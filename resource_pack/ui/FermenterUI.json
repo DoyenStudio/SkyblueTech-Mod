@@ -207,7 +207,7 @@
                                                                     "clip_ratio": 0.0,
                                                                     "fill": true,
                                                                     "keep_ratio": false,
-                                                                    "texture": "textures/netease/common/image/default",
+                                                                    "texture": "textures/machines/fermenter_controller_side",
                                                                     "tiled": true
                                                                 }
                                                             },
@@ -369,6 +369,34 @@
                                                         "font_scale_factor": 1.1,
                                                         "font_type": "default",
                                                         "text": "发酵池 （未知状态）"
+                                                    }
+                                                },
+                                                {
+                                                    "lack_blocks_tip": {
+                                                        "type": "label",
+                                                        "offset": [
+                                                            -4.0,
+                                                            28.0
+                                                        ],
+                                                        "size": [
+                                                            118.0,
+                                                            45
+                                                        ],
+                                                        "layer": 2,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 2.0,
+                                                        "font_size": "small",
+                                                        "font_type": "default",
+                                                        "locked_color": [
+                                                            1.0,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "text": "aaaa"
                                                     }
                                                 }
                                             ]

@@ -72,7 +72,9 @@ def GetMachineCls(block_name):
 @ChunkLoadedServerEvent.Listen()
 def onChunkLoaded(event):
     # type: (ChunkLoadedServerEvent) -> None
-    for block_entity_posdata in event.blockEntities:
+    if not event.blockEntities:
+        return
+    for block_entity_posdata in event.blockEntities[:]:
         x = block_entity_posdata["posX"]
         y = block_entity_posdata["posY"]
         z = block_entity_posdata["posZ"]
@@ -84,7 +86,6 @@ def onChunkLoaded(event):
         if bdata is None:
             raise RuntimeError("BlockEntityData load failed in %d ~ %d %d %d" % (event.dimension, x, y, z))
         cached_machines[(event.dimension, x, y, z)] = machine_cls(event.dimension, x, y, z, bdata)
-
 
 @ChunkAcquireDiscardedServerEvent.Listen()
 def onChunkDiscarded(event):

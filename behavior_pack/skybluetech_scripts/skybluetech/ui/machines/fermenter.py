@@ -1,11 +1,15 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
+from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from ...define.events.fermenter import FermenterSetTemperatureEvent
+from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
 from ...define.machine_config.fermenter import spec_recipes, TEMPERATURE_MIN, TEMPERATURE_MAX
 from ...ui_sync.machines.fermenter import FermenterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from ..utils import UpdatePowerBar, InitFluidDisplay, UpdateImageTransformColor
+
+FLAG_OK = 0
 
 POWER_NODE = MAIN_PATH / "power_bar"
 OUT_GAS_DISP_NODE = MAIN_PATH / "out_gas_display"
@@ -14,6 +18,7 @@ POOL_IMG_NODE = MAIN_PATH / "pool/fluid_img"
 TEMPERATURE_LABEL_NODE = MAIN_PATH / "temp_label"
 EXPECTED_TEMPERATURE_LABEL_NODE = MAIN_PATH / "expected_temp_label"
 POOL_TIP_LABEL_NODE = MAIN_PATH / "pool_tip"
+LACK_BLOCKS_TIP_NODE = MAIN_PATH / "lack_blocks_tip"
 TEMPERATURE_SLIDE_BAR_NODE = MAIN_PATH / "slider"
 
 
@@ -30,6 +35,7 @@ class FermenterUI(MachinePanelUIProxy):
         self.temperature_label = self.GetElement(TEMPERATURE_LABEL_NODE).AsLabel()
         self.expected_temperature_label = self.GetElement(EXPECTED_TEMPERATURE_LABEL_NODE).AsLabel()
         self.pool_tip = self.GetElement(POOL_TIP_LABEL_NODE).AsLabel()
+        self.lack_blocks_tip = self.GetElement(LACK_BLOCKS_TIP_NODE).AsLabel()
         self.temperature_slider = self.GetElement(TEMPERATURE_SLIDE_BAR_NODE).AsSlider()
         self.out_gas_updat_updater = InitFluidDisplay(
             self.out_gas_display, 
@@ -75,10 +81,21 @@ class FermenterUI(MachinePanelUIProxy):
         self.temperature_label.SetText("酵温 %.1f°C" % self.sync.mud_temperature)
         self.expected_temperature_label.SetText("控温 %.1f°C" % self.sync.expected_temperature)
         self.pool_img.SetFullSize("y", {"followType": "parent", "relativeValue": self.sync.content_volume_pc})
-        if self.sync.structure_finished:
+        sstatus = self.sync.structure_status
+        if sstatus == FLAG_OK:
             self.pool_tip.SetText("发酵池 （就绪）")
+        elif sstatus == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
+            self.pool_tip.SetText("发酵池 （缺少必要模块）")
         else:
             self.pool_tip.SetText("发酵池 （结构不完整）")
+        if self.sync.structure_lack_blocks and sstatus == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
+            fmt = "§l§4结构缺失方块：\n" + "\n".join(
+                GetItemHoverName(k) + "§l§4 x" + str(v)
+                for k, v in self.sync.structure_lack_blocks.items()
+            )
+            self.lack_blocks_tip.SetText(fmt)
+        else:
+            self.lack_blocks_tip.SetText("")
         
     @ViewBinder.binding(ViewBinder.BF_SliderFinished, "#fermenter.temperature_set_ok") # pyright: ignore[reportOptionalCall]
     def onTemperatureSliderFinished(self, progress, finished, _):

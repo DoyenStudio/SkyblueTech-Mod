@@ -11,7 +11,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     AddBlocksToBlockRemoveListener,
     GetBlockPaletteBetweenPos,
 )
-from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BROKEN
+from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BROKEN, DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
 from .base_machine import BaseMachine, GUIControl
 
 if 0:
@@ -22,15 +22,13 @@ if 0:
     BLOCK_PAT_INDEX = int
     POS_SET = set[tuple[int, int, int]]
 
+FLAG_OK = 0
 blockRemovedListenPool = set()  # type: set[str]
-
 server_inited = False
-
 
 @ServerInitCallback()
 def onServerInit():
     global server_inited
-    print(blockRemovedListenPool)
     AddBlocksToBlockRemoveListener(blockRemovedListenPool)
     server_inited = True
 
@@ -43,15 +41,16 @@ def onEntityPlaceBlock(event):
     y = event.y
     z = event.z
     for area in detect_areas.get(event.dimensionId, set()):
-        if not area.bound._last_destroyed:
+        if area.bound._last_destroy_flag == FLAG_OK:
             continue
         if area.isInside(x, y, z):
-            if area.Detect():
-                print("Detect OK")
+            flag = area.Detect()
+            if flag == FLAG_OK:
+                # print("Detect OK")
                 area.bound.UnsetStructureDestroyed()
             else:
-                print("Detect failed")
-                area.bound.SetStructureDestroyed()
+                # print("Detect failed")
+                area.bound.SetStructureDestroyed(flag)
             area.bound.OnStructureChanged()
 
 
@@ -63,15 +62,16 @@ def onBlockRemoved(event):
     y = event.y
     z = event.z
     for area in detect_areas.get(event.dimension, set()):
-        if area.bound._last_destroyed:
+        if area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
             continue
         if area.isInside(x, y, z):
-            if area.Detect():
-                print("Detect OK")
+            flag = area.Detect()
+            if flag == FLAG_OK:
+                # print("Detect OK")
                 area.bound.UnsetStructureDestroyed()
             else:
-                print("Detect failed")
-                area.bound.SetStructureDestroyed()
+                # print("Detect failed")
+                area.bound.SetStructureDestroyed(flag)
             area.bound.OnStructureChanged()
 
 
@@ -139,7 +139,6 @@ class DetectArea(object):
         ))
 
     def Detect(self):
-        # type: () -> bool
         spalette = self.palette
         current_palette = GetBlockPaletteBetweenPos(
             self.dim,
@@ -148,7 +147,7 @@ class DetectArea(object):
             eliminateAir=False,
         )
         if current_palette is None:
-            return False
+            return DEACTIVE_FLAG_STRUCTURE_BROKEN
         co_x = self.center_x - self.min_x
         co_y = self.center_y - self.min_y
         co_z = self.center_z - self.min_z
@@ -170,12 +169,9 @@ class DetectArea(object):
         #     co_x,
         #     co_z,
         # )
-        if spalette.Compare(current_palette, co_x, co_z):
-            if spalette.BlocksEnough(current_palette):
-                self.updateFunctionalBlocks(current_palette, co_x, co_y, co_z)
-                return True
-        for _ in range(3):
-            spalette = spalette.Rotate()
+        for _i in range(4):
+            if _i != 0:
+                spalette = spalette.Rotate()
             # print(
             #     "Comparing",
             #     (
@@ -190,10 +186,18 @@ class DetectArea(object):
             #     ),
             # )
             if spalette.Compare(current_palette, co_x, co_z):
-                if spalette.BlocksEnough(current_palette):
+                lacked_blocks = spalette.GetLackedBlocks(current_palette)
+                if lacked_blocks is None:
                     self.updateFunctionalBlocks(current_palette, co_x, co_y, co_z)
-                    return True
-        return False
+                    return FLAG_OK
+                else:
+                    self.bound._lacked_blocks = lacked_blocks
+                    if isinstance(self.bound, GUIControl):
+                        self.bound.OnSync()
+                    return DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
+        if isinstance(self.bound, GUIControl):
+            self.bound.OnSync()
+        return DEACTIVE_FLAG_STRUCTURE_BROKEN
 
     def updateFunctionalBlocks(self, palette, co_x, co_y, co_z):
         # type: (BlockPaletteComponent, int, int, int) -> None
@@ -275,19 +279,16 @@ class StructureBlockPalette(object):
                 return False
         return True
 
-    def BlocksEnough(self, block_palette):
-        # type: (BlockPaletteComponent) -> bool
-        """
-        判断方块调色板是否满足此结构所需方块数量。
-
-        Args:
-            block_palette (BlockPaletteComponent): 调色板
-        """
+    def GetLackedBlocks(self, block_palette):
+        # type: (BlockPaletteComponent) -> dict[str, int] | None
         for block_id, count in self.require_blocks_count.items():
             if block_palette.GetBlockCountInBlockPalette(block_id) < count:
-                print("BlocksNotEnough", block_id, count)
-                return False
-        return True
+                return {
+                    block_id: count
+                    for block_id, count in self.require_blocks_count.items()
+                    if block_palette.GetBlockCountInBlockPalette(block_id) < count
+                }
+        return None
 
     def Rotate(self):
         # type: () -> StructureBlockPalette
@@ -330,7 +331,8 @@ class MultiBlockStructure(BaseMachine):
     def __init__(self, dim, x, y, z, block_entity_data):
         if self.structure_palette is None:
             raise ValueError("StructureBlockPalette: structure_palette is None")
-        self._last_destroyed = False
+        self._last_destroy_flag = DEACTIVE_FLAG_STRUCTURE_BROKEN
+        self._lacked_blocks = {} # type: dict[str, int]
         self._palette = self.structure_palette
         self.dim = dim
         self.x = x
@@ -340,10 +342,15 @@ class MultiBlockStructure(BaseMachine):
     def OnLoad(self):
         self.area = DetectArea(self.dim, self.x, self.y, self.z, self)
         addDetectArea(self.dim, self.area)
-        if self.area.Detect():
+        self.detectLater()
+
+    @AsDelayFunc(0)
+    def detectLater(self):
+        flag = self.area.Detect()
+        if flag == FLAG_OK:
             self.area.bound.UnsetStructureDestroyed()
         else:
-            self.area.bound.SetStructureDestroyed()
+            self.area.bound.SetStructureDestroyed(flag)
 
     def OnStructureChanged(self):
         "覆写方法用于结构变更的回调。"
@@ -351,17 +358,20 @@ class MultiBlockStructure(BaseMachine):
     def OnUnload(self):
         removeDetectArea(self.dim, self.area)
 
-    def SetStructureDestroyed(self):
-        if not self._last_destroyed:
-            self.SetDeactiveFlag(DEACTIVE_FLAG_STRUCTURE_BROKEN)
-            self._last_destroyed = True
-            if isinstance(self, GUIControl):
-                self.OnSync()
+    def SetStructureDestroyed(self, flag):
+        # type: (int) -> None
+        if flag == self._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
+            return
+        self._last_destroy_flag = flag
+        self.SetDeactiveFlag(flag)
+        if isinstance(self, GUIControl):
+            self.OnSync()
 
     def UnsetStructureDestroyed(self):
-        if self._last_destroyed:
-            self.UnsetDeactiveFlag(DEACTIVE_FLAG_STRUCTURE_BROKEN)
-            self._last_destroyed = False
+        if self._last_destroy_flag != FLAG_OK:
+            self.UnsetDeactiveFlag(self._last_destroy_flag)
+            self._last_destroy_flag = FLAG_OK
+            self._lacked_blocks = {}
             if isinstance(self, GUIControl):
                 self.OnSync()
 
@@ -376,6 +386,24 @@ class MultiBlockStructure(BaseMachine):
         pos = self.GetFunctionalBlockPoses().get(block_id)
         if not pos:
             raise ValueError("Cannot find block: %s" % block_id)
+        from ..pool import GetMachineStrict
+        x, y, z = pos[index]
+        machine = GetMachineStrict(self.dim, x, y, z)
+        if not isinstance(machine, cls):
+            raise ValueError(
+                "({}, {}, {}): {} is not a {}".format(
+                    x, y, z,
+                    type(machine).__name__, cls.__name__
+                )
+            )
+        return machine
+
+    def TryGetMachine(self, cls, block_id=None, index=0):
+        # type: (type[MT], str | None, int) -> MT | None
+        block_id = block_id or cls.block_name
+        pos = self.GetFunctionalBlockPoses().get(block_id)
+        if not pos:
+            return None
         from ..pool import GetMachineStrict
         x, y, z = pos[index]
         machine = GetMachineStrict(self.dim, x, y, z)

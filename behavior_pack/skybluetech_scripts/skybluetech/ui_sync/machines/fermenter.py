@@ -15,7 +15,8 @@ K_OUT_FLUID_ID = "of"
 K_OUT_FLUID_VOLUME = "ofv"
 K_OUT_FLUID_MAX_VOLUME = "ofm"
 K_RECIPE = "re"
-K_STRUCTURE_FINISHED = "s"
+K_STRUCTURE_STATUS = "s"
+K_STRUCTURE_LACK_BLOCKS = "sl"
 
 
 class FermenterUISync(MachineUISync):
@@ -26,7 +27,8 @@ class FermenterUISync(MachineUISync):
     content_volume_pc = 0.0
     expected_temperature = 0.0
     recipe_id = 0
-    structure_finished = False
+    structure_status = 0
+    structure_lack_blocks = {} # type: dict[str, int]
     out_gas_id = None # type: str | None
     out_gas_volume = 0.0
     out_gas_max_volume = 0.0
@@ -41,7 +43,8 @@ class FermenterUISync(MachineUISync):
         self.mud_thickness = data[K_MUD_THICKNESS]
         self.content_volume_pc = data[K_CONTENT_VOLUME]
         self.recipe_id = data[K_RECIPE]
-        self.structure_finished = data[K_STRUCTURE_FINISHED]
+        self.structure_status = data[K_STRUCTURE_STATUS]
+        self.structure_lack_blocks = data[K_STRUCTURE_LACK_BLOCKS]
         self.expected_temperature = data[K_EXPECTED_TEMPERATURE]
         self.out_gas_id = data[K_OUT_GAS_ID]
         self.out_gas_volume = data[K_OUT_GAS_VOLUME]
@@ -58,7 +61,8 @@ class FermenterUISync(MachineUISync):
             K_MUD_THICKNESS: self.mud_thickness,
             K_CONTENT_VOLUME: self.content_volume_pc,
             K_RECIPE: self.recipe_id,
-            K_STRUCTURE_FINISHED: self.structure_finished,
+            K_STRUCTURE_STATUS: self.structure_status,
+            K_STRUCTURE_LACK_BLOCKS: self.structure_lack_blocks,
             K_EXPECTED_TEMPERATURE: self.expected_temperature,
             K_OUT_GAS_ID: self.out_gas_id,
             K_OUT_GAS_VOLUME: self.out_gas_volume,

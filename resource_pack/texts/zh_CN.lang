@@ -183,3 +183,4 @@ tile.skybluetech:fermenter_io_fluid2.name=发酵流体输出口
 tile.skybluetech:fermenter_io_gas.name=发酵气体输出口
 tile.skybluetech:fermenter_io_energy.name=发酵供能输入口
 tile.skybluetech:fermenter_io_item1.name=发酵物品输入口
+item.skybluetech:simple_machine_checker.name=简易机器检测器

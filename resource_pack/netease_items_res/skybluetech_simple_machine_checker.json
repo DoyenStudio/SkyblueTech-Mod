@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:simple_machine_checker"
+        },
+        "description": {
+            "identifier": "skybluetech:simple_machine_checker"
+        }
+    }
+}

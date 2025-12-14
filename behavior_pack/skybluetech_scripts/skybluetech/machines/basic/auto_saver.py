@@ -1,8 +1,9 @@
 # coding=utf-8
 #
 from weakref import WeakSet
-from tooldelta.api.timer import AsTimerFunc
+from mod_log import logger
 from mod.server.blockEntityData import BlockEntityData
+from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
 
 active_machines = WeakSet() # type: WeakSet[AutoSaver]
 auto_save_inited = False
@@ -10,6 +11,7 @@ auto_save_inited = False
 def startAutoSave():
     global auto_save_inited
     if not auto_save_inited:
+        logger.info("[SkyblueTech] AutoSave module inited")
         auto_save_inited = True
         autoSave()
 

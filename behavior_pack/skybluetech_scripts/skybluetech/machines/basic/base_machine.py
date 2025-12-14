@@ -122,6 +122,7 @@ class BaseMachine(object):
 
         Args:
             rf (int): 能量
+            is_generator (bool): 自身是否为发电机(或供能器), 若是, 则优先向网络输出能量
 
         Returns:
             tuple[bool, int]: 数值是否变动, 溢出的能量
@@ -170,6 +171,10 @@ class BaseMachine(object):
     def IsActive(self):
         # type: () -> bool
         return self.deactive_flags == 0
+
+    def IsActiveIgnoreCondition(self, cond):
+        # type: (int) -> bool
+        return self.deactive_flags & ~cond == 0
 
     def ResetDeactiveFlags(self):
         # type: () -> None

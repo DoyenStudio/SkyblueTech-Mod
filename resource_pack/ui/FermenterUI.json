@@ -175,10 +175,6 @@
                                                 },
                                                 {
                                                     "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
-                                                        "$slot0": 1,
-                                                        "$slot1": 2,
-                                                        "$slot2": 3,
-                                                        "$slot3": 4,
                                                         "offset": [
                                                             145,
                                                             -17
@@ -384,19 +380,14 @@
                                                         ],
                                                         "layer": 2,
                                                         "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
+                                                            0.6666666666666666,
+                                                            0.0,
+                                                            0.0
                                                         ],
                                                         "font_scale_factor": 2.0,
                                                         "font_size": "small",
                                                         "font_type": "default",
-                                                        "locked_color": [
-                                                            1.0,
-                                                            0.0,
-                                                            0.0
-                                                        ],
-                                                        "text": "aaaa"
+                                                        "text": "§lUndefined data"
                                                     }
                                                 }
                                             ]

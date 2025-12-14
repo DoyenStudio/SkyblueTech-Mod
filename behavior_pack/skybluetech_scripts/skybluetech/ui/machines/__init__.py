@@ -8,6 +8,7 @@ from .digger import DiggerUI
 from .farming_station import FarmingStationUI
 from .fermenter import FermenterUI
 from .fluid_condenser import FluidCondenserUI
+from .fluid_interface import FluidInterfaceUI
 from .forester import ForesterUI
 from .freezer import FreezerUI
 from .general_tank import GeneralTankUI

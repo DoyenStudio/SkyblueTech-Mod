@@ -70,23 +70,62 @@ class FermenterRecipe:
         out_fluid_volume, # type: float
         volume_reduce, # type: float
     ):
+        """
+        发酵池配方。
+
+        Args:
+            color (int): 发酵流体 RGB 颜色, 显示到 GUI
+            vitality_matter (str): 接种物
+            vitality_count (float): 接种物可增加的菌群浓度
+            inoculate_time (float): 接种所需时间
+            nutrition_matter (str): 营养物
+            nutrition_count (float): 营养物可增加的菌群浓度
+            min_temperature (float): 菌群可接受的最小温度
+            max_temperature (float): 菌群可接受的最大温度
+            fit_temperature (float): 菌群可接受最适温度
+            max_grow_speed (float): 菌群最大生长速度
+            max_thickness (float): 菌群最大浓度
+            produce_thickness (float): 菌群生产的最适浓度
+            out_gas_id (str): 产出的气体
+            out_gas_volume (float): 单次产生气体的体积
+            out_fluid_id (str): 产出的流体
+            out_fluid_volume (float): 单次产生流体的体积
+            volume_reduce (float): 单次生产消耗的发酵流体量
+        """
         self.color = color
+        "发酵流体 RGB 颜色, 显示到 GUI"
         self.vitality_matter = vitality_matter
+        "接种物"
         self.vitality_count = vitality_count
+        "接种物可增加的菌群浓度"
         self.inoculate_time = inoculate_time
+        "接种所需时间"
         self.nutrition_matter = nutrition_matter
+        "营养物"
         self.nutrition_count = nutrition_count
+        "营养物可增加的菌群浓度"
         self.min_temperature = min_temperature
+        "菌群可接受的最小温度"
         self.max_temperature = max_temperature
+        "菌群可接受的最大温度"
         self.fit_temperature = fit_temperature
+        "菌群可接受最适温度"
         self.max_grow_speed = max_grow_speed
+        "菌群最大生长速度"
         self.max_thickness = max_thickness
+        "菌群最大浓度"
         self.produce_thickness = produce_thickness
+        "菌群生产的最适浓度"
         self.out_gas_id = out_gas_id
+        "产出的气体"
         self.out_gas_volume = out_gas_volume
+        "单次产生气体的体积"
         self.out_fluid_id = out_fluid_id
+        "产出的流体"
         self.out_fluid_volume = out_fluid_volume
+        "单次产生流体的体积"
         self.volume_reduce = volume_reduce
+        "单次生产消耗的发酵流体量"
 
 
 spec_recipes = {
@@ -94,9 +133,9 @@ spec_recipes = {
         color=0x9a6f4f,
         vitality_matter="minecraft:dirt",
         vitality_count=0.1,
-        inoculate_time=30,
+        inoculate_time=5,
         nutrition_matter="skybluetech:bio_dust",
-        nutrition_count=0.05,
+        nutrition_count=0.2,
         min_temperature=25,
         max_temperature=40,
         fit_temperature=30,

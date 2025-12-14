@@ -36,6 +36,7 @@ class BasicTank(BaseMachine, FluidContainer, GUIControl):
         self.sync.MarkedAsChanged()
 
     def Dump(self):
+        print("Data was dumped", self.__class__.__name__)
         FluidContainer.Dump(self)
 
 

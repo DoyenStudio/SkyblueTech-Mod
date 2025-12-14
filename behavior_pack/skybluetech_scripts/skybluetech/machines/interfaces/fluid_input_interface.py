@@ -1,5 +1,6 @@
 # coding=utf-8
 #
+from weakref import ref
 from mod.server.blockEntityData import BlockEntityData
 from ...ui_sync.machines.fluid_interface import FluidInterfaceUISync
 from ..basic import BaseMachine, FluidContainer, GUIControl, RegisterMachine
@@ -33,3 +34,8 @@ class FluidInputInterface(BaseMachine, FluidContainer, GUIControl):
         self.sync.fluid_volume = self.fluid_volume
         self.sync.max_volume = self.max_fluid_volume
         self.sync.MarkedAsChanged()
+
+    def Dump(self):
+        BaseMachine.Dump(self)
+        FluidContainer.Dump(self)
+

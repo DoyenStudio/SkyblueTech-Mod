@@ -36,9 +36,11 @@ K_TEMPERATURE = "st:temp"
 K_EXPECTED_TEMPERTURE = "st:expected_temp"
 K_VOLUME = "st:volume"
 K_THICKNESS = "st:thickness"
-K_MUD_VATILATY = "st:mud_vatilaty"
+K_MUD_VATILATY = "st:mud_vitalaty"
 K_RECIPE = "st:recipe"
 K_CELL_HUNGER = "st:bacteria_hunger"
+K_INOCULATING_RECIPE = "st:inoculate_recipe"
+K_INOCULATE_TIME = "st:inoculate_time"
 
 
 @RegisterMachine
@@ -70,18 +72,19 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         self.OnSync()
 
     def OnTicking(self):
-        if self.IsActive():
-            self.t += 1
-            if self.t >= self.work_ticks_delay:
-                self.t = 0
-                return
-            if self.ProcessOnce():
-                self.workOnce()
-                self.OnSync()
-            recipe = spec_recipes.get(self.recipe_id)
-            if recipe is None:
-                return
-            self.lifeCycle(recipe)
+        self.t += 1
+        if self.t >= self.work_ticks_delay:
+            self.t = 0
+            if self.IsActive():
+                if self.ProcessOnce():
+                    self.workOnce()
+                    self.OnSync()
+            if self.IsActiveIgnoreCondition(flags.DEACTIVE_FLAG_POWER_LACK):
+                self.tryInoculate()
+                recipe = spec_recipes.get(self.recipe_id)
+                if recipe is None:
+                    return
+                self.lifeCycle(recipe)
 
     def OnLoad(self):
         UpgradeControl.OnLoad(self)
@@ -92,7 +95,15 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         self.bacteria_hunger = self.bdata[K_CELL_HUNGER] or 0.0
         self.expected_mud_temperature = self.bdata[K_EXPECTED_TEMPERTURE] or 25.0
         self.recipe_id = self.bdata[K_RECIPE] or 0
+        self.current_inoculating_recipe = self.bdata[K_INOCULATING_RECIPE] or 0
+        self.current_inoculate_time = self.bdata[K_INOCULATE_TIME] or 0.0
         MultiBlockStructure.OnLoad(self)
+
+    def OnStructureChanged(self, ok):
+        # type: (bool) -> None
+        if ok:
+            self.getEnergyInIO().SetMachineRef(self)
+            self.getItemInIO().OnSlotUpdate = self.OnOtherSlotUpdate
 
     def Dump(self):
         # type: () -> None
@@ -104,6 +115,8 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         self.bdata[K_CELL_HUNGER] = self.bacteria_hunger
         self.bdata[K_EXPECTED_TEMPERTURE] = self.expected_mud_temperature
         self.bdata[K_RECIPE] = self.recipe_id
+        self.bdata[K_INOCULATING_RECIPE] = self.current_inoculating_recipe
+        self.bdata[K_INOCULATE_TIME] = self.current_inoculate_time
 
     def OnUnload(self):
         # type: () -> None
@@ -137,13 +150,62 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
             self.sync.out_fluid_max_volume = 1.0
         self.sync.MarkedAsChanged()
 
+
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
-        UpgradeControl.OnSlotUpdate(self, slot_pos)
+        if slot_pos == 0:
+            # 接种槽
+            slotitem = self.GetSlotItem(0)
+            if slotitem is None:
+                if self.current_inoculating_recipe != 0:
+                    self.current_inoculate_time = 0
+                    self.current_inoculating_recipe = 0
+                return
+            if self.current_inoculating_recipe != 0:
+                recipe = spec_recipes[self.current_inoculating_recipe]
+                if slotitem.id != recipe.vitality_matter:
+                    self.current_inoculate_time = 0
+                    self.current_inoculating_recipe = 0
+            elif self.current_inoculate_time == 0:
+                if self.mud_thickness > 0 and self.mud_thickness < 0.1:
+                    # 菌种浓度太低
+                    recipe = spec_recipes[self.recipe_id]
+                    if slotitem.id != recipe.vitality_matter:
+                        self.current_inoculate_time = 0.0
+                        self.current_inoculating_recipe = 0
+                    else:
+                        self.current_inoculating_recipe = self.recipe_id
+                else:
+                    # 初始化一个菌种
+                    for recipe_id, recipe in spec_recipes.items():
+                        if recipe.vitality_matter == slotitem.id:
+                            self.current_inoculate_time = 0.0
+                            self.current_inoculating_recipe = recipe_id
+                            print("Set to", recipe_id)
+                            break
+
+    def OnOtherSlotUpdate(self, slot_pos):
+        # type: (int) -> None
+        pass
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        return UpgradeControl.IsValidInput(self, slot, item)
+        if self.InUpgradeSlot(slot):
+            return UpgradeControl.IsValidInput(self, slot, item)
+        elif slot == 0:
+            for recipe in spec_recipes.values():
+                if item.id == recipe.vitality_matter:
+                    return True
+            return False
+        elif slot == 1:
+            if self.recipe_id == 0:
+                return False
+            recipe = spec_recipes[self.recipe_id]
+            if item.id != recipe.nutrition_matter:
+                return False
+            return True
+        else:
+            return False
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
@@ -171,15 +233,22 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
     def lifeCycle(self, recipe):
         # type: (FermenterRecipe) -> None
         self.bacteria_hunger -= HUNGER_REDUCE
-        self.updateVitality(recipe)
         self.tryEat(recipe)
+        self.updateVitality(recipe)
         self.tryGrow(recipe)
         self.tryProduce(recipe)
 
     def tryCtrlTemperature(self):
-        self.mud_temperature += min(
-            1, max(self.expected_mud_temperature - self.mud_temperature, 0.05)
-        )
+        if self.mud_temperature < self.expected_mud_temperature:
+            self.mud_temperature += min(
+                (self.expected_mud_temperature - self.mud_temperature) * 0.002,
+                0.01
+            )
+        elif self.mud_temperature > self.expected_mud_temperature:
+            self.mud_temperature -= min(
+                (self.mud_temperature - self.expected_mud_temperature) * 0.002,
+                0.01
+            )
 
     def tryAddWater(self):
         if self.content_volume < POOL_MAX_VOLUME and self.getWaterInIO().fluid_volume > 50:
@@ -191,12 +260,30 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
     def tryEat(self, recipe):
         # type: (FermenterRecipe) -> None
         if self.bacteria_hunger <= 0:
-            maybe_food = self.GetSlotItem(0)
+            maybe_food = self.GetSlotItem(1)
             if maybe_food is None or maybe_food.id != recipe.nutrition_matter:
                 return
             maybe_food.count -= 1
-            self.SetSlotItem(0, maybe_food)
+            self.SetSlotItem(1, maybe_food)
             self.bacteria_hunger += recipe.nutrition_count
+            self.mud_vitality += recipe.vitality_count
+            11111
+
+    def tryInoculate(self):
+        # type: () -> None
+        if self.current_inoculating_recipe != 0:
+            print("growing", self.current_inoculate_time)
+            recipe = spec_recipes[self.current_inoculating_recipe]
+            self.current_inoculate_time += float(self.work_ticks_delay) / 20
+            if self.current_inoculate_time >= recipe.inoculate_time:
+                self.mud_thickness += recipe.vitality_count
+                self.recipe_id = self.current_inoculating_recipe
+                self.current_inoculating_recipe = 0
+                self.current_inoculate_time = 0.0
+                slotitem = self.GetSlotItem(1)
+                if slotitem is not None:
+                    slotitem.count -= 1
+                    self.SetSlotItem(1, slotitem)
 
     def tryGrow(self, recipe):
         # type: (FermenterRecipe) -> None
@@ -263,6 +350,12 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         # type: (FermenterRecipe) -> float
         return self.mud_vitality * recipe.max_grow_speed
 
+    def getItemInIO(self):
+        return self.GetMachine(ItemInputInterface, IO_ITEM)
+
+    def getEnergyInIO(self):
+        return self.GetMachine(EnergyInputInterface, IO_ENERGY)
+
     def getWaterInIO(self):
         return self.GetMachine(FluidInputInterface, IO_FLUID1)
 
@@ -276,6 +369,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
 @FermenterSetTemperatureEvent.Listen()
 def onFermenterSetTemperatureEvent(event):
     # type: (FermenterSetTemperatureEvent) -> None
+    global Fermenter
     m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, Fermenter):
         return

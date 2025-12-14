@@ -95,7 +95,19 @@ class FermenterUI(MachinePanelUIProxy):
             )
             self.lack_blocks_tip.SetText(fmt)
         else:
-            self.lack_blocks_tip.SetText("")
+            gas_id = self.sync.out_gas_id
+            fluid_id = self.sync.out_fluid_id
+            if gas_id is None or fluid_id is None:
+                fmt = "§l§0无配方"
+            else:
+                fmt = (
+                    # "§0§3发酵液量： §0%smB" % self.sync.mu
+                    # + "\n"
+                    "§6菌群浓度： §0%.1f" % self.sync.mud_thickness * 100
+                    + "\n"
+                    + "§2将产出： §0%s、 %s" % (GetItemHoverName(gas_id), GetItemHoverName(fluid_id))
+                )
+            self.lack_blocks_tip.SetText(fmt)
         
     @ViewBinder.binding(ViewBinder.BF_SliderFinished, "#fermenter.temperature_set_ok") # pyright: ignore[reportOptionalCall]
     def onTemperatureSliderFinished(self, progress, finished, _):

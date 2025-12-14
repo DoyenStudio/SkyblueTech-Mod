@@ -51,7 +51,6 @@ def onEntityPlaceBlock(event):
             else:
                 # print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
-            area.bound.OnStructureChanged()
 
 
 @BlockRemoveServerEvent.Listen(-100)
@@ -72,7 +71,6 @@ def onBlockRemoved(event):
             else:
                 # print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
-            area.bound.OnStructureChanged()
 
 
 detect_areas = {}  # type: dict[int, set[DetectArea]]
@@ -352,7 +350,8 @@ class MultiBlockStructure(BaseMachine):
         else:
             self.area.bound.SetStructureDestroyed(flag)
 
-    def OnStructureChanged(self):
+    def OnStructureChanged(self, structure_finished):
+        # type: (bool) -> None
         "覆写方法用于结构变更的回调。"
 
     def OnUnload(self):
@@ -364,6 +363,7 @@ class MultiBlockStructure(BaseMachine):
             return
         self._last_destroy_flag = flag
         self.SetDeactiveFlag(flag)
+        self.OnStructureChanged(False)
         if isinstance(self, GUIControl):
             self.OnSync()
 
@@ -372,6 +372,7 @@ class MultiBlockStructure(BaseMachine):
             self.UnsetDeactiveFlag(self._last_destroy_flag)
             self._last_destroy_flag = FLAG_OK
             self._lacked_blocks = {}
+            self.OnStructureChanged(True)
             if isinstance(self, GUIControl):
                 self.OnSync()
 

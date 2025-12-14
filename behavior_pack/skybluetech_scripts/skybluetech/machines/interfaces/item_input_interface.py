@@ -1,5 +1,6 @@
 # coding=utf-8
 #
+from weakref import ref
 from mod.server.blockEntityData import BlockEntityData
 from ..basic import BaseMachine, ItemContainer, RegisterMachine
 

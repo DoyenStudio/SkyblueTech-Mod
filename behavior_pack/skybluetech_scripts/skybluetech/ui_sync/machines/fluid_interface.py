@@ -10,7 +10,7 @@ K_PUMP_MAX_VOLUME = "M"
 class FluidInterfaceUISync(MachineUISync):
     fluid_id = None
     fluid_volume = 0
-    max_volume = 0
+    max_volume = 1
 
     def Unmarshal(self, data):
         self.fluid_id = data[K_PUMP_FLUID_ID]

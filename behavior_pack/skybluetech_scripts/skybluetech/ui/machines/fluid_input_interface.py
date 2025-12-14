@@ -9,8 +9,7 @@ FLUID_NODE = MAIN_PATH / "fluid_display"
 
 
 @RegistProxyScreen("FluidInputInterfaceUI.main")
-@RegistProxyScreen("FluidOutputInterfaceUI.main")
-class FluidInterfaceUI(MachinePanelUIProxy):
+class FluidInputInterfaceUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = FluidInterfaceUISync.NewClient(dim, x, y, z) # type: FluidInterfaceUISync

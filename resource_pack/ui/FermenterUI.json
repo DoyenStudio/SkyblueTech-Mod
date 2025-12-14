@@ -185,12 +185,12 @@
                                                     "pool": {
                                                         "type": "panel",
                                                         "offset": [
-                                                            -4.0,
-                                                            28.0
+                                                            -4.5,
+                                                            27.0
                                                         ],
                                                         "size": [
-                                                            123.0,
-                                                            49.0
+                                                            116.0,
+                                                            45.0
                                                         ],
                                                         "controls": [
                                                             {
@@ -210,6 +210,10 @@
                                                             {
                                                                 "frame": {
                                                                     "type": "image",
+                                                                    "size": [
+                                                                        "100%+4px",
+                                                                        "100%+4px"
+                                                                    ],
                                                                     "layer": 1,
                                                                     "clip_direction": "left",
                                                                     "clip_ratio": 0.0,

@@ -1,0 +1,16 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "spread_delay": 16,
+                "spread_range": 5
+            }
+        },
+        "description": {
+            "base_block": "flowing_liquid",
+            "category": "none",
+            "identifier": "skybluetech:flowing_methane_mud"
+        }
+    }
+}

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "liquid_color": [
+                    255,
+                    240,
+                    200,
+                    64
+                ],
+                "spread_delay": 5,
+                "spread_fire": true,
+                "spread_range": 8
+            }
+        },
+        "description": {
+            "base_block": "flowing_liquid",
+            "category": "none",
+            "identifier": "skybluetech:flowing_methane"
+        }
+    }
+}

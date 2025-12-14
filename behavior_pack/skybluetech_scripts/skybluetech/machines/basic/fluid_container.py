@@ -199,5 +199,9 @@ class FluidContainer(object):
             )
             self.Dump()
 
+    def SelfRequireFluid(self):
+        requireLibraryFunc()
+        RequirePostFluid(self.dim, self.xyz)
+
     def OnFluidSlotUpdate(self):
         pass

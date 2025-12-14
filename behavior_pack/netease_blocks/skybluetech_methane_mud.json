@@ -1,0 +1,20 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "liquid_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                ]
+            }
+        },
+        "description": {
+            "base_block": "liquid",
+            "category": "none",
+            "identifier": "skybluetech:methane_mud"
+        }
+    }
+}

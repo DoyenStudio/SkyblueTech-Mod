@@ -18,6 +18,7 @@ COLORS = {
     "skybluetech:molten_silver": ((239, 248, 249), 1),
     "skybluetech:molten_tin": ((233, 233, 233), 1),
     "skybluetech:raw_oil": ((44, 39, 28), 3),
+    "skybluetech:methane": ((255, 240, 200), 4),
 }
 
 IDX_MAP = {
@@ -26,7 +27,8 @@ IDX_MAP = {
         "gray_lava_flow": 0,
         "gray_molten_metal_still": 1,
         "gray_lava_still": 2,
-        "basic_water_static": 3
+        "basic_water_static": 3,
+        "gas": 4,
     }.items()
 }
 
@@ -37,7 +39,8 @@ BASIC_TEXTURES = {
     "minecraft:flowing_lava": TEXTURE_LAVA,
     "skybluetech:raw_oil": TEXTURE_BASIC_FLUID,
     #
-    "skybluetech:deepslate_lava": ROOT_TEXTURE + "/deepslate_lava_still"
+    "skybluetech:deepslate_lava": ROOT_TEXTURE + "/deepslate_lava_still",
+    "skybluetech:methane_mud": ROOT_TEXTURE + "/methane_mud"
 }
 
 TYPE_BASIC_IMG = 0

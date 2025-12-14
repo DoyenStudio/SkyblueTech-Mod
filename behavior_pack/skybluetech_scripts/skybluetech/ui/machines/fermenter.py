@@ -89,7 +89,7 @@ class FermenterUI(MachinePanelUIProxy):
         else:
             self.pool_tip.SetText("发酵池 （结构不完整）")
         if self.sync.structure_lack_blocks and sstatus == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
-            fmt = "§l§4结构缺失方块：\n" + "\n".join(
+            fmt = "§l§4结构缺失必须组件：\n" + "\n".join(
                 GetItemHoverName(k) + "§l§4 x" + str(v)
                 for k, v in self.sync.structure_lack_blocks.items()
             )
@@ -103,7 +103,7 @@ class FermenterUI(MachinePanelUIProxy):
                 fmt = (
                     # "§0§3发酵液量： §0%smB" % self.sync.mu
                     # + "\n"
-                    "§6菌群浓度： §0%.1f" % self.sync.mud_thickness * 100
+                    "§3菌群浓度： §0%.1f%%%%" % (self.sync.mud_thickness * 100)
                     + "\n"
                     + "§2将产出： §0%s、 %s" % (GetItemHoverName(gas_id), GetItemHoverName(fluid_id))
                 )

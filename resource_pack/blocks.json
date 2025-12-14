@@ -160,6 +160,14 @@
             "up": "skybluetech:gray_lava_still"
         }
     },
+    "skybluetech:flowing_methane": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
+    "skybluetech:flowing_methane_mud": {
+        "blockshape": "water",
+        "textures": "skybluetech:methane_mud"
+    },
     "skybluetech:flowing_mid_lava": {
         "blockshape": "water",
         "textures": {
@@ -349,12 +357,20 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:methane": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
+    "skybluetech:methane_mud": {
+        "blockshape": "water",
+        "textures": "skybluetech:methane_mud"
+    },
     "skybluetech:mid_lava": {
         "blockshape": "water",
         "textures": "skybluetech:gray_lava_flow"
     },
     "skybluetech:mixer": {
-
+        "sound": "iron"
     },
     "skybluetech:molten_copper": {
         "blockshape": "water",

@@ -144,8 +144,8 @@ spec_recipes = {
         produce_thickness=0.4,
         out_gas_id="skybluetech:methane",
         out_gas_volume=10,
-        out_fluid_id="skybluetech:nutrious_mud",
-        out_fluid_volume=1,
+        out_fluid_id="skybluetech:methane_mud",
+        out_fluid_volume=0.5,
         volume_reduce=0.05,
     )
 }

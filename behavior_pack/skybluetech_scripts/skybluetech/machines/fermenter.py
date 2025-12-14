@@ -106,6 +106,8 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
         if ok:
             self.getEnergyInIO().SetMachineRef(self)
             self.getItemInIO().OnSlotUpdate = self.OnOtherSlotUpdate
+            self.getFluidOutIO().SelfRequireFluid()
+        self.OnSync()
 
     def Dump(self):
         # type: () -> None
@@ -131,12 +133,12 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
         self.sync.store_rf_max = self.store_rf_max
         self.sync.mud_temperature = self.mud_temperature
         self.sync.mud_thickness = self.mud_thickness
-        self.sync.content_volume_pc = float(self.content_volume) / POOL_MAX_VOLUME
         self.sync.expected_temperature = self.expected_mud_temperature
         self.sync.recipe_id = self.recipe_id
         self.sync.structure_status = self._last_destroy_flag
         self.sync.structure_lack_blocks = self._lacked_blocks
         if self.sync.structure_status == 0:
+            self.sync.content_volume_pc = float(self.content_volume) / POOL_MAX_VOLUME
             self.sync.out_gas_id = self.getGasOutIO().fluid_id
             self.sync.out_gas_volume = self.getGasOutIO().fluid_volume
             self.sync.out_gas_max_volume = self.getGasOutIO().max_fluid_volume
@@ -144,6 +146,7 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
             self.sync.out_fluid_volume = self.getFluidOutIO().fluid_volume
             self.sync.out_fluid_max_volume = self.getFluidOutIO().max_fluid_volume
         else:
+            self.sync.content_volume_pc = 0.0
             self.sync.out_gas_id = None
             self.sync.out_gas_volume = 0.0
             self.sync.out_gas_max_volume = 1.0
@@ -177,7 +180,7 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
                         self.current_inoculating_recipe = 0
                     else:
                         self.current_inoculating_recipe = self.recipe_id
-                else:
+                elif self.mud_thickness == 0:
                     # 初始化一个菌种
                     for recipe_id, recipe in spec_recipes.items():
                         if recipe.vitality_matter == slotitem.id:
@@ -234,7 +237,7 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
 
     def lifeCycle(self, recipe):
         # type: (FermenterRecipe) -> None
-        self.bacteria_hunger -= HUNGER_REDUCE
+        self.bacteria_hunger = max(-1, self.bacteria_hunger - HUNGER_REDUCE)
         self.tryEat(recipe)
         self.updateVitality(recipe)
         self.tryGrow(recipe)
@@ -257,6 +260,7 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
             prev_vol = self.content_volume
             self.content_volume += 50
             self.getWaterInIO().fluid_volume -= 50
+            self.getWaterInIO().SelfRequireFluid()
             self.mud_thickness *= float(prev_vol) / self.content_volume
 
     def tryEat(self, recipe):
@@ -282,10 +286,10 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
                 self.recipe_id = self.current_inoculating_recipe
                 self.current_inoculating_recipe = 0
                 self.current_inoculate_time = 0.0
-                slotitem = self.GetSlotItem(1)
+                slotitem = self.GetSlotItem(0)
                 if slotitem is not None:
                     slotitem.count -= 1
-                    self.SetSlotItem(1, slotitem)
+                    self.SetSlotItem(0, slotitem)
 
     def tryGrow(self, recipe):
         # type: (FermenterRecipe) -> None
@@ -301,11 +305,18 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
         # type: (FermenterRecipe) -> None
         if self.mud_thickness < recipe.produce_thickness:
             return
+        print("Producting")
         self.content_volume -= recipe.volume_reduce
-        if self.getGasOutIO().fluid_id == recipe.out_gas_id:
-            self.getGasOutIO().fluid_volume += recipe.out_gas_volume
-        if self.getGasOutIO().fluid_id == recipe.out_fluid_id:
-            self.getGasOutIO().fluid_volume += recipe.out_fluid_volume
+        gas_io = self.getGasOutIO()
+        fluid_io = self.getFluidOutIO()
+        if gas_io.fluid_id is None:
+            gas_io.fluid_id = recipe.out_gas_id
+        if fluid_io.fluid_id is None:
+            fluid_io.fluid_id = recipe.out_fluid_id
+        if gas_io.fluid_id == recipe.out_gas_id:
+            gas_io.AddFluid(recipe.out_gas_id, recipe.out_gas_volume)
+        if fluid_io.fluid_id == recipe.out_fluid_id:
+            fluid_io.AddFluid(recipe.out_fluid_id, recipe.out_fluid_volume)
 
     def updateVitality(self, recipe):
         # type: (FermenterRecipe) -> None

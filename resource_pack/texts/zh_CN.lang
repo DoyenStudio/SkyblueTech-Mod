@@ -184,3 +184,7 @@ tile.skybluetech:fermenter_io_gas.name=发酵气体输出口
 tile.skybluetech:fermenter_io_energy.name=发酵供能输入口
 tile.skybluetech:fermenter_io_item1.name=发酵物品输入口
 item.skybluetech:simple_machine_checker.name=简易机器检测器
+tile.skybluetech:methane.name=沼气
+tile.skybluetech:flowing_methane.name=流动沼气
+tile.skybluetech:methane_mud.name=沼气发酵泥
+tile.skybluetech:flowing_methane_mud.name=流动沼气发酵泥

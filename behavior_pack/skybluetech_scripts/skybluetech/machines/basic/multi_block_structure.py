@@ -1,10 +1,15 @@
 # coding=utf-8
 #
+from weakref import WeakKeyDictionary
 from mod.common.component.blockPaletteComp import BlockPaletteComponent
+from mod_log import logger
 from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     EntityPlaceBlockAfterServerEvent,
+    ChunkAcquireDiscardedServerEvent,
+    ChunkLoadedServerEvent,
+    
 )
 from skybluetech_scripts.tooldelta.general import ServerInitCallback
 from skybluetech_scripts.tooldelta.api.server.block import (
@@ -22,6 +27,9 @@ if 0:
     BLOCK_PAT_INDEX = int
     POS_SET = set[tuple[int, int, int]]
 
+DEBUG = True
+DEBUG2 = True
+
 FLAG_OK = 0
 blockRemovedListenPool = set()  # type: set[str]
 server_inited = False
@@ -31,6 +39,9 @@ def onServerInit():
     global server_inited
     AddBlocksToBlockRemoveListener(blockRemovedListenPool)
     server_inited = True
+    logger.info("[MultiBlockStructure] Add blocks to pool: {}".format(
+        list(blockRemovedListenPool)
+    ))
 
 
 @EntityPlaceBlockAfterServerEvent.Listen()
@@ -41,15 +52,17 @@ def onEntityPlaceBlock(event):
     y = event.y
     z = event.z
     for area in detect_areas.get(event.dimensionId, set()):
-        if area.bound._last_destroy_flag == FLAG_OK:
+        if not DEBUG2 and area.bound._last_destroy_flag == FLAG_OK:
             continue
         if area.isInside(x, y, z):
             flag = area.Detect()
             if flag == FLAG_OK:
-                # print("Detect OK")
+                if DEBUG:
+                    print("Detect OK")
                 area.bound.UnsetStructureDestroyed()
             else:
-                # print("Detect failed")
+                if DEBUG:
+                    print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
 
 
@@ -61,15 +74,17 @@ def onBlockRemoved(event):
     y = event.y
     z = event.z
     for area in detect_areas.get(event.dimension, set()):
-        if area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
+        if not DEBUG2 and area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
             continue
         if area.isInside(x, y, z):
             flag = area.Detect()
             if flag == FLAG_OK:
-                # print("Detect OK")
+                if DEBUG:
+                    print("Detect OK")
                 area.bound.UnsetStructureDestroyed()
             else:
-                # print("Detect failed")
+                if DEBUG:
+                    print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
 
 
@@ -340,7 +355,7 @@ class MultiBlockStructure(BaseMachine):
     def OnLoad(self):
         self.area = DetectArea(self.dim, self.x, self.y, self.z, self)
         addDetectArea(self.dim, self.area)
-        self.detectLater()
+        addPending(self)
 
     @AsDelayFunc(0)
     def detectLater(self):
@@ -362,6 +377,7 @@ class MultiBlockStructure(BaseMachine):
         if flag == self._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
             return
         self._last_destroy_flag = flag
+        self.area.functional_block_poses = {}
         self.SetDeactiveFlag(flag)
         self.OnStructureChanged(False)
         if isinstance(self, GUIControl):
@@ -491,3 +507,82 @@ def GenerateSimpleStructureTemplate(
         max_z - offset_z,
         require_blocks_count or {},
     )
+
+# logics
+
+pending_detect_areas = {} # type: dict[int, WeakKeyDictionary[MultiBlockStructure, MBSLoadPender]]
+loaded_chunks = set() # type: set[tuple[int, int]]
+
+
+class MBSLoadPender:
+    # 多方块结构加载挂起器
+    # 考虑到多方块结构初始化时因为部分区块仍未加载完成, 需要先挂起
+    def __init__(self, m, chunks_need_load):
+        # type: (MultiBlockStructure, set[tuple[int, int]]) -> None
+        self.m = m
+        self.pending_chunks = set(chunks_need_load)
+        self.all_pendings = chunks_need_load
+
+    def Ready(self):
+        self.m.detectLater()
+
+def addPending(m):
+    # type: (MultiBlockStructure) -> None
+    chunks_not_loaded = getNotLoadedChunkPosesInRange(
+        m.area.min_x,
+        m.area.min_z,
+        m.area.max_x,
+        m.area.max_z
+    )
+    pender = MBSLoadPender(
+        m, chunks_not_loaded
+    )
+    if not chunks_not_loaded:
+        pender.Ready()
+    else:
+        pending_detect_areas.setdefault(m.dim, WeakKeyDictionary())[m] = pender
+
+
+def getNotLoadedChunkPosesInRange(startx, startz, endx, endz):
+    # type: (int, int, int, int) -> set[tuple[int, int]]
+    res = set() # type: set[tuple[int, int]]
+    startx, endx = sorted([startx, endx])
+    startz, endz = sorted([startz, endz])
+    for x in range(startx >> 4, endx >> 4 + 1):
+        for z in range(startz >> 4, endz >> 4 + 1):
+            p = (x, z)
+            if p in loaded_chunks:
+                continue
+            res.add(p)
+    return res
+
+@ChunkLoadedServerEvent.Listen(-1001)
+def onChunkLoaded(event):
+    # type: (ChunkLoadedServerEvent) -> None
+    pos = (event.chunkPosX, event.chunkPosZ)
+    print ("===ChunkAdded====", pos)
+    loaded_chunks.add(pos)
+    ms = pending_detect_areas.get(event.dimension)
+    if ms is None:
+        return
+    for m, pender in ms.copy().items():
+        if pos in pender.pending_chunks:
+            pender.pending_chunks.remove(pos)
+            if not pender.pending_chunks:
+                pender.Ready()
+                del pending_detect_areas[event.dimension][m]
+                if not pending_detect_areas[event.dimension]:
+                    del pending_detect_areas[event.dimension]
+
+@ChunkAcquireDiscardedServerEvent.Listen(1001)
+def onChunkDiscarded(event):
+    # type: (ChunkAcquireDiscardedServerEvent) -> None
+    pos = (event.chunkPosX, event.chunkPosZ)
+    loaded_chunks.remove(pos)
+    ms = pending_detect_areas.get(event.dimension)
+    if ms is None:
+        return
+    for pender in ms.copy().values():
+        if pos in pender.all_pendings and pos not in pender.pending_chunks:
+            pender.pending_chunks.add(pos)
+

@@ -33,6 +33,7 @@ from ..define.events.digger import DiggerWorkModeUpdatedEvent, DiggerUpdateCrack
 from ..utils.facing import GetOppositeDirFromFacing
 from ..ui_sync.machines.digger import DiggerUISync
 from .basic import (
+    AutoSaver,
     GUIControl,
     UpgradeControl,
     WorkRenderer,
@@ -43,7 +44,7 @@ TICKS_PER_SECOND = 20
 
 
 @RegisterMachine
-class Digger(GUIControl, UpgradeControl, WorkRenderer):
+class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     block_name = "skybluetech:digger"
     input_slots = ()
     output_slots = (0,)
@@ -54,6 +55,7 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.dx, self.dy, self.dz = GetOppositeDirFromFacing(
             GetBlockFacingDir(self.dim, (x, y, z))

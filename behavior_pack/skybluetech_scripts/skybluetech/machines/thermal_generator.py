@@ -4,7 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
 from ..ui_sync.machines.thermal_generator import ThermalGeneratorUISync
-from .basic import BaseMachine, ItemContainer, GUIControl, RegisterMachine
+from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, RegisterMachine
 
 K_BURN_SEC_LEFT = "burn_sec_left"
 K_MAX_BURN_SEC = "max_burn_secs"
@@ -14,7 +14,7 @@ SecondsPerTick = 0.05
 
 
 @RegisterMachine
-class ThermalGenerator(BaseMachine, ItemContainer, GUIControl):
+class ThermalGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
     block_name = "skybluetech:thermal_generator"
     store_rf_max = 14400
     energy_mode = (1, 1, 1, 1, 1, 1)
@@ -23,6 +23,7 @@ class ThermalGenerator(BaseMachine, ItemContainer, GUIControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ThermalGeneratorUISync.NewServer(self).Activate()

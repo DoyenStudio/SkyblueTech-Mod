@@ -119,6 +119,7 @@ class MultiFluidContainer(object):
             fluid.fluid_id = fluid_id
         fluid.volume += fluid_volume
         self.OnFluidSlotUpdate(slot_pos)
+        self.Dump()
 
     def AddFluid(self, fluid_id, fluid_volume, depth=0):
         # type: (str, float, int) -> tuple[bool, float]
@@ -132,11 +133,13 @@ class MultiFluidContainer(object):
                 if fluid_volume <= free_volume:
                     fluid.volume += fluid_volume
                     self.OnFluidSlotUpdate(slot)
+                    self.Dump()
                     return True, 0
                 else:
                     fluid.volume = fluid.max_volume
                     fluid_volume -= free_volume
                     self.OnFluidSlotUpdate(slot)
+                    self.Dump()
         return _orig != fluid_volume, fluid_volume
 
     def CanAddFluid(self, fluid_id):
@@ -159,10 +162,12 @@ class MultiFluidContainer(object):
                 fluid.fluid_id = None
                 fluid.volume = 0.0
                 self.OnFluidSlotUpdate(slot)
+                self.Dump()
                 return True, fid, fvol
             else:
                 fluid.volume -= req_fluid_volume
                 self.OnFluidSlotUpdate(slot)
+                self.Dump()
                 return True, fid, req_fluid_volume
         return False, "", 0
 
@@ -181,6 +186,7 @@ class MultiFluidContainer(object):
                 )
                 if fluid.volume <= 0.0:
                     fluid.fluid_id = None
+                self.Dump()
 
     def RequireAnyFluidFromNetwork(self):
         requireLibraryFunc()
@@ -216,6 +222,7 @@ class MultiFluidContainer(object):
                         )
                         GiveItem(player_id, Item(bucket_id, count=1))
                         self.OnFluidSlotUpdate(slot)
+                        self.Dump()
                         break
             else:
                 fluid_id = item.newItemName.replace("_bucket", "")
@@ -237,6 +244,7 @@ class MultiFluidContainer(object):
                             player_id, Item("minecraft:bucket", count=1)
                         )
                         self.OnFluidSlotUpdate(slot)
+                        self.Dump()
             if isinstance(self, GUIControl):
                 self.OnSync()
             return True

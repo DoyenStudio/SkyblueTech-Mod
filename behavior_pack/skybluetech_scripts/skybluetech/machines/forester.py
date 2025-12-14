@@ -13,6 +13,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
 from ..define.machine_config.forester import getSaplingId, isLog, isLeave
 from ..ui_sync.machines.forester import ForesterUISync
 from .basic import (
+    AutoSaver,
     BaseMachine,
     BaseSpeedControl,
     ItemContainer,
@@ -36,7 +37,7 @@ ALL_NEIGHBOUR_BLOCKS_ENUM = [
 
 
 @RegisterMachine
-class Forester(BaseSpeedControl, GUIControl, ItemContainer, PowerControl):
+class Forester(AutoSaver, BaseSpeedControl, GUIControl, ItemContainer, PowerControl):
     block_name = "skybluetech:forester"
     store_rf_max = 16000
     running_power = 80

@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from ..define import flags
 from ..ui_sync.machines.heavy_compressor import HeavyCompressorUISync
-from .basic import BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
+from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
 compressed_recipes = {} # type: dict[str, str]
 cant_compressed_recipes = set() # type: set[str]
@@ -39,7 +39,7 @@ def GetCompressedResult(item_id, aux_value=0):
 
 
 @RegisterMachine
-class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
+class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = "skybluetech:heavy_compressor"
     store_rf_max = 8800
     origin_process_ticks = 20 * 5 # 8s
@@ -51,6 +51,7 @@ class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = HeavyCompressorUISync.NewServer(self).Activate()

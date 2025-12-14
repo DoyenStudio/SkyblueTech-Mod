@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from ..define import flags
 from ..ui_sync.machines.splitter import SplitterUISync
-from .basic import BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
+from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
 split_recipes = {} # type: dict[str, str]
 cant_split_recipes = set() # type: set[str]
@@ -34,7 +34,7 @@ def GetSplitResult(item_id, aux_value=0):
 
 
 @RegisterMachine
-class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
+class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = "skybluetech:splitter"
     store_rf_max = 8800
     origin_process_ticks = 20 * 8
@@ -44,6 +44,7 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = SplitterUISync.NewServer(self).Activate()

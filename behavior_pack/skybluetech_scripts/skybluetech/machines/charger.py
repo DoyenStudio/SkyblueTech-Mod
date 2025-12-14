@@ -27,12 +27,12 @@ from ..define.machine_config.charger import CHARGE_SPEED
 from ..define.events.charger import ChargerItemModelUpdate, ChargeItemModelRequest
 from ..ui_sync.machines.charger import ChargerUISync
 from ..utils.charge import GetCharge, UpdateCharge, K_STORE_RF, K_STORE_RF_MAX
-from .basic import GUIControl, UpgradeControl, RegisterMachine
+from .basic import AutoSaver, GUIControl, UpgradeControl, RegisterMachine
 from .pool import GetMachineStrict
 
 
 @RegisterMachine
-class Charger(GUIControl, UpgradeControl):
+class Charger(AutoSaver, GUIControl, UpgradeControl):
     block_name = "skybluetech:charger"
     allow_upgrader_tags = {"skybluetech:upgraders/charger"}
     input_slots = (0,)
@@ -42,6 +42,7 @@ class Charger(GUIControl, UpgradeControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ChargerUISync.NewServer(self).Activate()
         self.stored_item = None

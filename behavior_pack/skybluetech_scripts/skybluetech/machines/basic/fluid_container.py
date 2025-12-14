@@ -84,6 +84,7 @@ class FluidContainer(object):
                         )
                         GiveItem(player_id, Item(bucket_id, count=1))
                         self.OnFluidSlotUpdate()
+                        self.Dump()
             else:
                 fluid_id = item.newItemName.replace("_bucket", "")
                 if self.CanAddFluid(fluid_id) and ItemExists(fluid_id):
@@ -99,6 +100,7 @@ class FluidContainer(object):
                         )
                         self.OnFluidSlotUpdate()
                         self.RequirePost()
+                        self.Dump()
             if isinstance(self, GUIControl):
                 self.OnSync()
             return True
@@ -134,6 +136,7 @@ class FluidContainer(object):
                 self.fluid_id, min(fluid_volume, self.max_fluid_volume), depth=depth
             )
             self.OnFluidSlotUpdate()
+            self.Dump()
             return True, max(0, fluid_volume - self.max_fluid_volume)
         elif fluid_id != self.fluid_id:
             return False, fluid_volume
@@ -142,6 +145,7 @@ class FluidContainer(object):
                 self.fluid_id, min(fluid_volume, self.max_fluid_volume), depth=depth
             )
             self.OnFluidSlotUpdate()
+            self.Dump()
             return True, max(
                 0, fluid_volume - (self.max_fluid_volume - self.fluid_volume)
             )
@@ -164,6 +168,7 @@ class FluidContainer(object):
                 self.fluid_id = None
                 self.fluid_volume = 0.0
                 self.OnFluidSlotUpdate()
+                self.Dump()
                 return True, i, v
             else:
                 if req_fluid_volume <= self.fluid_volume:
@@ -171,12 +176,14 @@ class FluidContainer(object):
                     if self.fluid_volume <= 0:
                         self.fluid_id = None
                     self.OnFluidSlotUpdate()
+                    self.Dump()
                     return True, i, v
                 elif not strict_volume:
                     self.fluid_volume -= req_fluid_volume
                     if self.fluid_volume <= 0.0:
                         self.fluid_id = None
                     self.OnFluidSlotUpdate()
+                    self.Dump()
                     return True, i, req_fluid_volume
                 else:
                     return False, "", 0.0
@@ -190,6 +197,7 @@ class FluidContainer(object):
             self.fluid_volume = PostFluidIntoNetworks(
                 self.dim, self.xyz, self.fluid_id, self.fluid_volume, None, 0
             )
+            self.Dump()
 
     def OnFluidSlotUpdate(self):
         pass

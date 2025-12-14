@@ -8,6 +8,7 @@ from ..define.machine_config.fermenter import *
 from ..ui_sync.machines.fermenter import FermenterUISync
 from ..utils.action_commit import SafeGetMachine
 from .basic import (
+    AutoSaver,
     BaseMachine,
     GUIControl,
     MultiBlockStructure,
@@ -44,7 +45,7 @@ K_INOCULATE_TIME = "st:inoculate_time"
 
 
 @RegisterMachine
-class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
+class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
     block_name = "skybluetech:fermenter_controller"
     origin_process_ticks = 1
     running_power = 5
@@ -65,6 +66,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
         self.t = 0
         self.sync = FermenterUISync.NewServer(self).Activate()

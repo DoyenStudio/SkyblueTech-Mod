@@ -4,6 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from ...define.machine_config import MachineRecipe
 from ...define import flags as flags
+from .auto_saver import AutoSaver
 from .base_machine import BaseMachine
 from .gui_ctrl import GUIControl
 from .sp_control import SPControl
@@ -13,7 +14,7 @@ from .work_renderer import WorkRenderer
 
 # TODO: 两个机器都 deactive 的情况
 
-class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
+class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     """
     基本的配方处理器机器基类。
     只运行简单物品配方的机器均可继承此类。
@@ -28,6 +29,7 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         self.current_recipe = None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
 
@@ -47,6 +49,7 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
             if self.ProcessOnce():
                 # 1tick 内有可能需要多次生产
                 self.runOnce()
+                self.Dump()
                 self.StartNext()
             else:
                 do_break = True

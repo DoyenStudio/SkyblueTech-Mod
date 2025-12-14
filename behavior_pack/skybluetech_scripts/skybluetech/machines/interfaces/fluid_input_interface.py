@@ -39,3 +39,4 @@ class FluidInputInterface(BaseMachine, FluidContainer, GUIControl):
         BaseMachine.Dump(self)
         FluidContainer.Dump(self)
 
+

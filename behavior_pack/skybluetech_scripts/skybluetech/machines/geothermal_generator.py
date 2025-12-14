@@ -4,14 +4,14 @@ from mod.server.blockEntityData import BlockEntityData
 from ..define import flags
 from ..define.machine_config.geothermal_generator import *
 from ..ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync, FluidSlotSync
-from .basic import BaseMachine, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
+from .basic import AutoSaver, BaseMachine, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
 
 K_BURN_TICKS_LEFT = "burn_ticks_left"
 K_POWER = "power"
 
 
 @RegisterMachine
-class GeoThermalGenerator(GUIControl, MultiFluidContainer, WorkRenderer):
+class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRenderer):
     block_name = "skybluetech:geothermal_generator"
     store_rf_max = 28800
     energy_io_mode = (1, 1, 1, 1, 1, 1)
@@ -20,6 +20,7 @@ class GeoThermalGenerator(GUIControl, MultiFluidContainer, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()

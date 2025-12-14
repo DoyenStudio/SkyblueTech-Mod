@@ -10,6 +10,7 @@ from ..define.machine_config.pump import *
 from ..define import flags as rf_flags
 from ..ui_sync.machines.pump import PumpUISync
 from .basic import (
+    AutoSaver,
     BaseMachine,
     FluidContainer,
     GUIControl,
@@ -23,7 +24,7 @@ K_PUMP_TYPE = "pump_type"
 
 
 @RegisterMachine
-class Pump(FluidContainer, GUIControl, ItemContainer, SPControl):
+class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
     block_name = "skybluetech:pump"
     store_rf_max = 8800
     running_power = 0
@@ -35,6 +36,7 @@ class Pump(FluidContainer, GUIControl, ItemContainer, SPControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)

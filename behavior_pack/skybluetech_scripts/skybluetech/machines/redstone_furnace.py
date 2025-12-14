@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from ..define import flags
 from ..define.machine_config.redstone_furnace import TICK_POWER
 from ..ui_sync.machines.redstone_furnace import RedstoneFurnaceUISync
-from .basic import BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
+from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
 
 def GetFurnaceOutputByInput(item_id, aux_value=0):
@@ -23,7 +23,7 @@ def GetFurnaceOutputByInput(item_id, aux_value=0):
 
 
 @RegisterMachine
-class RedstoneFurnace(GUIControl, ItemContainer, SPControl, WorkRenderer):
+class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = "skybluetech:redstone_furnace"
     store_rf_max = 8800
     origin_process_ticks = 20 * 8 # 8s
@@ -35,6 +35,7 @@ class RedstoneFurnace(GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = RedstoneFurnaceUISync.NewServer(self).Activate()

@@ -1,3 +1,4 @@
+from .auto_saver import AutoSaver
 from .base_machine import BaseMachine
 from .base_processor import BaseProcessor
 from .base_speed_control import BaseSpeedControl

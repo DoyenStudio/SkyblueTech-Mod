@@ -14,7 +14,7 @@ from ..define.machine_config.farming_station import (
     isBlockCrop,
 )
 from ..ui_sync.machines.farming_station import FarmingStationUISync
-from .basic import BaseMachine, ItemContainer, GUIControl, SPControl, RegisterMachine
+from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, RegisterMachine
 
 DX = 2
 DZ = 2
@@ -22,7 +22,7 @@ Y_OFFSET = 2
 
 
 @RegisterMachine
-class FarmingStation(GUIControl, ItemContainer, SPControl):
+class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
     block_name = "skybluetech:farming_station"
     store_rf_max = 16000
     running_power = 30
@@ -32,6 +32,7 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FarmingStationUISync.NewServer(self).Activate()

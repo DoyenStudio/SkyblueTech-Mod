@@ -1,0 +1,41 @@
+# coding=utf-8
+#
+from weakref import WeakSet
+from tooldelta.api.timer import AsTimerFunc
+from mod.server.blockEntityData import BlockEntityData
+
+active_machines = WeakSet() # type: WeakSet[AutoSaver]
+auto_save_inited = False
+
+def startAutoSave():
+    global auto_save_inited
+    if not auto_save_inited:
+        auto_save_inited = True
+        autoSave()
+
+@AsTimerFunc(1)
+def autoSave():
+    # TODO: 优化！
+    for machine in active_machines:
+        machine.Dump()
+
+
+class AutoSaver(object):
+    """
+    每隔 1 秒自动保存机器数据的基类。
+    
+    需要 `__init__()`
+    """
+    def __init__(self, dim, x, y, z, block_entity_data):
+        # type: (int, int, int, int, BlockEntityData) -> None
+        self.hash_val = hash((dim, x, y, z))
+        active_machines.add(self)
+        startAutoSave()
+
+    def Dump(self):
+        # type: () -> None
+        pass
+
+    def __hash__(self):
+        return self.hash_val
+

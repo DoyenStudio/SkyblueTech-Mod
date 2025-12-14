@@ -27,8 +27,8 @@ if 0:
     BLOCK_PAT_INDEX = int
     POS_SET = set[tuple[int, int, int]]
 
-DEBUG = True
-DEBUG2 = True
+DEBUG = False
+DEBUG2 = False
 
 FLAG_OK = 0
 blockRemovedListenPool = set()  # type: set[str]

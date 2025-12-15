@@ -105,6 +105,7 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     def OnUnload(self):
         # type: () -> None
+        AutoSaver.OnUnload(self)
         UpgradeControl.OnUnload(self)
         GUIControl.OnUnload(self)
 

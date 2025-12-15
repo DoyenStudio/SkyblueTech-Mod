@@ -59,6 +59,7 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
         self.onBlockChanged()
 
     def OnUnload(self):
+        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 

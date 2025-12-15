@@ -27,12 +27,17 @@ class AutoSaver(object):
     每隔 1 秒自动保存机器数据的基类。
     
     需要 `__init__()`
+    
+    覆写: `OnUnload`
     """
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         self.hash_val = hash((dim, x, y, z))
         active_machines.add(self)
         startAutoSave()
+
+    def OnUnload(self):
+        active_machines.remove(self)
 
     def Dump(self):
         # type: () -> None

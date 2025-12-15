@@ -108,6 +108,7 @@ class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
 
     def OnUnload(self):
         # type: () -> None
+        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 

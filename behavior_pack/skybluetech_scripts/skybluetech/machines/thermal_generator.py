@@ -29,6 +29,7 @@ class ThermalGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
         self.sync = ThermalGeneratorUISync.NewServer(self).Activate()
 
     def OnUnload(self):
+        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 

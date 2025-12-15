@@ -86,6 +86,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         self.ResetDeactiveFlags() # TODO: 安全问题?
 
     def OnUnload(self):
+        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 

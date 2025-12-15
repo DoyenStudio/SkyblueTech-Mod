@@ -147,5 +147,6 @@ class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     def OnUnload(self):
         # type: () -> None
+        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)

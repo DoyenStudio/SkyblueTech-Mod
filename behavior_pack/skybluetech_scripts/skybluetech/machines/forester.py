@@ -110,6 +110,7 @@ class Forester(AutoSaver, BaseSpeedControl, GUIControl, ItemContainer, PowerCont
         return True
 
     def OnUnload(self):
+        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 

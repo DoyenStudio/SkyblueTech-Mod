@@ -25,10 +25,6 @@ class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRender
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
 
-    def OnUnload(self):
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
-
     def OnTicking(self):
         if self.IsActive():
             self.burn_ticks -= 1
@@ -63,6 +59,11 @@ class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRender
         data = self.bdata
         self.burn_ticks = data[K_BURN_TICKS_LEFT] or 0
         self.power = data[K_POWER] or 0
+
+    def OnUnload(self):
+        AutoSaver.OnUnload(self)
+        BaseMachine.OnUnload(self)
+        GUIControl.OnUnload(self)
 
     def Dump(self):
         BaseMachine.Dump(self)

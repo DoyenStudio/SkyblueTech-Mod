@@ -58,6 +58,7 @@ class Charger(AutoSaver, GUIControl, UpgradeControl):
         GUIControl.OnClick(self, evt)
 
     def OnUnload(self):
+        AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
         UpgradeControl.OnUnload(self)
         self.updateCharge()

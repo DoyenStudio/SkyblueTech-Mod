@@ -138,5 +138,6 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
 
     def OnUnload(self):
         # type: () -> None
+        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)

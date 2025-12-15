@@ -143,8 +143,7 @@ def UpdateImageTransformColor(
     img, raw_r, raw_g, raw_b, new_r, new_g, new_b, transform_pc
 ):
     # type: (UImage, float, float, float, float, float, float, float) -> None
-    img.SetSpriteColor((
-        raw_r + (new_r - raw_r) * transform_pc,
-        raw_g + (new_g - raw_g) * transform_pc,
-        raw_b + (new_b - raw_b) * transform_pc,
-    ))
+    r = raw_r + (new_r - raw_r) * transform_pc
+    g = raw_g + (new_g - raw_g) * transform_pc
+    b = raw_b + (new_b - raw_b) * transform_pc
+    img.SetSpriteColor((r / 255, g / 255, b / 255))

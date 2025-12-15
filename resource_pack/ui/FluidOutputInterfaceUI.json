@@ -99,6 +99,18 @@
         ]
     },
     "main@common.base_screen": {
+        "button_mappings": [
+            {
+                "from_button_id": "button.menu_cancel",
+                "to_button_id": "button.menu_exit",
+                "mapping_type": "global"
+            },
+            {
+                "from_button_id": "button.menu_inventory_cancel",
+                "to_button_id": "button.menu_exit",
+                "mapping_type": "global"
+            }
+        ],
         "$screen_content": "FluidOutputInterfaceUI.fluid_output_interface_ui"
     },
     "namespace": "FluidOutputInterfaceUI"

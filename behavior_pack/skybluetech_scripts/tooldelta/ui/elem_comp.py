@@ -28,7 +28,7 @@ from .functions import addElement, removeElement
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
-    from typing import Callable, Any
+    from typing import Callable, Any, Literal
     from ..define.item import Item
     from .screen_comp import UScreenNode
     from .proxy_screen import UScreenProxy
@@ -83,6 +83,19 @@ class UBaseUI(object):
     def getFullPath(self):
         "未开放接口"
         return self.base.FullPath() # type: ignore
+
+    def SetFullPos(
+        self,
+        axis, # type: Literal["x", "y"]
+        follow_type="none", # type: Literal["none", "parent", "maxChildren", "maxSibling", "children", "x", "y"]
+        relative_value=0.0, # type: float
+        absolute_value=0.0, # type: float
+    ):
+        return self.base.SetFullPosition(axis, {
+            "followType": follow_type,
+            "relativeValue": relative_value,
+            "absoluteValue": absolute_value
+        })
 
     def SetSize(self, xy):
         # type: (tuple[float, float]) -> None

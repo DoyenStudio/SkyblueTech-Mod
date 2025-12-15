@@ -142,7 +142,7 @@ class FluidContainer(object):
             return False, fluid_volume
         else:
             self.fluid_volume = self.tryPostFluid(
-                self.fluid_id, min(fluid_volume, self.max_fluid_volume), depth=depth
+                self.fluid_id, min(self.fluid_volume + fluid_volume, self.max_fluid_volume), depth=depth
             )
             self.OnFluidSlotUpdate()
             self.Dump()

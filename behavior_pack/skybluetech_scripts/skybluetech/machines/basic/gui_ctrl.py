@@ -1,9 +1,9 @@
 # coding=utf-8
 #
-from ....tooldelta.events.server.block import ServerBlockUseEvent
-from ....tooldelta.events.server.ui import CreateUIRequest, ForceRemoveUIRequest
-from ....tooldelta.events.notify import NotifyToClient, NotifyToClients
-from ....tooldelta.ui.ui_sync import S2CSync, AddSyncPending, GetAllPlayersInSync
+from skybluetech_scripts.tooldelta.events.server.block import ServerBlockUseEvent
+from skybluetech_scripts.tooldelta.events.server.ui import CreateUIRequest, ForceRemoveUIRequest
+from skybluetech_scripts.tooldelta.events.notify import NotifyToClient, NotifyToClients
+from skybluetech_scripts.tooldelta.plugins.ui_sync import S2CSync, AddSyncPending, GetAllPlayersInSync
 from ...ui.machines.define import MachinePanelUI
 
 

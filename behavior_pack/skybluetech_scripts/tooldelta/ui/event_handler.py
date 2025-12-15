@@ -1,6 +1,5 @@
 from ..events.server.ui import CreateUIRequest, ForceRemoveUIRequest
 from ..events.client.control import OnKeyPressInGame
-from ..client_event_listener import ListenEvent
 from ..ui.reg import GetScreen
 from .pool import GetActiveScreen, GetActiveScreens, GetActiveProxyScreens
 

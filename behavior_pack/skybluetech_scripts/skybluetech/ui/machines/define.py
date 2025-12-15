@@ -1,16 +1,15 @@
 # coding=utf-8
 #
 from mod.client.extraClientApi import GetMinecraftEnum
-from skybluetech_scripts.tooldelta.events import CustomC2SEvent
-from skybluetech_scripts.tooldelta.events.client.block import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.api.client.player import GetPlayerDimensionId
 from skybluetech_scripts.tooldelta.api.timer import ExecLater
+from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
+from skybluetech_scripts.tooldelta.events import CustomC2SEvent
+from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent, OnKeyPressInGame
 from skybluetech_scripts.tooldelta.ui import SNode
-from skybluetech_scripts.tooldelta.ui.ui_sync import S2CSync
 from skybluetech_scripts.tooldelta.ui.screen_comp import UScreenNode
 from skybluetech_scripts.tooldelta.ui.proxy_screen import UScreenProxy
-from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
-from skybluetech_scripts.tooldelta.events.client.control import OnKeyPressInGame
+from skybluetech_scripts.tooldelta.plugins.ui_sync import S2CSync
 
 KeyEnum = GetMinecraftEnum().KeyBoardType
 _ESCAPE = str(KeyEnum.KEY_ESCAPE)
@@ -111,17 +110,18 @@ class MachinePanelUIProxy(UScreenProxy):
         if self.sync:
             self.sync.Deactivate()
 
-    def OnExit(self, params):
+    def OnExit(self):
         self._exitLater()
 
     def OnCurrentPageKeyEvent(self, event):
         # type: (OnKeyPressInGame) -> None
         UScreenProxy.OnCurrentPageKeyEvent(self, event)
         if event.key == _ESCAPE:
-            self._exitLater()
+            return
+            self.OnExit()
 
     def _exitLater(self):
-        ExecLater(0.1, self.RemoveUI)
+        ExecLater(0, self.RemoveUI)
 
 
 GPlayerId = ''

@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui.ui_sync import S2CSync, S2C_SERVER, S2C_CLIENT, notifySyncToSingleClient
+from skybluetech_scripts.tooldelta.plugins.ui_sync import S2CSync, S2C_SERVER, S2C_CLIENT, notifySyncToSingleClient
 from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 
 # TYPE_CHECKING

@@ -8,9 +8,9 @@ from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     EntityPlaceBlockAfterServerEvent,
     ChunkAcquireDiscardedServerEvent,
-    ChunkLoadedServerEvent,
-    
+    ChunkLoadedServerEvent,   
 )
+
 from skybluetech_scripts.tooldelta.general import ServerInitCallback
 from skybluetech_scripts.tooldelta.api.server.block import (
     AddBlocksToBlockRemoveListener,
@@ -28,7 +28,6 @@ if 0:
     POS_SET = set[tuple[int, int, int]]
 
 DEBUG = False
-DEBUG2 = False
 
 FLAG_OK = 0
 blockRemovedListenPool = set()  # type: set[str]
@@ -44,15 +43,15 @@ def onServerInit():
     ))
 
 
-@EntityPlaceBlockAfterServerEvent.Listen()
-@AsDelayFunc(0)
-def onEntityPlaceBlock(event):
+@EntityPlaceBlockAfterServerEvent.Listen(-1001)
+def onEntityPlaceStruBlock(event):
     # type: (EntityPlaceBlockAfterServerEvent) -> None
     x = event.x
     y = event.y
     z = event.z
+    # print "ADD", event.marshal()
     for area in detect_areas.get(event.dimensionId, set()):
-        if not DEBUG2 and area.bound._last_destroy_flag == FLAG_OK:
+        if area.bound.inited and area.bound._last_destroy_flag == FLAG_OK:
             continue
         if area.isInside(x, y, z):
             flag = area.Detect()
@@ -64,17 +63,22 @@ def onEntityPlaceBlock(event):
                 if DEBUG:
                     print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
+        else:
+            print("not in side")
 
 
-@BlockRemoveServerEvent.Listen(-100)
+@BlockRemoveServerEvent.Listen(-1001)
 @AsDelayFunc(0)
-def onBlockRemoved(event):
+def onStruBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
     x = event.x
     y = event.y
     z = event.z
+    # print "RM", event.marshal()
+    # print detect_areas
     for area in detect_areas.get(event.dimension, set()):
-        if not DEBUG2 and area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
+        # print area.bound._last_destroy_flag
+        if area.bound.inited and area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
             continue
         if area.isInside(x, y, z):
             flag = area.Detect()
@@ -86,6 +90,8 @@ def onBlockRemoved(event):
                 if DEBUG:
                     print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
+        else:
+            print("not in side")
 
 
 detect_areas = {}  # type: dict[int, set[DetectArea]]
@@ -351,6 +357,7 @@ class MultiBlockStructure(BaseMachine):
         self.x = x
         self.y = y
         self.z = z
+        self.inited = False
 
     def OnLoad(self):
         self.area = DetectArea(self.dim, self.x, self.y, self.z, self)
@@ -364,6 +371,7 @@ class MultiBlockStructure(BaseMachine):
             self.area.bound.UnsetStructureDestroyed()
         else:
             self.area.bound.SetStructureDestroyed(flag)
+        self.inited = True
 
     def OnStructureChanged(self, structure_finished):
         # type: (bool) -> None
@@ -560,7 +568,6 @@ def getNotLoadedChunkPosesInRange(startx, startz, endx, endz):
 def onChunkLoaded(event):
     # type: (ChunkLoadedServerEvent) -> None
     pos = (event.chunkPosX, event.chunkPosZ)
-    print ("===ChunkAdded====", pos)
     loaded_chunks.add(pos)
     ms = pending_detect_areas.get(event.dimension)
     if ms is None:

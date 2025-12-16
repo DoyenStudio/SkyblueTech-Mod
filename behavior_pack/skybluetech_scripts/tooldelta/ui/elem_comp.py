@@ -36,11 +36,11 @@ if TYPE_CHECKING:
 # TYPE_CHECKING END
 
 
-class UBaseUI(object):
+class UBaseCtrl(object):
     def __init__(self, root, base):
         # type: (ScreenLike, BaseUIControl) -> None
         if base is None:
-            raise ValueError("Can't initialize UBaseUI: comp is None")
+            raise ValueError("Can't initialize UBaseCtrl: comp is None")
         self._root = root
         self.base = base
         self._cache_t = None # type: Any | None
@@ -110,8 +110,8 @@ class UBaseUI(object):
         self.base.SetLayer(layer)
 
     def AddElement(self, element_def_name, element_name, force_update=True):
-        # type: (str, str, bool) -> UBaseUI
-        return UBaseUI(self._root, addElement(self._root, element_def_name, element_name, self.base, force_update))
+        # type: (str, str, bool) -> UBaseCtrl
+        return UBaseCtrl(self._root, addElement(self._root, element_def_name, element_name, self.base, force_update))
 
     def OnDestroyed(self):
         pass
@@ -124,7 +124,7 @@ class UBaseUI(object):
         return removeElement(self._root, self.base)
 
     def __truediv__(self, path):
-        # type: (str) -> UBaseUI
+        # type: (str) -> UBaseCtrl
         return self._get_path_cache(path)
 
     __getitem__ = __div__ = __truediv__
@@ -138,14 +138,14 @@ class UBaseUI(object):
 
     def _get_path_cache(self, path):
         if path not in self._child_cacher:
-            self._child_cacher[path] = UBaseUI(self._root, self.base.GetChildByPath("/" + path))
+            self._child_cacher[path] = UBaseCtrl(self._root, self.base.GetChildByPath("/" + path))
         return self._child_cacher[path]
 
 
-class UItemRenderer(UBaseUI):
+class UItemRenderer(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, ItemRendererUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ItemRendererUIControl):
             raise TypeError(
                 "expected ItemRendererUIControl, got " + str(type(base))
@@ -157,10 +157,10 @@ class UItemRenderer(UBaseUI):
         self.base.SetUiItem(item.newItemName, item.newAuxValue, item.isEnchanted, item.userData or {})
 
 
-class ULabel(UBaseUI):
+class ULabel(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, LabelUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, LabelUIControl):
             raise TypeError(
                 "expected LabelUIControl, got " + str(type(base))
@@ -176,10 +176,10 @@ class ULabel(UBaseUI):
         return self.base.GetText()
 
 
-class UImage(UBaseUI):
+class UImage(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, ImageUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ImageUIControl):
             raise TypeError(
                 "expected ImageUIControl, got " + str(type(base))
@@ -200,10 +200,10 @@ class UImage(UBaseUI):
         self.base.SetSpriteClipRatio(clipRatio)
 
 
-class UButton(UBaseUI):
+class UButton(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, ButtonUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ButtonUIControl):
             raise TypeError(
                 "expected ButtonUIControl, got " + str(type(base))
@@ -226,10 +226,10 @@ class UButton(UBaseUI):
         self.base.SetButtonHoverOutCallback(callback) # pyright: ignore[reportArgumentType]
 
 
-class UScrollView(UBaseUI):
+class UScrollView(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, ScrollViewUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ScrollViewUIControl):
             raise TypeError(
                 "expected ScrollViewUIControl, got " + str(type(base))
@@ -244,10 +244,10 @@ class UScrollView(UBaseUI):
         return self[scroll_device + "/scroll_view/stack_panel/background_and_viewport/scrolling_view_port/scrolling_content"]
 
 
-class UGrid(UBaseUI):
+class UGrid(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, GridUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, GridUIControl):
             raise TypeError(
                 "expected GridUIControl, got " + str(type(base))
@@ -263,8 +263,8 @@ class UGrid(UBaseUI):
         return gui.get_grid_dimension(self._root.base.GetScreenName(), self.getFullPath())
 
     def GetGridItem(self, x, y):
-        # type: (int, int) -> UBaseUI
-        return UBaseUI(self._root, self.base.GetGridItem(x, y))
+        # type: (int, int) -> UBaseCtrl
+        return UBaseCtrl(self._root, self.base.GetGridItem(x, y))
 
     def SetGridDimension(self, xy):
         # type: (tuple[int, int]) -> None
@@ -282,14 +282,14 @@ class UGrid(UBaseUI):
             self.later_exec_cbs = []
 
     def OnDestroyed(self):
-        UBaseUI.OnDestroyed(self)
+        UBaseCtrl.OnDestroyed(self)
         grid_comp_size_changed_cbs.pop(self.base.GetPath(), None)
 
 
-class UComboBox(UBaseUI):
+class UComboBox(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, NeteaseComboBoxUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, NeteaseComboBoxUIControl):
             raise TypeError(
                 "expected NeteaseComboBoxUIControl, got " + str(type(base))
@@ -312,10 +312,10 @@ class UComboBox(UBaseUI):
         return self.base.GetSelectOptionIndex()
 
 
-class USlider(UBaseUI):
+class USlider(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, SliderUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, SliderUIControl):
             raise TypeError(
                 "expected SliderUIControl, got " + str(type(base))
@@ -330,10 +330,10 @@ class USlider(UBaseUI):
         self.base.SetSliderValue(value)
 
 
-class UNeteasePaperDoll(UBaseUI):
+class UNeteasePaperDoll(UBaseCtrl):
     def __init__(self, root, base):
         # type: (ScreenLike, NeteasePaperDollUIControl) -> None
-        UBaseUI.__init__(self, root, base)
+        UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, NeteasePaperDollUIControl):
             raise TypeError(
                 "expected NeteasePaperDollUIControl, got " + str(type(base))
@@ -379,7 +379,7 @@ def onGridComponentSizeChanged(event):
 
 
 __all__ = [
-    "UBaseUI",
+    "UBaseCtrl",
     "UItemRenderer",
     "ULabel",
     "UImage",

@@ -5,7 +5,7 @@ import mod.client.extraClientApi as clientApi
 from mod.client.ui.screenNode import ScreenNode
 from mod_log import logger
 from skybluetech_scripts.tooldelta.events.client.control import OnKeyPressInGame
-from .elem_comp import UBaseUI
+from .elem_comp import UBaseCtrl
 from .utils import SNode
 
 
@@ -21,7 +21,7 @@ class UScreenProxy(CustomUIScreenProxy):
         CustomUIScreenProxy.__init__(self, screenName, screenNode)
         self.screenName = screenName
         self.base = self.screenNode = screenNode
-        self._elem_cacher = {} # type: dict[str, UBaseUI]
+        self._elem_cacher = {} # type: dict[str, UBaseCtrl]
         self.activated = False
         self._vars = {}
 
@@ -74,7 +74,7 @@ class UScreenProxy(CustomUIScreenProxy):
     # ====
     
     def GetElement(self, path):
-        # type: (str | SNode) -> UBaseUI
+        # type: (str | SNode) -> UBaseCtrl
         if isinstance(path, SNode):
             path = path.base
         return self._get_elem_cache(path)
@@ -82,11 +82,11 @@ class UScreenProxy(CustomUIScreenProxy):
     __getitem__ = __gt__ = GetElement
 
     def _get_elem_cache(self, path):
-        # type: (str) -> UBaseUI
+        # type: (str) -> UBaseCtrl
         if path in self._elem_cacher:
             return self._elem_cacher[path]
         else:
-            ui = UBaseUI(self, self.screenNode.GetBaseUIControl(path))
+            ui = UBaseCtrl(self, self.screenNode.GetBaseUIControl(path))
             self._elem_cacher[path] = ui
             return ui
  

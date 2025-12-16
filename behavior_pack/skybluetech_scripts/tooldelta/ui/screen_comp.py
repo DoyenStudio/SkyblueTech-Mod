@@ -4,7 +4,7 @@ import mod.client.extraClientApi as clientApi
 from ..internal import GetModName
 from ..events.client.control import OnKeyPressInGame
 from .utils import SNode
-from .elem_comp import UBaseUI
+from .elem_comp import UBaseCtrl
 from .functions import addElement
 
 
@@ -20,7 +20,7 @@ class UScreenNode(ScreenNode):
         ScreenNode.__init__(self, *args, **kwargs)
         self.base = self
         self.activated = False
-        self._elem_cacher = {} # type: dict[str, UBaseUI]
+        self._elem_cacher = {} # type: dict[str, UBaseCtrl]
         self._vars = {}
 
     @classmethod
@@ -82,7 +82,7 @@ class UScreenNode(ScreenNode):
     # ====
 
     def GetElement(self, path):
-        # type: (str | SNode) -> UBaseUI
+        # type: (str | SNode) -> UBaseCtrl
         if isinstance(path, SNode):
             path = path.base
         return self._get_elem_cache(path)
@@ -90,11 +90,11 @@ class UScreenNode(ScreenNode):
     __getitem__ = __gt__ = GetElement
 
     def _get_elem_cache(self, path):
-        # type: (str) -> UBaseUI
+        # type: (str) -> UBaseCtrl
         if path in self._elem_cacher:
             return self._elem_cacher[path]
         else:
-            ui = UBaseUI(self, self.GetBaseUIControl(path))
+            ui = UBaseCtrl(self, self.GetBaseUIControl(path))
             self._elem_cacher[path] = ui
             return ui
 

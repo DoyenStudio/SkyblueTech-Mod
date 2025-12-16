@@ -1,4 +1,4 @@
-from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseUI, UImage
+from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from ..utils.fmt import FormatRF as _formatRF, FormatFluidVolume as _formatFluidVolume
 from ..define.fluids import texture as fluid_texture
@@ -16,7 +16,7 @@ INFINITY = float("inf")
 
 
 def UpdatePowerBar(ui, rf_now, rf_max):
-    # type: (UBaseUI, int, int) -> None
+    # type: (UBaseCtrl, int, int) -> None
     if rf_max <= 0:
         return
     top = ui["bar/mask"]
@@ -28,17 +28,17 @@ def UpdatePowerBar(ui, rf_now, rf_max):
 
 
 def UpdateFlame(ui, percent):
-    # type: (UBaseUI, float) -> None
+    # type: (UBaseCtrl, float) -> None
     ui["mask"].AsImage().SetSpriteClipRatio("fromTopToBottom", 1 - percent)
 
 
 def UpdateGenericProgressL2R(ui, percent):
-    # type: (UBaseUI, float) -> None
+    # type: (UBaseCtrl, float) -> None
     ui["mask"].AsImage().SetSpriteClipRatio("fromRightToLeft", 1 - percent)
 
 
 def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
-    # type: (UBaseUI, str | None, float, float) -> None
+    # type: (UBaseCtrl, str | None, float, float) -> None
     fluid_img = ui["fluid"].AsImage()
     volume_disp = ui["text"].AsLabel()
     if fluid_id is None:
@@ -67,13 +67,13 @@ def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
 
 
 def InitFluidDisplay(ui, data_cb):
-    # type: (UBaseUI, BtnCb[tuple[str | None, float, float]]) -> Callable[[], None]
+    # type: (UBaseCtrl, BtnCb[tuple[str | None, float, float]]) -> Callable[[], None]
     btn = ui["data_btn"].AsButton()
     screen_vars = ui._root._vars
-    current_ctrl = [None]  # type: list[UBaseUI | None]
+    current_ctrl = [None]  # type: list[UBaseCtrl | None]
 
     def get_last_ui_board():
-        # type: () -> UBaseUI | None
+        # type: () -> UBaseCtrl | None
         return screen_vars.get("disp_fluid_databoard")
 
     def _updateHook():
@@ -120,7 +120,7 @@ def InitFluidDisplay(ui, data_cb):
 
 
 def InitFluidsDisplay(ui, fluid_slots, index):
-    # type: (UBaseUI, list[FluidSlotSync], int) -> Callable[[], None]
+    # type: (UBaseCtrl, list[FluidSlotSync], int) -> Callable[[], None]
     def get_data():
         if len(fluid_slots) == 0:
             fluid_id = "加载中.."

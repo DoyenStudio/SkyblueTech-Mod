@@ -64,7 +64,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "lava_display@PumpUI.FluidDisplay": {
+                                                    "lava_display@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "layer": 2,
                                                         "offset": [
@@ -78,7 +78,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -87,7 +87,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "water_display@PumpUI.FluidDisplay": {
+                                                    "water_display@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "layer": 2,
                                                         "offset": [
@@ -101,7 +101,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "flame@ThermalGeneratorUI.Flame": {
+                                                    "flame@SkybluePanelLib.Flame": {
                                                         "offset": [
                                                             8,
                                                             -41.5
@@ -112,7 +112,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

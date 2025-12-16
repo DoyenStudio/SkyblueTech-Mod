@@ -201,7 +201,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "flame@ThermalGeneratorUI.Flame": {
+                                                    "flame@SkybluePanelLib.Flame": {
                                                         "layer": 0,
                                                         "offset": [
                                                             -31,
@@ -210,7 +210,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
@@ -218,7 +218,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@RedstoneFurnaceUI.ProgressBar": {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
                                                         "layer": 0,
                                                         "offset": [
                                                             20,
@@ -227,7 +227,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "$slot0": 6,
                                                         "$slot1": 7,
                                                         "$slot2": 8,
@@ -242,7 +242,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46
@@ -263,41 +263,21 @@
         ]
     },
     "main@common.base_screen": {
+        "$screen_content": "AlloyFurnaceUI.alloy_furnace_ui",
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             },
             {
                 "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
-            }
-        ],
-        "$screen_content": "AlloyFurnaceUI.alloy_furnace_ui"
-    },
-    "namespace": "AlloyFurnaceUI",
-    "player_backpack": {
-        "type": "panel",
-        "size": [
-            100.0,
-            100.0
-        ],
-        "controls": [
-            {
-                "hotbar@common.hotbar_grid_template": {
-                    "offset": [
-                        0,
-                        -5
-                    ]
-                }
-            },
-            {
-                "inventory@common.inventory_panel": {}
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             }
         ]
     },
+    "namespace": "AlloyFurnaceUI",
     "slot_ingot_img": {
         "type": "image",
         "layer": 1,

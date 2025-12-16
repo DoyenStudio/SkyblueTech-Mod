@@ -101,7 +101,7 @@ def InitFluidDisplay(ui, data_cb):
         prev_board = get_last_ui_board()
         if prev_board is not None:
             return
-        e = ui.AddElement("BasicDataScreen.DataTextScreen", "fluid_hover_text")
+        e = ui.AddElement("SkybluePanelLib.DataTextScreen", "fluid_hover_text")
         e.SetLayer(100)
         screen_vars["disp_fluid_databoard"] = e
         current_ctrl[0] = e

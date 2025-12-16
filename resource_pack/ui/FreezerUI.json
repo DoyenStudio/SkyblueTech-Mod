@@ -83,7 +83,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -92,7 +92,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@RedstoneFurnaceUI.ProgressBar": {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
                                                         "$bg_image": "textures/panel/compressor_bg",
                                                         "$mask_image": "textures/panel/compressor_mask",
                                                         "offset": [
@@ -102,7 +102,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "fluid_disp@PumpUI.FluidDisplay": {
+                                                    "fluid_disp@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             -41,
@@ -115,7 +115,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "$slot0": 1,
                                                         "$slot1": 2,
                                                         "$slot2": 3,
@@ -214,7 +214,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

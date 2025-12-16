@@ -1,95 +1,9 @@
 {
-    "PowerBar": {
-        "type": "panel",
-        "size": [
-            14.0,
-            100
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "label": {
-                    "type": "label",
-                    "$text": "-- RF",
-                    "$text|default": "",
-                    "offset": [
-                        0.0,
-                        47.0
-                    ],
-                    "layer": 1,
-                    "font_scale_factor": 1.2,
-                    "font_type": "unicode",
-                    "shadow": true,
-                    "text": "$text",
-                    "text_alignment": "center"
-                }
-            },
-            {
-                "bar": {
-                    "type": "panel",
-                    "size": [
-                        "default",
-                        80.0
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "bg": {
-                                "type": "image",
-                                "layer": 1,
-                                "clip_direction": "left",
-                                "clip_ratio": 0.0,
-                                "keep_ratio": false,
-                                "texture": "textures/panel/energy_bar_bg",
-                                "tiled": true
-                            }
-                        },
-                        {
-                            "mask": {
-                                "type": "image",
-                                "anchor_from": "bottom_middle",
-                                "anchor_to": "bottom_middle",
-                                "size": [
-                                    "default",
-                                    "5%+0px"
-                                ],
-                                "layer": 2,
-                                "clip_offset": [
-                                    0.0,
-                                    0.0
-                                ],
-                                "enabled": false,
-                                "clip_ratio": 0.4999999999999997,
-                                "keep_ratio": false,
-                                "texture": "textures/panel/energy_bar_top",
-                                "tiled": "y"
-                            }
-                        },
-                        {
-                            "frame": {
-                                "type": "image",
-                                "layer": 3,
-                                "clip_ratio": 0.0,
-                                "keep_ratio": false,
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
-                                "texture": "textures/panel/frame_empty"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
     "main": {
         "type": "screen",
         "controls": [
             {
-                "panel@BatteryUI.PowerBar": {}
+                "panel@SkybluePanelLib.PowerBar": {}
             }
         ]
     },

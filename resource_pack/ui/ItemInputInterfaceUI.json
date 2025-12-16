@@ -79,7 +79,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

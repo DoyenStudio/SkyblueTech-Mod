@@ -1,150 +1,4 @@
 {
-    "FluidDisplay": {
-        "type": "panel",
-        "$text_size": "normal",
-        "$text_visible": true,
-        "$text_y_offset": [
-            0,
-            0
-        ],
-        "offset": [
-            -0.5,
-            -26.0
-        ],
-        "size": [
-            167.0,
-            53.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "fluid": {
-                    "type": "image",
-                    "anchor_from": "bottom_middle",
-                    "anchor_to": "bottom_middle",
-                    "size": [
-                        "default",
-                        "0%+0px"
-                    ],
-                    "layer": 1,
-                    "clip_ratio": 0.0,
-                    "color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "texture": "textures/fluid/basic_fluid",
-                    "tiled": true
-                }
-            },
-            {
-                "frame": {
-                    "type": "image",
-                    "layer": 2,
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "texture": "textures/panel/frame_empty"
-                }
-            },
-            {
-                "text": {
-                    "type": "label",
-                    "$text_size|default": "normal",
-                    "$text_visible|default": false,
-                    "$text_y_offset|default": [
-                        0,
-                        0
-                    ],
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": "$text_y_offset",
-                    "max_size": [
-                        "default",
-                        "0%+0px"
-                    ],
-                    "layer": 3,
-                    "visible": "$text_visible",
-                    "color": [
-                        0.0,
-                        0.0,
-                        0.7725490196078432
-                    ],
-                    "font_scale_factor": 1.5,
-                    "font_size": "$text_size",
-                    "font_type": "unicode",
-                    "text": "0B / 0B",
-                    "text_alignment": "center"
-                }
-            },
-            {
-                "data_btn@common.button": {
-                    "type": "button",
-                    "$control_alpha": 1.0,
-                    "$default_texture": "",
-                    "$hover_texture": "",
-                    "$is_new_nine_slice": false,
-                    "$label_color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "large",
-                    "$label_layer": 3,
-                    "$label_offset": [
-                        0,
-                        0
-                    ],
-                    "$label_text": "",
-                    "$nine_slice_buttom": 0,
-                    "$nine_slice_left": 0,
-                    "$nine_slice_right": 0,
-                    "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "",
-                    "$texture_layer": 2,
-                    "priority": 10,
-                    "layer": 10,
-                    "button_mappings": [],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "pressed_control": "pressed",
-                    "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "",
-                            "binding_condition": "always_when_visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "default@netease_editor_template_namespace.default": {}
-                        },
-                        {
-                            "hover@netease_editor_template_namespace.hover": {}
-                        },
-                        {
-                            "pressed@netease_editor_template_namespace.pressed": {}
-                        },
-                        {
-                            "button_label@netease_editor_template_namespace.button_label": {}
-                        }
-                    ]
-                }
-            }
-        ]
-    },
     "main@common.base_screen": {
         "button_mappings": [
             {
@@ -226,7 +80,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "fluid_display@PumpUI.FluidDisplay": {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
                                                         "layer": 2,
                                                         "offset": [
                                                             -3,
@@ -283,7 +137,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -292,7 +146,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "offset": [
                                                             106,
                                                             -57
@@ -303,7 +157,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

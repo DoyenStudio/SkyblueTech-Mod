@@ -51,7 +51,7 @@
                                 "texture": "textures/panel/dialog_background_opaque",
                                 "controls": [
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 -7
@@ -104,7 +104,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "out_gas_display@PumpUI.FluidDisplay": {
+                                                    "out_gas_display@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             93,
@@ -117,7 +117,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "out_fluid_display@PumpUI.FluidDisplay": {
+                                                    "out_fluid_display@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             93,
@@ -174,7 +174,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "offset": [
                                                             "-50%+14px",
                                                             "0%+0px"
@@ -182,7 +182,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "offset": [
                                                             145,
                                                             -17

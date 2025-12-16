@@ -120,7 +120,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -129,7 +129,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@RedstoneFurnaceUI.ProgressBar": {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
                                                         "$bg_image": "textures/panel/splitter_bg",
                                                         "$mask_image": "textures/panel/splitter_mask",
                                                         "offset": [
@@ -139,7 +139,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "offset": [
                                                             106,
                                                             -57
@@ -150,7 +150,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

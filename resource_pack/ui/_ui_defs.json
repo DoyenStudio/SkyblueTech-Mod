@@ -2,11 +2,11 @@
     "ui_defs": [
         "ui/AlloyFurnaceUI.json",
         "ui/AssemblerUI.json",
-        "ui/BasicDataScreen.json",
         "ui/BatteryUI.json",
         "ui/ChargerUI.json",
         "ui/CompressorUI.json",
         "ui/DiggerUI.json",
+        "ui/DistillatorUI.json",
         "ui/FarmingStationUI.json",
         "ui/FermenterUI.json",
         "ui/FluidCondenserUI.json",
@@ -28,6 +28,7 @@
         "ui/ObjUpVeinMinerSettingsUI.json",
         "ui/PumpUI.json",
         "ui/RedstoneFurnaceUI.json",
+        "ui/SkybluePanelLib.json",
         "ui/SplitterUI.json",
         "ui/ThermalGeneratorUI.json",
         "ui/ThermoelectricGeneratorUI.json"

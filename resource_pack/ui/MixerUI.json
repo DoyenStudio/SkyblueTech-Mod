@@ -79,7 +79,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "progress@RedstoneFurnaceUI.ProgressBar": {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
                                                         "$bg_image": "textures/panel/mixer_arrow_img",
                                                         "$mask_image": "textures/panel/mixer_arrow_mask",
                                                         "offset": [
@@ -93,7 +93,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "fluid_display@PumpUI.FluidDisplay": {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             -43.5,
@@ -150,7 +150,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
@@ -158,7 +158,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "offset": [
                                                             106,
                                                             -57
@@ -169,7 +169,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

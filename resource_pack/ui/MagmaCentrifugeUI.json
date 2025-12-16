@@ -80,7 +80,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "left_fluid@PumpUI.FluidDisplay": {
+                                                    "left_fluid@SkybluePanelLib.FluidDisplay": {
                                                         "$text_size": "small",
                                                         "$text_visible": false,
                                                         "$text_y_offset": [
@@ -99,7 +99,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -108,7 +108,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "$slot0": 1,
                                                         "$slot1": 2,
                                                         "$slot2": 3,
@@ -120,7 +120,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "right_fluid1@PumpUI.FluidDisplay": {
+                                                    "right_fluid1@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             14,
@@ -133,7 +133,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "right_fluid2@PumpUI.FluidDisplay": {
+                                                    "right_fluid2@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             36,
@@ -146,7 +146,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "right_fluid3@PumpUI.FluidDisplay": {
+                                                    "right_fluid3@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             58,
@@ -159,7 +159,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "right_fluid4@PumpUI.FluidDisplay": {
+                                                    "right_fluid4@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             14,
@@ -172,7 +172,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "right_fluid5@PumpUI.FluidDisplay": {
+                                                    "right_fluid5@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             36,
@@ -185,7 +185,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "right_fluid6@PumpUI.FluidDisplay": {
+                                                    "right_fluid6@SkybluePanelLib.FluidDisplay": {
                                                         "$text_visible": false,
                                                         "offset": [
                                                             58,
@@ -198,7 +198,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@RedstoneFurnaceUI.ProgressBar": {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
                                                         "$bg_image": "textures/panel/magma_centrifuge_proc",
                                                         "$mask_image": "textures/panel/magma_centrifuge_proc_mask",
                                                         "offset": [
@@ -215,7 +215,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

@@ -1,166 +1,18 @@
 {
-    "ProgressBar": {
-        "type": "panel",
-        "$bg_image": "textures/panel/arrow_img",
-        "$mask_image": "textures/panel/arrow_mask",
-        "size": [
-            36,
-            20.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "$bg_image|default": "",
-                    "layer": 1,
-                    "texture": "$bg_image"
-                }
-            },
-            {
-                "mask": {
-                    "type": "image",
-                    "$mask_image|default": "",
-                    "layer": 2,
-                    "clip_direction": "right",
-                    "texture": "$mask_image"
-                }
-            }
-        ]
-    },
-    "UpgradeSlots": {
-        "type": "panel",
-        "$slot0": 2,
-        "$slot1": 3,
-        "$slot2": 4,
-        "$slot3": 5,
-        "size": [
-            32,
-            86.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "layer": 1,
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
-                    "texture": "textures/panel/panel_bg"
-                }
-            },
-            {
-                "slot0": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        -27.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "RedstoneFurnaceUI.upgrade_img",
-                                "collection_index": "$slot0"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "slot1": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        -9.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$background_images|default": "RedstoneFurnaceUI.upgrade_img",
-                                "collection_index": "$slot1"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "slot2": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        9.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$background_images|default": "RedstoneFurnaceUI.upgrade_img",
-                                "collection_index": "$slot2"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "slot3": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        27.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$background_images|default": "RedstoneFurnaceUI.upgrade_img",
-                                "collection_index": "$slot3"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
     "main@common.base_screen": {
+        "$screen_content": "RedstoneFurnaceUI.redstone_furnace_ui",
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             },
             {
                 "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             }
-        ],
-        "$screen_content": "RedstoneFurnaceUI.redstone_furnace_ui"
+        ]
     },
     "namespace": "RedstoneFurnaceUI",
     "redstone_furnace_ui": {
@@ -228,7 +80,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -281,7 +133,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "flame@ThermalGeneratorUI.Flame": {
+                                                    "flame@SkybluePanelLib.Flame": {
                                                         "layer": 17,
                                                         "offset": [
                                                             -29,
@@ -290,7 +142,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@RedstoneFurnaceUI.ProgressBar": {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
                                                         "offset": [
                                                             0,
                                                             -50
@@ -302,7 +154,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "offset": [
                                                             106,
                                                             -57
@@ -313,7 +165,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

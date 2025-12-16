@@ -1,45 +1,18 @@
 {
-    "Flame": {
-        "type": "panel",
-        "size": [
-            20.0,
-            20.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "layer": 1,
-                    "clip_direction": "left",
-                    "clip_ratio": 0.0,
-                    "texture": "textures/ui/flame_img"
-                }
-            },
-            {
-                "mask": {
-                    "type": "image",
-                    "layer": 2,
-                    "clip_direction": "down",
-                    "texture": "textures/panel/flame_mask"
-                }
-            }
-        ]
-    },
     "main@common.base_screen": {
+        "$screen_content": "ThermalGeneratorUI.thermal_generator_ui",
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             },
             {
                 "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             }
-        ],
-        "$screen_content": "ThermalGeneratorUI.thermal_generator_ui"
+        ]
     },
     "namespace": "ThermalGeneratorUI",
     "thermal_generator_ui": {
@@ -111,7 +84,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "flame@ThermalGeneratorUI.Flame": {
+                                                    "flame@SkybluePanelLib.Flame": {
                                                         "layer": 3,
                                                         "offset": [
                                                             0,
@@ -129,7 +102,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -141,7 +114,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

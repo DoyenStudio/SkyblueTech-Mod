@@ -111,7 +111,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "layer": 13,
                                                         "offset": [
                                                             "-42%+0px",
@@ -120,7 +120,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "upgrades@RedstoneFurnaceUI.UpgradeSlots": {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
                                                         "offset": [
                                                             106,
                                                             -57
@@ -269,7 +269,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46
@@ -290,19 +290,19 @@
         ]
     },
     "main@common.base_screen": {
+        "$screen_content": "AssemblerUI.assembler_ui",
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             },
             {
                 "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             }
-        ],
-        "$screen_content": "AssemblerUI.assembler_ui"
+        ]
     },
     "namespace": "AssemblerUI",
     "tool_upgrade_img": {

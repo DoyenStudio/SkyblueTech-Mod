@@ -66,7 +66,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "power_bar@BatteryUI.PowerBar": {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
@@ -90,7 +90,7 @@
                                         }
                                     },
                                     {
-                                        "backpack@AlloyFurnaceUI.player_backpack": {
+                                        "@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

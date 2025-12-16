@@ -57,6 +57,8 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
     fluid_output_slots = {1, 2}
     fluid_slot_max_volumes = (1000, 1000, 1000)
     work_ticks_delay = 5
+    upgrade_slot_start = 2
+    allow_upgrader_tags = set()
     functional_block_ids = {
         IO_ENERGY,
         IO_ITEM,

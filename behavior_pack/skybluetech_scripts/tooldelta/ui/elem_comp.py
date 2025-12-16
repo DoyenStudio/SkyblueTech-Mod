@@ -330,6 +330,41 @@ class USlider(UBaseUI):
         self.base.SetSliderValue(value)
 
 
+class UNeteasePaperDoll(UBaseUI):
+    def __init__(self, root, base):
+        # type: (ScreenLike, NeteasePaperDollUIControl) -> None
+        UBaseUI.__init__(self, root, base)
+        if not isinstance(base, NeteasePaperDollUIControl):
+            raise TypeError(
+                "expected NeteasePaperDollUIControl, got " + str(type(base))
+            )
+        self.base = base
+
+    def RenderEntity(
+        self,
+        entity_id=None, # type: str | None
+        entity_identifier=None, # type: str | None
+        scale=1.0, # type: float
+        render_depth=-50, # type: int
+        init_rot_x=0, # type: float
+        init_rot_y=0, # type: float
+        init_rot_z=0, # type: float
+        molang_dict={}, # type: dict
+        rotation_axis=(0, 0, 0), # type: tuple[int, int, int]
+    ):
+        self.base.RenderEntity({
+            "entity_id": entity_id,
+            "entity_identifier": entity_identifier,
+            "scale": scale,
+            "render_depth": render_depth,
+            "init_rot_x": init_rot_x,
+            "init_rot_y": init_rot_y,
+            "init_rot_z": init_rot_z,
+            "molang_dict": molang_dict,
+            "rotation_axis": rotation_axis,
+        })
+
+
 grid_comp_size_changed_cbs = dict() # type: dict[str, Callable[[], None]]
 
 @GridComponentSizeChangedClientEvent.Listen()

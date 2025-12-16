@@ -8,6 +8,7 @@ K_MUD_TEMPERATURE = "t"
 K_MUD_THICKNESS = "th"
 K_CONTENT_VOLUME = "v"
 K_EXPECTED_TEMPERATURE = "et"
+K_EXPECTED_WATER_MAX_VOLUME = "ew"
 K_OUT_GAS_ID = "og"
 K_OUT_GAS_VOLUME = "ogv"
 K_OUT_GAS_MAX_VOLUME = "ogm"
@@ -17,6 +18,8 @@ K_OUT_FLUID_MAX_VOLUME = "ofm"
 K_RECIPE = "re"
 K_STRUCTURE_STATUS = "s"
 K_STRUCTURE_LACK_BLOCKS = "sl"
+K_GAS_PRODUCT_SPEED = "gp"
+K_FLUID_PRODUCT_SPEED = "fp"
 
 
 class FermenterUISync(MachineUISync):
@@ -26,6 +29,7 @@ class FermenterUISync(MachineUISync):
     mud_thickness = 0.0
     content_volume_pc = 0.0
     expected_temperature = 0.0
+    expected_water_max_volume = 0.0
     recipe_id = 0
     structure_status = 0
     structure_lack_blocks = {} # type: dict[str, int]
@@ -35,6 +39,8 @@ class FermenterUISync(MachineUISync):
     out_fluid_id = None # type: str | None
     out_fluid_volume = 0.0
     out_fluid_max_volume = 0.0
+    gas_product_speed = 0.0
+    fluid_product_speed = 0.0
 
     def Unmarshal(self, data):
         self.store_rf = data[K_STORE_RF]
@@ -46,12 +52,15 @@ class FermenterUISync(MachineUISync):
         self.structure_status = data[K_STRUCTURE_STATUS]
         self.structure_lack_blocks = data[K_STRUCTURE_LACK_BLOCKS]
         self.expected_temperature = data[K_EXPECTED_TEMPERATURE]
+        self.expected_water_max_volume = data[K_EXPECTED_WATER_MAX_VOLUME]
         self.out_gas_id = data[K_OUT_GAS_ID]
         self.out_gas_volume = data[K_OUT_GAS_VOLUME]
         self.out_gas_max_volume = data[K_OUT_GAS_MAX_VOLUME]
         self.out_fluid_id = data[K_OUT_FLUID_ID]
         self.out_fluid_volume = data[K_OUT_FLUID_VOLUME]
         self.out_fluid_max_volume = data[K_OUT_FLUID_MAX_VOLUME]
+        self.gas_product_speed = data[K_GAS_PRODUCT_SPEED]
+        self.fluid_product_speed = data[K_FLUID_PRODUCT_SPEED]
 
     def Marshal(self):
         return {
@@ -64,10 +73,13 @@ class FermenterUISync(MachineUISync):
             K_STRUCTURE_STATUS: self.structure_status,
             K_STRUCTURE_LACK_BLOCKS: self.structure_lack_blocks,
             K_EXPECTED_TEMPERATURE: self.expected_temperature,
+            K_EXPECTED_WATER_MAX_VOLUME: self.expected_water_max_volume,
             K_OUT_GAS_ID: self.out_gas_id,
             K_OUT_GAS_VOLUME: self.out_gas_volume,
             K_OUT_GAS_MAX_VOLUME: self.out_gas_max_volume,
             K_OUT_FLUID_ID: self.out_fluid_id,
             K_OUT_FLUID_VOLUME: self.out_fluid_volume,
             K_OUT_FLUID_MAX_VOLUME: self.out_fluid_max_volume,
+            K_GAS_PRODUCT_SPEED: self.gas_product_speed,
+            K_FLUID_PRODUCT_SPEED: self.fluid_product_speed,
         }

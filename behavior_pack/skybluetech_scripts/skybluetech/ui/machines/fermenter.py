@@ -2,9 +2,9 @@
 
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
-from ...define.events.fermenter import FermenterSetTemperatureEvent
+from ...define.events.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
 from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
-from ...define.machine_config.fermenter import spec_recipes, TEMPERATURE_MIN, TEMPERATURE_MAX
+from ...define.machine_config.fermenter import spec_recipes, TEMPERATURE_MIN, TEMPERATURE_MAX, POOL_MAX_VOLUME
 from ...ui_sync.machines.fermenter import FermenterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from ..utils import UpdatePowerBar, InitFluidDisplay, UpdateImageTransformColor
@@ -19,7 +19,9 @@ TEMPERATURE_LABEL_NODE = MAIN_PATH / "temp_label"
 EXPECTED_TEMPERATURE_LABEL_NODE = MAIN_PATH / "expected_temp_label"
 POOL_TIP_LABEL_NODE = MAIN_PATH / "pool_tip"
 LACK_BLOCKS_TIP_NODE = MAIN_PATH / "lack_blocks_tip"
-TEMPERATURE_SLIDE_BAR_NODE = MAIN_PATH / "slider"
+TEMPERATURE_SLIDER_NODE = MAIN_PATH / "slider"
+MAX_VOLUME_BAR_NODE = MAIN_PATH / "pool/max_volume_bar"
+VOLUME_SLIDER_NODE = MAIN_PATH / "volume_slider"
 
 
 @RegistProxyScreen("FermenterUI.main")
@@ -36,7 +38,9 @@ class FermenterUI(MachinePanelUIProxy):
         self.expected_temperature_label = self.GetElement(EXPECTED_TEMPERATURE_LABEL_NODE).AsLabel()
         self.pool_tip = self.GetElement(POOL_TIP_LABEL_NODE).AsLabel()
         self.lack_blocks_tip = self.GetElement(LACK_BLOCKS_TIP_NODE).AsLabel()
-        self.temperature_slider = self.GetElement(TEMPERATURE_SLIDE_BAR_NODE).AsSlider()
+        self.temperature_slider = self.GetElement(TEMPERATURE_SLIDER_NODE).AsSlider()
+        self.volume_slider = self.GetElement(VOLUME_SLIDER_NODE).AsSlider()
+        self.volume_bar = self.GetElement(MAX_VOLUME_BAR_NODE).AsImage()
         self.out_gas_updat_updater = InitFluidDisplay(
             self.out_gas_display, 
             lambda: (
@@ -63,12 +67,12 @@ class FermenterUI(MachinePanelUIProxy):
         UpdatePowerBar(self.power_bar, self.sync.store_rf, self.sync.store_rf_max)
         recipe = spec_recipes.get(self.sync.recipe_id)
         if recipe is None:
-            r, g, b = 0xff, 0xff, 0xff
+            r, g, b = 0, 0xa6, 0xff,
         else:
             color = recipe.color
             r, g, b = (color >> 16 & 0xff, color >> 8 & 0xff, color & 0xff)
         UpdateImageTransformColor(
-            self.pool_img.AsImage(),
+            self.pool_img,
             0, 0xa6, 0xff,
             r, g, b,
             self.sync.mud_thickness,
@@ -80,6 +84,14 @@ class FermenterUI(MachinePanelUIProxy):
         )
         self.temperature_label.SetText("酵温 %.1f°C" % self.sync.mud_temperature)
         self.expected_temperature_label.SetText("控温 %.1f°C" % self.sync.expected_temperature)
+        self.volume_bar.SetFullPos(
+            "y",
+            "parent",
+            0.5-self.sync.expected_water_max_volume/POOL_MAX_VOLUME
+        )
+        self.volume_slider.SetSliderValue(
+            1-self.sync.expected_water_max_volume/POOL_MAX_VOLUME
+        )
         self.pool_img.SetFullSize("y", {"followType": "parent", "relativeValue": self.sync.content_volume_pc})
         sstatus = self.sync.structure_status
         if sstatus == FLAG_OK:
@@ -95,30 +107,45 @@ class FermenterUI(MachinePanelUIProxy):
             )
             self.lack_blocks_tip.SetText(fmt)
         else:
-            gas_id = self.sync.out_gas_id
-            fluid_id = self.sync.out_fluid_id
-            if gas_id is None or fluid_id is None:
+            if self.sync.recipe_id == 0:
                 fmt = "§l§0无配方"
             else:
+                recipe = spec_recipes[self.sync.recipe_id]
                 fmt = (
                     # "§0§3发酵液量： §0%smB" % self.sync.mu
                     # + "\n"
                     "§3菌群浓度： §0%.1f%%%%" % (self.sync.mud_thickness * 100)
                     + "\n"
-                    + "§2将产出： §0%s、 %s" % (GetItemHoverName(gas_id), GetItemHoverName(fluid_id))
+                    + "§2将产出： §5%s§0、 §3%s" % (
+                        GetItemHoverName(recipe.out_gas_id),
+                        GetItemHoverName(recipe.out_fluid_id),
+                    )
+                    + "\n"
+                    + (
+                        "§4未达到最低产出浓度"
+                        if self.sync.mud_thickness < recipe.produce_thickness
+                        else "§2生产中： %.1fmB/s； %.1fmB/s" % (
+                            self.sync.gas_product_speed,
+                            self.sync.fluid_product_speed,
+                        )
+                    )
                 )
             self.lack_blocks_tip.SetText(fmt)
         
-    @ViewBinder.binding(ViewBinder.BF_SliderFinished, "#fermenter.temperature_set_ok") # pyright: ignore[reportOptionalCall]
+    @ViewBinder.binding(ViewBinder.BF_SliderFinished | ViewBinder.BF_SliderFinished, "#fermenter.temperature_set_ok") # pyright: ignore[reportOptionalCall]
     def onTemperatureSliderFinished(self, progress, finished, _):
         # type: (float, bool, int) -> None
         _, x, y, z = self.pos
         temp = TEMPERATURE_MIN + (TEMPERATURE_MAX - TEMPERATURE_MIN) * progress
-        FermenterSetTemperatureEvent(x, y, z, temp).send()
+        self.expected_temperature_label.SetText("控温 %.1f°C" % temp)
+        if finished:
+            FermenterSetTemperatureEvent(x, y, z, temp).send()
 
-    @ViewBinder.binding(ViewBinder.BF_SliderChanged, "#fermenter.temperature_set_ok") # pyright: ignore[reportOptionalCall]
+    @ViewBinder.binding(ViewBinder.BF_SliderChanged | ViewBinder.BF_SliderFinished, "#fermenter.volume_setter") # pyright: ignore[reportOptionalCall]
     def onTemperatureSliderChanged(self, progress, finished, _):
         # type: (float, bool, int) -> None
         _, x, y, z = self.pos
-        temp = TEMPERATURE_MIN + (TEMPERATURE_MAX - TEMPERATURE_MIN) * progress
-        self.expected_temperature_label.SetText("控温 %.1f°C" % temp)
+        vol = (1-progress) * POOL_MAX_VOLUME
+        if finished:
+            FermenterSeMaxVolumeEvent(x, y, z, vol).send()
+

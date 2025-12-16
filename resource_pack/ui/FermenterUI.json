@@ -89,7 +89,15 @@
                                         }
                                     },
                                     {
-                                        "close@common.close_button": {}
+                                        "close@common.close_button": {
+                                            "button_mappings": [
+                                                {
+                                                    "from_button_id": "button.menu_select",
+                                                    "mapping_type": "pressed",
+                                                    "to_button_id": "button.menu_exit"
+                                                }
+                                            ]
+                                        }
                                     },
                                     {
                                         "main": {
@@ -185,11 +193,11 @@
                                                     "pool": {
                                                         "type": "panel",
                                                         "offset": [
-                                                            -4.5,
+                                                            -11.5,
                                                             27.0
                                                         ],
                                                         "size": [
-                                                            116.0,
+                                                            101.0,
                                                             45.0
                                                         ],
                                                         "controls": [
@@ -203,7 +211,7 @@
                                                                     "clip_ratio": 0.0,
                                                                     "fill": true,
                                                                     "keep_ratio": false,
-                                                                    "texture": "textures/machines/fermenter_controller_side",
+                                                                    "texture": "textures/fluid/basic_fluid",
                                                                     "tiled": true
                                                                 }
                                                             },
@@ -224,6 +232,23 @@
                                                                         2.0
                                                                     ],
                                                                     "texture": "textures/panel/frame_empty"
+                                                                }
+                                                            },
+                                                            {
+                                                                "max_volume_bar": {
+                                                                    "type": "image",
+                                                                    "offset": [
+                                                                        "50%+-4px",
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        8.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "clip_direction": "left",
+                                                                    "clip_ratio": 0.0,
+                                                                    "texture": "textures/panel/red_bar"
                                                                 }
                                                             }
                                                         ]
@@ -393,6 +418,48 @@
                                                         "font_type": "default",
                                                         "text": "§lUndefined data"
                                                     }
+                                                },
+                                                {
+                                                    "volume_slider@common.slider": {
+                                                        "$background_default_control": "common.slider_background",
+                                                        "$background_hover_control": "common.slider_background_hover",
+                                                        "$progress_default_clip_direction": "up",
+                                                        "$progress_default_control": "common.slider_progress",
+                                                        "$progress_hover_clip_direction": "up",
+                                                        "$progress_hover_control": "common.slider_progress_hover",
+                                                        "$slider_box_hover_layout": "FermenterUI.temperature_slider_btn_img",
+                                                        "$slider_box_indent_layout": "common.slider_button_indent_layout",
+                                                        "$slider_box_layout": "FermenterUI.temperature_slider_btn_img",
+                                                        "$slider_box_locked_layout": "common.slider_button_locked_layout",
+                                                        "$slider_box_size": [
+                                                            16,
+                                                            10
+                                                        ],
+                                                        "$slider_box_size|default": [
+                                                            16,
+                                                            10
+                                                        ],
+                                                        "$slider_direction": "vertical",
+                                                        "$slider_direction|default": "vertical",
+                                                        "$slider_name": "#fermenter.volume_setter",
+                                                        "$slider_name|default": "#fermenter.volume_setter",
+                                                        "$slider_step_factory_control_ids": {
+                                                            "slider_step": "@common.slider_step",
+                                                            "slider_step_hover": "@common.slider_step_hover",
+                                                            "slider_step_progress": "@common.slider_step_progress",
+                                                            "slider_step_progress_hover": "@common.slider_step_progress_hover"
+                                                        },
+                                                        "$slider_steps|default": 8,
+                                                        "$slider_tts_text_value": "#netease_tts_text_value",
+                                                        "offset": [
+                                                            52,
+                                                            27
+                                                        ],
+                                                        "size": [
+                                                            6,
+                                                            48
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }
@@ -419,7 +486,26 @@
         ]
     },
     "main@common.base_screen": {
-        "$screen_content": "FermenterUI.fermenter_ui"
+        "$screen_content": "FermenterUI.fermenter_ui",
+        "button_mappings": [
+            {
+                "from_button_id": "button.menu_cancel",
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
+            },
+            {
+                "from_button_id": "button.menu_inventory_cancel",
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
+            }
+        ]
     },
-    "namespace": "FermenterUI"
+    "namespace": "FermenterUI",
+    "temperature_slider_btn_img": {
+        "type": "image",
+        "layer": 1,
+        "clip_direction": "left",
+        "clip_ratio": 0.0,
+        "texture": "textures/panel/left_triangle_slider_button"
+    }
 }

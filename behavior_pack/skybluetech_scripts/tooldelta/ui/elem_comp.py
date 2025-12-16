@@ -199,6 +199,11 @@ class UImage(UBaseCtrl):
         self.base.SetClipDirection(clipDirection)
         self.base.SetSpriteClipRatio(clipRatio)
 
+    def SetUV(self, uv, uv_size):
+        # type: (tuple[float, float], tuple[float, float]) -> None
+        self.base.SetSpriteUV(uv)
+        self.base.SetSpriteUVSize(uv_size)
+
 
 class UButton(UBaseCtrl):
     def __init__(self, root, base):

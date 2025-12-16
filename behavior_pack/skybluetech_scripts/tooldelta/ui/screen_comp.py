@@ -25,7 +25,14 @@ class UScreenNode(ScreenNode):
 
     @classmethod
     def CreateUI(cls, params={}):
-        # type: (dict) -> UScreenNode
+        # params["isHud"] = int(isHud)
+        n = clientApi.CreateUI(GetModName(), cls._key, params)
+        if not isinstance(n, cls):
+            raise Exception("CreateUI failed: return {} is not {}".format(n, cls))
+        return n
+
+    @classmethod
+    def PushUI(cls, params={}):
         # params["isHud"] = int(isHud)
         n = clientApi.PushScreen(GetModName(), cls._key, params)
         if not isinstance(n, cls):

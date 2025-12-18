@@ -23,9 +23,9 @@ class FreezerUI(MachinePanelUIProxy):
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         self.fluid_display = self.GetElement(FLUID_NODE)
-        self.mode_change_btn = self.GetElement(MODE_CHANGE_BTN_NODE).AsButton()
+        self.mode_change_btn = self.GetElement(MODE_CHANGE_BTN_NODE).asButton()
         self.mode_change_btn.SetCallback(self.changeMode)
-        self.mode_change_btn_img = self.mode_change_btn["item"].AsItemRenderer()
+        self.mode_change_btn_img = self.mode_change_btn["item"].asItemRenderer()
         self.fluid_updater = InitFluidDisplay(
             self.fluid_display,
             lambda: (

@@ -23,8 +23,8 @@ class AssemblerUI(MachinePanelUIProxy):
         self.sync = AssemblerUISync.NewClient(dim, x, y, z) # type: AssemblerUISync
         self.sync.WhenUpdated = self.WhenUpdated
         self.power = self.GetElement(POWER_NODE)
-        self.upgraders_grid = self.GetElement(UPGRADERS_LIST_NODE).AsScrollView().GetContent().AsGrid()
-        self[MAIN_PATH / "push_btn"].AsButton().SetCallback(self.onPush)
+        self.upgraders_grid = self.GetElement(UPGRADERS_LIST_NODE).asScrollView().GetContent().asGrid()
+        self[MAIN_PATH / "push_btn"].asButton().SetCallback(self.onPush)
         MachinePanelUIProxy.OnCreate(self)
         event_cbs.add(self.onListUpdate)
 
@@ -62,8 +62,8 @@ class AssemblerUI(MachinePanelUIProxy):
             if count != -1:
                 text = GetItemHoverName(text)
             elem = self.upgraders_grid.GetGridItem(0, i)
-            elem["text"].AsLabel().SetText(text)
-            elem["item"].AsItemRenderer().SetUiItem(Item(typ))
+            elem["text"].asLabel().SetText(text)
+            elem["item"].asItemRenderer().SetUiItem(Item(typ))
 
 
 @AssemblerUpgradersUpdate.Listen()

@@ -27,9 +27,9 @@ class ThermoelectricGeneratorUI(MachinePanelUI):
 
     def Create(self):
         MachinePanelUI.Create(self)
-        self.heat_label = self[heat_disp_node].AsLabel()
-        self.cool_label = self[cool_disp_node].AsLabel()
-        self.power_label = self[power_disp_node].AsLabel()
+        self.heat_label = self[heat_disp_node].asLabel()
+        self.cool_label = self[cool_disp_node].asLabel()
+        self.power_label = self[power_disp_node].asLabel()
         self.power_bar = self > power_bar_node
 
     def WhenUpdated(self):

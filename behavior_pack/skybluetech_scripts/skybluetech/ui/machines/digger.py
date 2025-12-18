@@ -21,8 +21,8 @@ class DiggerUI(MachinePanelUIProxy):
         self.sync.WhenUpdated = self.WhenUpdated
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
-        self.block_disp = self.GetElement(BLOCK_DISP_NODE).AsItemRenderer()
-        self.work_status = self.GetElement(WORK_STATUS_NODE).AsLabel()
+        self.block_disp = self.GetElement(BLOCK_DISP_NODE).asItemRenderer()
+        self.work_status = self.GetElement(WORK_STATUS_NODE).asLabel()
         self.block_disp.SetUiItem(Item("minecraft:barrier"))
         MachinePanelUIProxy.OnCreate(self)
 

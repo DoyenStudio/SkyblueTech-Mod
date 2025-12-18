@@ -58,7 +58,7 @@ class MachinePanelUI(UScreenNode):
     def Create(self):
         """ 超类方法, 告诉服务端 UI 开启的同时创建一个退出按钮回调。 """
         UScreenNode.Create(self)
-        self[self.EXIT_BTN_PATH].AsButton().SetCallback(self.OnExit)
+        self[self.EXIT_BTN_PATH].asButton().SetCallback(self.OnExit)
         NotifyToServer(UIOpen(self._key))
         self.inited = True
         if self.sync:

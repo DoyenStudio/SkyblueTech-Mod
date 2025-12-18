@@ -24,23 +24,23 @@ def UpdatePowerBar(ui, rf_now, rf_max):
     top.SetFullSize(
         "y", {"followType": "parent", "relativeValue": min(2, float(rf_now) / rf_max)}
     )
-    label.AsLabel().SetText(_formatRF(rf_now))
+    label.asLabel().SetText(_formatRF(rf_now))
 
 
 def UpdateFlame(ui, percent):
     # type: (UBaseCtrl, float) -> None
-    ui["mask"].AsImage().SetSpriteClipRatio("fromTopToBottom", 1 - percent)
+    ui["mask"].asImage().SetSpriteClipRatio("fromTopToBottom", 1 - percent)
 
 
 def UpdateGenericProgressL2R(ui, percent):
     # type: (UBaseCtrl, float) -> None
-    ui["mask"].AsImage().SetSpriteClipRatio("fromRightToLeft", 1 - percent)
+    ui["mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - percent)
 
 
 def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     # type: (UBaseCtrl, str | None, float, float) -> None
-    fluid_img = ui["fluid"].AsImage()
-    volume_disp = ui["text"].AsLabel()
+    fluid_img = ui["fluid"].asImage()
+    volume_disp = ui["text"].asLabel()
     if fluid_id is None:
         fluid_img.SetFullSize("y", {"followType": "parent", "relativeValue": 0})
     else:
@@ -68,7 +68,7 @@ def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
 
 def InitFluidDisplay(ui, data_cb):
     # type: (UBaseCtrl, BtnCb[tuple[str | None, float, float]]) -> Callable[[], None]
-    btn = ui["data_btn"].AsButton()
+    btn = ui["data_btn"].asButton()
     screen_vars = ui._root._vars
     current_ctrl = [None]  # type: list[UBaseCtrl | None]
 
@@ -82,7 +82,7 @@ def InitFluidDisplay(ui, data_cb):
         UpdateFluidDisplay(ui, fluid_id, fluid_vol, max_vol)
         if elem is None or elem is not current_ctrl[0]:
             return
-        (elem / "image/label").AsLabel().SetText(
+        (elem / "image/label").asLabel().SetText(
             "§d流体类型： §f"
             + (
                 (GetItemHoverName(fluid_id) or fluid_id)

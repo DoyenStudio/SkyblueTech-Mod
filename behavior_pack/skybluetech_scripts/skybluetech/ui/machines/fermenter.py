@@ -33,14 +33,14 @@ class FermenterUI(MachinePanelUIProxy):
         self.power_bar = self.GetElement(POWER_NODE)
         self.out_gas_display = self.GetElement(OUT_GAS_DISP_NODE)
         self.out_fluid_display = self.GetElement(OUT_FLUID_DISP_NODE)
-        self.pool_img = self.GetElement(POOL_IMG_NODE).AsImage()
-        self.temperature_label = self.GetElement(TEMPERATURE_LABEL_NODE).AsLabel()
-        self.expected_temperature_label = self.GetElement(EXPECTED_TEMPERATURE_LABEL_NODE).AsLabel()
-        self.pool_tip = self.GetElement(POOL_TIP_LABEL_NODE).AsLabel()
-        self.lack_blocks_tip = self.GetElement(LACK_BLOCKS_TIP_NODE).AsLabel()
-        self.temperature_slider = self.GetElement(TEMPERATURE_SLIDER_NODE).AsSlider()
-        self.volume_slider = self.GetElement(VOLUME_SLIDER_NODE).AsSlider()
-        self.volume_bar = self.GetElement(MAX_VOLUME_BAR_NODE).AsImage()
+        self.pool_img = self.GetElement(POOL_IMG_NODE).asImage()
+        self.temperature_label = self.GetElement(TEMPERATURE_LABEL_NODE).asLabel()
+        self.expected_temperature_label = self.GetElement(EXPECTED_TEMPERATURE_LABEL_NODE).asLabel()
+        self.pool_tip = self.GetElement(POOL_TIP_LABEL_NODE).asLabel()
+        self.lack_blocks_tip = self.GetElement(LACK_BLOCKS_TIP_NODE).asLabel()
+        self.temperature_slider = self.GetElement(TEMPERATURE_SLIDER_NODE).asSlider()
+        self.volume_slider = self.GetElement(VOLUME_SLIDER_NODE).asSlider()
+        self.volume_bar = self.GetElement(MAX_VOLUME_BAR_NODE).asImage()
         self.out_gas_updat_updater = InitFluidDisplay(
             self.out_gas_display, 
             lambda: (

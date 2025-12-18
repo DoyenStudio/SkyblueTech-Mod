@@ -52,31 +52,31 @@ class UBaseCtrl(object):
         # type: (bool, bool) -> None
         self.base.SetVisible(visible, forceUpdate)
 
-    def AsLabel(self):
+    def asLabel(self):
         # type: () -> ULabel
         return self._cache_t or self._save_t(ULabel(self._root, self.base.asLabel()))
 
-    def AsButton(self):
+    def asButton(self):
         # type: () -> UButton
         return self._cache_t or self._save_t(UButton(self._root, self.base.asButton()))
 
-    def AsItemRenderer(self):
+    def asItemRenderer(self):
         # type: () -> UItemRenderer
         return self._cache_t or self._save_t(UItemRenderer(self._root, self.base.asItemRenderer()))
 
-    def AsImage(self):
+    def asImage(self):
         # type: () -> UImage
         return self._cache_t or self._save_t(UImage(self._root, self.base.asImage()))
 
-    def AsScrollView(self):
+    def asScrollView(self):
         # type: () -> UScrollView
         return self._cache_t or self._save_t(UScrollView(self._root, self.base.asScrollView()))
 
-    def AsGrid(self):
+    def asGrid(self):
         # type: () -> UGrid
         return self._cache_t or self._save_t(UGrid(self._root, self.base.asGrid()))
 
-    def AsSlider(self):
+    def asSlider(self):
         # type: () -> USlider
         return self._cache_t or self._save_t(USlider(self._root, self.base.asSlider()))
 

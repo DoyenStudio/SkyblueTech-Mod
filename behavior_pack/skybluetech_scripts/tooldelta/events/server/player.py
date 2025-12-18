@@ -47,3 +47,46 @@ class PlayerAttackEntityEvent(ServerEvent):
         self._orig["cancel"] = True
 
 
+class ActuallyHurtServerEvent(ServerEvent):
+    name = "ActuallyHurtServerEvent"
+
+    srcId = "" # type: str
+    """ 伤害源id """
+    projectileId = "" # type: str
+    """ 投射物id """
+    entityId = "" # type: str
+    """ 被伤害id """
+    damage = 0.0 # type: float
+    """ 伤害值（被伤害吸收后的值），允许修改，设置为0则此次造成的伤害为0，若设置数值和原来一样则视为没有修改 """
+    invulnerableTime = 0 # type: int
+    """ 实体受击后，剩余的无懈可击帧数，在无懈可击时间内，damage和damage_f为超过上次伤害的部分 """
+    lastHurt = 0.0 # type: float
+    """ 实体上次受到的伤害 """
+    cause = "" # type: str
+    """ 伤害来源，详见Minecraft枚举值文档的ActorDamageCause """
+    customTag = "" # type: str
+    """ 使用Hurt接口传入的自定义伤害类型 """
+
+    def unmarshal(self, data):
+        # type: (dict) -> None
+        self.srcId = data["srcId"]
+        self.projectileId = data["projectileId"]
+        self.entityId = data["entityId"]
+        self.damage = data["damage"]
+        self.invulnerableTime = data["invulnerableTime"]
+        self.lastHurt = data["lastHurt"]
+        self.cause = data["cause"]
+        self.customTag = data["customTag"]
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "srcId": self.srcId,
+            "projectileId": self.projectileId,
+            "entityId": self.entityId,
+            "damage": self.damage,
+            "invulnerableTime": self.invulnerableTime,
+            "lastHurt": self.lastHurt,
+            "cause": self.cause,
+            "customTag": self.customTag,
+        }

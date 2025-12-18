@@ -27,23 +27,27 @@ def GetScreenClsKey(screen_cls):
     # type: (type[UScreenNode]) -> str
     return "tdui:{}.{}".format(screen_cls.__module__, screen_cls.__name__)
 
-def RegistScreen(spec_key=None, spec_path=None, spec_bound_ui=None):
+def RegistScreen(
+    bound_ui=None # type: str | None
+):
     def wrapper(screen_cls):
         # type: (UScreenNodeT) -> UScreenNodeT
-        bound_ui = spec_bound_ui or screen_cls.bound_ui
-        if bound_ui is None:
+        _bound_ui = bound_ui or screen_cls.bound_ui
+        if _bound_ui is None:
             raise ValueError("bound_ui is None")
-        key = screen_cls._key = spec_key or GetScreenClsKey(screen_cls)
+        key = screen_cls._key = GetScreenClsKey(screen_cls)
         if key in registeredScreens:
             logger.warning("ToolDelta: Screen key {} already exists. Abort".format(key))
             return screen_cls
         registeredScreens[key] = screen_cls
-        cls_path = spec_path or screen_cls.__module__ + "." + screen_cls.__name__
-        registeredScreenDatas[key] = (cls_path, bound_ui)
+        cls_path = screen_cls.__module__ + "." + screen_cls.__name__
+        registeredScreenDatas[key] = (cls_path, _bound_ui)
         return screen_cls
     return wrapper
 
-def RegistProxyScreen(bound_ui_name=""):
+def RegistProxyScreen(
+    bound_ui_name=None # type: str | None
+):
     def wrapper(proxy_screen_cls):
         # type: (UScreenProxyT) -> UScreenProxyT
         proxy_screen_cls.bound_proxier = bound_ui_name or proxy_screen_cls.bound_proxier

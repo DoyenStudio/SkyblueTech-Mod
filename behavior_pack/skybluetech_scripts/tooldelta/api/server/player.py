@@ -48,6 +48,7 @@ def SetInventorySlotItemCount(player_id, slot_id, count):
 
 
 __all__ = [
+    "GetAllPlayers",
     "GetNameById",
     "GetPlayerDimensionId",
     "GetPlayerMainhandItem",

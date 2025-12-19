@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.item import GetItemBasicInfo
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...define import flags
 from ...define.machine_config import MachineRecipe
 from .base_machine import BaseMachine
@@ -33,7 +33,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def OnPlaced(self, _):
         self.afterRequireAll()
 
-    @AsDelayFunc(1)
+    @Delay(1)
     def afterRequireAll(self):
         self.RequireItems()
         self.RequireFluids()

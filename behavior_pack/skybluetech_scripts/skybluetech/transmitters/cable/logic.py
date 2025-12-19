@@ -25,7 +25,7 @@ from skybluetech_scripts.tooldelta.api.server.container import (
     GetContainerSize,
     # SetChestBoxItemNum,
 )
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.api.server.tips import SetOnePopupNotice
 from ...machines.basic.item_container import ItemContainer
 from ...machines.pool import GetMachineStrict, GetMachineWithoutCls
@@ -313,7 +313,7 @@ def onBlockPlaced(event):
 
 
 @BlockRemoveServerEvent.Listen()
-@AsDelayFunc(0)  # 等待下一 tick, 此时才能保证此处方块为空
+@Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
 def onBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
     if event.fullName in COMMON_CONTAINERS:
@@ -367,7 +367,7 @@ def onNeighbourBlockChanged(event):
             UpdateWholeNetwork(event.dimensionId, network)
 
 @ContainerItemChangedServerEvent.Listen()
-@AsDelayFunc(ITEM_POST_DELAY)
+@Delay(ITEM_POST_DELAY)
 def onContainerItemChanged(event):
     # type: (ContainerItemChangedServerEvent) -> None
     # 当容器内的物品变化时, 尝试将物品放入网络

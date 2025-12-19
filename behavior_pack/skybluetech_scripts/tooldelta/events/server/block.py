@@ -15,7 +15,7 @@ class BlockRandomTickServerEvent(ServerEvent):
     """方块z坐标"""
     blockName = '' # type: str
     """方块名称"""
-    fullName = '' # type: str
+    fullName = '' #  type: str
     """方块的identifier，包含命名空间及名称"""
     auxValue = 0 # type: int
     """方块附加值"""

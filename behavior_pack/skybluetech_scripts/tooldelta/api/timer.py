@@ -26,7 +26,7 @@ def ExecLater(t, func, *args, **kwargs):
     timer = LaterFunc(t, func, *args, **kwargs) # pyright: ignore[reportArgumentType]
     pool.add(timer)
 
-def AsDelayFunc(t):
+def Delay(t):
     # type: (float) -> Callable[[Callable[PT, Any]], Callable[PT, Any]]
     """
     将方法固定作为延时方法
@@ -41,7 +41,7 @@ def AsDelayFunc(t):
         return inner
     return wrapper
 
-def AsTimerFunc(t):
+def Repeat(t):
     # type: (float) -> Callable[[Callable[PT, Any]], Callable[PT, Any]]
     """
     将方法固定作为定时执行方法
@@ -77,8 +77,14 @@ def onClientUninit():
         game.CancelTimer(timer)
     cTimerPool.clear()
 
+
+AsDelayFunc = Delay
+AsTimerFunc = Repeat
+
 __all__ = [
     "ExecLater",
+    "Delay",
+    "Repeat",
     "AsDelayFunc",
     "AsTimerFunc"
 ]

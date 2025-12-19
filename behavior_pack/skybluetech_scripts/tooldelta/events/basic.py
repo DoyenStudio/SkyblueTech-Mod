@@ -74,6 +74,11 @@ class CustomS2CEvent(ClientEvent):
         from .notify import NotifyToClients
         NotifyToClients(client_ids, self)
 
+    def sendAll(self):
+        # type: () -> None
+        from .notify import NotifyToAll
+        NotifyToAll(self)
+
 
 def NewClientEventData():
     return GetClient().CreateEventData()

@@ -3,7 +3,7 @@
 from weakref import WeakKeyDictionary
 from mod.common.component.blockPaletteComp import BlockPaletteComponent
 from mod_log import logger
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     EntityPlaceBlockAfterServerEvent,
@@ -68,7 +68,7 @@ def onEntityPlaceStruBlock(event):
 
 
 @BlockRemoveServerEvent.Listen(-1001)
-@AsDelayFunc(0)
+@Delay(0)
 def onStruBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
     x = event.x
@@ -364,7 +364,7 @@ class MultiBlockStructure(BaseMachine):
         addDetectArea(self.dim, self.area)
         addPending(self)
 
-    @AsDelayFunc(0)
+    @Delay(0)
     def detectLater(self):
         flag = self.area.Detect()
         if flag == FLAG_OK:

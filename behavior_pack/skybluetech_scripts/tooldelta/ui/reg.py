@@ -62,7 +62,7 @@ def RegistProxyScreen(
 def GetScreen(key):
     return registeredScreens.get(key)
 
-@UiInitFinishedEvent.Listen()
+@UiInitFinishedEvent.Listen(1000)
 def onUiInit(_):
     for key, (cls_path, bound_ui) in registeredScreenDatas.items():
         res = RegisterUI(
@@ -74,6 +74,7 @@ def onUiInit(_):
             logger.error("RegisterUI failed: {}, {}".format(cls_path, bound_ui))
     for cls_path, proxy_screen_cls in registeredScreensProxy.items():
         NSManagerIns.RegisterScreenProxy(proxy_screen_cls.bound_proxier, cls_path)
+    logger.debug("Screen registered")
 
 __all__ = [
     "RegistScreen",

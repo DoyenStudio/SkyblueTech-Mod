@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.client import (
     PlayCustomMusic,
     StopCustomMusicById,
-    ClientGetPlayerId
+    GetLocalPlayerId
 )
 from skybluetech_scripts.tooldelta.api.server import (
     GetPlayersInDim,
@@ -167,7 +167,7 @@ def onFamicomPlaySoundEvent(event):
             client_music_ids[event.sound_name] = audio_id
         else:
             SetOnePopupNotice(
-                ClientGetPlayerId(), "§c无法播放 FC 音乐: {}".format(audio_id)
+                GetLocalPlayerId(), "§c无法播放 FC 音乐: {}".format(audio_id)
             )
 
 @BlockRemoveServerEvent.Listen()

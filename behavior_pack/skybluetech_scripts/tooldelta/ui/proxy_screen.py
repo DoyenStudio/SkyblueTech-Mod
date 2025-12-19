@@ -3,6 +3,7 @@
 
 import mod.client.extraClientApi as clientApi
 from mod.client.ui.screenNode import ScreenNode
+from mod_log import logger
 from ..events.client.control import OnKeyPressInGame
 from .elem_comp import UBaseCtrl
 from .utils import SNode

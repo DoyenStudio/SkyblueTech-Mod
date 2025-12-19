@@ -20,6 +20,7 @@ from mod.client.ui.controls.neteasePaperDollUIControl import NeteasePaperDollUIC
 from mod.client.ui.controls.baseUIControl import BaseUIControl
 from mod.client.ui.controls.scrollViewUIControl import ScrollViewUIControl
 from mod.client.ui.controls.sliderUIControl import SliderUIControl
+from ..define import UICtrlPosData
 from ..api.timer import ExecLater
 from ..api.client.ui import GetToggleMode
 from ..events.client.ui import GridComponentSizeChangedClientEvent
@@ -47,10 +48,6 @@ class UBaseCtrl(object):
         self._child_cacher = {}
         self._vars = {}
         self._removed = False
-
-    def SetVisible(self, visible, forceUpdate=True):
-        # type: (bool, bool) -> None
-        self.base.SetVisible(visible, forceUpdate)
 
     def asLabel(self):
         # type: () -> ULabel
@@ -80,22 +77,36 @@ class UBaseCtrl(object):
         # type: () -> USlider
         return self._cache_t or self._save_t(USlider(self._root, self.base.asSlider()))
 
+    def asNeteasePaperDoll(self):
+        # type: () -> UNeteasePaperDoll
+        return self._cache_t or self._save_t(UNeteasePaperDoll(self._root, self.base.asNeteasePaperDoll()))
+
     def getFullPath(self):
         "未开放接口"
         return self.base.FullPath() # type: ignore
 
+    def GetPos(self):
+        # type: () -> tuple[float, float]
+        return self.base.GetPosition()
+
+    def GetFullPos(self, axis):
+        # type: (Literal["x", "y"]) -> UICtrlPosData
+        return UICtrlPosData.from_dict(self.base.GetFullPosition(axis))
+
     def SetFullPos(
         self,
         axis, # type: Literal["x", "y"]
-        follow_type="none", # type: Literal["none", "parent", "maxChildren", "maxSibling", "children", "x", "y"]
-        relative_value=0.0, # type: float
-        absolute_value=0.0, # type: float
+        posdata, # type: UICtrlPosData
     ):
-        return self.base.SetFullPosition(axis, {
-            "followType": follow_type,
-            "relativeValue": relative_value,
-            "absoluteValue": absolute_value
-        })
+        return self.base.SetFullPosition(axis, posdata.marshal())
+
+    def SetVisible(self, visible, forceUpdate=True):
+        # type: (bool, bool) -> None
+        self.base.SetVisible(visible, forceUpdate)
+
+    def SetPosition(self, xy):
+        # type: (tuple[float, float]) -> None
+        self.base.SetPosition(xy)
 
     def SetSize(self, xy):
         # type: (tuple[float, float]) -> None
@@ -357,7 +368,7 @@ class UNeteasePaperDoll(UBaseCtrl):
         molang_dict={}, # type: dict
         rotation_axis=(0, 0, 0), # type: tuple[int, int, int]
     ):
-        self.base.RenderEntity({
+        return self.base.RenderEntity({
             "entity_id": entity_id,
             "entity_identifier": entity_identifier,
             "scale": scale,

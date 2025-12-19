@@ -5,4 +5,5 @@ from .lang import *
 from .model import *
 from .player import *
 from .ui import *
+from .render import *
 from .sound import *

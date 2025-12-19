@@ -13,7 +13,7 @@ from skybluetech_scripts.tooldelta.events.server.item import (
     ServerItemUseOnEvent,
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayerDimensionId
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.skybluetech.transmitters.wire.logic import (
     PreRemoveMachine,
     AfterRemoveMachine
@@ -41,7 +41,7 @@ def RegisterMachine(machine_cls):
     return machine_cls
 
 @ContainerItemChangedServerEvent.ListenWithUserData()
-@AsDelayFunc(0)
+@Delay(0)
 def onSlotUpdate(event):
     # type: (ContainerItemChangedServerEvent) -> None
     pos = event.pos

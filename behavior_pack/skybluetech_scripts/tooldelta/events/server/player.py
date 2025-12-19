@@ -3,6 +3,7 @@
 from ...define.item import Item
 from ..basic import ServerEvent
 
+
 class PlayerAttackEntityEvent(ServerEvent):
     name = "PlayerAttackEntityEvent"
 
@@ -69,6 +70,7 @@ class ActuallyHurtServerEvent(ServerEvent):
 
     def unmarshal(self, data):
         # type: (dict) -> None
+        self._orig = data
         self.srcId = data["srcId"]
         self.projectileId = data["projectileId"]
         self.entityId = data["entityId"]
@@ -90,3 +92,38 @@ class ActuallyHurtServerEvent(ServerEvent):
             "cause": self.cause,
             "customTag": self.customTag,
         }
+
+    def modifyDamage(self, damage):
+        # type: (float) -> None
+        self._orig["damage"] = damage
+        self.damage = damage
+
+
+class PlayerHurtEvent(ServerEvent):
+    name = "PlayerHurtEvent"
+
+    id = "" # type: str
+    """ 受击玩家id """
+    attacker = "" # type: str
+    """ 伤害来源实体id，若没有实体攻击，例如高空坠落，id为-1 """
+    customTag = "" # type: str
+    """ 使用Hurt接口传入的自定义伤害类型 """
+    cause = "" # type: str
+    """ 伤害来源，详见Minecraft枚举值文档的ActorDamageCause """
+
+    def unmarshal(self, data):
+        # type: (dict) -> None
+        self.id = data["id"]
+        self.attacker = data["attacker"]
+        self.customTag = data["customTag"]
+        self.cause = data["cause"]
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "id": self.id,
+            "attacker": self.attacker,
+            "customTag": self.customTag,
+            "cause": self.cause,
+        }
+

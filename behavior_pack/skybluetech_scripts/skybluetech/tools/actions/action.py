@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     CraftItemOutputChangeServerEvent,
     UIContainerItemChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.api.server import (
     SetItemTierSpeed,
     GetPlayerMainhandItem,
@@ -75,7 +75,7 @@ def onServerItemUseOn(event):
 
 
 @ItemDurabilityChangedServerEvent.ListenWithUserData()
-@AsDelayFunc(0)
+@Delay(0)
 def onItemDurabilityChanged(event):
     # type: (ItemDurabilityChangedServerEvent) -> None
     event_item = event.item
@@ -116,7 +116,7 @@ def onItemTakeout(event):
             pass
 
 @UIContainerItemChangedServerEvent.Listen()
-@AsDelayFunc(0)
+@Delay(0)
 def onUIItemChanged(event):
     # type: (UIContainerItemChangedServerEvent) -> None
     if event.newItem.id == "minecraft:air":

@@ -14,7 +14,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockStates,
     UpdateBlockStates,
 )
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.api.server.tips import SetOnePopupNotice
 from ...machines.basic.fluid_container import FluidContainer
 from ...machines.basic.multi_fluid_container import MultiFluidContainer
@@ -245,7 +245,7 @@ def onBlockPlaced(event):
 
 
 @BlockRemoveServerEvent.Listen()
-@AsDelayFunc(0)  # 等待下一 tick, 此时才能保证此处方块为空
+@Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
 def onBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
     m = GetMachineWithoutCls(event.dimension, event.x, event.y, event.z)

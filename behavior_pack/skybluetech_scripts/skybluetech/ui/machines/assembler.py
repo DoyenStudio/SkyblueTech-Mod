@@ -2,7 +2,7 @@
 
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc, ExecLater
+from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
 from ...define.events.assembler import *
@@ -67,7 +67,7 @@ class AssemblerUI(MachinePanelUIProxy):
 
 
 @AssemblerUpgradersUpdate.Listen()
-@AsDelayFunc(0.1)
+@Delay(0.1)
 def onOrigListUpdate(event):
     # type: (AssemblerUpgradersUpdate) -> None
     onListUpdate(event, 0)

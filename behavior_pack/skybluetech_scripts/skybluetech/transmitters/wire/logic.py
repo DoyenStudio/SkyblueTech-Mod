@@ -13,7 +13,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     BlockHasTag,
     UpdateBlockStates,
 )
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc, ExecLater
+from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from ...machines.pool import GetMachineWithoutCls, GetMachineStrict, GetMachineCls, cached_machines
 from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
@@ -219,7 +219,7 @@ def UpdateWholeNetwork(dim, network):
 # 只有等到了整个网络内的机器全部初始化完了才可以唤醒网络
 # 否则递归会超过递归最大深度
 
-@AsDelayFunc(0)
+@Delay(0)
 def CallNetworkWake(dim, network):
     # type: (int, WireNetwork) -> None
     # wakeUpWholeNetwork(dim, network)
@@ -281,7 +281,7 @@ def onBlockPlaced(event):
         UpdateBlockStates(event.dimension, (event.posX, event.posY, event.posZ), states)
             
 @BlockRemoveServerEvent.Listen()
-@AsDelayFunc(0) # 等待下一 tick, 此时才能保证此处方块为空
+@Delay(0) # 等待下一 tick, 此时才能保证此处方块为空
 def onWireRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
     if BlockHasTag(event.fullName, "skybluetech_wire"):
@@ -300,7 +300,7 @@ def PreRemoveMachine(event, machine):
     clearMachineNetwork(event.dimension, event.x, event.y, event.z, machine)
     clearNearbyMachinesFacingNetwork(event.dimension, event.x, event.y, event.z)
 
-@AsDelayFunc(0)
+@Delay(0)
 def AfterRemoveMachine(event):
     # type: (BlockRemoveServerEvent) -> None
     # cacher 可以有效减少多面同线判断次数

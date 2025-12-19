@@ -9,6 +9,7 @@ class UiInitFinishedEvent(ClientEvent):
     def unmarshal(self, _):
         pass
 
+
 class GridComponentSizeChangedClientEvent(ClientEvent):
     name = "GridComponentSizeChangedClientEvent"
 

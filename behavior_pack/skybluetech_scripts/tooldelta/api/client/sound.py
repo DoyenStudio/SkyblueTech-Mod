@@ -10,7 +10,7 @@ _stopCustomMusicById = MethodCacher(lambda :ClientComp.CreateCustomAudio(ClientL
 
 def PlayCustomMusic(
     name, # type: str
-    pos, # type: tuple[float, float, float]
+    pos=(0, 0, 0), # type: tuple[float, float, float]
     volume=1, # type: float
     pitch=1, # type: float
     loop=False, # type: bool

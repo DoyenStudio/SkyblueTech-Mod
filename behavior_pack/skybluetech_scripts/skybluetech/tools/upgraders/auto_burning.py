@@ -3,7 +3,7 @@ from collections import deque
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import DestroyBlockEvent
 from skybluetech_scripts.tooldelta.internal import ServerComp
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
     SetBlock,

@@ -46,6 +46,9 @@ def SetInventorySlotItemCount(player_id, slot_id, count):
     # type: (str, int, int) -> bool
     return ServerComp.CreateItem(player_id).SetInvItemNum(slot_id, count)
 
+def IsOP(player_id):
+    # type: (str) -> bool
+    return ServerComp.CreatePlayer(player_id).GetPlayerAbilities().get("op", False)
 
 __all__ = [
     "GetAllPlayers",
@@ -54,6 +57,7 @@ __all__ = [
     "GetPlayerMainhandItem",
     "GetSelectedSlot",
     "GetPlayersInDim",
+    "IsOP",
     "SetInventorySlotItemCount",
     "SpawnItemToPlayerCarried",
 ]

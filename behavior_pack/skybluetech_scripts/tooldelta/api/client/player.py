@@ -14,13 +14,13 @@ def GetNameById(player_id):
 
 def GetPlayerDimensionId():
     # type: () -> int
-    return ClientComp.CreateGame(ClientGetPlayerId()).GetCurrentDimension()
+    return ClientComp.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
 
 def GetAllPlayers():
     # type: () -> list[str]
     return clientApi.GetPlayerList()
 
-def ClientGetPlayerId():
+def GetLocalPlayerId():
     if not inClientEnv():
         raise Exception("Not in client env")
     return clientApi.GetLocalPlayerId()
@@ -39,6 +39,6 @@ __all__ = [
     "GetNameById",
     "GetPlayerDimensionId",
     "GetAllPlayers",
-    "ClientGetPlayerId",
+    "GetLocalPlayerId",
     "GetPlayerMainhandItem",
 ]

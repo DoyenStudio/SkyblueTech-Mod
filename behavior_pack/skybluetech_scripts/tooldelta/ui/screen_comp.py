@@ -62,22 +62,13 @@ class UScreenNode(ScreenNode):
 
     # ==== overload ====
 
-    def OnUReactive(self):
-        # type: () -> None
-        "超类方法, 覆写后在重新激活 UI 时被调用"
-        pass
-
-    def OnUDeactive(self):
-        # type: () -> None
-        "超类方法, 覆写后在取消激活 UI 时被调用"
-        pass
-
     def Create(self):
         """ 超类方法用于激活页面。 """
         self._active()
 
     def Destroy(self):
         """ 超类方法用于反激活页面。 """
+        self._deactive()
         for element in self._elem_cacher.values():
             element.callDestroy()
 

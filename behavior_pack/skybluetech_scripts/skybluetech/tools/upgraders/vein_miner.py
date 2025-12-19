@@ -3,7 +3,7 @@ from collections import deque
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import ServerPlayerTryDestroyBlockEvent
 from skybluetech_scripts.tooldelta.internal import ServerComp
-from skybluetech_scripts.tooldelta.api.timer import AsDelayFunc
+from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.api.server import GetBlockName
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from ...utils.charge import GetCharge, GetChargeCost
@@ -66,7 +66,7 @@ def onVeinMine(event, item, item_ud, upgrader_ud):
     # UpdateCharge(event.playerId, item, charge)
     # SpawnItemToPlayerCarried(event.playerId, item)
 
-# @AsDelayFunc(0)
+# @Delay(0)
 def delayBreakBlock(
     player_id, # type: str
     blocks, # type: deque[tuple[int, int, int, int]]

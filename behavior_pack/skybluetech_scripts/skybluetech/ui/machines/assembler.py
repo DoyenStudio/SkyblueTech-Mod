@@ -8,7 +8,7 @@ from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
 from ...define.events.assembler import *
 from ...ui_sync.machines.assembler import AssemblerUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar
+from .utils import UpdatePowerBar
 
 POWER_NODE = MAIN_PATH / "power_bar"
 UPGRADERS_LIST_NODE = MAIN_PATH / "upgraders_view"

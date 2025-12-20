@@ -5,7 +5,7 @@ from ..define.events.freezer import FreezerModeChangedEvent
 from ..define.machine_config.freezer import recipes as Recipes
 from ..ui_sync.machines.freezer import FreezerUISync
 from .basic import MixedProcessor, RegisterMachine
-from .pool import GetMachineStrict, cached_machines
+from .pool import GetMachineStrict
 
 K_MODE = "mode"
 

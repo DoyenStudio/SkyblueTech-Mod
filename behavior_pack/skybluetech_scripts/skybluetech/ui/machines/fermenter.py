@@ -1,5 +1,5 @@
 # coding=utf-8
-
+from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from ...define.events.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
@@ -86,8 +86,10 @@ class FermenterUI(MachinePanelUIProxy):
         self.expected_temperature_label.SetText("控温 %.1f°C" % self.sync.expected_temperature)
         self.volume_bar.SetFullPos(
             "y",
-            "parent",
-            0.5-self.sync.expected_water_max_volume/POOL_MAX_VOLUME
+            UICtrlPosData(
+                "parent",
+                relative_value=0.5-self.sync.expected_water_max_volume/POOL_MAX_VOLUME
+            )
         )
         self.volume_slider.SetSliderValue(
             1-self.sync.expected_water_max_volume/POOL_MAX_VOLUME

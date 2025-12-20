@@ -16,8 +16,8 @@ class UScreenNode(ScreenNode):
     _key = "???"
     top_node = None # type: SNode | None
 
-    def __init__(self, *args, **kwargs):
-        ScreenNode.__init__(self, *args, **kwargs)
+    def __init__(self, namespace, name, param=None):
+        ScreenNode.__init__(self, namespace, name, param) # type: ignore
         self.base = self
         self.activated = False
         self._elem_cacher = {} # type: dict[str, UBaseCtrl]

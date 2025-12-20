@@ -42,11 +42,8 @@ class ItemContainer(object):
         "超类覆写方法, 判定槽位物品是否为合法输入。"
         return True
 
-    def GetSlotItem(self, slot_pos, get_user_data=False):
+    def GetSlotItem(self, slot_pos, get_user_data=True):
         # type: (int, bool) -> Item | None
-        """
-        在获取 userData 时一定要记得 `get_user_data=True`
-        """
         return GetContainerItem(self.dim, self.xyz, slot_pos, get_user_data)
 
     def SetSlotItem(self, slot_pos, item):

@@ -85,8 +85,8 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
             return
                 
     def runOnce(self):
-        input_item = self.GetSlotItem(0)
-        output_item = self.GetSlotItem(1)
+        input_item = self.GetSlotItem(0, False)
+        output_item = self.GetSlotItem(1, False)
         if input_item is None:
             raise ValueError("No input")
         expected_output = GetCompressedResult(input_item.newItemName, input_item.auxValue)

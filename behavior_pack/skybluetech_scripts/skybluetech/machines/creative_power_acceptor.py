@@ -7,7 +7,6 @@ from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInit
 from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
 from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 from skybluetech_scripts.tooldelta.events.client.block import ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent
-from skybluetech_scripts.tooldelta.events.notify import NotifyToAll, NotifyToServer, NotifyToClient
 from .basic import BaseMachine, RegisterMachine
 
 # TYPE_CHECKING
@@ -124,9 +123,9 @@ def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     if event.blockName == CreativePowerAcceptor.block_name:
         addText(event.dimensionId, (event.posX, event.posY, event.posZ), "输入功率： --")
-        NotifyToServer(CreativePowerAcceptorPowerUpdateRequest(
+        CreativePowerAcceptorPowerUpdateRequest(
             event.dimensionId, event.posX, event.posY, event.posZ
-        ))
+        ).send()
 
 @ModBlockEntityRemoveClientEvent.Listen()
 def onModBlockRemoved(event):
@@ -153,21 +152,21 @@ def onPowerUpdateRequest(event):
     z = event.z
     if dim == -1:
         # TODO: 客户端可能恶意连续请求以占用过多网络资源
-        NotifyToClient(event.mId, CreativePowerAcceptorPowerUpdate(
+        CreativePowerAcceptorPowerUpdate(
             [list(k) + [v] for k, v in updatePool.items()]
-        ))
+        ).send(event.mId)
     else:
-        NotifyToClient(event.mId, CreativePowerAcceptorPowerUpdate(
+        CreativePowerAcceptorPowerUpdate(
             [[dim, x, y, z, updatePool.get((dim, x, y, z), -32768)]]
-        ))
+        ).send(event.mId)
 
 @ClientInitCallback()
 def onClientInit():
-    NotifyToServer(CreativePowerAcceptorPowerUpdateRequest())
+    CreativePowerAcceptorPowerUpdateRequest().send()
 
 @ServerInitCallback()
 @AsTimerFunc(1)
 def onRepeatUpdate():
     compared = [list(k) + [v] for k, v in updatePool.items()][:50] # NOTE: 全局至多同时有 50 个功率更新
     if compared:
-        NotifyToAll(CreativePowerAcceptorPowerUpdate(compared))
+        CreativePowerAcceptorPowerUpdate(compared).sendAll()

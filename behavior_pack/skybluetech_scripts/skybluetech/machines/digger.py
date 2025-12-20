@@ -27,7 +27,6 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayersInDim
-from skybluetech_scripts.tooldelta.events.notify import NotifyToClients
 from ..define import flags
 from ..define.events.digger import DiggerWorkModeUpdatedEvent, DiggerUpdateCrack
 from ..utils.facing import GetOppositeDirFromFacing
@@ -118,10 +117,9 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         UpgradeControl.Dump(self)
 
     def OnWorkStatusUpdated(self):
-        NotifyToClients(
-            GetPlayersInDim(self.dim),
-            DiggerWorkModeUpdatedEvent(self.x, self.y, self.z, self.IsActive()),
-        )
+        DiggerWorkModeUpdatedEvent(
+            self.x, self.y, self.z, self.IsActive()
+        ).sendMulti(GetPlayersInDim(self.dim))
 
     def startNext(self, new_block=None):
         # type: (tuple[str, int] | None) -> None
@@ -172,16 +170,13 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
                 )
 
     def updateCrackToClients(self):
-        NotifyToClients(
-            GetPlayersInDim(self.dim),
-            DiggerUpdateCrack(
+        DiggerUpdateCrack(
                 self.dim,
                 self.x + self.dx,
                 self.y + self.dy,
                 self.z + self.dz,
                 self.prev_crack_stage,
-            ),
-        )
+        ).sendMulti(GetPlayersInDim(self.dim))
 
 
 @DiggerWorkModeUpdatedEvent.Listen()

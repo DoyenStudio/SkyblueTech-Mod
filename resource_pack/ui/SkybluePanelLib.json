@@ -1,4 +1,50 @@
 {
+    "DataTextScreen": {
+        "type": "panel",
+        "$text": "",
+        "size": [
+            "0%c+0px",
+            "0%c+0px"
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "image": {
+                    "type": "image",
+                    "size": [
+                        "100%c+9px",
+                        "100%c+6px"
+                    ],
+                    "layer": 1,
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/panel/detail_bg",
+                    "controls": [
+                        {
+                            "label": {
+                                "type": "label",
+                                "$text": "",
+                                "$text|default": "",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4.0,
+                                    4.0
+                                ],
+                                "layer": 1,
+                                "font_type": "default",
+                                "text": "$text"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "Flame": {
         "type": "panel",
         "size": [
@@ -172,6 +218,92 @@
             }
         ]
     },
+    "PowerBar": {
+        "type": "panel",
+        "size": [
+            14.0,
+            100
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "label": {
+                    "type": "label",
+                    "$text": "-- RF",
+                    "$text|default": "",
+                    "offset": [
+                        0.0,
+                        47.0
+                    ],
+                    "layer": 1,
+                    "font_scale_factor": 1.2,
+                    "font_type": "unicode",
+                    "shadow": true,
+                    "text": "$text",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        "default",
+                        80.0
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "keep_ratio": false,
+                                "texture": "textures/panel/energy_bar_bg",
+                                "tiled": true
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "size": [
+                                    "default",
+                                    "5%+0px"
+                                ],
+                                "layer": 2,
+                                "clip_offset": [
+                                    0.0,
+                                    0.0
+                                ],
+                                "enabled": false,
+                                "clip_ratio": 0.4999999999999997,
+                                "keep_ratio": false,
+                                "texture": "textures/panel/energy_bar_top",
+                                "tiled": "y"
+                            }
+                        },
+                        {
+                            "frame": {
+                                "type": "image",
+                                "layer": 3,
+                                "clip_ratio": 0.0,
+                                "keep_ratio": false,
+                                "nineslice_size": [
+                                    2.0,
+                                    2.0,
+                                    2.0,
+                                    2.0
+                                ],
+                                "texture": "textures/panel/frame_empty"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "ProgressBar": {
         "type": "panel",
         "$bg_image": "textures/panel/arrow_img",
@@ -320,6 +452,126 @@
             }
         ]
     },
+    "item_displayer": {
+        "type": "panel",
+        "size": [
+            20.0,
+            20.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/panel/bg_frame_01"
+                }
+            },
+            {
+                "item_count": {
+                    "type": "label",
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "size": [
+                        "100%+0px",
+                        "default"
+                    ],
+                    "layer": 2,
+                    "font_scale_factor": 1.5,
+                    "font_size": "small",
+                    "font_type": "default",
+                    "text": "-",
+                    "text_alignment": "right"
+                }
+            },
+            {
+                "item_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "property_bag": {
+                        "#item_id_aux": 131072
+                    }
+                }
+            },
+            {
+                "check_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "",
+                    "$hover_texture": "",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "normal",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "",
+                    "$texture_layer": 2,
+                    "layer": 3,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "main": {
+        "type": "screen"
+    },
+    "namespace": "SkybluePanelLib",
     "player_backpack": {
         "type": "panel",
         "size": [
@@ -339,141 +591,5 @@
                 "inventory@common.inventory_panel": {}
             }
         ]
-    },
-    "DataTextScreen": {
-        "type": "panel",
-        "$text": "",
-        "size": [
-            "0%c+0px",
-            "0%c+0px"
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "image": {
-                    "type": "image",
-                    "size": [
-                        "100%c+9px",
-                        "100%c+6px"
-                    ],
-                    "layer": 1,
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
-                    "texture": "textures/panel/detail_bg",
-                    "controls": [
-                        {
-                            "label": {
-                                "type": "label",
-                                "$text": "",
-                                "$text|default": "",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    4.0,
-                                    4.0
-                                ],
-                                "layer": 1,
-                                "font_type": "default",
-                                "text": "$text"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "PowerBar": {
-        "type": "panel",
-        "size": [
-            14.0,
-            100
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "label": {
-                    "type": "label",
-                    "$text": "-- RF",
-                    "$text|default": "",
-                    "offset": [
-                        0.0,
-                        47.0
-                    ],
-                    "layer": 1,
-                    "font_scale_factor": 1.2,
-                    "font_type": "unicode",
-                    "shadow": true,
-                    "text": "$text",
-                    "text_alignment": "center"
-                }
-            },
-            {
-                "bar": {
-                    "type": "panel",
-                    "size": [
-                        "default",
-                        80.0
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "bg": {
-                                "type": "image",
-                                "layer": 1,
-                                "clip_direction": "left",
-                                "clip_ratio": 0.0,
-                                "keep_ratio": false,
-                                "texture": "textures/panel/energy_bar_bg",
-                                "tiled": true
-                            }
-                        },
-                        {
-                            "mask": {
-                                "type": "image",
-                                "anchor_from": "bottom_middle",
-                                "anchor_to": "bottom_middle",
-                                "size": [
-                                    "default",
-                                    "5%+0px"
-                                ],
-                                "layer": 2,
-                                "clip_offset": [
-                                    0.0,
-                                    0.0
-                                ],
-                                "enabled": false,
-                                "clip_ratio": 0.4999999999999997,
-                                "keep_ratio": false,
-                                "texture": "textures/panel/energy_bar_top",
-                                "tiled": "y"
-                            }
-                        },
-                        {
-                            "frame": {
-                                "type": "image",
-                                "layer": 3,
-                                "clip_ratio": 0.0,
-                                "keep_ratio": false,
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
-                                "texture": "textures/panel/frame_empty"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "main": {
-        "type": "screen"
-    },
-    "namespace": "SkybluePanelLib"
+    }
 }

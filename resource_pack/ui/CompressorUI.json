@@ -1,4 +1,12 @@
 {
+    "compressor_progress@SkybluePanelLib.ProgressBar": {
+        "$bg_image": "textures/panel/compressor_bg",
+        "$mask_image": "textures/panel/compressor_mask",
+        "offset": [
+            1,
+            -41
+        ]
+    },
     "compressor_ui": {
         "type": "panel",
         "size": [
@@ -113,14 +121,7 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/panel/compressor_bg",
-                                                        "$mask_image": "textures/panel/compressor_mask",
-                                                        "offset": [
-                                                            1,
-                                                            -41
-                                                        ]
-                                                    }
+                                                    "progress@CompressorUI.compressor_progress": {}
                                                 },
                                                 {
                                                     "upgrades@SkybluePanelLib.UpgradeSlots": {
@@ -155,19 +156,19 @@
         ]
     },
     "main@common.base_screen": {
+        "$screen_content": "CompressorUI.compressor_ui",
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             },
             {
                 "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             }
-        ],
-        "$screen_content": "CompressorUI.compressor_ui"
+        ]
     },
     "namespace": "CompressorUI"
 }

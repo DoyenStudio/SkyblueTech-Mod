@@ -1,18 +1,30 @@
 {
     "main@common.base_screen": {
+        "$screen_content": "MixerUI.mixer_ui",
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             },
             {
                 "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             }
+        ]
+    },
+    "mixer_progress@SkybluePanelLib.ProgressBar": {
+        "$bg_image": "textures/panel/mixer_arrow_img",
+        "$mask_image": "textures/panel/mixer_arrow_mask",
+        "offset": [
+            0,
+            -43
         ],
-        "$screen_content": "MixerUI.mixer_ui"
+        "size": [
+            50,
+            25
+        ]
     },
     "mixer_ui": {
         "type": "panel",
@@ -79,18 +91,7 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/panel/mixer_arrow_img",
-                                                        "$mask_image": "textures/panel/mixer_arrow_mask",
-                                                        "offset": [
-                                                            0,
-                                                            -43
-                                                        ],
-                                                        "size": [
-                                                            50,
-                                                            25
-                                                        ]
-                                                    }
+                                                    "progress@MixerUI.mixer_progress": {}
                                                 },
                                                 {
                                                     "fluid_display@SkybluePanelLib.FluidDisplay": {

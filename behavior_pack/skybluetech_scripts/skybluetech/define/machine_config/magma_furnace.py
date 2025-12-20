@@ -22,12 +22,12 @@ recipes = [
         power_cost=160, tick_duration=sec(20)
     ),
     MachineRecipe(
-        {"fluid": {0: Input("minecraft:obsidian")}},
+        {"item": {0: Input("minecraft:obsidian")}},
         {"fluid": {0: Output("minecraft:lava", 1000)}},
         power_cost=160, tick_duration=sec(14)
     ),
     MachineRecipe(
-        {"fluid": {0: Input("minecraft:netherrack")}},
+        {"item": {0: Input("minecraft:netherrack")}},
         {"fluid": {0: Output("minecraft:lava", 250)}},
         power_cost=75, tick_duration=sec(8)
     ),

@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.alloy_furnace import AlloyFurnaceUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
+from .utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
 
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"

@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.thermal_generator import ThermalGeneratorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar, UpdateFlame
+from .utils import UpdatePowerBar, UpdateFlame
 
 POWER_NODE = MAIN_PATH / "power_bar"
 FLAME_NODE = MAIN_PATH / "flame"

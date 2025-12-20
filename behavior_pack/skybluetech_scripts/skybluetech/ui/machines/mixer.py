@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.mixer import MixerUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay, UpdateFluidDisplay
+from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay, UpdateFluidDisplay
 
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"

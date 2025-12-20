@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.pump import PumpUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar, InitFluidDisplay
+from .utils import UpdatePowerBar, InitFluidDisplay
 
 POWER_NODE = MAIN_PATH / "power_bar"
 FLUID_NODE = MAIN_PATH / "fluid_display"

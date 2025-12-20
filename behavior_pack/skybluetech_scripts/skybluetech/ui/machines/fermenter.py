@@ -7,7 +7,7 @@ from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
 from ...define.machine_config.fermenter import spec_recipes, TEMPERATURE_MIN, TEMPERATURE_MAX, POOL_MAX_VOLUME
 from ...ui_sync.machines.fermenter import FermenterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar, InitFluidDisplay, UpdateImageTransformColor
+from .utils import UpdatePowerBar, InitFluidDisplay, UpdateImageTransformColor
 
 FLAG_OK = 0
 

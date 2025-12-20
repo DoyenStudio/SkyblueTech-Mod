@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar, UpdateFlame, InitFluidsDisplay
+from .utils import UpdatePowerBar, UpdateFlame, InitFluidsDisplay
 
 POWER_NODE = MAIN_PATH / "power_bar"
 FLUID_LAVA_NODE = MAIN_PATH / "lava_display"

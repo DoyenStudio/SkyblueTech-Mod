@@ -2,7 +2,7 @@
 
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.redstone_furnace import RedstoneFurnaceUISync
-from ..utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
+from .utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
 from .define import MachinePanelUIProxy, MAIN_PATH
 
 POWER_NODE = MAIN_PATH / "power_bar"

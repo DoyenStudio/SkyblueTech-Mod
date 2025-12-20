@@ -6,7 +6,7 @@ from ...define.events.freezer import FreezerModeChangedEvent
 from ...define.machine_config.freezer import recipes
 from ...ui_sync.machines.freezer import FreezerUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay
+from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay
 
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"

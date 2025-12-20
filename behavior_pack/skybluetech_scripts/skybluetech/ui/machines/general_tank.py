@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.general_tank import GeneralTankUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import InitFluidDisplay, UpdateFluidDisplay
+from .utils import InitFluidDisplay, UpdateFluidDisplay
 
 FLUID_NODE = MAIN_PATH / "fluid_display"
 

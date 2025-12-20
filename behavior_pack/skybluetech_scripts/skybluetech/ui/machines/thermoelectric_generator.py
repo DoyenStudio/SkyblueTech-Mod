@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.ui.reg import RegistScreen
 from skybluetech_scripts.tooldelta.ui.utils import SNode
 from ...utils.fmt import FormatRF
 from ...ui_sync.machines.thermoelectric_generator import ThermoelectricGeneratorUISync
-from ..utils import UpdatePowerBar
+from .utils import UpdatePowerBar
 from .define import MachinePanelUI, MAIN_PATH
 
 

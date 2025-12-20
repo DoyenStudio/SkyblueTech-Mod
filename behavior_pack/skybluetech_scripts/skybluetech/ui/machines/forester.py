@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from ...ui_sync.machines.forester import ForesterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from ..utils import UpdatePowerBar
+from .utils import UpdatePowerBar
 
 POWER_NODE = MAIN_PATH / "power_bar"
 

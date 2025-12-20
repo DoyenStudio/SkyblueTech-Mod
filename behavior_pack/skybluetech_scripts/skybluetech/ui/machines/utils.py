@@ -1,8 +1,9 @@
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
-from ..utils.fmt import FormatRF as _formatRF, FormatFluidVolume as _formatFluidVolume
-from ..define.fluids import texture as fluid_texture
-from ..ui_sync.machines.basic_machine_ui_sync import FluidSlotSync
+from ...utils.fmt import FormatRF as _formatRF, FormatFluidVolume as _formatFluidVolume
+from ...define.fluids import texture as fluid_texture
+from ...ui_sync.machines.basic_machine_ui_sync import FluidSlotSync
 
 # TYPE_CHECKING
 if 0:
@@ -147,3 +148,38 @@ def UpdateImageTransformColor(
     g = raw_g + (new_g - raw_g) * transform_pc
     b = raw_b + (new_b - raw_b) * transform_pc
     img.SetSpriteColor((r / 255, g / 255, b / 255))
+
+
+class ItemDisplayer:
+    def __init__(self, ctrl, item):
+        # type: (UBaseCtrl, Item) -> None
+        self.ctrl = ctrl
+        self.item = item
+        self.item_renderer = ctrl["item_renderer"].asItemRenderer()
+        self.item_count_label = ctrl["item_count"].asLabel()
+        self.check_btn = ctrl["check_btn"].asButton()
+        self.check_btn.SetCallback(self.onBtnReleased)
+        self.update()
+
+    def UpdateItem(self, item):
+        # type: (Item) -> None
+        self.item = item
+        self.update()
+
+    def update(self):
+        if self.item.count not in (0, 1):
+            self.item_count_label.SetText(str(self.item.count))
+        else:
+            self.item_count_label.SetText("")
+        self.item_renderer.SetUiItem(self.item)
+
+    def onBtnReleased(self, params):
+        last_board = self.ctrl._root._vars.get("item_disp_databoard")
+        if isinstance(last_board, UBaseCtrl):
+            last_board.Remove()
+            del self.ctrl._root._vars["item_disp_databoard"]
+        else:
+            databoard = self.ctrl.AddElement("SkybluePanelLib.DataTextScreen", "item_hover_text")
+            databoard["image/label"].asLabel().SetText(GetItemHoverName(self.item.id))
+            self.ctrl._root._vars["item_disp_databoard"] = databoard
+

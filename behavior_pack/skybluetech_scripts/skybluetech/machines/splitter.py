@@ -1,8 +1,9 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
+from skybluetech_scripts.tooldelta.plugins.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
 from ..define import flags
 from ..ui_sync.machines.splitter import SplitterUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
@@ -20,13 +21,12 @@ def GetSplitResult(item_id, aux_value=0):
         return None
     recipes = GetRecipesByInput(item_id, "crafting_table", aux_value)
     for recipe in recipes:
-        pattern = recipe.get("pattern")
-        if pattern is not None:
-            result = recipe["result"]
-            if pattern == ["A"] and len(result) == 1:
-                first_item = result[0]
-                if first_item["count"] == 9:
-                    res = first_item["item"]
+        recipe = GetCraftingRecipe(recipe)
+        if isinstance(recipe, CraftingRecipeRes):
+            if recipe.pattern == ["A"] and len(recipe.result) == 1:
+                output = recipe.result[0]
+                if output.count == 9:
+                    res = output.item_id
                     split_recipes[item_id] = res
                     return res
     cant_split_recipes.add(item_id)

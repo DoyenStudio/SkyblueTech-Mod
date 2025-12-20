@@ -3,6 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
+from skybluetech_scripts.tooldelta.plugins.recipe_obj import GetFurnaceRecipe
 from ..define import flags
 from ..define.machine_config.redstone_furnace import TICK_POWER
 from ..ui_sync.machines.redstone_furnace import RedstoneFurnaceUISync
@@ -15,11 +16,7 @@ def GetFurnaceOutputByInput(item_id, aux_value=0):
     if len(res) < 1:
         return None
     else:
-        r = res[0]["output"]
-        if r[-2] == ":":
-            return r[:-2] # TODO: 忽略 aux! 危险!
-        else:
-            return r
+        return GetFurnaceRecipe(res[0]).output.item_id
 
 
 @RegisterMachine

@@ -7,3 +7,4 @@ from .extra_data import *
 from .item import *
 from .player import *
 from .tips import *
+from .world import *

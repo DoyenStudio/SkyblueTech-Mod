@@ -5,6 +5,9 @@ from ...ui_sync.machines.magma_centrifuge import MagmaCentrifugeUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidsDisplay
 
+from ..recipe_checker import AsRecipeCheckerBtn
+from ...define.machine_config.magma_centrifuge import recipes
+
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"
 LEFT_FLUID = MAIN_PATH / "left_fluid"
@@ -24,6 +27,11 @@ class MagmaCentrifugeUI(MachinePanelUIProxy):
         self.update_cbs = [InitFluidsDisplay(self.left_fluid_updater, self.sync.fluids, 0)]
         for i, ui in enumerate(self.right_fluid_updaters):
             self.update_cbs.append(InitFluidsDisplay(ui, self.sync.fluids, i + 1))
+        AsRecipeCheckerBtn(
+            self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
+            "skybluetech:magma_centrifuge",
+            recipes,
+        )
         MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):

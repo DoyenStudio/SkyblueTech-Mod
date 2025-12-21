@@ -9,8 +9,8 @@ if TYPE_CHECKING:
 # TYPE_CHECKING END
 
 def addElement(screen, element_def_name, element_name, parent, force_update=True):
-    # type: (ScreenLike, str, str, BaseUIControl, bool) -> BaseUIControl
-    return screen.base.CreateChildControl(element_def_name, element_name, parent, force_update)
+    # type: (ScreenLike, str, str, BaseUIControl | None, bool) -> BaseUIControl
+    return screen.base.CreateChildControl(element_def_name, element_name, parent, force_update) # pyright: ignore[reportArgumentType]
 
 def removeElement(screen, element):
     # type: (ScreenLike, BaseUIControl) -> bool

@@ -5,6 +5,9 @@ from ...ui_sync.machines.magma_furnace import MagmaFurnaceUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay
 
+from ..recipe_checker import AsRecipeCheckerBtn
+from ...define.machine_config.magma_furnace import recipes
+
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"
 FLUID_NODE = MAIN_PATH / "fluid_display"
@@ -26,6 +29,11 @@ class MagmaFurnaceUI(MachinePanelUIProxy):
                 self.sync.fluid_volume,
                 self.sync.max_volume,
             )
+        )
+        AsRecipeCheckerBtn(
+            self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
+            "skybluetech:magma_furnace",
+            recipes,
         )
         MachinePanelUIProxy.OnCreate(self)
 

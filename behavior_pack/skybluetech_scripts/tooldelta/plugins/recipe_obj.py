@@ -46,7 +46,7 @@ class UnorderedCraftingRecipeRes:
 
 class FurnaceRecipe:
     def __init__(self, data):
-        self.input_item_id = data["input"]
+        self.input_item_id = data["input"] # type: str
         output = data["output"]
         if isinstance(output, str):
             datas = output.split(":")[-1]

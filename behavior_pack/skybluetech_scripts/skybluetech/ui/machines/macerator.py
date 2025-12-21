@@ -5,6 +5,9 @@ from ...ui_sync.machines.macerator import MaceratorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R
 
+from ..recipe_checker import AsRecipeCheckerBtn
+from ...define.machine_config.macerator import recipes
+
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"
 
@@ -18,6 +21,11 @@ class MaceratorUI(MachinePanelUIProxy):
         self.sync.WhenUpdated = self.WhenUpdated
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
+        AsRecipeCheckerBtn(
+            self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
+            "skybluetech:macerator",
+            recipes,
+        )
         MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):

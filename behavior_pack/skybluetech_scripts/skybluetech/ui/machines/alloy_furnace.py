@@ -5,6 +5,9 @@ from ...ui_sync.machines.alloy_furnace import AlloyFurnaceUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
 
+from ..recipe_checker import AsRecipeCheckerBtn
+from ...define.machine_config.alloy_furnace import recipes
+
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"
 FLAME_NODE = MAIN_PATH / "flame"
@@ -19,6 +22,11 @@ class AlloyFurnaceUI(MachinePanelUIProxy):
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         self.flame = self.GetElement(FLAME_NODE)
+        AsRecipeCheckerBtn(
+            self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
+            "skybluetech:alloy_furnace",
+            recipes,
+        )
         MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):

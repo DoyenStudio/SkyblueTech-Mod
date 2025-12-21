@@ -85,9 +85,17 @@ class UBaseCtrl(object):
         "未开放接口"
         return self.base.FullPath() # type: ignore
 
+    def GetSize(self):
+        # type: () -> tuple[float, float]
+        return self.base.GetSize()
+
     def GetPos(self):
         # type: () -> tuple[float, float]
         return self.base.GetPosition()
+
+    def GetRootPos(self):
+        # type: () -> tuple[float, float]
+        return self.base.GetGlobalPosition()
 
     def GetFullPos(self, axis):
         # type: (Literal["x", "y"]) -> UICtrlPosData
@@ -104,7 +112,11 @@ class UBaseCtrl(object):
         # type: (bool, bool) -> None
         self.base.SetVisible(visible, forceUpdate)
 
-    def SetPosition(self, xy):
+    def SetPropertyBag(self, params):
+        # type: (dict) -> bool
+        return self.base.SetPropertyBag(params)
+
+    def SetPos(self, xy):
         # type: (tuple[float, float]) -> None
         self.base.SetPosition(xy)
 
@@ -178,9 +190,9 @@ class ULabel(UBaseCtrl):
             )
         self.base = base
 
-    def SetText(self, text):
-        # type: (str) -> None
-        self.base.SetText(text)
+    def SetText(self, text, sync_size=False):
+        # type: (str, bool) -> None
+        self.base.SetText(text, sync_size)
 
     def GetText(self):
         # type: () -> str | None

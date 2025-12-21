@@ -6,6 +6,7 @@ from mod.client.ui.screenNode import ScreenNode
 from mod_log import logger
 from ..events.client.control import OnKeyPressInGame
 from .elem_comp import UBaseCtrl
+from .functions import addElement
 from .utils import SNode
 
 
@@ -72,12 +73,18 @@ class UScreenProxy(CustomUIScreenProxy):
 
 
     # ====
-    
+
+    def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
+        # type: (str, str, bool) -> UBaseCtrl
+        return UBaseCtrl(self, addElement(self, ctrl_def_name, ctrl_name, None, force_update))
+
     def GetElement(self, path):
         # type: (str | SNode) -> UBaseCtrl
         if isinstance(path, SNode):
             path = path.base
         return self._get_elem_cache(path)
+
+    # ==== private methods
 
     __getitem__ = __gt__ = GetElement
 

@@ -41,6 +41,7 @@ class UScreenNode(ScreenNode):
 
     def RemoveUI(self):
         self._deactive()
+        self.SetRemove()
         
 
     def _active(self):
@@ -79,11 +80,17 @@ class UScreenNode(ScreenNode):
 
     # ====
 
+    def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
+        # type: (str, str, bool) -> UBaseCtrl
+        return UBaseCtrl(self, addElement(self, ctrl_def_name, ctrl_name, None, force_update))
+
     def GetElement(self, path):
         # type: (str | SNode) -> UBaseCtrl
         if isinstance(path, SNode):
             path = path.base
         return self._get_elem_cache(path)
+
+    # ==== private methods
 
     __getitem__ = __gt__ = GetElement
 

@@ -67,20 +67,20 @@ def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     fluid_img.SetFullSize("y", {"followType": "parent", "relativeValue": min(2, prgs)})
 
 
-def InitFluidDisplay(ui, data_cb):
+def InitFluidDisplay(ctrl, data_cb):
     # type: (UBaseCtrl, BtnCb[tuple[str | None, float, float]]) -> Callable[[], None]
-    btn = ui["data_btn"].asButton()
-    screen_vars = ui._root._vars
+    btn = ctrl["data_btn"].asButton()
+    screen_vars = ctrl._root._vars
     current_ctrl = [None]  # type: list[UBaseCtrl | None]
 
     def get_last_ui_board():
         # type: () -> UBaseCtrl | None
-        return screen_vars.get("disp_fluid_databoard")
+        return screen_vars.get("disp_board")
 
     def _updateHook():
         elem = get_last_ui_board()
         fluid_id, fluid_vol, max_vol = data_cb()
-        UpdateFluidDisplay(ui, fluid_id, fluid_vol, max_vol)
+        UpdateFluidDisplay(ctrl, fluid_id, fluid_vol, max_vol)
         if elem is None or elem is not current_ctrl[0]:
             return
         (elem / "image/label").asLabel().SetText(
@@ -98,25 +98,44 @@ def InitFluidDisplay(ui, data_cb):
             + _formatFluidVolume(max_vol)
         )
 
-    def onRollOver(params):
-        prev_board = get_last_ui_board()
-        if prev_board is not None:
-            return
-        e = ui.AddElement("SkybluePanelLib.DataTextScreen", "fluid_hover_text")
-        e.SetLayer(100)
-        screen_vars["disp_fluid_databoard"] = e
-        current_ctrl[0] = e
-        _updateHook()
+    # def onRollOver(params):
+    #     prev_board = get_last_ui_board()
+    #     if prev_board is not None:
+    #         return
+    #     e = ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "fluid_hover_text")
+    #     e.SetPos(ctrl.GetRootPos())
+    #     e.SetLayer(100)
+    #     screen_vars["disp_fluid_databoard"] = e
+    #     current_ctrl[0] = e
+    #     _updateHook()
 
-    def onRollOut(params):
+    # def onRollOut(params):
+    #     prev_board = get_last_ui_board()
+    #     if prev_board is not None:
+    #         prev_board.Remove()
+    #         del screen_vars["disp_fluid_databoard"]
+    #     current_ctrl[0] = None
+
+    def onRelease(params):
         prev_board = get_last_ui_board()
         if prev_board is not None:
             prev_board.Remove()
-            del screen_vars["disp_fluid_databoard"]
-        current_ctrl[0] = None
+            del screen_vars["disp_board"]
+            if screen_vars.get("disp_board_src") is ctrl:
+                screen_vars.pop("disp_board_src")
+                return
+        e = ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "fluid_hover_text")
+        e.SetPos(ctrl.GetRootPos())
+        e.SetLayer(100)
+        screen_vars["disp_board"] = e
+        screen_vars["disp_board_src"] = ctrl
+        current_ctrl[0] = e
+        _updateHook()
+            
 
-    btn.SetOnRollOverCallback(onRollOver)
-    btn.SetOnRollOutCallback(onRollOut)
+    # btn.SetOnRollOverCallback(onRollOver)
+    # btn.SetOnRollOutCallback(onRollOut)
+    btn.SetCallback(onRelease)
     return _updateHook
 
 
@@ -151,15 +170,17 @@ def UpdateImageTransformColor(
 
 
 class ItemDisplayer:
-    def __init__(self, ctrl, item):
-        # type: (UBaseCtrl, Item) -> None
+    def __init__(self, ctrl, item, tag=None):
+        # type: (UBaseCtrl, Item, str | None) -> None
         self.ctrl = ctrl
         self.item = item
+        self.tag = tag
         self.item_renderer = ctrl["item_renderer"].asItemRenderer()
         self.item_count_label = ctrl["item_count"].asLabel()
         self.check_btn = ctrl["check_btn"].asButton()
         self.check_btn.SetCallback(self.onBtnReleased)
         self.update()
+        self.item_renderer.SetVisible(True)
 
     def UpdateItem(self, item):
         # type: (Item) -> None
@@ -174,12 +195,63 @@ class ItemDisplayer:
         self.item_renderer.SetUiItem(self.item)
 
     def onBtnReleased(self, params):
-        last_board = self.ctrl._root._vars.get("item_disp_databoard")
+        screen_vars = self.ctrl._root._vars
+        last_board = screen_vars.get("disp_board")
         if isinstance(last_board, UBaseCtrl):
             last_board.Remove()
-            del self.ctrl._root._vars["item_disp_databoard"]
-        else:
-            databoard = self.ctrl.AddElement("SkybluePanelLib.DataTextScreen", "item_hover_text")
-            databoard["image/label"].asLabel().SetText(GetItemHoverName(self.item.id))
-            self.ctrl._root._vars["item_disp_databoard"] = databoard
+            del screen_vars["disp_board"]
+            if screen_vars.get("disp_board_src") is self.ctrl:
+                screen_vars.pop("disp_board_src")
+                return
+        databoard = self.ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "item_hover_text")
+        databoard.SetLayer(100)
+        fmt = GetItemHoverName(self.item.id) or self.item.id
+        if self.tag is not None:
+            fmt += "\n\n§8接受标签: " + self.tag
+        databoard["image/label"].asLabel().SetText(fmt, sync_size=True)
+        x, y = self.ctrl.GetRootPos()
+        sizex, sizey = self.ctrl.GetSize()
+        csizex, csizey = databoard.GetSize()
+        databoard.SetPos((x + sizex / 2 + csizex / 2, y -(sizey / 2 + csizey / 2)))
+        screen_vars["disp_board"] = databoard
+        screen_vars["disp_board_src"] = self.ctrl
 
+
+class FluidDisplayer:
+    def __init__(self, ctrl, fluid_id, fluid_volume, max_volume):
+        # type: (UBaseCtrl, str, float, float) -> None
+        self.ctrl = ctrl
+        self.fluid_id = fluid_id
+        self.volume = fluid_volume
+        self.max_volume = max_volume
+        self.check_btn = ctrl["data_btn"].asButton()
+        self.check_btn.SetCallback(self.onBtnReleased)
+        self.update()
+
+    def update(self):
+        UpdateFluidDisplay(self.ctrl, self.fluid_id, self.volume, self.max_volume)
+
+    def onBtnReleased(self, params):
+        screen_vars = self.ctrl._root._vars
+        last_board = screen_vars.get("disp_board")
+        if isinstance(last_board, UBaseCtrl):
+            last_board.Remove()
+            del screen_vars["disp_board"]
+            if screen_vars.get("disp_board_src") is self.ctrl:
+                screen_vars.pop("disp_board_src")
+                return
+        databoard = self.ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "item_hover_text")
+        databoard["image/label"].asLabel().SetText(
+            "§d流体类型： §f"
+            + (GetItemHoverName(self.fluid_id) or self.fluid_id)
+            + "\n"
+            + "§a体积： §f"
+            + _formatFluidVolume(self.volume)
+        )
+        databoard.SetLayer(100)
+        x, y = self.ctrl.GetRootPos()
+        sizex, sizey = self.ctrl.GetSize()
+        csizex, csizey = databoard.GetSize()
+        databoard.SetPos((x + sizex / 2 + csizex / 2, y))
+        screen_vars["disp_board"] = databoard
+        screen_vars["disp_board_src"] = self.ctrl

@@ -17,6 +17,6 @@ recipes = [
     preset.Simple11TagRecipe("ingots/tin", "skybluetech:tin_plate"),
     preset.Simple11TagRecipe("ingots/lead", "skybluetech:lead_plate"),
     preset.Simple11TagRecipe("ingots/silver", "skybluetech:silver_plate"),
-    preset.Simple11TagRecipe("ingots/plainum", "skybluetech:platinum_plate"),
+    preset.Simple11TagRecipe("ingots/platinum", "skybluetech:platinum_plate"),
     preset.Simple11TagRecipe("ingots/nickel", "skybluetech:nickel_plate"),
 ]

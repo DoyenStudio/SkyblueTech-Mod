@@ -69,6 +69,10 @@ class PresetMachineRecipe(object):
         # type: (str, str) -> MachineRecipe
         return MachineRecipe({"item": {0: Input(input_tag, 1, is_tag=True)}}, {"item": {1: Output(output_id, 1)}}, self.power_cost, self.tick_duration)
 
+    def SimpleXXTagRecipe(self, input_tag, input_count, output_id, output_count):
+        # type: (str, int, str, int) -> MachineRecipe
+        return MachineRecipe({"item": {0: Input(input_tag, input_count, is_tag=True)}}, {"item": {1: Output(output_id, output_count)}}, self.power_cost, self.tick_duration)
+
 
     def Recipe(self, inputs, outputs):
         # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]]) -> MachineRecipe

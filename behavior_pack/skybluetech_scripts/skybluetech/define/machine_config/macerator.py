@@ -16,7 +16,7 @@ recipes = [
     preset.Simple11Recipe("minecraft:cobblestone", "minecraft:sand"),
     preset.Simple11Recipe("minecraft:sand", "skybluetech:dust_block"),
     preset.Simple11Recipe("minecraft:lapis_lazuli", "skybluetech:lapis_dust"),
-    preset.Simple11Recipe("minecraft:coal", "skybluetech:coal_dust"),
+    preset.Simple11Recipe("minecraft:coal", "skybluetech:carbon_dust"),
     preset.Simple11Recipe("minecraft:charcoal", "skybluetech:carbon_dust"),
     preset.Simple11Recipe("minecraft:ancient_debris", "skybluetech:ancient_debris_dust"),
     # Ingot 2 Dust
@@ -32,9 +32,9 @@ recipes = [
     preset.SimpleXXRecipe("minecraft:raw_copper", 1, "skybluetech:copper_dust", 2), 
     preset.SimpleXXRecipe("minecraft:raw_iron", 1, "skybluetech:iron_dust", 2),
     preset.SimpleXXRecipe("minecraft:raw_gold", 1, "skybluetech:gold_dust", 2),
-    preset.SimpleXXRecipe("raws/tin", 1, "skybluetech:tin_dust", 2),
-    preset.SimpleXXRecipe("raws/lead", 1, "skybluetech:lead_dust", 2),
-    preset.SimpleXXRecipe("raws/silver", 1, "skybluetech:silver_dust", 2),
-    preset.SimpleXXRecipe("raws/platinum", 1, "skybluetech:platinum_dust", 2),
-    preset.SimpleXXRecipe("raws/nickel", 1, "skybluetech:nickel_dust", 2),
+    preset.SimpleXXTagRecipe("raws/tin", 1, "skybluetech:tin_dust", 2),
+    preset.SimpleXXTagRecipe("raws/lead", 1, "skybluetech:lead_dust", 2),
+    preset.SimpleXXTagRecipe("raws/silver", 1, "skybluetech:silver_dust", 2),
+    preset.SimpleXXTagRecipe("raws/platinum", 1, "skybluetech:platinum_dust", 2),
+    preset.SimpleXXTagRecipe("raws/nickel", 1, "skybluetech:nickel_dust", 2),
 ]

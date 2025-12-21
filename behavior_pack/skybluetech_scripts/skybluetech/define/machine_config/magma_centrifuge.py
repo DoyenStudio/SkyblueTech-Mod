@@ -9,7 +9,7 @@ recipes = [
             1: Output("skybluetech:light_lava", 18),
             2: Output("skybluetech:mid_lava", 60),
             3: Output("skybluetech:heavy_lava", 18),
-            4: Output("skybluetech:molten_clay", 4),
+            4: Output("skybluetech:molten_earth", 4),
         }},
         power_cost=80, tick_duration=20 * 5
     ),
@@ -17,7 +17,7 @@ recipes = [
         {"fluid": {0: Input("skybluetech:light_lava", 100)}},
         {"fluid": {
             1: Output("minecraft:lava", 60),
-            2: Output("skybluetech:molten_clay", 30),
+            2: Output("skybluetech:molten_earth", 30),
             3: Output("skybluetech:molten_impurity", 10),
         }},
         power_cost=80, tick_duration=20 * 5

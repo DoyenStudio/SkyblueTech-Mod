@@ -93,8 +93,8 @@
                                                 },
                                                 {
                                                     "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/panel/compressor_bg",
-                                                        "$mask_image": "textures/panel/compressor_mask",
+                                                        "$bg_image": "textures/ui/compressor_bg",
+                                                        "$mask_image": "textures/ui/compressor_mask",
                                                         "offset": [
                                                             1,
                                                             -43
@@ -130,8 +130,8 @@
                                                     "mode_change@common.button": {
                                                         "type": "button",
                                                         "$control_alpha": 1.0,
-                                                        "$default_texture": "textures/panel/button_default",
-                                                        "$hover_texture": "textures/panel/button_hovered",
+                                                        "$default_texture": "textures/ui/button_default",
+                                                        "$hover_texture": "textures/ui/button_hovered",
                                                         "$is_new_nine_slice": false,
                                                         "$label_color": [
                                                             1,
@@ -157,7 +157,7 @@
                                                             1.0
                                                         ],
                                                         "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                                        "$pressed_texture": "textures/panel/button_pressed",
+                                                        "$pressed_texture": "textures/ui/button_pressed",
                                                         "$texture_layer": 2,
                                                         "offset": [
                                                             37.0,

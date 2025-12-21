@@ -188,6 +188,6 @@
     "upgrade_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/panel/slot_upgrade_bg"
+        "texture": "textures/ui/slot_upgrade_bg"
     }
 }

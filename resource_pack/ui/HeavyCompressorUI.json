@@ -114,8 +114,8 @@
                                                 },
                                                 {
                                                     "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/panel/heavy_compressor_bg",
-                                                        "$mask_image": "textures/panel/heavy_compressor_mask",
+                                                        "$bg_image": "textures/ui/heavy_compressor_bg",
+                                                        "$mask_image": "textures/ui/heavy_compressor_mask",
                                                         "offset": [
                                                             1,
                                                             -43

@@ -2,8 +2,8 @@
     "ExitButton@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
-        "$default_texture": "textures/panel/exit_btn",
-        "$hover_texture": "textures/panel/exit_btn",
+        "$default_texture": "textures/ui/exit_btn",
+        "$hover_texture": "textures/ui/exit_btn",
         "$is_new_nine_slice": false,
         "$label_color": [
             1,
@@ -29,7 +29,7 @@
             0
         ],
         "$pressed_button_name": "%netease_editor_template_namespace.click",
-        "$pressed_texture": "textures/panel/exit_btn_pressed",
+        "$pressed_texture": "textures/ui/exit_btn_pressed",
         "$texture_layer": 2,
         "offset": [
             "0%+127.5px",
@@ -90,7 +90,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/panel/panel_bg",
+                    "texture": "textures/ui/panel_bg",
                     "uv": [
                         0.0,
                         0.0
@@ -219,7 +219,7 @@
                                                                         2.0,
                                                                         2.0
                                                                     ],
-                                                                    "texture": "textures/panel/bg_frame_01"
+                                                                    "texture": "textures/ui/bg_frame_01"
                                                                 }
                                                             },
                                                             {
@@ -243,7 +243,7 @@
                                                                         2.0,
                                                                         2.0
                                                                     ],
-                                                                    "texture": "textures/panel/frame_empty"
+                                                                    "texture": "textures/ui/frame_empty"
                                                                 }
                                                             }
                                                         ]

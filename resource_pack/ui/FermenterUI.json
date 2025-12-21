@@ -48,7 +48,7 @@
                                     4.0,
                                     4.0
                                 ],
-                                "texture": "textures/panel/dialog_background_opaque",
+                                "texture": "textures/ui/dialog_background_opaque",
                                 "controls": [
                                     {
                                         "@SkybluePanelLib.player_backpack": {
@@ -231,7 +231,7 @@
                                                                         2.0,
                                                                         2.0
                                                                     ],
-                                                                    "texture": "textures/panel/frame_empty"
+                                                                    "texture": "textures/ui/frame_empty"
                                                                 }
                                                             },
                                                             {
@@ -248,7 +248,7 @@
                                                                     "layer": 1,
                                                                     "clip_direction": "left",
                                                                     "clip_ratio": 0.0,
-                                                                    "texture": "textures/panel/red_bar"
+                                                                    "texture": "textures/ui/red_bar"
                                                                 }
                                                             }
                                                         ]
@@ -506,6 +506,6 @@
         "layer": 1,
         "clip_direction": "left",
         "clip_ratio": 0.0,
-        "texture": "textures/panel/left_triangle_slider_button"
+        "texture": "textures/ui/left_triangle_slider_button"
     }
 }

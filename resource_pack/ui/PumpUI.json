@@ -1,18 +1,18 @@
 {
     "main@common.base_screen": {
+        "$screen_content": "PumpUI.pump_ui",
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             },
             {
                 "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
             }
-        ],
-        "$screen_content": "PumpUI.pump_ui"
+        ]
     },
     "namespace": "PumpUI",
     "pump_ui": {

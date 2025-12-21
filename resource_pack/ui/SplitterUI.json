@@ -130,8 +130,8 @@
                                                 },
                                                 {
                                                     "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/panel/splitter_bg",
-                                                        "$mask_image": "textures/panel/splitter_mask",
+                                                        "$bg_image": "textures/ui/splitter_bg",
+                                                        "$mask_image": "textures/ui/splitter_mask",
                                                         "offset": [
                                                             1,
                                                             -43

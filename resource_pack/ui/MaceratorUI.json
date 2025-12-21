@@ -1,7 +1,7 @@
 {
     "macerator_progress@SkybluePanelLib.ProgressBar": {
-        "$bg_image": "textures/panel/macerator_prgs_bg",
-        "$mask_image": "textures/panel/macerator_prgs_top",
+        "$bg_image": "textures/ui/macerator_prgs_bg",
+        "$mask_image": "textures/ui/macerator_prgs_top",
         "offset": [
             0,
             -42
@@ -134,6 +134,14 @@
                                                 },
                                                 {
                                                     "progress@MaceratorUI.macerator_progress": {}
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            71,
+                                                            0
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }

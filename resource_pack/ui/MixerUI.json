@@ -15,8 +15,8 @@
         ]
     },
     "mixer_progress@SkybluePanelLib.ProgressBar": {
-        "$bg_image": "textures/panel/mixer_arrow_img",
-        "$mask_image": "textures/panel/mixer_arrow_mask",
+        "$bg_image": "textures/ui/mixer_arrow_img",
+        "$mask_image": "textures/ui/mixer_arrow_mask",
         "offset": [
             0,
             -43
@@ -163,6 +163,14 @@
                                                         "offset": [
                                                             106,
                                                             -57
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            71,
+                                                            0
                                                         ]
                                                     }
                                                 }

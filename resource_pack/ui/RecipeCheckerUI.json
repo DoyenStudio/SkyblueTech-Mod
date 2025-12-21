@@ -1,0 +1,1005 @@
+{
+    "alloy_furnace_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            80.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -60,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        -40,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "layer": 36,
+                    "offset": [
+                        -20,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.item_displayer": {
+                    "layer": 53,
+                    "offset": [
+                        -40,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.item_displayer": {
+                    "layer": 70,
+                    "offset": [
+                        40,
+                        -20
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "layer": 87,
+                    "offset": [
+                        10,
+                        -20
+                    ],
+                    "size": [
+                        36,
+                        20
+                    ]
+                }
+            },
+            {
+                "flame@SkybluePanelLib.Flame": {
+                    "layer": 91,
+                    "offset": [
+                        -40,
+                        0
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            }
+        ]
+    },
+    "compressor_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            40.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        30,
+                        0
+                    ]
+                }
+            },
+            {
+                "progress@CompressorUI.compressor_progress": {
+                    "layer": 36,
+                    "offset": [
+                        0,
+                        0
+                    ]
+                }
+            }
+        ]
+    },
+    "content": {
+        "type": "panel",
+        "size": [
+            200.0,
+            220.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg_image": {
+                    "type": "image",
+                    "priority": 13,
+                    "layer": 1,
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/panel_bg_rect"
+                }
+            },
+            {
+                "recipes_view@common.scrolling_panel": {
+                    "$background_nine_slice_buttom": 0,
+                    "$background_nine_slice_left": 0,
+                    "$background_nine_slice_right": 0,
+                    "$background_nine_slice_top": 0,
+                    "$background_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$box_nine_slice_buttom": 0,
+                    "$box_nine_slice_left": 0,
+                    "$box_nine_slice_right": 0,
+                    "$box_nine_slice_top": 0,
+                    "$box_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$is_background_nine_slice": false,
+                    "$is_box_nine_slice": false,
+                    "$is_track_nine_slice": false,
+                    "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                    "$scroll_background_texture": "textures/ui/ScrollRail",
+                    "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                    "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                    "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                    "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                    "$scroll_track_texture": "textures/ui/ScrollRail",
+                    "$scrolling_content": "RecipeCheckerUI.recipe_fgrid",
+                    "$show_background": true,
+                    "$track_nine_slice_buttom": 0,
+                    "$track_nine_slice_left": 0,
+                    "$track_nine_slice_right": 0,
+                    "$track_nine_slice_top": 0,
+                    "$track_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "layer": 2,
+                    "offset": [
+                        0,
+                        6
+                    ],
+                    "property_bag": {
+                        "#scrolling_content": "RecipeCheckerUI.crafting_table_recipes"
+                    },
+                    "size": [
+                        180,
+                        188
+                    ]
+                }
+            },
+            {
+                "left_sections_grid": {
+                    "type": "grid",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        "-50%+-10px",
+                        0.0
+                    ],
+                    "layer": 1,
+                    "collection_name": "recipe_left_sections",
+                    "grid_dimensions": [
+                        1,
+                        1
+                    ],
+                    "grid_item_template": "RecipeCheckerUI.left_section"
+                }
+            },
+            {
+                "title": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        3.0,
+                        6.0
+                    ],
+                    "size": [
+                        "97%+0px",
+                        "default"
+                    ],
+                    "layer": 3,
+                    "color": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "font_scale_factor": 1.3,
+                    "font_type": "default",
+                    "shadow": true,
+                    "text": "未知配方处理器",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "panel@RecipeCheckerUI.recipe_fgrid": {}
+            },
+            {
+                "close_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/close_button_default",
+                    "$hover_texture": "textures/ui/close_button_default",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/close_button_default",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [
+                        -2.0,
+                        2.0
+                    ],
+                    "size": [
+                        18.0,
+                        18.0
+                    ],
+                    "layer": 2,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "crafting_table_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            80.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -50,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        -30,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "layer": 36,
+                    "offset": [
+                        -10,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.item_displayer": {
+                    "layer": 53,
+                    "offset": [
+                        -50,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.item_displayer": {
+                    "layer": 70,
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot5@SkybluePanelLib.item_displayer": {
+                    "layer": 87,
+                    "offset": [
+                        -10,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot6@SkybluePanelLib.item_displayer": {
+                    "layer": 104,
+                    "offset": [
+                        -50,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot7@SkybluePanelLib.item_displayer": {
+                    "layer": 121,
+                    "offset": [
+                        -30,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot8@SkybluePanelLib.item_displayer": {
+                    "layer": 138,
+                    "offset": [
+                        -10,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot9@SkybluePanelLib.item_displayer": {
+                    "layer": 155,
+                    "offset": [
+                        50,
+                        0
+                    ]
+                }
+            },
+            {
+                "image": {
+                    "type": "image",
+                    "offset": [
+                        20.0,
+                        0.0
+                    ],
+                    "size": [
+                        30.0,
+                        30.0
+                    ],
+                    "layer": 172,
+                    "texture": "textures/ui/arrow_img"
+                }
+            }
+        ]
+    },
+    "fluid_condenser_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            60.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        30,
+                        0
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "layer": 19,
+                    "offset": [
+                        -35,
+                        0
+                    ],
+                    "size": [
+                        30,
+                        50
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "layer": 45
+                }
+            }
+        ]
+    },
+    "furnace_recipe": {
+        "type": "panel",
+        "size": [
+            180.0,
+            60.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -30,
+                        -10
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        30,
+                        -10
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "layer": 87,
+                    "offset": [
+                        0,
+                        -10
+                    ]
+                }
+            },
+            {
+                "flame@SkybluePanelLib.Flame": {
+                    "layer": 91,
+                    "offset": [
+                        -30,
+                        10
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            }
+        ]
+    },
+    "left_section": {
+        "type": "panel",
+        "size": [
+            26.0,
+            26.0
+        ],
+        "controls": [
+            {
+                "image": {
+                    "type": "image",
+                    "layer": 2,
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/left_section"
+                }
+            },
+            {
+                "item_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        "100%+-7px",
+                        "100%+-7px"
+                    ],
+                    "layer": 2,
+                    "property_bag": {
+                        "#item_id_aux": 131072
+                    }
+                }
+            },
+            {
+                "select_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "",
+                    "$hover_texture": "",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "small",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "",
+                    "$texture_layer": 2,
+                    "layer": 2,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "recipe_left_sections",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "macerator_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            40.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        30,
+                        0
+                    ]
+                }
+            },
+            {
+                "progress@MaceratorUI.macerator_progress": {
+                    "layer": 36,
+                    "offset": [
+                        0,
+                        0
+                    ]
+                }
+            }
+        ]
+    },
+    "magma_centrifuge_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            90.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_size": "small",
+                    "$text_visible": false,
+                    "$text_y_offset": [
+                        0,
+                        "2%+0px"
+                    ],
+                    "layer": 6,
+                    "offset": [
+                        -47,
+                        0
+                    ],
+                    "size": [
+                        29,
+                        76
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        14,
+                        -22
+                    ],
+                    "size": [
+                        22,
+                        30
+                    ]
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        36,
+                        -22
+                    ],
+                    "size": [
+                        22,
+                        30
+                    ]
+                }
+            },
+            {
+                "fluid3@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        58,
+                        -22
+                    ],
+                    "size": [
+                        22,
+                        30
+                    ]
+                }
+            },
+            {
+                "fluid4@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        14,
+                        22
+                    ],
+                    "size": [
+                        22,
+                        30
+                    ]
+                }
+            },
+            {
+                "fluid5@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        36,
+                        22
+                    ],
+                    "size": [
+                        22,
+                        30
+                    ]
+                }
+            },
+            {
+                "fluid6@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        58,
+                        22
+                    ],
+                    "size": [
+                        22,
+                        30
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/magma_centrifuge_proc",
+                    "$mask_image": "textures/ui/magma_centrifuge_proc_mask",
+                    "offset": [
+                        22,
+                        0
+                    ],
+                    "size": [
+                        120,
+                        15
+                    ]
+                }
+            }
+        ]
+    },
+    "magma_furnace_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            70.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "layer": 19,
+                    "offset": [
+                        35,
+                        0
+                    ],
+                    "size": [
+                        30,
+                        50
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "layer": 45
+                }
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "$screen_content": "RecipeCheckerUI.content"
+    },
+    "mixer_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            80.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -6,
+                        -22
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "layer": 19,
+                    "offset": [
+                        -40,
+                        0
+                    ],
+                    "size": [
+                        30,
+                        65
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/mixer_arrow_img",
+                    "$mask_image": "textures/ui/mixer_arrow_mask",
+                    "layer": 45,
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": [
+                        50,
+                        25
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 49,
+                    "offset": [
+                        36,
+                        5
+                    ]
+                }
+            }
+        ]
+    },
+    "namespace": "RecipeCheckerUI",
+    "recipe_fgrid": {
+        "type": "panel"
+    }
+}

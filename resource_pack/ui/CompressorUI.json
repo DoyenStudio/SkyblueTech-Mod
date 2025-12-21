@@ -1,7 +1,7 @@
 {
     "compressor_progress@SkybluePanelLib.ProgressBar": {
-        "$bg_image": "textures/panel/compressor_bg",
-        "$mask_image": "textures/panel/compressor_mask",
+        "$bg_image": "textures/ui/compressor_bg",
+        "$mask_image": "textures/ui/compressor_mask",
         "offset": [
             1,
             -41
@@ -128,6 +128,14 @@
                                                         "offset": [
                                                             106,
                                                             -57
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            71,
+                                                            0
                                                         ]
                                                     }
                                                 }

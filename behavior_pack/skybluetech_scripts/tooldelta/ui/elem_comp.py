@@ -20,17 +20,17 @@ from mod.client.ui.controls.neteasePaperDollUIControl import NeteasePaperDollUIC
 from mod.client.ui.controls.baseUIControl import BaseUIControl
 from mod.client.ui.controls.scrollViewUIControl import ScrollViewUIControl
 from mod.client.ui.controls.sliderUIControl import SliderUIControl
-from ..define import UICtrlPosData
+from ..define import UICtrlPosData, Item
 from ..api.timer import ExecLater
 from ..api.client.ui import GetToggleMode
 from ..events.client.ui import GridComponentSizeChangedClientEvent
 from ..no_runtime_typing import TYPE_CHECKING
 from .functions import addElement, removeElement
+from .utils import SNode
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
     from typing import Callable, Any, Literal
-    from ..define.item import Item
     from .screen_comp import UScreenNode
     from .proxy_screen import UScreenProxy
     ScreenLike = UScreenNode | UScreenProxy
@@ -146,6 +146,12 @@ class UBaseCtrl(object):
         self._removed = True
         return removeElement(self._root, self.base)
 
+    def GetElement(self, path):
+        # type: (str | SNode) -> UBaseCtrl
+        return self._get_path_cache(path)
+
+    # ====
+
     def __truediv__(self, path):
         # type: (str) -> UBaseCtrl
         return self._get_path_cache(path)
@@ -160,6 +166,8 @@ class UBaseCtrl(object):
         return obj
 
     def _get_path_cache(self, path):
+        if isinstance(path, SNode):
+            path = path.base
         if path not in self._child_cacher:
             self._child_cacher[path] = UBaseCtrl(self._root, self.base.GetChildByPath("/" + path))
         return self._child_cacher[path]
@@ -178,6 +186,11 @@ class UItemRenderer(UBaseCtrl):
     def SetUiItem(self, item):
         # type: (Item) -> None
         self.base.SetUiItem(item.newItemName, item.newAuxValue, item.isEnchanted, item.userData or {})
+
+    def GetUiItem(self):
+        # type: () -> tuple[str, int, bool]
+        res = self.base.GetUiItem()
+        return res["itemName"], res["auxValue"], res["isEnchanted"]
 
 
 class ULabel(UBaseCtrl):

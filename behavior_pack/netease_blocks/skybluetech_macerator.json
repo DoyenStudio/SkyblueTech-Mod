@@ -12,7 +12,7 @@
             },
             "netease:block_container": {
                 "container_size": 6,
-                "custom_description": "打粉机",
+                "custom_description": "磨粉机",
                 "screen_name": "MaceratorUI.main"
             },
             "netease:block_entity": {

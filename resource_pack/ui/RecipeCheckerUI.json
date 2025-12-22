@@ -720,7 +720,7 @@
                     "$pressed_button_name": "#recipe_checker.select_category",
                     "$pressed_texture": "",
                     "$texture_layer": 2,
-                    "layer": 0,
+                    "layer": 4,
                     "button_mappings": [
                         {
                             "to_button_id": "$pressed_button_name",

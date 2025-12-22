@@ -1,7 +1,7 @@
 # coding=utf-8
 import time
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl, UScreenNode
+from skybluetech_scripts.tooldelta.ui import UBaseCtrl, UScreenNode, UScreenProxy
 from skybluetech_scripts.tooldelta.plugins.allitems_getter import GetItemsByTag, allitems_by_tag
 from skybluetech_scripts.tooldelta.plugins.recipe_obj import (
     CraftingRecipeRes,
@@ -19,13 +19,6 @@ DISP_BOARD_KEY = "disp_board"
 DISP_BOARD_SRC_KEY = "disp_board_src"
 
 
-def ClearDisplayBoard(root):
-    # type: (UScreenNode) -> None
-    if DISP_BOARD_KEY in root._vars:
-        root._vars.pop(DISP_BOARD_KEY).Remove()
-    if DISP_BOARD_SRC_KEY in root._vars:
-        root._vars.pop(DISP_BOARD_SRC_KEY)
-
 
 class ItemDisplayer:
     def __init__(self, ctrl, item, tag=None):
@@ -39,7 +32,7 @@ class ItemDisplayer:
         self.check_btn.SetCallback(self.onBtnReleased)
         self.update()
         self.item_renderer.SetVisible(True)
-        self.double_click_detecter = getDoubleClickDetecter()
+        self.double_click_detecter = GetDoubleClickDetecter()
 
     def UpdateItem(self, item):
         # type: (Item) -> None
@@ -54,32 +47,22 @@ class ItemDisplayer:
         self.item_renderer.SetUiItem(self.item)
 
     def onBtnReleased(self, params):
-        screen_vars = self.ctrl._root._vars
-        last_board = screen_vars.get(DISP_BOARD_KEY)
         if self.double_click_detecter():
             from .recipe_checker_ui import RecipeCheckerUI
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):
                 root.renderRecipesOfInput(self.item.id, CategoryType.ITEM)
             return
-        if isinstance(last_board, UBaseCtrl):
-            last_board.Remove()
-            del screen_vars[DISP_BOARD_KEY]
-            if screen_vars.get(DISP_BOARD_SRC_KEY) is self.ctrl:
-                screen_vars.pop(DISP_BOARD_SRC_KEY)
-                return
-        databoard = self.ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "item_hover_text")
-        databoard.SetLayer(100)
+        if NeedRemoveDisplayBoard(self.ctrl):
+            return
         fmt = GetItemHoverName(self.item.id) or self.item.id
         if self.tag is not None:
             fmt += "\n\n§8接受标签: " + self.tag
-        databoard["image/label"].asLabel().SetText(fmt, sync_size=True)
+        databoard = CreateDisplayBoard(self.ctrl, fmt)
         x, y = self.ctrl.GetRootPos()
         sizex, sizey = self.ctrl.GetSize()
         csizex, csizey = databoard.GetSize()
         databoard.SetPos((x + sizex / 2 + csizex / 2, y -(sizey / 2 + csizey / 2)))
-        screen_vars[DISP_BOARD_KEY] = databoard
-        screen_vars[DISP_BOARD_SRC_KEY] = self.ctrl
 
 
 class FluidDisplayer:
@@ -92,42 +75,33 @@ class FluidDisplayer:
         self.check_btn = ctrl["data_btn"].asButton()
         self.check_btn.SetCallback(self.onBtnReleased)
         self.update()
-        self.double_click_detecter = getDoubleClickDetecter()
+        self.double_click_detecter = GetDoubleClickDetecter()
 
     def update(self):
         UpdateFluidDisplay(self.ctrl, self.fluid_id, self.volume, self.max_volume)
 
     def onBtnReleased(self, params):
-        screen_vars = self.ctrl._root._vars
-        last_board = screen_vars.get(DISP_BOARD_KEY)
         if self.double_click_detecter():
             from .recipe_checker_ui import RecipeCheckerUI
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):
                 root.renderRecipesOfInput(self.fluid_id, CategoryType.FLUID)
             return
-        if isinstance(last_board, UBaseCtrl):
-            last_board.Remove()
-            del screen_vars[DISP_BOARD_KEY]
-            if screen_vars.get(DISP_BOARD_SRC_KEY) is self.ctrl:
-                screen_vars.pop(DISP_BOARD_SRC_KEY)
-                return
-        databoard = self.ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "item_hover_text")
-        databoard["image/label"].asLabel().SetText(
+        if NeedRemoveDisplayBoard(self.ctrl):
+            RemoveDisplayBoard(self.ctrl._root)
+            return
+        databoard = CreateDisplayBoard(
+            self.ctrl,
             "§d流体类型： §f"
             + (GetItemHoverName(self.fluid_id) or self.fluid_id)
             + "\n"
             + "§a体积： §f"
             + _formatFluidVolume(self.volume)
         )
-        databoard.SetLayer(100)
         x, y = self.ctrl.GetRootPos()
         sizex, sizey = self.ctrl.GetSize()
         csizex, csizey = databoard.GetSize()
         databoard.SetPos((x + sizex / 2 + csizex / 2, y))
-        screen_vars[DISP_BOARD_KEY] = databoard
-        screen_vars[DISP_BOARD_SRC_KEY] = self.ctrl
-
         
 
 def RenderGenericMachineRecipe(panel, recipe):
@@ -186,14 +160,18 @@ def RenderCraftingTableRecipe(panel, recipe):
     else:
         for i, input in enumerate(recipe.base.inputs):
             ItemDisplayer(panel["slot%d" % i], Item(input.item_id, input.aux_value))
-    ItemDisplayer(panel["slot9"], Item(recipe.base.result[0].item_id, recipe.base.result[0].aux_value))
+    ItemDisplayer(panel["slot9"], Item(
+        recipe.base.result[0].item_id,
+        recipe.base.result[0].aux_value,
+        recipe.base.result[0].count,
+    ))
 
 def RenderFurnaceRecipe(panel, recipe):
     # type: (UBaseCtrl, GenericFurnaceRecipe) -> None
     ItemDisplayer(panel["slot0"], Item(recipe.base.input_item_id))
     ItemDisplayer(panel["slot1"], Item(recipe.base.output.item_id, recipe.base.output.aux_value))
 
-def getDoubleClickDetecter(delay=0.25):
+def GetDoubleClickDetecter(delay=0.25):
     ticker = [0.0]
     def onclick_cb():
         nowtime = time.time()
@@ -202,3 +180,28 @@ def getDoubleClickDetecter(delay=0.25):
         ticker[0] = nowtime
         return False
     return onclick_cb
+
+def RemoveDisplayBoard(root):
+    # type: (UScreenNode | UScreenProxy) -> None
+    screen_vars = root._vars
+    if DISP_BOARD_KEY in screen_vars:
+        screen_vars.pop(DISP_BOARD_KEY).Remove()
+    if screen_vars.get(DISP_BOARD_SRC_KEY):
+        screen_vars.pop(DISP_BOARD_SRC_KEY)
+
+def NeedRemoveDisplayBoard(ctrl):
+    # type: (UBaseCtrl) -> bool
+    screen_vars = ctrl._root._vars
+    return DISP_BOARD_KEY in screen_vars and screen_vars.get(DISP_BOARD_SRC_KEY) is ctrl
+
+def CreateDisplayBoard(ctrl, text):
+    # type: (UBaseCtrl, str) -> UBaseCtrl
+    RemoveDisplayBoard(ctrl._root)
+    screen_vars = ctrl._root._vars
+    databoard = ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "display_board")
+    databoard["image/label"].asLabel().SetText(text, sync_size=True)
+    databoard.SetLayer(100)
+    screen_vars[DISP_BOARD_KEY] = databoard
+    screen_vars[DISP_BOARD_SRC_KEY] = ctrl
+    return databoard
+

@@ -1,4 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.ui import UBaseCtrl
+
 
 class CategoryType:
     ITEM = "item"
@@ -34,6 +36,17 @@ class RecipeBase:
         }
         """
         raise NotImplementedError
+
+    def RenderInit(self, panel_ctrl):
+        # type: (UBaseCtrl) -> None
+        raise NotImplementedError
+
+    def RenderUpdate(self, panel_ctrl, render_ticks):
+        # type: (UBaseCtrl, int) -> None
+        """
+        0.2 秒触发一次。实际传入的 render_ticks 一秒增加 30。
+        """
+        pass
 
     def __hash__(self):
         raise NotImplementedError

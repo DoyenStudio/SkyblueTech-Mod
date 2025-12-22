@@ -10,24 +10,15 @@ from skybluetech_scripts.tooldelta.ui import (
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client.control import OnKeyPressInGame
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
-from ...define.machine_config.define import MachineRecipe
-from ..machines.utils import UpdateGenericProgressL2R
 from ...mini_jei import (
     CategoryType,
     RecipeBase,
     GetRecipesByInput,
     GetRecipesByOutput,
-    GenericCraftingTableRecipe,
-    GenericFurnaceRecipe,
-)
-from .utils import (
     CreateDisplayBoard,
-    RemoveDisplayBoard,
     NeedRemoveDisplayBoard,
+    RemoveDisplayBoard,
     GetDoubleClickDetecter,
-    RenderGenericMachineRecipe,
-    RenderCraftingTableRecipe,
-    RenderFurnaceRecipe,
 )
 
 MAIN_PATH = SNode(
@@ -77,7 +68,7 @@ class RecipeCheckerUI(UScreenNode):
         self.update_ticks += 1
         if self.update_ticks % 6 == 0:
             for ctrl, rcp in self.ctrls_in_fgrid.items():
-                self.updateFakegridCtrl(ctrl, rcp)
+                rcp.RenderUpdate(ctrl, self.update_ticks)
 
     def OnCurrentPageKeyEvent(self, event):
         # type: (OnKeyPressInGame) -> None
@@ -140,12 +131,7 @@ class RecipeCheckerUI(UScreenNode):
             last_xize, last_ysize = elem.GetSize()
             elem.SetPos((0, last_ysize * i))
             self.ctrls_in_fgrid[elem] = rcp
-            if isinstance(rcp, MachineRecipe):
-                RenderGenericMachineRecipe(elem, rcp)
-            elif isinstance(rcp, GenericCraftingTableRecipe):
-                RenderCraftingTableRecipe(elem, rcp)
-            elif isinstance(rcp, GenericFurnaceRecipe):
-                RenderFurnaceRecipe(elem, rcp)
+            rcp.RenderInit(elem)
         rcp_fake_grid.SetSize((last_xize, last_ysize * len(rcps)))
 
     @ViewBinder.binding(ViewBinder.BF_ButtonClick, "#recipe_checker.select_category")  # pyright: ignore[reportOptionalCall]
@@ -201,11 +187,3 @@ class RecipeCheckerUI(UScreenNode):
             recipe_dic.setdefault(rcp.recipe_icon_id, []).append(rcp)
         self.PushRecipes(recipe_dic)
         self.updateAll()
-
-    def updateFakegridCtrl(self, ctrl, rcp):
-        # type: (UBaseCtrl, RecipeBase) -> None
-        if isinstance(rcp, MachineRecipe):
-            progress_bar = ctrl["progress"]
-            run_time = self.update_ticks * 0.66 % rcp.tick_duration
-            UpdateGenericProgressL2R(progress_bar, run_time / rcp.tick_duration)
-            

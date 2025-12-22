@@ -1,5 +1,4 @@
 # coding=utf-8
-import time
 from skybluetech_scripts.tooldelta.plugins.recipe_obj import (
     CraftingRecipeRes,
     UnorderedCraftingRecipeRes,
@@ -12,59 +11,11 @@ from skybluetech_scripts.tooldelta.api.client.world import (
     GetRecipesByResult,
 )
 from skybluetech_scripts.tooldelta.plugins.allitems_getter import AddItemGettedCallback
-from .define import CategoryType, RecipeBase
-from .register import RegisterRecipe
-
-
-class GenericCraftingTableRecipe(RecipeBase):
-    recipe_icon_id = "minecraft:crafting_table"
-    render_ui_def_name = "RecipeCheckerUI.crafting_table_recipes"
-
-    def __init__(self, base):
-        # type: (CraftingRecipeRes | UnorderedCraftingRecipeRes) -> None
-        self.base = base
-
-    def GetInputs(self):
-        # type: () -> dict[str, list[str]]
-        if isinstance(self.base, CraftingRecipeRes):
-            return {CategoryType.ITEM: [
-                v.item_id
-                for v in self.base.pattern_key.values()
-            ]}
-        else:
-            return {CategoryType.ITEM: [
-                v.item_id
-                for v in self.base.inputs
-            ]}
-
-    def GetOutputs(self):
-        # type: () -> dict[str, list[str]]
-        return {CategoryType.ITEM: [
-            v.item_id
-            for v in self.base.result
-        ]}
-
-    def __hash__(self):
-        return
-
-
-
-class GenericFurnaceRecipe(RecipeBase):
-    recipe_icon_id = "minecraft:furnace"
-    render_ui_def_name = "RecipeCheckerUI.furnace_recipes"
-
-    def __init__(self, base):
-        # type: (FurnaceRecipe) -> None
-        self.base = base
-
-    def GetInputs(self):
-        # type: () -> dict[str, list[str]]
-        return {CategoryType.ITEM: [self.base.input_item_id]}
-
-    def GetOutputs(self):
-        # type: () -> dict[str, list[str]]
-        return {CategoryType.ITEM: [self.base.output.item_id]}
-
+from .core.register import RegisterRecipe
+from .common.recipe_cls import (
+    GenericCraftingTableRecipe,
+    GenericFurnaceRecipe,
+)
 
 
 items_from_recipe_loaded = set() # type: set[str]
@@ -99,5 +50,6 @@ def RegisterItemToRecipe(item_id):
 def onItemsLoaded(item_ids):
     for item_id in item_ids:
         RegisterItemToRecipe(item_id)
+
 
 AddItemGettedCallback(onItemsLoaded)

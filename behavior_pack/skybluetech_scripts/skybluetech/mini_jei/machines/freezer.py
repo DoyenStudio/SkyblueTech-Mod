@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from .define import CategoryType, MachineRecipe, Input, Output
+from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 MACHINE_ID = "skybluetech:freezer"
 

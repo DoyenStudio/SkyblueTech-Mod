@@ -7,6 +7,7 @@ from ..events.server import DelServerPlayerEvent
 allitems = set() # type: set[str]
 allitems_by_tag = {} # type: dict[str, set[str]]
 client_already_get_allitems = set() # type: set[str]
+items_getted_callback = []
 
 
 class GetAllItemsRequest(CustomC2SEvent):
@@ -65,6 +66,8 @@ def onGetResponse(event):
     else:
         print("[INFO] GetAllItemsResponse: Got all items from server (%d)" % len(event.items))
         loadAllItems(event.items)
+        for cb in items_getted_callback:
+            cb(allitems)
 
 def loadAllItems(_allitems):
     # type: (list[str]) -> None
@@ -84,3 +87,8 @@ def GetItemsByTag(tag):
     # type: (str) -> set[str]
     "ClientSide function"
     return allitems_by_tag.get(tag, set())
+
+def AddItemGettedCallback(callback):
+    "ClientSide function"
+    items_getted_callback.append(callback)
+

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 IO_ENERGY = "skybluetech:fermenter_io_energy"
 IO_FLUID1 = "skybluetech:fermenter_io_fluid1"
 IO_FLUID2 = "skybluetech:fermenter_io_fluid2"

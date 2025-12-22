@@ -147,7 +147,7 @@
         "type": "panel",
         "size": [
             200.0,
-            220.0
+            215.0
         ],
         "layer": 1,
         "controls": [
@@ -232,11 +232,10 @@
                         "-50%+-10px",
                         0.0
                     ],
-                    "layer": 1,
                     "collection_name": "recipe_left_sections",
                     "grid_dimensions": [
                         1,
-                        1
+                        0
                     ],
                     "grid_item_template": "RecipeCheckerUI.left_section"
                 }
@@ -248,7 +247,7 @@
                     "anchor_to": "top_left",
                     "offset": [
                         3.0,
-                        6.0
+                        5.0
                     ],
                     "size": [
                         "97%+0px",
@@ -266,9 +265,6 @@
                     "text": "未知配方处理器",
                     "text_alignment": "center"
                 }
-            },
-            {
-                "panel@RecipeCheckerUI.recipe_fgrid": {}
             },
             {
                 "close_btn@common.button": {
@@ -307,7 +303,79 @@
                     "anchor_to": "top_right",
                     "offset": [
                         -2.0,
-                        2.0
+                        3.0
+                    ],
+                    "size": [
+                        18.0,
+                        18.0
+                    ],
+                    "layer": 2,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "back_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/back_button",
+                    "$hover_texture": "textures/ui/back_button",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/back_button",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        6.0,
+                        3.0
                     ],
                     "size": [
                         18.0,
@@ -523,7 +591,7 @@
             }
         ]
     },
-    "furnace_recipe": {
+    "furnace_recipes": {
         "type": "panel",
         "size": [
             180.0,
@@ -592,11 +660,11 @@
             26.0,
             26.0
         ],
+        "layer": 5,
         "controls": [
             {
                 "image": {
                     "type": "image",
-                    "layer": 2,
                     "nineslice_size": [
                         4.0,
                         4.0,
@@ -614,7 +682,6 @@
                         "100%+-7px",
                         "100%+-7px"
                     ],
-                    "layer": 2,
                     "property_bag": {
                         "#item_id_aux": 131072
                     }
@@ -650,10 +717,10 @@
                         0,
                         0
                     ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_button_name": "#recipe_checker.select_category",
                     "$pressed_texture": "",
                     "$texture_layer": 2,
-                    "layer": 2,
+                    "layer": 0,
                     "button_mappings": [
                         {
                             "to_button_id": "$pressed_button_name",

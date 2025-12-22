@@ -6,7 +6,7 @@ from .recipe_checker_ui import RecipeCheckerUI
 def PushRecipeCheckerUI(icon_item_name, recipes):
     # type: (str, list[MachineRecipe]) -> RecipeCheckerUI
     uiNode = RecipeCheckerUI.PushUI()
-    uiNode.SetRecipes({icon_item_name: recipes})
+    uiNode.PushRecipes({icon_item_name: recipes}) # pyright: ignore[reportArgumentType]
     return uiNode
 
 def AsRecipeCheckerBtn(

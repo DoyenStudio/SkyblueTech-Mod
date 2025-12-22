@@ -238,20 +238,29 @@ class UButton(UBaseCtrl):
             )
         self.base = base
 
-    def SetCallback(self, callback):
-        # type: (Callable[[Any], None]) -> None
+    def SetCallback(
+        self,
+        callback # type: Callable[[Any], None]
+    ):
         self.base.AddTouchEventParams({"isSwallow": True})
         self.base.SetButtonTouchUpCallback(callback) # pyright: ignore[reportArgumentType]
+        return self
 
-    def SetOnRollOverCallback(self, callback):
-        # type: (Callable[[dict], None]) -> None
+    def SetOnRollOverCallback(
+        self,
+        callback # type: Callable[[dict], None]
+    ):
         self.base.AddHoverEventParams()
         self.base.SetButtonHoverInCallback(callback) # pyright: ignore[reportArgumentType]
+        return self
 
-    def SetOnRollOutCallback(self, callback):
-        # type: (Callable[[dict], None]) -> None
+    def SetOnRollOutCallback(
+        self,
+        callback # type: Callable[[dict], None]
+    ):
         self.base.AddHoverEventParams()
         self.base.SetButtonHoverOutCallback(callback) # pyright: ignore[reportArgumentType]
+        return self
 
 
 class UScrollView(UBaseCtrl):
@@ -286,6 +295,7 @@ class UGrid(UBaseCtrl):
         self.base = base
 
     def GetGridDimension(self):
+        # type: () -> tuple[int, int]
         " 未开放接口 "
         import gui # pyright: ignore[reportMissingImports]
         return gui.get_grid_dimension(self._root.base.GetScreenName(), self.getFullPath())

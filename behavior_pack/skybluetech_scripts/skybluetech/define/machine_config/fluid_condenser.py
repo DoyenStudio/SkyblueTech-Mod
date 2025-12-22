@@ -1,22 +1,46 @@
 # coding=utf-8
 #
-from .define import MachineRecipe, Input, Output
+from .define import CategoryType, MachineRecipe, Input, Output
 
 MC_METAL = {"copper", "iron", "gold"}
+MACHINE_ID = "skybluetech:fluid_condenser"
+
+
+class FluidCondenserRecipe(MachineRecipe):
+    recipe_icon_id = MACHINE_ID
+    render_ui_def_name = "RecipeCheckerUI.fluid_condenser_recipes"
+
+    def __init__(
+        self,
+        input_fluid, # type: str
+        input_fluid_volume, # type: float
+        output_item, # type: str
+        output_item_count, # type: int
+        power_cost, # type: int
+        tick_duration # type: int
+    ):
+        MachineRecipe.__init__(
+            self,
+            {CategoryType.FLUID: {0: Input(input_fluid, input_fluid_volume)}},
+            {CategoryType.ITEM: {0: Output(output_item, output_item_count)}},
+            power_cost,
+            tick_duration,
+        )
+
 
 def recipeMolten2Ingot(metal_id, power_cost=80, tick_duration=180):
-    # type: (str, int, int) -> MachineRecipe
-    return MachineRecipe(
-        {"fluid": {0: Input("skybluetech:molten_" + metal_id, 144)}}, 
-        {"item": {0: Output(("minecraft:" if metal_id in MC_METAL else "skybluetech:") + metal_id + "_ingot", 1)}},
-        power_cost=power_cost, tick_duration=tick_duration
+    # type: (str, int, int) -> FluidCondenserRecipe
+    return FluidCondenserRecipe(
+        "skybluetech:molten_" + metal_id, 144, 
+        ("minecraft:" if metal_id in MC_METAL else "skybluetech:") + metal_id + "_ingot",
+        1, power_cost, tick_duration
     )
 
 
 recipes = [
-    MachineRecipe(
-        {"fluid": {0: Input("minecraft:lava", 1000)}},
-        {"item": {0: Output("minecraft:obsidian", 1)}},
+    FluidCondenserRecipe(
+        "minecraft:lava", 1000,
+        "minecraft:obsidian", 1,
         tick_duration=200, power_cost=50
     ),
     #

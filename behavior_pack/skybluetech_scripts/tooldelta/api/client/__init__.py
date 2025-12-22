@@ -7,3 +7,4 @@ from .player import *
 from .ui import *
 from .render import *
 from .sound import *
+from .world import *

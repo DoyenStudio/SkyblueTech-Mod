@@ -63,8 +63,8 @@ def onEntityPlaceStruBlock(event):
                 if DEBUG:
                     print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
-        else:
-            print("not in side")
+        # else:
+        #     print("not in side")
 
 
 @BlockRemoveServerEvent.Listen(-1001)
@@ -90,8 +90,8 @@ def onStruBlockRemoved(event):
                 if DEBUG:
                     print("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
-        else:
-            print("not in side")
+        # else:
+        #     print("not in side")
 
 
 detect_areas = {}  # type: dict[int, set[DetectArea]]

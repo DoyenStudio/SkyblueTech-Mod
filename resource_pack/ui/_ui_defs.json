@@ -30,6 +30,7 @@
         "ui/RecipeCheckerUI.json",
         "ui/RedstoneFurnaceUI.json",
         "ui/SkybluePanelLib.json",
+        "ui/SolarPanelUI.json",
         "ui/SplitterUI.json",
         "ui/ThermalGeneratorUI.json",
         "ui/ThermoelectricGeneratorUI.json"

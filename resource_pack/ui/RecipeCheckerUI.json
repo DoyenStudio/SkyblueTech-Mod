@@ -591,6 +591,96 @@
             }
         ]
     },
+    "freezer_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            60.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        30,
+                        0
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "layer": 19,
+                    "offset": [
+                        -35,
+                        0
+                    ],
+                    "size": [
+                        30,
+                        50
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "layer": 45
+                }
+            },
+            {
+                "fake_btn": {
+                    "type": "image",
+                    "offset": [
+                        30.0,
+                        19.0
+                    ],
+                    "size": [
+                        16.0,
+                        16.0
+                    ],
+                    "layer": 1,
+                    "clip_direction": "left",
+                    "clip_ratio": 0.0,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/button_default",
+                    "controls": [
+                        {
+                            "item_renderer": {
+                                "type": "custom",
+                                "renderer": "inventory_item_renderer",
+                                "size": [
+                                    "100%+-2px",
+                                    "100%+-2px"
+                                ],
+                                "layer": 1,
+                                "property_bag": {
+                                    "#item_id_aux": 131072
+                                }
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "furnace_recipes": {
         "type": "panel",
         "size": [
@@ -994,6 +1084,70 @@
     },
     "main@common.base_screen": {
         "$screen_content": "RecipeCheckerUI.content"
+    },
+    "metal_press_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            70.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -40,
+                        -18
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 49,
+                    "offset": [
+                        40,
+                        -18
+                    ]
+                }
+            },
+            {
+                "progress@MixerUI.mixer_progress": {
+                    "$bg_image": "textures/ui/metal_press_bg",
+                    "$mask_image": "textures/ui/metal_press_mask",
+                    "offset": [
+                        0,
+                        -18
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        0,
+                        12
+                    ],
+                    "size": [
+                        50,
+                        30
+                    ]
+                }
+            }
+        ]
     },
     "mixer_recipes": {
         "type": "panel",

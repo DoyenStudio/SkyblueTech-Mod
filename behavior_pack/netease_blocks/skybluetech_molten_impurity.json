@@ -3,6 +3,7 @@
     "minecraft:block": {
         "components": {
             "netease:liquid": {
+                "bucket_name": "skybluetech:molten_impurity_bucket",
                 "liquid_color": [
                     74,
                     47,

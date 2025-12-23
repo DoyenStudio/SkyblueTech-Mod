@@ -107,4 +107,4 @@ recipes = [
         "skybluetech:molten_platinum", ingot2motten_vol,
         power_cost=45, tick_duration=sec(4.5)
     ),
-]
+] # type: list[MachineRecipe]

@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.item import GetItemBasicInfo
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...define import flags
-from ...define.machine_config import MachineRecipe
+from ...mini_jei.machines.recipe_cls import MachineRecipe
 from .base_machine import BaseMachine
 from .base_processor import BaseProcessor
 from .upgrade_control import UpgradeControl

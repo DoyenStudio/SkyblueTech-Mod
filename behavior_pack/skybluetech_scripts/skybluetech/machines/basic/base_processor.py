@@ -2,7 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
-from ...define.machine_config import MachineRecipe
+from ...mini_jei.machines.recipe_cls import MachineRecipe
 from ...define import flags as flags
 from .auto_saver import AutoSaver
 from .base_machine import BaseMachine

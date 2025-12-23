@@ -63,3 +63,4 @@ def onFreezerModeChanged(event):
         return
     machine.setMode(event.new_mode)
     machine.sync.FastSync(event.player_id)
+

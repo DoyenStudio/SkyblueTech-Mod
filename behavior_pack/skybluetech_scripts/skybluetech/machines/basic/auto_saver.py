@@ -26,6 +26,7 @@ def autoSave():
 class AutoSaver(BaseMachine):
     """
     每隔 1 秒自动保存机器数据的基类。
+    TODO: 等网易加入了方块实体移除前事件后该基类可废除。
     
     需要 `__init__()`
     

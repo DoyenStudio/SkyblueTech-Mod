@@ -213,7 +213,7 @@ def UpdateWholeNetwork(dim, network):
         if m is None:
             continue
         m.rf_networks[facing] = network
-        print "214:TryActivate", type(m).__name__
+        print "216:TryActivate", type(m).__name__
         m.OnTryActivate()
 
 # 只有等到了整个网络内的机器全部初始化完了才可以唤醒网络
@@ -235,7 +235,7 @@ def wakeUpWholeNetwork(dim, network):
         m = GetMachineStrict(dim, x, y, z)
         if m is None:
             continue
-        print "235:TryActivate", type(m).__name__
+        print "238:TryActivate", type(m).__name__
         m.OnTryActivate()
             
 

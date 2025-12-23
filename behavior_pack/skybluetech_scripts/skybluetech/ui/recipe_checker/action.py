@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.ui.elem_comp import UButton
-from ...mini_jei.core.define import RecipeBase
+from ...mini_jei import RecipeBase
 from .recipe_checker_ui import RecipeCheckerUI
 
 def PushRecipeCheckerUI(icon_item_name, recipes):

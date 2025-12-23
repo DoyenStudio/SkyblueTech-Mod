@@ -182,6 +182,7 @@ class BaseMachine(object):
 
     def initRFNetwork(self):
         # type: () -> None
+        "初始化此机器 6 面连接的所有能源线缆。"
         requireWireModule()
         self.rf_networks = GetNearbyWireNetwork(self.dim, self.x, self.y, self.z)
         for network in self.rf_networks:

@@ -55,4 +55,4 @@ recipes = [
         {0: Input("minecraft:gold_ingot", 2), 2: Input(TAG_ANCIENT_DEBRIS_DUST, 3, True)},
         {4: Output("minecraft:netherite_ingot", 1)}
     )
-]
+] # type: list[MachineRecipe]

@@ -18,4 +18,4 @@ recipes = [
         tick_duration=40,
         power_cost=30,
     ),
-]
+] # type: list[MachineRecipe]

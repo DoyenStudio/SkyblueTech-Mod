@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from ..define.machine_config.mixer import recipes as Recipes
+from ..define.machine_config.mixer import recipes as Recipes, MachineRecipe
 from ..ui_sync.machines.mixer import MixerUISync
 from .basic import MixedProcessor, RegisterMachine
 

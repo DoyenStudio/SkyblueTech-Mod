@@ -18,4 +18,4 @@ recipes = [
     recipeMolten2Ingot("silver"),
     recipeMolten2Ingot("platinum"),
     recipeMolten2Ingot("nickel"),
-]
+] # type: list[MachineRecipe]

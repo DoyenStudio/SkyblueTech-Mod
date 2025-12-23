@@ -21,4 +21,4 @@ recipes = [
     preset_tagged("ingots/silver", "skybluetech:silver_plate"),
     preset_tagged("ingots/platinum", "skybluetech:platinum_plate"),
     preset_tagged("ingots/nickel", "skybluetech:nickel_plate"),
-]
+] # type: list[MachineRecipe]

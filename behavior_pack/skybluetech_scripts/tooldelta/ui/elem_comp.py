@@ -231,7 +231,7 @@ class UImage(UBaseCtrl):
         self.base.SetSpriteColor(rgb)
 
     def SetSpriteClipRatio(self, clipDirection, clipRatio):
-        # type: (str, float) -> None
+        # type: (Literal["fromLeftToRight", "fromRightToLeft", "fromTopToBottom", "fromBottomToTop", "fromOutsideToInside"], float) -> None
         self.base.SetClipDirection(clipDirection)
         self.base.SetSpriteClipRatio(clipRatio)
 

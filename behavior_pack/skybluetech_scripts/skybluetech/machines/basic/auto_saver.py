@@ -4,6 +4,7 @@ from weakref import WeakSet
 from mod_log import logger
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
+from .base_machine import BaseMachine
 
 active_machines = WeakSet() # type: WeakSet[AutoSaver]
 auto_save_inited = False
@@ -22,7 +23,7 @@ def autoSave():
         machine.Dump()
 
 
-class AutoSaver(object):
+class AutoSaver(BaseMachine):
     """
     每隔 1 秒自动保存机器数据的基类。
     
@@ -38,10 +39,6 @@ class AutoSaver(object):
 
     def OnUnload(self):
         active_machines.remove(self)
-
-    def Dump(self):
-        # type: () -> None
-        pass
 
     def __hash__(self):
         return self.hash_val

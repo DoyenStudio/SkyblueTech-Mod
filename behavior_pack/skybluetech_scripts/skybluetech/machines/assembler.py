@@ -42,6 +42,19 @@ class Assembler(GUIControl, UpgradeControl):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         return res
 
+    def OnPlaced(self, _):
+        for dx, dy, dz in DXYZ_FACING.keys():
+            facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
+            bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
+            if not bname:
+                continue
+            connectToWire = isWire(GetBlockTags(bname))
+            UpdateBlockStates(
+                self.dim,
+                (self.x, self.y, self.z),
+                {"skybluetech:connection_" + facing_en: connectToWire},
+            )
+
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         dx = event.neighborPosX - self.x

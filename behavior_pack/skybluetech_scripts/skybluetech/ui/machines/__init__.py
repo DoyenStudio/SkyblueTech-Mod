@@ -21,6 +21,7 @@ from .magma_centrifuge import MagmaCentrifugeUI
 from .mixer import MixerUI
 from .pump import PumpUI
 from .redstone_furnace import RedstoneFurnaceUI
+from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI
 from .thermal_generator import ThermalGeneratorUI
 from .thermoelectric_generator import ThermoelectricGeneratorUI

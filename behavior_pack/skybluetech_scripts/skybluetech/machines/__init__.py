@@ -19,8 +19,8 @@ from .mixer import Mixer
 from .pump import Pump
 from .redstone_furnace import RedstoneFurnace
 from .splitter import Splitter
+from .solar_panel import SolarPanel
 from .thermoelectric_generator import ThermoelectricGenerator
 from .thermal_generator import ThermalGenerator
-
 from .interfaces import *
 from .tanks import *

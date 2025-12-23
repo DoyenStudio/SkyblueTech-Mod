@@ -188,3 +188,5 @@ tile.skybluetech:methane.name=沼气
 tile.skybluetech:flowing_methane.name=流动沼气
 tile.skybluetech:methane_mud.name=沼气发酵泥
 tile.skybluetech:flowing_methane_mud.name=流动沼气发酵泥
+tile.skybluetech:solar_panel.name=太阳能发电机
+item.skybluetech:solar_panel_pane.name=太阳能电池单板

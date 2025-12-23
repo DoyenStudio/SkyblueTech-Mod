@@ -480,6 +480,16 @@
     "skybluetech:silver_wire": {
         "sound": "cloth"
     },
+    "skybluetech:solar_panel": {
+        "textures": {
+            "down": "skybluetech:generator_frame_down",
+            "east": "skybluetech:generator_frame_side",
+            "north": "skybluetech:generator_frame_side",
+            "south": "skybluetech:generator_frame_side",
+            "up": "skybluetech:solar_panel_top",
+            "west": "skybluetech:generator_frame_side"
+        }
+    },
     "skybluetech:splitter": {
         "textures": {
             "down": "skybluetech:frame_bottom",

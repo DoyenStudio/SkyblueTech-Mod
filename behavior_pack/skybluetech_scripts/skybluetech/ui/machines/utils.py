@@ -37,6 +37,13 @@ def UpdateGenericProgressL2R(ui, percent):
     # type: (UBaseCtrl, float) -> None
     ui["mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - percent)
 
+def UpdateGenericProgressT2B(ui, percent):# -> Any:
+    # type: (UBaseCtrl, float) -> None
+    ui["mask"].asImage().SetSpriteClipRatio("fromTopToBottom", 1 - percent)
+
+def UpdateGenericProgressB2T(ui, percent):
+    # type: (UBaseCtrl, float) -> None
+    ui["mask"].asImage().SetSpriteClipRatio("fromBottomToTop", 1 - percent)
 
 def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     # type: (UBaseCtrl, str | None, float, float) -> None

@@ -1,0 +1,79 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "east_charge": "q.block_state('skybluetech:connection_east')",
+                    "north_charge": "q.block_state('skybluetech:connection_north')",
+                    "south_charge": "q.block_state('skybluetech:connection_south')",
+                    "west_charge": "q.block_state('skybluetech:connection_west')"
+                },
+                "identifier": "geometry.skybluetech.solar_panel"
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:solar_panel"
+                }
+            },
+            "netease:block_container": {
+                "container_size": 1,
+                "custom_description": "太阳能发电机",
+                "screen_name": "SolarPanelUI.main"
+            },
+            "netease:block_entity": {
+                "movable": false,
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7使用太阳能进行发电。"
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.0
+            },
+            "tag:redstoneflux_connectable": {},
+            "tag:redstoneflux_generator": {},
+            "tag:redstoneflux_provider": {},
+            "tag:skybluetech_generator": {},
+            "tag:skybluetech_machine": {},
+            "tag:skybluetech_container": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:solar_panel",
+            "states": {
+                "skybluetech:connection_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_north": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_south": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_west": [
+                    false,
+                    true
+                ]
+            }
+        }
+    }
+}

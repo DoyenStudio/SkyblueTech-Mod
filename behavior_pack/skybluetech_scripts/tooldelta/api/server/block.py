@@ -19,6 +19,7 @@ _setBlockStates = MethodCacher(lambda :ServerComp.CreateBlockState(ServerLevelId
 _listenOnBlockRemoveEvent = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).ListenOnBlockRemoveEvent)
 _getBlockBasicInfo = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetBlockBasicInfo)
 
+
 def GetBlockEntityDataDict(dimension, x, y, z):
     # type: (int, int, int, int) -> dict | None
     return _getBlockEntityDict(dimension, (x, y, z))
@@ -118,6 +119,7 @@ def GetActualFacingByDirection(direction, origin_facing):
 
 GetBlockPaletteFromPosList = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteFromPosList)
 GetBlockPaletteBetweenPos = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteBetweenPos)
+GetTopBlockHeight = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetTopBlockHeight)
 
 def NewSingleBlockPalette(block_id):
     # type: (str) -> BlockPaletteComponent
@@ -138,6 +140,7 @@ __all__ = [
     "GetBlockTags",
     "GetBlockBasicInfo",
     "GetPosBlockTags",
+    "GetTopBlockHeight",
     "BlockHasTag",
     "GetBlockName",
     "SetBlock",

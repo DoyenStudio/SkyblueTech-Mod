@@ -14,8 +14,12 @@ def GetRecipesByResult(item_id, recipe_tag, aux_value=0, maxResultNum=-1):
     # type: (str, str, int, int) -> list[dict]
     return _getRecipesByResult(item_id, recipe_tag, aux_value, maxResultNum)
 
+GetLocalTime = ServerComp.CreateDimension(ServerLevelId).GetLocalTime
+IsRaining = ServerComp.CreateWeather(ServerLevelId).IsRaining
 
 __all__ = [
     "GetRecipesByInput",
     "GetRecipesByResult",
+    "GetLocalTime",
+    "IsRaining",
 ]

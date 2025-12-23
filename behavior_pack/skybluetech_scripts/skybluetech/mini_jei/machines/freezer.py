@@ -1,5 +1,7 @@
 # coding=utf-8
 #
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 MACHINE_ID = "skybluetech:freezer"
@@ -27,3 +29,9 @@ class FreezerRecipe(MachineRecipe):
             tick_duration,
         )
         self.index = index
+        self.output_item = output_item
+
+    def RenderInit(self, panel):
+        # type: (UBaseCtrl) -> None
+        MachineRecipe.RenderInit(self, panel)
+        panel["fake_btn/item_renderer"].asItemRenderer().SetUiItem(Item(self.output_item))

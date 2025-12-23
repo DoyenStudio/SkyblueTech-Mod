@@ -2,6 +2,14 @@
     "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 0.5
+            },
+            "netease:tier": {
+                "destroy_special": false,
+                "digger": "shovel",
+                "level": 0
+            },
             "tag:dust_block": {
 
             }

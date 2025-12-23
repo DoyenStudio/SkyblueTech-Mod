@@ -33,7 +33,7 @@ class MagmaFurnaceUI(MachinePanelUIProxy):
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
             "skybluetech:magma_furnace",
-            recipes,
+            recipes, # pyright: ignore[reportArgumentType]
         )
         MachinePanelUIProxy.OnCreate(self)
 

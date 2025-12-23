@@ -24,7 +24,7 @@ class MaceratorUI(MachinePanelUIProxy):
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
             "skybluetech:macerator",
-            recipes,
+            recipes, # pyright: ignore[reportArgumentType]
         )
         MachinePanelUIProxy.OnCreate(self)
 

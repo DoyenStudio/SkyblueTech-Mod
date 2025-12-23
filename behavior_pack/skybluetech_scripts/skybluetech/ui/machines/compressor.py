@@ -24,7 +24,7 @@ class CompressorUI(MachinePanelUIProxy):
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
             "skybluetech:compressor",
-            recipes,
+            recipes, # pyright: ignore[reportArgumentType]
         )
         MachinePanelUIProxy.OnCreate(self)
 

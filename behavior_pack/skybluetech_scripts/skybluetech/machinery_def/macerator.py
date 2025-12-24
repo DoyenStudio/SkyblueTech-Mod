@@ -41,4 +41,4 @@ recipes = [
     preset_tagged(RawTag.SILVER, 1, Dusts.SILVER, 2),
     preset_tagged(RawTag.PLATINUM, 1, Dusts.PLATINUM, 2),
     preset_tagged(RawTag.NICKEL, 1, Dusts.NICKEL, 2),
-]
+] # type: list[MachineRecipe]

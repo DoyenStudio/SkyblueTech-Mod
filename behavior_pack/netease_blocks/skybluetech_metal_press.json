@@ -1,0 +1,157 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "netease:block_container": {
+                "container_size": 6,
+                "custom_description": "金属冲压机",
+                "screen_name": "MetalPressUI.main"
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7将锭压缩为板等。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "minecraft:geometry": {
+                "identifier": "minecraft:geometry.full_block"
+            },
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_appliance": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_machine": {},
+            "tag:skybluetech_fluid_container": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:metal_press",
+            "states": {
+                "skybluetech:active": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('skybluetech:active')",
+                "components": {
+                    "minecraft:material_instances": {
+                        "north": {
+                            "texture": "skybluetech:metal_press_front_active"
+                        },
+                        "down": {
+                            "texture": "skybluetech:frame_bottom"
+                        },
+                        "east": {
+                            "texture": "skybluetech:frame"
+                        },
+                        "south": {
+                            "texture": "skybluetech:frame"
+                        },
+                        "up": {
+                            "texture": "skybluetech:frame_up"
+                        },
+                        "west": {
+                            "texture": "skybluetech:frame"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:active')",
+                "components": {
+                    "minecraft:material_instances": {
+                        "north": {
+                            "texture": "skybluetech:metal_press_front"
+                        },
+                        "down": {
+                            "texture": "skybluetech:frame_bottom"
+                        },
+                        "east": {
+                            "texture": "skybluetech:frame"
+                        },
+                        "south": {
+                            "texture": "skybluetech:frame"
+                        },
+                        "up": {
+                            "texture": "skybluetech:frame_up"
+                        },
+                        "west": {
+                            "texture": "skybluetech:frame"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

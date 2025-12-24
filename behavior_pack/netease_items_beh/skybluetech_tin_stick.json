@@ -1,0 +1,16 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "sticks/tin"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:tin_stick"
+        }
+    }
+}

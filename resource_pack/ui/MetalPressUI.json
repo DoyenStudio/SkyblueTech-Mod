@@ -1,0 +1,192 @@
+{
+    "main@common.base_screen": {
+        "$screen_content": "netease_editor_template_namespace.netease_editor_root_panel"
+    },
+    "metal_press_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 100,
+                    "visible": false
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "混合搅拌机",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "input_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            -40.0,
+                                                            -52.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 0
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            40.0,
+                                                            -52.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 1
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "offset": [
+                                                            0,
+                                                            -20
+                                                        ],
+                                                        "size": [
+                                                            51,
+                                                            31
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "progress@MixerUI.mixer_progress": {
+                                                        "$bg_image": "textures/ui/metal_press_bg",
+                                                        "$mask_image": "textures/ui/metal_press_mask",
+                                                        "offset": [
+                                                            0,
+                                                            -52
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
+                                                        "offset": [
+                                                            106,
+                                                            -57
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            71,
+                                                            0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "namespace": "MetalPressUI",
+    "screen": {
+        "type": "screen",
+        "controls": [
+            {
+                "panel@metal_press_ui.metal_press_ui": {}
+            }
+        ]
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "sticks/bronze"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:bronze_stick"
+        }
+    }
+}

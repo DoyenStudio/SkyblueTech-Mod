@@ -1,0 +1,23 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "bucket_name": "minecraft:water_bucket",
+                "can_float_boat": false,
+                "liquid_color": [
+                    255,
+                    207,
+                    0,
+                    128
+                ],
+                "spread_fire": true
+            }
+        },
+        "description": {
+            "base_block": "liquid",
+            "category": "none",
+            "identifier": "skybluetech:lubricant"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:silver_stick"
+        },
+        "description": {
+            "identifier": "skybluetech:silver_stick"
+        }
+    }
+}

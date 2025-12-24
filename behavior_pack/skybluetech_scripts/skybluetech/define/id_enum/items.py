@@ -42,6 +42,15 @@ class Dusts:
     STEEL = "skybluetech:steel_dust"
 
 
+class Sticks:
+    COPPER = "skybluetech:copper_stick"
+    TIN = "skybluetech:tin_stick"
+    SILVER = "skybluetech:silver_stick"
+    PLATINUM = "skybluetech:platinum_stick"
+    STEEL = "skybluetech:steel_stick"
+    BRONZE = "skybluetech:bronze_stick"
+
+
 class RawOres:
     TIN = "skybluetech:raw_tin"
     LEAD = "skybluetech:raw_lead"

@@ -18,6 +18,7 @@ from .heavy_compressor import HeavyCompressorUI
 from .macerator import MaceratorUI
 from .magma_furnace import MagmaFurnaceUI
 from .magma_centrifuge import MagmaCentrifugeUI
+from .metal_press import MetalPressUI
 from .mixer import MixerUI
 from .pump import PumpUI
 from .redstone_furnace import RedstoneFurnaceUI

@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     DestroyEntity,
     SpawnDroppedItem,
 )
-from ..define.machine_config.farming_station import (
+from ..machine_def.farming_station import (
     isRipedCrop,
     isBlockCrop,
 )

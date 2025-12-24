@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from ...mini_jei.machines.macerator import *
+from ..mini_jei.machines.macerator import *
 
 
 DEFAULT_TICK_DURATION = 160

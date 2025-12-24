@@ -3,11 +3,9 @@
 from ...define.id_enum import machinerys
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
-TAG_DUST_BLOCK = "dust_block"
 
-
-class MixerRecipe(MachineRecipe):
-    recipe_icon_id = machinerys.MIXER
+class MetalPressRecipe(MachineRecipe):
+    recipe_icon_id = machinerys.METAL_PRESS
     render_ui_def_name = "RecipeCheckerUI.mixer_recipes"
 
     def __init__(

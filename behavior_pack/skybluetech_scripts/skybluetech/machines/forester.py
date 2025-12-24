@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     DestroyEntity,
     SpawnDroppedItem,
 )
-from ..define.machine_config.forester import getSaplingId, isLog, isLeave
+from ..machine_def.forester import getSaplingId, isLog, isLeave
 from ..ui_sync.machines.forester import ForesterUISync
 from .basic import (
     AutoSaver,

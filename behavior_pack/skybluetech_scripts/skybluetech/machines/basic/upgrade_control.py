@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.skybluetech.define.machine_config.upgraders import *
+from ...machine_def.upgraders import *
 from .base_machine import BaseMachine
 from .item_container import ItemContainer
 from .sp_control import SPControl

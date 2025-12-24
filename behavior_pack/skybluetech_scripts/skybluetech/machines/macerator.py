@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from ..define.machine_config.macerator import recipes as Recipes
+from ..machine_def.macerator import recipes as Recipes
 from ..ui_sync.machines.macerator import MaceratorUISync
 from .basic import RegisterMachine, BaseProcessor
 

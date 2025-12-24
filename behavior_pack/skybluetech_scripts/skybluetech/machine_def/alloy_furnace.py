@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 
-from ...mini_jei.machines.alloy_furnace import *
+from ..mini_jei.machines.alloy_furnace import *
 
 
 DEFAULT_TICK_DURATION = 160

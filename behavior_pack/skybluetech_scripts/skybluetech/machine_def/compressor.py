@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from ...mini_jei.machines.compressor import *
+from ..mini_jei.machines.compressor import *
 
 
 DEFAULT_TICK_DURATION = 20 * 8

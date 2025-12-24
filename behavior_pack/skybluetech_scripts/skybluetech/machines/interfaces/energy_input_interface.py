@@ -5,10 +5,11 @@ from mod.server.blockEntityData import BlockEntityData
 from ..basic import BaseMachine
 from ..basic.register import BaseMachine, RegisterMachine
 
-from ...define.machine_config import (
-    fermenter
+# LOADED_INTERFACES
+from ...machine_def import (
+    fermenter,
 )
-
+#
 
 REG_BLOCK_IDS = (
     fermenter.IO_ENERGY,

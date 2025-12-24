@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from ...mini_jei.machines.fluid_condenser import *
+from ..mini_jei.machines.fluid_condenser import *
 
 
 recipes = [

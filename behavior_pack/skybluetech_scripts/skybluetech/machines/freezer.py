@@ -2,7 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from ..define.events.freezer import FreezerModeChangedEvent
-from ..define.machine_config.freezer import recipes as Recipes
+from ..machine_def.freezer import recipes as Recipes
 from ..ui_sync.machines.freezer import FreezerUISync
 from .basic import MixedProcessor, RegisterMachine
 from .pool import GetMachineStrict

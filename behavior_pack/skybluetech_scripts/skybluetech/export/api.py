@@ -4,7 +4,7 @@ from ..machines.pool import GetMachineStrict
 def GetEnergyOfMachine(dimension, x, y, z):
     # type: (int, int, int, int) -> tuple[int, int]
     """
-    获取某一维度
+    获取某一机器方块所储存的能量和最大能量。
 
     Args:
         dimension (int): 维度 ID

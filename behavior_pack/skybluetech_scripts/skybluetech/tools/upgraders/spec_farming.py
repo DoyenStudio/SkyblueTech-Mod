@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetBlock,
     SpawnItemToPlayerCarried,
 )
-from ...define.machine_config.farming_station import isRipedCrop
+from ...machine_def.farming_station import isRipedCrop
 from ...utils.charge import GetCharge, UpdateCharge
 from .register import RegisterItemUseOnCallback
 from .utils import GetUpgraderLevel

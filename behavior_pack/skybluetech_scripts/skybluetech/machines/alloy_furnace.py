@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from ..define.machine_config.alloy_furnace import recipes as Recipes
+from ..machine_def.alloy_furnace import recipes as Recipes
 from ..ui_sync.machines.alloy_furnace import AlloyFurnaceUISync
 from .basic import BaseProcessor, RegisterMachine
 

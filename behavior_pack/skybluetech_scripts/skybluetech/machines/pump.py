@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.events.server.block import BlockNeighborChang
 from skybluetech_scripts.tooldelta.events.server.item import PlayerTryPutCustomContainerItemServerEvent
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockNameAndAux
 from skybluetech_scripts.tooldelta.api.server.item import ItemExists
-from ..define.machine_config.pump import *
+from ..machine_def.pump import *
 from ..define import flags as rf_flags
 from ..ui_sync.machines.pump import PumpUISync
 from .basic import (

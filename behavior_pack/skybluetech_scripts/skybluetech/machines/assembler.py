@@ -7,7 +7,7 @@ from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent, Blo
 from skybluetech_scripts.tooldelta.events.notify import NotifyToClients, NotifyToClient
 from ..define import flags
 from ..define.events.assembler import *
-from ..define.machine_config.assembler import *
+from ..machine_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
 from ..utils.constants import DXYZ_FACING, FACING_EN
 from ..utils.lore import GetLorePos, SetLoreAtPos

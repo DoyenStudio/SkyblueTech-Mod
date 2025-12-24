@@ -23,7 +23,7 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityRemoveClientEvent,
 )
 from ..define import flags
-from ..define.machine_config.charger import CHARGE_SPEED
+from ..machine_def.charger import CHARGE_SPEED
 from ..define.events.charger import ChargerItemModelUpdate, ChargeItemModelRequest
 from ..ui_sync.machines.charger import ChargerUISync
 from ..utils.charge import GetCharge, UpdateCharge, K_STORE_RF, K_STORE_RF_MAX

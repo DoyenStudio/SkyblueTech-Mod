@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from ....tooldelta.api.server.block import (
+from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockStates as _getBlockStates,
     GetActualFacingByCardinalFacing as _getActualFacing,
     GetActualFacingByDirection as _getActualFacing2

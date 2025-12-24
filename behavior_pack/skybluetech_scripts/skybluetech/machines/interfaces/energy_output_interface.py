@@ -5,6 +5,9 @@ from mod.server.blockEntityData import BlockEntityData
 from ..basic import BaseMachine
 from ..basic.register import RegisterMachine
 
+# LOADED_INTERFACES
+#
+
 REG_BLOCK_IDS = (   
 )
 

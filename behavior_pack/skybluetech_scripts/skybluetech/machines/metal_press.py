@@ -1,26 +1,26 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from ..machine_def.fluid_condenser import recipes as Recipes
-from ..ui_sync.machines.fluid_condenser import FluidCondenserUISync
+from ..machine_def.mixer import recipes as Recipes
+from ..ui_sync.machines.mixer import MixerUISync
 from .basic import MixedProcessor, RegisterMachine
 
 
 @RegisterMachine
-class FluidCondenser(MixedProcessor):
-    block_name = "skybluetech:fluid_condenser"
+class MetalPress(MixedProcessor):
+    block_name = "skybluetech:mixer"
     store_rf_max = 8800
     recipes = Recipes
     input_slots = (0,)
     output_slots = (1,)
-    fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_input_slots = {0}
+    fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_slot_max_volumes = (2000,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
-        self.sync = FluidCondenserUISync.NewServer(self).Activate()
+        self.sync = MixerUISync.NewServer(self).Activate()
         self.OnSync()
 
     def OnSync(self):

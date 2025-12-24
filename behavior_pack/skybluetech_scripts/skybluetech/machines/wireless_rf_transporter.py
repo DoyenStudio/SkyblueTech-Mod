@@ -2,7 +2,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
-from ..define.machine_config.battery_cube import *
+from ..machine_def.battery_cube import *
 from ..ui_sync.machines.battery_cube import BatteryCubeUISync
 from .basic import BaseMachine, GUIControl, ItemContainer, RegisterMachine
 from .pool import GetMachineStrict

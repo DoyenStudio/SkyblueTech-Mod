@@ -1,13 +1,13 @@
 # coding=utf-8
 #
+from ...define.id_enum import machinerys
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 MC_METAL = {"copper", "iron", "gold"}
-MACHINE_ID = "skybluetech:fluid_condenser"
 
 
 class FluidCondenserRecipe(MachineRecipe):
-    recipe_icon_id = MACHINE_ID
+    recipe_icon_id = machinerys.FLUID_CONDENSER
     render_ui_def_name = "RecipeCheckerUI.fluid_condenser_recipes"
 
     def __init__(

@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from ...mini_jei.machines.mixer import *
+from ..mini_jei.machines.mixer import *
 
 
 recipes = [

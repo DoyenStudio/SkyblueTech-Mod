@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from ..define.machine_config.magma_centrifuge import recipes as Recipes
+from ..machine_def.magma_centrifuge import recipes as Recipes
 from ..ui_sync.machines.magma_centrifuge import MagmaCentrifugeUISync, FluidSlotSync
 from .basic import MixedProcessor, RegisterMachine
 

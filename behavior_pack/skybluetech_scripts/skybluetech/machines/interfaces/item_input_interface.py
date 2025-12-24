@@ -4,9 +4,11 @@ from weakref import ref
 from mod.server.blockEntityData import BlockEntityData
 from ..basic import BaseMachine, ItemContainer, RegisterMachine
 
-from ...define.machine_config import (
-    fermenter
+# LOADED_INTERFACES
+from ...machine_def import (
+    fermenter,
 )
+#
 
 REG_BLOCK_IDS = (
     fermenter.IO_ITEM,

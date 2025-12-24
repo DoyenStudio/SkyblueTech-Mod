@@ -5,9 +5,11 @@ from mod.server.blockEntityData import BlockEntityData
 from ...ui_sync.machines.fluid_interface import FluidInterfaceUISync
 from ..basic import BaseMachine, FluidContainer, GUIControl, RegisterMachine
 
-from ...define.machine_config import (
+# LOADED_INTERFACES
+from ...machine_def import (
     fermenter
 )
+#
 
 REG_BLOCK_IDS = (
     fermenter.IO_FLUID2,

@@ -2,7 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from ..define import flags
-from ..define.machine_config.geothermal_generator import *
+from ..machine_def.geothermal_generator import *
 from ..ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync, FluidSlotSync
 from .basic import AutoSaver, BaseMachine, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
 

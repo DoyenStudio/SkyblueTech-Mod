@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.events.server.block import (
     ServerPlaceBlockEntityEvent,
 )
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
-from ..define.machine_config.thermoelectric_generator import COLD_BLOCKS, HOT_BLOCKS
+from ..machine_def.thermoelectric_generator import COLD_BLOCKS, HOT_BLOCKS
 from ..define.utils import NEIGHBOR_BLOCKS_ENUM
 from ..ui_sync.machines.thermoelectric_generator import ThermoelectricGeneratorUISync
 from ..ui.machines.thermoelectric_generator import ThermoelectricGeneratorUI

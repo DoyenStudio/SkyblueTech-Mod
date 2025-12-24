@@ -4,7 +4,9 @@ from skybluetech_scripts.tooldelta.events.server.block import ServerBlockUseEven
 from skybluetech_scripts.tooldelta.events.server.ui import CreateUIRequest, ForceRemoveUIRequest
 from skybluetech_scripts.tooldelta.events.notify import NotifyToClient, NotifyToClients
 from skybluetech_scripts.tooldelta.plugins.ui_sync import S2CSync, AddSyncPending, GetAllPlayersInSync
-from ...ui.machines.define import MachinePanelUI
+
+if 0:
+    from ...ui.machines.define import MachinePanelUI
 
 
 class GUIControl(object):

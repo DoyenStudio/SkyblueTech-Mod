@@ -1,5 +1,5 @@
 {
-    "main@common.base_screen": {
+    "main@common.inventory_screen_common": {
         "$screen_content": "SolarPanelUI.solar_panel_ui",
         "button_mappings": [
             {
@@ -25,7 +25,7 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100,
+                    "layer": 11,
                     "visible": false
                 }
             },
@@ -81,7 +81,7 @@
                                             "controls": [
                                                 {
                                                     "gen_slot@netease_container.custom_grid_item": {
-                                                        "layer": 100,
+                                                        "layer": 2,
                                                         "offset": [
                                                             0,
                                                             -13

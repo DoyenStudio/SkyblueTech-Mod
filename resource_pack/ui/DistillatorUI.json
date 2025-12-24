@@ -13,7 +13,7 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100,
+                    "layer": 11,
                     "visible": false
                 }
             },
@@ -173,7 +173,7 @@
             }
         ]
     },
-    "main@common.base_screen": {
+    "main@common.inventory_screen_common": {
         "$screen_content": "netease_editor_template_namespace.netease_editor_root_panel"
     },
     "namespace": "DistillatorUI",

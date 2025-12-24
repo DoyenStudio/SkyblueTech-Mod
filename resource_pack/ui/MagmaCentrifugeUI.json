@@ -9,7 +9,7 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100,
+                    "layer": 11,
                     "size": [
                         0,
                         0
@@ -243,7 +243,7 @@
             }
         ]
     },
-    "main@common.base_screen": {
+    "main@common.inventory_screen_common": {
         "$screen_content": "MagmaCentrifugeUI.magma_centrifuge_ui",
         "button_mappings": [
             {

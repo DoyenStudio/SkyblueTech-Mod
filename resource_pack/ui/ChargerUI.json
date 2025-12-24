@@ -9,7 +9,7 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100,
+                    "layer": 11,
                     "visible": false
                 }
             },
@@ -71,8 +71,8 @@
                                                             -40.0
                                                         ],
                                                         "size": [
-                                                            "100%cm",
-                                                            "100%cm"
+                                                            "11%cm",
+                                                            "11%cm"
                                                         ],
                                                         "collection_name": "netease_container",
                                                         "controls": [
@@ -92,8 +92,8 @@
                                                             -40.0
                                                         ],
                                                         "size": [
-                                                            "100%cm+0px",
-                                                            "100%cm+0px"
+                                                            "11%cm+0px",
+                                                            "11%cm+0px"
                                                         ],
                                                         "collection_name": "netease_container",
                                                         "controls": [
@@ -146,20 +146,8 @@
             }
         ]
     },
-    "main@common.base_screen": {
-        "$screen_content": "ChargerUI.charger_ui",
-        "button_mappings": [
-            {
-                "from_button_id": "button.menu_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            },
-            {
-                "from_button_id": "button.menu_inventory_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            }
-        ]
+    "main@common.inventory_screen_common": {
+        "$screen_content": "ChargerUI.charger_ui"
     },
     "namespace": "ChargerUI"
 }

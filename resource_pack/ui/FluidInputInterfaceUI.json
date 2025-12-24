@@ -98,7 +98,7 @@
             }
         ]
     },
-    "main@common.base_screen": {
+    "main@common.inventory_screen_common": {
         "$screen_content": "FluidInputInterfaceUI.fluid_input_interface_ui",
         "button_mappings": [
             {

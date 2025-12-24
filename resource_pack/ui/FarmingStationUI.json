@@ -111,7 +111,7 @@
             }
         ]
     },
-    "main@common.base_screen": {
+    "main@common.inventory_screen_common": {
         "button_mappings": [
             {
                 "from_button_id": "button.menu_cancel",

@@ -1,11 +1,11 @@
 # coding=utf-8
 #
-from ...define.id_enum import machinerys
+from ...define.id_enum import machinery
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 
 class MaceratorRecipe(MachineRecipe):
-    recipe_icon_id = machinerys.MACERATOR
+    recipe_icon_id = machinery.MACERATOR
     render_ui_def_name = "RecipeCheckerUI.macerator_recipes"
 
     def __init__(self, input, output_id, output_count, power_cost, tick_duration):

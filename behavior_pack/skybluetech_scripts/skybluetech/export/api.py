@@ -1,5 +1,5 @@
 # coding=utf-8
-from ..machines.pool import GetMachineStrict
+from ..machinery.pool import GetMachineStrict
 
 def GetEnergyOfMachine(dimension, x, y, z):
     # type: (int, int, int, int) -> tuple[int, int]

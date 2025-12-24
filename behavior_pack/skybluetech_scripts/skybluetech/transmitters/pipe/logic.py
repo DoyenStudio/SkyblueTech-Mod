@@ -16,9 +16,9 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 )
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.api.server.tips import SetOnePopupNotice
-from ...machines.basic.fluid_container import FluidContainer
-from ...machines.basic.multi_fluid_container import MultiFluidContainer
-from ...machines.pool import GetMachineStrict, GetMachineWithoutCls
+from ...machinery.basic.fluid_container import FluidContainer
+from ...machinery.basic.multi_fluid_container import MultiFluidContainer
+from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
 from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, FACING_ZHCN, DXYZ_FACING
 from .define import PipeNetwork

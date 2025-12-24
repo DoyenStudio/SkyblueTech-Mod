@@ -12,8 +12,8 @@ from skybluetech_scripts.tooldelta.api.server import (
     DestroyEntity,
     SpawnDroppedItem,
 )
-from ...machine_def.redstone_furnace import TICK_POWER
-from ...machines.redstone_furnace import GetFurnaceOutputByInput
+from ...machinery_def.redstone_furnace import TICK_POWER
+from ...machinery.redstone_furnace import GetFurnaceOutputByInput
 from ...utils.charge import GetCharge, UpdateCharge
 from .register import RegisterDestroyBlockCallback
 from .utils import GetUpgraderLevel

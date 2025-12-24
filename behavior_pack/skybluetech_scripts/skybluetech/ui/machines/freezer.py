@@ -3,13 +3,13 @@
 from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
 from skybluetech_scripts.tooldelta.define import Item
 from ...define.events.freezer import FreezerModeChangedEvent
-from ...machine_def.freezer import recipes
+from ...machinery_def.freezer import recipes
 from ...ui_sync.machines.freezer import FreezerUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay
 
 from ..recipe_checker import AsRecipeCheckerBtn
-from ...machine_def.freezer import recipes
+from ...machinery_def.freezer import recipes
 
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"

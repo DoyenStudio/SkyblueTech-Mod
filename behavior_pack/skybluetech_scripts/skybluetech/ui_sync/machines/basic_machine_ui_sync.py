@@ -6,8 +6,8 @@ from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 # TYPE_CHECKING
 if TYPE_CHECKING:
     from typing import Self
-    from ...machines.basic.base_machine import BaseMachine
-    from ...machines.basic.multi_fluid_container import MultiFluidContainer
+    from ...machinery.basic.base_machine import BaseMachine
+    from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 # TYPE_CHECKING END
 
 

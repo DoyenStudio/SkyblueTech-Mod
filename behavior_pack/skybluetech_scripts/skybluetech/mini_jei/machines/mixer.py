@@ -1,13 +1,13 @@
 # coding=utf-8
 #
-from ...define.id_enum import machinerys
+from ...define.id_enum import machinery
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 TAG_DUST_BLOCK = "dust_block"
 
 
 class MixerRecipe(MachineRecipe):
-    recipe_icon_id = machinerys.MIXER
+    recipe_icon_id = machinery.MIXER
     render_ui_def_name = "RecipeCheckerUI.mixer_recipes"
 
     def __init__(

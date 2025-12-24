@@ -1,1 +1,1 @@
-from . import machines, tools, transmitters, ui, misc
+from . import machinery, tools, transmitters, ui, misc

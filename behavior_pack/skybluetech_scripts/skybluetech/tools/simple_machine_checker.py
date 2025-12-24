@@ -10,8 +10,8 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayerMainhandItem
 from skybluetech_scripts.tooldelta.api.server.tips import SetOnePopupNotice
-from ..machines.basic import GUIControl
-from ..machines.pool import GetMachineStrict
+from ..machinery.basic import GUIControl
+from ..machinery.pool import GetMachineStrict
 
 
 @ServerPlayerTryDestroyBlockEvent.Listen()

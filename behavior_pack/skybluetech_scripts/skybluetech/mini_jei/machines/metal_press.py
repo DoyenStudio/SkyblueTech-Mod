@@ -1,11 +1,11 @@
 # coding=utf-8
 #
-from ...define.id_enum import machinerys
+from ...define.id_enum import machinery
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 
 class MetalPressRecipe(MachineRecipe):
-    recipe_icon_id = machinerys.METAL_PRESS
+    recipe_icon_id = machinery.METAL_PRESS
     render_ui_def_name = "RecipeCheckerUI.mixer_recipes"
 
     def __init__(

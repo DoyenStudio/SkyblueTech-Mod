@@ -1,11 +1,11 @@
 # coding=utf-8
 #
-from ...define.id_enum import machinerys
+from ...define.id_enum import machinery
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 
 class MagmaCentrifugeRecipe(MachineRecipe):
-    recipe_icon_id = machinerys.MAGMA_CENTRIFUGE
+    recipe_icon_id = machinery.MAGMA_CENTRIFUGE
     render_ui_def_name = "RecipeCheckerUI.magma_centrifuge_recipes"
 
     def __init__(self, input_fluid, input_volume, outputs, power_cost, tick_duration):

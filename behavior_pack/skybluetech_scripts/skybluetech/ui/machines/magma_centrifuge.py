@@ -6,7 +6,7 @@ from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidsDisplay
 
 from ..recipe_checker import AsRecipeCheckerBtn
-from ...machine_def.magma_centrifuge import recipes
+from ...machinery_def.magma_centrifuge import recipes
 
 POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"

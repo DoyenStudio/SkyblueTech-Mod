@@ -2,12 +2,12 @@
 #
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from ...define.id_enum import machinerys
+from ...define.id_enum import machinery
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 
 class FreezerRecipe(MachineRecipe):
-    recipe_icon_id = machinerys.FREEZER
+    recipe_icon_id = machinery.FREEZER
     render_ui_def_name = "RecipeCheckerUI.freezer_recipes"
 
     def __init__(

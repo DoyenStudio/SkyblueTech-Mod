@@ -1,11 +1,11 @@
 # coding=utf-8
 #
 from ....tooldelta.no_runtime_typing import TYPE_CHECKING
-from ...machines.pool import GetMachineStrict
+from ...machinery.pool import GetMachineStrict
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
-    from ...machines.basic.base_machine import BaseMachine
+    from ...machinery.basic.base_machine import BaseMachine
     PosData = tuple[int, int, int, int]
 # TYPE_CHECKING END
 

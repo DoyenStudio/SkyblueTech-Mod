@@ -1,11 +1,11 @@
 # coding=utf-8
 #
-from ...define.id_enum import machinerys
+from ...define.id_enum import machinery
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 
 class AlloyFurnaceRecipe(MachineRecipe):
-    recipe_icon_id = machinerys.ALLOY_FURNACE
+    recipe_icon_id = machinery.ALLOY_FURNACE
     render_ui_def_name = "RecipeCheckerUI.alloy_furnace_recipes"
 
     def __init__(self, inputs, outputs, power_cost, tick_duration):

@@ -14,7 +14,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     UpdateBlockStates,
 )
 from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
-from ...machines.pool import GetMachineWithoutCls, GetMachineStrict, GetMachineCls, cached_machines
+from ...machinery.pool import GetMachineWithoutCls, GetMachineStrict, GetMachineCls, cached_machines
 from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
 from .define import WireNetwork, WireLevelEnum
@@ -22,7 +22,7 @@ from .pool import GetSameNetwork, GetCachedNetworkFromPos, SetNetworkToPos
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
-    from ...machines.basic.base_machine import BaseMachine
+    from ...machinery.basic.base_machine import BaseMachine
     PosData = tuple[int, int, int, int] # x y z facing
 # TYPE_CHECKING END
 

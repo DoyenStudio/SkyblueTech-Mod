@@ -1,8 +1,8 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.api.server import GetPos, GetPlayerDimensionId
-from ..machines.basic import BaseMachine
-from ..machines.pool import GetMachineStrict, cached_machines
+from ..machinery.basic import BaseMachine
+from ..machinery.pool import GetMachineStrict, cached_machines
 
 
 def SafeGetMachine(x, y, z, player_id):

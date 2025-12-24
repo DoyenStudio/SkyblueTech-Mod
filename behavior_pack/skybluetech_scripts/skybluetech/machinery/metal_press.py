@@ -1,14 +1,15 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from ..machinery_def.mixer import recipes as Recipes
-from ..ui_sync.machines.mixer import MixerUISync
+from ..define.id_enum.machinery import METAL_PRESS as MACHINE_ID
+from ..machinery_def.metal_press import recipes as Recipes
+from ..ui_sync.machines.metal_press import MetalPressUISync
 from .basic import MixedProcessor, RegisterMachine
 
 
 @RegisterMachine
 class MetalPress(MixedProcessor):
-    block_name = "skybluetech:mixer"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     recipes = Recipes
     input_slots = (0,)
@@ -20,7 +21,7 @@ class MetalPress(MixedProcessor):
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
-        self.sync = MixerUISync.NewServer(self).Activate()
+        self.sync = MetalPressUISync.NewServer(self).Activate()
         self.OnSync()
 
     def OnSync(self):

@@ -4,11 +4,12 @@
             "group_name": "itemGroup.name.metal_sticks",
             "icon": "skybluetech:tin_stick",
             "list": [
+                "skybluetech:copper_stick",
                 "skybluetech:tin_stick",
                 "skybluetech:silver_stick",
+                "skybluetech:platinum_stick",
                 "skybluetech:bronze_stick",
-                "skybluetech:copper_stick",
-                "skybluetech:platinum_stick"
+                "skybluetech:steel_stick"
             ]
         }
     ]

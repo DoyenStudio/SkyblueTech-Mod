@@ -1,6 +1,6 @@
 {
     "main@common.inventory_screen_common": {
-        "$screen_content": "netease_editor_template_namespace.netease_editor_root_panel"
+        "$screen_content": "MetalPressUI.metal_press_ui"
     },
     "metal_press_ui": {
         "type": "panel",
@@ -49,7 +49,7 @@
                                             "font_scale_factor": 1.4,
                                             "font_type": "default",
                                             "shadow": true,
-                                            "text": "混合搅拌机",
+                                            "text": "金属冲压机床",
                                             "text_alignment": "center"
                                         }
                                     },
@@ -180,13 +180,5 @@
             }
         ]
     },
-    "namespace": "MetalPressUI",
-    "screen": {
-        "type": "screen",
-        "controls": [
-            {
-                "panel@metal_press_ui.metal_press_ui": {}
-            }
-        ]
-    }
+    "namespace": "MetalPressUI"
 }

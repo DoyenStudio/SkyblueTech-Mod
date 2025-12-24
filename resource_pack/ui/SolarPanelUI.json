@@ -81,7 +81,7 @@
                                             "controls": [
                                                 {
                                                     "gen_slot@netease_container.custom_grid_item": {
-                                                        "layer": 2,
+                                                        "layer": 10,
                                                         "offset": [
                                                             0,
                                                             -13

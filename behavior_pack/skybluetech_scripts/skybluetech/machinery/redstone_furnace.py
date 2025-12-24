@@ -5,6 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.plugins.recipe_obj import GetFurnaceRecipe
 from ..define import flags
+from ..define.id_enum.machinery import REDSTONE_FURNACE as MACHINE_ID
 from ..machinery_def.redstone_furnace import TICK_POWER
 from ..ui_sync.machines.redstone_furnace import RedstoneFurnaceUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
@@ -21,7 +22,7 @@ def GetFurnaceOutputByInput(item_id, aux_value=0):
 
 @RegisterMachine
 class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
-    block_name = "skybluetech:redstone_furnace"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     origin_process_ticks = 20 * 8 # 8s
     running_power = TICK_POWER

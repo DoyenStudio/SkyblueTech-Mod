@@ -8,6 +8,7 @@ from skybluetech_scripts.tooldelta.api.server.block import GetBlockNameAndAux
 from skybluetech_scripts.tooldelta.api.server.item import ItemExists
 from ..machinery_def.pump import *
 from ..define import flags as rf_flags
+from ..define.id_enum.machinery import PUMP as MACHINE_ID
 from ..ui_sync.machines.pump import PumpUISync
 from .basic import (
     AutoSaver,
@@ -25,7 +26,7 @@ K_PUMP_TYPE = "pump_type"
 
 @RegisterMachine
 class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
-    block_name = "skybluetech:pump"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     running_power = 0
     input_slots = (0,)

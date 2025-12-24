@@ -5,6 +5,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.plugins.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
 from ..define import flags
+from ..define.id_enum.machinery import SPLITTER as MACHINE_ID
 from ..ui_sync.machines.splitter import SplitterUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
@@ -12,30 +13,9 @@ split_recipes = {} # type: dict[str, str]
 cant_split_recipes = set() # type: set[str]
 
 
-def GetSplitResult(item_id, aux_value=0):
-    # type: (str, int) -> str | None
-    res = split_recipes.get(item_id)
-    if res is not None:
-        return res
-    elif res in cant_split_recipes:
-        return None
-    recipes = GetRecipesByInput(item_id, "crafting_table", aux_value)
-    for recipe in recipes:
-        recipe = GetCraftingRecipe(recipe)
-        if isinstance(recipe, CraftingRecipeRes):
-            if recipe.pattern == ["A"] and len(recipe.result) == 1:
-                output = recipe.result[0]
-                if output.count == 9:
-                    res = output.item_id
-                    split_recipes[item_id] = res
-                    return res
-    cant_split_recipes.add(item_id)
-    return None
-
-
 @RegisterMachine
 class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
-    block_name = "skybluetech:splitter"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     origin_process_ticks = 20 * 8
     running_power = 30
@@ -150,3 +130,24 @@ class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
         AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
+
+
+def GetSplitResult(item_id, aux_value=0):
+    # type: (str, int) -> str | None
+    res = split_recipes.get(item_id)
+    if res is not None:
+        return res
+    elif res in cant_split_recipes:
+        return None
+    recipes = GetRecipesByInput(item_id, "crafting_table", aux_value)
+    for recipe in recipes:
+        recipe = GetCraftingRecipe(recipe)
+        if isinstance(recipe, CraftingRecipeRes):
+            if recipe.pattern == ["A"] and len(recipe.result) == 1:
+                output = recipe.result[0]
+                if output.count == 9:
+                    res = output.item_id
+                    split_recipes[item_id] = res
+                    return res
+    cant_split_recipes.add(item_id)
+    return None

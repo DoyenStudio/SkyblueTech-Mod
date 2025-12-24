@@ -7,6 +7,7 @@ from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInit
 from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
 from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 from skybluetech_scripts.tooldelta.events.client.block import ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent
+from ..define.id_enum.machinery import CREATIVE_POWER_ACCEPTOR as MACHINE_ID
 from .basic import BaseMachine, RegisterMachine
 
 # TYPE_CHECKING
@@ -19,7 +20,7 @@ INFINITY = float("inf")
 
 @RegisterMachine
 class CreativePowerAcceptor(BaseMachine):
-    block_name = "skybluetech:creative_power_acceptor"
+    block_name = MACHINE_ID
     store_rf_max = 0
 
     def __init__(self, dim, x, y, z, block_entity_data):

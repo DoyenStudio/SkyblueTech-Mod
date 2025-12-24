@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
+from ..define.id_enum.machinery import MIXER as MACHINE_ID
 from ..machinery_def.mixer import recipes as Recipes, MachineRecipe
 from ..ui_sync.machines.mixer import MixerUISync
 from .basic import MixedProcessor, RegisterMachine
@@ -8,7 +9,7 @@ from .basic import MixedProcessor, RegisterMachine
 
 @RegisterMachine
 class Mixer(MixedProcessor):
-    block_name = "skybluetech:mixer"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     recipes = Recipes
     input_slots = (0,)

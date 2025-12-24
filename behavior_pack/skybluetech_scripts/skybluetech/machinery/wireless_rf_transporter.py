@@ -2,6 +2,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
+from ..define.id_enum.machinery import WIRELESS_RF_TRANSPORTER as MACHINE_ID
 from ..machinery_def.battery_cube import *
 from ..ui_sync.machines.battery_cube import BatteryCubeUISync
 from .basic import BaseMachine, GUIControl, ItemContainer, RegisterMachine
@@ -16,7 +17,7 @@ MODE_RECEIVER = 1
 
 @RegisterMachine
 class WirelessRFTransporter(BaseMachine, GUIControl, ItemContainer):
-    block_name = "skybluetech:wireless_rf_transporter"
+    block_name = MACHINE_ID
     store_rf_max = 100000
     energy_io_mode = (1, 1, 0, 0, 0, 0)
 

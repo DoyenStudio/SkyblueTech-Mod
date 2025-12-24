@@ -5,6 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.plugins.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
 from ..define import flags
+from ..define.id_enum.machinery import HEAVY_COMPRESSOR as MACHINE_ID
 from ..ui_sync.machines.heavy_compressor import HeavyCompressorUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
@@ -12,49 +13,9 @@ compressed_recipes = {} # type: dict[str, str]
 cant_compressed_recipes = set() # type: set[str]
 
 
-def GetCompressedResult(item_id, aux_value=0):
-    # type: (str, int) -> str | None
-    res = compressed_recipes.get(item_id)
-    if res is not None:
-        return res
-    elif res in cant_compressed_recipes:
-        return None
-    recipes = GetRecipesByInput(item_id, "crafting_table", aux_value)
-    for recipe in recipes:
-        recipe = GetCraftingRecipe(recipe)
-        if isinstance(recipe, CraftingRecipeRes):
-            if recipe.pattern == ["AAA", "AAA", "AAA"]:
-                result = recipe.result[0].item_id
-                compressed_recipes[item_id] = result
-                return result
-        else:
-            if len(recipe.inputs) == 1:
-                first_item = recipe.inputs[0]
-                if first_item.count == 9:
-                    res = first_item.item_id
-                    compressed_recipes[item_id] = res
-                    return res
-        # pattern = recipe.get("pattern")
-        # ingredients = recipe.get("ingredients")
-        # if pattern is not None:
-        #     if pattern == ["AAA", "AAA", "AAA"]:
-        #         result = recipe["result"][0]["item"]
-        #         compressed_recipes[item_id] = result
-        #         return result
-        # elif ingredients is not None:
-        #     if len(ingredients) == 1:
-        #         first_item = ingredients[0]
-        #         if first_item["count"] == 9:
-        #             result = first_item["item"]
-        #             compressed_recipes[item_id] = result
-        #             return result
-    cant_compressed_recipes.add(item_id)
-    return None
-
-
 @RegisterMachine
 class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
-    block_name = "skybluetech:heavy_compressor"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     origin_process_ticks = 20 * 5 # 8s
     running_power = 30
@@ -171,3 +132,43 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
+
+
+def GetCompressedResult(item_id, aux_value=0):
+    # type: (str, int) -> str | None
+    res = compressed_recipes.get(item_id)
+    if res is not None:
+        return res
+    elif res in cant_compressed_recipes:
+        return None
+    recipes = GetRecipesByInput(item_id, "crafting_table", aux_value)
+    for recipe in recipes:
+        recipe = GetCraftingRecipe(recipe)
+        if isinstance(recipe, CraftingRecipeRes):
+            if recipe.pattern == ["AAA", "AAA", "AAA"]:
+                result = recipe.result[0].item_id
+                compressed_recipes[item_id] = result
+                return result
+        else:
+            if len(recipe.inputs) == 1:
+                first_item = recipe.inputs[0]
+                if first_item.count == 9:
+                    res = first_item.item_id
+                    compressed_recipes[item_id] = res
+                    return res
+        # pattern = recipe.get("pattern")
+        # ingredients = recipe.get("ingredients")
+        # if pattern is not None:
+        #     if pattern == ["AAA", "AAA", "AAA"]:
+        #         result = recipe["result"][0]["item"]
+        #         compressed_recipes[item_id] = result
+        #         return result
+        # elif ingredients is not None:
+        #     if len(ingredients) == 1:
+        #         first_item = ingredients[0]
+        #         if first_item["count"] == 9:
+        #             result = first_item["item"]
+        #             compressed_recipes[item_id] = result
+        #             return result
+    cant_compressed_recipes.add(item_id)
+    return None

@@ -9,6 +9,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     DestroyEntity,
     SpawnDroppedItem,
 )
+from ..define.id_enum.machinery import FARMING_STATION as MACHINE_ID
 from ..machinery_def.farming_station import (
     isRipedCrop,
     isBlockCrop,
@@ -23,7 +24,7 @@ Y_OFFSET = 2
 
 @RegisterMachine
 class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
-    block_name = "skybluetech:farming_station"
+    block_name = MACHINE_ID
     store_rf_max = 16000
     running_power = 30
     origin_process_ticks = 20 * 5

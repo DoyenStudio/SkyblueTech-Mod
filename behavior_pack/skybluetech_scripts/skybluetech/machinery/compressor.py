@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
+from ..define.id_enum.machinery import COMPRESSOR as MACHINE_ID
 from ..machinery_def.compressor import recipes as Recipes
 from ..ui_sync.machines.compressor import CompressorUISync
 from .basic import RegisterMachine, BaseProcessor
@@ -8,7 +9,7 @@ from .basic import RegisterMachine, BaseProcessor
 
 @RegisterMachine
 class Compressor(BaseProcessor):
-    block_name = "skybluetech:compressor"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     recipes = Recipes
     input_slots = (0,)

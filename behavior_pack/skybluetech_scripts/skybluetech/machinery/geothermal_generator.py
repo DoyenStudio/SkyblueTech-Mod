@@ -2,6 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from ..define import flags
+from ..define.id_enum.machinery import GEO_THERMAL_GENERATOR as MACHINE_ID
 from ..machinery_def.geothermal_generator import *
 from ..ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync, FluidSlotSync
 from .basic import AutoSaver, BaseMachine, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
@@ -12,7 +13,7 @@ K_POWER = "power"
 
 @RegisterMachine
 class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRenderer):
-    block_name = "skybluetech:geothermal_generator"
+    block_name = MACHINE_ID
     store_rf_max = 28800
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     fluid_input_slots = {0, 1}

@@ -8,6 +8,7 @@ from skybluetech_scripts.tooldelta.events.server.block import (
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
 from ..machinery_def.thermoelectric_generator import COLD_BLOCKS, HOT_BLOCKS
 from ..define.utils import NEIGHBOR_BLOCKS_ENUM
+from ..define.id_enum.machinery import THERMOELECTRIC_GENERATOR as MACHINE_ID
 from ..ui_sync.machines.thermoelectric_generator import ThermoelectricGeneratorUISync
 from ..ui.machines.thermoelectric_generator import ThermoelectricGeneratorUI
 from .basic import BaseMachine, GUIControl, RegisterMachine
@@ -15,7 +16,7 @@ from .basic import BaseMachine, GUIControl, RegisterMachine
 
 @RegisterMachine
 class ThermoelectricGenerator(BaseMachine, GUIControl):
-    block_name = "skybluetech:thermoelectric_generator"
+    block_name = MACHINE_ID
     store_rf_max = 14400
     bound_ui = ThermoelectricGeneratorUI
     is_container = False

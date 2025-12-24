@@ -12,6 +12,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
 )
 from ..define import flags
+from ..define.id_enum.machinery import SOLAR_PANEL as MACHINE_ID
 from ..utils.constants import DXYZ_FACING, FACING_EN
 from ..ui_sync.machines.solar_panel import SolarPanelUISync
 from ..transmitters.wire.logic import isWire
@@ -20,7 +21,7 @@ from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, RegisterMa
 
 @RegisterMachine
 class SolarPanel(AutoSaver, BaseMachine, ItemContainer, GUIControl):
-    block_name = "skybluetech:solar_panel"
+    block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
 

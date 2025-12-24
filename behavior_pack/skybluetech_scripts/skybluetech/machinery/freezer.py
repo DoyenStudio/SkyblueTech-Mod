@@ -2,6 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from ..define.events.freezer import FreezerModeChangedEvent
+from ..define.id_enum.machinery import FREEZER as MACHINE_ID
 from ..machinery_def.freezer import recipes as Recipes
 from ..ui_sync.machines.freezer import FreezerUISync
 from .basic import MixedProcessor, RegisterMachine
@@ -12,7 +13,7 @@ K_MODE = "mode"
 
 @RegisterMachine
 class Freezer(MixedProcessor):
-    block_name = "skybluetech:freezer"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     recipes = []
     output_slots = (0,)

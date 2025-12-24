@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
+from ..define.id_enum.machinery import ALLOY_FURNACE as MACHINE_ID
 from ..machinery_def.alloy_furnace import recipes as Recipes
 from ..ui_sync.machines.alloy_furnace import AlloyFurnaceUISync
 from .basic import BaseProcessor, RegisterMachine
@@ -8,7 +9,7 @@ from .basic import BaseProcessor, RegisterMachine
 
 @RegisterMachine
 class AlloyFurnace(BaseProcessor):
-    block_name = "skybluetech:alloy_furnace"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     recipes = Recipes
     input_slots = (0, 1, 2, 3)

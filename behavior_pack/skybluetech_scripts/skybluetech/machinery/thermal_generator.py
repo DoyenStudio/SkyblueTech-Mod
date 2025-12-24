@@ -3,6 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
+from ..define.id_enum.machinery import THERMAL_GENERATOR as MACHINE_ID
 from ..ui_sync.machines.thermal_generator import ThermalGeneratorUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, RegisterMachine
 
@@ -15,7 +16,7 @@ SecondsPerTick = 0.05
 
 @RegisterMachine
 class ThermalGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
-    block_name = "skybluetech:thermal_generator"
+    block_name = MACHINE_ID
     store_rf_max = 14400
     energy_mode = (1, 1, 1, 1, 1, 1)
 

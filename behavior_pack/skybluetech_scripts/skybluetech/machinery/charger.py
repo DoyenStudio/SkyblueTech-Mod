@@ -23,6 +23,7 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityRemoveClientEvent,
 )
 from ..define import flags
+from ..define.id_enum.machinery import CHARGER as MACHINE_ID
 from ..machinery_def.charger import CHARGE_SPEED
 from ..define.events.charger import ChargerItemModelUpdate, ChargeItemModelRequest
 from ..ui_sync.machines.charger import ChargerUISync
@@ -33,7 +34,7 @@ from .pool import GetMachineStrict
 
 @RegisterMachine
 class Charger(AutoSaver, GUIControl, UpgradeControl):
-    block_name = "skybluetech:charger"
+    block_name = MACHINE_ID
     allow_upgrader_tags = {"skybluetech:upgraders/charger"}
     input_slots = (0,)
     output_slots = (1,)

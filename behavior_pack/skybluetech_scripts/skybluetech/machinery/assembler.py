@@ -7,6 +7,7 @@ from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent, Blo
 from skybluetech_scripts.tooldelta.events.notify import NotifyToClients, NotifyToClient
 from ..define import flags
 from ..define.events.assembler import *
+from ..define.id_enum.machinery import ASSEMBLER as MACHINE_ID
 from ..machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
 from ..utils.constants import DXYZ_FACING, FACING_EN
@@ -22,7 +23,7 @@ def g(dic, key):
 
 @RegisterMachine
 class Assembler(GUIControl, UpgradeControl):
-    block_name = "skybluetech:assembler"
+    block_name = MACHINE_ID
     store_rf_max = 100000
     energy_io_mode = (0, 0, 0, 0, 0, 0)
 

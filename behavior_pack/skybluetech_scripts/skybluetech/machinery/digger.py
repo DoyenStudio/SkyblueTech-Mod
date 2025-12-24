@@ -29,6 +29,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayersInDim
 from ..define import flags
 from ..define.events.digger import DiggerWorkModeUpdatedEvent, DiggerUpdateCrack
+from ..define.id_enum.machinery import DIGGER as MACHINE_ID
 from ..utils.facing import GetOppositeDirFromFacing
 from ..ui_sync.machines.digger import DiggerUISync
 from .basic import (
@@ -44,7 +45,7 @@ TICKS_PER_SECOND = 20
 
 @RegisterMachine
 class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
-    block_name = "skybluetech:digger"
+    block_name = MACHINE_ID
     input_slots = ()
     output_slots = (0,)
     store_rf_max = 8800

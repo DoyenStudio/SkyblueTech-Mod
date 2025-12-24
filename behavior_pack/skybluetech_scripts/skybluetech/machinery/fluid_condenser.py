@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
+from ..define.id_enum.machinery import FLUID_CONDENSER as MACHINE_ID
 from ..machinery_def.fluid_condenser import recipes as Recipes
 from ..ui_sync.machines.fluid_condenser import FluidCondenserUISync
 from .basic import MixedProcessor, RegisterMachine
@@ -8,8 +9,7 @@ from .basic import MixedProcessor, RegisterMachine
 
 @RegisterMachine
 class FluidCondenser(MixedProcessor):
-    block_name = "skybluetech:fluid_condenser"
-    store_rf_max = 8800
+    block_name = MACHINE_ID
     recipes = Recipes
     input_slots = (0,)
     output_slots = (1,)

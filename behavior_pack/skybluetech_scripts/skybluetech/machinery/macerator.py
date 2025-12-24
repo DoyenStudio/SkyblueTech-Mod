@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
+from ..define.id_enum.machinery import MACERATOR as MACHINE_ID
 from ..machinery_def.macerator import recipes as Recipes
 from ..ui_sync.machines.macerator import MaceratorUISync
 from .basic import RegisterMachine, BaseProcessor
@@ -8,7 +9,7 @@ from .basic import RegisterMachine, BaseProcessor
 
 @RegisterMachine
 class Macerator(BaseProcessor):
-    block_name = "skybluetech:macerator"
+    block_name = MACHINE_ID
     store_rf_max = 8800
     recipes = Recipes
     input_slots = (0,)

@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
+from ..define.id_enum.machinery import CREATIVE_GENERATOR as MACHINE_ID
 from .basic import BaseMachine, RegisterMachine
 
 INFINITY = float("inf")
@@ -8,7 +9,7 @@ INFINITY = float("inf")
 
 @RegisterMachine
 class CreativeGenerator(BaseMachine):
-    block_name = "skybluetech:creative_generator"
+    block_name = MACHINE_ID
     store_rf_max = 0
     energy_io_mode = (1, 1, 1, 1, 1, 1)
 

@@ -12,6 +12,7 @@ from .utils import SNode
 
 CustomUIScreenProxy = clientApi.GetUIScreenProxyCls()
 ViewBinder = clientApi.GetViewBinderCls()
+ViewRequest = clientApi.GetViewViewRequestCls()
 
 
 class UScreenProxy(CustomUIScreenProxy):
@@ -99,5 +100,6 @@ class UScreenProxy(CustomUIScreenProxy):
  
 __all__ = [
     "UScreenProxy",
-    "ViewBinder"
+    "ViewBinder",
+    "ViewRequest"
 ]

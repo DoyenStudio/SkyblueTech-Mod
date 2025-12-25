@@ -1,8 +1,8 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.api.server import GetPos, GetPlayerDimensionId
-from ..machinery.basic import BaseMachine
-from ..machinery.pool import GetMachineStrict, cached_machines
+from ..machinery.basic import BaseMachine, GUIControl
+from ..machinery.pool import GetMachineStrict
 
 
 def SafeGetMachine(x, y, z, player_id):
@@ -12,5 +12,8 @@ def SafeGetMachine(x, y, z, player_id):
         for a, b in zip(GetPos(player_id), (x, y, z))
     ):
         return None
-    return GetMachineStrict(GetPlayerDimensionId(player_id), x, y, z)
+    m = GetMachineStrict(GetPlayerDimensionId(player_id), x, y, z)
+    if not isinstance(m, GUIControl) or not m.sync.PlayerInSync(player_id):
+        return None
+    return m
     

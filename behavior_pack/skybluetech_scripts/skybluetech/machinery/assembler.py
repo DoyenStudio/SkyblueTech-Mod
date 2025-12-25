@@ -2,7 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId, UpdateBlockStates, GetBlockTags, GetBlockName
+from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockTags, GetBlockName
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent, BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.events.notify import NotifyToClients, NotifyToClient
 from ..define import flags
@@ -10,12 +10,12 @@ from ..define.events.assembler import *
 from ..define.id_enum.machinery import ASSEMBLER as MACHINE_ID
 from ..machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
+from ..utils.action_commit import SafeGetMachine
 from ..utils.constants import DXYZ_FACING, FACING_EN
 from ..utils.lore import GetLorePos, SetLoreAtPos
 from ..ui_sync.machines.assembler import AssemblerUISync
 from ..transmitters.wire.logic import isWire
 from .basic import GUIControl, UpgradeControl, RegisterMachine
-from .pool import GetMachineStrict
 
 def g(dic, key):
     return dic[key]["__value__"]
@@ -229,8 +229,7 @@ def getMaxUpgradersCount(item):
 @AssemblerActionRequest.Listen()
 def onHandleAction(event):
     # type: (AssemblerActionRequest) -> None
-    dim = GetPlayerDimensionId(event.pid)
-    m = GetMachineStrict(dim, event.x, event.y, event.z)
+    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
     if not isinstance(m, Assembler):
         return
     if event.action == ACTION_PULL_UPGRADER:

@@ -5,8 +5,8 @@ from ..define.events.freezer import FreezerModeChangedEvent
 from ..define.id_enum.machinery import FREEZER as MACHINE_ID
 from ..machinery_def.freezer import recipes as Recipes
 from ..ui_sync.machines.freezer import FreezerUISync
+from ..utils.action_commit import SafeGetMachine
 from .basic import MixedProcessor, RegisterMachine
-from .pool import GetMachineStrict
 
 K_MODE = "mode"
 
@@ -57,10 +57,8 @@ class Freezer(MixedProcessor):
 @FreezerModeChangedEvent.Listen()
 def onFreezerModeChanged(event):
     # type: (FreezerModeChangedEvent) -> None
-    machine = GetMachineStrict(event.dim, event.x, event.y, event.z)
+    machine = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(machine, Freezer):
-        return
-    if not machine.sync.PlayerInSync(event.player_id):
         return
     machine.setMode(event.new_mode)
     machine.sync.FastSync(event.player_id)

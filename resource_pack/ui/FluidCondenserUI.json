@@ -142,7 +142,7 @@
                                         }
                                     },
                                     {
-                                        "@SkybluePanelLib.player_backpack": {
+                                        "backpack@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46

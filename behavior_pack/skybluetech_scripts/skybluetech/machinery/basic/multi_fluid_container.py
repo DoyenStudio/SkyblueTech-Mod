@@ -216,6 +216,8 @@ class MultiFluidContainer(object):
                     bucket_id = fluid.fluid_id + "_bucket"
                     if ItemExists(bucket_id):
                         fluid.volume -= BUCKET_VOLUME
+                        if fluid.volume <= 0.0:
+                            fluid.fluid_id = None
                         SetInventorySlotItemCount(
                             player_id, GetSelectedSlot(player_id), item.count - 1
                         )
@@ -226,7 +228,8 @@ class MultiFluidContainer(object):
             else:
                 fluid_id = item.newItemName.replace("_bucket", "")
                 if ItemExists(fluid_id) and self.CanAddFluid(fluid_id):
-                    for slot, fluid in enumerate(self.fluids):
+                    for slot in self.fluid_input_slots:
+                        fluid = self.fluids[slot]
                         if not self.IsValidFluidInput(slot, fluid_id):
                             continue
                         elif fluid.volume + BUCKET_VOLUME > fluid.max_volume:

@@ -38,6 +38,15 @@ class HeatCtrl(BaseMachine):
 
     def ShareHeat(self, other):
         # type: (HeatCtrl) -> bool
+        """
+        分享、传递热量给给定的机器， 机器必须继承 `HeatCtrl` 类。
+
+        Args:
+            other (HeatCtrl): 对应机器
+
+        Returns:
+            bool: 是否进行了传热, 如果温度差异过小则不会传热
+        """
         diff = abs(self.kelvin - other.kelvin)
         if diff <= DIFF_THRESOLD:
             return False
@@ -62,12 +71,27 @@ class HeatCtrl(BaseMachine):
 
     def InputFluidAndUpdateHeat(self, fluid_id, new_volume):
         # type: (str, float) -> None
+        """
+        当机器接受了具有比热容的流体时调用。
+        会更新此机器温度。
+
+        Args:
+            fluid_id (str): 流体类型
+            new_volume (float): 当前此流体的体积
+        """
         orig_q = self.kelvin * self.heat_c
         self.FlushCValueByFluid(fluid_id, new_volume)
         self.kelvin = orig_q / self.heat_c / (new_volume + 100)
 
     def FlushCValueByFluid(self, fluid_id, fluid_volume):
         # type: (str | None, float) -> None
+        """
+        根据所给流体类型和体积更新此机器的比热容。
+
+        Args:
+            fluid_id (str): 流体种类
+            fluid_volume (float): 当前此流体的体积
+        """
         if fluid_id is None or fluid_volume == 0:
             self.heat_c = self.original_heat_c
         else:

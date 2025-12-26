@@ -1,9 +1,6 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
-        "skybluetech:": {
-            "textures": ""
-        },
         "skybluetech:alloy_furnace_front": {
             "textures": "textures/machines/alloy_furnace_front"
         },

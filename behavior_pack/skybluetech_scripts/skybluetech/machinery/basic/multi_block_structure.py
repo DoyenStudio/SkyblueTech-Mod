@@ -231,6 +231,9 @@ class DetectArea(object):
 
 
 class StructureBlockPalette(object):
+    """
+    多方块检测调色板, 用于表示多方块结构的内容。
+    """
     def __init__(
         self,
         posblock_data,  # type: dict[int, set[tuple[int, int, int]]]
@@ -345,7 +348,9 @@ class MultiBlockStructure(BaseMachine):
     """
 
     structure_palette = None  # type: StructureBlockPalette | None
+    "用于进行多方块完整性检测的多方块结构调色板。"
     functional_block_ids = set()  # type: set[str]
+    "多方块结构中功能性方块的列表。"
 
     def __init__(self, dim, x, y, z, block_entity_data):
         if self.structure_palette is None:
@@ -401,12 +406,27 @@ class MultiBlockStructure(BaseMachine):
                 self.OnSync()
 
     def GetFunctionalBlockPoses(self):
+        "返回功能性方块对于多方块结构核心位置的相对坐标。"
         return self.area.functional_block_poses
 
     # StructureUtils
 
     def GetMachine(self, cls, block_id=None, index=0):
         # type: (type[MT], str | None, int) -> MT
+        """
+        获取多方块结构中某一类型的机器。
+
+        Args:
+            cls (BaseMachine): 机器类
+            block_id (str, optional): 机器方块 ID
+            index (int, optional): 索引值, 如果有多个匹配的机器则使用索引值。
+
+        Raises:
+            ValueError: 找不到对应机器
+
+        Returns:
+            BaseMachine: 所求机器类
+        """
         block_id = block_id or cls.block_name
         pos = self.GetFunctionalBlockPoses().get(block_id)
         if not pos:
@@ -425,6 +445,7 @@ class MultiBlockStructure(BaseMachine):
 
     def TryGetMachine(self, cls, block_id=None, index=0):
         # type: (type[MT], str | None, int) -> MT | None
+        """GetMachine 的可空返回版本, 获取不到对应机器则返回 None"""
         block_id = block_id or cls.block_name
         pos = self.GetFunctionalBlockPoses().get(block_id)
         if not pos:

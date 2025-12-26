@@ -61,6 +61,9 @@
         "skybluetech:description_icon": {
             "textures": "textures/items/description"
         },
+        "skybluetech:distilled_water_bucket": {
+            "textures": "textures/items/buckets/distilled_water_bucket"
+        },
         "skybluetech:famicom_cartidge_1": {
             "textures": "textures/items/cartidges/famicom_cartidge_1"
         },
@@ -294,9 +297,6 @@
         },
         "skybluetech:transmitter_wrench": {
             "textures": "textures/items/cable_wrench"
-        },
-        "skybluetech:distilled_water_bucket": {
-            "textures": "textures/items/buckets/distilled_water_bucket"
         }
     },
     "texture_name": "atlas.items"

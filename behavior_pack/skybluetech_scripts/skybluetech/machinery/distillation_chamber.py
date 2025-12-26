@@ -63,6 +63,10 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
         HeatCtrl.Dump(self)
         MultiFluidContainer.Dump(self)
 
+    def IsValidFluidInput(self, slot, fluid_id):
+        # type: (int, str) -> bool
+        return fluid_id in recipes_collection
+
     def workOnce(self):
         in_fluid = self.fluids[0]
         out_fluid = self.fluids[1]

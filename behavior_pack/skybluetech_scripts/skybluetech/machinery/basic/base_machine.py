@@ -166,18 +166,45 @@ class BaseMachine(object):
 
     def HasDeactiveFlag(self, flag):
         # type: (int) -> bool
+        """
+        是否拥有某一停机标志。
+
+        Args:
+            flag (int): 标志位
+
+        Returns:
+            bool
+        """
         return self.deactive_flags & flag != 0
 
     def IsActive(self):
         # type: () -> bool
+        """
+        机器是否处于工作状态。
+
+        Returns:
+            bool
+        """
         return self.deactive_flags == 0
 
     def IsActiveIgnoreCondition(self, cond):
         # type: (int) -> bool
+        """
+        机器在排除某种停机标志可能的情况下是否还能工作。
+
+        Args:
+            cond (int): 一个或多个停机标志
+
+        Returns:
+            bool
+        """
         return self.deactive_flags & ~cond == 0
 
     def ResetDeactiveFlags(self):
         # type: () -> None
+        """
+        重置所有停机标志, 即将机器设置为工作模式。
+        """
         self.deactive_flags = 0
 
     def initRFNetwork(self):

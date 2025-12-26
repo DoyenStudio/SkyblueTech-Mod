@@ -19,7 +19,8 @@ class UpgradeControl(ItemContainer, SPControl):
     """
     upgrade_slot_start = 2 # type: int
     upgrade_slots = 4 # type: int
-    allow_upgrader_tags = {"skybluetech:upgraders/speed", "skybluetech:upgraders/energy"} # type: set[str]
+    allow_upgrader_tags = set() # type: set[str]
+    "可接受的机器升级卡标签。"
 
     def __init__(self, dim, x, y, z, block_entity_data):
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)

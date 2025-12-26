@@ -21,6 +21,12 @@ class BaseSpeedControl(BaseMachine):
 
     def SetSpeedRelative(self, speed):
         # type: (float) -> None
+        """
+        设置相对速度。默认为 1
+
+        Args:
+            speed (float): 相对速度
+        """
         self.reduce_ticks = speed
 
     def ProcessOnce(self):
@@ -41,16 +47,37 @@ class BaseSpeedControl(BaseMachine):
             
     def SetProcessTicks(self, ticks):
         # type: (int) -> None
+        """
+        设置工作一次所需 ticks。
+
+        Args:
+            ticks (int): mc game ticks
+        """
         self.origin_process_ticks = ticks
 
     def GetProcessProgress(self):
+        """
+        获取工作进度 (最多为 1)。
+
+        Returns:
+            float: 工作进度, 0~1
+        """
         return 1 - float(self.ticks_left) / self.origin_process_ticks
 
     def ResetProgress(self):
+        """
+        重置工作进度。
+        """
         self.ticks_left = self.origin_process_ticks
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
+        """
+        设置停机标志位。会使得机器退出工作状态。
+
+        Args:
+            flag (int): 停机标志位
+        """
         BaseMachine.SetDeactiveFlag(self, flag)
         if flag != DEACTIVE_FLAG_POWER_LACK:
             self.ResetProgress()

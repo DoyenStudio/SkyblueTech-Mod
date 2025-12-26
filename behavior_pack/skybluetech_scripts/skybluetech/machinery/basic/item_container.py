@@ -55,7 +55,7 @@ class ItemContainer(object):
         SetChestBoxItemNum(None, self.xyz, slot_pos, count, self.dim)
 
     def GetSlotSize(self):
-        return GetContainerSize(self.xyz, self.dim)
+        return len(self.input_slots) + len(self.output_slots)
 
     def GetInputSlotItems(self):
         # type: () -> dict[int, Item]
@@ -82,12 +82,18 @@ class ItemContainer(object):
 
     def RequireItems(self):
         # type: () -> bool
+        """
+        此机器向物品管线网络请求一次物品。
+
+        Returns:
+            bool: 是否请求成功
+        """
         requireLibraryFunc()
         return RequireItems(self.dim, self.xyz)
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
-        "覆写方法用于作为机器槽位更新的回调。"
+        "覆写方法用于作为机器物品槽位更新的回调。"
 
     def OnCustomCotainerPutItem(self, event):
         # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
@@ -101,4 +107,13 @@ class ItemContainer(object):
         # item_res = PostItemIntoNetworks(self.dim, self.xyz, item, None)
         # if item_res is None:
         #     return None
+        """
+        输出产出的物品。
+
+        Args:
+            item (Item): 产出物
+
+        Returns:
+            Item: ?
+        """
         return PutItemIntoContainer(self.dim, self.xyz, item, self.output_slots)

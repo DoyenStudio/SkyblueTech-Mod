@@ -2,7 +2,10 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:max_stack_size": 1
+            "minecraft:max_stack_size": 1,
+            "netease:customtips": {
+                "value": "\n§7点击物品或流体管道对准输入/输出源的边缘， 可以设置管道的输入/抽取模式。"
+            }
         },
         "description": {
             "category": "skybluetech",

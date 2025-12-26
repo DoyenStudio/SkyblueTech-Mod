@@ -34,6 +34,9 @@ if 0:
 
 def RegisterMachine(machine_cls):
     # type: (type[MT]) -> type[MT]
+    """
+    注册机器。所有机器类都必须使用此 `@RegisterMachine` 标注器标注。
+    """
     if machine_cls.block_name:
         pool.machine_classes[machine_cls.block_name] = machine_cls
     for extra_block_name in machine_cls.extra_block_names:

@@ -153,6 +153,15 @@ class FluidContainer(object):
 
     def CanAddFluid(self, fluid_id):
         # type: (str) -> bool
+        """
+        容器能否添加指定种类的流体。
+
+        Args:
+            fluid_id (str): 流体类型
+
+        Returns:
+            bool
+        """
         return self.fluid_id is None or (
             fluid_id == self.fluid_id and self.fluid_volume < self.max_fluid_volume
         )
@@ -201,8 +210,12 @@ class FluidContainer(object):
             self.Dump()
 
     def SelfRequireFluid(self):
+        """
+        容器自身向网络索取一次流体。
+        """
         requireLibraryFunc()
         RequirePostFluid(self.dim, self.xyz)
 
     def OnFluidSlotUpdate(self):
+        "流体内容更新时调用。"
         pass

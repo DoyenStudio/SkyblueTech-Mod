@@ -188,6 +188,9 @@ class MultiFluidContainer(object):
                 self.Dump()
 
     def RequireAnyFluidFromNetwork(self):
+        """
+        向流体管道网络索求一次流体。
+        """
         requireLibraryFunc()
         RequirePostFluid(self.dim, self.xyz)
 

@@ -24,6 +24,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     # output_slot_index = 0
     # "允许漏斗漏出的槽位"
     energy_mode = (0, 0, 0, 0, 0, 0)
+    allow_upgrader_tags = {"skybluetech:upgraders/speed", "skybluetech:upgraders/energy"}
     
 
     def __init__(self, dim, x, y, z, block_entity_data):

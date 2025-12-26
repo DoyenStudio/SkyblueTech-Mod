@@ -81,9 +81,10 @@ def bfsFindConnections(dim, start, connected=None):
                 queue.append(xyz)
                 if not first_cable_name:
                     first_cable_name = gbname
-                elif first_cable_name != gbname:
-                    # 不同等级的管道无法并用
-                    continue
+                # elif first_cable_name != gbname:
+                #     # 不同等级的管道无法并用
+                #     continue
+                continue
             dir_name = FACING_EN[facing]
             if block_states["skybluetech:connection_" + dir_name]:
                 if block_states["skybluetech:cable_io_" + dir_name]:
@@ -106,11 +107,11 @@ def bfsFindConnections(dim, start, connected=None):
 
 
 def getNearbyPipeNetwork(dim, x, y, z, exists=None, enable_cache=False):
-    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[list[PipeNetwork], list[PipeNetwork]]
+    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[set[PipeNetwork], set[PipeNetwork]]
     if enable_cache and (dim, x, y, z) in tankNetworkPool:
         return tankNetworkPool[(dim, (x, y, z))]
-    input_networks = []  # type: list[PipeNetwork]
-    output_networks = []  # type: list[PipeNetwork]
+    input_networks = set()  # type: set[PipeNetwork]
+    output_networks = set()  # type: set[PipeNetwork]
     _exists = exists or set()  # type: set[PosData]
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
         next_pos = (x + dx, y + dy, z + dz)
@@ -119,14 +120,14 @@ def getNearbyPipeNetwork(dim, x, y, z, exists=None, enable_cache=False):
             continue
         p = next_pos + (OPPOSITE_FACING[facing],)
         if p in network.group_inputs:
-            input_networks.append(GetSameNetwork(network))
+            input_networks.add(GetSameNetwork(network))
         elif p in network.group_outputs:
-            output_networks.append(GetSameNetwork(network))
+            output_networks.add(GetSameNetwork(network))
     return input_networks, output_networks
 
 
 def GetTankNetworks(dim, x, y, z, enable_cache=False, cacher=None):
-    # type: (int, int, int, int, bool, set[PosData] | None) -> tuple[list[PipeNetwork], list[PipeNetwork]]
+    # type: (int, int, int, int, bool, set[PosData] | None) -> tuple[set[PipeNetwork], set[PipeNetwork]]
     "获取某一位置附近的管道网络。会使用缓存。"
     nws = tankNetworkPool.get((dim, (x, y, z)))
     if nws is not None:
@@ -144,17 +145,17 @@ def clearNearbyPipesNetwork(dim, x, y, z):
         tankNetworkPool.pop((dim, (ax, ay, az)), None)
 
 
-def UpdateWholeNetwork(dim, network):
+def AddNetworkToPool(dim, network):
     # type: (int, PipeNetwork) -> None
     "更新管道目标池数据。将网络数据同步到目标池。"
     for x, y, z, _ in network.group_inputs:
-        tankNetworkPool.setdefault((dim, (x, y, z)), ([], []))[0].append(network)
+        tankNetworkPool.setdefault((dim, (x, y, z)), (set(), set()))[0].add(network)
     for x, y, z, _ in network.group_outputs:
-        tankNetworkPool.setdefault((dim, (x, y, z)), ([], []))[1].append(network)
+        tankNetworkPool.setdefault((dim, (x, y, z)), (set(), set()))[1].add(network)
 
 
 def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks, depth):
-    # type: (int, tuple[int, int, int], str, float, list[PipeNetwork] | None, int) -> float
+    # type: (int, tuple[int, int, int], str, float, set[PipeNetwork] | None, int) -> float
     "向网络发送流体, 返回剩余流体体积"
     if networks is None:
         x, y, z = xyz
@@ -248,7 +249,7 @@ def onBlockPlaced(event):
 @Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
 def onBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
-    m = GetMachineWithoutCls(event.dimension, event.x, event.y, event.z)
+    m = GetMachineStrict(event.dimension, event.x, event.y, event.z)
     if m is not None:
         tankNetworkPool.pop((event.dimension, (event.x, event.y, event.z)), None)
 
@@ -328,8 +329,12 @@ def onPlayerUseWrench(event):
 @BlockNeighborChangedServerEvent.Listen()
 def onNeighbourBlockChanged(event):
     # type: (BlockNeighborChangedServerEvent) -> None
+    if event.fromBlockName == event.toBlockName:
+        return
     if not isPipe(event.blockName):
         return
+    import time
+    t = time.time()
     from_block_can_connect = canConnect(event.fromBlockName)
     to_block_can_connect = canConnect(event.toBlockName)
     if from_block_can_connect != to_block_can_connect:
@@ -354,9 +359,10 @@ def onNeighbourBlockChanged(event):
             )
     if canConnect(event.fromBlockName) or canConnect(event.toBlockName):
         clearNearbyPipesNetwork(event.dimensionId, event.posX, event.posY, event.posZ)
+    if canConnect(event.toBlockName):
         cacher = set()  # type: set[PosData]
         i, o = GetTankNetworks(
             event.dimensionId, event.posX, event.posY, event.posZ, cacher=cacher
         )
-        for network in i + o:
-            UpdateWholeNetwork(event.dimensionId, network)
+        for network in i | o:
+            AddNetworkToPool(event.dimensionId, network)

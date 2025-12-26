@@ -104,9 +104,10 @@ def bfsFindConnections(dim, start, connected=None):
                 queue.append(xyz)
                 if not first_cable_name:
                     first_cable_name = gbname
-                elif first_cable_name != gbname:
-                    # 不同等级的管道无法并用
-                    continue
+                # elif first_cable_name != gbname:
+                #     # 不同等级的管道无法并用
+                #     continue
+                continue
             dir_name = FACING_EN[facing]
             if block_states["skybluetech:connection_" + dir_name]:
                 if block_states["skybluetech:cable_io_" + dir_name]:
@@ -119,7 +120,6 @@ def bfsFindConnections(dim, start, connected=None):
         connected.add(
             current
         )  # TODO: 管道过多使得队列内存占用过大; 考虑限制最大 bfs 数
-
     return CableNetwork(
         dim,
         input_nodes,
@@ -129,9 +129,9 @@ def bfsFindConnections(dim, start, connected=None):
 
 
 def getNearbyCableNetwork(dim, x, y, z, exists=None):
-    # type: (int, int, int, int, set[PosData] | None) -> tuple[list[CableNetwork], list[CableNetwork]]
-    input_networks = []  # type: list[CableNetwork]
-    output_networks = []  # type: list[CableNetwork]
+    # type: (int, int, int, int, set[PosData] | None) -> tuple[set[CableNetwork], set[CableNetwork]]
+    input_networks = set()  # type: set[CableNetwork]
+    output_networks = set()  # type: set[CableNetwork]
     _exists = exists or set()  # type: set[PosData]
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
         next_pos = (x + dx, y + dy, z + dz)
@@ -140,14 +140,14 @@ def getNearbyCableNetwork(dim, x, y, z, exists=None):
             continue
         p = next_pos + (OPPOSITE_FACING[facing],)
         if p in network.group_inputs:
-            input_networks.append(GetSameNetwork(network))
+            input_networks.add(GetSameNetwork(network))
         elif p in network.group_outputs:
-            output_networks.append(GetSameNetwork(network))
+            output_networks.add(GetSameNetwork(network))
     return input_networks, output_networks
 
 
 def GetContainerNetworks(dim, x, y, z, enable_cache=False, cacher=None):
-    # type: (int, int, int, int, bool, set[PosData] | None) -> tuple[list[CableNetwork], list[CableNetwork]]
+    # type: (int, int, int, int, bool, set[PosData] | None) -> tuple[set[CableNetwork], set[CableNetwork]]
     """
     返回某一个坐标的容器周围的网络，返回分别为输入型和提取型网络。
     如果要调用多次, 可先创建一个空集合, exists 参数传入这个集合, 以便 bfs 复用。
@@ -163,7 +163,7 @@ def GetContainerNetworks(dim, x, y, z, enable_cache=False, cacher=None):
 
 
 def PostItemIntoNetworks(dim, xyz, item, networks):
-    # type: (int, tuple[int, int, int], Item, list[CableNetwork] | None) -> None | Item
+    # type: (int, tuple[int, int, int], Item, set[CableNetwork] | None) -> None | Item
     "向网络发送物品, 返回剩余物品"
     if networks is None:
         x, y, z = xyz
@@ -285,12 +285,12 @@ def clearNearbyContainersNetwork(dim, x, y, z):
         containerNetworkPool.pop((dim, (ax, ay, az)), None)
 
 
-def UpdateWholeNetwork(dim, network):
+def AddNetworkToPool(dim, network):
     # type: (int, CableNetwork) -> None
     for x, y, z, _ in network.group_inputs:
-        containerNetworkPool.setdefault((dim, (x, y, z)), ([], []))[0].append(network)
+        containerNetworkPool.setdefault((dim, (x, y, z)), (set(), set()))[0].add(network)
     for x, y, z, _ in network.group_outputs:
-        containerNetworkPool.setdefault((dim, (x, y, z)), ([], []))[1].append(network)
+        containerNetworkPool.setdefault((dim, (x, y, z)), (set(), set()))[1].add(network)
 
 
 @ServerPlaceBlockEntityEvent.Listen()
@@ -321,50 +321,6 @@ def onBlockRemoved(event):
     m = GetMachineWithoutCls(event.dimension, event.x, event.y, event.z)
     if m is not None:
         containerNetworkPool.pop((event.dimension, (event.x, event.y, event.z)), None)
-
-
-@BlockNeighborChangedServerEvent.Listen()
-def onNeighbourBlockChanged(event):
-    # type: (BlockNeighborChangedServerEvent) -> None
-    if event.fromBlockName == event.toBlockName and event.fromBlockAuxValue == event.toAuxValue:
-        return
-    if not isCable(event.blockName):
-        return
-    from_block_can_connect = canConnect(event.fromBlockName)
-    to_block_can_connect = canConnect(event.toBlockName)
-    if from_block_can_connect != to_block_can_connect:
-        dxyz = (
-            event.neighborPosX - event.posX,
-            event.neighborPosY - event.posY,
-            event.neighborPosZ - event.posZ,
-        )
-        facing_key = "skybluetech:connection_" + FACING_EN[DXYZ_FACING[dxyz]]
-        if isCable(event.toBlockName):
-            io_key = "skybluetech:cable_io_" + FACING_EN[DXYZ_FACING[dxyz]]
-            UpdateBlockStates(
-                event.dimensionId,
-                (event.posX, event.posY, event.posZ),
-                {facing_key: to_block_can_connect, io_key: False},
-            )
-        else:
-            UpdateBlockStates(
-                event.dimensionId,
-                (event.posX, event.posY, event.posZ),
-                {facing_key: to_block_can_connect},
-            )
-    if canConnect(event.fromBlockName) or canConnect(event.toBlockName):
-        clearNearbyContainersNetwork(
-            event.dimensionId, event.posX, event.posY, event.posZ
-        )
-        cacher = set()  # type: set[PosData]
-        i, o = GetContainerNetworks(
-            event.dimensionId,
-            event.posX, event.posY, event.posZ,
-            cacher=cacher,
-            enable_cache=False
-        )
-        for network in i + o:
-            UpdateWholeNetwork(event.dimensionId, network)
 
 @ContainerItemChangedServerEvent.Listen()
 @Delay(ITEM_POST_DELAY)
@@ -484,3 +440,47 @@ def onPlayerUseWrench(event):
 
 
 AddBlocksToBlockRemoveListener(COMMON_CONTAINERS)
+
+
+@BlockNeighborChangedServerEvent.Listen()
+def onNeighbourBlockChanged(event):
+    # type: (BlockNeighborChangedServerEvent) -> None
+    if event.fromBlockName == event.toBlockName:
+        return
+    if not isCable(event.blockName):
+        return
+    from_block_can_connect = canConnect(event.fromBlockName)
+    to_block_can_connect = canConnect(event.toBlockName)
+    if from_block_can_connect != to_block_can_connect:
+        dxyz = (
+            event.neighborPosX - event.posX,
+            event.neighborPosY - event.posY,
+            event.neighborPosZ - event.posZ,
+        )
+        facing_key = "skybluetech:connection_" + FACING_EN[DXYZ_FACING[dxyz]]
+        if isCable(event.toBlockName):
+            io_key = "skybluetech:cable_io_" + FACING_EN[DXYZ_FACING[dxyz]]
+            UpdateBlockStates(
+                event.dimensionId,
+                (event.posX, event.posY, event.posZ),
+                {facing_key: to_block_can_connect, io_key: False},
+            )
+        else:
+            UpdateBlockStates(
+                event.dimensionId,
+                (event.posX, event.posY, event.posZ),
+                {facing_key: to_block_can_connect},
+            )
+    if canConnect(event.fromBlockName) or canConnect(event.toBlockName):
+        clearNearbyContainersNetwork(
+            event.dimensionId, event.posX, event.posY, event.posZ
+        )
+        cacher = set()  # type: set[PosData]
+        i, o = GetContainerNetworks(
+            event.dimensionId,
+            event.posX, event.posY, event.posZ,
+            cacher=cacher,
+            enable_cache=False
+        )
+        for network in i | o:
+            AddNetworkToPool(event.dimensionId, network)

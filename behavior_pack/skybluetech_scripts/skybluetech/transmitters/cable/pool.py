@@ -22,5 +22,5 @@ def GetSameNetwork(network):
 
 
 # TODO: 我的山头: 需要 GC
-containerNetworkPool = {} # type: dict[DmPosData, tuple[list[CableNetwork], list[CableNetwork]]]
+containerNetworkPool = {} # type: dict[DmPosData, tuple[set[CableNetwork], set[CableNetwork]]]
 

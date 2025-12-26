@@ -78,6 +78,8 @@ class FluidContainer(object):
                     bucket_id = self.fluid_id + "_bucket"
                     if ItemExists(bucket_id):
                         self.fluid_volume -= BUCKET_VOLUME
+                        if self.fluid_volume == 0:
+                            self.fluid_id = None
                         SetInventorySlotItemCount(
                             player_id, GetSelectedSlot(player_id), item.count - 1
                         )
@@ -179,7 +181,7 @@ class FluidContainer(object):
                     return True, i, v
                 elif not strict_volume:
                     self.fluid_volume -= req_fluid_volume
-                    if self.fluid_volume <= 0.0:
+                    if self.fluid_volume <= 0:
                         self.fluid_id = None
                     self.OnFluidSlotUpdate()
                     self.Dump()

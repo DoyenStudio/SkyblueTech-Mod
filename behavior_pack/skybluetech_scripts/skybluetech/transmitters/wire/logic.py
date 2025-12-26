@@ -210,7 +210,7 @@ def UpdateWholeNetwork(dim, network):
     for pos in network.GetAllPoses():
         x, y, z, facing = pos
         m = GetMachineStrict(dim, x, y, z)
-        if m is None:
+        if m is None or m.is_non_energy_machine:
             continue
         m.rf_networks[facing] = network
         print "216:TryActivate", type(m).__name__

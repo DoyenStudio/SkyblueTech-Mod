@@ -1,0 +1,300 @@
+{
+    "resource_pack_name": "vanilla",
+    "texture_data": {
+        "skybluetech:ancient_debris_dust": {
+            "textures": "textures/items/dusts/ancient_debris_dust"
+        },
+        "skybluetech:basic_energy_upgrader": {
+            "textures": "textures/items/upgraders/basic_energy_upgrader"
+        },
+        "skybluetech:basic_speed_upgrader": {
+            "textures": "textures/items/upgraders/basic_speed_upgrader"
+        },
+        "skybluetech:bio_dust": {
+            "textures": "textures/items/dusts/bio_dust"
+        },
+        "skybluetech:bronze_dust": {
+            "textures": "textures/items/dusts/bronze_dust"
+        },
+        "skybluetech:bronze_ingot": {
+            "textures": "textures/items/ingots/bronze_ingot"
+        },
+        "skybluetech:bronze_pipe": {
+            "textures": "textures/transmitters/item_transport_cable_item"
+        },
+        "skybluetech:bronze_plate": {
+            "textures": "textures/items/plates/bronze_plate"
+        },
+        "skybluetech:bronze_stick": {
+            "textures": "textures/items/sticks/bronze_stick"
+        },
+        "skybluetech:carbon_dust": {
+            "textures": "textures/items/dusts/carbon_dust"
+        },
+        "skybluetech:cartidge_1_model": {
+            "textures": "textures/models/cartidges/cartidge_yellow"
+        },
+        "skybluetech:cartidge_2_model": {
+            "textures": "textures/models/cartidges/cartidge_blue"
+        },
+        "skybluetech:cartidge_3_model": {
+            "textures": "textures/models/cartidges/cartidge_purple"
+        },
+        "skybluetech:copper_dust": {
+            "textures": "textures/items/dusts/copper_dust"
+        },
+        "skybluetech:copper_plate": {
+            "textures": "textures/items/plates/copper_plate"
+        },
+        "skybluetech:copper_stick": {
+            "textures": "textures/items/sticks/copper_stick"
+        },
+        "skybluetech:copper_wire": {
+            "textures": "textures/wire/copper_wire_item"
+        },
+        "skybluetech:creative_wire": {
+            "textures": "textures/wire/creative_wire_item"
+        },
+        "skybluetech:deepslate_lava_bucket": {
+            "textures": "textures/items/buckets/deepslate_lava_bucket"
+        },
+        "skybluetech:description_icon": {
+            "textures": "textures/items/description"
+        },
+        "skybluetech:famicom_cartidge_1": {
+            "textures": "textures/items/cartidges/famicom_cartidge_1"
+        },
+        "skybluetech:famicom_cartidge_2": {
+            "textures": "textures/items/cartidges/famicom_cartidge_2"
+        },
+        "skybluetech:famicom_cartidge_3": {
+            "textures": "textures/items/cartidges/famicom_cartidge_3"
+        },
+        "skybluetech:gold_dust": {
+            "textures": "textures/items/dusts/gold_dust"
+        },
+        "skybluetech:gold_plate": {
+            "textures": "textures/items/plates/gold_plate"
+        },
+        "skybluetech:heavy_lava_bucket": {
+            "textures": "textures/items/buckets/heavy_lava_bucket"
+        },
+        "skybluetech:invar_dust": {
+            "textures": "textures/items/dusts/invar_dust"
+        },
+        "skybluetech:invar_ingot": {
+            "textures": "textures/items/ingots/invar_ingot"
+        },
+        "skybluetech:invar_plate": {
+            "textures": "textures/items/plates/invar_plate"
+        },
+        "skybluetech:iron_dust": {
+            "textures": "textures/items/dusts/iron_dust"
+        },
+        "skybluetech:iron_plate": {
+            "textures": "textures/items/plates/iron_plate"
+        },
+        "skybluetech:item_transport_cable": {
+            "textures": "textures/transmitters/item_transport_cable_item"
+        },
+        "skybluetech:junior_battery": {
+            "textures": "textures/items/batterys/junior_battery"
+        },
+        "skybluetech:lapis_dust": {
+            "textures": "textures/items/dusts/lapis_dust"
+        },
+        "skybluetech:lead_dust": {
+            "textures": "textures/items/dusts/lead_dust"
+        },
+        "skybluetech:lead_ingot": {
+            "textures": "textures/items/ingots/lead_ingot"
+        },
+        "skybluetech:lead_plate": {
+            "textures": "textures/items/plates/lead_plate"
+        },
+        "skybluetech:light_lava_bucket": {
+            "textures": "textures/items/buckets/light_lava_bucket"
+        },
+        "skybluetech:lubricant_bucket": {
+            "textures": "textures/items/buckets/lubricant_bucket"
+        },
+        "skybluetech:mid_lava_bucket": {
+            "textures": "textures/items/buckets/mid_lava_bucket"
+        },
+        "skybluetech:molten_copper_bucket": {
+            "textures": "textures/items/buckets/molten_copper_bucket"
+        },
+        "skybluetech:molten_earth_bucket": {
+            "textures": "textures/items/buckets/molten_earth_bucket"
+        },
+        "skybluetech:molten_gold_bucket": {
+            "textures": "textures/items/buckets/molten_gold_bucket"
+        },
+        "skybluetech:molten_impurity_bucket": {
+            "textures": "textures/items/buckets/molten_impurity_bucket"
+        },
+        "skybluetech:molten_iron_bucket": {
+            "textures": "textures/items/buckets/molten_iron_bucket"
+        },
+        "skybluetech:molten_lead_bucket": {
+            "textures": "textures/items/buckets/molten_lead_bucket"
+        },
+        "skybluetech:molten_nickel_bucket": {
+            "textures": "textures/items/buckets/molten_nickel_bucket"
+        },
+        "skybluetech:molten_platinum_bucket": {
+            "textures": "textures/items/buckets/molten_platinum_bucket"
+        },
+        "skybluetech:molten_silver_bucket": {
+            "textures": "textures/items/buckets/molten_silver_bucket"
+        },
+        "skybluetech:molten_tin_bucket": {
+            "textures": "textures/items/buckets/molten_tin_bucket"
+        },
+        "skybluetech:nickel_dust": {
+            "textures": "textures/items/dusts/nickel_dust"
+        },
+        "skybluetech:nickel_ingot": {
+            "textures": "textures/items/ingots/nickel_ingot"
+        },
+        "skybluetech:nickel_plate": {
+            "textures": "textures/items/plates/nickel_plate"
+        },
+        "skybluetech:obj_upgrader_attack": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_attack"
+        },
+        "skybluetech:obj_upgrader_autoburning": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_auto_burning"
+        },
+        "skybluetech:obj_upgrader_digspeed": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_digspeed"
+        },
+        "skybluetech:obj_upgrader_energy": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_energy"
+        },
+        "skybluetech:obj_upgrader_fortune": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_fortune"
+        },
+        "skybluetech:obj_upgrader_spec_farming": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_spec_farming"
+        },
+        "skybluetech:obj_upgrader_veinminer": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_veinminer"
+        },
+        "skybluetech:platinum_dust": {
+            "textures": "textures/items/dusts/platinum_dust"
+        },
+        "skybluetech:platinum_ingot": {
+            "textures": "textures/items/ingots/platinum_ingot"
+        },
+        "skybluetech:platinum_plate": {
+            "textures": "textures/items/plates/platinum_plate"
+        },
+        "skybluetech:platinum_stick": {
+            "textures": "textures/items/sticks/platinum_stick"
+        },
+        "skybluetech:raw_lead": {
+            "textures": "textures/items/raw_ore/raw_lead"
+        },
+        "skybluetech:raw_nickel": {
+            "textures": "textures/items/raw_ore/raw_nickel"
+        },
+        "skybluetech:raw_oil_bucket": {
+            "textures": "textures/items/buckets/raw_oil_bucket"
+        },
+        "skybluetech:raw_platinum": {
+            "textures": "textures/items/raw_ore/raw_platinum"
+        },
+        "skybluetech:raw_silver": {
+            "textures": "textures/items/raw_ore/raw_silver"
+        },
+        "skybluetech:raw_tin": {
+            "textures": "textures/items/raw_ore/raw_tin"
+        },
+        "skybluetech:resin": {
+            "textures": "textures/items/resin"
+        },
+        "skybluetech:rough_rubber": {
+            "textures": "textures/items/rough_rubber"
+        },
+        "skybluetech:seven": {
+            "textures": "textures/items/7"
+        },
+        "skybluetech:silver_dust": {
+            "textures": "textures/items/dusts/silver_dust"
+        },
+        "skybluetech:silver_ingot": {
+            "textures": "textures/items/ingots/silver_ingot"
+        },
+        "skybluetech:silver_plate": {
+            "textures": "textures/items/plates/silver_plate"
+        },
+        "skybluetech:silver_stick": {
+            "textures": "textures/items/sticks/silver_stick"
+        },
+        "skybluetech:silver_wire": {
+            "textures": "textures/wire/silver_wire_item"
+        },
+        "skybluetech:simple_block_debugger": {
+            "textures": "textures/items/simple_block_debugger"
+        },
+        "skybluetech:simple_blocknbt_debugger": {
+            "textures": "textures/items/simple_blocknbt_debugger"
+        },
+        "skybluetech:simple_machine_checker": {
+            "textures": "textures/items/simple_machine_checker"
+        },
+        "skybluetech:skyblue_axe": {
+            "textures": "textures/objects/tools/skyblue_axe"
+        },
+        "skybluetech:skyblue_hoe": {
+            "textures": "textures/objects/tools/skyblue_hoe"
+        },
+        "skybluetech:skyblue_pickaxe": {
+            "textures": "textures/objects/tools/skyblue_pickaxe"
+        },
+        "skybluetech:skyblue_shovel": {
+            "textures": "textures/objects/tools/skyblue_shovel "
+        },
+        "skybluetech:skyblue_sword": {
+            "textures": "textures/objects/weapons/skyblue_sword"
+        },
+        "skybluetech:solar_panel_pane": {
+            "textures": "textures/items/solar_panel_pane"
+        },
+        "skybluetech:steel_dust": {
+            "textures": "textures/items/dusts/steel_dust"
+        },
+        "skybluetech:steel_ingot": {
+            "textures": "textures/items/ingots/steel_ingot"
+        },
+        "skybluetech:steel_plate": {
+            "textures": "textures/items/plates/steel_plate"
+        },
+        "skybluetech:steel_stick": {
+            "textures": "textures/items/sticks/steel_stick"
+        },
+        "skybluetech:superconduct_wire": {
+            "textures": "textures/wire/superconduct_wire_item"
+        },
+        "skybluetech:tin_dust": {
+            "textures": "textures/items/dusts/tin_dust"
+        },
+        "skybluetech:tin_ingot": {
+            "textures": "textures/items/ingots/tin_ingot"
+        },
+        "skybluetech:tin_plate": {
+            "textures": "textures/items/plates/tin_plate"
+        },
+        "skybluetech:tin_stick": {
+            "textures": "textures/items/sticks/tin_stick"
+        },
+        "skybluetech:tin_wire": {
+            "textures": "textures/wire/tin_wire_item"
+        },
+        "skybluetech:transmitter_wrench": {
+            "textures": "textures/items/cable_wrench"
+        }
+    },
+    "texture_name": "atlas.items"
+}

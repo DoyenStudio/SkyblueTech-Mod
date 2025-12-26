@@ -11,7 +11,7 @@ LUBRICANT = "skybluetech:lubricant"
 METHANE = "skybluetech:methane"
 METHANE_MUD = "skybluetech:methane_mud"
 
-PURE_WATER = "skybluetech:pure_water"
+DISTILLED_WATER = "skybluetech:distilled_water"
 
 
 class Molten:

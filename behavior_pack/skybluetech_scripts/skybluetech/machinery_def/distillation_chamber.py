@@ -7,7 +7,7 @@ from ..mini_jei.machines.distillation_chamber import *
 recipes = [
     DistillatorChamberRecipe(
         "minecraft:water", 50,
-        PURE_WATER, 45,
+        DISTILLED_WATER, 45,
         c2k(30), c2k(80), c2k(100)
     ),
     DistillatorChamberRecipe(

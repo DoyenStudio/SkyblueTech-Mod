@@ -275,6 +275,14 @@
             "up": "skybluetech:basic_water_flowing"
         }
     },
+    "skybluetech:flowing_distilled_water": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_flowing"
+        }
+    },
     "skybluetech:fluid_condenser": {
         "textures": {
             "down": "skybluetech:frame_bottom",
@@ -462,6 +470,14 @@
         "textures": "skybluetech:raw_nickel_block"
     },
     "skybluetech:raw_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_static"
+        }
+    },
+    "skybluetech:distilled_water": {
         "blockshape": "water",
         "textures": {
             "down": "skybluetech:basic_water_static",

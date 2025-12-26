@@ -294,6 +294,9 @@
         },
         "skybluetech:transmitter_wrench": {
             "textures": "textures/items/cable_wrench"
+        },
+        "skybluetech:distilled_water_bucket": {
+            "textures": "textures/items/buckets/distilled_water_bucket"
         }
     },
     "texture_name": "atlas.items"

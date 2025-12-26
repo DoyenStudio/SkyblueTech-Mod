@@ -5,6 +5,15 @@ HEAVY_LAVA = "skybluetech:heavy_lava"
 MID_LAVA = "skybluetech:mid_lava"
 LIGHT_LAVA = "skybluetech:light_lava"
 
+RAW_OIL = "skybluetech:raw_oil"
+LUBRICANT = "skybluetech:lubricant"
+
+METHANE = "skybluetech:methane"
+METHANE_MUD = "skybluetech:methane_mud"
+
+PURE_WATER = "skybluetech:pure_water"
+
+
 class Molten:
     EARTH = "skybluetech:molten_earth"
     IMPURITY = "skybluetech:molten_impurity"
@@ -16,9 +25,3 @@ class Molten:
     SILVER = "skybluetech:molten_silver"
     NICKEL = "skybluetech:molten_nickel"
     PLATINUM = "skybluetech:molten_platinum"
-
-RAW_OIL = "skybluetech:raw_oil"
-LUBRICANT = "skybluetech:lubricant"
-
-METHANE = "skybluetech:methane"
-METHANE_MUD = "skybluetech:methane_mud"

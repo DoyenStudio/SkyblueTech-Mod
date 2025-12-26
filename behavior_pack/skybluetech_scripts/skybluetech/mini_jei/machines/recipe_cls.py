@@ -60,6 +60,8 @@ class Recipe(RecipeBase):
 
 
 class MachineRecipe(Recipe):
+    render_progress = True
+
     def __init__(self, inputs, outputs, power_cost, tick_duration):
         # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]], int, int) -> None
         Recipe.__init__(self, inputs, outputs)
@@ -118,8 +120,11 @@ class MachineRecipe(Recipe):
 
     def RenderUpdate(self, panel, render_ticks):
         # type: (UBaseCtrl, int) -> None
+        if not self.render_progress:
+            return
         td = self.tick_duration * 3
         p = (render_ticks * 2.0) % td / td
         panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
+
 
 

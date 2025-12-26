@@ -200,7 +200,7 @@ class BaseMachine(object):
                 continue
             for x, y, z, _ in network.group_appliances:
                 machine = pool.GetMachineStrict(self.dim, x, y, z)
-                if machine is not None:
+                if machine is not None and not machine.is_non_energy_machine:
                     updated, rf = machine.AddPower(rf, False, network.get_power_limit(), depth)
                     if updated and isinstance(machine, GUIControl):
                         machine.OnSync()

@@ -1,0 +1,47 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.distillation_chamber"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:distillation_chamber"
+                }
+            },
+            "netease:block_container": {
+                "container_size": 5,
+                "custom_description": "热力蒸馏仓",
+                "screen_name": "DistillationChamberUI.main"
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7热力蒸馏塔的单方块版本。\n使用热源如电力加热仓为其供热后可对流体进行蒸馏。\n无法产生副产物， 也不能使用太高的蒸馏温度， \n但是可以进行精细蒸馏。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:skybluetech_fluid_container": {
+
+            },
+            "tag:skybluetech_machine": {
+
+            }
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:distillation_chamber"
+        }
+    }
+}

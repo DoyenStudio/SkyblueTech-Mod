@@ -40,7 +40,6 @@ BASIC_TEXTURES = {
     "minecraft:flowing_water": TEXTURE_WATER,
     "minecraft:lava": TEXTURE_LAVA,
     "minecraft:flowing_lava": TEXTURE_LAVA,
-    fluids.RAW_OIL: TEXTURE_BASIC_FLUID,
     #
     fluids.DEEPSLATE_LAVA: ROOT_TEXTURE + "/deepslate_lava_still",
     fluids.METHANE_MUD: ROOT_TEXTURE + "/methane_mud"

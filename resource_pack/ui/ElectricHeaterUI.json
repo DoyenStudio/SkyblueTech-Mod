@@ -1,0 +1,311 @@
+{
+    "electric_heater_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "visible": false
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "电力加热仓",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "databar": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            0.0,
+                                                            -62.0
+                                                        ],
+                                                        "size": [
+                                                            100.0,
+                                                            25.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "keep_ratio": false,
+                                                        "nineslice_size": [
+                                                            2.0,
+                                                            2.0,
+                                                            2.0,
+                                                            2.0
+                                                        ],
+                                                        "texture": "textures/ui/Indent",
+                                                        "controls": [
+                                                            {
+                                                                "text": {
+                                                                    "type": "label",
+                                                                    "size": [
+                                                                        96.0,
+                                                                        20.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "设定功率： 0.0 RF/t\n当前温度： 0.0 K"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input_slot@netease_container.custom_grid_item": {
+                                                        "layer": 10,
+                                                        "offset": [
+                                                            38,
+                                                            -12
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "layer": 13,
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input@common.text_edit_box": {
+                                                        "type": "edit_box",
+                                                        "$edit_box_default_texture": "textures/ui/edit_box_indent",
+                                                        "$edit_box_hover_texture": "textures/ui/edit_box_indent_hover",
+                                                        "$font_scale_factor": 1.0,
+                                                        "$font_size": "normal",
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$place_holder_text": "设定功率(RF/t)...",
+                                                        "$place_holder_text_color": [
+                                                            0.5,
+                                                            0.5,
+                                                            0.5
+                                                        ],
+                                                        "$text_background_default": "netease_editor_template_namespace.edit_box_background_default",
+                                                        "$text_background_hover": "netease_editor_template_namespace.edit_box_background_hover",
+                                                        "$text_box_name": "#electric_heater.input",
+                                                        "$text_box_text_color": [
+                                                            1,
+                                                            1,
+                                                            1
+                                                        ],
+                                                        "$text_edit_box_content_binding_name": "#netease_editor_template_namespace.message_content",
+                                                        "$text_edit_box_label_anchor_point": "right_middle",
+                                                        "$text_edit_box_label_min_size": [
+                                                            "100%",
+                                                            0
+                                                        ],
+                                                        "$text_edit_box_label_size": [
+                                                            "default",
+                                                            "default"
+                                                        ],
+                                                        "offset": [
+                                                            -16.0,
+                                                            -40.0
+                                                        ],
+                                                        "size": [
+                                                            68.0,
+                                                            20.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "max_length": 512
+                                                    }
+                                                },
+                                                {
+                                                    "confirm_btn@common.button": {
+                                                        "type": "button",
+                                                        "$control_alpha": 1.0,
+                                                        "$default_texture": "textures/ui/button_default",
+                                                        "$hover_texture": "textures/ui/button_hovered",
+                                                        "$is_new_nine_slice": false,
+                                                        "$label_color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "$label_font_scale_factor": 1.2,
+                                                        "$label_font_size": "normal",
+                                                        "$label_layer": 3,
+                                                        "$label_offset": [
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$label_text": "确定",
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            2.0,
+                                                            2.0,
+                                                            2.0,
+                                                            2.0
+                                                        ],
+                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                        "$pressed_texture": "textures/ui/button_pressed",
+                                                        "$texture_layer": 2,
+                                                        "offset": [
+                                                            34.0,
+                                                            -40.0
+                                                        ],
+                                                        "size": [
+                                                            31.0,
+                                                            20.0
+                                                        ],
+                                                        "layer": 2,
+                                                        "button_mappings": [],
+                                                        "default_control": "default",
+                                                        "hover_control": "hover",
+                                                        "is_handle_button_move_event": true,
+                                                        "pressed_control": "pressed",
+                                                        "bindings": [
+                                                            {
+                                                                "binding_type": "collection_details",
+                                                                "binding_collection_name": "",
+                                                                "binding_condition": "always_when_visible"
+                                                            }
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "default@netease_editor_template_namespace.default": {
+                                                                    "keep_ratio": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "hover@netease_editor_template_namespace.hover": {
+                                                                    "keep_ratio": false
+                                                                }
+                                                            },
+                                                            {
+                                                                "pressed@netease_editor_template_namespace.pressed": {}
+                                                            },
+                                                            {
+                                                                "button_label@netease_editor_template_namespace.button_label": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "offset": [
+                                                            -15.0,
+                                                            -13.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 1.3,
+                                                        "font_type": "default",
+                                                        "text": "额外加热元件",
+                                                        "text_alignment": "center"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "ElectricHeaterUI.electric_heater_ui",
+        "button_mappings": [
+            {
+                "from_button_id": "button.menu_cancel",
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
+            },
+            {
+                "from_button_id": "button.menu_inventory_cancel",
+                "mapping_type": "global",
+                "to_button_id": "button.menu_exit"
+            }
+        ]
+    },
+    "namespace": "ElectricHeaterUI"
+}

@@ -1,0 +1,62 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.electric_heater"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:electric_heater"
+                }
+            },
+            "netease:block_container": {
+                "container_size": 5,
+                "custom_description": "电力加热仓",
+                "screen_name": "ElectricHeaterUI.main"
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7在其中放入加热装置后通电， 可从五个面的铜盘输出热能。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:redstoneflux_accepter": {
+
+            },
+            "tag:redstoneflux_appliance": {
+
+            },
+            "tag:redstoneflux_connectable": {
+
+            },
+            "tag:skybluetech_appliance": {
+
+            },
+            "tag:skybluetech_container": {
+
+            },
+            "tag:skybluetech_machine": {
+
+            }
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:electric_heater"
+        }
+    }
+}

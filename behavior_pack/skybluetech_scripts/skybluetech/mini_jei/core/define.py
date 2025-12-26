@@ -50,3 +50,25 @@ class RecipeBase:
 
     def __hash__(self):
         raise NotImplementedError
+
+
+class Description(RecipeBase):
+    recipe_icon_id = "skybluetech:description_icon"
+    render_ui_def_name = "RecipeCheckerUI.description_page"
+
+    def __init__(self, categories_with_ids, title, content):
+        # type: (dict[str, list[str]], str, str) -> None
+        self.categories_with_ids = categories_with_ids
+        self.title = title
+        self.content = content
+
+    def RenderInit(self, panel_ctrl):
+        # type: (UBaseCtrl) -> None
+        panel_ctrl["bg_img/title"].asLabel().SetText(self.title, sync_size=True)
+        panel_ctrl["bg_img/content"].asLabel().SetText(self.content, sync_size=True)
+
+    def GetInputs(self):
+        return {}
+
+    def GetOutputs(self):
+        return self.categories_with_ids

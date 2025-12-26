@@ -101,6 +101,9 @@
         },
         "sound": "iron"
     },
+    "skybluetech:distillation_chamber": {
+        "sound": "glass"
+    },
     "skybluetech:dust_block": {
         "sound": "cloth",
         "textures": "skybluetech:dust_block"
@@ -374,14 +377,7 @@
         }
     },
     "skybluetech:metal_press": {
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:metal_press_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
-            "west": "skybluetech:frame"
-        }
+        "sound": "iron"
     },
     "skybluetech:methane": {
         "blockshape": "water",

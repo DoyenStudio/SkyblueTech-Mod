@@ -7,5 +7,6 @@ from .core.render_utils import (
     RemoveDisplayBoard,
     GetDoubleClickDetecter,
 )
-from .core.register import RegisterRecipe
+from .core.register import RegisterRecipe, RegisterDescription
 from . import init_common_recipes as _
+from . import init_descriptions as _

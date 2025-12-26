@@ -57,3 +57,14 @@ def FormatFluidVolume(vol):
         return "%.2f B" % (float(vol) / 1000)
     else:
         return "%.0f mB" % vol
+
+def FormatKelvin(k):
+    # type: (float) -> str
+    if k == INFINITY:
+        return "Inf"
+    suffixes = ("", "k", "M", "G", "T", "P", "E", "Z", "Y")
+    d = 0
+    while d < len(suffixes) and k >= 1000:
+        d += 1
+        k /= 1000.0
+    return "%.2f %sK" % (k, suffixes[d])

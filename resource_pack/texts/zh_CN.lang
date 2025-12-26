@@ -201,3 +201,6 @@ item.skybluetech:silver_stick.name=银棒
 item.skybluetech:platinum_stick.name=铂棒
 itemGroup.name.metal_sticks=金属棍
 item.skybluetech:steel_stick.name=钢棒
+tile.skybluetech:electric_heater.name=电力加热仓
+tile.skybluetech:distillation_chamber.name=小型蒸馏仓
+item.skybluetech:description_icon.name=说明

@@ -1,0 +1,77 @@
+# coding=utf-8
+from .base_machine import BaseMachine
+from ...define.fluids.fluid_c import fluid_c_values
+
+K_KELVIN = "kelvin"
+ENV_TEMPERATURE = 300.0
+S = 0.01
+D = 0.001
+TICK_TIME = 20
+DIFF_THRESOLD = 1e-3
+
+
+class HeatCtrl(BaseMachine):
+    """
+    热机机器类, 表示产热或吸热的机器。
+
+    需要: `__init__`
+
+    需要覆写: `OnLoad`, `OnTicking`, `Dump`
+    """
+
+    heat_loss = 1
+    "热量散失值, 越大表示散热越快。"
+    original_heat_c = 4000
+    "原始比热容"
+    # auto_share_heat = True
+    # "是否自动传递热量"
+
+    def __init__(self, dim, x, y, z, block_entity_data):
+        self.heat_c = self.original_heat_c
+
+    def OnLoad(self):
+        self.kelvin = self.bdata[K_KELVIN] or ENV_TEMPERATURE
+
+    def OnTicking(self):
+        if self.kelvin > ENV_TEMPERATURE:
+            self._heatLoss()
+
+    def ShareHeat(self, other):
+        # type: (HeatCtrl) -> bool
+        diff = abs(self.kelvin - other.kelvin)
+        if diff <= DIFF_THRESOLD:
+            return False
+        R_self = D / self.heat_c
+        R_other = D / other.heat_c
+        heat_flux = diff / (R_self + R_other) * S
+        dQ = heat_flux / TICK_TIME
+        if self.kelvin > other.kelvin:
+            self.kelvin -= dQ / self.heat_c
+            other.kelvin += dQ / other.heat_c
+        else:
+            self.kelvin += dQ / self.heat_c
+            other.kelvin -= dQ / other.heat_c
+        return True
+
+    def _heatLoss(self):
+        self.kelvin = max(ENV_TEMPERATURE, self.kelvin - (self.kelvin**4 - ENV_TEMPERATURE**4) * self.heat_loss * 1e-10)
+        # print "val", (self.kelvin**4 - ENV_TEMPERATURE**4) * self.heat_loss * 1e-10
+
+    def Dump(self):
+        self.bdata[K_KELVIN] = self.kelvin
+
+    def InputFluidAndUpdateHeat(self, fluid_id, new_volume):
+        # type: (str, float) -> None
+        orig_q = self.kelvin * self.heat_c
+        self.FlushCValueByFluid(fluid_id, new_volume)
+        self.kelvin = orig_q / self.heat_c / (new_volume + 100)
+
+    def FlushCValueByFluid(self, fluid_id, fluid_volume):
+        # type: (str | None, float) -> None
+        if fluid_id is None or fluid_volume == 0:
+            self.heat_c = self.original_heat_c
+        else:
+            fluid_c = fluid_c_values[fluid_id]
+            self.heat_c = self.original_heat_c * (
+                100 / (fluid_volume + 100)
+            ) + fluid_c * (fluid_volume / (fluid_volume + 100))

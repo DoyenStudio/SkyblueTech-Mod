@@ -540,6 +540,245 @@
             }
         ]
     },
+    "description_page": {
+        "type": "panel",
+        "size": [
+            180.0,
+            "100%cm+0px"
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg_img": {
+                    "type": "image",
+                    "size": [
+                        "default",
+                        "100%cm+25px"
+                    ],
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg",
+                    "controls": [
+                        {
+                            "title": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    3.0
+                                ],
+                                "size": [
+                                    "100%+-6px",
+                                    15.0
+                                ],
+                                "layer": 5,
+                                "color": [
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "font_scale_factor": 1.600000000000001,
+                                "font_type": "default",
+                                "shadow": true,
+                                "text": "你好世界"
+                            }
+                        },
+                        {
+                            "content": {
+                                "type": "label",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "offset": [
+                                    0.0,
+                                    -4.0
+                                ],
+                                "size": [
+                                    "100%+-6px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "月是细耐室军母唱都进征火。印句调迅露运金早弱喜怕亚线，树心磁孩船。电参度思许己该括研安显苦失。\n\n秋持门皮息序级显杨良宪。试队你测诗践销东。了演参称要受条官苏入船下里，益光测晚思另陆守略础巴，宣材亮到似，必士马则细去夫去丝养扩派置。\n\n不盐多过套，承将超聚石做应高养攻附环医。激优重们说矿则烧先源严项林持，承汽许音面著末育。研优裂修止算山似胶些盾跑银。Lorem ipsum dolor what can i say?"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "image": {
+                    "type": "image",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": [
+                        "100%sm+0px",
+                        20.0
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/grid_bg"
+                }
+            }
+        ]
+    },
+    "distillation_chamber_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            60.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "layer": 19,
+                    "offset": [
+                        -20,
+                        12
+                    ],
+                    "size": [
+                        60,
+                        28
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "layer": 19,
+                    "offset": [
+                        -20,
+                        -15
+                    ],
+                    "size": [
+                        60,
+                        20
+                    ]
+                }
+            },
+            {
+                "right_board": {
+                    "type": "image",
+                    "offset": [
+                        50.0,
+                        0.0
+                    ],
+                    "size": [
+                        66.0,
+                        54.0
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/panel_bg",
+                    "controls": [
+                        {
+                            "tip": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    4.0
+                                ],
+                                "size": [
+                                    "100%+-8px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "最适产出温度"
+                            }
+                        },
+                        {
+                            "tip_text": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    15.0
+                                ],
+                                "size": [
+                                    "100%+-10px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.0,
+                                    0.6666666666666666,
+                                    0.0
+                                ],
+                                "font_type": "default",
+                                "text": "0 K"
+                            }
+                        },
+                        {
+                            "tip_text2": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    26.0
+                                ],
+                                "size": [
+                                    "100%+-10px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.5882352941176471,
+                                    0.392156862745098,
+                                    0.0
+                                ],
+                                "font_scale_factor": 1.3,
+                                "font_size": "small",
+                                "font_type": "default",
+                                "text": "0 K ~ 0 K"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "fluid_condenser_recipes": {
         "type": "panel",
         "size": [

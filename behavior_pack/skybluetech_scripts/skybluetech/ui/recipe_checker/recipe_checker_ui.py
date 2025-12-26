@@ -128,10 +128,10 @@ class RecipeCheckerUI(UScreenNode):
                 rcp.render_ui_def_name,
                 "fgrid_item%d" % i,
             )
+            rcp.RenderInit(elem)
             last_xize, last_ysize = elem.GetSize()
             elem.SetPos((0, last_ysize * i))
             self.ctrls_in_fgrid[elem] = rcp
-            rcp.RenderInit(elem)
         rcp_fake_grid.SetSize((last_xize, last_ysize * len(rcps)))
 
     @ViewBinder.binding(ViewBinder.BF_ButtonClick, "#recipe_checker.select_category")  # pyright: ignore[reportOptionalCall]

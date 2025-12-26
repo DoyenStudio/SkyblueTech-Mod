@@ -4,6 +4,7 @@ from .base_processor import BaseProcessor
 from .base_speed_control import BaseSpeedControl
 from .fluid_container import FluidContainer
 from .gui_ctrl import GUIControl
+from .heat_ctrl import HeatCtrl
 from .item_container import ItemContainer
 from .mixed_processor import MixedProcessor
 from .multi_block_structure import MultiBlockStructure

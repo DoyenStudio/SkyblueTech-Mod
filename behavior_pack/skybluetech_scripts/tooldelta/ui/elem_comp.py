@@ -81,6 +81,10 @@ class UBaseCtrl(object):
         # type: () -> UNeteasePaperDoll
         return self._cache_t or self._save_t(UNeteasePaperDoll(self._root, self.base.asNeteasePaperDoll()))
 
+    def asTextEditBox(self):
+        # type: () -> UTextEditBoxUIControl
+        return self._cache_t or self._save_t(UTextEditBoxUIControl(self._root, self.base.asTextEditBox()))
+
     def getFullPath(self):
         "未开放接口"
         return self.base.FullPath() # type: ignore
@@ -414,6 +418,24 @@ class UNeteasePaperDoll(UBaseCtrl):
             "molang_dict": molang_dict,
             "rotation_axis": rotation_axis,
         })
+
+
+class UTextEditBoxUIControl(UBaseCtrl):
+    def __init__(self, root, base):
+        # type: (ScreenLike, TextEditBoxUIControl) -> None
+        UBaseCtrl.__init__(self, root, base)
+        if not isinstance(base, TextEditBoxUIControl):
+            raise TypeError(
+                "expected TextEditBoxUIControl, got " + str(type(base))
+            )
+        self.base = base
+
+    def GetText(self):
+        return self.base.GetEditText()
+
+    def SetText(self, text):
+        # type: (str) -> None
+        self.base.SetEditText(text)
 
 
 grid_comp_size_changed_cbs = dict() # type: dict[str, Callable[[], None]]

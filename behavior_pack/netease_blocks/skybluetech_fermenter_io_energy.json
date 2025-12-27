@@ -22,6 +22,7 @@
             "netease:solid": {
                 "value": true
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},
             "tag:redstoneflux_connectable": {}
         },

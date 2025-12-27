@@ -27,6 +27,7 @@
                 "custom_description": "发酵气体输出口",
                 "screen_name": "FluidOutputInterfaceUI.main"
             },
+            "tag:piston_denier": {},
             "tag:skybluetech_fluid_container": {}
         },
         "description": {

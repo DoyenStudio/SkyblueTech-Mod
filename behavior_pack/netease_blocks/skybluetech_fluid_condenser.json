@@ -31,6 +31,7 @@
                 "custom_description": "流体冷却机",
                 "screen_name": "FluidCondenserUI.main"
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},
             "tag:redstoneflux_appliance": {},
             "tag:redstoneflux_connectable": {},

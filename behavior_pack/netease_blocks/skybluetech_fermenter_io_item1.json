@@ -27,6 +27,7 @@
                 "custom_description": "发酵物品输入口",
                 "screen_name": "ItemInputInterfaceUI.main"
             },
+            "tag:piston_denier": {},
             "tag:skybluetech_container": {}
         },
         "description": {

@@ -19,24 +19,13 @@
             "netease:listen_block_remove": {
                 "value": true
             },
-            "tag:redstoneflux_accepter": {
-
-            },
-            "tag:redstoneflux_appliance": {
-
-            },
-            "tag:redstoneflux_connectable": {
-
-            },
-            "tag:skybluetech_appliance": {
-
-            },
-            "tag:skybluetech_container": {
-
-            },
-            "tag:skybluetech_machine": {
-
-            }
+            "tag:piston_denier": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_appliance": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_machine": {}
         },
         "description": {
             "base_block": "netease_container",

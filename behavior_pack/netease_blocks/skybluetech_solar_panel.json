@@ -45,6 +45,7 @@
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 2.0
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_connectable": {},
             "tag:redstoneflux_generator": {},
             "tag:redstoneflux_provider": {},

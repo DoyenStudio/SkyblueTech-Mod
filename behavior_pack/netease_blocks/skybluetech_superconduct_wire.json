@@ -22,6 +22,7 @@
             "netease:neighborchanged_sendto_script": {
                 "value": true
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_connectable": {},
             "tag:skybluetech_wire": {},
             "minecraft:geometry": {

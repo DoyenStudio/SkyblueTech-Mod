@@ -43,6 +43,7 @@
                 "custom_description": "装配台",
                 "screen_name": "AssemblerUI.main"
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},
             "tag:redstoneflux_appliance": {},
             "tag:redstoneflux_connectable": {},

@@ -31,6 +31,7 @@
                 "custom_description": "发酵池",
                 "screen_name": "FermenterUI.main"
             },
+            "tag:piston_denier": {},
             "tag:skybluetech_machine": {}
         },
         "description": {

@@ -56,6 +56,7 @@
                 "custom_description": "挖掘钻头",
                 "screen_name": "DiggerUI.main"
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},
             "tag:redstoneflux_appliance": {},
             "tag:redstoneflux_connectable": {},

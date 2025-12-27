@@ -34,6 +34,7 @@
                 "custom_description": "skybluetech:creative_tank",
                 "screen_name": "GeneralTankUI.main"
             },
+            "tag:piston_denier": {},
             "tag:skybluetech_fluid_container": {}
         },
         "description": {

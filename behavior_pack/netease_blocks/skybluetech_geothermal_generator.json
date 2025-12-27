@@ -41,6 +41,7 @@
                 "custom_description": "地热发电机",
                 "screen_name": "GeoThermalGeneratorUI.main"
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_provider": {},
             "tag:redstoneflux_generator": {},
             "tag:redstoneflux_connectable": {},

@@ -27,6 +27,7 @@
             "minecraft:geometry": {
                 "identifier": "minecraft:geometry.full_block"
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},
             "tag:redstoneflux_appliance": {},
             "tag:redstoneflux_connectable": {},

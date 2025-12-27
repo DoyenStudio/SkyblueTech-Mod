@@ -82,6 +82,8 @@ class MultiFluidContainer(object):
     "是否允许玩家直接使用桶与机器进行交互"
     fluid_io_fix_mode = 1
     "使用 1 时调用 FixIOModeByCardinalFacing; 使用 2 时调用 FixIOModeByDirection; 其他则不适用修复"
+    auto_fluid_require_delay = -1
+    "自动索求流体的 tick 间隔; -1 则为从不索取; 此时需要调用 `OnTicking()`"
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -103,6 +105,7 @@ class MultiFluidContainer(object):
             FluidSlot.unmarshal(rawdatas[i], mv)
             for i, mv in enumerate(self.fluid_slot_max_volumes)
         ]
+        self._fluid_req_delay = self.auto_fluid_require_delay
 
     def Dump(self):
         self.bdata[K_FLUIDS] = [fluid.marshal() for fluid in self.fluids]
@@ -110,6 +113,12 @@ class MultiFluidContainer(object):
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
         return True
+
+    def OnTicking(self):
+        self._fluid_req_delay -= 1
+        if self._fluid_req_delay <= 0:
+            self._fluid_req_delay = self.auto_fluid_require_delay
+            self.RequireFluidsFromNetwork()
 
     def OutputFluid(self, fluid_id, fluid_volume, slot_pos):
         # type: (str, float, int) -> None
@@ -170,7 +179,8 @@ class MultiFluidContainer(object):
                 return True, fid, req_fluid_volume
         return False, "", 0
 
-    def RequireFluids(self):
+    def RequireFluidsFromNetwork(self):
+        "从流体管道网络请求一次流体。"
         requireLibraryFunc()
         RequirePostFluid(self.dim, self.xyz)
 
@@ -218,6 +228,7 @@ class MultiFluidContainer(object):
                         continue
                     bucket_id = fluid.fluid_id + "_bucket"
                     if ItemExists(bucket_id):
+                        fluid_id = fluid.fluid_id
                         fluid.volume -= BUCKET_VOLUME
                         if fluid.volume <= 0.0:
                             fluid.fluid_id = None
@@ -225,7 +236,7 @@ class MultiFluidContainer(object):
                             player_id, GetSelectedSlot(player_id), item.count - 1
                         )
                         GiveItem(player_id, Item(bucket_id, count=1))
-                        self.OnFluidSlotUpdate(slot)
+                        self.onReducedFluid(slot, fluid_id, BUCKET_VOLUME)
                         self.Dump()
                         break
             else:
@@ -265,3 +276,25 @@ class MultiFluidContainer(object):
         return PostFluidIntoNetworks(
             self.dim, self.xyz, fluid_id, fluid_volume, None, depth=depth
         )
+
+    def OnAddedFluid(self, slot, fluid_id, fluid_volume):
+        # type: (int, str, float) -> None
+        pass
+
+    def OnReducedFluid(self, slot, fluid_id, fluid_volume):
+        # type: (int, str, float) -> None
+        pass
+
+    def onAddedFluid(self, slot, fluid_id, fluid_volume):
+        # type: (int, str, float) -> None
+        self.OnAddedFluid(slot, fluid_id, fluid_volume)
+        self.OnFluidSlotUpdate(slot)
+        if isinstance(self, GUIControl):
+            self.OnSync()
+
+    def onReducedFluid(self, slot, fluid_id, fluid_volume):
+        # type: (int, str, float) -> None
+        self.OnReducedFluid(slot, fluid_id, fluid_volume)
+        self.OnFluidSlotUpdate(slot)
+        if isinstance(self, GUIControl):
+            self.OnSync()

@@ -33,9 +33,7 @@
                     "texture": "skybluetech:item_transport_cable"
                 }
             },
-            "netease:block_entity": {
-
-            },
+            "netease:block_entity": {},
             "netease:custom_tips": {
                 "value": "\n§7可用于在容器间传输物品。\n§b使用扳手可以切换管道的输入 / 提取模式。"
             },
@@ -51,9 +49,8 @@
             "netease:solid": {
                 "value": false
             },
-            "tag:skybluetech_cable": {
-
-            }
+            "tag:piston_denier": {},
+            "tag:skybluetech_cable": {}
         },
         "description": {
             "category": "skybluetech",

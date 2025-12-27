@@ -31,12 +31,9 @@
                 "digger": "pickaxe",
                 "level": 2
             },
-            "tag:skybluetech_fluid_container": {
-
-            },
-            "tag:skybluetech_machine": {
-
-            }
+            "tag:piston_denier": {},
+            "tag:skybluetech_fluid_container": {},
+            "tag:skybluetech_machine": {}
         },
         "description": {
             "base_block": "netease_container",

@@ -454,3 +454,62 @@ class EntityPlaceBlockAfterServerEvent(ServerEvent):
             "dimensionId": self.dimensionId,
             "face": self.face,
         }
+
+
+class PistonActionServerEvent(ServerEvent):
+    name = "PistonActionServerEvent"
+
+    action = "" # type: str
+    """ 推送时=expanding；缩回时=retracting """
+    pistonFacing = 0 # type: int
+    """ 活塞的朝向，参考Facing枚举 """
+    pistonMoveFacing = 0 # type: int
+    """ 活塞的运动方向，参考Facing枚举 """
+    dimensionId = 0 # type: int
+    """ 活塞方块所在的维度 """
+    pistonX = 0 # type: int
+    """ 活塞方块的x坐标 """
+    pistonY = 0 # type: int
+    """ 活塞方块的y坐标 """
+    pistonZ = 0 # type: int
+    """ 活塞方块的z坐标 """
+    blockList = [] # type: list[list[int]]
+    """ 活塞运动影响到产生被移动效果的方块坐标[x,y,z]，均为int类型 """
+    breakBlockList = [] # type: list[list[int]]
+    """ 活塞运动影响到产生被破坏效果的方块坐标[x,y,z]，均为int类型 """
+    entityList = [] # type: list[str]
+    """ 活塞运动影响到产生被移动或被破坏效果的实体的ID列表 """
+
+    def unmarshal(self, data):
+        # type: (dict) -> None
+        self._orig = data
+        self.action = data["action"]
+        self.pistonFacing = data["pistonFacing"]
+        self.pistonMoveFacing = data["pistonMoveFacing"]
+        self.dimensionId = data["dimensionId"]
+        self.pistonX = data["pistonX"]
+        self.pistonY = data["pistonY"]
+        self.pistonZ = data["pistonZ"]
+        self.blockList = data["blockList"]
+        self.breakBlockList = data["breakBlockList"]
+        self.entityList = data["entityList"]
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "action": self.action,
+            "pistonFacing": self.pistonFacing,
+            "pistonMoveFacing": self.pistonMoveFacing,
+            "dimensionId": self.dimensionId,
+            "pistonX": self.pistonX,
+            "pistonY": self.pistonY,
+            "pistonZ": self.pistonZ,
+            "blockList": self.blockList,
+            "breakBlockList": self.breakBlockList,
+            "entityList": self.entityList,
+        }
+
+    def cancel(self):
+        # type: () -> None
+        "允许触发，默认为False，若设为True，可阻止触发后续的事件"
+        self._orig["cancel"] = True

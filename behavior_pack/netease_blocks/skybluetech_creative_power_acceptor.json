@@ -10,6 +10,7 @@
             "netease:listen_block_remove": {
                 "value": true
             },
+            "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},
             "tag:redstoneflux_appliance": {},
             "tag:redstoneflux_connectable": {},

@@ -77,6 +77,7 @@ class FluidContainer(object):
                 if self.fluid_id is not None and self.fluid_volume >= BUCKET_VOLUME:
                     bucket_id = self.fluid_id + "_bucket"
                     if ItemExists(bucket_id):
+                        orig_fluid_id = self.fluid_id
                         self.fluid_volume -= BUCKET_VOLUME
                         if self.fluid_volume == 0:
                             self.fluid_id = None
@@ -84,7 +85,7 @@ class FluidContainer(object):
                             player_id, GetSelectedSlot(player_id), item.count - 1
                         )
                         GiveItem(player_id, Item(bucket_id, count=1))
-                        self.OnFluidSlotUpdate()
+                        self.onReducedFluid(orig_fluid_id, BUCKET_VOLUME)
                         self.Dump()
             else:
                 fluid_id = item.newItemName.replace("_bucket", "")
@@ -99,7 +100,7 @@ class FluidContainer(object):
                         SpawnItemToPlayerCarried(
                             player_id, Item("minecraft:bucket", count=1)
                         )
-                        self.OnFluidSlotUpdate()
+                        self.onAddedFluid(fluid_id, BUCKET_VOLUME)
                         self.RequirePost()
                         self.Dump()
             if isinstance(self, GUIControl):
@@ -114,6 +115,9 @@ class FluidContainer(object):
 
     def tryPostFluid(self, fluid_id, fluid_volume, depth=0):
         # type: (str, float, int) -> float
+        """
+        尝试向容器已连接的管道网络输出流体。
+        """
         if depth >= 64:
             print("[SkyblueTech][Warning] max depth reached")
             return fluid_volume
@@ -132,20 +136,32 @@ class FluidContainer(object):
         if isinstance(self, GUIControl):
             self.OnSync()
         if self.fluid_id is None:
+            orig_volume = self.fluid_volume
             self.fluid_id = fluid_id
             self.fluid_volume = self.tryPostFluid(
                 self.fluid_id, min(fluid_volume, self.max_fluid_volume), depth=depth
             )
-            self.OnFluidSlotUpdate()
+            if orig_volume > self.fluid_volume:
+                self.onReducedFluid(self.fluid_id, orig_volume - self.fluid_volume)
+            elif orig_volume < self.fluid_volume:
+                self.onAddedFluid(self.fluid_id, self.fluid_volume - orig_volume)
+            if self.fluid_volume == 0:
+                self.fluid_id = None
             self.Dump()
             return True, max(0, fluid_volume - self.max_fluid_volume)
         elif fluid_id != self.fluid_id:
             return False, fluid_volume
         else:
+            orig_volume = self.fluid_volume
             self.fluid_volume = self.tryPostFluid(
                 self.fluid_id, min(self.fluid_volume + fluid_volume, self.max_fluid_volume), depth=depth
             )
-            self.OnFluidSlotUpdate()
+            if orig_volume > self.fluid_volume:
+                self.onReducedFluid(self.fluid_id, orig_volume - self.fluid_volume)
+            elif orig_volume < self.fluid_volume:
+                self.onAddedFluid(self.fluid_id, self.fluid_volume - orig_volume)
+            if self.fluid_volume == 0:
+                self.fluid_id = None
             self.Dump()
             return True, max(
                 0, fluid_volume - (self.max_fluid_volume - self.fluid_volume)
@@ -170,31 +186,31 @@ class FluidContainer(object):
         # type: (str | None, float | None, bool) -> tuple[bool, str, float]
         # 返回: 获取是否成功, 获取到的流体 ID, 获取到的流体容量
         if req_fluid_id is None or req_fluid_id == self.fluid_id:
-            i = self.fluid_id
+            fid = self.fluid_id
             v = self.fluid_volume
-            if i is None:
+            if fid is None:
                 return False, "", 0.0
             if req_fluid_volume is None:
                 self.fluid_id = None
                 self.fluid_volume = 0.0
-                self.OnFluidSlotUpdate()
+                self.onReducedFluid(fid, v)
                 self.Dump()
-                return True, i, v
+                return True, fid, v
             else:
                 if req_fluid_volume <= self.fluid_volume:
                     self.fluid_volume -= req_fluid_volume
                     if self.fluid_volume <= 0:
                         self.fluid_id = None
-                    self.OnFluidSlotUpdate()
+                    self.onReducedFluid(fid, v)
                     self.Dump()
-                    return True, i, v
+                    return True, fid, v
                 elif not strict_volume:
                     self.fluid_volume -= req_fluid_volume
                     if self.fluid_volume <= 0:
                         self.fluid_id = None
-                    self.OnFluidSlotUpdate()
+                    self.onReducedFluid(fid, req_fluid_volume)
                     self.Dump()
-                    return True, i, req_fluid_volume
+                    return True, fid, req_fluid_volume
                 else:
                     return False, "", 0.0
         else:
@@ -204,9 +220,12 @@ class FluidContainer(object):
         "让此容器向网络输出一次流体。"
         requireLibraryFunc()
         if self.fluid_id is not None:
+            orig_volume = self.fluid_volume
             self.fluid_volume = PostFluidIntoNetworks(
                 self.dim, self.xyz, self.fluid_id, self.fluid_volume, None, 0
             )
+            if self.fluid_volume < orig_volume:
+                self.onReducedFluid(self.fluid_id, orig_volume - self.fluid_volume)
             self.Dump()
 
     def SelfRequireFluid(self):
@@ -219,3 +238,28 @@ class FluidContainer(object):
     def OnFluidSlotUpdate(self):
         "流体内容更新时调用。"
         pass
+
+    def OnAddedFluid(self, fluid_id, added_fluid_volume):
+        # type: (str, float) -> None
+        "容器内流体体积已经增加时调用。"
+        pass
+
+    def OnReducedFluid(self, fluid_id, reduced_fluid_volume):
+        # type: (str, float) -> None
+        "容器内流体体积已经减少时调用。"
+        pass
+
+    def onAddedFluid(self, fluid_id, fluid_volume):
+        # type: (str, float) -> None
+        self.OnAddedFluid(fluid_id, fluid_volume)
+        self.OnFluidSlotUpdate()
+        if isinstance(self, GUIControl):
+            self.OnSync()
+
+    def onReducedFluid(self, fluid_id, fluid_volume):
+        # type: (str, float) -> None
+        self.OnReducedFluid(fluid_id, fluid_volume)
+        self.OnFluidSlotUpdate()
+        if isinstance(self, GUIControl):
+            self.OnSync()
+

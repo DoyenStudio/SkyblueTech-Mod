@@ -126,7 +126,7 @@ class MultiFluidContainer(object):
         if fluid.fluid_id is None:
             fluid.fluid_id = fluid_id
         fluid.volume += fluid_volume
-        self.OnFluidSlotUpdate(slot_pos)
+        self.onAddedFluid(slot_pos, fluid_id, fluid_volume)
         self.Dump()
 
     def AddFluid(self, fluid_id, fluid_volume, depth=0):
@@ -140,13 +140,13 @@ class MultiFluidContainer(object):
                 free_volume = fluid.max_volume - fluid.volume
                 if fluid_volume <= free_volume:
                     fluid.volume += fluid_volume
-                    self.OnFluidSlotUpdate(slot)
+                    self.onAddedFluid(slot, fluid_id, fluid_volume)
                     self.Dump()
                     return True, 0
                 else:
                     fluid.volume = fluid.max_volume
                     fluid_volume -= free_volume
-                    self.OnFluidSlotUpdate(slot)
+                    self.onAddedFluid(slot, fluid_id, free_volume)
                     self.Dump()
         return _orig != fluid_volume, fluid_volume
 
@@ -169,12 +169,12 @@ class MultiFluidContainer(object):
                 # NOTE: 遇到第一个有效槽位就立即返回, 不考虑后续槽位
                 fluid.fluid_id = None
                 fluid.volume = 0.0
-                self.OnFluidSlotUpdate(slot)
+                self.onReducedFluid(slot, fid, fvol)
                 self.Dump()
                 return True, fid, fvol
             else:
                 fluid.volume -= req_fluid_volume
-                self.OnFluidSlotUpdate(slot)
+                self.onReducedFluid(slot, fid, req_fluid_volume)
                 self.Dump()
                 return True, fid, req_fluid_volume
         return False, "", 0
@@ -188,11 +188,14 @@ class MultiFluidContainer(object):
         # type: () -> None
         "让此容器向网络输出一次流体。"
         requireLibraryFunc()
-        for i, fluid in enumerate(self.fluids):
+        for slot, fluid in enumerate(self.fluids):
             if fluid.fluid_id is not None:
+                orig_fluid_vol = fluid.volume
                 fluid.volume = PostFluidIntoNetworks(
                     self.dim, self.xyz, fluid.fluid_id, fluid.volume, None, 0
                 )
+                if fluid.volume < orig_fluid_vol:
+                    self.onReducedFluid(slot, fluid.fluid_id, orig_fluid_vol - fluid.volume)
                 if fluid.volume <= 0.0:
                     fluid.fluid_id = None
                 self.Dump()
@@ -259,7 +262,7 @@ class MultiFluidContainer(object):
                         SpawnItemToPlayerCarried(
                             player_id, Item("minecraft:bucket", count=1)
                         )
-                        self.OnFluidSlotUpdate(slot)
+                        self.onAddedFluid(slot, fluid_id, BUCKET_VOLUME)
                         self.Dump()
             if isinstance(self, GUIControl):
                 self.OnSync()
@@ -277,12 +280,14 @@ class MultiFluidContainer(object):
             self.dim, self.xyz, fluid_id, fluid_volume, None, depth=depth
         )
 
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume):
+    def OnAddedFluid(self, slot, fluid_id, added_fluid_volume):
         # type: (int, str, float) -> None
+        "容器内流体体积已经增加时调用。"
         pass
 
-    def OnReducedFluid(self, slot, fluid_id, fluid_volume):
+    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume):
         # type: (int, str, float) -> None
+        "容器内流体体积已经减少时调用。"
         pass
 
     def onAddedFluid(self, slot, fluid_id, fluid_volume):

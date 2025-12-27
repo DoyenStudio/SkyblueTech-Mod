@@ -36,7 +36,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     @Delay(1)
     def afterRequireAll(self):
         self.RequireItems()
-        self.RequireFluids()
+        self.RequireFluidsFromNetwork()
         self.OnSync()
 
     def Dump(self):
@@ -53,7 +53,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
             if not dont_recursive:
                 # 可能是物品或流体不够了, 尝试向附近的管道网络索取物品
                 # TODO: RequireFluid
-                ok = self.RequireItems() or self.RequireFluids()
+                ok = self.RequireItems() or self.RequireFluidsFromNetwork()
                 # if ok:
                 self.StartNext(dont_recursive=True)
             return

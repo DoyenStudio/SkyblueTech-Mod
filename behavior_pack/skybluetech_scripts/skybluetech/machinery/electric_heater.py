@@ -30,7 +30,7 @@ class ElectricHeater(AutoSaver, HeatCtrl, GUIControl, PowerControl):
         # type: () -> None
         PowerControl.OnLoad(self)
         HeatCtrl.OnLoad(self)
-        self.running_power = self.bdata[K_SET_POWER] or 500
+        self.running_power = self.bdata[K_SET_POWER] or 0
         self.initLater()
 
     def OnNeighborChanged(self, evt):

@@ -19,7 +19,7 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
     fluid_io_fix_mode = 0
     fluid_input_slots = {0}
     fluid_output_slots = {1}
-    fluid_slot_max_volumes = (1000, 1000)
+    fluid_slot_max_volumes = (1500, 1000)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None   
@@ -42,6 +42,7 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
     def OnTicking(self):
         # type: () -> None
         HeatCtrl.OnTicking(self)
+        MultiFluidContainer.OnTicking(self)
         self.output_rate = 0
         self.workOnce()
         self.OnSync()
@@ -66,6 +67,13 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
         return fluid_id in recipes_collection
+
+    def OnAddedFluid(self, slot, fluid_id, add_fluid_volume):
+        # type: (int, str, float) -> None
+        if slot == 0:
+            cur_volume = self.fluids[0].volume
+            prev_volume = cur_volume - add_fluid_volume
+            self.InputFluidAndUpdateHeat(fluid_id, prev_volume, cur_volume)
 
     def workOnce(self):
         in_fluid = self.fluids[0]
@@ -100,12 +108,8 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
             # TODO: 即使剩余量不足单次产量也按比例进行产出
             if out_fluid.max_volume - out_fluid.volume >= produce:
                 in_fluid.volume -= consume
-                out_fluid.volume += produce
                 self.output_rate = produce_rate
-                out_fluid.fluid_id = rcp.produce_matter
-                    
-    def OnFluidSlotUpdate(self, slot):
-        if slot in self.fluid_input_slots and self.fluids[0].fluid_id is not None:
-            self.InputFluidAndUpdateHeat(self.fluids[0].fluid_id, self.fluids[0].volume)
+                self.OutputFluid(rcp.produce_matter, produce, 1)
+
 
 

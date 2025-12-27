@@ -8,6 +8,7 @@ S = 0.01
 D = 0.001
 TICK_TIME = 20
 DIFF_THRESOLD = 1e-3
+SELF_M = 10
 
 
 class HeatCtrl(BaseMachine):
@@ -28,6 +29,7 @@ class HeatCtrl(BaseMachine):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         self.heat_c = self.original_heat_c
+
 
     def OnLoad(self):
         self.kelvin = self.bdata[K_KELVIN] or ENV_TEMPERATURE
@@ -69,8 +71,8 @@ class HeatCtrl(BaseMachine):
     def Dump(self):
         self.bdata[K_KELVIN] = self.kelvin
 
-    def InputFluidAndUpdateHeat(self, fluid_id, new_volume):
-        # type: (str, float) -> None
+    def InputFluidAndUpdateHeat(self, fluid_id, prev_fluid_volume, new_fluid_volume):
+        # type: (str, float, float) -> None
         """
         当机器接受了具有比热容的流体时调用。
         会更新此机器温度。
@@ -79,23 +81,25 @@ class HeatCtrl(BaseMachine):
             fluid_id (str): 流体类型
             new_volume (float): 当前此流体的体积
         """
-        orig_q = self.kelvin * self.heat_c
-        self.FlushCValueByFluid(fluid_id, new_volume)
-        self.kelvin = orig_q / self.heat_c / (new_volume + 100)
+        add_fluid_volume = new_fluid_volume - prev_fluid_volume
+        orig_q = self.kelvin * self.heat_c * (prev_fluid_volume + SELF_M)
+        self.FlushCValueByFluid(fluid_id, add_fluid_volume, new_fluid_volume)
+        self.kelvin = (orig_q + fluid_c_values[fluid_id] * ENV_TEMPERATURE * add_fluid_volume) / self.heat_c / (new_fluid_volume + SELF_M)
+        # print "fluid_c:", fluid_c_values[fluid_id], "my_c:", self.heat_c, "k:", self.kelvin
 
-    def FlushCValueByFluid(self, fluid_id, fluid_volume):
-        # type: (str | None, float) -> None
+    def FlushCValueByFluid(self, fluid_id, add_volume, new_volume):
+        # type: (str | None, float, float) -> None
         """
         根据所给流体类型和体积更新此机器的比热容。
 
         Args:
             fluid_id (str): 流体种类
-            fluid_volume (float): 当前此流体的体积
+            fluid_volume (float): 添加的此流体的体积
         """
-        if fluid_id is None or fluid_volume == 0:
+        if fluid_id is None or new_volume == 0:
             self.heat_c = self.original_heat_c
         else:
             fluid_c = fluid_c_values[fluid_id]
             self.heat_c = self.original_heat_c * (
-                100 / (fluid_volume + 100)
-            ) + fluid_c * (fluid_volume / (fluid_volume + 100))
+                float(SELF_M) / (new_volume + SELF_M)
+            ) + fluid_c * (float(new_volume) / (new_volume + SELF_M))

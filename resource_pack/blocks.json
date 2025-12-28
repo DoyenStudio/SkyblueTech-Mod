@@ -292,14 +292,7 @@
         }
     },
     "skybluetech:fluid_condenser": {
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:fluid_condenser_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
-            "west": "skybluetech:frame"
-        }
+        "sound": "iron"
     },
     "skybluetech:forester": {
         "textures": {
@@ -312,14 +305,7 @@
         }
     },
     "skybluetech:freezer": {
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:freezer_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
-            "west": "skybluetech:frame"
-        }
+        "sound": "iron"
     },
     "skybluetech:geothermal_generator": {
         "sound": "copper"
@@ -370,27 +356,13 @@
         }
     },
     "skybluetech:macerator": {
-
+        "sound": "iron"
     },
     "skybluetech:magma_centrifuge": {
-        "textures": {
-            "down": "skybluetech:creative_power_acceptor_top",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:frame",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
-            "west": "skybluetech:frame"
-        }
+        "sound": "iron"
     },
     "skybluetech:magma_furnace": {
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:magma_furnace_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
-            "west": "skybluetech:frame"
-        }
+        "sound": "iron"
     },
     "skybluetech:metal_press": {
         "sound": "iron"

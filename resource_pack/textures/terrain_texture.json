@@ -218,6 +218,9 @@
         "skybluetech:metal_press_front": {
             "textures": "textures/machines/metal_press_front"
         },
+        "skybluetech:metal_press_front_active": {
+            "textures": "textures/machines/flipbook_textures/metal_press_front_active"
+        },
         "skybluetech:methane_mud": {
             "textures": "textures/fluid/methane"
         },

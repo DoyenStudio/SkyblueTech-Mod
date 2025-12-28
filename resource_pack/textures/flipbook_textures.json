@@ -56,20 +56,9 @@
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/macerator_front_active",
-        "atlas_tile": "skybluetech:macerator_front_active",
-        "ticks_per_frame": 4,
-        "blend_frames": false
-    },
-    {
         "flipbook_texture": "textures/machines/flipbook_textures/magma_furnace_front_active",
         "atlas_tile": "skybluetech:magma_furnace_front_active",
         "ticks_per_frame": 4
-    },
-    {
-        "flipbook_texture": "textures/machines/flipbook_textures/metal_press_front_active",
-        "atlas_tile": "skybluetech:metal_press_front_active",
-        "ticks_per_frame": 3
     },
     {
         "flipbook_texture": "textures/machines/flipbook_textures/mixer_front_active",
@@ -80,5 +69,17 @@
         "flipbook_texture": "textures/machines/flipbook_textures/fluid_condenser_front_active",
         "atlas_tile": "skybluetech:fluid_condenser_front_active",
         "ticks_per_frame": 3
+    },
+    {
+        "flipbook_texture": "textures/machines/flipbook_textures/metal_press_front_active",
+        "atlas_tile": "skybluetech:metal_press_front_active",
+        "ticks_per_frame": 3,
+        "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/machines/flipbook_textures/macerator_front_active",
+        "atlas_tile": "skybluetech:macerator_front_active",
+        "ticks_per_frame": 4,
+        "blend_frames": false
     }
 ]

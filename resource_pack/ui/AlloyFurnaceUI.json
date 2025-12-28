@@ -9,11 +9,7 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100,
-                    "size": [
-                        0,
-                        0
-                    ]
+                    "layer": 11
                 }
             },
             {

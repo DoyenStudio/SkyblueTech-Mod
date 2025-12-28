@@ -5,6 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.item import GetItemBasicInfo
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...define import flags
+from ...mini_jei.core.define import CategoryType
 from ...mini_jei.machines.recipe_cls import MachineRecipe
 from .base_machine import BaseMachine
 from .base_processor import BaseProcessor
@@ -95,12 +96,13 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
             return
         input_items.update(output_items)
         self.finishRecipeOnce(input_items, self.current_recipe)
+        self.RequireAnyFluidFromNetwork()
 
     def getRecipe(self, input_items, input_fluids):
         # type: (dict[int, Item], list[FluidSlot]) -> MachineRecipe | None
         for recipe in self.recipes:
             cont = False
-            for slot_pos, input in recipe.inputs.get("item", {}).items():
+            for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
                 item = input_items.get(slot_pos, None)
                 if item is None:
                     cont = True
@@ -114,7 +116,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 ):
                     cont = True
                     break
-            for slot_pos, input in recipe.inputs.get("fluid", {}).items():
+            for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
                 fluid = input_fluids[slot_pos]
                 if fluid.fluid_id is None:
                     cont = True
@@ -138,7 +140,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def canOutput(self, recipe, output_item_slots):
         # type: (MachineRecipe, dict[int, Item]) -> bool
         outputs = recipe.outputs
-        for slot_pos, output in outputs.get("item", {}).items():
+        for slot_pos, output in outputs.get(CategoryType.ITEM, {}).items():
             item = output_item_slots.get(slot_pos, None)
             if item is None:
                 # TODO: 假设输出不可能超过物品最大堆叠数
@@ -151,7 +153,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 item_count = item.count + output.count
             if item_count > item.GetBasicInfo().maxStackSize:
                 return False
-        for slot_pos, output in outputs.get("fluid", {}).items():
+        for slot_pos, output in outputs.get(CategoryType.FLUID, {}).items():
             fluid = self.fluids[slot_pos]
             if fluid.fluid_id is None:
                 # TODO: 假设输出不可能超过流体槽最大容量
@@ -179,18 +181,18 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def finishRecipeOnce(self, slotitems, recipe):
         # type: (dict[int, Item], MachineRecipe) -> None
         fluid_slots = self.fluids
-        for slot_pos, input in recipe.inputs.get("item", {}).items():
+        for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
             slotitems[slot_pos].count -= int(input.count)
-        for slot_pos, input in recipe.inputs.get("fluid", {}).items():
+        for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
             fluid_slots[slot_pos].volume -= input.count
-        for slot_pos, output in recipe.outputs.get("item", {}).items():
+        for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
             orig_item = slotitems.get(slot_pos, None)
             if orig_item is None:
                 orig_item = Item(output.id, 0, int(output.count))
             else:
                 orig_item.count += int(output.count)
             slotitems[slot_pos] = orig_item
-        for slot_pos, output in recipe.outputs.get("fluid", {}).items():
+        for slot_pos, output in recipe.outputs.get(CategoryType.FLUID, {}).items():
             self.OutputFluid(output.id, output.count, slot_pos)
         self.SetSlotItems(slotitems)
 
@@ -202,6 +204,9 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         if slot_pos not in self.input_slots and not self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
             return
         recipe = self.getRecipe(self.GetInputSlotItems(), self.fluids)
+        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+            # 此时产出可能不堵塞了
+            self.StartNext()
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             self.current_recipe = None

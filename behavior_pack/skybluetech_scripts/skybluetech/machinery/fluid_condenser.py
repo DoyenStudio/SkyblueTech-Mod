@@ -11,8 +11,8 @@ from .basic import MixedProcessor, RegisterMachine
 class FluidCondenser(MixedProcessor):
     block_name = MACHINE_ID
     recipes = Recipes
-    input_slots = (0,)
-    output_slots = (1,)
+    input_slots = ()
+    output_slots = (0,)
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_input_slots = {0}
     fluid_slot_max_volumes = (2000,)

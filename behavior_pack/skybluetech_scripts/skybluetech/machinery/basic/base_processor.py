@@ -2,6 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
+from ...mini_jei.core.define import CategoryType
 from ...mini_jei.machines.recipe_cls import MachineRecipe
 from ...define import flags as flags
 from .auto_saver import AutoSaver
@@ -144,12 +145,12 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        if slot in self.output_slots:
-            return False
-        elif self.InUpgradeSlot(slot):
+        if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
+        elif slot in self.output_slots:
+            return False
         for recipe in self.recipes:
-            slot_input = recipe.inputs.get("item", {}).get(slot)
+            slot_input = recipe.inputs.get(CategoryType.ITEM, {}).get(slot)
             if slot_input is None:
                 continue
             if slot_input.is_tag:
@@ -164,7 +165,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         # type: (dict[int, Item]) -> MachineRecipe | None
         for recipe in self.recipes:
             cont = False
-            for slot_pos, input in recipe.inputs.get("item", {}).items():
+            for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
                 item = inputs.get(slot_pos, None)
                 if item is None:
                     cont = True
@@ -189,7 +190,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     @staticmethod
     def canOutput(recipe, output_slots):
         # type: (MachineRecipe, dict[int, Item]) -> bool
-        outputs = recipe.outputs.get("item", {})
+        outputs = recipe.outputs.get(CategoryType.ITEM, {})
         for slot_pos, output in outputs.items():
             item = output_slots.get(slot_pos, None)
             if item is None:
@@ -207,9 +208,9 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     def finishRecipeOnce(self, slotitems, recipe):
         # type: (dict[int, Item], MachineRecipe) -> None
-        for slot_pos, input in recipe.inputs.get("item", {}).items():
+        for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
             slotitems[slot_pos].count -= int(input.count)
-        for slot_pos, output in recipe.outputs.get("item", {}).items():
+        for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
             orig_item = slotitems.get(slot_pos, None)
             if orig_item is None:
                 orig_item = Item(output.id, 0, int(output.count))

@@ -183,51 +183,8 @@
             }
         ]
     },
-    "main@common.base_screen": {
-        "$screen_content": "MagmaFurnaceUI.magma_furnace_ui",
-        "button_mappings": [
-            {
-                "from_button_id": "button.menu_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            },
-            {
-                "from_button_id": "button.menu_inventory_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            },
-            {
-                "from_button_id": "button.menu_select",
-                "mapping_type": "pressed",
-                "to_button_id": "button.cursor_drop_all"
-            },
-            {
-                "from_button_id": "button.menu_secondary_select",
-                "mapping_type": "pressed",
-                "to_button_id": "button.cursor_drop_one"
-            },
-            {
-                "from_button_id": "button.menu_ok",
-                "mapping_type": "pressed",
-                "to_button_id": "button.cursor_drop_all"
-            },
-            {
-                "from_button_id": "button.controller_back",
-                "ignored": "(not $is_ps4)",
-                "mapping_type": "pressed",
-                "to_button_id": "button.cursor_drop_all"
-            },
-            {
-                "from_button_id": "button.controller_select",
-                "mapping_type": "pressed",
-                "to_button_id": "button.cursor_drop_one"
-            },
-            {
-                "from_button_id": "button.controller_secondary_select",
-                "mapping_type": "pressed",
-                "to_button_id": "button.cursor_drop_all"
-            }
-        ]
+    "main@common.inventory_screen_common": {
+        "$screen_content": "MagmaFurnaceUI.magma_furnace_ui"
     },
     "namespace": "MagmaFurnaceUI"
 }

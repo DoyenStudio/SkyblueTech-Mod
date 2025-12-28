@@ -112,18 +112,6 @@
         ]
     },
     "main@common.inventory_screen_common": {
-        "button_mappings": [
-            {
-                "from_button_id": "button.menu_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
-            },
-            {
-                "from_button_id": "button.menu_inventory_cancel",
-                "to_button_id": "button.menu_exit",
-                "mapping_type": "global"
-            }
-        ],
         "$screen_content": "FarmingStationUI.farming_station_ui"
     },
     "namespace": "FarmingStationUI"

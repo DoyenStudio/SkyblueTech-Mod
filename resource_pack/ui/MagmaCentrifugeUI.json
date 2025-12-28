@@ -244,19 +244,7 @@
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "MagmaCentrifugeUI.magma_centrifuge_ui",
-        "button_mappings": [
-            {
-                "from_button_id": "button.menu_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            },
-            {
-                "from_button_id": "button.menu_inventory_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            }
-        ]
+        "$screen_content": "MagmaCentrifugeUI.magma_centrifuge_ui"
     },
     "namespace": "MagmaCentrifugeUI"
 }

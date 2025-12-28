@@ -27,7 +27,7 @@
                 "value": true
             },
             "netease:block_container": {
-                "container_size": 6,
+                "container_size": 5,
                 "custom_description": "流体冷却机",
                 "screen_name": "FluidCondenserUI.main"
             },

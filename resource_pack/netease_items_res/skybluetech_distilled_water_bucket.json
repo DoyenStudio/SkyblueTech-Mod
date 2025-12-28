@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:distilled_water_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:distilled_water_bucket"
+        }
+    }
+}

@@ -64,16 +64,9 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         if self.InUpgradeSlot(slot_pos):
             UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
-        if slot_pos in self.output_slots:
-            if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-                # i dont sure
-                if (
-                    self.current_recipe is not None
-                    and self.canOutput(self.current_recipe, self.GetOutputSlotItems())
-                ):
-                    self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
-            else:
-                return
+        if slot_pos in self.output_slots and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+            self.StartNext()
+            return
         recipe = self.getRecipe(self.GetInputSlotItems())
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)

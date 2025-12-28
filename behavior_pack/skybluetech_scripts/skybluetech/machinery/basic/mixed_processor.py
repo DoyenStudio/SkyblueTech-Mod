@@ -201,12 +201,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         if self.InUpgradeSlot(slot_pos):
             UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
-        if slot_pos not in self.input_slots and not self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+        if slot_pos in self.output_slots and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+            self.StartNext()
             return
         recipe = self.getRecipe(self.GetInputSlotItems(), self.fluids)
-        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-            # 此时产出可能不堵塞了
-            self.StartNext()
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             self.current_recipe = None

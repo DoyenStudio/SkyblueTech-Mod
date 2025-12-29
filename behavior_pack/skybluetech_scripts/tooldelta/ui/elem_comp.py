@@ -405,7 +405,7 @@ class UNeteasePaperDoll(UBaseCtrl):
         init_rot_y=0, # type: float
         init_rot_z=0, # type: float
         molang_dict={}, # type: dict
-        rotation_axis=(0, 0, 0), # type: tuple[int, int, int]
+        rotation_axis=(0, 0, 0), # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
     ):
         return self.base.RenderEntity({
             "entity_id": entity_id,
@@ -416,6 +416,26 @@ class UNeteasePaperDoll(UBaseCtrl):
             "init_rot_y": init_rot_y,
             "init_rot_z": init_rot_z,
             "molang_dict": molang_dict,
+            "rotation_axis": rotation_axis,
+        })
+
+    def RenderBlockGeometryModel(
+        self,
+        block_geometry_model_name, # type: str
+        scale=1.0, # type: float
+        init_rot_y=0, # type: float
+        init_rot_x=0, # type: float
+        init_rot_z=0, # type: float
+        molang_dict=None, # type: dict | None
+        rotation_axis=(0, 0, 0), # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
+    ):
+        return self.base.RenderBlockGeometryModel({
+            "block_geometry_model_name": block_geometry_model_name,
+            "scale": scale,
+            "init_rot_y": init_rot_y,
+            "init_rot_x": init_rot_x,
+            "init_rot_z": init_rot_z,
+            "molang_dict": molang_dict or {},
             "rotation_axis": rotation_axis,
         })
 

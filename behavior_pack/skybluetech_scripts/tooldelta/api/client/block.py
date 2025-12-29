@@ -36,15 +36,15 @@ def GetBlockNameAndAux(pos):
 
 GetBlockTextures = _getBlockTextures
 
-def NewSingleBlockPalette(block_id):
-    # type: (str) -> BlockPaletteComponent
+def NewSingleBlockPalette(block_id, aux=0):
+    # type: (str, int) -> BlockPaletteComponent
     newBlockPalette = ClientComp.CreateBlock(ClientLevelId).GetBlankBlockPalette()
     newBlockPalette.DeserializeBlockPalette({
         'extra': {},
         'void': False,
         'actor': {},
         'volume': (1, 1, 1),
-        'common': {(block_id, 0): [0]},
+        'common': {(block_id, aux): [0]},
         'eliminateAir': True
     })
     return newBlockPalette

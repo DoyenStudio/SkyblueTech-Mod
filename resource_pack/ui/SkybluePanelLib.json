@@ -565,6 +565,26 @@
                         }
                     ]
                 }
+            },
+            {
+                "prob": {
+                    "type": "label",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "size": [
+                        "100%+1px",
+                        "default"
+                    ],
+                    "layer": 5,
+                    "color": [
+                        1.0,
+                        1.0,
+                        0.0
+                    ],
+                    "font_scale_factor": 1.6,
+                    "font_size": "small",
+                    "font_type": "default"
+                }
             }
         ]
     },

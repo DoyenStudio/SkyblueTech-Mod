@@ -11,13 +11,15 @@ DISP_BOARD_SRC_KEY = "disp_board_src"
 
 
 class ItemDisplayer:
-    def __init__(self, ctrl, item, tag=None):
-        # type: (UBaseCtrl, Item, str | None) -> None
+    def __init__(self, ctrl, item, tag=None, prob=1.0):
+        # type: (UBaseCtrl, Item, str | None, float) -> None
         self.ctrl = ctrl
         self.item = item
         self.tag = tag
+        self.prob = prob
         self.item_renderer = ctrl["item_renderer"].asItemRenderer()
         self.item_count_label = ctrl["item_count"].asLabel()
+        self.prob_label = ctrl["prob"].asLabel()
         self.check_btn = ctrl["check_btn"].asButton()
         self.check_btn.SetCallback(self.onBtnReleased)
         self.update()
@@ -35,6 +37,8 @@ class ItemDisplayer:
         else:
             self.item_count_label.SetText("")
         self.item_renderer.SetUiItem(self.item)
+        if self.prob != 1.0:
+            self.prob_label.SetText("%.1f%%%%" % (self.prob * 100))
 
     def onBtnReleased(self, params):
         if self.double_click_detecter():
@@ -46,6 +50,8 @@ class ItemDisplayer:
         if NeedRemoveDisplayBoard(self.ctrl):
             return
         fmt = GetItemHoverName(self.item.id) or self.item.id
+        if self.prob != 1.0:
+            fmt += "\n§e产出概率： %.1f%%%%" % (self.prob * 100)
         if self.tag is not None:
             fmt += "\n\n§8接受标签: " + self.tag
         databoard = CreateDisplayBoard(self.ctrl, fmt)

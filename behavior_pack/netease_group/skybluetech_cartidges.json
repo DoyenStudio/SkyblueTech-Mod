@@ -1,0 +1,13 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.cartidges",
+            "icon": "skybluetech:famicom_cartridge_1",
+            "list": [
+                "skybluetech:famicom_cartridge_1",
+                "skybluetech:famicom_cartridge_2",
+                "skybluetech:famicom_cartridge_3"
+            ]
+        }
+    ]
+}

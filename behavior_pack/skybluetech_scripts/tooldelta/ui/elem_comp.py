@@ -48,6 +48,7 @@ class UBaseCtrl(object):
         self._child_cacher = {}
         self._vars = {}
         self._removed = False
+        self._removed_listeners = [] # type: list[Callable[[], None]]
 
     def asLabel(self):
         # type: () -> ULabel
@@ -140,6 +141,10 @@ class UBaseCtrl(object):
         # type: (str, str, bool) -> UBaseCtrl
         return UBaseCtrl(self._root, addElement(self._root, element_def_name, element_name, self.base, force_update))
 
+    def addDestroyListener(self, func):
+        # type: (Callable[[], None]) -> None
+        self._removed_listeners.append(func)
+
     def OnDestroyed(self):
         pass
 
@@ -148,6 +153,7 @@ class UBaseCtrl(object):
             print("[Warning] control already removed")
             return
         self._removed = True
+        self.callDestroy()
         return removeElement(self._root, self.base)
 
     def GetElement(self, path):
@@ -163,6 +169,8 @@ class UBaseCtrl(object):
     __getitem__ = __div__ = __truediv__
 
     def callDestroy(self):
+        for func in self._removed_listeners:
+            func()
         self.OnDestroyed()
 
     def _save_t(self, obj):
@@ -427,7 +435,7 @@ class UNeteasePaperDoll(UBaseCtrl):
         init_rot_x=0, # type: float
         init_rot_z=0, # type: float
         molang_dict=None, # type: dict | None
-        rotation_axis=(0, 0, 0), # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
+        rotation_axis=(1, 0, 0), # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
     ):
         return self.base.RenderBlockGeometryModel({
             "block_geometry_model_name": block_geometry_model_name,

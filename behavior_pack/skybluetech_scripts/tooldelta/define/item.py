@@ -26,7 +26,7 @@ class Item(object):
     """可选，物品自定义标识符。可以用于保存数据， 区分物品"""
     userData = None # type: dict | None
     """可选，物品userData，用于灾厄旗帜、旗帜等物品，请勿随意设置该值"""
-    durability = None # type: int | None
+    durability = 0 # type: int
     """可选，物品耐久度，不存在耐久概念的物品默认值为零"""
 
     def __init__(
@@ -40,7 +40,7 @@ class Item(object):
         customTips="", # type: str | None
         extraId=None, # type: str | None
         userData=None, # type: dict | None
-        durability=None, # type: int | None
+        durability=0, # type: int
         _orig=None # type: dict | None
     ):
         # type: (...) -> None
@@ -71,7 +71,7 @@ class Item(object):
             data.get("customTips"),
             data.get("extraId"),
             data.get("userData"),
-            data.get("durability"),
+            data.get("durability", 0),
             _orig = data,
         )
 
@@ -89,7 +89,7 @@ class Item(object):
         self.customTips = data.get("customTips")
         self.extraId = data.get("extraId")
         self.userData = data.get("userData")
-        self.durability = data.get("durability")
+        self.durability = data.get("durability", 0)
 
     def marshal(self):
         # type: () -> dict
@@ -159,8 +159,8 @@ class Item(object):
         return (
             self.newItemName == other.newItemName
             and self.newAuxValue == other.newAuxValue
-            and self.enchantData == other.enchantData
-            and self.modEnchantData == other.modEnchantData
+            and (self.enchantData == other.enchantData or (not self.enchantData and not other.enchantData))
+            and (self.modEnchantData == other.modEnchantData or (not self.modEnchantData and not other.modEnchantData))
             and self.userData == other.userData
             and self.durability == other.durability
         )

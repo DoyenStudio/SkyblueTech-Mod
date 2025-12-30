@@ -39,8 +39,8 @@ class ItemContainer(object):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        "超类覆写方法, 判定槽位物品是否为合法输入。"
-        return True
+        "子类覆写方法, 判定槽位物品是否为合法输入。超类防止物品输入到输出口。"
+        return slot in self.input_slots
 
     def GetSlotItem(self, slot_pos, get_user_data=True):
         # type: (int, bool) -> Item | None

@@ -1,0 +1,160 @@
+{
+    "hydroponic_bed_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "水培床",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "crop_disp": {
+                                                        "type": "custom",
+                                                        "renderer": "netease_paper_doll_renderer",
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            -20.0,
+                                                            37.0
+                                                        ],
+                                                        "size": [
+                                                            40.0,
+                                                            40.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "enable_scissor_test": false,
+                                                        "rotation": "gesture_x",
+                                                        "screen_scale": 1.0
+                                                    }
+                                                },
+                                                {
+                                                    "gen_slot@netease_container.custom_grid_item": {
+                                                        "layer": 5,
+                                                        "offset": [
+                                                            40,
+                                                            -43
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "img": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            -20.0,
+                                                            -42.0
+                                                        ],
+                                                        "size": [
+                                                            60.0,
+                                                            60.0
+                                                        ],
+                                                        "layer": 5,
+                                                        "clip_direction": "left",
+                                                        "clip_ratio": 0.0,
+                                                        "texture": "textures/models/hydroponic_bed_texture",
+                                                        "uv_size": [
+                                                            16.0,
+                                                            16.0
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "layer": 13,
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            71,
+                                                            0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "HydroponicBedUI.hydroponic_bed_ui"
+    },
+    "namespace": "HydroponicBedUI"
+}

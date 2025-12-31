@@ -1,0 +1,48 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.hydroponic_bed"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:hydroponic_bed"
+                }
+            },
+            "netease:block_container": {
+                "container_size": 5,
+                "custom_description": "水培床",
+                "screen_name": "HydroponicBedUI.main"
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7在其下放置水培床基座以供给水分或额外养料，\n使得水培床中的作物以更快的速度生长。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_fluid_container": {},
+            "tag:skybluetech_machine": {},
+            "tag:skybluetech_appliance": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:hydroponic_bed"
+        }
+    }
+}

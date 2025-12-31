@@ -25,7 +25,10 @@ class Input(Element):
 
 
 class Output(Element):
-    pass
+    def __init__(self, id, count=1, prob=1):
+        # type: (str, float, float) -> None
+        Element.__init__(self, id, count)
+        self.prob = prob
 
 
 class Recipe(RecipeBase):

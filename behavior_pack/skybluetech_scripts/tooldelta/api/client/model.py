@@ -1,5 +1,5 @@
 # coding=utf-8
-
+from mod.client.extraClientApi import GetEngineCompFactory
 from ...internal import ClientComp, ClientLevelId, inClientEnv
 
 
@@ -8,10 +8,10 @@ class FreeModel(object):
         # type: (str) -> None
         if not inClientEnv():
             raise RuntimeError("Not in client")
-        self.model_comp = ClientComp.CreateModel(ClientLevelId)
+        self.model_comp = GetEngineCompFactory().CreateModel(ClientLevelId)
         self.model_id = self.model_comp.CreateFreeModel(model_name)
         if self.model_id == 0:
-            raise ValueError("Invalid model: " + model_name)
+            print("[ERROR] model invalid: " + model_name)
 
     def SetPos(self, x, y, z):
         # type: (float, float, float) -> bool
@@ -32,4 +32,5 @@ class FreeModel(object):
 def CreateFreeModel(model_name):
     # type: (str) -> FreeModel
     return FreeModel(model_name)
+
 

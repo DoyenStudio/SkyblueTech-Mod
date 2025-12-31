@@ -19,6 +19,8 @@
         "ui/GeneralTankUI.json",
         "ui/GeoThermalGeneratorUI.json",
         "ui/HeavyCompressorUI.json",
+        "ui/HydroponicBaseUI.json",
+        "ui/HydroponicBedUI.json",
         "ui/ItemInputInterfaceUI.json",
         "ui/ItemOutputInterfaceUI.json",
         "ui/ItemSlot.json",

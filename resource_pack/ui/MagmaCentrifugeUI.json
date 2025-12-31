@@ -19,7 +19,7 @@
             },
             {
                 "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3,
+                    "layer": 10,
                     "max_size": [
                         0,
                         0
@@ -28,6 +28,7 @@
             },
             {
                 "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 10,
                     "max_size": [
                         0,
                         0
@@ -36,6 +37,7 @@
             },
             {
                 "item_lock_notification_factory@common.item_lock_notification_factory": {
+                    "layer": 10,
                     "max_size": [
                         0,
                         0
@@ -49,7 +51,9 @@
                             "bg@common.dialog_background_opaque": {
                                 "controls": [
                                     {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {
+                                            "layer": 0
+                                        }
                                     },
                                     {
                                         "gamepad_cursor_button@common.gamepad_cursor_button": {

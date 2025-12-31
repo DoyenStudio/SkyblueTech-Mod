@@ -17,6 +17,8 @@ from .freezer import FreezerUI
 from .general_tank import GeneralTankUI
 from .geothermal_generator import GeoThermalGeneratorUI
 from .heavy_compressor import HeavyCompressorUI
+from .hydroponic_base import HydroponicBaseUI
+from .hydroponic_bed import HydroponicBedUI
 from .macerator import MaceratorUI
 from .magma_furnace import MagmaFurnaceUI
 from .magma_centrifuge import MagmaCentrifugeUI

@@ -983,6 +983,131 @@
             }
         ]
     },
+    "hydroponic_bed_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            80.0
+        ],
+        "layer": 1,
+        "clips_children": true,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "img": {
+                    "type": "image",
+                    "offset": [
+                        -48.0,
+                        0.0
+                    ],
+                    "size": [
+                        60.0,
+                        60.0
+                    ],
+                    "layer": 12,
+                    "clips_children": true,
+                    "clip_direction": "left",
+                    "clip_ratio": 0.0,
+                    "texture": "textures/models/hydroponic_bed_texture",
+                    "uv_size": [
+                        16.0,
+                        16.0
+                    ]
+                }
+            },
+            {
+                "crop_disp": {
+                    "type": "custom",
+                    "renderer": "netease_paper_doll_renderer",
+                    "offset": [
+                        -48.0,
+                        -4.0
+                    ],
+                    "size": [
+                        "100%y+0px",
+                        44.0
+                    ],
+                    "layer": 2,
+                    "enable_scissor_test": true,
+                    "rotation": "gesture_x",
+                    "screen_scale": 1.0
+                }
+            },
+            {
+                "seed_item@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        32,
+                        -22
+                    ]
+                }
+            },
+            {
+                "seed_tip": {
+                    "type": "label",
+                    "offset": [
+                        4.0,
+                        -22.0
+                    ],
+                    "layer": 5,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_scale_factor": 1.4,
+                    "font_type": "default",
+                    "text": "种子",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "output_tip": {
+                    "type": "label",
+                    "offset": [
+                        4.0,
+                        4.0
+                    ],
+                    "layer": 5,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_scale_factor": 1.4,
+                    "font_type": "default",
+                    "text": "产出",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "outputs_stack": {
+                    "type": "stack_panel",
+                    "offset": [
+                        53.0,
+                        15.0
+                    ],
+                    "size": [
+                        60.0,
+                        40.0
+                    ],
+                    "layer": 1,
+                    "orientation": "horizontal"
+                }
+            }
+        ]
+    },
     "left_section": {
         "type": "panel",
         "size": [

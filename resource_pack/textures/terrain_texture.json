@@ -191,6 +191,12 @@
         "skybluetech:heavy_compressor_front_active": {
             "textures": "textures/machines/flipbook_textures/heavy_compressor_front_active"
         },
+        "skybluetech:hydroponic_base": {
+            "textures": "textures/machines/hydroponic_base"
+        },
+        "skybluetech:hydroponic_bed": {
+            "textures": "textures/models/hydroponic_bed_texture"
+        },
         "skybluetech:invar_tank": {
             "textures": "textures/models/tanks/invar_tank_texture"
         },

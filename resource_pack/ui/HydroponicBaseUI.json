@@ -1,0 +1,142 @@
+{
+    "hydroponic_base_ui": {
+        "type": "panel",
+        "offset": [
+            1.0,
+            0.0
+        ],
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "水培基座",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "fluid0@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "layer": 2,
+                                                        "offset": [
+                                                            -64,
+                                                            -39
+                                                        ],
+                                                        "size": [
+                                                            32,
+                                                            72
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "fluid1@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "layer": 2,
+                                                        "offset": [
+                                                            -21,
+                                                            -39
+                                                        ],
+                                                        "size": [
+                                                            32,
+                                                            72
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "container_slots@netease_container.netease_custom_container_grid": {
+                                                        "grid_dimensions": [
+                                                            4,
+                                                            4
+                                                        ],
+                                                        "layer": 1,
+                                                        "offset": [
+                                                            "0%c+99px",
+                                                            25
+                                                        ],
+                                                        "size": [
+                                                            "100%c+0px",
+                                                            "100%c+0px"
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "HydroponicBaseUI.hydroponic_base_ui"
+    },
+    "namespace": "HydroponicBaseUI"
+}

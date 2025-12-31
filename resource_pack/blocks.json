@@ -328,6 +328,15 @@
             "up": "skybluetech:gray_lava_still"
         }
     },
+    "skybluetech:hydroponic_base": {
+        "textures": "skybluetech:hydroponic_base"
+    },
+    "skybluetech:hydroponic_bed": {
+        "client_entity": {
+            "identifier": "skybluetech:hydrioponic_bed"
+        },
+        "sound": "iron"
+    },
     "skybluetech:invar_tank": {
         "client_entity": {
             "identifier": "skybluetech:invar_tank"

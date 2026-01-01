@@ -38,7 +38,7 @@ class HydroponicBedUI(MachinePanelUIProxy):
             return
         self.last_render_crop_id = self.sync.crop_id
         self.last_grow_stage = self.sync.grow_stage
-        pal = NewSingleBlockPalette("minecraft:wheat" or "minecraft:air", self.sync.grow_stage)
+        pal = NewSingleBlockPalette(self.sync.crop_id or "minecraft:air", self.sync.grow_stage)
         geo_id = CombineBlockPaletteToGeometry(pal, "geometry.skybluetech_temp.crop_id")
         self.crop_disp.RenderBlockGeometryModel(
             geo_id,

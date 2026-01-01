@@ -6,11 +6,9 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
-from skybluetech_scripts.tooldelta.api.client import (
-    NewSingleBlockPalette,
-    CreateFreeModel,
-    CombineBlockPaletteToGeometry,
-    FreeModel,
+from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
+    GeometryModel,
+    CreateBlankSingleBlockModelEntity,
 )
 from ..define import flags
 from ..define.events.hydroponic_bed import (
@@ -156,10 +154,14 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl):
         self.notifyUpdate()
 
     def notifyUpdate(self):
+        if self.crop_id is None:
+            crop_block_id = None
+        else:
+            crop_block_id = Recipes[self.crop_id].crop_block_id
         pids = S_machinery2clis.get(self)
         if pids:
             HydroponicBedModelUpdateEvent(
-                self.x, self.y, self.z, self.crop_id, self.grow_stage
+                self.x, self.y, self.z, crop_block_id, self.grow_stage
             ).sendMulti(list(pids))
 
 
@@ -174,7 +176,6 @@ def onC2SModBlockLoadEvent(event):
         if key not in S_cli_loaded_machinerys:
             m = GetMachineStrict(event.dim, event.x, event.y, event.z)
             if not isinstance(m, HydroponicBed):
-                print("warning: machine not match")
                 return
         S_cli_loaded_machinerys[key] = m
         S_machinery2clis.setdefault(m, set()).add(event.player_id)
@@ -185,24 +186,15 @@ def onC2SModBlockLoadEvent(event):
         m = S_cli_loaded_machinerys[key]
         S_machinery2clis.get(m, set()).discard(event.player_id)
 
-C_loaded_models = {}  # type: dict[tuple[int, int, int], FreeModel]
-
-def createModel(x, y, z, crop_id, aux):
-    # type: (int, int, int, str, int) -> FreeModel
-    geo_id = CombineBlockPaletteToGeometry(
-        NewSingleBlockPalette(
-            crop_id, aux
-        ),
-        "tempblock_%s_%d" % (crop_id.replace("minecraft:", ""), aux)
-    )
-    model = CreateFreeModel(geo_id)
-    model.SetPos(x, y, z)
-    return model
+C_loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 
 @ModBlockEntityLoadedClientEvent.Listen()
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     if event.blockName == HydroponicBed.block_name:
+        C_loaded_models[
+            (event.posX, event.posY, event.posZ)
+        ] = CreateBlankSingleBlockModelEntity((event.posX, event.posY+3.0/16, event.posZ))
         HydroponicBedClientLoadEvent(
             event.dimensionId, event.posX, event.posY, event.posZ, MODE_LOAD
         ).send()
@@ -222,9 +214,11 @@ def onModBlockRemoved(event):
 def onS2CUpdate(event):
     # type: (HydroponicBedModelUpdateEvent) -> None
     key = (event.x, event.y, event.z)
-    model = C_loaded_models.pop(key, None)
-    if model is not None:
-        model.Destroy()
-    if event.crop_id is not None:
-        C_loaded_models[key] = createModel(event.x, event.y, event.z, event.crop_id, event.aux)
-
+    if event.crop_id is None:
+        model = C_loaded_models.get(key, None)
+        if model is not None:
+            model.SetBlockModel("minecraft:air", 0)
+    elif event.crop_id is not None:
+        model = C_loaded_models.get(key)
+        if model is not None:
+            model.SetBlockModel(event.crop_id, event.aux)

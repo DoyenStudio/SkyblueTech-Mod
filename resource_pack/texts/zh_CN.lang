@@ -208,3 +208,4 @@ tile.skybluetech:tin_block.name=锡块
 tile.skybluetech:tin_ore.name=锡矿石
 tile.skybluetech:tin_wire.name=锡线缆
 tile.skybluetech:hydroponic_base.name=水培基座
+entity.skybluetech:model_entity.name=模型实体

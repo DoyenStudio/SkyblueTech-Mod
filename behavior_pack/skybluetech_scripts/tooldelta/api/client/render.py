@@ -31,11 +31,21 @@ def PlayParticleOn(particle_name, entity_id):
     par_id = comp.Create(particle_name)
     return comp.BindEntity(par_id, entity_id)
 
+def AddActorBlockGeometry(entity_id, geo_id, offset=(0, 0, 0), rotation=(0, 0, 0)):
+    # type: (str, str, tuple[float, float, float], tuple[float, float, float]) -> bool
+    return ClientComp.CreateActorRender(entity_id).AddActorBlockGeometry(geo_id, offset, rotation)
+
+def DeleteActorBlockGeometry(entity_id, geo_id):
+    # type: (str, str) -> bool
+    return ClientComp.CreateActorRender(entity_id).DeleteActorBlockGeometry(geo_id)
+
 
 __all__ = [
     "CopyActorTextureFromPlayer",
     "SetRenderLocalPlayer",
     "SetNotRenderAtAll",
+    "AddActorBlockGeometry",
+    "DeleteActorBlockGeometry",
     "PlayParticleAt",
     "PlayParticleOn",
 ]

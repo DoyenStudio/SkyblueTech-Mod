@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "geometry": {
+                "default": "geometry.skybluetech.model_entity"
+            },
+            "materials": {
+                "default": "armor_stand"
+            },
+            "identifier": "skybluetech:model_entity",
+            "textures": {
+                "default": "textures/entity/model_entity_texture"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.model_entity"
+            ]
+        }
+    }
+}

@@ -39,11 +39,16 @@ def DeleteActorBlockGeometry(entity_id, geo_id):
     # type: (str, str) -> bool
     return ClientComp.CreateActorRender(entity_id).DeleteActorBlockGeometry(geo_id)
 
+def SetActorBlockGeometryScale(entity_id, geo_id, scale):
+    # type: (str, str, tuple[float, float, float]) -> bool
+    return ClientComp.CreateActorRender(entity_id).SetActorBlockGeometryScale(geo_id, scale)
+
 
 __all__ = [
     "CopyActorTextureFromPlayer",
     "SetRenderLocalPlayer",
     "SetNotRenderAtAll",
+    "SetActorBlockGeometryScale",
     "AddActorBlockGeometry",
     "DeleteActorBlockGeometry",
     "PlayParticleAt",

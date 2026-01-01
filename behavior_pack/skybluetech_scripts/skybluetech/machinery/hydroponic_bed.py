@@ -164,6 +164,7 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl):
                 self.x, self.y, self.z, crop_block_id, self.grow_stage
             ).sendMulti(list(pids))
 
+# SERVER PART
 
 S_cli_loaded_machinerys = WVDict()  # type: WVDict[tuple[int, int, int, int], HydroponicBed]
 S_machinery2clis = WKDict() # type: WKDict[HydroponicBed, set[str]]
@@ -186,6 +187,8 @@ def onC2SModBlockLoadEvent(event):
         m = S_cli_loaded_machinerys[key]
         S_machinery2clis.get(m, set()).discard(event.player_id)
 
+# CLIENT PART
+
 C_loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 
 @ModBlockEntityLoadedClientEvent.Listen()
@@ -194,7 +197,7 @@ def onModBlockLoaded(event):
     if event.blockName == HydroponicBed.block_name:
         C_loaded_models[
             (event.posX, event.posY, event.posZ)
-        ] = CreateBlankSingleBlockModelEntity((event.posX, event.posY+3.0/16, event.posZ))
+        ] = CreateBlankSingleBlockModelEntity((event.posX, event.posY+3.0/16*0.4, event.posZ))
         HydroponicBedClientLoadEvent(
             event.dimensionId, event.posX, event.posY, event.posZ, MODE_LOAD
         ).send()
@@ -221,4 +224,4 @@ def onS2CUpdate(event):
     elif event.crop_id is not None:
         model = C_loaded_models.get(key)
         if model is not None:
-            model.SetBlockModel(event.crop_id, event.aux)
+            model.SetBlockModel(event.crop_id, event.aux, (0.8, 0.8, 0.8))

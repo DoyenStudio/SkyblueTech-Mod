@@ -4,6 +4,7 @@ from ..api.client import (
     NewSingleBlockPalette,
     CreateClientEntity,
     DestroyClientEntity,
+    SetActorBlockGeometryScale,
     AddActorBlockGeometry,
     DeleteActorBlockGeometry,
 )
@@ -14,8 +15,8 @@ class GeometryModel(object):
         self.entity_id = entity_id
         self.geo_id = None
 
-    def SetBlockModel(self, block_name, aux):
-        # type: (str, int) -> bool
+    def SetBlockModel(self, block_name, aux, scale=None):
+        # type: (str, int, tuple[float, float, float] | None) -> bool
         if self.geo_id is not None:
             res = self.RemoveGeometry()
             if not res:
@@ -25,7 +26,12 @@ class GeometryModel(object):
         self.geo_id = CombineBlockPaletteToGeometry(pal, self.geo_id)
         if self.geo_id is None:
             raise Exception("Failed to create geometry: " + self.geo_id)
-        return AddActorBlockGeometry(self.entity_id, self.geo_id)
+        final_res =  AddActorBlockGeometry(self.entity_id, self.geo_id)
+        if scale is not None:
+            res = SetActorBlockGeometryScale(self.entity_id, self.geo_id, scale)
+            if not res:
+                print ("[Warning] set geometry scale failed")
+        return final_res
 
     def RemoveGeometry(self):
         if self.geo_id is not None:

@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
 from ..define.id_enum.machinery import THERMAL_GENERATOR as MACHINE_ID
 from ..ui_sync.machines.thermal_generator import ThermalGeneratorUISync
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, RegisterMachine
+from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, WorkRenderer, RegisterMachine
 
 K_BURN_SEC_LEFT = "burn_sec_left"
 K_MAX_BURN_SEC = "max_burn_secs"
@@ -15,10 +15,10 @@ SecondsPerTick = 0.05
 
 
 @RegisterMachine
-class ThermalGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
+class ThermalGenerator(AutoSaver, ItemContainer, GUIControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 14400
-    energy_mode = (1, 1, 1, 1, 1, 1)
+    energy_io_mode = (1, 1, 1, 1, 1, 1)
 
     GENERATE_POWER = 160
 
@@ -74,11 +74,19 @@ class ThermalGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
             self.next_burn()
 
     def OnTryActivate(self):
-        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL) and self.store_rf < self.store_rf_max:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
+        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL):
+            _, self.store_rf = self.AddPower(self.store_rf, True)
+            if self.store_rf < self.store_rf_max:
+                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
+
+    def SetDeactiveFlag(self, flag):
+        # type: (int) -> None
+        BaseMachine.SetDeactiveFlag(self, flag)
+        WorkRenderer.SetDeactiveFlag(self, flag)
 
     def next_burn(self):
         if self.store_rf >= self.store_rf_max:
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
             return False
         mainSlotItem = self.GetSlotItem(0)
         if mainSlotItem is None:

@@ -214,7 +214,7 @@ def UpdateWholeNetwork(dim, network):
             continue
         m.rf_networks[facing] = network
         print "216:TryActivate", type(m).__name__
-        m.OnTryActivate()
+        ExecLater(0, m.OnTryActivate)
 
 # 只有等到了整个网络内的机器全部初始化完了才可以唤醒网络
 # 否则递归会超过递归最大深度

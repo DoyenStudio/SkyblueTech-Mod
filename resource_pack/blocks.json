@@ -483,11 +483,6 @@
         "textures": "skybluetech:raw_tin_block"
     },
     "skybluetech:redstone_furnace": {
-        "carried_textures": {
-            "east": "skybluetech:frame",
-            "north": "skybluetech:redstone_furnace_front",
-            "up": "skybluetech:frame_up"
-        },
         "textures": {
             "down": "skybluetech:frame_bottom",
             "east": "skybluetech:frame",
@@ -507,24 +502,10 @@
         "sound": "cloth"
     },
     "skybluetech:solar_panel": {
-        "textures": {
-            "down": "skybluetech:generator_frame_down",
-            "east": "skybluetech:generator_frame_side",
-            "north": "skybluetech:generator_frame_side",
-            "south": "skybluetech:generator_frame_side",
-            "up": "skybluetech:solar_panel_top",
-            "west": "skybluetech:generator_frame_side"
-        }
+        "sound": "iron"
     },
     "skybluetech:splitter": {
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:splitter_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
-            "west": "skybluetech:frame"
-        }
+        "sound": "iron"
     },
     "skybluetech:steel_tank": {
         "client_entity": {
@@ -536,7 +517,7 @@
         "sound": "cloth"
     },
     "skybluetech:thermal_generator": {
-        "textures": "skybluetech:thermoelectric_generator_downside"
+        "sound": "iron"
     },
     "skybluetech:thermoelectric_generator": {
         "sound": "metal",

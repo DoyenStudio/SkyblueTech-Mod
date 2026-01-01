@@ -168,6 +168,9 @@
         "skybluetech:generator_frame_side": {
             "textures": "textures/machines/generator_frame_side"
         },
+        "skybluetech:generator_frame_up": {
+            "textures": "textures/machines/generator_frame_up"
+        },
         "skybluetech:geothermal_generator": {
             "textures": "textures/models/geothermal_generator_texture"
         },
@@ -334,6 +337,12 @@
         },
         "skybluetech:tin_wire_item": {
             "textures": "textures/wire/tin_wire_item"
+        },
+        "skybluetech:thermal_generator_front_active": {
+            "textures": "textures/machines/flipbook_textures/thermal_generator_front_active"
+        },
+        "skybluetech:thermal_generator_front": {
+            "textures": "textures/machines/thermal_generator_front"
         }
     },
     "texture_name": "atlas.terrain"

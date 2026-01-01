@@ -81,5 +81,11 @@
         "atlas_tile": "skybluetech:macerator_front_active",
         "ticks_per_frame": 4,
         "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/machines/flipbook_textures/thermal_generator_front_active",
+        "atlas_tile": "skybluetech:thermal_generator_front_active",
+        "ticks_per_frame": 3,
+        "blend_frames": false
     }
 ]

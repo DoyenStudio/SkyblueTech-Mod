@@ -2,6 +2,12 @@
     "format_version": "1.21.0",
     "minecraft:block": {
         "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.0
+            },
+            "minecraft:geometry": {
+                "identifier": "minecraft:geometry.full_block"
+            },
             "netease:block_container": {
                 "container_size": 1,
                 "custom_description": "火力发电机",
@@ -32,17 +38,128 @@
             "tag:redstoneflux_connectable": {},
             "tag:redstoneflux_generator": {},
             "tag:redstoneflux_provider": {},
-            "tag:skybluetech_generator": {},
-            "tag:skybluetech_machine": {},
             "tag:skybluetech_container": {},
-            "minecraft:destructible_by_mining": {
-                "seconds_to_destroy": 2.0
-            }
+            "tag:skybluetech_generator": {},
+            "tag:skybluetech_machine": {}
         },
         "description": {
             "base_block": "netease_container",
             "category": "skybluetech",
-            "identifier": "skybluetech:thermal_generator"
-        }
+            "identifier": "skybluetech:thermal_generator",
+            "states": {
+                "skybluetech:active": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "permutations": [
+            {
+                "components": {
+                    "minecraft:material_instances": {
+                        "north": {
+                            "texture": "skybluetech:thermal_generator_front_active"
+                        },
+                        "south": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "down": {
+                            "texture": "skybluetech:generator_frame_down"
+                        },
+                        "east": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "up": {
+                            "texture": "skybluetech:generator_frame_up"
+                        },
+                        "west": {
+                            "texture": "skybluetech:generator_frame_side"
+                        }
+                    }
+                },
+                "condition": "q.block_state('skybluetech:active')"
+            },
+            {
+                "components": {
+                    "minecraft:material_instances": {
+                        "north": {
+                            "texture": "skybluetech:thermal_generator_front"
+                        },
+                        "south": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "down": {
+                            "texture": "skybluetech:generator_frame_down"
+                        },
+                        "east": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "up": {
+                            "texture": "skybluetech:generator_frame_up"
+                        },
+                        "west": {
+                            "texture": "skybluetech:generator_frame_side"
+                        }
+                    }
+                },
+                "condition": "!q.block_state('skybluetech:active')"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'"
+            }
+        ]
     }
 }

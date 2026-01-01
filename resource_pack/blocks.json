@@ -333,9 +333,9 @@
             "down": "skybluetech:frame_bottom",
             "east": "skybluetech:hydroponic_base_fluid_side",
             "north": "skybluetech:hydroponic_base_item_side",
-            "south": "skybluetech:hydroponic_base_fluid_side",
+            "south": "skybluetech:hydroponic_base_item_side",
             "up": "skybluetech:hydroponic_base_upside",
-            "west": "skybluetech:hydroponic_base_item_side"
+            "west": "skybluetech:hydroponic_base_fluid_side"
         }
     },
     "skybluetech:hydroponic_bed": {

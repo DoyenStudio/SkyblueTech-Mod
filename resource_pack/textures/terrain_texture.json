@@ -194,6 +194,15 @@
         "skybluetech:hydroponic_base": {
             "textures": "textures/machines/hydroponic_base"
         },
+        "skybluetech:hydroponic_base_fluid_side": {
+            "textures": "textures/machines/hydroponic_base_fluid_side"
+        },
+        "skybluetech:hydroponic_base_item_side": {
+            "textures": "textures/machines/hydroponic_base_item_side"
+        },
+        "skybluetech:hydroponic_base_upside": {
+            "textures": "textures/machines/hydroponic_base_upside"
+        },
         "skybluetech:hydroponic_bed": {
             "textures": "textures/models/hydroponic_bed_texture"
         },

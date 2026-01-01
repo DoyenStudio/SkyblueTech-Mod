@@ -78,7 +78,8 @@
                         "west": {
                             "texture": "skybluetech:frame"
                         }
-                    }
+                    },
+                    "minecraft:light_emission": 12
                 }
             },
             {
@@ -103,7 +104,8 @@
                         "west": {
                             "texture": "skybluetech:frame"
                         }
-                    }
+                    },
+                    "minecraft:light_emission": 0
                 }
             },
             {

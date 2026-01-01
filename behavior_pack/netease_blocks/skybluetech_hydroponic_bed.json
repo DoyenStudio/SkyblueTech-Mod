@@ -42,7 +42,27 @@
         "description": {
             "base_block": "netease_container",
             "category": "skybluetech",
-            "identifier": "skybluetech:hydroponic_bed"
-        }
+            "identifier": "skybluetech:hydroponic_bed",
+            "states": {
+                "skybluetech:active": [
+                    false,
+                    true
+                ]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('skybluetech:active')",
+                "components": {
+                    "minecraft:light_emission": 12
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:active')",
+                "components": {
+                    "minecraft:light_emission": 0
+                }
+            }
+        ]
     }
 }

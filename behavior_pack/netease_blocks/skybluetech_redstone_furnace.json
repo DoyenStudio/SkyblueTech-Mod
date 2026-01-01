@@ -68,7 +68,8 @@
                         "west": {
                             "texture": "skybluetech:frame"
                         }
-                    }
+                    },
+                    "minecraft:light_emission": 15
                 },
                 "condition": "q.block_state('skybluetech:active')"
             },
@@ -93,7 +94,8 @@
                         "west": {
                             "texture": "skybluetech:frame"
                         }
-                    }
+                    },
+                    "minecraft:light_emission": 0
                 },
                 "condition": "!q.block_state('skybluetech:active')"
             },

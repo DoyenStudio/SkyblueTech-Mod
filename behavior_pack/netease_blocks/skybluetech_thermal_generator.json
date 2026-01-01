@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.0",
+    "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
             "minecraft:destructible_by_mining": {
@@ -65,41 +65,42 @@
             {
                 "components": {
                     "minecraft:material_instances": {
+                        "down": {
+                            "texture": "skybluetech:generator_frame_down"
+                        },
+                        "east": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
                         "north": {
                             "texture": "skybluetech:thermal_generator_front_active"
                         },
                         "south": {
                             "texture": "skybluetech:generator_frame_side"
                         },
-                        "down": {
-                            "texture": "skybluetech:generator_frame_down"
-                        },
-                        "east": {
-                            "texture": "skybluetech:generator_frame_side"
-                        },
                         "up": {
                             "texture": "skybluetech:generator_frame_up"
                         },
                         "west": {
                             "texture": "skybluetech:generator_frame_side"
                         }
-                    }
+                    },
+                    "minecraft:light_emission": 15
                 },
                 "condition": "q.block_state('skybluetech:active')"
             },
             {
                 "components": {
                     "minecraft:material_instances": {
-                        "north": {
-                            "texture": "skybluetech:thermal_generator_front"
-                        },
-                        "south": {
-                            "texture": "skybluetech:generator_frame_side"
-                        },
                         "down": {
                             "texture": "skybluetech:generator_frame_down"
                         },
                         "east": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "north": {
+                            "texture": "skybluetech:thermal_generator_front"
+                        },
+                        "south": {
                             "texture": "skybluetech:generator_frame_side"
                         },
                         "up": {
@@ -108,7 +109,8 @@
                         "west": {
                             "texture": "skybluetech:generator_frame_side"
                         }
-                    }
+                    },
+                    "minecraft:light_emission": 0
                 },
                 "condition": "!q.block_state('skybluetech:active')"
             },

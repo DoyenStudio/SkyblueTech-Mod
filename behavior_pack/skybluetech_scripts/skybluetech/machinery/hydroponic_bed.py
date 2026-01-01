@@ -26,6 +26,7 @@ from .basic import (
     ItemContainer,
     GUIControl,
     PowerControl,
+    WorkRenderer,
     RegisterMachine,
 )
 from .pool import GetMachineStrict
@@ -40,7 +41,7 @@ MAX_WATER_STORE = 1000
 
 
 @RegisterMachine
-class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl):
+class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRenderer):
     block_name = MACHINE_ID
     input_slots = (0,)
     running_power = POWER_COST
@@ -102,6 +103,21 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl):
         # type: (int, Item) -> bool
         return item.id in Recipes
 
+    def OnSlotUpdate(self, slot_pos):
+        # type: (int) -> None
+        seed_item = self.GetSlotItem(0)
+        self.crop_id = seed_item.id if seed_item else None
+        if self.crop_id is None:
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+        elif self.crop_id in Recipes:
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+        self.OnSync()
+        self.notifyUpdate()
+
+    def SetDeactiveFlag(self, flag):
+        BaseMachine.SetDeactiveFlag(self, flag)
+        WorkRenderer.SetDeactiveFlag(self, flag)
+
     def workOnce(self):
         if self.crop_id is not None:
             self.stage_grow_ticks += WORK_TICK_DELAY
@@ -141,17 +157,6 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl):
             m.OutputItem(Item(recipe.seed_item, count=out_seed_count))
             for out_crop in recipe.rand_harvest_output():
                 m.OutputItem(Item(out_crop.id))
-
-    def OnSlotUpdate(self, slot_pos):
-        # type: (int) -> None
-        seed_item = self.GetSlotItem(0)
-        self.crop_id = seed_item.id if seed_item else None
-        if self.crop_id is None:
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-        elif self.crop_id in Recipes:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-        self.OnSync()
-        self.notifyUpdate()
 
     def notifyUpdate(self):
         if self.crop_id is None:

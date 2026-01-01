@@ -2,11 +2,11 @@
     "groups": [
         {
             "group_name": "itemGroup.skybluetech.cartidges",
-            "icon": "skybluetech:famicom_cartridge_1",
+            "icon": "skybluetech:famicom_cartidge_1",
             "list": [
-                "skybluetech:famicom_cartridge_1",
-                "skybluetech:famicom_cartridge_2",
-                "skybluetech:famicom_cartridge_3"
+                "skybluetech:famicom_cartidge_1",
+                "skybluetech:famicom_cartidge_2",
+                "skybluetech:famicom_cartidge_3"
             ]
         }
     ]

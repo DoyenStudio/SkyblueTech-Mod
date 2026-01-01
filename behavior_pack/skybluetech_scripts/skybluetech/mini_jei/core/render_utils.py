@@ -48,6 +48,7 @@ class ItemDisplayer:
                 root.renderRecipesOfInput(self.item.id, CategoryType.ITEM)
             return
         if NeedRemoveDisplayBoard(self.ctrl):
+            RemoveDisplayBoard(self.ctrl._root)
             return
         fmt = GetItemHoverName(self.item.id) or self.item.id
         if self.prob != 1.0:

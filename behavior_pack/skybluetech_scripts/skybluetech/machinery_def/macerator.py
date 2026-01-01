@@ -6,7 +6,7 @@ from ..mini_jei.machines.macerator import *
 
 
 DEFAULT_TICK_DURATION = 160
-DEFAULT_POWER = 90
+DEFAULT_POWER = 30
 
 preset = gen_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 preset_tagged = gen_tagged_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)

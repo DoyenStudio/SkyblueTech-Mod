@@ -11,7 +11,7 @@ recipes = [
         "minecraft:copper_ingot", 1,
         Sticks.COPPER, 1,
         tick_duration=60,
-        power_cost=50,
+        power_cost=40,
     ),
     MetalPressRecipe(
         LUBRICANT, 10,

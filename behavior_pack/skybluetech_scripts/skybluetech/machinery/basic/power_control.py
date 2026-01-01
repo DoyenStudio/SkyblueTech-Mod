@@ -46,7 +46,7 @@ class PowerControl(BaseMachine):
         BaseMachine.ReducePower(self, rf)
 
     def PowerEnough(self, auto_require=True):
-        "如果能量不足时自动将 flag 设置为缺少能源"
+        "如果能量不足时先尝试向电网索取能源, 后自动将 flag 设置为缺少能源"
         # type: (bool) -> bool
         res = self.store_rf >= self.running_power
         if res:

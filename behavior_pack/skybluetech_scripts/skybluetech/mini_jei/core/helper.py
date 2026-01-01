@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.plugins.allitems_getter import GetItemsByTag
+from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName, GetItemTags
 from .define import RecipeBase, CategoryType
 from .storage import *

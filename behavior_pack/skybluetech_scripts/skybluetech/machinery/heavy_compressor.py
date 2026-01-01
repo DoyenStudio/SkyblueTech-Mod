@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
-from skybluetech_scripts.tooldelta.plugins.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
+from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
 from ..define import flags
 from ..define.id_enum.machinery import HEAVY_COMPRESSOR as MACHINE_ID
 from ..ui_sync.machines.heavy_compressor import HeavyCompressorUISync

@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent, OnK
 from skybluetech_scripts.tooldelta.ui import SNode
 from skybluetech_scripts.tooldelta.ui.screen_comp import UScreenNode
 from skybluetech_scripts.tooldelta.ui.proxy_screen import UScreenProxy
-from skybluetech_scripts.tooldelta.plugins.ui_sync import S2CSync
+from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync
 
 KeyEnum = GetMinecraftEnum().KeyBoardType
 _ESCAPE = str(KeyEnum.KEY_ESCAPE)

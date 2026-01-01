@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.plugins.recipe_obj import (
+from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     CraftingRecipeRes,
     UnorderedCraftingRecipeRes,
     FurnaceRecipe,
@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.client.world import (
     GetRecipesByInput,
     GetRecipesByResult,
 )
-from skybluetech_scripts.tooldelta.plugins.allitems_getter import AddItemGettedCallback
+from skybluetech_scripts.tooldelta.extensions.allitems_getter import AddItemGettedCallback
 from .core.register import RegisterRecipe
 from .common.recipe_cls import (
     GenericCraftingTableRecipe,

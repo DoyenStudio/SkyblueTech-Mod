@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
-from skybluetech_scripts.tooldelta.plugins.recipe_obj import GetFurnaceRecipe
+from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
 from ..define import flags
 from ..define.id_enum.machinery import REDSTONE_FURNACE as MACHINE_ID
 from ..machinery_def.redstone_furnace import TICK_POWER

@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from skybluetech_scripts.tooldelta.plugins.allitems_getter import GetItemsByTag
+from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from ..core import CategoryType, RecipeBase, RegisterRecipe
 from ..core.render_utils import ItemDisplayer
 from .render_utils import FluidDisplayer

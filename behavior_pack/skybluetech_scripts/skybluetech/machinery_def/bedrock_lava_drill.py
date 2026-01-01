@@ -7,7 +7,7 @@ HEAVY_FRAME = "skybluetech:heavy_frame"
 STRUCTURE_PATTERN_MAPPING = {
     "H": HEAVY_FRAME,
 }
-STRUCTURE_PATTERN ={
+STRUCTURE_PATTERN = {
     0: [
         "   H   ",
         "       ",

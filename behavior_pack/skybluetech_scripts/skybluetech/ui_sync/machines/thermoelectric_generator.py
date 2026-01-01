@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.plugins.ui_sync import S2CSync
+from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync
 
 
 class ThermoelectricGeneratorUISync(S2CSync):

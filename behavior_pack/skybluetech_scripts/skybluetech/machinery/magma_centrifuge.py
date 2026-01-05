@@ -12,11 +12,9 @@ class MagmaCentrifuge(MixedProcessor):
     block_name = MACHINE_ID
     store_rf_max = 8800
     fluid_slot_max_volumes = (8000, 1000, 1000, 1000, 1000, 1000, 1000)
-    fluid_io_mode = (1, 0, 1, 1, 1, 1)
     recipes = Recipes
     fluid_input_slots = {0}
     fluid_output_slots = {1, 2, 3, 4, 5, 6}
-    fluid_io_mode = (0, 0, 0, 0, 0, 0)
     upgrade_slot_start = 2
     upgrade_slots = 4
 

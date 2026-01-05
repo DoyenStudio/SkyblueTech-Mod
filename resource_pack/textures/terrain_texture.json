@@ -240,7 +240,7 @@
             "textures": "textures/machines/flipbook_textures/metal_press_front_active"
         },
         "skybluetech:methane_mud": {
-            "textures": "textures/fluid/methane"
+            "textures": "textures/fluid/methane_mud"
         },
         "skybluetech:mixer_front": {
             "textures": "textures/machines/mixer_front"
@@ -317,6 +317,12 @@
         "skybluetech:superconduct_wire_item": {
             "textures": "textures/wire/superconduct_wire_item"
         },
+        "skybluetech:thermal_generator_front": {
+            "textures": "textures/machines/thermal_generator_front"
+        },
+        "skybluetech:thermal_generator_front_active": {
+            "textures": "textures/machines/flipbook_textures/thermal_generator_front_active"
+        },
         "skybluetech:thermoelectric_generator_downside": {
             "textures": "textures/machines/thermoelectric_generator_downside"
         },
@@ -337,12 +343,6 @@
         },
         "skybluetech:tin_wire_item": {
             "textures": "textures/wire/tin_wire_item"
-        },
-        "skybluetech:thermal_generator_front_active": {
-            "textures": "textures/machines/flipbook_textures/thermal_generator_front_active"
-        },
-        "skybluetech:thermal_generator_front": {
-            "textures": "textures/machines/thermal_generator_front"
         }
     },
     "texture_name": "atlas.terrain"

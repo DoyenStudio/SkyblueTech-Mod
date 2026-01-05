@@ -43,6 +43,12 @@ def SetActorBlockGeometryScale(entity_id, geo_id, scale):
     # type: (str, str, tuple[float, float, float]) -> bool
     return ClientComp.CreateActorRender(entity_id).SetActorBlockGeometryScale(geo_id, scale)
 
+def RebuildRenderForOneActor(entity_id):
+    # type: (str) -> bool
+    return ClientComp.CreateActorRender(entity_id).RebuildRenderForOneActor()
+
+AddTextureToOneActor = MethodCacher(lambda:ClientComp.CreateActorRender(ClientLevelId).AddTextureToOneActor)
+
 
 __all__ = [
     "CopyActorTextureFromPlayer",
@@ -51,6 +57,8 @@ __all__ = [
     "SetActorBlockGeometryScale",
     "AddActorBlockGeometry",
     "DeleteActorBlockGeometry",
+    "RebuildRenderForOneActor",
+    "AddTextureToOneActor",
     "PlayParticleAt",
     "PlayParticleOn",
 ]

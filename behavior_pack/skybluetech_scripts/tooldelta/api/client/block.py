@@ -8,8 +8,7 @@ from ..internal.cacher import MethodCacher
 _getBlock = MethodCacher(lambda :ClientComp.CreateBlockInfo(ClientLevelId).GetBlock)
 _getBlockEntityData = MethodCacher(lambda :ClientComp.CreateBlockInfo(ClientLevelId).GetBlockEntityData)
 _getBlockTextures = MethodCacher(lambda :ClientComp.CreateBlockInfo(ClientLevelId).GetBlockTextures)
-_setBlockEntityMolangValue = MethodCacher(lambda :ClientComp.CreateBlockInfo(ClientLevelId).SetBlockEntityMolangValue)
-_setCrackFrame = MethodCacher(lambda :ClientComp.CreateBlockInfo(ClientLevelId).SetCrackFrame)
+
 
 def GetBlockEntityData(x, y, z):
     # type: (int, int, int) -> dict | None
@@ -54,10 +53,14 @@ def CombineBlockPaletteToGeometry(palette, geo_name):
     blockGeometryComp = clientApi.GetEngineCompFactory().CreateBlockGeometry(ClientLevelId)
     return blockGeometryComp.CombineBlockPaletteToGeometry(palette, geo_name)
 
+def AddBlockUseListener(block_id):
+    # type: (str) -> None
+    ClientComp.CreateBlockUseEventWhiteList(ClientLevelId).AddBlockItemListenForUseEvent(block_id)
 
-SetBlockEntityMolangValue = _setBlockEntityMolangValue
 
-SetCrackFrame = _setCrackFrame
+SetBlockEntityMolangValue = MethodCacher(lambda :ClientComp.CreateBlockInfo(ClientLevelId).SetBlockEntityMolangValue)
+SetCrackFrame = MethodCacher(lambda :ClientComp.CreateBlockInfo(ClientLevelId).SetCrackFrame)
+
 
 __all__ = [
     "GetBlockName",
@@ -66,6 +69,7 @@ __all__ = [
     "GetBlockTextures",
     "NewSingleBlockPalette",
     "CombineBlockPaletteToGeometry",
+    "AddBlockUseListener",
     "SetBlockEntityMolangValue",
     "SetCrackFrame"
 ]

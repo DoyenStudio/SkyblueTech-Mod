@@ -5,12 +5,20 @@
             "geometry": {
                 "default": "geometry.skybluetech.model_entity"
             },
+            "scripts": {
+                "animate": [
+                    "y_scale"
+                ]
+            },
             "materials": {
                 "default": "armor_stand"
             },
             "identifier": "skybluetech:model_entity",
             "textures": {
                 "default": "textures/entity/model_entity_texture"
+            },
+            "animations": {
+                "y_scale": "animation.skybluetech.model_entity.y_scale"
             },
             "render_controllers": [
                 "controller.render.skybluetech.model_entity"

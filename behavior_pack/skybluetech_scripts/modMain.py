@@ -20,4 +20,4 @@ class SkyblueTech(ToolDeltaMod):
     name = "SkyblueTech"
     version = (1, 0, 0)
 
-
+entry.entry()

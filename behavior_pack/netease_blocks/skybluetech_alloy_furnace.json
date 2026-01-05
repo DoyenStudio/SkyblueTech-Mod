@@ -18,7 +18,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7可烧制合金。"
+                "value": "\n§7可将多种金属混合烧制为合金。"
             },
             "netease:listen_block_remove": {
                 "value": true

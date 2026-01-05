@@ -18,7 +18,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7可用于冷却高热流体。"
+                "value": "\n§7可用于冷却高热流体， 如熔岩和熔融金属。"
             },
             "netease:listen_block_remove": {
                 "value": true

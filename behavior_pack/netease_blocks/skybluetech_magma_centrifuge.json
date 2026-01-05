@@ -14,7 +14,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7可用于分离类似熔岩的高热流体。"
+                "value": "\n§7可用于分离类熔岩的高热流体。"
             },
             "netease:listen_block_remove": {
                 "value": true

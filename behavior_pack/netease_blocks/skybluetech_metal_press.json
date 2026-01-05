@@ -19,7 +19,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7使用润滑油将金属锭裁切为金属棒。"
+                "value": "\n§7可使用润滑油将金属锭裁切为金属棒。"
             },
             "netease:listen_block_remove": {
                 "value": true

@@ -49,7 +49,8 @@ class HydroponicBedRecipe(MachineRecipe):
             r -= prob
             if r <= 0:
                 return i + 0 # at least 1
-        raise ValueError("seed_output_probs error: %f" % sum(self.seed_output_probs))
+        # ...
+        return len(self.seed_output_probs)
 
     def rand_harvest_output(self):
         for output in self.harvest_outputs:

@@ -23,25 +23,24 @@ registeredScreenDatas = {} # type: dict[str, tuple[str, str]]
 registeredScreensProxy = {} # type: dict[str, type[UScreenProxy]]
 
 
-def GetScreenClsKey(screen_cls):
-    # type: (type[UScreenNode]) -> str
-    return "tdui:{}.{}".format(screen_cls.__module__, screen_cls.__name__)
+# def GetScreenClsKey(screen_cls):
+#     # type: (type[UScreenNode]) -> str
+#     return "tdui:{}.{}".format(screen_cls.__module__, screen_cls.__name__)
 
 def RegistScreen(
-    bound_ui=None # type: str | None
+    bound_ui, # type: str
+    key=None # type: str | None
 ):
     def wrapper(screen_cls):
         # type: (UScreenNodeT) -> UScreenNodeT
-        _bound_ui = bound_ui or screen_cls.bound_ui
-        if _bound_ui is None:
-            raise ValueError("bound_ui is None")
-        key = screen_cls._key = GetScreenClsKey(screen_cls)
-        if key in registeredScreens:
-            logger.warning("ToolDelta: Screen key {} already exists. Abort".format(key))
+        ui_key = key or bound_ui
+        screen_cls._key = ui_key
+        if ui_key in registeredScreens:
+            logger.warning("ToolDelta: Screen key {} already exists. Abort".format(ui_key))
             return screen_cls
-        registeredScreens[key] = screen_cls
+        registeredScreens[ui_key] = screen_cls
         cls_path = screen_cls.__module__ + "." + screen_cls.__name__
-        registeredScreenDatas[key] = (cls_path, _bound_ui)
+        registeredScreenDatas[ui_key] = (cls_path, bound_ui)
         return screen_cls
     return wrapper
 
@@ -67,7 +66,8 @@ def onUiInit(_):
     for key, (cls_path, bound_ui) in registeredScreenDatas.items():
         res = RegisterUI(
             GetModName(),
-            key, cls_path,
+            key,
+            cls_path,
             bound_ui
         )
         if not res:
@@ -79,6 +79,5 @@ def onUiInit(_):
 __all__ = [
     "RegistScreen",
     "RegistProxyScreen",
-    "GetScreen",
-    "GetScreenClsKey"
+    "GetScreen"
 ]

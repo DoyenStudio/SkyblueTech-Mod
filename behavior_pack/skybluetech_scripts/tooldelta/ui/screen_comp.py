@@ -13,7 +13,6 @@ ViewBinder = clientApi.GetViewBinderCls()
 
 
 class UScreenNode(ScreenNode):
-    bound_ui = None # type: str | None
     _key = "???"
     top_node = None # type: SNode | None
 

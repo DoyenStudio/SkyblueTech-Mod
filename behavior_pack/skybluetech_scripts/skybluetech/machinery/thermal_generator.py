@@ -20,6 +20,7 @@ class ThermalGenerator(AutoSaver, ItemContainer, GUIControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
+    input_slots = (0,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None

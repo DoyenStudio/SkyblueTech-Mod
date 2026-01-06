@@ -136,6 +136,7 @@ def NewSingleBlockPalette(block_id):
 
 
 __all__ = [
+    "AddBlocksToBlockRemoveListener",
     "GetBlockEntityData",
     "GetBlockTags",
     "GetBlockBasicInfo",

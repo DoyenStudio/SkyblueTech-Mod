@@ -6,16 +6,15 @@ from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
 from skybluetech_scripts.tooldelta.events import CustomC2SEvent
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent, OnKeyPressInGame
-from skybluetech_scripts.tooldelta.ui import SNode
+from skybluetech_scripts.tooldelta.ui import SNode, SCREEN_BASE_PATH
 from skybluetech_scripts.tooldelta.ui.screen_comp import UScreenNode
 from skybluetech_scripts.tooldelta.ui.proxy_screen import UScreenProxy
 from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync
 
 KeyEnum = GetMinecraftEnum().KeyBoardType
-_ESCAPE = str(KeyEnum.KEY_ESCAPE)
-MAIN_PATH = SNode(
-    "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel/root_panel/bg/main"
-)
+_ESCAPE = KeyEnum.KEY_ESCAPE
+MAIN_PATH = SCREEN_BASE_PATH / "root_panel/bg/main"
+
 
 class UIOpen(CustomC2SEvent):
     name = "skybluetech:UIOpen"

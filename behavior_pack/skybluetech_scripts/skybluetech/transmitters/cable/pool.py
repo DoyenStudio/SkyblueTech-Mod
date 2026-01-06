@@ -5,7 +5,7 @@ from ....tooldelta.no_runtime_typing import TYPE_CHECKING
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
-    from .define import CableNetwork
+    from .define import CableNetwork, CableAccessPoint
     DmPosData = tuple[int, tuple[int, int, int]]
 # TYPE_CHECKING END
 
@@ -23,4 +23,4 @@ def GetSameNetwork(network):
 
 # TODO: 我的山头: 需要 GC
 containerNetworkPool = {} # type: dict[DmPosData, tuple[set[CableNetwork], set[CableNetwork]]]
-
+containerAccessPointPool = WValueDict() # type: WValueDict[tuple[int, int, int, int, int], CableAccessPoint] # (dim, x, y, z, access_facing)

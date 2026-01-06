@@ -300,6 +300,16 @@ class BlockRemoveServerEvent(ServerEvent):
             "dimension": self.dimension,
         }
 
+    @classmethod
+    def AddExtraBlocks(
+        cls,
+        blocks # type: set[str]
+    ):
+        from ...api.server import AddBlocksToBlockRemoveListener
+        AddBlocksToBlockRemoveListener(blocks)
+        return cls
+
+
 class ServerEntityTryPlaceBlockEvent(ServerEvent):
     name = "ServerEntityTryPlaceBlockEvent"
 

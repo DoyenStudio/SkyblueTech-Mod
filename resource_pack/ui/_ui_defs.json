@@ -38,6 +38,7 @@
         "ui/SolarPanelUI.json",
         "ui/SplitterUI.json",
         "ui/ThermalGeneratorUI.json",
-        "ui/ThermoelectricGeneratorUI.json"
+        "ui/ThermoelectricGeneratorUI.json",
+        "ui/TransmitterSettingsUI.json"
     ]
 }

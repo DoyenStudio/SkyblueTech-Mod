@@ -50,6 +50,11 @@ def IsOP(player_id):
     # type: (str) -> bool
     return ServerComp.CreatePlayer(player_id).GetPlayerAbilities().get("op", False)
 
+def IsSneaking(player_id):
+    # type: (str) -> bool
+    return ServerComp.CreatePlayer(player_id).isSneaking()
+
+
 __all__ = [
     "GetAllPlayers",
     "GetNameById",
@@ -58,6 +63,7 @@ __all__ = [
     "GetSelectedSlot",
     "GetPlayersInDim",
     "IsOP",
+    "IsSneaking",
     "SetInventorySlotItemCount",
     "SpawnItemToPlayerCarried",
 ]

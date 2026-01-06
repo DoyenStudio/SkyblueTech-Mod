@@ -295,6 +295,9 @@
         "skybluetech:tin_wire": {
             "textures": "textures/wire/tin_wire_item"
         },
+        "skybluetech:transmitter_label_wrench": {
+            "textures": "textures/items/transmitter_label_wrench"
+        },
         "skybluetech:transmitter_wrench": {
             "textures": "textures/items/cable_wrench"
         }

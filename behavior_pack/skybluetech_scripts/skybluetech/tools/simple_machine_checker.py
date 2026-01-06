@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayerMainhandItem
 from skybluetech_scripts.tooldelta.api.server.tips import SetOnePopupNotice
-from ..machinery.basic import GUIControl
+from ..machinery.basic import GUIControl, MultiFluidContainer, FluidContainer
 from ..machinery.pool import GetMachineStrict
 
 
@@ -45,3 +45,9 @@ def onBlockUse(event):
                 ),
             )
         event.cancel()
+        # extras
+        if isinstance(m, FluidContainer):
+            m.OnFluidSlotUpdate()
+        elif isinstance(m, MultiFluidContainer):
+            for slot in m.fluid_output_slots:
+                m.OnFluidSlotUpdate(slot)

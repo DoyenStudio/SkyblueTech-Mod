@@ -20,6 +20,10 @@ class CreateUIRequest(CustomS2CEvent):
         self.sync_id = data.get("sid")
 
 
+class PushUIRequest(CreateUIRequest):
+    name = "PushUIRequest"
+
+
 class ForceRemoveUIRequest(CustomS2CEvent):
     name = "ForceRemoveUIRequest"
 

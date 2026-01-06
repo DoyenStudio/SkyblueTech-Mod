@@ -94,6 +94,10 @@ class UBaseCtrl(object):
         # type: () -> tuple[float, float]
         return self.base.GetSize()
 
+    def GetPropertyBag(self):
+        # type: () -> dict
+        return self.base.GetPropertyBag()
+
     def GetPos(self):
         # type: () -> tuple[float, float]
         return self.base.GetPosition()
@@ -222,6 +226,10 @@ class ULabel(UBaseCtrl):
     def GetText(self):
         # type: () -> str | None
         return self.base.GetText()
+
+    def SetColor(self, rgb):
+        # type: (tuple[float, float, float]) -> None
+        self.base.SetTextColor(rgb)
 
 
 class UImage(UBaseCtrl):

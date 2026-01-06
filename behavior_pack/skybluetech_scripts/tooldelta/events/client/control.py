@@ -1,9 +1,15 @@
 # coding=utf-8
 
 from ..basic import ClientEvent
+from mod.client.extraClientApi import GetMinecraftEnum as _GetMinecraftEnum
+
+_KeyBoardType = _GetMinecraftEnum().KeyBoardType
+
 
 class OnKeyPressInGame(ClientEvent):
     name = "OnKeyPressInGame"
+
+    KeyBoardType = _KeyBoardType
 
     screenName = '' # type: str
     """ 当前screenName """

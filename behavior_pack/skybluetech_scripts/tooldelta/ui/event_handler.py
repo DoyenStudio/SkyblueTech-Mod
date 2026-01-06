@@ -9,7 +9,7 @@ def onCreateUIRequest(event):
     ui = GetScreen(event.ui_key)
     if ui is None:
         raise ValueError("UI not found: " + event.ui_key)
-    ui.CreateUI(params={"sync": event.sync_id})
+    ui.CreateUI(params=event.params)
 
 @PushUIRequest.Listen()
 def onPushUIRequest(event):
@@ -17,7 +17,7 @@ def onPushUIRequest(event):
     ui = GetScreen(event.ui_key)
     if ui is None:
         raise ValueError("UI not found: " + event.ui_key)
-    ui.PushUI(params={"sync": event.sync_id})
+    ui.PushUI(params=event.params)
 
 @ForceRemoveUIRequest.Listen()
 def onForceRemoveUIRequest(event):

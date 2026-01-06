@@ -6,18 +6,21 @@ from ..basic import CustomS2CEvent
 class CreateUIRequest(CustomS2CEvent):
     name = "CreateUIRequest"
 
-    def __init__(self, ui_key="", sync_id=""):
-        # type: (str, str) -> None
+    def __init__(self, ui_key="", sync_id="", params={}):
+        # type: (str, str, dict) -> None
         self.ui_key = ui_key
         self.sync_id = sync_id
+        self.params = params
 
     def marshal(self):
-        return {"key": self.ui_key, "sid": self.sync_id}
+        return {"key": self.ui_key, "sid": self.sync_id, "params": self.params}
 
     def unmarshal(self, data):
         # type: (dict) -> None
         self.ui_key = data["key"]
         self.sync_id = data.get("sid")
+        self.params = data["params"].copy()
+        self.params["sync_id"] = self.sync_id
 
 
 class PushUIRequest(CreateUIRequest):

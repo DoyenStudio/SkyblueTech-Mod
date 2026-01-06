@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
+from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, Binder
 from ...define.events.electric_heater import ElectricHeaterSetPowerEvent
 from ...ui_sync.machines.electric_heater import ElectricHeaterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
@@ -42,7 +42,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         dim, x, y, z = self.pos
         ElectricHeaterSetPowerEvent(dim, x, y, z, int(text)).send()
 
-    @ViewBinder.binding(ViewBinder.BF_EditFinished, "#electric_heater.input")  # pyright: ignore[reportOptionalCall]
+    @Binder.binding(Binder.BF_EditFinished, "#electric_heater.input")
     def onTextEdited(self, params):
         text = params["Text"]
         if text == "":

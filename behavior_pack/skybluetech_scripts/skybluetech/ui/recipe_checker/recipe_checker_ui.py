@@ -25,7 +25,7 @@ MAIN_PATH = SNode(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
 )
 
-ESC = GetMinecraftEnum().KeyBoardType.KEY_ESCAPE
+_ESC = GetMinecraftEnum().KeyBoardType.KEY_ESCAPE
 
 
 @RegistScreen("RecipeCheckerUI.main")
@@ -72,7 +72,7 @@ class RecipeCheckerUI(UScreenNode):
 
     def OnCurrentPageKeyEvent(self, event):
         # type: (OnKeyPressInGame) -> None
-        if event.isDown == 1 and event.key == ESC:
+        if event.isDown == 1 and event.key == _ESC:
             self.RemoveUI()
 
     def PushRecipes(self, recipes):

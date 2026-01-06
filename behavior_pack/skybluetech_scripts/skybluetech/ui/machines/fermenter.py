@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
+from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, Binder
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from ...define.events.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
 from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
@@ -134,7 +134,7 @@ class FermenterUI(MachinePanelUIProxy):
                 )
             self.lack_blocks_tip.SetText(fmt)
         
-    @ViewBinder.binding(ViewBinder.BF_SliderFinished | ViewBinder.BF_SliderFinished, "#fermenter.temperature_set_ok") # pyright: ignore[reportOptionalCall]
+    @Binder.binding(Binder.BF_SliderFinished | Binder.BF_SliderFinished, "#fermenter.temperature_set_ok")
     def onTemperatureSliderFinished(self, progress, finished, _):
         # type: (float, bool, int) -> None
         _, x, y, z = self.pos
@@ -143,7 +143,7 @@ class FermenterUI(MachinePanelUIProxy):
         if finished:
             FermenterSetTemperatureEvent(x, y, z, temp).send()
 
-    @ViewBinder.binding(ViewBinder.BF_SliderChanged | ViewBinder.BF_SliderFinished, "#fermenter.volume_setter") # pyright: ignore[reportOptionalCall]
+    @Binder.binding(Binder.BF_SliderChanged | Binder.BF_SliderFinished, "#fermenter.volume_setter")
     def onTemperatureSliderChanged(self, progress, finished, _):
         # type: (float, bool, int) -> None
         _, x, y, z = self.pos

@@ -16,9 +16,8 @@ power_disp_node = CENTER_NODE / "power_disp"
 power_bar_node = TOP_NODE / "PowerBar"
 
 
-@RegistScreen()
+@RegistScreen("ThermoelectricGeneratorUI.main")
 class ThermoelectricGeneratorUI(MachinePanelUI):
-    bound_ui = "ThermoelectricGeneratorUI.main"
 
     def __init__(self, namespace, name, param):
         MachinePanelUI.__init__(self, namespace, name, param)

@@ -17,6 +17,7 @@ class UScreenNode(ScreenNode):
     top_node = None # type: SNode | None
 
     def __init__(self, namespace, screenName, param=None):
+        # type: (str, str, dict | None) -> None
         ScreenNode.__init__(self, namespace, screenName, param) # type: ignore
         self.screen_name = screenName
         self.base = self

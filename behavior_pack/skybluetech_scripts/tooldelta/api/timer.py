@@ -37,7 +37,7 @@ def Delay(t):
         # type: (Callable[PT, Any]) -> Callable[PT, Any]
         def inner(*args, **kwargs):
             ExecLater(t, func, *args, **kwargs)
-        inner.__name__ = func.__name__
+        inner.__name__ = func.__module__ + "." + func.__name__
         return inner
     return wrapper
 
@@ -59,7 +59,7 @@ def Repeat(t):
                 raise RuntimeError("Not in client or server env")
             timer = game.AddRepeatedTimer(t, func, *args, **kwargs) # pyright: ignore[reportArgumentType]
             pool.add(timer)
-        inner.__name__ = func.__name__
+        inner.__name__ = func.__module__ + "." + func.__name__
         return inner
     return wrapper
 

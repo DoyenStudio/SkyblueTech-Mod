@@ -4,7 +4,6 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockTags, GetBlockName
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent, BlockNeighborChangedServerEvent
-from skybluetech_scripts.tooldelta.events.notify import NotifyToClients, NotifyToClient
 from ..define import flags
 from ..define.events.assembler import *
 from ..define.id_enum.machinery import ASSEMBLER as MACHINE_ID
@@ -79,7 +78,7 @@ class Assembler(GUIControl, UpgradeControl):
     def OnClick(self, event):
         # type: (ServerBlockUseEvent) -> None
         GUIControl.OnClick(self, event)
-        NotifyToClient(event.playerId, AssemblerUpgradersUpdate(self.lis))
+        AssemblerUpgradersUpdate(self.lis).send(event.playerId)
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf
@@ -89,7 +88,7 @@ class Assembler(GUIControl, UpgradeControl):
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         self.updateList()
-        NotifyToClients(self.sync.GetPlayersInSync(), AssemblerUpgradersUpdate(self.lis))
+        AssemblerUpgradersUpdate(self.lis).sendMulti(self.sync.GetPlayersInSync())
 
     def OnUnload(self):
         # type: () -> None

@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
+from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, Binder
 from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
@@ -31,7 +31,7 @@ class AssemblerUI(MachinePanelUIProxy):
     def OnDestroy(self):
         event_cbs.discard(self.onListUpdate)
 
-    @ViewBinder.binding(ViewBinder.BF_ButtonClickUp, "#upgrade_arg_click") # pyright: ignore[reportOptionalCall]
+    @Binder.binding(Binder.BF_ButtonClickUp, "#upgrade_arg_click")
     def onclick(self, arg):
         _, x, y, z = self.pos
         NotifyToServer(AssemblerActionRequest(x, y, z, ACTION_PULL_UPGRADER, arg["#collection_index"]))
@@ -67,7 +67,7 @@ class AssemblerUI(MachinePanelUIProxy):
 
 
 @AssemblerUpgradersUpdate.Listen()
-@Delay(0.1)
+@Delay(0)
 def onOrigListUpdate(event):
     # type: (AssemblerUpgradersUpdate) -> None
     onListUpdate(event, 0)

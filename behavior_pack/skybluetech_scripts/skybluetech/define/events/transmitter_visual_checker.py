@@ -24,18 +24,37 @@ class TransmitterVisualCheckerCheckRequest(CustomC2SEvent):
 class TransmitterVisualCheckerCheckResponse(CustomS2CEvent):
     name = "st:TmVCR"
 
-    def __init__(self, nodes=[], inputs=[], outputs=[], suc=False):
-        # type: (list[tuple[int, int, int]], list[tuple[int, int, int]], list[tuple[int, int, int]], bool) -> None
+    TYPE_WIRE = 0
+    TYPE_CABLE = 1
+    TYPE_PIPE = 2
+
+    def __init__(
+        self,
+        nodes=[], # type: list[tuple[int, int, int]]
+        inputs=[], # type: list[tuple[int, int, int]]
+        outputs=[], # type: list[tuple[int, int, int]]
+        suc=False,
+        type=0
+    ):
+        # type: (...) -> None
         self.nodes = nodes
         self.inputs = inputs
         self.outputs = outputs
         self.suc = suc
+        self.type = type
 
     def marshal(self):
-        return {"nodes": self.nodes, "inputs": self.inputs, "outputs": self.outputs, "suc": self.suc}
+        return {
+            "nodes": self.nodes,
+            "inputs": self.inputs,
+            "outputs": self.outputs,
+            "suc": self.suc,
+            "type": self.type
+        }
 
     def unmarshal(self, data):
         self.nodes = data["nodes"]
         self.inputs = data["inputs"]
         self.outputs = data["outputs"]
         self.suc = data["suc"]
+        self.type = data["type"]

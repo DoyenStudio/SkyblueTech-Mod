@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from collections import deque
+from weakref import WeakValueDictionary as WValueDict
 from skybluetech_scripts.tooldelta.events.server.block import (
     BlockRemoveServerEvent,
     ServerPlaceBlockEntityEvent,
@@ -9,47 +10,48 @@ from skybluetech_scripts.tooldelta.events.server.block import (
 from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockName,
-    GetBlockTags,
     BlockHasTag,
+    GetBlockTags,
     UpdateBlockStates,
 )
-from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
-from ...machinery.pool import GetMachineWithoutCls, GetMachineStrict, GetMachineCls, cached_machines
+from skybluetech_scripts.tooldelta.api.timer import Delay
+from ...machinery.basic import BaseMachine
+from ...machinery.pool import GetMachineStrict, GetMachineCls
 from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
-from .define import WireNetwork, WireLevelEnum
-from .pool import GetSameNetwork, GetCachedNetworkFromPos, SetNetworkToPos
+from .define import WireNetwork, WireAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
+from .pool import WireNetworkPool, WireAccessPointPool, GNodes
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
-    from ...machinery.basic.base_machine import BaseMachine
-    PosData = tuple[int, int, int, int] # x y z facing
+    PosData = tuple[int, int, int]  # x y z
 # TYPE_CHECKING END
 
-def canConnect(origName, blockName):
+def isWire(blockName):
+    # type: (str) -> bool
+    return BlockHasTag(blockName, "skybluetech_wire")
+
+def bothCanConnect(origName, blockName):
     # type: (str, str) -> bool
     tags = GetBlockTags(blockName)
     tags2 = GetBlockTags(origName)
-    if "redstoneflux_connectable" not in tags:
+    if "redstoneflux_connectable" not in tags or "redstoneflux_connectable" not in tags2:
         return False
-    elif isWire(tags) and isWire(tags2):
+    elif isWire(blockName) and isWire(blockName):
         return origName == blockName
     return True
 
-def isWire(block_tags):
-    # type: (set[str]) -> bool
-    return "skybluetech_wire" in block_tags
-
-def isMachine(block_tags):
-    # type: (set[str]) -> bool
-    return "redstoneflux_machine" in block_tags or isSkyblueMachine(block_tags)
+def isRFMachine(blockName):
+    return BlockHasTag(blockName, "redstoneflux_appliance") or BlockHasTag(
+        blockName, "redstoneflux_generator"
+    )
 
 def isSkyblueMachine(block_tags):
     # type: (set[str]) -> bool
     return "skybluetech_machine" in block_tags
 
 def isPowerProvider(block_tags, dim, posdata):
-    # type: (set[str], int, PosData) -> bool
+    # type: (set[str], int, tuple[int, int, int, int]) -> bool
     if isSkyblueMachine(block_tags):
         block_name = GetBlockName(dim, posdata[:3])
         if block_name is None:
@@ -58,7 +60,7 @@ def isPowerProvider(block_tags, dim, posdata):
     return "redstoneflux_provider" in block_tags
 
 def isPowerAccepter(block_tags, dim, posdata):
-    # type: (set[str], int, PosData) -> bool
+    # type: (set[str], int, tuple[int, int, int, int]) -> bool
     if isSkyblueMachine(block_tags):
         block_name = GetBlockName(dim, posdata[:3])
         if block_name is None:
@@ -68,263 +70,301 @@ def isPowerAccepter(block_tags, dim, posdata):
 
 def bfsFindConnections(dim, start, connected=None):
     # type: (int, PosData, set[PosData] | None) -> WireNetwork | None
-    "start 只能是线缆！"
-    power_provider_nodes = set() # type: set[PosData] # PosData = tuple[int, int, int, int] 最后一个 int 表示机器是通过哪个面接入网络的
-    power_accepter_nodes = set() # type: set[PosData]
+    # 确保 start 一定是线缆 !!!
+
+    start_bname = GetBlockName(dim, start)
+    if start_bname is None:
+        return None
+    if not isWire(start_bname):  # 确保 start 一定是线缆 !!!
+        return None
+
+    output_nodes = set()  # type: set[WireAccessPoint]
+    input_nodes = set()  # type: set[WireAccessPoint]
     if connected is None:
         connected = set()
+    nodes = set() # type: set[PosData]
 
-    start = start[:3] + (OPPOSITE_FACING[start[3]],) # 这里 facing 指的是 bfs 搜索前进方向
-    # # pre-process
-    if start in connected: # 防止六面重复判断接线
-        return None
-    bname = GetBlockName(dim, start[:3])
-    if bname is None:
-        return None
-    btags = GetBlockTags(bname)
-    if not isWire(btags): # 不是线缆
-        raise ValueError("Start is not a wire")
-    first_wire_name = bname
-    # # pre-process end
+    first_wire_name = None
 
     queue = deque([start])
-    w = WireNetwork(dim, set(), set(), 0)
     while queue:
         current = queue.popleft()
-        connected.add(current) # TODO: 线缆过多使得队列内存占用过大; 考虑限制最大 bfs 数
-        cx, cy, cz, _ = current
-        for next_facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
-            opposite_facing = OPPOSITE_FACING[next_facing]
-            next_pos = (cx + dx, cy + dy, cz + dz, opposite_facing)
-            if next_pos in connected:
+        cx, cy, cz = current
+
+        _i = set()  # type: set[WireAccessPoint]
+        _o = set()  # type: set[WireAccessPoint]
+        for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+            xyz = (cx + dx, cy + dy, cz + dz)
+            if xyz in connected:
                 continue
-            bname = GetBlockName(dim, next_pos[:3])
-            if bname is None:
+            gbname = GetBlockName(dim, xyz)
+            if gbname is None:
                 continue
-            btags = GetBlockTags(bname)
-            if isPowerProvider(btags, dim, next_pos):
-                power_provider_nodes.add(next_pos)
-                SetNetworkToPos((dim,) + next_pos, w)
-            elif isPowerAccepter(btags, dim, next_pos):
-                power_accepter_nodes.add(next_pos)
-                SetNetworkToPos((dim,) + next_pos, w)
-            elif isWire(btags):
+            elif isWire(gbname):
                 if not first_wire_name:
-                    first_wire_name = bname
-                elif first_wire_name != bname:
-                    # 不同等级的电缆无法并用
+                    first_wire_name = gbname
+                elif first_wire_name != gbname:
+                    # 不同等级的线缆无法并用
                     continue
-                queue.append(next_pos)
-                w.AddWireNode(next_pos[:3])
-    if first_wire_name is None:
-        raise ValueError("Invalid wire network")
-    w.group_appliances = power_accepter_nodes
-    w.group_generators = power_provider_nodes
-    w.wire_level = WireLevelEnum.from_block_name(first_wire_name)
-    w.updateAllDevices()
-    return w
+                queue.append(xyz)
+                continue
+            elif isRFMachine(gbname):
+                block_tags = GetBlockTags(gbname)
+                posdata = xyz + (OPPOSITE_FACING[facing],)
+                if isPowerProvider(block_tags, dim, posdata):
+                    _o.add(WireAccessPoint(dim, cx, cy, cz, facing, AP_MODE_OUTPUT))
+                elif isPowerAccepter(block_tags, dim, posdata):
+                    _i.add(WireAccessPoint(dim, cx, cy, cz, facing, AP_MODE_INPUT))
+                else:
+                    print("[ERROR] Machine wire con invalid: ", xyz, gbname)
+                    continue
+        input_nodes |= _i
+        output_nodes |= _o
+        connected.add(
+            current
+        )  # TODO: 线缆过多使得队列内存占用过大; 考虑限制最大 bfs 数
+        nodes.add(current)
 
-def clearNearbyMachinesFacingNetwork(dim, x, y, z):
+    return WireNetwork(
+        dim,
+        input_nodes,
+        output_nodes,
+        nodes,
+        0,  # 目前无传输限制
+    )
+
+def getAndInitNetwork(dim, start, exists=None):
+    # type: (int, PosData, set[PosData] | None) -> WireNetwork | None
+    """
+    在线缆位置获取并初始化传输网络。
+
+    Args:
+        dim (int): 维度 ID
+        start (tuple[int, int, int]): 开始坐标
+        exists (set, optional): 用于缓存路径点的set
+
+    Returns:
+        WireNetwork (optional): 传输网络
+    """
+    network = bfsFindConnections(dim, start, exists)
+    if network is None:
+        return None
+    dim_datas = GNodes.setdefault(dim, WValueDict())
+    for node in network.nodes:
+        dim_datas[node] = network
+    for ap in network.group_inputs | network.group_outputs:
+        WireAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
+        WireNetworkPool.setdefault(
+            (network.dim, ap.target_pos),
+            (set(), set())
+        )[ap.io_mode].add(network)
+    return network
+
+# def addContainerToNetwork(dim, x, y, z, network):
+#     # type: (int, int, int, int, WireNetwork) -> None
+#     """
+#     初始化一个容器附近的所有传输网络。
+#     一般是容器被创建时调用的。
+
+#     Args:
+#         dim (int): 维度 ID
+#         x (int): x
+#         y (int): y
+#         z (int): z
+#         network (WireNetwork): 传输网络
+#     """
+
+
+def clearNearbyNetwork(dim, x, y, z):
     # type: (int, int, int, int) -> None
+    """
+    清除一个容器附近的所有传输网络。
+    一般是容器消失时调用的。
+
+    Args:
+        dim (int): 维度 ID
+        x (int): x
+        y (int): y
+        z (int): z
+    """
+    WireNetworkPool.pop((dim, (x, y, z)), None)
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+        opposite_facing = OPPOSITE_FACING[facing]
         ax, ay, az = x + dx, y + dy, z + dz
-        m = GetMachineWithoutCls(dim, ax, ay, az)
-        if m is None or m.is_non_energy_machine:
-            continue
-        m.rf_networks[OPPOSITE_FACING[facing]] = None
-        SetNetworkToPos((dim, ax, ay, az, OPPOSITE_FACING[facing]), None)
-
-def clearMachineNetwork(dim, x, y, z, m=None):
-    # type: (int, int, int, int, BaseMachine | None) -> None
-    if m is None:
-        m = GetMachineStrict(dim, x, y, z)
-    if m is None:
-        raise ValueError("Machine not found at (%d, %d, %d)" % (x, y, z))
-    if m.is_non_energy_machine:
-        return
-    networks = m.rf_networks
-    for facing, network in enumerate(networks):
-        if network is not None:
-            SetNetworkToPos((dim, x, y, z, facing), None)
-
-# 可以从机器坐标开始找, 也可以从线缆坐标开始找
-def GetNearbyWireNetwork(dim, x, y, z, exists=None):
-    # type: (int, int, int, int, set[PosData] | None) -> list[WireNetwork | None]
-    """
-    获取一个方块邻近的网络信息。
-    找到之后会同时更新整个网络。
-    """
-    networks = [None] * 6 # type: list[WireNetwork | None]
-    _exists = exists or set() # type: set[PosData]
-    start_bname = GetBlockName(dim, (x, y, z))
-    if start_bname is None:
-        return [] # never happens
-    start_btags = GetBlockTags(start_bname)
-    for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
-        # 在电缆初始化时会遇到一个电缆被它附近机器几次初始化的情况 这肯定是不行的
-        # 所以需要缓存
-        existing_network = GetCachedNetworkFromPos((dim, x, y, z, facing))
-        # 如果是机器初始化的时候初始化网络
-        # 那么肯定会在初始化的时候遍历到未初始化的机器
-        # 这时候创建网络完成了之后就不能过快 CallWakeup, 需确认网络内所有机器都初始化完成之后才能 Call
-        # 所以网络就有一个属性 inited_devices 和 all_devices
-        # 但是这又诞生了一个新的问题: 如果这个机器是后放置的, 那么旧的网络也已缓存了, 就会使用旧的网络
-        # 这样一来机器实际上调用的是旧的网络, 所以要一个判别方法 not AllDevicesInited()
-        # 然后我们还需要把旧的网络全部更换成新的
-        if existing_network is not None and not existing_network.AllDevicesInited():
-            networks[facing] = existing_network
-            continue
-        start_fpos = (x, y, z, facing)
-        current_fpos = (x + dx, y + dy, z + dz, facing)
-        start_is_appliance = isPowerAccepter(start_btags, dim, start_fpos)
-        start_is_generator = isPowerProvider(start_btags, dim, start_fpos)
-        current_block = GetBlockName(dim, (x + dx, y + dy, z + dz))
-        if current_block is None:
-            continue
-        current_block_tags = GetBlockTags(current_block)
-        if isMachine(current_block_tags):
-            # 二元网络
-            current_opfpos = (x + dx, y + dy, z + dz, OPPOSITE_FACING[facing])
-            if start_is_appliance and isPowerProvider(current_block_tags, dim, current_opfpos):
-                network = WireNetwork(dim, {current_opfpos}, {start_fpos})
-            elif start_is_generator and isPowerAccepter(current_block_tags, dim, current_opfpos):
-                network = WireNetwork(dim, {start_fpos}, {current_opfpos})
+        ap = WireAccessPointPool.pop((dim, ax, ay, az, opposite_facing), None)
+        if ap is not None:
+            bound_network = ap.get_bounded_network()
+            if bound_network is not None:
+                bound_network.group_inputs.discard(ap)
+                bound_network.group_outputs.discard(ap)
             else:
-                # 发电机和发电机 / 用电器和用电器连接在一起是无意义的网络
-                continue
-            SetNetworkToPos((dim, x, y, z, facing), network)
-        elif isWire(current_block_tags):
-            network = bfsFindConnections(dim, current_fpos, _exists)
-            if network is None:
-                continue
-        else:
+                print("[ERROR] Wire access point {} bound network None".format((dim, x, y, z, facing)))
+
+def deleteNetwork(network):
+    # type: (WireNetwork) -> None
+    "完全清除一个网络。"
+    for io in network.group_inputs | network.group_outputs:
+        WireAccessPointPool.pop((network.dim, io.x, io.y, io.z, io.access_facing), None)
+        WireNetworkPool.pop((network.dim, io.target_pos), None)
+        for node in network.nodes:
+            GNodes.get(network.dim, {}).pop(node, None)
+
+def cleanAccessPointNetwork(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    """
+    清理一个节点的网络数据。
+
+    Args:
+        dim (int): 维度 ID
+        x (int): x
+        y (int): y
+        z (int): z
+    """
+    network = GNodes.get(dim, {}).pop((x, y, z), None) or GetNetworkByWire(dim, x, y, z)
+    if network is not None:
+        deleteNetwork(network)
+    tmp_set = set()
+    GetNearbyWireNetworks(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set,
+        enable_cache=False
+    ) # 仅刷新
+
+def cleanContainerNetworks(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    """
+    清理一个容器周围的网络数据。
+
+    Args:
+        dim (int): 维度 ID
+        x (int): x
+        y (int): y
+        z (int): z
+    """
+    i, o = GetNearbyWireNetworks(dim, x, y, z)
+    for network in i | o:
+        deleteNetwork(network)
+    tmp_set = set()
+    GetNearbyWireNetworks(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set,
+        enable_cache=False
+    ) # 仅刷新
+
+
+def GetNearbyWireNetworks(dim, x, y, z, exists=None, enable_cache=True):
+    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[set[WireNetwork], set[WireNetwork]]
+    """
+    获取一个容器附近的输入和提取网络。
+
+    Args:
+        dim (int): 维度 ID
+        x (int): 容器 x 坐标
+        y (int): 容器 y 坐标
+        z (int): 容器 z 坐标
+        exists (set, optional): 路径缓存set
+        enable_cache (bool, optional): 是否允许使用缓存
+
+    Returns:
+        tuple[set[WireNetwork], set[WireNetwork]]: 分别表示输入和提取模式的传输网络
+    """
+    if enable_cache:
+        cached_network = WireNetworkPool.get((dim, (x, y, z)), None)
+        if cached_network is not None:
+            return cached_network
+    input_networks = set()  # type: set[WireNetwork]
+    output_networks = set()  # type: set[WireNetwork]
+    _exists = exists or set()  # type: set[PosData]
+    for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+        next_pos = (x + dx, y + dy, z + dz)
+        network = getAndInitNetwork(dim, next_pos, _exists)
+        if network is None:
             continue
-        network.updateAllDevices()
-        networks[facing] = GetSameNetwork(network)
-        UpdateWholeNetwork(dim, network)
-    return networks
+        p = WireAccessPoint(dim, x + dx, y + dy, z + dz, OPPOSITE_FACING[facing], -1) # -1 表示输入输出模式未知
+        if p in network.group_inputs:
+            input_networks.add(network)
+        elif p in network.group_outputs:
+            output_networks.add(network)
+    return input_networks, output_networks
 
-def UpdateWholeNetwork(dim, network):
-    # type: (int, WireNetwork) -> None
-    "更新整个网络, 先更新接入点面的信息再尝试激活机器。"
-    for pos in network.GetAllPoses():
-        x, y, z, facing = pos
-        m = GetMachineStrict(dim, x, y, z)
-        if m is None or m.is_non_energy_machine:
-            continue
-        m.rf_networks[facing] = network
-        print "216:TryActivate", type(m).__name__
-        ExecLater(0, m.OnTryActivate)
-
-# 只有等到了整个网络内的机器全部初始化完了才可以唤醒网络
-# 否则递归会超过递归最大深度
-
-@Delay(0)
-def CallNetworkWake(dim, network):
-    # type: (int, WireNetwork) -> None
-    # wakeUpWholeNetwork(dim, network)
-    network.AddAwakeNum()
-    if network.AllDevicesInited():
-        wakeUpWholeNetwork(dim, network)
-
-def wakeUpWholeNetwork(dim, network):
-    # type: (int, WireNetwork) -> None
-    "尝试激活网络中的每个接入点。"
-    for pos in network.GetAllPoses():
-        x, y, z, _ = pos
-        m = GetMachineStrict(dim, x, y, z)
-        if m is None:
-            continue
-        print "238:TryActivate", type(m).__name__
-        m.OnTryActivate()
-            
+def GetNetworkByWire(dim, x, y, z, cacher=None):
+    # type: (int, int, int, int, set[PosData] | None) -> WireNetwork | None
+    network = GNodes.get(dim, {}).get((x, y, z))
+    if network is not None:
+        return network
+    return getAndInitNetwork(dim, (x, y, z), cacher)
 
 def RequireEnergyFromNetwork(machine):
     # type: (BaseMachine) -> bool
     ok = False
-    for network in machine.rf_networks:
+    networks = GetNearbyWireNetworks(machine.dim, machine.x, machine.y, machine.z)[0]
+    for network in networks:
         if network is None:
             continue
-        generator_nodes = network.group_generators
-        for gx, gy, gz, _ in generator_nodes:
-            m2 = GetMachineStrict(machine.dim, gx, gy, gz)
+        generator_nodes = network.get_output_access_points()
+        for ap in generator_nodes:
+            m2 = GetMachineStrict(machine.dim, *ap.target_pos)
             if m2 is None:
                 continue
             m2.OnTryActivate() # 这样尝试输出能源
             ok = True
     return ok
-        
 
 @ServerPlaceBlockEntityEvent.Listen()
 def onBlockPlaced(event):
     # type: (ServerPlaceBlockEntityEvent) -> None
-    # 机器放置就不判定了, 去机器初始化判定
-    # if BlockHasTag(event.blockName, "skybluetech_machine"):
-    #     # cacher 可以有效减少多面同线判断次数
-    #     cacher = set() # type: set[PosData]
-    #     for network in GetNearbyWireNetwork(event.dimension, event.posX, event.posY, event.posZ, cacher):
-    #         UpdateWholeNetwork(event.dimension, network)
-    if BlockHasTag(event.blockName, "skybluetech_wire"):
-        network = bfsFindConnections(event.dimension, (event.posX, event.posY, event.posZ, 0))
-        if network is not None:
-            UpdateWholeNetwork(event.dimension, network)
-        states = {} # type: dict[str, bool]
+    if isWire(event.blockName):
+        states = {}  # type: dict[str, bool]
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
-            facing_key = "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
+            facing_key = (
+                "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
+            )
             bname = GetBlockName(
                 event.dimension,
                 (event.posX + dx, event.posY + dy, event.posZ + dz),
             )
             if bname is None:
                 continue
-            states[facing_key] = canConnect(event.blockName, bname)
+            states[facing_key] = bothCanConnect(event.blockName, bname)
         UpdateBlockStates(event.dimension, (event.posX, event.posY, event.posZ), states)
-            
+        cleanAccessPointNetwork(event.dimension, event.posX, event.posY, event.posZ)
+    elif isRFMachine(event.blockName):
+        # 图方便
+        cleanContainerNetworks(event.dimension, event.posX, event.posY, event.posZ)
+
 @BlockRemoveServerEvent.Listen()
-@Delay(0) # 等待下一 tick, 此时才能保证此处方块为空
-def onWireRemoved(event):
+@Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
+def onBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
-    if BlockHasTag(event.fullName, "skybluetech_wire"):
-        if BlockHasTag(event.fullName, "skybluetech_machine"):
-            clearMachineNetwork(event.dimension, event.x, event.y, event.z)
-        clearNearbyMachinesFacingNetwork(event.dimension, event.x, event.y, event.z)
-        # cacher 可以有效减少多面同线判断次数
-        cacher = set() # type: set[PosData]
-        for network in GetNearbyWireNetwork(event.dimension, event.x, event.y, event.z, cacher):
-            if network is None:
-                continue
-            # UpdateWholeNetwork(event.dimension, network)
-
-def PreRemoveMachine(event, machine):
-    # type: (BlockRemoveServerEvent, BaseMachine) -> None
-    clearMachineNetwork(event.dimension, event.x, event.y, event.z, machine)
-    clearNearbyMachinesFacingNetwork(event.dimension, event.x, event.y, event.z)
-
-@Delay(0)
-def AfterRemoveMachine(event):
-    # type: (BlockRemoveServerEvent) -> None
-    # cacher 可以有效减少多面同线判断次数
-    cacher = set() # type: set[PosData]
-    for network in GetNearbyWireNetwork(event.dimension, event.x, event.y, event.z, cacher):
-        if network is None:
-            continue
-        # UpdateWholeNetwork(event.dimension, network)
+    if isRFMachine(event.fullName):
+        clearNearbyNetwork(event.dimension, event.x, event.y, event.z)
+    elif isWire(event.fullName):
+        cleanAccessPointNetwork(event.dimension, event.x, event.y, event.z)
 
 @BlockNeighborChangedServerEvent.Listen()
 def onNeighbourBlockChanged(event):
     # type: (BlockNeighborChangedServerEvent) -> None
-    if isWire(GetBlockTags(event.blockName)):
-        from_block_can_connect = canConnect(event.blockName, event.fromBlockName)
-        to_block_can_connect = canConnect(event.blockName, event.toBlockName)
-        if from_block_can_connect != to_block_can_connect:
-            dxyz = (
-                event.neighborPosX - event.posX,
-                event.neighborPosY - event.posY,
-                event.neighborPosZ - event.posZ
-            )
-            facing_key = "skybluetech:connection_" + FACING_EN[DXYZ_FACING[dxyz]]
-            UpdateBlockStates(
-                event.dimensionId,
-                (event.posX, event.posY, event.posZ),
-                {facing_key: to_block_can_connect}
-            )
+    if event.fromBlockName == event.toBlockName:
+        return
+    if not isWire(event.blockName):
+        return
+    orig_can_connect = bothCanConnect(event.blockName, event.fromBlockName)
+    can_connect = bothCanConnect(event.blockName, event.toBlockName)
+    if orig_can_connect != can_connect:
+        dxyz = (
+            event.neighborPosX - event.posX,
+            event.neighborPosY - event.posY,
+            event.neighborPosZ - event.posZ,
+        )
+        facing_key = "skybluetech:connection_" + FACING_EN[DXYZ_FACING[dxyz]]
+        UpdateBlockStates(
+            event.dimensionId,
+            (event.posX, event.posY, event.posZ),
+            {facing_key: can_connect},
+        )

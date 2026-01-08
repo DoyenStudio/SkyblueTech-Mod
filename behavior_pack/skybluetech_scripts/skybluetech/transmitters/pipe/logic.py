@@ -339,7 +339,6 @@ def onBlockPlaced(event):
         cleanAccessPointNetwork(event.dimension, event.posX, event.posY, event.posZ)
     elif isFluidContainer(event.blockName):
         # 图方便
-        print("Exec")
         cleanContainerNetworks(event.dimension, event.posX, event.posY, event.posZ)
 
 @BlockRemoveServerEvent.Listen()

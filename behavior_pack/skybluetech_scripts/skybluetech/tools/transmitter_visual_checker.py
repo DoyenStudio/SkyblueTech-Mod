@@ -12,8 +12,11 @@ from ..define.events.transmitter_visual_checker import (
 from ..transmitters.constants import DXYZ_FACING
 from ..transmitters.cable.logic import GetNetworkByCable, isCable
 from ..transmitters.pipe.logic import GetNetworkByPipe, isPipe
+from ..transmitters.wire.logic import GetNetworkByWire, isWire
 
-server_limiter = PlayerRateLimiter(2)
+RATE_LIMIT = 0.5
+
+server_limiter = PlayerRateLimiter(RATE_LIMIT)
 
 # SERVER PART
 @TransmitterVisualCheckerCheckRequest.Listen()
@@ -33,11 +36,19 @@ def onRecvRequest(event):
         if network is None:
             TransmitterVisualCheckerCheckResponse(suc=False).send(event.player_id)
             return
+        network_type = TransmitterVisualCheckerCheckResponse.TYPE_CABLE
     elif isPipe(bname):
         network = GetNetworkByPipe(dim, event.x, event.y, event.z)
         if network is None:
             TransmitterVisualCheckerCheckResponse(suc=False).send(event.player_id)
             return
+        network_type = TransmitterVisualCheckerCheckResponse.TYPE_PIPE
+    elif isWire(bname):
+        network = GetNetworkByWire(dim, event.x, event.y, event.z)
+        if network is None:
+            TransmitterVisualCheckerCheckResponse(suc=False).send(event.player_id)
+            return
+        network_type = TransmitterVisualCheckerCheckResponse.TYPE_WIRE
     else:
         TransmitterVisualCheckerCheckResponse(suc=False).send(event.player_id)
         return
@@ -46,12 +57,14 @@ def onRecvRequest(event):
         nodes=list(network.nodes),
         inputs=[i.target_pos for i in network.group_inputs],
         outputs=[i.target_pos for i in network.group_outputs],
+        type=network_type,
     ).send(event.player_id)
 
 
 # CLIENT PART
 
-client_limiter = PlayerRateLimiter(2)
+client_limiter = PlayerRateLimiter(RATE_LIMIT)
+g_shapes = []
 
 @ClientBlockUseEvent.Listen()
 def onClientBlockUseEvent(event):
@@ -62,6 +75,7 @@ def onClientBlockUseEvent(event):
     if event.blockName.startswith("skybluetech:") and (
         "cable" in event.blockName
         or "pipe" in event.blockName 
+        or "wire" in event.blockName
     ):
         ok = client_limiter.record(GetLocalPlayerId())
         if not ok:
@@ -80,7 +94,7 @@ def onResponse(event):
 
 def displayModel(event):
     # type: (TransmitterVisualCheckerCheckResponse) -> None
-    shapes = []
+    clean()
     draw_comp = ClientComp.CreateDrawing(ClientLevelId)
     nodes = set(event.nodes)
     all_nodes = nodes | set(event.inputs + event.outputs)
@@ -103,28 +117,29 @@ def displayModel(event):
                     (ddx, ddy, ddz),
                     (0, 1, 1)
                 )
-                box.SetPriority(100000)
-                shapes.append(box)
+                g_shapes.append(box)
     for input_node in event.inputs:
         x, y, z = input_node
         text = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
-            "输入",
+            "用电器" if event.type == event.TYPE_WIRE else "输入",
             (0, 1, 0)
         )
-        shapes.append(text)
+        g_shapes.append(text)
     for output_node in event.outputs:
         x, y, z = output_node
         text = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
-            "抽出",
+            "能量源" if event.type == event.TYPE_WIRE else "输出",
             (1, 0, 0)
         )
-        shapes.append(text)
-    removeAfter(shapes)
+        g_shapes.append(text)
+    removeAfter()
 
 @Delay(10)
-def removeAfter(shapes):
-    for shape in shapes:
+def removeAfter():
+    clean()
+
+def clean():
+    for shape in g_shapes:
         shape.Remove()
-    

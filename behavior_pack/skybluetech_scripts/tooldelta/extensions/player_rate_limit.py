@@ -5,6 +5,7 @@ from ..api.timer import ExecLater
 
 class PlayerRateLimiter(object):
     def __init__(self, limit_seconds=0):
+        # type: (float) -> None
         self.limit_seconds = limit_seconds
         self._limits = {} # type: dict[str, float]
 

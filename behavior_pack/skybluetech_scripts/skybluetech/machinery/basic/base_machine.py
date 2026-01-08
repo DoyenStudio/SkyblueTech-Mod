@@ -15,12 +15,11 @@ K_DEACTIVE_FLAGS = "deactive_flags"
 _getWireModule = False
 
 def requireWireModule():
-    global _getWireModule, GetNearbyWireNetwork, CallNetworkWake
+    global _getWireModule, GetNearbyWireNetworks
     if _getWireModule:
         return
     from ...transmitters.wire.logic import (
-        GetNearbyWireNetwork,
-        CallNetworkWake,
+        GetNearbyWireNetworks,
     )
     _getWireModule = True
 
@@ -51,8 +50,6 @@ class BaseMachine(object):
         self.x = x
         self.y = y
         self.z = z
-        if not self.is_non_energy_machine:
-            self.initRFNetwork()
         self.OnLoad()
 
     # ==== overload ====
@@ -207,26 +204,21 @@ class BaseMachine(object):
         """
         self.deactive_flags = 0
 
-    def initRFNetwork(self):
-        # type: () -> None
-        "初始化此机器 6 面连接的所有能源线缆。"
-        requireWireModule()
-        self.rf_networks = GetNearbyWireNetwork(self.dim, self.x, self.y, self.z)
-        for network in self.rf_networks:
-            if network is not None:
-                CallNetworkWake(self.dim, network)
-
     def addPowerIntoWireNetwork(self, rf, depth=0):
         # type: (int, int) -> int
         """ 在已连接的电缆网络中为机器添加能量。 返回溢出的能量 """
         if self.store_rf > 0:
             rf += self.store_rf
             self.store_rf = 0
-        for network in self.rf_networks:
+        requireWireModule()
+        output_networks = GetNearbyWireNetworks(
+            self.dim, self.x, self.y, self.z, enable_cache=True
+        )[1]
+        for network in output_networks:
             if network is None:
                 continue
-            for x, y, z, _ in network.group_appliances:
-                machine = pool.GetMachineStrict(self.dim, x, y, z)
+            for ap in network.get_input_access_points():
+                machine = pool.GetMachineStrict(self.dim, *ap.target_pos)
                 if machine is not None and not machine.is_non_energy_machine:
                     updated, rf = machine.AddPower(rf, False, network.get_power_limit(), depth)
                     if updated and isinstance(machine, GUIControl):

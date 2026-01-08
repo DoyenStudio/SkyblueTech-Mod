@@ -14,10 +14,6 @@ from skybluetech_scripts.tooldelta.events.server.item import (
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayerDimensionId
 from skybluetech_scripts.tooldelta.api.timer import Delay
-from skybluetech_scripts.skybluetech.transmitters.wire.logic import (
-    PreRemoveMachine,
-    AfterRemoveMachine
-)
 from .. import pool
 from .base_machine import BaseMachine
 from .fluid_container import FluidContainer
@@ -106,7 +102,5 @@ def OnUnload(event):
     # type: (BlockRemoveServerEvent) -> None
     m = pool.PopMachineStrict(event.dimension,event.x, event.y, event.z)
     if m is not None:
-        PreRemoveMachine(event, m)
         m.OnDestroy()
         m.OnUnload()
-        AfterRemoveMachine(event)

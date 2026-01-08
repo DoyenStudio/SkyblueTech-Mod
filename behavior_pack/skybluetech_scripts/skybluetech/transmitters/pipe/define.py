@@ -20,25 +20,13 @@ class PipeNetwork:
         self.group_inputs = group_inputs
         self.group_outputs = group_outputs
         self.pipe_level = pipe_level
-        self.inited_containers = 0
-        self.all_containers = 0
         self.nodes = nodes
         for _i in group_inputs | group_outputs:
             _i.bound_network(self)
 
-    def updateAllDevices(self):
-        self.all_devices = len(self.group_inputs) + len(self.group_outputs)
-
     def GetAllPoses(self):
         # type: () -> set[PipeAccessPoint]
         return self.group_inputs | self.group_outputs
-
-    def AddAwakeNum(self):
-        # if not self.AllDevicesInited():
-        #     self.inited_devices += 1
-        self.inited_devices += 1
-        if self.inited_devices > self.all_devices:
-            print ("[ERROR] pipe inited_devices > all_devices", self.inited_devices, self.all_devices)
 
     def __repr__(self):
         return "WireNetwork({}, {}, {})".format(self.dim, self.group_outputs, self.group_inputs)

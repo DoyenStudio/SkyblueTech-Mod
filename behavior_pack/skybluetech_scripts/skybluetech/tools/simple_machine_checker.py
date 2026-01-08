@@ -31,17 +31,14 @@ def onBlockUse(event):
             if isinstance(m, GUIControl):
                 m.OnSync()
             m.Dump()
-            if not m.is_non_energy_machine:
-                networks_num = len([i for i in m.rf_networks if i])
             SetOnePopupNotice(
                 event.playerId,
-                "此方块 (%d, %d, %d) 是 %s [#%d]"
+                "此方块 (%d, %d, %d) 是 %s"
                 % (
                     event.x,
                     event.y,
                     event.z,
                     m.__class__.__name__,
-                    networks_num,
                 ),
             )
         event.cancel()

@@ -9,8 +9,6 @@ if TYPE_CHECKING:
     DmPosData = tuple[int, tuple[int, int, int]]
 # TYPE_CHECKING END
 
-pool = WValueDict() # type: WValueDict[int, PipeNetwork]
-
 
 # TODO: 我的山头: 需要 GC
 PipeNetworkPool = {} # type: dict[DmPosData, tuple[set[PipeNetwork], set[PipeNetwork]]]

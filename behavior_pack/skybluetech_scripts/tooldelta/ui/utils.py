@@ -16,6 +16,9 @@ class SNode(object):
         # type: (str) -> SNode
         return SNode(self.base + "/" + path)
 
+    def __mod__(self, val):
+        return self.base % val
+
     __div__ = __truediv__
 
     def __repr__(self):

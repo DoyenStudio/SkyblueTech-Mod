@@ -55,6 +55,7 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
         seed_item = self.GetSlotItem(0)
         self.crop_id = seed_item.id if seed_item else None
         self.ticks = 0
+        self.OnSync()
 
     def OnLoad(self):
         BaseMachine.OnLoad(self)
@@ -74,6 +75,8 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
         AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
+        S_cli_loaded_machinerys.pop((self.dim, self.x, self.y, self.z), None)
+        S_machinery2clis.pop(self, None)
 
     def OnTicking(self):
         # type: () -> None
@@ -183,7 +186,8 @@ def onC2SModBlockLoadEvent(event):
             m = GetMachineStrict(event.dim, event.x, event.y, event.z)
             if not isinstance(m, HydroponicBed):
                 return
-        S_cli_loaded_machinerys[key] = m
+            S_cli_loaded_machinerys[key] = m
+        m = S_cli_loaded_machinerys[key]
         S_machinery2clis.setdefault(m, set()).add(event.player_id)
         m.notifyUpdate()
     elif event.mode == MODE_UNLOAD:

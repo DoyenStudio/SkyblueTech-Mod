@@ -4,7 +4,6 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.api.timer import Repeat
 from skybluetech_scripts.tooldelta.api.server import (
     UpdateBlockStates,
-    GetBlockTags,
     GetBlockName,
 )
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
@@ -12,7 +11,6 @@ from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServ
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
-    UiInitFinishedEvent,
 )
 from ...ui_sync.machines.general_tank import GeneralTankUISync
 from ...utils.fluid_model import FluidModel
@@ -174,6 +172,7 @@ def updateClientTanksOnce():
                 sync_modify = loadModel(x, y, z, tank_cls).SetTexture(fluid_id)
             elif old_fluid_id is not None and fluid_id is None:
                 client_models.pop((x, y, z))[1].Destroy()
+                sync_modify = True
             elif old_fluid_id is not None and fluid_id is not None:
                 client_models.pop((x, y, z))[1].Destroy()
                 sync_modify = loadModel(x, y, z, tank_cls).SetTexture(fluid_id)

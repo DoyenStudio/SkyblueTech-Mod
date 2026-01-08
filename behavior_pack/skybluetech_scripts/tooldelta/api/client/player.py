@@ -30,9 +30,22 @@ def GetPlayerMainhandItem(player_id):
     it = ClientComp.CreateItem(player_id).GetPlayerItem(mcEnum.ItemPosType.CARRIED, 0, True)
     if it is None:
         return None
-    return Item("").unmarshal(it)
+    return Item.from_dict(it)
 
+def GetLocalPlayerMainhandItem():
+    # type: () -> Item | None
+    it = ClientComp.CreateItem(GetLocalPlayerId()).GetPlayerItem(mcEnum.ItemPosType.CARRIED, 0, True)
+    if it is None:
+        return None
+    return Item.from_dict(it)
 
+def GetLocalPlayerHotbarAndInvItems(get_user_data=False):
+    return [
+        (Item.from_dict(it) if it is not None else None)
+        for it in ClientComp.CreateItem(
+            GetLocalPlayerId()
+        ).GetPlayerAllItems(mcEnum.ItemPosType.INVENTORY, get_user_data)
+    ]
 
 
 __all__ = [
@@ -41,4 +54,6 @@ __all__ = [
     "GetAllPlayers",
     "GetLocalPlayerId",
     "GetPlayerMainhandItem",
+    "GetLocalPlayerMainhandItem",
+    "GetLocalPlayerHotbarAndInvItems",
 ]

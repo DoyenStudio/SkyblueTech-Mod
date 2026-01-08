@@ -155,7 +155,7 @@ class UBaseCtrl(object):
     def Remove(self):
         if self._removed:
             print("[Warning] control already removed")
-            return
+            return False
         self._removed = True
         self.callDestroy()
         return removeElement(self._root, self.base)
@@ -340,6 +340,15 @@ class UGrid(UBaseCtrl):
     def SetGridDimension(self, xy):
         # type: (tuple[int, int]) -> None
         self.base.SetGridDimension(xy)
+
+    def SetDimensionAndCall(self, xy, cb):
+        # type: (tuple[int, int], Callable[[], None]) -> None
+        old_xy = self.GetGridDimension()
+        if xy == old_xy:
+            cb()
+        else:
+            self.SetGridDimension(xy)
+            self.ExecuteAfterUpdate(cb)
 
     def ExecuteAfterUpdate(self, cb):
         # type: (Callable[[], None]) -> None

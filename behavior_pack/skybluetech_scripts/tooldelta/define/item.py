@@ -128,7 +128,7 @@ class Item(object):
 
     @property
     def isEnchanted(self):
-        return self.enchantData is not None or self.modEnchantData is not None
+        return bool(self.enchantData or self.modEnchantData)
 
     def GetBasicInfo(self):
         cached = itemBasicInfoPool.get(self.newItemName)

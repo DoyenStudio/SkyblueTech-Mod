@@ -11,16 +11,8 @@ if TYPE_CHECKING:
 
 pool = WValueDict() # type: WValueDict[int, PipeNetwork]
 
-def GetSameNetwork(network):
-    # type: (PipeNetwork) -> PipeNetwork
-    network_hash = hash(network)
-    if network_hash in pool:
-        return pool[network_hash]
-    else:
-        pool[network_hash] = network
-        return network
-
 
 # TODO: 我的山头: 需要 GC
-tankNetworkPool = {} # type: dict[DmPosData, tuple[set[PipeNetwork], set[PipeNetwork]]]
-tankAccessPointPool = WValueDict() # type: WValueDict[tuple[int, int, int, int, int], PipeAccessPoint] # (dim, x, y, z, access_facing)
+PipeNetworkPool = {} # type: dict[DmPosData, tuple[set[PipeNetwork], set[PipeNetwork]]]
+PipeAccessPointPool = WValueDict() # type: WValueDict[tuple[int, int, int, int, int], PipeAccessPoint] # (dim, x, y, z, access_facing)
+GNodes = {} # type: dict[int, WValueDict[tuple[int, int, int], PipeNetwork]]

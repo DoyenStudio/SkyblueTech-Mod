@@ -2,6 +2,7 @@
 #
 from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 from skybluetech_scripts.tooldelta.api.server import GetBlockEntityData
+from ..constants import FACING_DXYZ
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
@@ -13,17 +14,17 @@ AP_MODE_INPUT = 0
 AP_MODE_OUTPUT = 1
 
 class PipeNetwork:
-    def __init__(self, dim, group_inputs, group_outputs, pipe_level=0):
-        # type: (int, set[PipeAccessPoint], set[PipeAccessPoint], int) -> None
+    def __init__(self, dim, group_inputs, group_outputs, nodes, pipe_level=0):
+        # type: (int, set[PipeAccessPoint], set[PipeAccessPoint], set[tuple[int, int, int]], int) -> None
         self.dim = dim
         self.group_inputs = group_inputs
         self.group_outputs = group_outputs
         self.pipe_level = pipe_level
-        self.pipe_nodes = set() # type: set[tuple[int, int, int]]
-
-    def AddWireNode(self, xyz):
-        # type: (tuple[int, int, int]) -> None
-        self.pipe_nodes.add(xyz)
+        self.inited_containers = 0
+        self.all_containers = 0
+        self.nodes = nodes
+        for _i in group_inputs | group_outputs:
+            _i.bound_network(self)
 
     def updateAllDevices(self):
         self.all_devices = len(self.group_inputs) + len(self.group_outputs)
@@ -31,9 +32,6 @@ class PipeNetwork:
     def GetAllPoses(self):
         # type: () -> set[PipeAccessPoint]
         return self.group_inputs | self.group_outputs
-
-    def AllDevicesInited(self):
-        return self.inited_devices == self.all_devices
 
     def AddAwakeNum(self):
         # if not self.AllDevicesInited():
@@ -73,6 +71,11 @@ class PipeAccessPoint:
     def bound_network(self, network):
         # type: (PipeNetwork) -> None
         self._bounded_network = network
+
+    @property
+    def target_pos(self):
+        dx, dy, dz = FACING_DXYZ[self.access_facing]
+        return (self.x + dx, self.y + dy, self.z + dz)
 
     def get_bounded_network(self):
         # type: () -> PipeNetwork | None

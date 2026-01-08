@@ -28,3 +28,4 @@ DXYZ_FACING = {
     (1, 0, 0): 5,
     (-1, 0, 0): 4,
 }
+FACING_DXYZ = {v: k for k, v in DXYZ_FACING.items()}

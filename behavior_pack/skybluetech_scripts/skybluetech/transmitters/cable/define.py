@@ -2,6 +2,7 @@
 #
 from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 from skybluetech_scripts.tooldelta.api.server import GetBlockEntityData
+from ..constants import FACING_DXYZ
 
 # TYPE_CHECKING
 if TYPE_CHECKING:
@@ -13,17 +14,17 @@ AP_MODE_OUTPUT = 1
 
 
 class CableNetwork:
-    def __init__(self, dim, group_inputs, group_outputs, cable_level=0):
-        # type: (int, set[CableAccessPoint], set[CableAccessPoint], int) -> None
+    def __init__(self, dim, group_inputs, group_outputs, nodes, cable_level=0):
+        # type: (int, set[CableAccessPoint], set[CableAccessPoint], set[tuple[int, int, int]], int) -> None
         self.dim = dim
         self.group_inputs = group_inputs
         self.group_outputs = group_outputs
         self.cable_level = cable_level
         self.inited_containers = 0
         self.all_containers = 0
+        self.nodes = nodes
         for _i in group_inputs | group_outputs:
             _i.bound_network(self)
-        # self.wire_nodes = set() # type: set[tuple[int, int, int]] # not_set_yet
 
     def AllContainersInited(self):
         return self.inited_containers == self.all_containers
@@ -81,6 +82,11 @@ class CableAccessPoint:
         # type: () -> CableNetwork | None
         return self._bounded_network
 
+    @property
+    def target_pos(self):
+        dx, dy, dz = FACING_DXYZ[self.access_facing]
+        return (self.x + dx, self.y + dy, self.z + dz)
+
     def _load_settings(self):
         settings_list = self._init_or_fix_settings()
         self.settings = settings_list[self.access_facing]
@@ -125,4 +131,5 @@ class CableAccessPoint:
         # type: (CableAccessPoint) -> bool
         return self.x == other.x and self.y == other.y and self.z == other.z and self.access_facing == other.access_facing
 
-
+    def __repr__(self):
+        return "CableAccessPoint({}, {}, {}, {}, {})".format(self.dim, self.x, self.y, self.z, self.access_facing)

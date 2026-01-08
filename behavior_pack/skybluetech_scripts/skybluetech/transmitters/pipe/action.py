@@ -15,8 +15,8 @@ from ...define.events.transmitter_settings import (
 from ...define.utils import NEIGHBOR_BLOCKS_ENUM
 from ..constants import FACING_EN, FACING_ZHCN
 from .define import PipeAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
-from .logic import isPipe, canConnect, bfsFindConnections, GetNetworkByCable, UpdateNetworkAccessPoints
-from .pool import tankAccessPointPool
+from .logic import isPipe, canConnect, GetNetworkByPipe
+from .pool import PipeAccessPointPool, PipeNetworkPool
 
 
 PIECE = 5.0 / 16
@@ -69,7 +69,7 @@ def onPlayerUseWrench(event):
         facing_en_key = "skybluetech:cable_io_" + FACING_EN[facing]
         newState = not block_orig_status.get(facing_en_key, False)
         block_orig_status[facing_en_key] = newState
-        current_network = bfsFindConnections(event.dimensionId, (blockX, blockY, blockZ))
+        current_network = GetNetworkByPipe(event.dimensionId, blockX, blockY, blockZ)
         if current_network is None:
             SetOnePopupNotice(event.playerId, "§4管道数据异常", "§7[§cx§7] §c错误")
             return
@@ -83,9 +83,12 @@ def onPlayerUseWrench(event):
                 AP_MODE_OUTPUT
             )
             ap.bound_network(current_network)
+            i, o = PipeNetworkPool[(current_network.dim, ap.target_pos)]
+            i.discard(current_network)
             current_network.group_inputs.remove(ap)
             current_network.group_outputs.add(ap)
-            UpdateNetworkAccessPoints(current_network)
+            o.add(current_network)
+            PipeAccessPointPool[(ap.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         else:
             ap = PipeAccessPoint(
                 event.dimensionId,
@@ -96,9 +99,12 @@ def onPlayerUseWrench(event):
                 AP_MODE_INPUT
             )
             ap.bound_network(current_network)
+            i, o = PipeNetworkPool[(current_network.dim, ap.target_pos)]
+            o.discard(current_network)
             current_network.group_inputs.add(ap)
             current_network.group_outputs.remove(ap)
-            UpdateNetworkAccessPoints(current_network)
+            i.add(current_network)
+            PipeAccessPointPool[(ap.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         SetOnePopupNotice(
             event.playerId,
             "§f已将管道的§6"
@@ -112,13 +118,13 @@ def onPlayerUseWrench(event):
         if facing is None:
             SetOnePopupNotice(event.playerId, "无效扳手设置位置")
             return
-        ap = tankAccessPointPool.get((event.dimensionId, event.x, event.y, event.z, facing))
+        ap = PipeAccessPointPool.get((event.dimensionId, event.x, event.y, event.z, facing))
         if ap is None:
-            GetNetworkByCable(
+            GetNetworkByPipe(
                 event.dimensionId,
                 event.x, event.y, event.z
             ) # 需要激活一次
-            ap = tankAccessPointPool.get((event.dimensionId, event.x, event.y, event.z, facing))
+            ap = PipeAccessPointPool.get((event.dimensionId, event.x, event.y, event.z, facing))
             if ap is None:
                 SetOnePopupNotice(event.playerId, "管道此面没有邻接容器， 无法进行设置")
                 return
@@ -140,9 +146,8 @@ def onSetLabel(event):
     # type: (TransmitterSetLabel) -> None
     if not isinstance(event.label, int) or event.label < 0 or event.label > 100000:
         return
-    ap = tankAccessPointPool.get((event.dim, event.x, event.y, event.z, event.facing))
+    ap = PipeAccessPointPool.get((event.dim, event.x, event.y, event.z, event.facing))
     if ap is None:
-        print("Error finding AP")
         return
     ap.set_label(event.label)
 
@@ -151,8 +156,7 @@ def onSetPriority(event):
     # type: (TransmitterSetPriority) -> None
     if not isinstance(event.priority, int) or event.priority < -100000 or event.priority > 100000:
         return
-    ap = tankAccessPointPool.get((event.dim, event.x, event.y, event.z, event.facing))
+    ap = PipeAccessPointPool.get((event.dim, event.x, event.y, event.z, event.facing))
     if ap is None:
-        print("Error finding AP")
         return
     ap.set_priority(event.priority)

@@ -226,6 +226,8 @@ class FluidContainer(object):
             )
             if self.fluid_volume < orig_volume:
                 self.onReducedFluid(self.fluid_id, orig_volume - self.fluid_volume)
+            if self.fluid_volume == 0:
+                self.fluid_id = None
             self.Dump()
 
     def SelfRequireFluid(self):

@@ -9,18 +9,10 @@ if TYPE_CHECKING:
     DmPosData = tuple[int, tuple[int, int, int]]
 # TYPE_CHECKING END
 
-pool = WValueDict() # type: WValueDict[int, CableNetwork]
-
-def GetSameNetwork(network):
-    # type: (CableNetwork) -> CableNetwork
-    network_hash = hash(network)
-    if network_hash in pool:
-        return pool[network_hash]
-    else:
-        pool[network_hash] = network
-        return network
+pool = WValueDict() # type: WValueDict[CableNetwork, CableNetwork]
 
 
 # TODO: 我的山头: 需要 GC
-containerNetworkPool = {} # type: dict[DmPosData, tuple[set[CableNetwork], set[CableNetwork]]]
-containerAccessPointPool = WValueDict() # type: WValueDict[tuple[int, int, int, int, int], CableAccessPoint] # (dim, x, y, z, access_facing)
+CableNetworkPool = {} # type: dict[DmPosData, tuple[set[CableNetwork], set[CableNetwork]]]
+CableAccessPointPool = WValueDict() # type: WValueDict[tuple[int, int, int, int, int], CableAccessPoint] # (dim, x, y, z, access_facing)
+GNodes = {} # type: dict[int, WValueDict[tuple[int, int, int], CableNetwork]]

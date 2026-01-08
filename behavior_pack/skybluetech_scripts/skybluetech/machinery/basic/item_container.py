@@ -47,8 +47,8 @@ class ItemContainer(object):
         return GetContainerItem(self.dim, self.xyz, slot_pos, get_user_data)
 
     def SetSlotItem(self, slot_pos, item):
-        # type: (int, Item | None) -> None
-        SetContainerItem(self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0))
+        # type: (int, Item | None) -> bool
+        return SetContainerItem(self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0))
 
     def SetSlotItemCount(self, slot_pos, count):
         # type: (int, int) -> None
@@ -79,6 +79,38 @@ class ItemContainer(object):
         # type: (dict[int, Item]) -> None
         for slot_pos, item in slotitems.items():
             self.SetSlotItem(slot_pos, item)
+
+    def PushItem(self, item):
+        # type: (Item) -> Item | None
+        for slot_pos in self.input_slots:
+            orig_item = self.GetSlotItem(slot_pos, get_user_data=True)
+            if orig_item is None:
+                if not self.IsValidInput(slot_pos, item):
+                    continue
+                res = self.SetSlotItem(slot_pos, item)
+                if res:
+                    return None
+                else:
+                    continue
+            elif not orig_item.CanMerge(item):
+                continue
+            sum_count = orig_item.count + item.count
+            max_stack = orig_item.GetBasicInfo().maxStackSize
+            if sum_count > max_stack:
+                item_new = item.copy()
+                item_new.count = max_stack
+                res = self.SetSlotItem(slot_pos, item_new)
+                if not res:
+                    continue
+                item.count = sum_count - max_stack
+            else:
+                item_new = item.copy()
+                item_new.count = sum_count
+                res = self.SetSlotItem(slot_pos, item_new)
+                if not res:
+                    continue
+                return None
+        return item
 
     def RequireItems(self):
         # type: () -> bool

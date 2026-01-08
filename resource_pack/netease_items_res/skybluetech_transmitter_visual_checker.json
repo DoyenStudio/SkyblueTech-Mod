@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:transmitter_visual_checker"
+        },
+        "description": {
+            "identifier": "skybluetech:transmitter_visual_checker"
+        }
+    }
+}

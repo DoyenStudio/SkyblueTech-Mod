@@ -8,5 +8,6 @@ from . import (
     skyblue_hoe,
     skyblue_pickaxe,
     skyblue_shovel,
+    transmitter_visual_checker,
     transmitter_wrench,
 )

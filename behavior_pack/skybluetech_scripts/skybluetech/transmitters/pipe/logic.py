@@ -58,6 +58,7 @@ def bfsFindConnections(dim, start, connected=None):
     input_nodes = set()  # type: set[PipeAccessPoint]
     if connected is None:
         connected = set()
+    nodes = set() # type: set[PosData]
 
     first_cable_name = None
 
@@ -86,23 +87,22 @@ def bfsFindConnections(dim, start, connected=None):
                 continue
             elif isFluidContainer(gbname):
                 dir_name = FACING_EN[facing]
-                if block_states["skybluetech:connection_" + dir_name]:
-                    if block_states["skybluetech:cable_io_" + dir_name]:
-                        _o.add(PipeAccessPoint(dim, cx, cy, cz, facing, AP_MODE_OUTPUT))
-                    else:
-                        _i.add(PipeAccessPoint(dim, cx, cy, cz, facing, AP_MODE_INPUT))
-
+                if block_states["skybluetech:cable_io_" + dir_name]:
+                    _o.add(PipeAccessPoint(dim, cx, cy, cz, facing, AP_MODE_OUTPUT))
+                else:
+                    _i.add(PipeAccessPoint(dim, cx, cy, cz, facing, AP_MODE_INPUT))
         input_nodes |= _i
         output_nodes |= _o
         connected.add(
             current
         )  # TODO: 管道过多使得队列内存占用过大; 考虑限制最大 bfs 数
+        nodes.add(current)
 
     return PipeNetwork(
         dim,
         input_nodes,
         output_nodes,
-        connected,
+        nodes,
         0,  # 目前无传输限制
     )
 
@@ -133,10 +133,25 @@ def getAndInitNetwork(dim, start, exists=None):
         )[ap.io_mode].add(network)
     return network
 
-def cleanNearbyNetwork(dim, x, y, z):
+# def addContainerToNetwork(dim, x, y, z, network):
+#     # type: (int, int, int, int, PipeNetwork) -> None
+#     """
+#     初始化一个容器附近的所有传输网络。
+#     一般是容器被创建时调用的。
+
+#     Args:
+#         dim (int): 维度 ID
+#         x (int): x
+#         y (int): y
+#         z (int): z
+#         network (PipeNetwork): 传输网络
+#     """
+
+
+def clearNearbyNetwork(dim, x, y, z):
     # type: (int, int, int, int) -> None
     """
-    清理一个容器附近的所有传输网络。
+    清除一个容器附近的所有传输网络。
     一般是容器消失时调用的。
 
     Args:
@@ -157,6 +172,63 @@ def cleanNearbyNetwork(dim, x, y, z):
                 bound_network.group_outputs.discard(ap)
             else:
                 print("[ERROR] Pipe access point {} bound network None".format((dim, x, y, z, facing)))
+
+def deleteNetwork(network):
+    # type: (PipeNetwork) -> None
+    "完全清除一个网络。"
+    for io in network.group_inputs | network.group_outputs:
+        PipeAccessPointPool.pop((network.dim, io.x, io.y, io.z, io.access_facing), None)
+        PipeNetworkPool.pop((network.dim, io.target_pos), None)
+        for node in network.nodes:
+            GNodes.get(network.dim, {}).pop(node, None)
+
+def cleanAccessPointNetwork(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    """
+    清理一个节点的网络数据。
+
+    Args:
+        dim (int): 维度 ID
+        x (int): x
+        y (int): y
+        z (int): z
+    """
+    network = GNodes.get(dim, {}).pop((x, y, z), None) or GetNetworkByPipe(dim, x, y, z)
+    if network is not None:
+        deleteNetwork(network)
+    tmp_set = set()
+    GetNearbyPipeNetworks(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set,
+        enable_cache=False
+    ) # 仅刷新
+
+def cleanContainerNetworks(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    """
+    清理一个容器周围的网络数据。
+
+    Args:
+        dim (int): 维度 ID
+        x (int): x
+        y (int): y
+        z (int): z
+    """
+    i, o = GetNearbyPipeNetworks(dim, x, y, z)
+    for network in i | o:
+        deleteNetwork(network)
+    tmp_set = set()
+    GetNearbyPipeNetworks(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set,
+        enable_cache=False
+    ) # 仅刷新
 
 
 def GetNearbyPipeNetworks(dim, x, y, z, exists=None, enable_cache=True):
@@ -199,7 +271,6 @@ def GetNetworkByPipe(dim, x, y, z, cacher=None):
     network = GNodes.get(dim, {}).get((x, y, z))
     if network is not None:
         return network
-    print("trying")
     return getAndInitNetwork(dim, (x, y, z), cacher)
 
 def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks, depth):
@@ -251,7 +322,7 @@ def RequirePostFluid(dim, xyz):
 @ServerPlaceBlockEntityEvent.Listen()
 def onBlockPlaced(event):
     # type: (ServerPlaceBlockEntityEvent) -> None
-    if BlockHasTag(event.blockName, "skybluetech_pipe"):
+    if isPipe(event.blockName):
         states = {}  # type: dict[str, bool]
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
             facing_key = (
@@ -265,14 +336,20 @@ def onBlockPlaced(event):
                 continue
             states[facing_key] = canConnect(bname)
         UpdateBlockStates(event.dimension, (event.posX, event.posY, event.posZ), states)
+        cleanAccessPointNetwork(event.dimension, event.posX, event.posY, event.posZ)
+    elif isFluidContainer(event.blockName):
+        # 图方便
+        print("Exec")
+        cleanContainerNetworks(event.dimension, event.posX, event.posY, event.posZ)
 
 @BlockRemoveServerEvent.Listen()
 @Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
 def onBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
-    m = GetMachineStrict(event.dimension, event.x, event.y, event.z)
-    if m is not None:
-        PipeNetworkPool.pop((event.dimension, (event.x, event.y, event.z)), None)
+    if isFluidContainer(event.fullName):
+        clearNearbyNetwork(event.dimension, event.x, event.y, event.z)
+    elif isPipe(event.fullName):
+        cleanAccessPointNetwork(event.dimension, event.x, event.y, event.z)
 
 @BlockNeighborChangedServerEvent.Listen()
 def onNeighbourBlockChanged(event):
@@ -303,13 +380,3 @@ def onNeighbourBlockChanged(event):
                 (event.posX, event.posY, event.posZ),
                 {facing_key: to_block_can_connect},
             )
-    if canConnect(event.fromBlockName) or canConnect(event.toBlockName):
-        cleanNearbyNetwork(event.dimensionId, event.neighborPosX, event.neighborPosY, event.neighborPosZ)
-    if canConnect(event.toBlockName):
-        GetNearbyPipeNetworks(
-            event.dimensionId,
-            event.neighborPosX,
-            event.neighborPosY,
-            event.neighborPosZ,
-            enable_cache=False
-        ) # 仅刷新

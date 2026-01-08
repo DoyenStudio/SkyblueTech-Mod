@@ -84,7 +84,7 @@ def onPlayerUseWrench(event):
             )
             ap.bound_network(current_network)
             i, o = CableNetworkPool[(current_network.dim, ap.target_pos)]
-            i.discard(current_network)
+            i.remove(current_network)
             current_network.group_inputs.remove(ap)
             current_network.group_outputs.add(ap)
             o.add(current_network)
@@ -100,7 +100,7 @@ def onPlayerUseWrench(event):
             )
             ap.bound_network(current_network)
             i, o = CableNetworkPool[(current_network.dim, ap.target_pos)]
-            o.discard(current_network)
+            o.remove(current_network)
             current_network.group_inputs.add(ap)
             current_network.group_outputs.remove(ap)
             i.add(current_network)

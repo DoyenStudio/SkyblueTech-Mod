@@ -149,8 +149,8 @@ def getAndInitNetwork(dim, start, exists=None):
         CableAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         CableNetworkPool.setdefault(
             (network.dim, ap.target_pos),
-            (set(), set())
-        )[ap.io_mode].add(network)
+            ([], [])
+        )[ap.io_mode].append(network)
     return network
 
 def cleanNearbyNetwork(dim, x, y, z):
@@ -222,9 +222,16 @@ def cleanContainerNetworks(dim, x, y, z):
         z (int): z
     """
     i, o = GetNearbyCableNetworks(dim, x, y, z)
-    for network in i | o:
+    for network in i + o:
         deleteNetwork(network)
     tmp_set = set()
+    GetNetworkByCable(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set
+    )
     GetNearbyCableNetworks(
         dim,
         x,
@@ -235,7 +242,7 @@ def cleanContainerNetworks(dim, x, y, z):
     ) # 仅刷新
 
 def GetNearbyCableNetworks(dim, x, y, z, exists=None, enable_cache=True):
-    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[set[CableNetwork], set[CableNetwork]]
+    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[list[CableNetwork], list[CableNetwork]]
     """
     获取一个容器附近的输入和提取网络。
 
@@ -252,8 +259,8 @@ def GetNearbyCableNetworks(dim, x, y, z, exists=None, enable_cache=True):
     """
     if enable_cache and (dim, x, y, z) in CableNetworkPool:
         return CableNetworkPool[(dim, (x, y, z))]
-    input_networks = set()  # type: set[CableNetwork]
-    output_networks = set()  # type: set[CableNetwork]
+    input_networks = []  # type: list[CableNetwork]
+    output_networks = []  # type: list[CableNetwork]
     _exists = exists or set()  # type: set[PosData]
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
         next_pos = (x + dx, y + dy, z + dz)
@@ -262,9 +269,9 @@ def GetNearbyCableNetworks(dim, x, y, z, exists=None, enable_cache=True):
             continue
         p = CableAccessPoint(dim, x + dx, y + dy, z + dz, OPPOSITE_FACING[facing], -1) # -1 表示输入输出模式未知
         if p in network.group_inputs:
-            input_networks.add(network)
+            input_networks.append(network)
         elif p in network.group_outputs:
-            output_networks.add(network)
+            output_networks.append(network)
     return input_networks, output_networks
 
 def GetNetworkByCable(dim, x, y, z, cacher=None):
@@ -275,7 +282,7 @@ def GetNetworkByCable(dim, x, y, z, cacher=None):
     return getAndInitNetwork(dim, (x, y, z), cacher)
 
 def PostItemIntoNetworks(dim, xyz, item, networks):
-    # type: (int, tuple[int, int, int], Item, set[CableNetwork] | None) -> None | Item
+    # type: (int, tuple[int, int, int], Item, list[CableNetwork] | None) -> None | Item
     "向网络发送物品, 返回剩余物品"
     if networks is None:
         x, y, z = xyz
@@ -285,29 +292,30 @@ def PostItemIntoNetworks(dim, xyz, item, networks):
         key=lambda ap: ap.get_priority(),
         reverse=True,
     ):
-        dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[ap.access_facing]
-        cxyz = (ap.x + dx, ap.y + dy, ap.z + dz)
-        if xyz == cxyz:
+        if xyz == ap.target_pos:
             # 别自己给自己装东西 !
             continue
-        m = GetMachineWithoutCls(dim, ap.x + dx, ap.y + dy, ap.z + dz)
-        if m is not None:
-            # 是机器
-            if not isinstance(m, ItemContainer):
-                raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
-            item_new = m.PushItem(item)
-            if item_new is None:
-                return None
-            item = item_new
+        ret_item = PushItemToGenericContainer(ap, item)
+        if ret_item is None:
+            return None
         else:
-            container_size = GetContainerSize(cxyz, dim)
-            if container_size is None:
-                continue
-            item_new = PushItemToOrigContainer(dim, cxyz, item, container_size)
-            if item_new is None:
-                return None
-            item = item_new
+            item = ret_item
     return item
+
+def PushItemToGenericContainer(ap, item):
+    # type: (CableAccessPoint, Item) -> Item | None
+    cxyz = ap.target_pos
+    m = GetMachineWithoutCls(ap.dim, *cxyz)
+    if m is not None:
+        # 是机器
+        if not isinstance(m, ItemContainer):
+            raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
+        return m.PushItem(item)
+    else:
+        container_size = GetContainerSize(cxyz, ap.dim)
+        if container_size is None:
+            return item
+        return PushItemToOrigContainer(ap.dim, cxyz, item, container_size)
 
 def PushItemToOrigContainer(dim, xyz, item, container_size):
     # type: (int, tuple[int, int, int], Item, int) -> Item | None

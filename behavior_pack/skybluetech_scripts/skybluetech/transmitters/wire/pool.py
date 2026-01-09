@@ -11,6 +11,6 @@ if TYPE_CHECKING:
 
 
 # TODO: 我的山头: 需要 GC
-WireNetworkPool = {} # type: dict[DmPosData, tuple[set[WireNetwork], set[WireNetwork]]]
+WireNetworkPool = {} # type: dict[DmPosData, tuple[list[WireNetwork], list[WireNetwork]]]
 WireAccessPointPool = WValueDict() # type: WValueDict[tuple[int, int, int, int, int], WireAccessPoint] # (dim, x, y, z, access_facing)
 GNodes = {} # type: dict[int, WValueDict[tuple[int, int, int], WireNetwork]]

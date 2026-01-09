@@ -11,6 +11,6 @@ if TYPE_CHECKING:
 
 
 # TODO: 我的山头: 需要 GC
-PipeNetworkPool = {} # type: dict[DmPosData, tuple[set[PipeNetwork], set[PipeNetwork]]]
+PipeNetworkPool = {} # type: dict[DmPosData, tuple[list[PipeNetwork], list[PipeNetwork]]]
 PipeAccessPointPool = WValueDict() # type: WValueDict[tuple[int, int, int, int, int], PipeAccessPoint] # (dim, x, y, z, access_facing)
 GNodes = {} # type: dict[int, WValueDict[tuple[int, int, int], PipeNetwork]]

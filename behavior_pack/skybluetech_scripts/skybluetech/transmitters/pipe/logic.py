@@ -17,7 +17,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...machinery.basic.fluid_container import FluidContainer
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
-from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
+from ...machinery.pool import GetMachineStrict
 from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
 from .define import PipeNetwork, PipeAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
@@ -129,8 +129,8 @@ def getAndInitNetwork(dim, start, exists=None):
         PipeAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         PipeNetworkPool.setdefault(
             (network.dim, ap.target_pos),
-            (set(), set())
-        )[ap.io_mode].add(network)
+            ([], [])
+        )[ap.io_mode].append(network)
     return network
 
 # def addContainerToNetwork(dim, x, y, z, network):
@@ -193,17 +193,23 @@ def cleanAccessPointNetwork(dim, x, y, z):
         y (int): y
         z (int): z
     """
-    network = GNodes.get(dim, {}).pop((x, y, z), None) or GetNetworkByPipe(dim, x, y, z)
+    network = GNodes.get(dim, {}).pop((x, y, z), None)
     if network is not None:
         deleteNetwork(network)
     tmp_set = set()
+    GetNetworkByPipe(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set
+    )
     GetNearbyPipeNetworks(
         dim,
         x,
         y,
         z,
-        tmp_set,
-        enable_cache=False
+        tmp_set
     ) # 仅刷新
 
 def cleanContainerNetworks(dim, x, y, z):
@@ -218,7 +224,7 @@ def cleanContainerNetworks(dim, x, y, z):
         z (int): z
     """
     i, o = GetNearbyPipeNetworks(dim, x, y, z)
-    for network in i | o:
+    for network in i + o:
         deleteNetwork(network)
     tmp_set = set()
     GetNearbyPipeNetworks(
@@ -232,7 +238,7 @@ def cleanContainerNetworks(dim, x, y, z):
 
 
 def GetNearbyPipeNetworks(dim, x, y, z, exists=None, enable_cache=True):
-    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[set[PipeNetwork], set[PipeNetwork]]
+    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[list[PipeNetwork], list[PipeNetwork]]
     """
     获取一个容器附近的输入和提取网络。
 
@@ -251,8 +257,8 @@ def GetNearbyPipeNetworks(dim, x, y, z, exists=None, enable_cache=True):
         cached_network = PipeNetworkPool.get((dim, (x, y, z)), None)
         if cached_network is not None:
             return cached_network
-    input_networks = set()  # type: set[PipeNetwork]
-    output_networks = set()  # type: set[PipeNetwork]
+    input_networks = [] # type: list[PipeNetwork]
+    output_networks = []  # type: list[PipeNetwork]
     _exists = exists or set()  # type: set[PosData]
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
         next_pos = (x + dx, y + dy, z + dz)
@@ -261,9 +267,9 @@ def GetNearbyPipeNetworks(dim, x, y, z, exists=None, enable_cache=True):
             continue
         p = PipeAccessPoint(dim, x + dx, y + dy, z + dz, OPPOSITE_FACING[facing], -1) # -1 表示输入输出模式未知
         if p in network.group_inputs:
-            input_networks.add(network)
+            input_networks.append(network)
         elif p in network.group_outputs:
-            output_networks.add(network)
+            output_networks.append(network)
     return input_networks, output_networks
 
 def GetNetworkByPipe(dim, x, y, z, cacher=None):
@@ -274,7 +280,7 @@ def GetNetworkByPipe(dim, x, y, z, cacher=None):
     return getAndInitNetwork(dim, (x, y, z), cacher)
 
 def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks, depth):
-    # type: (int, tuple[int, int, int], str, float, set[PipeNetwork] | None, int) -> float
+    # type: (int, tuple[int, int, int], str, float, list[PipeNetwork] | None, int) -> float
     "向网络发送流体, 返回剩余流体体积"
     if networks is None:
         x, y, z = xyz
@@ -284,20 +290,25 @@ def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks, depth):
         key=lambda ap: ap.get_priority(),
         reverse=True,
     ):
-        dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[ap.access_facing]
-        cxyz = (ap.x + dx, ap.y + dy, ap.z + dz)
-        if xyz == cxyz:
+        if xyz == ap.target_pos:
             # 别自己给自己装东西 !
             continue
-        m = GetMachineWithoutCls(dim, ap.x + dx, ap.y + dy, ap.z + dz)
-        if m is None:
-            continue
-            # 目前不处理任何非流体容器方块
-        if not isinstance(m, (FluidContainer, MultiFluidContainer)):
-            raise ValueError("Machine %s is not a FluidContainer" % type(m).__name__)
-        _, fluid_volume = m.AddFluid(fluid_id, fluid_volume, depth=depth+1)
+        fluid_volume = PushFluidToFluidContainer(ap, fluid_id, fluid_volume, depth)
         if fluid_volume <= 0:
             break
+    return fluid_volume
+
+def PushFluidToFluidContainer(ap, fluid_id, fluid_volume, depth=0):
+    # type: (PipeAccessPoint, str, float, int) -> float
+    "向容器内装流体, 返回剩余流体体积"
+    cxyz = ap.target_pos
+    m = GetMachineStrict(ap.dim, *cxyz)
+    if m is None:
+        return fluid_volume
+        # 目前不处理任何非流体容器方块
+    if not isinstance(m, (FluidContainer, MultiFluidContainer)):
+        raise ValueError("Machine %s is not a FluidContainer" % type(m).__name__)
+    _, fluid_volume = m.AddFluid(fluid_id, fluid_volume, depth=depth+1)
     return fluid_volume
 
 def RequirePostFluid(dim, xyz):
@@ -315,7 +326,7 @@ def RequirePostFluid(dim, xyz):
         if xyz == cxyz:
             # 别自己给自己提取 !
             continue
-        m = GetMachineWithoutCls(dim, ap.x + dx, ap.y + dy, ap.z + dz)
+        m = GetMachineStrict(dim, ap.x + dx, ap.y + dy, ap.z + dz)
         if isinstance(m, (FluidContainer, MultiFluidContainer)):
             m.RequirePost()
 

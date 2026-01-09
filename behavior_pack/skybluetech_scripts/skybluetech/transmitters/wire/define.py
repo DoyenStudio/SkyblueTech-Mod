@@ -47,8 +47,9 @@ class WireNetwork:
     def __repr__(self):
         return "WireNetwork({}, {}, {})".format(self.dim, self.group_outputs, self.group_inputs)
 
-    def __hash__(self):
-        return hash((self.dim, tuple(self.group_outputs), tuple(self.group_inputs)))
+    def __eq__(self, other):
+        # type: (WireNetwork) -> bool
+        return self.dim == other.dim and self.group_inputs == other.group_inputs and self.group_outputs == other.group_outputs
 
 
 class WireAccessPoint:

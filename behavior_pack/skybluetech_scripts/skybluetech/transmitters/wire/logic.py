@@ -156,8 +156,8 @@ def getAndInitNetwork(dim, start, exists=None):
         WireAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         WireNetworkPool.setdefault(
             (network.dim, ap.target_pos),
-            (set(), set())
-        )[ap.io_mode].add(network)
+            ([], [])
+        )[ap.io_mode].append(network)
     return network
 
 # def addContainerToNetwork(dim, x, y, z, network):
@@ -224,6 +224,13 @@ def cleanAccessPointNetwork(dim, x, y, z):
     if network is not None:
         deleteNetwork(network)
     tmp_set = set()
+    GetNetworkByWire(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set
+    )
     GetNearbyWireNetworks(
         dim,
         x,
@@ -245,9 +252,16 @@ def cleanContainerNetworks(dim, x, y, z):
         z (int): z
     """
     i, o = GetNearbyWireNetworks(dim, x, y, z)
-    for network in i | o:
+    for network in i + o:
         deleteNetwork(network)
     tmp_set = set()
+    GetNetworkByWire(
+        dim,
+        x,
+        y,
+        z,
+        tmp_set
+    )
     GetNearbyWireNetworks(
         dim,
         x,
@@ -259,7 +273,7 @@ def cleanContainerNetworks(dim, x, y, z):
 
 
 def GetNearbyWireNetworks(dim, x, y, z, exists=None, enable_cache=True):
-    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[set[WireNetwork], set[WireNetwork]]
+    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[list[WireNetwork], list[WireNetwork]]
     """
     获取一个容器附近的输入和提取网络。
 
@@ -278,8 +292,8 @@ def GetNearbyWireNetworks(dim, x, y, z, exists=None, enable_cache=True):
         cached_network = WireNetworkPool.get((dim, (x, y, z)), None)
         if cached_network is not None:
             return cached_network
-    input_networks = set()  # type: set[WireNetwork]
-    output_networks = set()  # type: set[WireNetwork]
+    input_networks = []  # type: list[WireNetwork]
+    output_networks = []  # type: list[WireNetwork]
     _exists = exists or set()  # type: set[PosData]
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
         next_pos = (x + dx, y + dy, z + dz)
@@ -288,9 +302,9 @@ def GetNearbyWireNetworks(dim, x, y, z, exists=None, enable_cache=True):
             continue
         p = WireAccessPoint(dim, x + dx, y + dy, z + dz, OPPOSITE_FACING[facing], -1) # -1 表示输入输出模式未知
         if p in network.group_inputs:
-            input_networks.add(network)
+            input_networks.append(network)
         elif p in network.group_outputs:
-            output_networks.add(network)
+            output_networks.append(network)
     return input_networks, output_networks
 
 def GetNetworkByWire(dim, x, y, z, cacher=None):

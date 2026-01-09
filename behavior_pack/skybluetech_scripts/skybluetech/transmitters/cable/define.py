@@ -24,14 +24,24 @@ class CableNetwork:
         for _i in group_inputs | group_outputs:
             _i.bound_network(self)
 
+    def get_input_access_points(self):
+        return sorted(
+            self.group_inputs,
+            key=lambda ap: ap.get_priority(),
+            reverse=True,
+        )
+
+    def get_output_access_points(self):
+        return sorted(
+            self.group_outputs,
+            key=lambda ap: ap.get_priority(),
+            reverse=True,
+        )
+
     def __repr__(self):
         return "CableNetwork({}, {})".format(self.group_inputs, self.group_outputs)
-            
 
-    def __hash__(self):
-        return hash((tuple(self.group_inputs), tuple(self.group_outputs)))
-
-    def same(self, other):
+    def __eq__(self, other):
         # type: (CableNetwork) -> bool
         return self.group_inputs == other.group_inputs and self.group_outputs == other.group_outputs
 
@@ -115,4 +125,4 @@ class CableAccessPoint:
         return self.x == other.x and self.y == other.y and self.z == other.z and self.access_facing == other.access_facing
 
     def __repr__(self):
-        return "CableAccessPoint({}, {}, {}, {}, {})".format(self.dim, self.x, self.y, self.z, self.access_facing)
+        return "CableAP({}, {}, {}, {}, {})".format(self.dim, self.x, self.y, self.z, self.access_facing)

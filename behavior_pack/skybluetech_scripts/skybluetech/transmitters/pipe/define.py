@@ -24,15 +24,26 @@ class PipeNetwork:
         for _i in group_inputs | group_outputs:
             _i.bound_network(self)
 
-    def GetAllPoses(self):
-        # type: () -> set[PipeAccessPoint]
-        return self.group_inputs | self.group_outputs
+    def get_input_access_points(self):
+        return sorted(
+            self.group_inputs,
+            key=lambda ap: ap.get_priority(),
+            reverse=True,
+        )
+
+    def get_output_access_points(self):
+        return sorted(
+            self.group_outputs,
+            key=lambda ap: ap.get_priority(),
+            reverse=True,
+        )
+
+    def __eq__(self, other):
+        # type: (PipeNetwork) -> bool
+        return self.dim == other.dim and self.group_outputs == other.group_outputs and self.group_inputs == other.group_inputs
 
     def __repr__(self):
         return "WireNetwork({}, {}, {})".format(self.dim, self.group_outputs, self.group_inputs)
-
-    def __hash__(self):
-        return hash((self.dim, tuple(self.group_outputs), tuple(self.group_inputs)))
 
 
 class PipeAccessPoint:
@@ -112,3 +123,6 @@ class PipeAccessPoint:
     def __eq__(self, other):
         # type: (PipeAccessPoint) -> bool
         return self.x == other.x and self.y == other.y and self.z == other.z and self.access_facing == other.access_facing
+
+    def __repr__(self):
+        return "PipeAP({}, {}, {}, {}, {})".format(self.dim, self.x, self.y, self.z, self.access_facing)

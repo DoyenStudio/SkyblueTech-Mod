@@ -87,7 +87,7 @@ def onPlayerUseWrench(event):
             i.remove(current_network)
             current_network.group_inputs.remove(ap)
             current_network.group_outputs.add(ap)
-            o.add(current_network)
+            o.append(current_network)
             CableAccessPointPool[(ap.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         else:
             ap = CableAccessPoint(
@@ -103,7 +103,7 @@ def onPlayerUseWrench(event):
             o.remove(current_network)
             current_network.group_inputs.add(ap)
             current_network.group_outputs.remove(ap)
-            i.add(current_network)
+            i.append(current_network)
             CableAccessPointPool[(ap.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         SetOnePopupNotice(
             event.playerId,

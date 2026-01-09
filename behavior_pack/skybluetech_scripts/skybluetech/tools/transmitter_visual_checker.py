@@ -95,6 +95,7 @@ def onResponse(event):
 def displayModel(event):
     # type: (TransmitterVisualCheckerCheckResponse) -> None
     clean()
+    shapes = []
     draw_comp = ClientComp.CreateDrawing(ClientLevelId)
     nodes = set(event.nodes)
     all_nodes = nodes | set(event.inputs + event.outputs)
@@ -117,7 +118,7 @@ def displayModel(event):
                     (ddx, ddy, ddz),
                     (0, 1, 1)
                 )
-                g_shapes.append(box)
+                shapes.append(box)
     for input_node in event.inputs:
         x, y, z = input_node
         text = draw_comp.AddTextShape(
@@ -125,21 +126,26 @@ def displayModel(event):
             "用电器" if event.type == event.TYPE_WIRE else "输入",
             (0, 1, 0)
         )
-        g_shapes.append(text)
+        shapes.append(text)
     for output_node in event.outputs:
         x, y, z = output_node
         text = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
-            "能量源" if event.type == event.TYPE_WIRE else "输出",
+            "能量源" if event.type == event.TYPE_WIRE else "抽取",
             (1, 0, 0)
         )
-        g_shapes.append(text)
-    removeAfter()
+        shapes.append(text)
+    g_shapes.append(shapes)
+    removeAfter(shapes)
 
 @Delay(10)
-def removeAfter():
-    clean()
+def removeAfter(shapes):
+    if shapes in g_shapes:
+        g_shapes.remove(shapes)
+        for shape in shapes:
+            shape.Remove()
 
 def clean():
-    for shape in g_shapes:
+    for shape in [j for i in g_shapes for j in i]:
         shape.Remove()
+    g_shapes[:] = []

@@ -4,8 +4,6 @@
         "components": {
             "minecraft:geometry": {
                 "bone_visibility": {
-                    "down": "q.block_state('skybluetech:connection_down')",
-                    "east": "q.block_state('skybluetech:connection_east')",
                     "hang_down": "q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:cable_io_down')",
                     "hang_east": "q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:cable_io_east')",
                     "hang_north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:cable_io_north')",
@@ -13,15 +11,15 @@
                     "hang_up": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:cable_io_up')",
                     "hang_west": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:cable_io_west')",
                     "north": "q.block_state('skybluetech:connection_north')",
-                    "root_down": "!q.block_state('skybluetech:connection_down')",
-                    "root_east": "!q.block_state('skybluetech:connection_east')",
-                    "root_north": "!q.block_state('skybluetech:connection_north')",
-                    "root_south": "!q.block_state('skybluetech:connection_south')",
-                    "root_up": "!q.block_state('skybluetech:connection_up')",
-                    "root_west": "!q.block_state('skybluetech:connection_west')",
                     "south": "q.block_state('skybluetech:connection_south')",
                     "up": "q.block_state('skybluetech:connection_up')",
-                    "west": "q.block_state('skybluetech:connection_west')"
+                    "west": "q.block_state('skybluetech:connection_west')",
+                    "down": "q.block_state('skybluetech:connection_down')",
+                    "east": "q.block_state('skybluetech:connection_east')",
+                    "r_up2down": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')",
+                    "r_west2east": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')",
+                    "r_south2north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                    "r_common": "!(q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')) && !(q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')) && !(q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west'))"
                 },
                 "identifier": "geometry.skybluetech.item_transport_cable"
             },

@@ -3,7 +3,7 @@
         "type": "panel",
         "size": [
             240.0,
-            200.0
+            120.0
         ],
         "layer": 1,
         "controls": [
@@ -44,18 +44,22 @@
             {
                 "main_label@TransmitterSettingsUI.index_selector": {
                     "$collection_name": "none",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
                     "offset": [
-                        -96,
-                        -25
+                        -85,
+                        43
                     ]
                 }
             },
             {
                 "index_sign_tip": {
                     "type": "label",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
                     "offset": [
                         -84.0,
-                        -46.0
+                        25.0
                     ],
                     "color": [
                         0.2588235294117647,
@@ -64,7 +68,7 @@
                     ],
                     "font_scale_factor": 1.4,
                     "font_type": "default",
-                    "text": "传输标志",
+                    "text": "传输标识",
                     "text_alignment": "center"
                 }
             },
@@ -143,9 +147,11 @@
             {
                 "network_label_selector_stack": {
                     "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
                     "offset": [
                         28.0,
-                        -45.0
+                        25.0
                     ],
                     "size": [
                         160.0,
@@ -172,9 +178,10 @@
             {
                 "priority_tip": {
                     "type": "label",
+                    "anchor_from": "bottom_middle",
                     "offset": [
                         -78.0,
-                        4.0
+                        -20.0
                     ],
                     "color": [
                         0.2588235294117647,
@@ -190,8 +197,8 @@
                 "prior_sub_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/netease/common/button/default",
-                    "$hover_texture": "textures/netease/common/button/hover",
+                    "$default_texture": "textures/ui/button_default",
+                    "$hover_texture": "textures/ui/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -199,7 +206,7 @@
                         0.2588235294117647
                     ],
                     "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "normal",
+                    "$label_font_size": "large",
                     "$label_layer": 3,
                     "$label_offset": [
                         0,
@@ -211,17 +218,19 @@
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
                     "$nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/netease/common/button/pressed",
+                    "$pressed_texture": "textures/ui/button_pressed",
                     "$texture_layer": 2,
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
                     "offset": [
-                        -26.0,
-                        3.0
+                        -28.0,
+                        -6.0
                     ],
                     "size": [
                         25.0,
@@ -266,8 +275,8 @@
                 "prior_add_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/netease/common/button/default",
-                    "$hover_texture": "textures/netease/common/button/hover",
+                    "$default_texture": "textures/ui/button_default",
+                    "$hover_texture": "textures/ui/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -275,7 +284,7 @@
                         0.2588235294117647
                     ],
                     "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "normal",
+                    "$label_font_size": "large",
                     "$label_layer": 3,
                     "$label_offset": [
                         0,
@@ -287,17 +296,19 @@
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
                     "$nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/netease/common/button/pressed",
+                    "$pressed_texture": "textures/ui/button_pressed",
                     "$texture_layer": 2,
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
                     "offset": [
-                        88.0,
-                        3.0
+                        86.0,
+                        -6.0
                     ],
                     "size": [
                         25.0,
@@ -380,9 +391,11 @@
                         "default",
                         "default"
                     ],
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
                     "offset": [
-                        31.0,
-                        3.0
+                        29.0,
+                        -6.0
                     ],
                     "size": [
                         80.0,

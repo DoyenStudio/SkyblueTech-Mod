@@ -123,3 +123,50 @@ class ModBlockEntityRemoveClientEvent(ClientEvent):
             "dimensionId": self.dimensionId,
             "blockName": self.blockName,
         }
+
+
+class PlayerTryDestroyBlockClientEvent(ClientEvent):
+    name = "PlayerTryDestroyBlockClientEvent"
+
+    x = 0 # type: int
+    """ 方块x坐标 """
+    y = 0 # type: int
+    """ 方块y坐标 """
+    z = 0 # type: int
+    """ 方块z坐标 """
+    face = 0 # type: int
+    """ 方块被敲击的面向id，参考Facing枚举 """
+    blockName = "" # type: str
+    """ 方块的identifier，包含命名空间及名称 """
+    auxData = 0 # type: int
+    """ 方块附加值 """
+    playerId = "" # type: str
+    """ 试图破坏方块的玩家ID """
+
+    def unmarshal(self, data):
+        # type: (dict) -> None
+        self._orig = data
+        self.x = data["x"]
+        self.y = data["y"]
+        self.z = data["z"]
+        self.face = data["face"]
+        self.blockName = data["blockName"]
+        self.auxData = data["auxData"]
+        self.playerId = data["playerId"]
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "x": self.x,
+            "y": self.y,
+            "z": self.z,
+            "face": self.face,
+            "blockName": self.blockName,
+            "auxData": self.auxData,
+            "playerId": self.playerId,
+        }
+
+    def cancel(self):
+        # type: () -> None
+        "默认为False，在脚本层设置为True就能取消该方块的破坏"
+        self._orig["cancel"] = True

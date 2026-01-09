@@ -294,6 +294,9 @@
     "skybluetech:fluid_condenser": {
         "sound": "iron"
     },
+    "skybluetech:fluid_splitter": {
+        "textures": "skybluetech:sun"
+    },
     "skybluetech:forester": {
         "textures": {
             "down": "skybluetech:frame_bottom",
@@ -349,6 +352,9 @@
             "identifier": "skybluetech:invar_tank"
         },
         "sound": "glass"
+    },
+    "skybluetech:item_splitter": {
+        "textures": "skybluetech:rect_panel_bg"
     },
     "skybluetech:item_transport_cable": {
         "sound": "stone"

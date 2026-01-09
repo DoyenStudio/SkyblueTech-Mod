@@ -12,10 +12,12 @@ from .farming_station import FarmingStation
 from .fermenter import Fermenter
 from .forester import Forester
 from .freezer import Freezer
+from .fluid_splitter import FluidSplitter
 from .geothermal_generator import GeoThermalGenerator
 from .heavy_compressor import HeavyCompressor
 from .hydroponic_base import HydroponicBase
 from .hydroponic_bed import HydroponicBed
+from .item_splitter import ItemSplitter
 from .macerator import Macerator
 from .magma_furnace import MagmaFurnace
 from .magma_centrifuge import MagmaCentrifuge

@@ -281,6 +281,9 @@
         "skybluetech:raw_tin_block": {
             "textures": "textures/blocks/raw_ore_block/raw_tin_block"
         },
+        "skybluetech:rect_panel_bg": {
+            "textures": "textures/ui/rect_panel_bg"
+        },
         "skybluetech:redstone_furnace_front": {
             "textures": "textures/machines/redstone_furnace_front"
         },
@@ -310,6 +313,9 @@
         },
         "skybluetech:steel_tank": {
             "textures": "textures/models/tanks/steel_tank_texture"
+        },
+        "skybluetech:sun": {
+            "textures": "textures/ui/sun"
         },
         "skybluetech:superconduct_wire": {
             "textures": "textures/wire/superconduct_wire"

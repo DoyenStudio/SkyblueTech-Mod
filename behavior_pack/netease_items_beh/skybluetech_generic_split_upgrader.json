@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 8,
+            "minecraft:tags": {
+                "tags": [
+                    "skybluetech:upgraders/generic_item_split"
+                ]
+            },
+            "netease:customtips": {
+                "value": "\n§7置于分拣器的升级槽中， 将所有不在过滤列表中的物品\n自动投递到颜色标识为§l§f[§c0§f]§c红色§r§7的输入口中。"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:generic_split_upgrader"
+        }
+    }
+}

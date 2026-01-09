@@ -25,3 +25,6 @@ class Molten:
     SILVER = "skybluetech:molten_silver"
     NICKEL = "skybluetech:molten_nickel"
     PLATINUM = "skybluetech:molten_platinum"
+
+
+# 更改此文件的同时需要更改 machinery_def/fluid_splitter.py 中的打表

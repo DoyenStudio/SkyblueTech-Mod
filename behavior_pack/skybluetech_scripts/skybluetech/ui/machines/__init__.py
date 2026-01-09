@@ -12,6 +12,7 @@ from .fermenter import FermenterUI
 from .fluid_condenser import FluidCondenserUI
 from .fluid_input_interface import FluidInputInterfaceUI
 from .fluid_output_interface import FluidOutputInterfaceUI
+from .fluid_splitter import FluidSplitterUI
 from .forester import ForesterUI
 from .freezer import FreezerUI
 from .general_tank import GeneralTankUI
@@ -19,6 +20,7 @@ from .geothermal_generator import GeoThermalGeneratorUI
 from .heavy_compressor import HeavyCompressorUI
 from .hydroponic_base import HydroponicBaseUI
 from .hydroponic_bed import HydroponicBedUI
+from .item_splitter import ItemSplitterUI
 from .macerator import MaceratorUI
 from .magma_furnace import MagmaFurnaceUI
 from .magma_centrifuge import MagmaCentrifugeUI

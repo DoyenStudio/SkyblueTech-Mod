@@ -1,0 +1,34 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:block_container": {
+                "container_size": 7,
+                "custom_description": "物品分拣器",
+                "screen_name": "ItemSplitterUI.main"
+            },
+            "netease:block_entity": {},
+            "netease:custom_tips": {
+                "value": "\n§7用于分拣物品。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_container": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:item_splitter"
+        }
+    }
+}

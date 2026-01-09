@@ -73,6 +73,9 @@
         "skybluetech:famicom_cartidge_3": {
             "textures": "textures/items/cartidges/famicom_cartidge_3"
         },
+        "skybluetech:generic_split_upgrader": {
+            "textures": "textures/items/upgraders/generic_split_upgrader"
+        },
         "skybluetech:gold_dust": {
             "textures": "textures/items/dusts/gold_dust"
         },

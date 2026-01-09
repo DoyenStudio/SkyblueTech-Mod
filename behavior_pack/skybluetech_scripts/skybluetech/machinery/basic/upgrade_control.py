@@ -62,6 +62,7 @@ class UpgradeControl(ItemContainer, SPControl):
     def UpdateUpgraders(self, upgraders):
         # type: (dict[str, int]) -> None
         "超类方法更新基本的速度和能量升级处理。超类方法作进一步处理"
+        self._upgraders = upgraders
         speed_pos = 1.0
         speed_neg = 1.0
         power_pos = 1.0
@@ -75,6 +76,10 @@ class UpgradeControl(ItemContainer, SPControl):
             power_neg += POWER_UPGRADER_MAPPINGS.get(upgrader, 0) * count
         self.SetSpeedRelative(speed_pos / speed_neg)
         self.SetPower(int(self._origin_power * power_pos / power_neg))
+
+    def HasUpgrader(self, item_id):
+        # type: (str) -> bool
+        return item_id in self._upgraders
 
     def otherSlotHasSameUpgrader(self, slot, item_name):
         # type: (int, str) -> bool

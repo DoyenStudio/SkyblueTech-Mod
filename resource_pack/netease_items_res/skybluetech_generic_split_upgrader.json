@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:generic_split_upgrader"
+        },
+        "description": {
+            "identifier": "skybluetech:generic_split_upgrader"
+        }
+    }
+}

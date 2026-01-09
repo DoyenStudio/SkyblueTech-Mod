@@ -307,11 +307,7 @@ class UScrollView(UBaseCtrl):
         self.base = base
 
     def GetContent(self):
-        if GetToggleMode() == 0:
-            scroll_device = "scroll_mouse"
-        else:
-            scroll_device = "scroll_touch"
-        return self[scroll_device + "/scroll_view/stack_panel/background_and_viewport/scrolling_view_port/scrolling_content"]
+        return UBaseCtrl(self._root, self.base.GetScrollViewContentControl())
 
 
 class UGrid(UBaseCtrl):

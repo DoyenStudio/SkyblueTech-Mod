@@ -154,10 +154,12 @@ def getAndInitNetwork(dim, start, exists=None):
         dim_datas[node] = network
     for ap in network.group_inputs | network.group_outputs:
         WireAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
-        WireNetworkPool.setdefault(
+        nws = WireNetworkPool.setdefault(
             (network.dim, ap.target_pos),
             ([], [])
-        )[ap.io_mode].append(network)
+        )[ap.io_mode]
+        if network not in nws:
+            nws.append(network)
     return network
 
 # def addContainerToNetwork(dim, x, y, z, network):
@@ -203,11 +205,18 @@ def clearNearbyNetwork(dim, x, y, z):
 def deleteNetwork(network):
     # type: (WireNetwork) -> None
     "完全清除一个网络。"
-    for io in network.group_inputs | network.group_outputs:
-        WireAccessPointPool.pop((network.dim, io.x, io.y, io.z, io.access_facing), None)
-        WireNetworkPool.pop((network.dim, io.target_pos), None)
-        for node in network.nodes:
-            GNodes.get(network.dim, {}).pop(node, None)
+    for ap in network.group_inputs | network.group_outputs:
+        WireAccessPointPool.pop((network.dim, ap.x, ap.y, ap.z, ap.access_facing), None)
+        nws = WireNetworkPool.get((network.dim, ap.target_pos))
+        if nws is None:
+            continue
+        i, o = nws
+        if network in i:
+            i.remove(network)
+        elif network in o:
+            o.remove(network)
+    for node in network.nodes.copy():
+        GNodes.get(network.dim, {}).pop(node, None)
 
 def cleanAccessPointNetwork(dim, x, y, z):
     # type: (int, int, int, int) -> None

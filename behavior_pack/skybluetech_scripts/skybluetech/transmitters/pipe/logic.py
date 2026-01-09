@@ -127,10 +127,13 @@ def getAndInitNetwork(dim, start, exists=None):
         dim_datas[node] = network
     for ap in network.group_inputs | network.group_outputs:
         PipeAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
-        PipeNetworkPool.setdefault(
+        nws = PipeNetworkPool.setdefault(
             (network.dim, ap.target_pos),
             ([], [])
-        )[ap.io_mode].append(network)
+        )[ap.io_mode]
+        if network not in nws:
+            # NOTE: bugfix here, can be prettier
+            nws.append(network)
     return network
 
 # def addContainerToNetwork(dim, x, y, z, network):
@@ -170,17 +173,22 @@ def clearNearbyNetwork(dim, x, y, z):
             if bound_network is not None:
                 bound_network.group_inputs.discard(ap)
                 bound_network.group_outputs.discard(ap)
-            else:
-                print("[ERROR] Pipe access point {} bound network None".format((dim, x, y, z, facing)))
 
 def deleteNetwork(network):
     # type: (PipeNetwork) -> None
     "完全清除一个网络。"
-    for io in network.group_inputs | network.group_outputs:
-        PipeAccessPointPool.pop((network.dim, io.x, io.y, io.z, io.access_facing), None)
-        PipeNetworkPool.pop((network.dim, io.target_pos), None)
-        for node in network.nodes:
-            GNodes.get(network.dim, {}).pop(node, None)
+    for ap in network.group_inputs | network.group_outputs:
+        PipeAccessPointPool.pop((network.dim, ap.x, ap.y, ap.z, ap.access_facing), None)
+        nws = PipeNetworkPool.get((network.dim, ap.target_pos))
+        if nws is None:
+            continue
+        i, o = nws
+        if network in i:
+            i.remove(network)
+        elif network in o:
+            o.remove(network)
+    for node in network.nodes.copy():
+        GNodes.get(network.dim, {}).pop(node, None)
 
 def cleanAccessPointNetwork(dim, x, y, z):
     # type: (int, int, int, int) -> None

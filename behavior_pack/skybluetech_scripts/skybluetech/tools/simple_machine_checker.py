@@ -33,12 +33,13 @@ def onBlockUse(event):
             m.Dump()
             SetOnePopupNotice(
                 event.playerId,
-                "此方块 (%d, %d, %d) 是 %s"
+                "此方块 (%d, %d, %d) 是 %s ~%d"
                 % (
                     event.x,
                     event.y,
                     event.z,
                     m.__class__.__name__,
+                    m.deactive_flags,
                 ),
             )
         event.cancel()
@@ -46,5 +47,5 @@ def onBlockUse(event):
         if isinstance(m, FluidContainer):
             m.OnFluidSlotUpdate()
         elif isinstance(m, MultiFluidContainer):
-            for slot in m.fluid_output_slots:
-                m.OnFluidSlotUpdate(slot)
+            for slot in m.fluid_output_slots | {0}:
+                m.onFluidSlotUpdate(slot)

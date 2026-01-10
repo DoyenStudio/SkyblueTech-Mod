@@ -23,7 +23,7 @@ class MagmaCentrifugeUI(MachinePanelUIProxy):
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         self.left_fluid_updater = self.GetElement(LEFT_FLUID)
-        self.right_fluid_updaters = [self > (RIGHT_FLUID + str(i + 1)) for i in range(6)]
+        self.right_fluid_updaters = [self[RIGHT_FLUID + str(i + 1)] for i in range(6)]
         self.update_cbs = [InitFluidsDisplay(self.left_fluid_updater, self.sync.fluids, 0)]
         for i, ui in enumerate(self.right_fluid_updaters):
             self.update_cbs.append(InitFluidsDisplay(ui, self.sync.fluids, i + 1))

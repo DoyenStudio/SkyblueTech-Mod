@@ -94,11 +94,17 @@ class S2CSync(object):
         self.WhenUpdated()
 
     @classmethod
-    def NewClient(cls, sync_id):
+    def NewClient(
+        cls,
+        sync_id # type: str
+    ):
         return cls(S2C_CLIENT, sync_id)
 
     @classmethod
-    def NewServer(cls, spec_key=None):
+    def NewServer(
+        cls,
+        spec_key=None # type: str | None
+    ):
         return cls(S2C_SERVER, spec_key)
 
     def Activate(self):
@@ -181,7 +187,8 @@ def serverBroadcastSyncEvents():
     posted_sync_ids = set() # type: set[str]
     for cliId, sync_ids in server_active_syncs.copy().items():
         sync_ids = {i for i in sync_ids if server_sync_pool[i]._changed}
-        notifySyncToSingleClient(cliId, sync_ids)
+        if sync_ids:
+            notifySyncToSingleClient(cliId, sync_ids)
         posted_sync_ids |= sync_ids
     for sync_id in posted_sync_ids:
         server_sync_pool[sync_id]._changed = False

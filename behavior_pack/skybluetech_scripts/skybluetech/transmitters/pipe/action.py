@@ -82,13 +82,13 @@ def onPlayerUseWrench(event):
                 facing,
                 AP_MODE_OUTPUT
             )
-            GetNearbyPipeNetworks(event.dimensionId, *ap.target_pos) # 仅刷新
             ap.bound_network(current_network)
-            i, o = PipeNetworkPool[(current_network.dim, ap.target_pos)]
+            i, o = GetNearbyPipeNetworks(event.dimensionId, *ap.target_pos)
             i.remove(current_network)
             current_network.group_inputs.remove(ap)
             current_network.group_outputs.add(ap)
             o.append(current_network)
+            PipeNetworkPool[(current_network.dim, ap.target_pos)] = (i, o)
             PipeAccessPointPool[(ap.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
         else:
             ap = PipeAccessPoint(
@@ -99,9 +99,8 @@ def onPlayerUseWrench(event):
                 facing,
                 AP_MODE_INPUT
             )
-            GetNearbyPipeNetworks(event.dimensionId, *ap.target_pos) # 仅刷新
             ap.bound_network(current_network)
-            i, o = PipeNetworkPool[(current_network.dim, ap.target_pos)]
+            i, o = GetNearbyPipeNetworks(event.dimensionId, *ap.target_pos)
             o.remove(current_network)
             current_network.group_inputs.add(ap)
             current_network.group_outputs.remove(ap)

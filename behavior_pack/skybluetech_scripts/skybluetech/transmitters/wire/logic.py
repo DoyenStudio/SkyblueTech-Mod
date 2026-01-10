@@ -295,14 +295,17 @@ def GetNearbyWireNetworks(dim, x, y, z, exists=None, enable_cache=True):
     """
     if enable_cache:
         cached_network = WireNetworkPool.get((dim, (x, y, z)), None)
-        if cached_network is not None:
+        if cached_network is not None and cached_network[0] and cached_network[1]:
+            # not pretty fix
             return cached_network
     input_networks = []  # type: list[WireNetwork]
     output_networks = []  # type: list[WireNetwork]
     _exists = exists or set()  # type: set[PosData]
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
         next_pos = (x + dx, y + dy, z + dz)
-        network = getAndInitNetwork(dim, next_pos, _exists)
+        network = GNodes.get(dim, {}).get(next_pos)
+        if network is None:
+            network = getAndInitNetwork(dim, next_pos, _exists)
         if network is None:
             continue
         p = WireAccessPoint(dim, x + dx, y + dy, z + dz, OPPOSITE_FACING[facing], -1) # -1 表示输入输出模式未知

@@ -82,7 +82,6 @@ def onPlayerUseWrench(event):
                 facing,
                 AP_MODE_OUTPUT
             )
-            GetNearbyCableNetworks(event.dimensionId, *ap.target_pos) # 仅刷新
             ap.bound_network(current_network)
             i, o = CableNetworkPool[(current_network.dim, ap.target_pos)]
             i.remove(current_network)
@@ -99,7 +98,6 @@ def onPlayerUseWrench(event):
                 facing,
                 AP_MODE_INPUT
             )
-            GetNearbyCableNetworks(event.dimensionId, *ap.target_pos) # 仅刷新
             ap.bound_network(current_network)
             i, o = CableNetworkPool[(current_network.dim, ap.target_pos)]
             o.remove(current_network)

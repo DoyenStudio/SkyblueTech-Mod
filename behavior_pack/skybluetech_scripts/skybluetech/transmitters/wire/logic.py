@@ -154,12 +154,6 @@ def getAndInitNetwork(dim, start, exists=None):
         dim_datas[node] = network
     for ap in network.group_inputs | network.group_outputs:
         WireAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
-        nws = WireNetworkPool.setdefault(
-            (network.dim, ap.target_pos),
-            ([], [])
-        )[ap.io_mode]
-        if network not in nws:
-            nws.append(network)
     return network
 
 # def addContainerToNetwork(dim, x, y, z, network):
@@ -215,6 +209,8 @@ def deleteNetwork(network):
             i.remove(network)
         elif network in o:
             o.remove(network)
+        if not i and not o:
+            WireNetworkPool.pop((network.dim, ap.target_pos))
     for node in network.nodes.copy():
         GNodes.get(network.dim, {}).pop(node, None)
 
@@ -314,6 +310,7 @@ def GetNearbyWireNetworks(dim, x, y, z, exists=None, enable_cache=True):
             input_networks.append(network)
         elif p in network.group_outputs:
             output_networks.append(network)
+    WireNetworkPool[(dim, (x, y, z))] = (input_networks, output_networks)
     return input_networks, output_networks
 
 def GetNetworkByWire(dim, x, y, z, cacher=None):

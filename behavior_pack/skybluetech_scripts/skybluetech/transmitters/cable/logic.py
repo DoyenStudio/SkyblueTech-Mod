@@ -147,12 +147,6 @@ def getAndInitNetwork(dim, start, exists=None):
         dim_datas[node] = network
     for ap in network.group_inputs | network.group_outputs:
         CableAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
-        nws = CableNetworkPool.setdefault(
-            (network.dim, ap.target_pos),
-            ([], [])
-        )[ap.io_mode]
-        if network not in nws:
-            nws.append(network)
     return network
 
 def cleanNearbyNetwork(dim, x, y, z):
@@ -193,6 +187,8 @@ def deleteNetwork(network):
             i.remove(network)
         elif network in o:
             o.remove(network)
+        if not i and not o:
+            CableNetworkPool.pop((network.dim, ap.target_pos), None)
     for node in network.nodes.copy():
         GNodes.get(network.dim, {}).pop(node, None)
 
@@ -281,6 +277,7 @@ def GetNearbyCableNetworks(dim, x, y, z, exists=None, enable_cache=True):
             input_networks.append(network)
         elif p in network.group_outputs:
             output_networks.append(network)
+    CableNetworkPool[(dim, (x, y, z))] = (input_networks, output_networks)
     return input_networks, output_networks
 
 def GetNetworkByCable(dim, x, y, z, cacher=None):

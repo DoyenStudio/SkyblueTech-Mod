@@ -15,7 +15,7 @@ from ...define.events.transmitter_settings import (
 from ...define.utils import NEIGHBOR_BLOCKS_ENUM
 from ..constants import FACING_EN, FACING_ZHCN
 from .define import PipeAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
-from .logic import isPipe, canConnect, GetNetworkByPipe
+from .logic import isPipe, canConnect, GetNetworkByPipe, GetNearbyPipeNetworks
 from .pool import PipeAccessPointPool, PipeNetworkPool
 
 
@@ -82,6 +82,7 @@ def onPlayerUseWrench(event):
                 facing,
                 AP_MODE_OUTPUT
             )
+            GetNearbyPipeNetworks(event.dimensionId, *ap.target_pos) # 仅刷新
             ap.bound_network(current_network)
             i, o = PipeNetworkPool[(current_network.dim, ap.target_pos)]
             i.remove(current_network)
@@ -98,6 +99,7 @@ def onPlayerUseWrench(event):
                 facing,
                 AP_MODE_INPUT
             )
+            GetNearbyPipeNetworks(event.dimensionId, *ap.target_pos) # 仅刷新
             ap.bound_network(current_network)
             i, o = PipeNetworkPool[(current_network.dim, ap.target_pos)]
             o.remove(current_network)

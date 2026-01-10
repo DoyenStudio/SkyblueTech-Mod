@@ -127,13 +127,6 @@ def getAndInitNetwork(dim, start, exists=None):
         dim_datas[node] = network
     for ap in network.group_inputs | network.group_outputs:
         PipeAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
-        nws = PipeNetworkPool.setdefault(
-            (network.dim, ap.target_pos),
-            ([], [])
-        )[ap.io_mode]
-        if network not in nws:
-            # NOTE: bugfix here, can be prettier
-            nws.append(network)
     return network
 
 # def addContainerToNetwork(dim, x, y, z, network):
@@ -187,6 +180,8 @@ def deleteNetwork(network):
             i.remove(network)
         elif network in o:
             o.remove(network)
+        if not i and not o:
+            PipeNetworkPool.pop((network.dim, ap.target_pos), None)
     for node in network.nodes.copy():
         GNodes.get(network.dim, {}).pop(node, None)
 
@@ -278,6 +273,7 @@ def GetNearbyPipeNetworks(dim, x, y, z, exists=None, enable_cache=True):
             input_networks.append(network)
         elif p in network.group_outputs:
             output_networks.append(network)
+    PipeNetworkPool[(dim, (x, y, z))] = (input_networks, output_networks)
     return input_networks, output_networks
 
 def GetNetworkByPipe(dim, x, y, z, cacher=None):
@@ -316,7 +312,7 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume, depth=0):
         # 目前不处理任何非流体容器方块
     if not isinstance(m, (FluidContainer, MultiFluidContainer)):
         raise ValueError("Machine %s is not a FluidContainer" % type(m).__name__)
-    _, fluid_volume = m.AddFluid(fluid_id, fluid_volume, depth=depth+1)
+    ok, fluid_volume = m.AddFluid(fluid_id, fluid_volume, depth=depth+1)
     return fluid_volume
 
 def RequirePostFluid(dim, xyz):

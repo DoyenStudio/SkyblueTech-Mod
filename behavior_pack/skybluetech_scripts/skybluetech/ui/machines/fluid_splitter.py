@@ -45,6 +45,7 @@ class FluidSplitterUI(MachinePanelUIProxy):
         MachinePanelUIProxy.OnCreate(self)
 
     def OnDestroy(self):
+        MachinePanelUIProxy.OnDestroy(self)
         event_cbs.discard(self.onListUpdated)
         self.closeLabelSelector()
         self.closeFluidSelector()

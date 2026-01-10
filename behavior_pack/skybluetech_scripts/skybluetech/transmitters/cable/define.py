@@ -38,6 +38,11 @@ class CableNetwork:
             reverse=True,
         )
 
+    def flush_from(self, other):
+        # type: (CableNetwork) -> None
+        self.group_inputs = other.group_inputs
+        self.group_outputs = other.group_outputs
+
     def __repr__(self):
         return "CableNetwork({}, {})".format(self.group_inputs, self.group_outputs)
 

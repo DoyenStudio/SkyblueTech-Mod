@@ -44,6 +44,11 @@ class WireNetwork:
     def get_power_limit(self):
         return WIRELEVEL_2_POWERLIMIT[self.wire_level]
 
+    def flush_from(self, other):
+        # type: (WireNetwork) -> None
+        self.group_inputs = other.group_inputs
+        self.group_outputs = other.group_outputs
+
     def __repr__(self):
         return "WireNetwork({}, {}, {})".format(self.dim, self.group_outputs, self.group_inputs)
 

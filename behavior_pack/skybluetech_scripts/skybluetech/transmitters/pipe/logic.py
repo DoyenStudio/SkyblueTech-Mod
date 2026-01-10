@@ -266,11 +266,12 @@ def GetNearbyPipeNetworks(dim, x, y, z, exists=None, enable_cache=True):
     _exists = exists or set()  # type: set[PosData]
     for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
         next_pos = (x + dx, y + dy, z + dz)
-        network = GNodes.get(dim, {}).get(next_pos)
-        if network is None:
-            network = getAndInitNetwork(dim, next_pos, _exists)
+        old_network = GNodes.get(dim, {}).get(next_pos)
+        network = getAndInitNetwork(dim, next_pos, _exists)
         if network is None:
             continue
+        if old_network is not None:
+            old_network.flush_from(network)
         p = PipeAccessPoint(dim, x + dx, y + dy, z + dz, OPPOSITE_FACING[facing], -1) # -1 表示输入输出模式未知
         if p in network.group_inputs:
             input_networks.append(network)

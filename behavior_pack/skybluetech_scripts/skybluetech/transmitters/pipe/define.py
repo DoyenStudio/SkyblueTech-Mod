@@ -38,6 +38,11 @@ class PipeNetwork:
             reverse=True,
         )
 
+    def flush_from(self, other):
+        # type: (PipeNetwork) -> None
+        self.group_inputs = other.group_inputs
+        self.group_outputs = other.group_outputs
+
     def __eq__(self, other):
         # type: (PipeNetwork) -> bool
         return self.dim == other.dim and self.group_outputs == other.group_outputs and self.group_inputs == other.group_inputs

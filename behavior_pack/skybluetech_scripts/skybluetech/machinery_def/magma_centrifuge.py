@@ -39,7 +39,8 @@ recipes = [
             1: Output(Molten.SILVER, 8),
             2: Output(Molten.GOLD, 5),
             3: Output(Molten.NICKEL, 50),
-            4: Output(Molten.IMPURITY, 20),
+            4: Output(Molten.IRON, 65),
+            5: Output(Molten.IMPURITY, 20),
         },
         power_cost=80, tick_duration=20 * 5
     ),

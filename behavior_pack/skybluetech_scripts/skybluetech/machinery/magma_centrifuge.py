@@ -15,7 +15,7 @@ class MagmaCentrifuge(MixedProcessor):
     recipes = Recipes
     fluid_input_slots = {0}
     fluid_output_slots = {1, 2, 3, 4, 5, 6}
-    upgrade_slot_start = 2
+    upgrade_slot_start = 0
     upgrade_slots = 4
 
     def __init__(self, dim, x, y, z, block_entity_data):

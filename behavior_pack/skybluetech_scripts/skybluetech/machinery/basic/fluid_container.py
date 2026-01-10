@@ -221,8 +221,8 @@ class FluidContainer(object):
         requireLibraryFunc()
         if self.fluid_id is not None:
             orig_volume = self.fluid_volume
-            self.fluid_volume = PostFluidIntoNetworks(
-                self.dim, self.xyz, self.fluid_id, self.fluid_volume, None, 0
+            self.fluid_volume = self.tryPostFluid(
+                self.fluid_id, self.fluid_volume, 0
             )
             if self.fluid_volume < orig_volume:
                 self.onReducedFluid(self.fluid_id, orig_volume - self.fluid_volume)

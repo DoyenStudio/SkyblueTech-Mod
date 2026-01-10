@@ -36,15 +36,19 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         self.sync = FluidSplitterUISync.NewServer(self).Activate()
         self.OnSync()
 
-    def OnFluidSlotUpdate(self, slot_pos):
+    def OnFluidSlotUpdate(self, _):
         # type: (int) -> None
-        fluid = self.fluids[slot_pos]
-        fluid_id = fluid.fluid_id
-        if fluid_id is not None and fluid.volume > 0:
-            fluid.volume = self.tryPostFluidByLabel(fluid_id, fluid.volume)
+        self.readyTryPostFluid()
+        self.OnSync()
+
+    def readyTryPostFluid(self):
+        for slot in self.fluid_input_slots:
+            fluid = self.fluids[slot]
+            fluid_id = fluid.fluid_id
+            if fluid_id is not None and fluid.volume > 0:
+                fluid.volume = self.tryPostFluidByLabel(fluid_id, fluid.volume)
             if fluid.volume <= 0:
                 fluid.fluid_id = None
-        self.OnSync()
 
     def tryPostFluidByLabel(self, fluid_id, fluid_volume):
         # type: (str, float) -> float
@@ -57,6 +61,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
                     fluid_volume = PushFluidToFluidContainer(ap, fluid_id, fluid_volume)
                     if fluid_volume <= 0:
                         break
+                    # print("Left", fluid_volume)
         return fluid_volume
 
     def getLabelByFluid(self, fluid_id):

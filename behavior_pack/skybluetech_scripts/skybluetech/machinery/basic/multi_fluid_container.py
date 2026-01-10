@@ -188,7 +188,6 @@ class MultiFluidContainer(object):
         # type: () -> None
         "让此容器向网络输出一次流体。"
         requireLibraryFunc()
-        print(self, self.fluid_output_slots)
         for slot in self.fluid_output_slots:
             fluid = self.fluids[slot]
             if fluid.fluid_id is not None:

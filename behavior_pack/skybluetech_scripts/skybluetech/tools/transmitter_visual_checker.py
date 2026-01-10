@@ -1,7 +1,7 @@
 # coding=utf-8
 from random import random
 from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId, GetBlockName, SetOnePopupNotice
-from skybluetech_scripts.tooldelta.api.client import SePopupNotice, GetLocalPlayerMainhandItem, GetLocalPlayerId
+from skybluetech_scripts.tooldelta.api.client import GetLocalPlayerMainhandItem, GetLocalPlayerId, GetBlockName as CGetBlockName
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
@@ -104,10 +104,19 @@ def onClientBlockUseEvent(event):
     ok = client_limiter.record(GetLocalPlayerId())
     if not ok:
         return
-    TransmitterVisualCheckerCheckRequest(
-        event.x, event.y, event.z,
-        TransmitterVisualCheckerCheckRequest.MODE_GET_BY_TRANSMITTER,
-    ).send()
+    bname = CGetBlockName((event.x, event.y, event.z))
+    if bname is None:
+        return
+    if "cable" in bname or "pipe" in bname or "wire" in bname:
+        TransmitterVisualCheckerCheckRequest(
+            event.x, event.y, event.z,
+            TransmitterVisualCheckerCheckRequest.MODE_GET_BY_TRANSMITTER,
+        ).send()
+    else:
+        TransmitterVisualCheckerCheckRequest(
+            event.x, event.y, event.z,
+            TransmitterVisualCheckerCheckRequest.MODE_GET_BY_MACHINE,
+        ).send()
     event.cancel()
 
 # @PlayerTryDestroyBlockClientEvent.Listen()
@@ -191,12 +200,15 @@ def clean():
     for shape in [j for i in g_shapes for j in i]:
         shape.Remove()
     g_shapes[:] = []
+    for shape in [j for i in g_multi_shapes for j in i]:
+        shape.Remove()
+    g_multi_shapes[:] = []
 
 
 
 def displayMultiModel(event):
     # type: (TransmitterVisualCheckerCheckMultiResponse) -> None
-    cleanMulti()
+    clean()
     shapes = []
     draw_comp = ClientComp.CreateDrawing(ClientLevelId)
     for (inputs, outputs, nodes, network_type) in event.reses:
@@ -249,7 +261,3 @@ def removeMultiAfter(shapes):
         for shape in shapes:
             shape.Remove()
 
-def cleanMulti():
-    for shape in [j for i in g_multi_shapes for j in i]:
-        shape.Remove()
-    g_multi_shapes[:] = []

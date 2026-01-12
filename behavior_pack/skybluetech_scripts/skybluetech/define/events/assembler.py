@@ -11,8 +11,11 @@ class AssemblerUpgradersUpdate(CustomS2CEvent):
     def marshal(self):
         return {"lis": self.lis}
 
-    def unmarshal(self, data):
-        self.lis = data["lis"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.lis = data["lis"]
+        return instance
 
 ACTION_PUSH_UPGRADER = 0
 ACTION_PULL_UPGRADER = 1
@@ -32,10 +35,13 @@ class AssemblerActionRequest(CustomC2SEvent):
     def marshal(self):
         return {"action": self.action, "index": self.index, "x": self.x, "y": self.y, "z": self.z}
 
-    def unmarshal(self, data):
-        self.action = data["action"]
-        self.index = data["index"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.pid = data["__id__"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.action = data["action"]
+        instance.index = data["index"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.pid = data["__id__"]
+        return instance

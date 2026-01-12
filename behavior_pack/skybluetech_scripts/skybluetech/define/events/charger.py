@@ -15,10 +15,13 @@ class ChargerItemModelUpdate(CustomS2CEvent):
     def marshal(self):
         return {"item_id": self.item_id, "enchanted": self.enchanted, "xyz": [self.x, self.y, self.z]}
 
-    def unmarshal(self, data):
-        self.item_id = data["item_id"]
-        self.enchanted = data["enchanted"]
-        self.x, self.y, self.z = data["xyz"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.item_id = data["item_id"]
+        instance.enchanted = data["enchanted"]
+        instance.x, instance.y, instance.z = data["xyz"]
+        return instance
 
 
 class ChargeItemModelRequest(CustomC2SEvent):
@@ -34,9 +37,11 @@ class ChargeItemModelRequest(CustomC2SEvent):
     def marshal(self):
         return {"x":  self.x, "y": self.y, "z": self.z}
 
-    def unmarshal(self, data):
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.pid = data["__id__"]
-
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.pid = data["__id__"]
+        return instance

@@ -21,11 +21,13 @@ class ElectricHeaterSetPowerEvent(CustomC2SEvent):
             "power": self.power
         }
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.power = data["power"]
-        self.player_id = data["__id__"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.dim = data["dim"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.power = data["power"]
+        instance.player_id = data["__id__"]
+        return instance

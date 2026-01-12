@@ -19,14 +19,15 @@ class FermenterSetTemperatureEvent(CustomC2SEvent):
             "t": self.temperature
         }
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.temperature = data["t"]
-        self.player_id = data["__id__"]
-
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.temperature = data["t"]
+        instance.player_id = data["__id__"]
+        return instance
 
 class FermenterSeMaxVolumeEvent(CustomC2SEvent):
     name = "st:FSMV"
@@ -46,10 +47,12 @@ class FermenterSeMaxVolumeEvent(CustomC2SEvent):
             "v": self.volume
         }
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.volume = data["v"]
-        self.player_id = data["__id__"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.volume = data["v"]
+        instance.player_id = data["__id__"]
+        return instance

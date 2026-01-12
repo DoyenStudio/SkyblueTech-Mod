@@ -25,14 +25,17 @@ class FluidSplitterSettingsSetLabel(CustomC2SEvent):
             "l": self.label,
         }
 
-    def unmarshal(self, data):
-        self.pid = data["__id__"]
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.setting_index = data["s"]
-        self.label = data["l"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.pid = data["__id__"]
+        instance.dim = data["dim"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.setting_index = data["s"]
+        instance.label = data["l"]
+        return instance
 
 
 class FluidSplitterSettingsSetFluid(CustomC2SEvent):
@@ -57,14 +60,17 @@ class FluidSplitterSettingsSetFluid(CustomC2SEvent):
             "f": self.fluid_id,
         }
 
-    def unmarshal(self, data):
-        self.pid = data["__id__"]
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.setting_index = data["s"]
-        self.fluid_id = data["f"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.pid = data["__id__"]
+        instance.dim = data["dim"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.setting_index = data["s"]
+        instance.fluid_id = data["f"]
+        return instance
 
 
 class FluidSplitterSimpleAction(CustomC2SEvent):
@@ -92,14 +98,17 @@ class FluidSplitterSimpleAction(CustomC2SEvent):
             "e": self.extra
         }
 
-    def unmarshal(self, data):
-        self.pid = data["__id__"]
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.action = data["a"]
-        self.extra = data["e"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.pid = data["__id__"]
+        instance.dim = data["dim"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.action = data["a"]
+        instance.extra = data["e"]
+        return instance
 
 
 class FluidSplitterSettingsListUpdate(CustomS2CEvent):
@@ -112,5 +121,8 @@ class FluidSplitterSettingsListUpdate(CustomS2CEvent):
     def marshal(self):
         return {"l": self.lis}
 
-    def unmarshal(self, data):
-        self.lis = data["l"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.lis = data["l"]
+        return instance

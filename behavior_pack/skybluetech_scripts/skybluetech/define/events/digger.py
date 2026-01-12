@@ -19,12 +19,14 @@ class DiggerWorkModeUpdatedEvent(CustomS2CEvent):
             "active": self.active,
         }
 
-    def unmarshal(self, data):
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.active = data["active"]
-
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.active = data["active"]
+        return instance
 
 class DiggerUpdateCrack(CustomS2CEvent):
     name = "st:DUC"
@@ -46,9 +48,12 @@ class DiggerUpdateCrack(CustomS2CEvent):
             "level": self.level,
         }
 
-    def unmarshal(self, data):
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.level = data["level"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.dim = data["dim"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.level = data["level"]
+        return instance

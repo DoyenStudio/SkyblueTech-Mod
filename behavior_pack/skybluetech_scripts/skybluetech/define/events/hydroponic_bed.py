@@ -18,13 +18,16 @@ class HydroponicBedClientLoadEvent(CustomC2SEvent):
     def marshal(self):
         return {"d": self.dim, "x": self.x, "y": self.y, "z": self.z, "m": self.mode}
 
-    def unmarshal(self, data):
-        self.player_id = data["__id__"]
-        self.dim = data["d"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.mode = data["m"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.player_id = data["__id__"]
+        instance.dim = data["d"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.mode = data["m"]
+        return instance
 
 
 class HydroponicBedModelUpdateEvent(CustomS2CEvent):
@@ -41,13 +44,15 @@ class HydroponicBedModelUpdateEvent(CustomS2CEvent):
     def marshal(self):
         return {"x": self.x, "y": self.y, "z": self.z, "c": self.crop_id, "a": self.aux}
 
-    def unmarshal(self, data):
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.crop_id = data["c"]
-        self.aux = data["a"]
-
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.crop_id = data["c"]
+        instance.aux = data["a"]
+        return instance
 
 class HydroponicBedModelUpdatesEvent(CustomS2CEvent):
     name = "st:HBUPD"
@@ -59,6 +64,8 @@ class HydroponicBedModelUpdatesEvent(CustomS2CEvent):
     def marshal(self):
         return {"u": self.updates}
 
-    def unmarshal(self, data):
-        self.updates = data["u"]
-
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.updates = data["u"]
+        return instance

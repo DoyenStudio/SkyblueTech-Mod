@@ -21,11 +21,13 @@ class FreezerModeChangedEvent(CustomC2SEvent):
             "new_mode": self.new_mode
         }
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.new_mode = data["new_mode"]
-        self.player_id = data["__id__"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.dim = data["dim"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.new_mode = data["new_mode"]
+        instance.player_id = data["__id__"]
+        return instance

@@ -11,11 +11,14 @@ class DelServerPlayerEvent(ServerEvent):
     uid = 0 # type: int
     """玩家的netease uid，玩家的唯一标识"""
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.id = data["id"]
-        self.isTransfer = data["isTransfer"]
-        self.uid = data["uid"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> DelServerPlayerEvent
+        instance = cls()
+        instance.id = data["id"]
+        instance.isTransfer = data["isTransfer"]
+        instance.uid = data["uid"]
+        return instance
 
 
 class ChunkAcquireDiscardedServerEvent(ServerEvent):
@@ -32,13 +35,16 @@ class ChunkAcquireDiscardedServerEvent(ServerEvent):
     blockEntities = [] # type: list[dict]
     """ 随区块卸载而从世界移除的自定义方块实体的坐标的列表，列表元素dict包含posX，posY，posZ三个int表示自定义方块实体的坐标，blockName表示方块的identifier，包含命名空间及名称。注意事件触发时已经无法获取到这些方块实体的信息，仅供脚本资源回收用。 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.dimension = data["dimension"]
-        self.chunkPosX = data["chunkPosX"]
-        self.chunkPosZ = data["chunkPosZ"]
-        self.entities = data["entities"]
-        self.blockEntities = data["blockEntities"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ChunkAcquireDiscardedServerEvent
+        instance = cls()
+        instance.dimension = data["dimension"]
+        instance.chunkPosX = data["chunkPosX"]
+        instance.chunkPosZ = data["chunkPosZ"]
+        instance.entities = data["entities"]
+        instance.blockEntities = data["blockEntities"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -63,12 +69,15 @@ class ChunkLoadedServerEvent(ServerEvent):
     blockEntities = [] # type: list[dict]
     """ 随区块加载而加载进世界的自定义方块实体的坐标的列表，列表元素dict包含posX，posY，posZ三个int表示自定义方块实体的坐标，blockName表示方块的identifier，包含命名空间及名称 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.dimension = data["dimension"]
-        self.chunkPosX = data["chunkPosX"]
-        self.chunkPosZ = data["chunkPosZ"]
-        self.blockEntities = data["blockEntities"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ChunkLoadedServerEvent
+        instance = cls()
+        instance.dimension = data["dimension"]
+        instance.chunkPosX = data["chunkPosX"]
+        instance.chunkPosZ = data["chunkPosZ"]
+        instance.blockEntities = data["blockEntities"]
+        return instance
 
     def marshal(self):
         # type: () -> dict

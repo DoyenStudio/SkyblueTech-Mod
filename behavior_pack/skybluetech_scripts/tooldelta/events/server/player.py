@@ -20,16 +20,18 @@ class PlayerAttackEntityEvent(ServerEvent):
     isCrit = False # type: bool
     """ 本次攻击是否产生暴击,不支持修改 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.playerId = data["playerId"]
-        self.victimId = data["victimId"]
-        self.damage = data["damage"]
-        self.isValid = data["isValid"]
-        self.isKnockBack = data["isKnockBack"]
-        self.isCrit = data["isCrit"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PlayerAttackEntityEvent
+        instance = cls()
+        instance._orig = data
+        instance.playerId = data["playerId"]
+        instance.victimId = data["victimId"]
+        instance.damage = data["damage"]
+        instance.isValid = data["isValid"]
+        instance.isKnockBack = data["isKnockBack"]
+        instance.isCrit = data["isCrit"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -68,17 +70,20 @@ class ActuallyHurtServerEvent(ServerEvent):
     customTag = "" # type: str
     """ 使用Hurt接口传入的自定义伤害类型 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.srcId = data["srcId"]
-        self.projectileId = data["projectileId"]
-        self.entityId = data["entityId"]
-        self.damage = data["damage"]
-        self.invulnerableTime = data["invulnerableTime"]
-        self.lastHurt = data["lastHurt"]
-        self.cause = data["cause"]
-        self.customTag = data["customTag"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ActuallyHurtServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.srcId = data["srcId"]
+        instance.projectileId = data["projectileId"]
+        instance.entityId = data["entityId"]
+        instance.damage = data["damage"]
+        instance.invulnerableTime = data["invulnerableTime"]
+        instance.lastHurt = data["lastHurt"]
+        instance.cause = data["cause"]
+        instance.customTag = data["customTag"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -111,12 +116,15 @@ class PlayerHurtEvent(ServerEvent):
     cause = "" # type: str
     """ 伤害来源，详见Minecraft枚举值文档的ActorDamageCause """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.id = data["id"]
-        self.attacker = data["attacker"]
-        self.customTag = data["customTag"]
-        self.cause = data["cause"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PlayerHurtEvent
+        instance = cls()
+        instance.id = data["id"]
+        instance.attacker = data["attacker"]
+        instance.customTag = data["customTag"]
+        instance.cause = data["cause"]
+        return instance
 
     def marshal(self):
         # type: () -> dict

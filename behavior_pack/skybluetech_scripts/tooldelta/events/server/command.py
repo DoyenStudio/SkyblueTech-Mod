@@ -17,16 +17,20 @@ class CustomCommandTriggerServerEvent(ServerEvent):
     """ 设置自定义命令是否执行失败，默认为False，如果执行失败，返回信息以红色字体显示 """
     return_msg_key = "" # type: str
     """ 设置返回给玩家或命令方块的信息，也支持通过语言文件(.lang)定义，默认值为commands.custom.success(自定义命令执行成功) """
+    _orig = {}
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.command = data["command"]
-        self.args = data["args"]
-        self.variant = data["variant"]
-        self.origin = data["origin"]
-        self.return_failed = data["return_failed"]
-        self.return_msg_key = data["return_msg_key"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> CustomCommandTriggerServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.command = data["command"]
+        instance.args = data["args"]
+        instance.variant = data["variant"]
+        instance.origin = data["origin"]
+        instance.return_failed = data["return_failed"]
+        instance.return_msg_key = data["return_msg_key"]
+        return instance
 
     def marshal(self):
         # type: () -> dict

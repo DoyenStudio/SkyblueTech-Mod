@@ -13,16 +13,19 @@ class ClientNewSync(CustomC2SEvent):
     def __init__(self, sync_name=""):
         self.sync_name = sync_name
 
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ClientNewSync
+        instance = cls()
+        instance.sync_name = data["sync_name"]
+        instance.pid = data["pid"]
+        return instance
+
     def marshal(self):
         m = GetClient().CreateEventData()
         m["sync_name"] = self.sync_name
         m["pid"] = clientApi.GetLocalPlayerId()
         return m
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.sync_name = data["sync_name"]
-        self.pid = data["pid"]
 
 
 class ClientPopSync(CustomC2SEvent):
@@ -33,16 +36,19 @@ class ClientPopSync(CustomC2SEvent):
     def __init__(self, sync_name=""):
         self.sync_name = sync_name
 
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ClientPopSync
+        instance = cls()
+        instance.sync_name = data["sync_name"]
+        instance.pid = data["pid"]
+        return instance
+
     def marshal(self):
         m = GetClient().CreateEventData()
         m["sync_name"] = self.sync_name
         m["pid"] = clientApi.GetLocalPlayerId()
         return m
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.sync_name = data["sync_name"]
-        self.pid = data["pid"]
 
 
 class ServerDelSync(CustomS2CEvent):
@@ -51,14 +57,17 @@ class ServerDelSync(CustomS2CEvent):
     def __init__(self, sync_name=""):
         self.sync_name = sync_name
 
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerDelSync
+        instance = cls()
+        instance.sync_name = data["sync_name"]
+        return instance
+
     def marshal(self):
         m = GetServer().CreateEventData()
         m["sync_name"] = self.sync_name
         return m
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.sync_name = data["sync_name"]
 
 
 class S2CSyncDatas(CustomS2CEvent):
@@ -68,11 +77,14 @@ class S2CSyncDatas(CustomS2CEvent):
         # type: (list | None) -> None
         self.sync_datas = sync_datas or []
 
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> S2CSyncDatas
+        instance = cls()
+        instance.sync_datas = data["datas"]
+        return instance
+
     def marshal(self):
         m = GetServer().CreateEventData()
         m["datas"] = self.sync_datas
         return m
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.sync_datas = data["datas"]

@@ -6,7 +6,7 @@ from ..basic import CustomS2CEvent, CustomC2SEvent
 class TDRpcCallS2C(CustomS2CEvent):
     name = "td:RpcCallS2C"
 
-    def __init__(self, funcname, args, kwargs):
+    def __init__(self, funcname="", args=(), kwargs={}):
         self.funcname = funcname
         self.args = args
         self.kwargs = kwargs
@@ -17,13 +17,17 @@ class TDRpcCallS2C(CustomS2CEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        return cls(data["f"], data["a"], data["k"])
+        instance = cls()
+        instance.funcname = data["f"]
+        instance.args = data["a"]
+        instance.kwargs = data["k"]
+        return instance
 
 
 class TDRpcCallC2SRet(CustomC2SEvent):
     name = "td:RpcCallC2SRet"
 
-    def __init__(self, ret_value, error):
+    def __init__(self, ret_value=None, error=None):
         self.ret_value = ret_value
         self.error = error
 
@@ -32,5 +36,7 @@ class TDRpcCallC2SRet(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        return cls(data["r"], data["e"])
-
+        instance = cls()
+        instance.ret_value = data["r"]
+        instance.error = data["e"]
+        return instance

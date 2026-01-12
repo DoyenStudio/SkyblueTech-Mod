@@ -2,11 +2,10 @@
 
 from mod.common.component.blockPaletteComp import BlockPaletteComponent
 from ...define.block import BlockBasicInfo
-from ...no_runtime_typing import TYPE_CHECKING
 from ...internal import ServerComp, ServerLevelId
 from ..internal.cacher import MethodCacher
 
-if TYPE_CHECKING:
+if 0:
     from mod.server.blockEntityData import BlockEntityData
 
 _getBlockNew = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetBlockNew)

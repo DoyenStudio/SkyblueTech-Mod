@@ -24,17 +24,21 @@ class BlockRandomTickServerEvent(ServerEvent):
     dimensionId = 0 # type: int
     """实体维度"""
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.posX = data["posX"]
-        self.posY = data["posY"]
-        self.posZ = data["posZ"]
-        self.blockName = data["blockName"]
-        self.fullName = data["fullName"]
-        self.auxValue = data["auxValue"]
-        self.brightness = data["brightness"]
-        self.dimensionId = data["dimensionId"]
+    @classmethod
+    def unmarshal(
+        cls,
+        data, # type: dict
+    ):
+        instance = cls()
+        instance.posX = data["posX"]
+        instance.posY = data["posY"]
+        instance.posZ = data["posZ"]
+        instance.blockName = data["blockName"]
+        instance.fullName = data["fullName"]
+        instance.auxValue = data["auxValue"]
+        instance.brightness = data["brightness"]
+        instance.dimensionId = data["dimensionId"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -64,14 +68,16 @@ class ServerBlockEntityTickEvent(ServerEvent):
     posZ = 0 # type: int
     """该方块的z坐标"""
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.blockName = data["blockName"]
-        self.dimension = data["dimension"]
-        self.posX = data["posX"]
-        self.posY = data["posY"]
-        self.posZ = data["posZ"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerBlockEntityTickEvent
+        instance = cls()
+        instance.blockName = data["blockName"]
+        instance.dimension = data["dimension"]
+        instance.posX = data["posX"]
+        instance.posY = data["posY"]
+        instance.posZ = data["posZ"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -87,19 +93,26 @@ class ServerBlockEntityTickEvent(ServerEvent):
 class ServerPlaceBlockEntityEvent(ServerEvent):
     name = "ServerPlaceBlockEntityEvent"
 
-    def __init__(self, blockName="", dimension=0, posX=0, posY=0, posZ=0):
-        self.blockName = blockName
-        self.dimension = dimension
-        self.posX = posX
-        self.posY = posY
-        self.posZ = posZ
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerPlaceBlockEntityEvent
+        instance = cls()
+        instance.blockName = data["blockName"]
+        instance.dimension = data["dimension"]
+        instance.posX = data["posX"]
+        instance.posY = data["posY"]
+        instance.posZ = data["posZ"]
+        return instance
 
-    def unmarshal(self, data):  # type: (dict) -> None
-        self.blockName = data["blockName"]  # type: str
-        self.dimension = data["dimension"]  # type: int
-        self.posX = data["posX"]  # type: int
-        self.posY = data["posY"]  # type: int
-        self.posZ = data["posZ"]  # type: int
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "blockName": self.blockName,
+            "dimension": self.dimension,
+            "posX": self.posX,
+            "posY": self.posY,
+            "posZ": self.posZ,
+        }
 
 
 class ServerBlockUseEvent(ServerEvent):
@@ -130,22 +143,24 @@ class ServerBlockUseEvent(ServerEvent):
     dimensionId = 0 # type: int
     """维度id"""
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.playerId = data["playerId"]
-        self.blockName = data["blockName"]
-        self.aux = data["aux"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.clickX = data["clickX"]
-        self.clickY = data["clickY"]
-        self.clickZ = data["clickZ"]
-        self.face = data["face"]
-        self.item = Item.from_dict(data["itemDict"])
-        self.dimensionId = data["dimensionId"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerBlockUseEvent
+        instance = cls()
+        instance._orig = data  # type: ignore
+        instance.playerId = data["playerId"]
+        instance.blockName = data["blockName"]
+        instance.aux = data["aux"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.clickX = data["clickX"]
+        instance.clickY = data["clickY"]
+        instance.clickZ = data["clickZ"]
+        instance.face = data["face"]
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.dimensionId = data["dimensionId"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -172,40 +187,42 @@ class ServerBlockUseEvent(ServerEvent):
 class BlockNeighborChangedServerEvent(ServerEvent):
     name = "BlockNeighborChangedServerEvent"
 
-    def __init__(self,
-                 dimensionId=0, posX=0, posY=0, posZ=0,
-                 blockName="", auxValue=0,
-                 neighborPosX=0, neighborPosY=0, neighborPosZ=0,
-                 fromBlockName="", fromBlockAuxValue=0, toBlockName="", toAuxValue=0):
-        self.dimensionId = dimensionId
-        self.posX = posX
-        self.posY = posY
-        self.posZ = posZ
-        self.blockName = blockName
-        self.auxValue = auxValue
-        self.neighborPosX = neighborPosX
-        self.neighborPosY = neighborPosY
-        self.neighborPosZ = neighborPosZ
-        self.fromBlockName = fromBlockName
-        self.toBlockName = toBlockName
-        self.fromBlockAuxValue = fromBlockAuxValue
-        self.toAuxValue = toAuxValue
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> BlockNeighborChangedServerEvent
+        instance = cls()
+        instance.dimensionId = data["dimensionId"]
+        instance.posX = data["posX"]
+        instance.posY = data["posY"]
+        instance.posZ = data["posZ"]
+        instance.blockName = data["blockName"]
+        instance.auxValue = data["auxValue"]
+        instance.neighborPosX = data["neighborPosX"]
+        instance.neighborPosY = data["neighborPosY"]
+        instance.neighborPosZ = data["neighborPosZ"]
+        instance.fromBlockName = data["fromBlockName"]
+        instance.fromBlockAuxValue = data["fromBlockAuxValue"]
+        instance.toBlockName = data["toBlockName"]
+        instance.toAuxValue = data["toAuxValue"]
+        return instance
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.dimensionId = data["dimensionId"]  # type: int
-        self.posX = data["posX"]  # type: int
-        self.posY = data["posY"]  # type: int
-        self.posZ = data["posZ"]  # type: int
-        self.blockName = data["blockName"]  # type: str
-        self.auxValue = data["auxValue"]  # type: int
-        self.neighborPosX = data["neighborPosX"]  # type: int
-        self.neighborPosY = data["neighborPosY"]  # type: int
-        self.neighborPosZ = data["neighborPosZ"]  # type: int
-        self.fromBlockName = data["fromBlockName"]  # type: str
-        self.fromBlockAuxValue = data["fromBlockAuxValue"]  # type: int
-        self.toBlockName = data["toBlockName"]  # type: str
-        self.toAuxValue = data["toAuxValue"]  # type: int
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "dimensionId": self.dimensionId,
+            "posX": self.posX,
+            "posY": self.posY,
+            "posZ": self.posZ,
+            "blockName": self.blockName,
+            "auxValue": self.auxValue,
+            "neighborPosX": self.neighborPosX,
+            "neighborPosY": self.neighborPosY,
+            "neighborPosZ": self.neighborPosZ,
+            "fromBlockName": self.fromBlockName,
+            "fromBlockAuxValue": self.fromBlockAuxValue,
+            "toBlockName": self.toBlockName,
+            "toAuxValue": self.toAuxValue,
+        }
 
 
 class ServerPlayerTryDestroyBlockEvent(ServerEvent):
@@ -230,19 +247,20 @@ class ServerPlayerTryDestroyBlockEvent(ServerEvent):
     spawnResources = False # type: bool
     """是否生成掉落物，默认为True，在脚本层设置为False就能取消生成掉落物"""
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.face = data["face"]
-        self.fullName = data["fullName"]
-        self.auxData = data["auxData"]
-        self.playerId = data["playerId"]
-        self.dimensionId = data["dimensionId"]
-        self.spawnResources = data["spawnResources"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerPlayerTryDestroyBlockEvent
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.face = data["face"]
+        instance.fullName = data["fullName"]
+        instance.auxData = data["auxData"]
+        instance.playerId = data["playerId"]
+        instance.dimensionId = data["dimensionId"]
+        instance.spawnResources = data["spawnResources"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -279,15 +297,17 @@ class BlockRemoveServerEvent(ServerEvent):
     dimension = 0 # type: int
     """该方块所在的维度"""
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.fullName = data["fullName"]
-        self.auxValue = data["auxValue"]
-        self.dimension = data["dimension"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> BlockRemoveServerEvent
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.fullName = data["fullName"]
+        instance.auxValue = data["auxValue"]
+        instance.dimension = data["dimension"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -336,21 +356,22 @@ class ServerEntityTryPlaceBlockEvent(ServerEvent):
     clickZ = 0.0 # type: float
     """ 点击点的z比例位置 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.fullName = data["fullName"]
-        self.auxData = data["auxData"]
-        self.entityId = data["entityId"]
-        self.dimensionId = data["dimensionId"]
-        self.face = data["face"]
-        self.clickX = data["clickX"]
-        self.clickY = data["clickY"]
-        self.clickZ = data["clickZ"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerEntityTryPlaceBlockEvent
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.fullName = data["fullName"]
+        instance.auxData = data["auxData"]
+        instance.entityId = data["entityId"]
+        instance.dimensionId = data["dimensionId"]
+        instance.face = data["face"]
+        instance.clickX = data["clickX"]
+        instance.clickY = data["clickY"]
+        instance.clickZ = data["clickZ"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -393,18 +414,20 @@ class DestroyBlockEvent(ServerEvent):
     dropEntityIds = [] # type: list[str]
     """ 掉落物实体id列表 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.face = data["face"]
-        self.fullName = data["fullName"]
-        self.auxData = data["auxData"]
-        self.playerId = data["playerId"]
-        self.dimensionId = data["dimensionId"]
-        self.dropEntityIds = data["dropEntityIds"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> DestroyBlockEvent
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.face = data["face"]
+        instance.fullName = data["fullName"]
+        instance.auxData = data["auxData"]
+        instance.playerId = data["playerId"]
+        instance.dimensionId = data["dimensionId"]
+        instance.dropEntityIds = data["dropEntityIds"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -441,16 +464,19 @@ class EntityPlaceBlockAfterServerEvent(ServerEvent):
     face = 0 # type: int
     """ 点击方块的面，参考Facing枚举 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.fullName = data["fullName"]
-        self.auxData = data["auxData"]
-        self.entityId = data["entityId"]
-        self.dimensionId = data["dimensionId"]
-        self.face = data["face"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> EntityPlaceBlockAfterServerEvent
+        instance = cls()
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.fullName = data["fullName"]
+        instance.auxData = data["auxData"]
+        instance.entityId = data["entityId"]
+        instance.dimensionId = data["dimensionId"]
+        instance.face = data["face"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -490,19 +516,22 @@ class PistonActionServerEvent(ServerEvent):
     entityList = [] # type: list[str]
     """ 活塞运动影响到产生被移动或被破坏效果的实体的ID列表 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.action = data["action"]
-        self.pistonFacing = data["pistonFacing"]
-        self.pistonMoveFacing = data["pistonMoveFacing"]
-        self.dimensionId = data["dimensionId"]
-        self.pistonX = data["pistonX"]
-        self.pistonY = data["pistonY"]
-        self.pistonZ = data["pistonZ"]
-        self.blockList = data["blockList"]
-        self.breakBlockList = data["breakBlockList"]
-        self.entityList = data["entityList"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PistonActionServerEvent
+        instance = cls()
+        instance._orig = data  # type: ignore
+        instance.action = data["action"]
+        instance.pistonFacing = data["pistonFacing"]
+        instance.pistonMoveFacing = data["pistonMoveFacing"]
+        instance.dimensionId = data["dimensionId"]
+        instance.pistonX = data["pistonX"]
+        instance.pistonY = data["pistonY"]
+        instance.pistonZ = data["pistonZ"]
+        instance.blockList = data["blockList"]
+        instance.breakBlockList = data["breakBlockList"]
+        instance.entityList = data["entityList"]
+        return instance
 
     def marshal(self):
         # type: () -> dict

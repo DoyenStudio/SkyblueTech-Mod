@@ -18,11 +18,14 @@ class OnKeyPressInGame(ClientEvent):
     isDown = 1 # type: int
     """ 是否按下，按下为1，弹起为0 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.screenName = data["screenName"]
-        self.key = int(data["key"])
-        self.isDown = int(data["isDown"])
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> OnKeyPressInGame
+        instance = cls()
+        instance.screenName = data["screenName"]
+        instance.key = int(data["key"])
+        instance.isDown = int(data["isDown"])
+        return instance
 
     def marshal(self):
         # type: () -> dict

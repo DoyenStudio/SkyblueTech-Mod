@@ -4,9 +4,12 @@ from ..internal import GetServer, GetClient
 class BaseEvent(object):
     name = "Event"
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        raise NotImplementedError
+    @classmethod
+    def unmarshal(
+        cls,
+        data, # type: dict
+    ): 
+        return cls()
 
 
 class ServerEvent(BaseEvent):
@@ -93,11 +96,11 @@ _clientListenerModLoaded = False
 def _requireServerListenerModule():
     global ServerListenEvent, _serverListenerModLoaded
     if not _serverListenerModLoaded:
-        from ..server_event_listener import ListenEvent as ServerListenEvent
+        from .server_event_listener import ListenEvent as ServerListenEvent
         _serverListenerModLoaded = True
 
 def _requireClientListenerModule():
     global ClientListenEvent, _clientListenerModLoaded
     if not _clientListenerModLoaded:
-        from ..client_event_listener import ListenEvent as ClientListenEvent
+        from .client_event_listener import ListenEvent as ClientListenEvent
         _clientListenerModLoaded = True

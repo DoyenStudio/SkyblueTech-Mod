@@ -6,8 +6,9 @@ from ..basic import ClientEvent
 class UiInitFinishedEvent(ClientEvent):
     name = "UiInitFinished"
 
-    def unmarshal(self, _):
-        pass
+    @classmethod
+    def unmarshal(cls, _):
+        return cls()
 
 
 class GridComponentSizeChangedClientEvent(ClientEvent):
@@ -16,9 +17,11 @@ class GridComponentSizeChangedClientEvent(ClientEvent):
     path = '' # type: str
     """ grid网格所在的路径（从UI根节点算起） """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.path = data["path"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.path = data["path"]
+        return instance
 
     def marshal(self):
         # type: () -> dict

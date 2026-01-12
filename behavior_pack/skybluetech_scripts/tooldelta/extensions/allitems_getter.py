@@ -16,8 +16,11 @@ class GetAllItemsRequest(CustomC2SEvent):
     def marshal(self):
         return {}
 
-    def unmarshal(self, data):
-        self.pid = data["__id__"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.pid = data["__id__"]
+        return instance
 
 
 class GetAllItemsResponse(CustomS2CEvent):
@@ -31,9 +34,12 @@ class GetAllItemsResponse(CustomS2CEvent):
     def marshal(self):
         return {"i": self.items, "ok": self.ok}
 
-    def unmarshal(self, data):
-        self.items = data["i"]
-        self.ok = data["ok"]
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.items = data["i"]
+        instance.ok = data["ok"]
+        return instance
 
 @DelServerPlayerEvent.Listen()
 def onDelPlayer(event):

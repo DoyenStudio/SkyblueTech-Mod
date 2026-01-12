@@ -23,16 +23,19 @@ class PlayerTryPutCustomContainerItemClientEvent(ClientEvent):
     """ 容器方块z坐标 """
 
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.item = Item.from_dict(data["itemDict"])
-        self.collectionName = data["collectionName"]
-        self.collectionType = data["collectionType"]
-        self.collectionIndex = data["collectionIndex"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PlayerTryPutCustomContainerItemClientEvent
+        instance = cls()
+        instance._orig = data
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.collectionName = data["collectionName"]
+        instance.collectionType = data["collectionType"]
+        instance.collectionIndex = data["collectionIndex"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -70,16 +73,19 @@ class PlayerTryRemoveCustomContainerItemClientEvent(ClientEvent):
     """ 容器方块z坐标 """
 
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.item = Item.from_dict(data["itemDict"])
-        self.collectionName = data["collectionName"]
-        self.collectionType = data["collectionType"]
-        self.collectionIndex = data["collectionIndex"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PlayerTryRemoveCustomContainerItemClientEvent
+        instance = cls()
+        instance._orig = data
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.collectionName = data["collectionName"]
+        instance.collectionType = data["collectionType"]
+        instance.collectionIndex = data["collectionIndex"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -108,11 +114,14 @@ class ClientItemTryUseEvent(ClientEvent):
     """ 使用的物品的物品信息 """
 
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.playerId = data["playerId"]
-        self.item = Item.from_dict(data["itemDict"])
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ClientItemTryUseEvent
+        instance = cls()
+        instance._orig = data
+        instance.playerId = data["playerId"]
+        instance.item = Item.from_dict(data["itemDict"])
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -139,7 +148,7 @@ class ClientItemUseOnEvent(ClientEvent):
     y = 0 # type: int
     """ 方块 y 坐标值 """
     z = 0 # type: int
-    """ 方块 z 坐标值 """
+    """ 方块 z 坐标값 """
     blockName = '' # type: str
     """ 方块的identifier """
     blockAuxValue = 0 # type: int
@@ -156,21 +165,24 @@ class ClientItemUseOnEvent(ClientEvent):
     """ 设为True可取消物品的使用 """
 
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.entityId = data["entityId"]
-        self.item = Item.from_dict(data["itemDict"])
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.blockName = data["blockName"]
-        self.blockAuxValue = data["blockAuxValue"]
-        self.face = data["face"]
-        self.clickX = data["clickX"]
-        self.clickY = data["clickY"]
-        self.clickZ = data["clickZ"]
-        self.ret = data["ret"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ClientItemUseOnEvent
+        instance = cls()
+        instance._orig = data
+        instance.entityId = data["entityId"]
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.blockName = data["blockName"]
+        instance.blockAuxValue = data["blockAuxValue"]
+        instance.face = data["face"]
+        instance.clickX = data["clickX"]
+        instance.clickY = data["clickY"]
+        instance.clickZ = data["clickZ"]
+        instance.ret = data["ret"]
+        return instance
 
     def marshal(self):
         # type: () -> dict

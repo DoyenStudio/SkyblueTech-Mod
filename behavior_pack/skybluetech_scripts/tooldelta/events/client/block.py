@@ -26,18 +26,21 @@ class ClientBlockUseEvent(ClientEvent):
     """ 点击点的z比例位置 """
 
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.playerId = data["playerId"]
-        self.blockName = data["blockName"]
-        self.aux = data["aux"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.clickX = data["clickX"]
-        self.clickY = data["clickY"]
-        self.clickZ = data["clickZ"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ClientBlockUseEvent
+        instance = cls()
+        instance._orig = data
+        instance.playerId = data["playerId"]
+        instance.blockName = data["blockName"]
+        instance.aux = data["aux"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.clickX = data["clickX"]
+        instance.clickY = data["clickY"]
+        instance.clickZ = data["clickZ"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -73,13 +76,16 @@ class ModBlockEntityLoadedClientEvent(ClientEvent):
     """ 方块的identifier，包含命名空间及名称 """
 
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.posX = data["posX"]
-        self.posY = data["posY"]
-        self.posZ = data["posZ"]
-        self.dimensionId = data["dimensionId"]
-        self.blockName = data["blockName"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ModBlockEntityLoadedClientEvent
+        instance = cls()
+        instance.posX = data["posX"]
+        instance.posY = data["posY"]
+        instance.posZ = data["posZ"]
+        instance.dimensionId = data["dimensionId"]
+        instance.blockName = data["blockName"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -106,13 +112,16 @@ class ModBlockEntityRemoveClientEvent(ClientEvent):
     """ 方块的identifier，包含命名空间及名称 """
 
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.posX = data["posX"]
-        self.posY = data["posY"]
-        self.posZ = data["posZ"]
-        self.dimensionId = data["dimensionId"]
-        self.blockName = data["blockName"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ModBlockEntityRemoveClientEvent
+        instance = cls()
+        instance.posX = data["posX"]
+        instance.posY = data["posY"]
+        instance.posZ = data["posZ"]
+        instance.dimensionId = data["dimensionId"]
+        instance.blockName = data["blockName"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -143,16 +152,19 @@ class PlayerTryDestroyBlockClientEvent(ClientEvent):
     playerId = "" # type: str
     """ 试图破坏方块的玩家ID """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.face = data["face"]
-        self.blockName = data["blockName"]
-        self.auxData = data["auxData"]
-        self.playerId = data["playerId"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PlayerTryDestroyBlockClientEvent
+        instance = cls()
+        instance._orig = data
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.face = data["face"]
+        instance.blockName = data["blockName"]
+        instance.auxData = data["auxData"]
+        instance.playerId = data["playerId"]
+        return instance
 
     def marshal(self):
         # type: () -> dict

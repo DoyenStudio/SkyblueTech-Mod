@@ -25,18 +25,20 @@ class PlayerTryPutCustomContainerItemServerEvent(ServerEvent):
     z = 0 # type: int
     """ 容器方块z坐标 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.item = Item.from_dict(data["itemDict"])
-        self.collectionName = data["collectionName"]
-        self.collectionType = data["collectionType"]
-        self.collectionIndex = data["collectionIndex"]
-        self.playerId = data["playerId"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PlayerTryPutCustomContainerItemServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.collectionName = data["collectionName"]
+        instance.collectionType = data["collectionType"]
+        instance.collectionIndex = data["collectionIndex"]
+        instance.playerId = data["playerId"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -83,18 +85,20 @@ class PlayerTryRemoveCustomContainerItemServerEvent(ServerEvent):
     z = 0 # type: int
     """ 容器方块z坐标 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.item = Item.from_dict(data["itemDict"])
-        self.collectionName = data["collectionName"]
-        self.collectionType = data["collectionType"]
-        self.collectionIndex = data["collectionIndex"]
-        self.playerId = data["playerId"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> PlayerTryRemoveCustomContainerItemServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.collectionName = data["collectionName"]
+        instance.collectionType = data["collectionType"]
+        instance.collectionIndex = data["collectionIndex"]
+        instance.playerId = data["playerId"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -131,15 +135,17 @@ class ContainerItemChangedServerEvent(ServerEvent):
     newItem = Item("")
     """ 新物品 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.pos = data["pos"]
-        self.containerType = data["containerType"]
-        self.slot = data["slot"]
-        self.dimensionId = data["dimensionId"]
-        self.oldItem = Item.from_dict(data["oldItemDict"])
-        self.newItem = Item.from_dict(data["newItemDict"])
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ContainerItemChangedServerEvent
+        instance = cls()
+        instance.pos = data["pos"]
+        instance.containerType = data["containerType"]
+        instance.slot = data["slot"]
+        instance.dimensionId = data["dimensionId"]
+        instance.oldItem = Item.from_dict(data["oldItemDict"])
+        instance.newItem = Item.from_dict(data["newItemDict"])
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -175,16 +181,18 @@ class ItemPushInCustomContainerServerEvent(ServerEvent):
     z = 0 # type: int
     """ 容器方块z坐标 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.item = Item.from_dict(data["itemDict"])
-        self.collectionName = data["collectionName"]
-        self.collectionIndex = data["collectionIndex"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ItemPushInCustomContainerServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.collectionName = data["collectionName"]
+        instance.collectionIndex = data["collectionIndex"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -219,17 +227,19 @@ class ItemPullOutCustomContainerServerEvent(ServerEvent):
     z = 0 # type: int
     """ 容器方块z坐标 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.item = Item.from_dict(data["itemDict"])
-        self.collectionName = data["collectionName"]
-        self.collectionIndex = data["collectionIndex"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.cancel = data["cancel"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ItemPullOutCustomContainerServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.collectionName = data["collectionName"]
+        instance.collectionIndex = data["collectionIndex"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.cancel = data["cancel"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -277,22 +287,24 @@ class ServerItemUseOnEvent(ServerEvent):
     clickZ = 0.0 # type: float
     """ 点击点的z比例位置 """
 
-
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.entityId = data["entityId"]
-        self.item = Item.from_dict(data["itemDict"])
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.blockName = data["blockName"]
-        self.blockAuxValue = data["blockAuxValue"]
-        self.face = data["face"]
-        self.dimensionId = data["dimensionId"]
-        self.clickX = data["clickX"]
-        self.clickY = data["clickY"]
-        self.clickZ = data["clickZ"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerItemUseOnEvent
+        instance = cls()
+        instance._orig = data
+        instance.entityId = data["entityId"]
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.blockName = data["blockName"]
+        instance.blockAuxValue = data["blockAuxValue"]
+        instance.face = data["face"]
+        instance.dimensionId = data["dimensionId"]
+        instance.clickX = data["clickX"]
+        instance.clickY = data["clickY"]
+        instance.clickZ = data["clickZ"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -336,12 +348,15 @@ class ActorAcquiredItemServerEvent(ServerEvent):
     acquireMethod = 0 # type: int
     """ 获得物品的方法，详见ItemAcquisitionMethod枚举 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.actor = data["actor"]
-        self.secondaryActor = data["secondaryActor"]
-        self.item = Item.from_dict(data["itemDict"])
-        self.acquireMethod = data["acquireMethod"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ActorAcquiredItemServerEvent
+        instance = cls()
+        instance.actor = data["actor"]
+        instance.secondaryActor = data["secondaryActor"]
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.acquireMethod = data["acquireMethod"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -363,11 +378,14 @@ class OnCarriedNewItemChangedServerEvent(ServerEvent):
     playerId = '' # type: str
     """ 玩家 entityId """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.oldItem = Item.from_dict(data["oldItemDict"]) if data["oldItemDict"] else None
-        self.newItem = Item.from_dict(data["newItemDict"]) if data["newItemDict"] else None
-        self.playerId = data["playerId"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> OnCarriedNewItemChangedServerEvent
+        instance = cls()
+        instance.oldItem = Item.from_dict(data["oldItemDict"]) if data["oldItemDict"] else None
+        instance.newItem = Item.from_dict(data["newItemDict"]) if data["newItemDict"] else None
+        instance.playerId = data["playerId"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -392,14 +410,17 @@ class ItemDurabilityChangedServerEvent(ServerEvent):
     canChange = False # type: bool
     """ 是否支持修改，为true时支持通过durability修改，为false时不支持 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.entityId = data["entityId"]
-        self.item = Item.from_dict(data["itemDict"])
-        self.durabilityBefore = data["durabilityBefore"]
-        self.durability = data["durability"]
-        self.canChange = data["canChange"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ItemDurabilityChangedServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.entityId = data["entityId"]
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.durabilityBefore = data["durabilityBefore"]
+        instance.durability = data["durability"]
+        instance.canChange = data["canChange"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -430,11 +451,14 @@ class ServerItemTryUseEvent(ServerEvent):
     item = Item("") # type: Item
     """ 使用的物品的物品信息字典 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.playerId = data["playerId"]
-        self.item = Item.from_dict(data["itemDict"])
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> ServerItemTryUseEvent
+        instance = cls()
+        instance._orig = data
+        instance.playerId = data["playerId"]
+        instance.item = Item.from_dict(data["itemDict"])
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -466,12 +490,15 @@ class CraftItemOutputChangeServerEvent(ServerEvent):
     screenContainerType = 0 # type: int
     """ 当前界面类型, 类型含义见：容器类型枚举 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self._orig = data
-        self.playerId = data["playerId"]
-        self.item = Item.from_dict(data["itemDict"])
-        self.screenContainerType = data["screenContainerType"]
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> CraftItemOutputChangeServerEvent
+        instance = cls()
+        instance._orig = data
+        instance.playerId = data["playerId"]
+        instance.item = Item.from_dict(data["itemDict"])
+        instance.screenContainerType = data["screenContainerType"]
+        return instance
 
     def marshal(self):
         # type: () -> dict
@@ -499,12 +526,15 @@ class UIContainerItemChangedServerEvent(ServerEvent):
     newItem = Item("") # type: Item
     """ 生成的物品，格式参考物品信息字典 """
 
-    def unmarshal(self, data):
-        # type: (dict) -> None
-        self.playerId = data["playerId"]
-        self.slot = data["slot"]
-        self.oldItem = Item.from_dict(data["oldItemDict"])
-        self.newItem = Item.from_dict(data["newItemDict"])
+    @classmethod
+    def unmarshal(cls, data):
+        # type: (dict) -> UIContainerItemChangedServerEvent
+        instance = cls()
+        instance.playerId = data["playerId"]
+        instance.slot = data["slot"]
+        instance.oldItem = Item.from_dict(data["oldItemDict"])
+        instance.newItem = Item.from_dict(data["newItemDict"])
+        return instance
 
     def marshal(self):
         # type: () -> dict

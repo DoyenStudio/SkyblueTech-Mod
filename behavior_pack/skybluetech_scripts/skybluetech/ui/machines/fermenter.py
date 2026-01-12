@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, Binder
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from ...define.events.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
 from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
@@ -24,7 +24,7 @@ MAX_VOLUME_BAR_NODE = MAIN_PATH / "pool/max_volume_bar"
 VOLUME_SLIDER_NODE = MAIN_PATH / "volume_slider"
 
 
-@RegistProxyScreen("FermenterUI.main")
+@RegistToolDeltaScreen("FermenterUI.main", is_proxy=True)
 class FermenterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

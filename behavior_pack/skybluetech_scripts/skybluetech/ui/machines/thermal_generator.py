@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.thermal_generator import ThermalGeneratorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateFlame
@@ -9,7 +9,7 @@ POWER_NODE = MAIN_PATH / "power_bar"
 FLAME_NODE = MAIN_PATH / "flame"
 
 
-@RegistProxyScreen("ThermalGeneratorUI.main")
+@RegistToolDeltaScreen("ThermalGeneratorUI.main", is_proxy=True)
 class ThermalGeneratorUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

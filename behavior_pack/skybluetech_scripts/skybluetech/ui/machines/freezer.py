@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.define import Item
 from ...define.events.freezer import FreezerModeChangedEvent
 from ...machinery_def.freezer import recipes
@@ -17,7 +17,7 @@ FLUID_NODE = MAIN_PATH / "fluid_disp"
 MODE_CHANGE_BTN_NODE = MAIN_PATH / "mode_change"
 
 
-@RegistProxyScreen("FreezerUI.main")
+@RegistToolDeltaScreen("FreezerUI.main", is_proxy=True)
 class FreezerUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

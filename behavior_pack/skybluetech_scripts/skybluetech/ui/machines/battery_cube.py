@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.battery_cube import BatteryCubeUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar
@@ -8,7 +8,7 @@ from .utils import UpdatePowerBar
 POWER_NODE = MAIN_PATH / "power_bar"
 
 
-@RegistProxyScreen("BatteryCubeUI.main")
+@RegistToolDeltaScreen("BatteryCubeUI.main", is_proxy=True)
 class BatteryCubeUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

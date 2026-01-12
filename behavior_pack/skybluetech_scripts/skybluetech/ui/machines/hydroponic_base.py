@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.api.client import NewSingleBlockPalette, CombineBlockPaletteToGeometry
 from ...ui_sync.machines.hydroponic_base import HydroponicBaseUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
@@ -9,7 +9,7 @@ FLUID_0_NODE = MAIN_PATH / "fluid0"
 FLUID_1_NODE = MAIN_PATH / "fluid1"
 
 
-@RegistProxyScreen("HydroponicBaseUI.main")
+@RegistToolDeltaScreen("HydroponicBaseUI.main", is_proxy=True)
 class HydroponicBaseUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

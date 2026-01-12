@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.alloy_furnace import AlloyFurnaceUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
@@ -13,7 +13,7 @@ PRGS_NODE = MAIN_PATH / "progress"
 FLAME_NODE = MAIN_PATH / "flame"
 
 
-@RegistProxyScreen("AlloyFurnaceUI.main")
+@RegistToolDeltaScreen("AlloyFurnaceUI.main", is_proxy=True)
 class AlloyFurnaceUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

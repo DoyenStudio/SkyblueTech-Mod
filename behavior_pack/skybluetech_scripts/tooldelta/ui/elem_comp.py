@@ -17,23 +17,20 @@ from mod.client.ui.controls.textEditBoxUIControl import TextEditBoxUIControl
 from mod.client.ui.controls.gridUIControl import GridUIControl
 from mod.client.ui.controls.labelUIControl import LabelUIControl
 from mod.client.ui.controls.neteasePaperDollUIControl import NeteasePaperDollUIControl
-from mod.client.ui.controls.baseUIControl import BaseUIControl
 from mod.client.ui.controls.scrollViewUIControl import ScrollViewUIControl
 from mod.client.ui.controls.sliderUIControl import SliderUIControl
 from ..define import UICtrlPosData, Item
 from ..api.timer import ExecLater
-from ..api.client.ui import GetToggleMode
 from ..events.client.ui import GridComponentSizeChangedClientEvent
-from ..no_runtime_typing import TYPE_CHECKING
-from .functions import addElement, removeElement
 from .utils import SNode
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from typing import Callable, Any, Literal
     from .screen_comp import UScreenNode
     from .proxy_screen import UScreenProxy
-    ScreenLike = UScreenNode | UScreenProxy
+    from .general_screen import ToolDeltaScreen
+    ScreenLike = UScreenNode | UScreenProxy | ToolDeltaScreen
 # TYPE_CHECKING END
 
 
@@ -143,7 +140,12 @@ class UBaseCtrl(object):
 
     def AddElement(self, element_def_name, element_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
-        return UBaseCtrl(self._root, addElement(self._root, element_def_name, element_name, self.base, force_update))
+        return UBaseCtrl(
+            self._root,
+            self._root.base.CreateChildControl(
+                element_def_name, element_name, self.base, force_update
+            )
+        )
 
     def addDestroyListener(self, func):
         # type: (Callable[[], None]) -> None
@@ -158,7 +160,7 @@ class UBaseCtrl(object):
             return False
         self._removed = True
         self.callDestroy()
-        return removeElement(self._root, self.base)
+        return self._root.base.RemoveChildControl(self.base)
 
     def GetElement(self, path):
         # type: (str | SNode) -> UBaseCtrl

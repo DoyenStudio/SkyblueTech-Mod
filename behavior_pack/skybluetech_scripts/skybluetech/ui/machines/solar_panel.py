@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.solar_panel import SolarPanelUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressT2B
@@ -10,7 +10,7 @@ SUN_NODE = MAIN_PATH / "progress"
 TEXT_NODE = MAIN_PATH / "text"
 
 
-@RegistProxyScreen("SolarPanelUI.main")
+@RegistToolDeltaScreen("SolarPanelUI.main", is_proxy=True)
 class SolarPanelUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

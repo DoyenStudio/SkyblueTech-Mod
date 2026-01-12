@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.forester import ForesterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar
@@ -8,7 +8,7 @@ from .utils import UpdatePowerBar
 POWER_NODE = MAIN_PATH / "power_bar"
 
 
-@RegistProxyScreen("ForesterUI.main")
+@RegistToolDeltaScreen("ForesterUI.main", is_proxy=True)
 class ForesterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

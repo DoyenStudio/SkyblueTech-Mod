@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.pump import PumpUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, InitFluidDisplay
@@ -9,7 +9,7 @@ POWER_NODE = MAIN_PATH / "power_bar"
 FLUID_NODE = MAIN_PATH / "fluid_display"
 
 
-@RegistProxyScreen("PumpUI.main")
+@RegistToolDeltaScreen("PumpUI.main", is_proxy=True)
 class PumpUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

@@ -6,9 +6,7 @@ from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
 from skybluetech_scripts.tooldelta.events import CustomC2SEvent
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent, OnKeyPressInGame
-from skybluetech_scripts.tooldelta.ui import SNode, SCREEN_BASE_PATH
-from skybluetech_scripts.tooldelta.ui.screen_comp import UScreenNode
-from skybluetech_scripts.tooldelta.ui.proxy_screen import UScreenProxy
+from skybluetech_scripts.tooldelta.ui import SNode, SCREEN_BASE_PATH, UScreenNode, UScreenProxy, ToolDeltaScreen
 from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync
 
 KeyEnum = GetMinecraftEnum().KeyBoardType
@@ -84,10 +82,10 @@ class MachinePanelUI(UScreenNode):
 
 
 
-class MachinePanelUIProxy(UScreenProxy):
+class MachinePanelUIProxy(ToolDeltaScreen):
     def __init__(self, screenName, screenNode):
         global GPlayerId, GPos
-        UScreenProxy.__init__(self, screenName, screenNode)
+        ToolDeltaScreen.__init__(self, screenName, screenNode)
         self.sync = None # type: S2CSync | None
         if GPos is None:
             raise RuntimeError("Player do not click machine but create UI")
@@ -96,16 +94,16 @@ class MachinePanelUIProxy(UScreenProxy):
     
     def OnCreate(self):
         """ 超类方法, 告诉服务端 UI 开启的同时创建一个退出按钮回调。 """
-        UScreenProxy.OnCreate(self)
-        NotifyToServer(UIOpen(self.bound_proxier))
+        # UScreenProxy.OnCreate(self)
+        # NotifyToServer(UIOpen(self.bound_proxier))
         self.inited = True
         if self.sync:
             self.sync.Activate()
 
     def OnDestroy(self):
         """ 超类方法, 告诉服务端 UI 关闭。 """
-        UScreenProxy.OnDestroy(self)
-        NotifyToServer(UIClose(self.bound_proxier))
+        # UScreenProxy.OnDestroy(self)
+        # NotifyToServer(UIClose(self.bound_proxier))
         if self.sync:
             self.sync.Deactivate()
 
@@ -114,10 +112,8 @@ class MachinePanelUIProxy(UScreenProxy):
 
     def OnCurrentPageKeyEvent(self, event):
         # type: (OnKeyPressInGame) -> None
-        UScreenProxy.OnCurrentPageKeyEvent(self, event)
-        if event.key == _ESCAPE:
-            return
-            self.OnExit()
+        # UScreenProxy.OnCurrentPageKeyEvent(self, event)
+        pass
 
     def _exitLater(self):
         ExecLater(0, self.RemoveUI)

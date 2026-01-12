@@ -5,7 +5,6 @@ from ..internal import GetModName
 from ..events.client.control import OnKeyPressInGame
 from .utils import SNode
 from .elem_comp import UBaseCtrl
-from .functions import addElement
 
 
 ScreenNode = clientApi.GetScreenNodeCls()
@@ -67,7 +66,10 @@ class UScreenNode(ScreenNode):
 
     def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
-        return UBaseCtrl(self, addElement(self, ctrl_def_name, ctrl_name, None, force_update))
+        return UBaseCtrl(
+            self,
+            self.base.CreateChildControl(ctrl_def_name, ctrl_name, None, force_update) # pyright: ignore[reportArgumentType]
+        )
 
     def GetElement(self, path):
         # type: (str | SNode) -> UBaseCtrl

@@ -2,7 +2,7 @@
 #
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.digger import DiggerUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R
@@ -13,7 +13,7 @@ BLOCK_DISP_NODE = MAIN_PATH / "block_disp"
 WORK_STATUS_NODE = MAIN_PATH / "work_status"
 
 
-@RegistProxyScreen("DiggerUI.main")
+@RegistToolDeltaScreen("DiggerUI.main", is_proxy=True)
 class DiggerUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

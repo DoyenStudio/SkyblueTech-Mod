@@ -6,7 +6,6 @@ from mod.client.ui.screenNode import ScreenNode
 from mod_log import logger
 from ..events.client.control import OnKeyPressInGame
 from .elem_comp import UBaseCtrl
-from .functions import addElement
 from .utils import SNode
 
 
@@ -41,7 +40,6 @@ class UScreenProxy(CustomUIScreenProxy):
         from .pool import _removeActiveProxyScreen
         if not self.activated:
             return
-        
         _removeActiveProxyScreen(self)
         # self.activated = False
         if clientApi.GetTopUINode() is self.screenNode:
@@ -77,7 +75,10 @@ class UScreenProxy(CustomUIScreenProxy):
 
     def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
-        return UBaseCtrl(self, addElement(self, ctrl_def_name, ctrl_name, None, force_update))
+        return UBaseCtrl(
+            self,
+            self.base.CreateChildControl(ctrl_def_name, ctrl_name, None, force_update) # pyright: ignore[reportArgumentType]
+        )
 
     def GetElement(self, path):
         # type: (str | SNode) -> UBaseCtrl

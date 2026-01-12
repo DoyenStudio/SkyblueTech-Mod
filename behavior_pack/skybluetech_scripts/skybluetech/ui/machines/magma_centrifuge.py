@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.magma_centrifuge import MagmaCentrifugeUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidsDisplay
@@ -14,7 +14,7 @@ LEFT_FLUID = MAIN_PATH / "left_fluid"
 RIGHT_FLUID = MAIN_PATH / "right_fluid"
 
 
-@RegistProxyScreen("MagmaCentrifugeUI.main")
+@RegistToolDeltaScreen("MagmaCentrifugeUI.main", is_proxy=True)
 class MagmaCentrifugeUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

@@ -4,4 +4,5 @@ from .pool import *
 from .proxy_screen import *
 from .reg import *
 from .screen_comp import *
+from .general_screen import *
 from .utils import *

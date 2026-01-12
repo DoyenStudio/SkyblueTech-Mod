@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, Binder
+from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
@@ -16,7 +16,7 @@ UPGRADERS_LIST_NODE = MAIN_PATH / "upgraders_view"
 event_cbs = set()
 
 
-@RegistProxyScreen("AssemblerUI.main")
+@RegistToolDeltaScreen("AssemblerUI.main", is_proxy=True)
 class AssemblerUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateFlame, InitFluidsDisplay
@@ -11,7 +11,7 @@ FLUID_WATER_NODE = MAIN_PATH / "water_display"
 FLAME_NODE = MAIN_PATH / "flame"
 
 
-@RegistProxyScreen("GeoThermalGeneratorUI.main")
+@RegistToolDeltaScreen("GeoThermalGeneratorUI.main", is_proxy=True)
 class GeoThermalGeneratorUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

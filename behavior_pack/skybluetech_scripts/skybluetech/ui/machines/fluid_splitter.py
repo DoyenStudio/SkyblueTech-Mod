@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, UBaseCtrl, Binder
+from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl, Binder
 from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from ...define.events.fluid_splitter import (
@@ -19,10 +20,8 @@ SETTINGS_VIEW_NODE = MAIN_PATH / "settings_view"
 ADD_BTN_NODE = MAIN_PATH / "add_btn"
 FLUID_DISP_NODE = MAIN_PATH / "fluid_display"
 
-event_cbs = set()
 
-
-@RegistProxyScreen("FluidSplitterUI.main")
+@RegistToolDeltaScreen("FluidSplitterUI.main", is_proxy=True)
 class FluidSplitterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
@@ -41,12 +40,10 @@ class FluidSplitterUI(MachinePanelUIProxy):
             self.sync.fluids,
             0,
         )
-        event_cbs.add(self.onListUpdated)
         MachinePanelUIProxy.OnCreate(self)
 
     def OnDestroy(self):
         MachinePanelUIProxy.OnDestroy(self)
-        event_cbs.discard(self.onListUpdated)
         self.closeLabelSelector()
         self.closeFluidSelector()
 
@@ -54,12 +51,6 @@ class FluidSplitterUI(MachinePanelUIProxy):
         if not self.inited:
             return
         self.fluid_update_cb()
-
-    def onListUpdated(self, event):
-        # type: (FluidSplitterSettingsListUpdate) -> None
-        last = self.settings_grid.GetGridDimension()[1]
-        cur =  len(event.lis)
-        self.settings_grid.SetDimensionAndCall((1, cur), lambda: self.onGridUpdated(event.lis))
 
     def onGridUpdated(self, lis):
         # type: (list[tuple[int, str]]) -> None
@@ -243,24 +234,14 @@ class FluidSplitterUI(MachinePanelUIProxy):
             dim, x, y, z, self.selected_setting_index, fluid_id
         ).send()
         self.closeFluidSelector()
-        
 
-@FluidSplitterSettingsListUpdate.Listen()
-@Delay(0)
-def onOrigListUpdate(event):
-    # type: (FluidSplitterSettingsListUpdate) -> None
-    onListUpdate(event, 0)
+    @MachinePanelUIProxy.Listen(FluidSplitterSettingsListUpdate)
+    @Delay(0)
+    def onListUpdated(self, event):
+        # type: (FluidSplitterSettingsListUpdate) -> None
+        cur =  len(event.lis)
+        self.settings_grid.SetDimensionAndCall((1, cur), lambda: self.onGridUpdated(event.lis))
 
-def onListUpdate(event, exec_depth):
-    # type: (FluidSplitterSettingsListUpdate, int) -> None
-    if exec_depth > 5:
-        print("[WARNING] FluidSplitterUI.onListUpdate: Too many retries")
-        return
-    if event_cbs:
-        for cb in event_cbs:
-            cb(event)
-    else:
-        ExecLater(0.1, onListUpdate, event, exec_depth + 1)
 
 def fuzzySearch(text, sections):
     # type: (str, list[str]) -> list[str]

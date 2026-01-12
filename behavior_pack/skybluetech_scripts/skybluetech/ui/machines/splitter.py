@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.splitter import SplitterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R
@@ -9,7 +9,7 @@ POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"
 
 
-@RegistProxyScreen("SplitterUI.main")
+@RegistToolDeltaScreen("SplitterUI.main", is_proxy=True)
 class SplitterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

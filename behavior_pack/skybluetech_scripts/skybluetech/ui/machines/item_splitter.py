@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, UBaseCtrl, Binder
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl, Binder
 from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName, GetLocalPlayerHotbarAndInvItems
 from ...define.events.item_splitter import (
@@ -16,10 +16,8 @@ from .define import MachinePanelUIProxy, MAIN_PATH
 SETTINGS_VIEW_NODE = MAIN_PATH / "settings_view"
 ADD_BTN_NODE = MAIN_PATH / "add_btn"
 
-event_cbs = set()
 
-
-@RegistProxyScreen("ItemSplitterUI.main")
+@RegistToolDeltaScreen("ItemSplitterUI.main", is_proxy=True)
 class ItemSplitterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
@@ -31,11 +29,9 @@ class ItemSplitterUI(MachinePanelUIProxy):
         self.label_selector_window = None
         self.item_selector_window = None
         self.selected_setting_index = -1
-        event_cbs.add(self.onListUpdated)
         MachinePanelUIProxy.OnCreate(self)
 
     def OnDestroy(self):
-        event_cbs.discard(self.onListUpdated)
         self.closeLabelSelector()
         self.closeItemSelector()
 
@@ -43,6 +39,8 @@ class ItemSplitterUI(MachinePanelUIProxy):
         if not self.inited:
             return
 
+    @MachinePanelUIProxy.Listen(ItemSplitterSettingsListUpdate)
+    @Delay(0)
     def onListUpdated(self, event):
         # type: (ItemSplitterSettingsListUpdate) -> None
         last = self.settings_grid.GetGridDimension()[1]
@@ -204,21 +202,4 @@ class ItemSplitterUI(MachinePanelUIProxy):
             ItemSplitterSimpleAction.ACTION_REMOVE_SETTING,
             idx,
         ).send()
-
-@ItemSplitterSettingsListUpdate.Listen()
-@Delay(0)
-def onOrigListUpdate(event):
-    # type: (ItemSplitterSettingsListUpdate) -> None
-    onListUpdate(event, 0)
-
-def onListUpdate(event, exec_depth):
-    # type: (ItemSplitterSettingsListUpdate, int) -> None
-    if exec_depth > 5:
-        print("[WARNING] ItemSplitterUI.onListUpdate: Too many retries")
-        return
-    if event_cbs:
-        for cb in event_cbs:
-            cb(event)
-    else:
-        ExecLater(0.1, onListUpdate, event, exec_depth + 1)
 

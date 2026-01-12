@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.fluid_condenser import FluidCondenserUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay
@@ -13,7 +13,7 @@ PRGS_NODE = MAIN_PATH / "progress"
 FLUID_NODE = MAIN_PATH / "fluid_display"
 
 
-@RegistProxyScreen("FluidCondenserUI.main")
+@RegistToolDeltaScreen("FluidCondenserUI.main", is_proxy=True)
 class FluidCondenserUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

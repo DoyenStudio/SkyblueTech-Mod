@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.metal_press import MetalPressUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay, UpdateFluidDisplay
@@ -13,7 +13,7 @@ PRGS_NODE = MAIN_PATH / "progress"
 FLUID_NODE = MAIN_PATH / "fluid_display"
 
 
-@RegistProxyScreen("MetalPressUI.main")
+@RegistToolDeltaScreen("MetalPressUI.main", is_proxy=True)
 class MetalPressUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

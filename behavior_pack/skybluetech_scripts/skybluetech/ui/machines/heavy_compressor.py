@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.heavy_compressor import HeavyCompressorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R
@@ -9,7 +9,7 @@ POWER_NODE = MAIN_PATH / "power_bar"
 PRGS_NODE = MAIN_PATH / "progress"
 
 
-@RegistProxyScreen("HeavyCompressorUI.main")
+@RegistToolDeltaScreen("HeavyCompressorUI.main", is_proxy=True)
 class HeavyCompressorUI(MachinePanelUIProxy):
     def __init__(self, screenName, screenNode):
         MachinePanelUIProxy.__init__(self, screenName, screenNode)

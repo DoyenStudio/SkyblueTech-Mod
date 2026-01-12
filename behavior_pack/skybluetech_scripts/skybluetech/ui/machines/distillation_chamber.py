@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, ViewBinder
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, ViewBinder
 from ...ui_sync.machines.distillation_chamber import DistillationChamberUISync
 from ...utils.fmt import FormatKelvin, FormatFluidVolume
 from .define import MachinePanelUIProxy, MAIN_PATH
@@ -15,7 +15,7 @@ LOWER_FLUID_NODE = MAIN_PATH / "lower_fluid"
 UPPER_FLUID_NODE = MAIN_PATH / "upper_fluid"
 
 
-@RegistProxyScreen("DistillationChamberUI.main")
+@RegistToolDeltaScreen("DistillationChamberUI.main", is_proxy=True)
 class DistillationChamberUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

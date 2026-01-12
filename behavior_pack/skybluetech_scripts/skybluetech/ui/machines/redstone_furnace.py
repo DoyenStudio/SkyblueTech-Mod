@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machines.redstone_furnace import RedstoneFurnaceUISync
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
 from .define import MachinePanelUIProxy, MAIN_PATH
@@ -10,7 +10,7 @@ PRGS_NODE = MAIN_PATH / "progress"
 FLAME_NODE = MAIN_PATH / "flame"
 
 
-@RegistProxyScreen("RedstoneFurnaceUI.main")
+@RegistToolDeltaScreen("RedstoneFurnaceUI.main", is_proxy=True)
 class RedstoneFurnaceUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistProxyScreen, Binder
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
 from ...define.events.electric_heater import ElectricHeaterSetPowerEvent
 from ...ui_sync.machines.electric_heater import ElectricHeaterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
@@ -12,7 +12,7 @@ INPUT_NODE = MAIN_PATH / "input"
 CONFIRM_BTN_NODE = MAIN_PATH / "confirm_btn"
 
 
-@RegistProxyScreen("ElectricHeaterUI.main")
+@RegistToolDeltaScreen("ElectricHeaterUI.main", is_proxy=True)
 class ElectricHeaterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos

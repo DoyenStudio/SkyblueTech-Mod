@@ -3,10 +3,10 @@
 import mod.server.extraServerApi as serverApi
 import mod.client.extraClientApi as clientApi
 from threading import current_thread
-from .no_runtime_typing import TYPE_CHECKING
+
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from .mod_server import ToolDeltaModServer as Server
     from .mod_client import ToolDeltaModClient as Client
 # TYPE_CHECKING END

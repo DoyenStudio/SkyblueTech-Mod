@@ -1,10 +1,10 @@
 # coding=utf-8
 #
 from .internal import setClient, setServer
-from .no_runtime_typing import TYPE_CHECKING
+
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from typing import Callable, TypeVar
     from .mod_server import ToolDeltaModServer as Server
     from .mod_client import ToolDeltaModClient as Client

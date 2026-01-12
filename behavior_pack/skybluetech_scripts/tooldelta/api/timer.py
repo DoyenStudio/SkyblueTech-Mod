@@ -1,9 +1,9 @@
-from ..no_runtime_typing import TYPE_CHECKING
+
 from ..internal import ServerComp, ClientComp, ClientLevelId, ServerLevelId, inClientEnv, inServerEnv
 from ..general import ClientUninitCallback, ServerUninitCallback
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from typing import Callable, Any, ParamSpec
     from mod.common.utils.timer import CallLater
     PT = ParamSpec("PT")

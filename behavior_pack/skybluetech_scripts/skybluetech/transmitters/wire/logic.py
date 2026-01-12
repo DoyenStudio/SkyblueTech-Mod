@@ -7,7 +7,7 @@ from skybluetech_scripts.tooldelta.events.server.block import (
     ServerPlaceBlockEntityEvent,
     BlockNeighborChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
+
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockName,
     BlockHasTag,
@@ -23,7 +23,7 @@ from .define import WireNetwork, WireAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
 from .pool import WireNetworkPool, WireAccessPointPool, GNodes
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     PosData = tuple[int, int, int]  # x y z
 # TYPE_CHECKING END
 

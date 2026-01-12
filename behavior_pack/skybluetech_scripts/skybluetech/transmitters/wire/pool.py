@@ -1,10 +1,10 @@
 # coding=utf-8
 #
 from weakref import WeakValueDictionary as WValueDict
-from ....tooldelta.no_runtime_typing import TYPE_CHECKING
+
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from .define import WireNetwork, WireAccessPoint
     DmPosData = tuple[int, tuple[int, int, int]]
 # TYPE_CHECKING END

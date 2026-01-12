@@ -1,9 +1,8 @@
 from skybluetech_scripts.tooldelta.events.server.world import ChunkAcquireDiscardedServerEvent, ChunkLoadedServerEvent
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockEntityData, GetBlockName
-from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from .basic.base_machine import BaseMachine
 # TYPE_CHECKING END
 

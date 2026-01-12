@@ -1,11 +1,11 @@
 # coding=utf-8
 #
-from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
+
 from skybluetech_scripts.tooldelta.api.server import GetBlockEntityData
 from ..constants import FACING_DXYZ
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from ...machinery.basic.base_machine import BaseMachine
     PosData = tuple[int, int, int, int]
 # TYPE_CHECKING END

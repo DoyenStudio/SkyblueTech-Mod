@@ -5,13 +5,12 @@ from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2S
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
 from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInitCallback
 from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
-from skybluetech_scripts.tooldelta.no_runtime_typing import TYPE_CHECKING
 from skybluetech_scripts.tooldelta.events.client.block import ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent
 from ..define.id_enum.machinery import CREATIVE_POWER_ACCEPTOR as MACHINE_ID
 from .basic import BaseMachine, RegisterMachine
 
 # TYPE_CHECKING
-if TYPE_CHECKING:
+if 0:
     from mod.client.component.drawingShapeCompClient import DrawingShapeCompClient
 # TYPE_CHECKING END
 
@@ -75,13 +74,15 @@ class CreativePowerAcceptorPowerUpdateRequest(CustomC2SEvent):
             "z": self.z,
         }
 
-    def unmarshal(self, data):
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.mId = data["__id__"]
-        pass
+    @classmethod
+    def unmarshal(cls, data):
+        instance = cls()
+        instance.dim = data["dim"]
+        instance.x = data["x"]
+        instance.y = data["y"]
+        instance.z = data["z"]
+        instance.mId = data["__id__"]
+        return instance
 
 
 
@@ -95,9 +96,14 @@ class CreativePowerAcceptorPowerUpdate(CustomS2CEvent):
     def marshal(self):
         return self.datas
 
-    def unmarshal(self, data):
-        # type: (list[list[int]]) -> None
-        self.datas = data
+    @classmethod
+    def unmarshal(
+        cls, 
+        data # type: list[list[int]]
+    ):
+        instance = cls()
+        instance.datas = data
+        return instance
 
 
 def addText(dim, pos, default_text=""):

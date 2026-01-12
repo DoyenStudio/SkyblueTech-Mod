@@ -1,13 +1,13 @@
 # # coding=utf-8
 # #
-# from ..no_runtime_typing import TYPE_CHECKING
+# 
 # from ..internal import InServerEnv
 # from ..events.notify import NotifyToClient, NotifyToServer
 # from ..events.server.internal import TDRpcCallS2C, TDRpcCallC2SRet
 # from ..events.client.internal import TDRpcCallC2S, TDRpcCallS2CRet
 
 # # TYPE_CHECKING
-# if TYPE_CHECKING:
+# if 0:
 #     from typing import Callable, TypeVar, Any
 #     FuncT = TypeVar("FuncT", bound=Callable)
 # # TYPE_CHECKING END

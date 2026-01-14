@@ -22,6 +22,7 @@ def onBlockUse(event):
             + blockName
             + " §r§f特殊值： "
             + str(blockAux)
+            + " [%s]" % bin(blockAux)
             + "\n"
             + "§e方块标签: §f"
             + ", ".join(tags)

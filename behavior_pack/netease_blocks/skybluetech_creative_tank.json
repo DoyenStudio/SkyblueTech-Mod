@@ -28,7 +28,7 @@
             "minecraft:material_instances": {
                 "*": {
                     "isotropic": true,
-                    "render_method": "blend",
+                    "render_method": "alpha_test",
                     "texture": "skybluetech:creative_tank"
                 }
             },

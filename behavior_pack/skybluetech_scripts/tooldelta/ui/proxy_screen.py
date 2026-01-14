@@ -15,6 +15,7 @@ ViewRequest = clientApi.GetViewViewRequestCls()
 
 
 class UScreenProxy(CustomUIScreenProxy):
+    "已废弃, 请使用 ToolDeltaScreen。"
     bound_proxier = ""
 
     def __init__(self, screenName, screenNode):

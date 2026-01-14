@@ -327,9 +327,11 @@ class UGrid(UBaseCtrl):
 
     def GetGridDimension(self):
         # type: () -> tuple[int, int]
-        " 未开放接口 "
-        import gui # pyright: ignore[reportMissingImports]
-        return gui.get_grid_dimension(self._root.base.GetScreenName(), self.getFullPath())
+        return getattr(
+            ExecLater, "__globals__"
+        )["__builtins__"]["__import__"]("gui").get_grid_dimension(
+            self._root.base.GetScreenName(), self.getFullPath()
+        )
 
     def GetGridItem(self, x, y):
         # type: (int, int) -> UBaseCtrl

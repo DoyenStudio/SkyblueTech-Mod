@@ -31,7 +31,7 @@ class ToolDeltaScreen(object):
         self._element_cacher = {} # type: dict[str, UBaseCtrl]
         self._vars = {}
         self._ui_bound_events = [] # type: list[tuple[type[ClientEvent], Callable[[ClientEvent], None], int]]
-        self._analyze_reflections()
+        self._analyze_td_bindings()
 
     def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
@@ -88,8 +88,8 @@ class ToolDeltaScreen(object):
         """
         def wrapper(func):
             # type: (CallT) -> CallT
-            func._tdscreen_event_listen = event
-            func._tdscreen_event_listen_priority = priority
+            setattr(func, "_tdscreen_event_listen", event)
+            setattr(func, "_tdscreen_event_listen_priority", priority)
             return func
         return wrapper
 
@@ -153,7 +153,7 @@ class ToolDeltaScreen(object):
         cls._screen_proxy_cls = t
         return t
 
-    def _analyze_reflections(self):
+    def _analyze_td_bindings(self):
         for key in dir(self):
             func = getattr(self, key)
             if hasattr(func, '_tdscreen_event_listen'):

@@ -12,6 +12,7 @@ ViewBinder = clientApi.GetViewBinderCls()
 
 
 class UScreenNode(ScreenNode):
+    "已废弃, 请使用 ToolDeltaScreen。"
     _key = "???"
     top_node = None # type: SNode | None
 

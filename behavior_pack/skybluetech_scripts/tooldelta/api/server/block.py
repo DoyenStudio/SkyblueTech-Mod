@@ -116,10 +116,6 @@ def GetActualFacingByDirection(direction, origin_facing):
         return origin_facing
     return (origin_facing + direction - 2) % 4
 
-GetBlockPaletteFromPosList = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteFromPosList)
-GetBlockPaletteBetweenPos = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteBetweenPos)
-GetTopBlockHeight = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetTopBlockHeight)
-
 def NewSingleBlockPalette(block_id):
     # type: (str) -> BlockPaletteComponent
     newBlockPalette = ServerComp.CreateBlock(ServerLevelId).GetBlankBlockPalette()
@@ -133,6 +129,11 @@ def NewSingleBlockPalette(block_id):
     })
     return newBlockPalette
 
+GetBlockPaletteFromPosList = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteFromPosList)
+GetBlockPaletteBetweenPos = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteBetweenPos)
+GetTopBlockHeight = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetTopBlockHeight)
+GetBlockAuxValueFromStates = MethodCacher(lambda:ServerComp.CreateBlockState(ServerLevelId).GetBlockAuxValueFromStates)
+MayPlace = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).MayPlace)
 
 __all__ = [
     "AddBlocksToBlockRemoveListener",
@@ -141,8 +142,12 @@ __all__ = [
     "GetBlockBasicInfo",
     "GetPosBlockTags",
     "GetTopBlockHeight",
+    "GetBlockAuxValueFromStates",
+    "GetBlockPaletteFromPosList",
+    "GetBlockPaletteBetweenPos",
     "BlockHasTag",
     "GetBlockName",
+    "MayPlace",
     "SetBlock",
     "GetBlockStates",
     "UpdateBlockStates"

@@ -65,6 +65,9 @@
         "skybluetech:creative_wire_item": {
             "textures": "textures/wire/creative_wire_item"
         },
+        "skybluetech:custom_dirt": {
+            "textures": "textures/blocks/custom_dirt"
+        },
         "skybluetech:deepslate_lava_flow": {
             "quad": 2,
             "textures": "textures/fluid/deepslate_lava_flow"
@@ -92,6 +95,9 @@
         },
         "skybluetech:digger_icon": {
             "textures": "textures/machines/digger"
+        },
+        "skybluetech:wind_generator_icon": {
+            "textures": "textures/machines/wind_generator"
         },
         "skybluetech:distillation_chamber": {
             "textures": "textures/models/distillation_chamber_texture"
@@ -349,6 +355,9 @@
         },
         "skybluetech:tin_wire_item": {
             "textures": "textures/wire/tin_wire_item"
+        },
+        "skybluetech:wind_generator": {
+            "textures": "textures/models/wind_generator_texture"
         }
     },
     "texture_name": "atlas.terrain"

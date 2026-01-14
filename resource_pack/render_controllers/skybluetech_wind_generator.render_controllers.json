@@ -1,0 +1,36 @@
+{
+	"format_version": "1.8.0",
+	"render_controllers": {
+		"controller.render.skybluetech.wind_generator": {
+			"part_visibility": [
+				{
+					"body": "variable.mod_is_base_block"
+				},
+				{
+					"paddles": "variable.mod_is_base_block"
+				},
+				{
+					"east_charge": "variable.is_connect_east"
+				},
+				{
+					"north_charge": "variable.is_connect_north"
+				},
+				{
+					"south_charge": "variable.is_connect_south"
+				},
+				{
+					"west_charge": "variable.is_connect_west"
+				}
+			],
+			"geometry": "Geometry.default",
+			"materials": [
+				{
+					"*": "Material.default"
+				}
+			],
+			"textures": [
+				"Texture.default"
+			]
+		}
+	}
+}

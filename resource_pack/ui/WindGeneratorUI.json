@@ -1,0 +1,160 @@
+{
+    "main@common.inventory_screen_common": {
+        "$screen_content": "WindGeneratorUI.wind_generator_ui"
+    },
+    "namespace": "WindGeneratorUI",
+    "wind_generator_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "风力发电机",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "gen_slot@netease_container.custom_grid_item": {
+                                                        "layer": 10,
+                                                        "offset": [
+                                                            0,
+                                                            -11
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "layer": 13,
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "text": {
+                                                        "type": "label",
+                                                        "offset": [
+                                                            6.0,
+                                                            -54.0
+                                                        ],
+                                                        "size": [
+                                                            116.0,
+                                                            46.0
+                                                        ],
+                                                        "layer": 5,
+                                                        "color": [
+                                                            0.0,
+                                                            1.0,
+                                                            0.0
+                                                        ],
+                                                        "font_scale_factor": 1.2,
+                                                        "font_type": "default",
+                                                        "text": "风强度： 0 MCW\n输出功率： 0 RF"
+                                                    }
+                                                },
+                                                {
+                                                    "image": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            6.0,
+                                                            -54.0
+                                                        ],
+                                                        "size": [
+                                                            120.0,
+                                                            50.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "clip_direction": "left",
+                                                        "clip_ratio": 0.0,
+                                                        "nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "texture": "textures/ui/bg_frame_slim"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    }
+}

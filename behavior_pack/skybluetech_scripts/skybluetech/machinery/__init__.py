@@ -29,6 +29,7 @@ from .splitter import Splitter
 from .solar_panel import SolarPanel
 from .thermoelectric_generator import ThermoelectricGenerator
 from .thermal_generator import ThermalGenerator
+from .wind_generator import WindGenerator
 # collections
 from .interfaces import *
 from .tanks import *

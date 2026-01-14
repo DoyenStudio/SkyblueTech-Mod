@@ -541,5 +541,13 @@
     },
     "skybluetech:tin_wire": {
         "sound": "cloth"
+    },
+    "skybluetech:wind_generator": {
+        "client_entity": {
+            "block_icon": "skybluetech:wind_generator_icon",
+            "hand_model_use_client_entity": true,
+            "identifier": "skybluetech:wind_generator"
+        },
+        "sound": "iron"
     }
 }

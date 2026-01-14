@@ -214,3 +214,4 @@ tile.skybluetech:fluid_splitter.name=分流器
 tile.skybluetech:item_splitter.name=物品分拣器
 item.skybluetech:transmitter_visual_checker.name=传输网络可视化查看器
 item.skybluetech:generic_split_upgrader.name=特化板： 泛用分拣过滤
+tile.skybluetech:wind_generator.name=风力发电机

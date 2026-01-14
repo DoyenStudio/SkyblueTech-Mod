@@ -41,6 +41,7 @@
         "ui/SplitterUI.json",
         "ui/ThermalGeneratorUI.json",
         "ui/ThermoelectricGeneratorUI.json",
-        "ui/TransmitterSettingsUI.json"
+        "ui/TransmitterSettingsUI.json",
+        "ui/WindGeneratorUI.json"
     ]
 }

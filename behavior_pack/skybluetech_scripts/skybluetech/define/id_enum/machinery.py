@@ -30,6 +30,7 @@ SOLAR_PANEL = "skybluetech:solar_panel"
 SPLITTER = "skybluetech:splitter"
 THERMAL_GENERATOR = "skybluetech:thermal_generator"
 THERMOELECTRIC_GENERATOR = "skybluetech:thermoelectric_generator"
+WIND_GENERATOR = "skybluetech:wind_generator"
 WIRELESS_RF_TRANSPORTER = "skybluetech:wireless_rf_transporter"
 
 

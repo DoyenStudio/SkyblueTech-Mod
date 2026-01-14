@@ -54,6 +54,10 @@ def IsSneaking(player_id):
     # type: (str) -> bool
     return ServerComp.CreatePlayer(player_id).isSneaking()
 
+def PlayerUseItemToPos(player_id, pos, pos_type, slot=0, facing=1):
+    # type: (str, tuple[int, int, int], int, int, int) -> bool
+    return ServerComp.CreateBlockInfo(player_id).PlayerUseItemToPos(pos, pos_type, slot, facing)
+
 
 __all__ = [
     "GetAllPlayers",
@@ -64,6 +68,7 @@ __all__ = [
     "GetPlayersInDim",
     "IsOP",
     "IsSneaking",
+    "PlayerUseItemToPos",
     "SetInventorySlotItemCount",
     "SpawnItemToPlayerCarried",
 ]

@@ -9,16 +9,15 @@ from skybluetech_scripts.tooldelta.api.server import (
     UpdateBlockStates,
     GetBlockName,
 )
-from ..define import flags
 from ..define.id_enum.machinery import SOLAR_PANEL as MACHINE_ID
-from ..utils.constants import DXYZ_FACING, FACING_EN
+from ..define.facing import DXYZ_FACING, FACING_EN
 from ..ui_sync.machines.solar_panel import SolarPanelUISync
 from ..transmitters.wire.logic import isWire
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, RegisterMachine
+from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, RegisterMachine
 
 
 @RegisterMachine
-class SolarPanel(AutoSaver, BaseMachine, ItemContainer, GUIControl):
+class SolarPanel(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
@@ -26,7 +25,7 @@ class SolarPanel(AutoSaver, BaseMachine, ItemContainer, GUIControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = SolarPanelUISync.NewServer(self).Activate()
         self.t = 0
@@ -39,7 +38,7 @@ class SolarPanel(AutoSaver, BaseMachine, ItemContainer, GUIControl):
             self.t = 0
             self.update()
         if self.t % 5 == 0 and self.IsActive():
-            self.AddPower(self.power_output * 5, True)
+            self.GeneratePower(self.power_output * 5)
             self.OnSync()
 
     def OnPlaced(self, _):
@@ -92,7 +91,7 @@ class SolarPanel(AutoSaver, BaseMachine, ItemContainer, GUIControl):
 
     def OnUnload(self):
         # type: () -> None
-        BaseMachine.OnUnload(self)
+        BasicGenerator.OnUnload(self)
         AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
 

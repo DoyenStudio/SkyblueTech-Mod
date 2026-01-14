@@ -12,7 +12,7 @@ from skybluetech_scripts.tooldelta.api.server import (
 from ...define.events.transmitter_settings import (
     TransmitterSetLabel, TransmitterSetPriority
 )
-from ...define.utils import NEIGHBOR_BLOCKS_ENUM
+from ...define.facing import NEIGHBOR_BLOCKS_ENUM
 from ..constants import FACING_EN, FACING_ZHCN
 from .define import CableAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
 from .logic import isCable, canConnect, GetNetworkByCable, GetNearbyCableNetworks

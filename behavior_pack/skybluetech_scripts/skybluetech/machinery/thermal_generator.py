@@ -6,7 +6,7 @@ from ..define import flags
 from ..define.id_enum.machinery import THERMAL_GENERATOR as MACHINE_ID
 from ..machinery_def.thermal_generator import TICK_POWER
 from ..ui_sync.machines.thermal_generator import ThermalGeneratorUISync
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, WorkRenderer, RegisterMachine
+from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, WorkRenderer, RegisterMachine
 
 K_BURN_SEC_LEFT = "burn_sec_left"
 K_MAX_BURN_SEC = "max_burn_secs"
@@ -16,7 +16,7 @@ SecondsPerTick = 0.05
 
 
 @RegisterMachine
-class ThermalGenerator(AutoSaver, ItemContainer, GUIControl, WorkRenderer):
+class ThermalGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
@@ -25,14 +25,14 @@ class ThermalGenerator(AutoSaver, ItemContainer, GUIControl, WorkRenderer):
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ThermalGeneratorUISync.NewServer(self).Activate()
         self.OnSync()
 
     def OnUnload(self):
         AutoSaver.OnUnload(self)
-        BaseMachine.OnUnload(self)
+        BasicGenerator.OnUnload(self)
         GUIControl.OnUnload(self)
 
     def OnTicking(self):
@@ -41,7 +41,7 @@ class ThermalGenerator(AutoSaver, ItemContainer, GUIControl, WorkRenderer):
                 self.is_burning = self.next_burn()
                 return
             self.burn_seconds_left -= SecondsPerTick
-            self.AddPower(TICK_POWER, True)
+            self.GeneratePower(TICK_POWER)
             self.OnSync()
 
     def IsValidInput(self, slot, item):
@@ -56,14 +56,14 @@ class ThermalGenerator(AutoSaver, ItemContainer, GUIControl, WorkRenderer):
         self.sync.MarkedAsChanged()
 
     def OnLoad(self):
-        BaseMachine.OnLoad(self)
+        BasicGenerator.OnLoad(self)
         data = self.bdata
         self.burn_seconds_left = data[K_BURN_SEC_LEFT] or 0
         self.max_burn_seconds = data[K_MAX_BURN_SEC] or 1
         self.is_burning = self.burn_seconds_left > 0
 
     def Dump(self):
-        BaseMachine.Dump(self)
+        BasicGenerator.Dump(self)
         self.bdata[K_BURN_SEC_LEFT] = self.burn_seconds_left
         self.bdata[K_MAX_BURN_SEC] = self.max_burn_seconds
 
@@ -74,14 +74,11 @@ class ThermalGenerator(AutoSaver, ItemContainer, GUIControl, WorkRenderer):
             self.next_burn()
 
     def OnTryActivate(self):
-        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL):
-            _, self.store_rf = self.AddPower(self.store_rf, True)
-            if self.store_rf < self.store_rf_max:
-                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
+        self.ResetDeactiveFlags()
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
-        BaseMachine.SetDeactiveFlag(self, flag)
+        BasicGenerator.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)
 
     def next_burn(self):

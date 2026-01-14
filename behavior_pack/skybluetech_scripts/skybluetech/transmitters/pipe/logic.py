@@ -18,7 +18,7 @@ from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...machinery.basic.fluid_container import FluidContainer
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.pool import GetMachineStrict
-from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
+from ...define.facing import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
 from .define import PipeNetwork, PipeAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
 from .pool import PipeNetworkPool, PipeAccessPointPool, GNodes

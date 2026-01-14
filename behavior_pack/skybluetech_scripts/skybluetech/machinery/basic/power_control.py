@@ -16,9 +16,9 @@ class PowerControl(BaseMachine):
     power_pos_rate = 1.0
     power_neg_rate = 1.0
 
-    def AddPower(self, rf, is_generator=False, max_limit=None, depth=0):
-        # type: (int, bool, int | None, int) -> tuple[bool, int]
-        res = BaseMachine.AddPower(self, rf, is_generator, max_limit, depth)
+    def AddPower(self, rf, max_limit=None, passed=None):
+        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
+        res = BaseMachine.AddPower(self, rf, max_limit, passed)
         if self.store_rf < self.running_power:
             self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         else:

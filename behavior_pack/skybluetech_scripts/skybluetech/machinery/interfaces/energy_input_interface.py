@@ -36,11 +36,11 @@ class EnergyInputInterface(BaseMachine):
         # type: (BaseMachine) -> None
         self.machine_ref = ref(machine)
 
-    def AddPower(self, rf, is_generator=False, max_limit=None, depth=0):
-        # type: (int, bool, int | None, int) -> tuple[bool, int]
+    def AddPower(self, rf, max_limit=None, passed=None):
+        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
         m = self.getMachineRef()
         if m is None:
             return False, rf
         else:
-            return m.AddPower(rf, is_generator, max_limit, depth)
+            return m.AddPower(rf, max_limit, passed)
 

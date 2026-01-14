@@ -7,15 +7,15 @@ from skybluetech_scripts.tooldelta.events.server.block import (
 )
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
 from ..machinery_def.thermoelectric_generator import COLD_BLOCKS, HOT_BLOCKS
-from ..define.utils import NEIGHBOR_BLOCKS_ENUM
+from ..define.facing import NEIGHBOR_BLOCKS_ENUM
 from ..define.id_enum.machinery import THERMOELECTRIC_GENERATOR as MACHINE_ID
 from ..ui_sync.machines.thermoelectric_generator import ThermoelectricGeneratorUISync
 from ..ui.machines.thermoelectric_generator import ThermoelectricGeneratorUI
-from .basic import BaseMachine, GUIControl, RegisterMachine
+from .basic import BasicGenerator, GUIControl, RegisterMachine
 
 
 @RegisterMachine
-class ThermoelectricGenerator(BaseMachine, GUIControl):
+class ThermoelectricGenerator(BasicGenerator, GUIControl):
     block_name = MACHINE_ID
     store_rf_max = 14400
     bound_ui = ThermoelectricGeneratorUI
@@ -24,22 +24,22 @@ class ThermoelectricGenerator(BaseMachine, GUIControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ThermoelectricGeneratorUISync.NewServer().Activate()
         self.active = True
 
     def OnPlaced(self, event):
         # type: (ServerPlaceBlockEntityEvent) -> None
-        BaseMachine.OnPlaced(self, event)
+        BasicGenerator.OnPlaced(self, event)
 
     def OnUnload(self):
-        BaseMachine.OnUnload(self)
+        BasicGenerator.OnUnload(self)
         GUIControl.OnUnload(self)
         self.sync.Deactivate()
 
     def OnTicking(self):
-        update, _ = self.AddPower(self.power_output, True)
-        if update:
+        updated = self.GeneratePower(self.power_output)
+        if updated:
             self.OnSync()
         else:
             self.active = False
@@ -52,7 +52,7 @@ class ThermoelectricGenerator(BaseMachine, GUIControl):
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         self.active = True
-        BaseMachine.OnNeighborChanged(self, event)
+        BasicGenerator.OnNeighborChanged(self, event)
         former_block = event.fromBlockName
         to_block = event.toBlockName
         self.cool_value -= COLD_BLOCKS.get(former_block, 0) - COLD_BLOCKS.get(to_block, 0)
@@ -68,7 +68,7 @@ class ThermoelectricGenerator(BaseMachine, GUIControl):
         self.sync.MarkedAsChanged()
 
     def OnLoad(self):
-        BaseMachine.OnLoad(self)
+        BasicGenerator.OnLoad(self)
         data = self.bdata
         self.heat_value = data["heat_value"] or 0
         self.cool_value = data["cool_value"] or 0
@@ -86,7 +86,7 @@ class ThermoelectricGenerator(BaseMachine, GUIControl):
             self.update_power()
 
     def Dump(self):
-        BaseMachine.Dump(self)
+        BasicGenerator.Dump(self)
         self.bdata["heat_value"] = self.heat_value
         self.bdata["cool_value"] = self.cool_value
         self.bdata["power_output"] = self.power_output

@@ -6,11 +6,11 @@ from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlock
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent, BlockNeighborChangedServerEvent
 from ..define import flags
 from ..define.events.assembler import *
+from ..define.facing import DXYZ_FACING, FACING_EN
 from ..define.id_enum.machinery import ASSEMBLER as MACHINE_ID
 from ..machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
 from ..utils.action_commit import SafeGetMachine
-from ..utils.constants import DXYZ_FACING, FACING_EN
 from ..utils.lore import GetLorePos, SetLoreAtPos
 from ..ui_sync.machines.assembler import AssemblerUISync
 from ..transmitters.wire.logic import isWire
@@ -36,8 +36,8 @@ class Assembler(GUIControl, UpgradeControl):
         self.updateList()
         self.OnSync()
 
-    def AddPower(self, rf, is_generator=False, max_limit=None, depth=0):
-        res = UpgradeControl.AddPower(self, rf, is_generator, max_limit, depth)
+    def AddPower(self, rf, max_limit=None, passed=None):
+        res = UpgradeControl.AddPower(self, rf, max_limit, passed)
         if self.store_rf > 0 and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         return res

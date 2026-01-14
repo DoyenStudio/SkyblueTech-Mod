@@ -17,7 +17,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...machinery.basic import BaseMachine
 from ...machinery.pool import GetMachineStrict, GetMachineCls
-from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
+from ...define.facing import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
 from .define import WireNetwork, WireAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
 from .pool import WireNetworkPool, WireAccessPointPool, GNodes

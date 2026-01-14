@@ -5,14 +5,14 @@ from ..define import flags
 from ..define.id_enum.machinery import GEO_THERMAL_GENERATOR as MACHINE_ID
 from ..machinery_def.geothermal_generator import *
 from ..ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync, FluidSlotSync
-from .basic import AutoSaver, BaseMachine, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
+from .basic import AutoSaver, BasicGenerator, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
 
 K_BURN_TICKS_LEFT = "burn_ticks_left"
 K_POWER = "power"
 
 
 @RegisterMachine
-class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRenderer):
+class GeoThermalGenerator(AutoSaver, BasicGenerator, GUIControl, MultiFluidContainer, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 28800
     energy_io_mode = (1, 1, 1, 1, 1, 1)
@@ -22,7 +22,7 @@ class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRender
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
 
@@ -37,7 +37,7 @@ class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRender
                 if self.power == 0:
                     self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
                     return
-            self.AddPower(self.power, True)
+            self.GeneratePower(self.power)
             self.OnSync()
 
     def IsValidFluidInput(self, slot, fluid_id):
@@ -56,18 +56,18 @@ class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRender
         self.sync.MarkedAsChanged()
 
     def OnLoad(self):
-        BaseMachine.OnLoad(self)
+        BasicGenerator.OnLoad(self)
         data = self.bdata
         self.burn_ticks = data[K_BURN_TICKS_LEFT] or 0
         self.power = data[K_POWER] or 0
 
     def OnUnload(self):
         AutoSaver.OnUnload(self)
-        BaseMachine.OnUnload(self)
+        BasicGenerator.OnUnload(self)
         GUIControl.OnUnload(self)
 
     def Dump(self):
-        BaseMachine.Dump(self)
+        BasicGenerator.Dump(self)
         MultiFluidContainer.Dump(self)
         self.bdata[K_BURN_TICKS_LEFT] = self.burn_ticks
         self.bdata[K_POWER] = 0
@@ -103,5 +103,5 @@ class GeoThermalGenerator(AutoSaver, GUIControl, MultiFluidContainer, WorkRender
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
-        BaseMachine.SetDeactiveFlag(self, flag)
+        BasicGenerator.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)

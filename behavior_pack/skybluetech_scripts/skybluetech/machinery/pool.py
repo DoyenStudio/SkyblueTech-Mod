@@ -1,5 +1,6 @@
 from skybluetech_scripts.tooldelta.events.server.world import ChunkAcquireDiscardedServerEvent, ChunkLoadedServerEvent
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockEntityData, GetBlockName
+from ..define.facing import DXYZ_FACING, FACING_DXYZ
 
 # TYPE_CHECKING
 if 0:
@@ -24,6 +25,22 @@ def GetMachine(dimension, x, y, z, machine_cls):
         cached_machines[(dimension, x, y, z)] = cache
         return cache
 
+def GetNearbyMachines(
+    dim, # type: int
+    x, # type: int
+    y, # type: int
+    z, # type: int
+    spec_facing=() # type: tuple[int, ...]
+):
+    if spec_facing:
+        facings = {FACING_DXYZ[i]: i for i in spec_facing}
+    else:
+        facings = DXYZ_FACING
+    for (dx, dy, dz), facing in facings.items():
+        m = GetMachineStrict(dim, x + dx, y + dy, z + dz)
+        if m is not None:
+            yield m, facing
+
 def GetMachineWithoutCls(dimension, x, y, z, block_id=None):
     # type: (int, int, int, int, str | None) -> BaseMachine | None
     bname = block_id or GetBlockName(dimension, (x, y, z))
@@ -33,17 +50,6 @@ def GetMachineWithoutCls(dimension, x, y, z, block_id=None):
     if block_cls is None:
         return None
     return GetMachine(dimension, x, y, z, block_cls)
-
-def GetMachineStrictCls(dimension, x, y, z, machine_cls, real_strict=False):
-    # type: (int, int, int, int, type[BaseMachine], bool) -> BaseMachine | None
-    if not real_strict:
-        m = GetMachine(dimension, x, y, z, machine_cls)
-    else:
-        m = GetMachineStrict(dimension, x, y, z)
-    if isinstance(m, machine_cls):
-        return m
-    else:
-        return None
 
 def GetMachineStrict(dimension, x, y, z):
     # type: (int, int, int, int) -> BaseMachine | None

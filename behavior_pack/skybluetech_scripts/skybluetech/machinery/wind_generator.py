@@ -30,15 +30,15 @@ from ..define.events.wind_generator import (
     WindGeneratorStatesUpdate,
 )
 from ..define.id_enum.machinery import WIND_GENERATOR as MACHINE_ID
-from ..utils.constants import DXYZ_FACING, FACING_EN
+from ..define.facing import DXYZ_FACING, FACING_EN
 from ..ui_sync.machines.wind_generator import WindGeneratorUISync
 from ..transmitters.wire.logic import isWire
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, RegisterMachine
+from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, RegisterMachine
 from .pool import GetMachineStrict
 
 
 @RegisterMachine
-class WindGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
+class WindGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
@@ -48,7 +48,7 @@ class WindGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = WindGeneratorUISync.NewServer(self).Activate()
         self.t = 0
@@ -74,7 +74,7 @@ class WindGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
         if not self.is_base_block:
             return
         if self.t % 5 == 0 and self.IsActive():
-            self.AddPower(self.power_output * 5, True)
+            self.GeneratePower(self.power_output * 5)
             self.OnSync()
 
     @classmethod
@@ -183,7 +183,7 @@ class WindGenerator(AutoSaver, BaseMachine, ItemContainer, GUIControl):
 
     def OnUnload(self):
         # type: () -> None
-        BaseMachine.OnUnload(self)
+        BasicGenerator.OnUnload(self)
         AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
 

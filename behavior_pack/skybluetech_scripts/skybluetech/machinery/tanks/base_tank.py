@@ -12,9 +12,9 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
+from ...define.facing import DXYZ_FACING, FACING_EN
 from ...ui_sync.machines.general_tank import GeneralTankUISync
 from ...utils.fluid_model import FluidModel
-from ...utils.constants import DXYZ_FACING, FACING_EN
 from ...transmitters.pipe.logic import isPipe
 from ..basic import BaseMachine, FluidContainer, GUIControl
 from ..basic.fluid_container import K_FLUID_ID, K_FLUID_VOLUME

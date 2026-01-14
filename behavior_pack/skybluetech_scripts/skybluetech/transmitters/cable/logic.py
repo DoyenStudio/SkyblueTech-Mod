@@ -23,7 +23,7 @@ from skybluetech_scripts.tooldelta.api.server.container import (
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...machinery.basic.item_container import ItemContainer
 from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
-from ...define.utils import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
+from ...define.facing import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import COMMON_CONTAINERS, FACING_EN, DXYZ_FACING
 from .define import CableNetwork, CableAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
 from .pool import CableNetworkPool, CableAccessPointPool, GNodes

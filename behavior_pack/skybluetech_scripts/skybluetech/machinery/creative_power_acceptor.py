@@ -34,7 +34,7 @@ class CreativePowerAcceptor(BaseMachine):
         self.power = 0
         self.delay = 20
 
-    def AddPower(self, rf, is_generator=False, max_limit=None, depth=0):
+    def AddPower(self, rf,  max_limit=None, depth=0):
         if max_limit is not None:
             rf = min(rf, max_limit)
         self.power += rf

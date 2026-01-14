@@ -6,7 +6,6 @@ from skybluetech_scripts.tooldelta.events.server.block import (
     BlockNeighborChangedServerEvent,
     ServerEntityTryPlaceBlockEvent,
 )
-from .. import pool
 from .gui_ctrl import GUIControl
 
 K_STORE_RF = "store_rf"
@@ -118,8 +117,8 @@ class BaseMachine(object):
             self.bdata[K_STORE_RF] = self.store_rf
         self.bdata[K_DEACTIVE_FLAGS] = self.deactive_flags
 
-    def AddPower(self, rf, is_generator=False, max_limit=None, depth=0):
-        # type: (int, bool, int | None, int) -> tuple[bool, int]
+    def AddPower(self, rf, max_limit=None, passed=None):
+        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
         """
         为自身增加能量。
 
@@ -130,17 +129,19 @@ class BaseMachine(object):
         Returns:
             tuple[bool, int]: 数值是否变动, 溢出的能量
         """
+        if passed is None:
+            passed = set()
         if max_limit is None:
             power_overflow = 0
         else:
             power_overflow = max(0, rf - max_limit)
             rf = min(rf, max_limit)
-        if is_generator and depth < 4:
-            rf = self.addPowerIntoWireNetwork(rf, depth+1)
         power_old = self.store_rf
         power_new = min(power_old + rf, self.store_rf_max)
         self.store_rf = power_new
         power_overflow += power_old + rf - power_new
+        if isinstance(self, GUIControl):
+            self.OnSync()
         return power_new != power_old, power_overflow
     
     def ReducePower(self, rf):
@@ -209,29 +210,6 @@ class BaseMachine(object):
         重置所有停机标志, 即将机器设置为工作模式。
         """
         self.deactive_flags = 0
-
-    def addPowerIntoWireNetwork(self, rf, depth=0):
-        # type: (int, int) -> int
-        """ 在已连接的电缆网络中为机器添加能量。 返回溢出的能量 """
-        if self.store_rf > 0:
-            rf += self.store_rf
-            self.store_rf = 0
-        requireWireModule()
-        output_networks = GetNearbyWireNetworks(
-            self.dim, self.x, self.y, self.z, enable_cache=True
-        )[1]
-        for network in output_networks:
-            if network is None:
-                continue
-            for ap in network.get_input_access_points():
-                machine = pool.GetMachineStrict(self.dim, *ap.target_pos)
-                if machine is not None and not machine.is_non_energy_machine:
-                    updated, rf = machine.AddPower(rf, False, network.get_power_limit(), depth)
-                    if updated and isinstance(machine, GUIControl):
-                        machine.OnSync()
-                    if rf == 0:
-                        break
-        return rf
 
     def __hash__(self):
         return hash((self.dim, self.x, self.y, self.z))

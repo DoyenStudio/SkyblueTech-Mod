@@ -6,9 +6,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetTopBlockHeight,
     GetLocalTime,
     IsRaining,
-    GetPlayerDimensionId,
     UpdateBlockStates,
-    GetBlockTags,
     GetBlockName,
 )
 from ..define import flags
@@ -50,7 +48,7 @@ class SolarPanel(AutoSaver, BaseMachine, ItemContainer, GUIControl):
             bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
             if not bname:
                 continue
-            connectToWire = isWire(GetBlockTags(bname))
+            connectToWire = isWire(bname)
             UpdateBlockStates(
                 self.dim,
                 (self.x, self.y, self.z),
@@ -65,7 +63,7 @@ class SolarPanel(AutoSaver, BaseMachine, ItemContainer, GUIControl):
         facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
         if facing_en not in {"south", "north", "east", "west"}:
             return
-        connectToWire = isWire(GetBlockTags(event.toBlockName))
+        connectToWire = isWire(event.toBlockName)
         UpdateBlockStates(
             self.dim,
             (self.x, self.y, self.z),

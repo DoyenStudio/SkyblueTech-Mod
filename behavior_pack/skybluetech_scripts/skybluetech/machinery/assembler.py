@@ -2,7 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockTags, GetBlockName
+from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockName
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent, BlockNeighborChangedServerEvent
 from ..define import flags
 from ..define.events.assembler import *
@@ -48,7 +48,7 @@ class Assembler(GUIControl, UpgradeControl):
             bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
             if not bname:
                 continue
-            connectToWire = isWire(GetBlockTags(bname))
+            connectToWire = isWire(bname)
             UpdateBlockStates(
                 self.dim,
                 (self.x, self.y, self.z),
@@ -63,7 +63,7 @@ class Assembler(GUIControl, UpgradeControl):
         facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
         if facing_en not in {"south", "north", "east", "west"}:
             return
-        connectToWire = isWire(GetBlockTags(event.toBlockName))
+        connectToWire = isWire(event.toBlockName)
         UpdateBlockStates(
             self.dim,
             (self.x, self.y, self.z),
@@ -228,7 +228,7 @@ def getMaxUpgradersCount(item):
 @AssemblerActionRequest.Listen()
 def onHandleAction(event):
     # type: (AssemblerActionRequest) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, Assembler):
         return
     if event.action == ACTION_PULL_UPGRADER:

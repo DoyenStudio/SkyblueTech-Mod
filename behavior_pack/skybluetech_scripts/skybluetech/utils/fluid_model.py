@@ -1,20 +1,12 @@
 # coding=utf-8
-
-from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.api.client import (
     AddTextureToOneActor,
     CreateClientEntity,
     DestroyClientEntity,
-    RegisterQueryMolang,
-    SetQueryMolang,
     RebuildRenderForOneActor,
 )
+from ..define.client_molangs import Y_SCALE
 
-
-@ClientInitCallback()
-def onClientSideInit():
-    # type: () -> None
-    RegisterQueryMolang("query.mod.tank_fluid_y_scale", 0.0)
 
 def GetFluidTexturePath(fluid_id):
     # type: (str) -> str
@@ -45,4 +37,4 @@ class FluidModel:
 
     def SetYScale(self, y_scale):
         # type: (float) -> bool
-        return SetQueryMolang(self.ceid, "query.mod.tank_fluid_y_scale", y_scale)
+        return Y_SCALE.set_to_entity(self.ceid, y_scale)

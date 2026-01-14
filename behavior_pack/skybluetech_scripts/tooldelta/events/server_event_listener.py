@@ -13,7 +13,9 @@ if 0:
 # TYPE_CHECKING END
 
 
-listeners = {}  # type: dict[str, dict[type[ServerEvent], tuple[Callable[[Any], None], int]]]
+event_listeners = {}  # type: dict[int, dict[type[ServerEvent], list[Callable[[Any], None]]]]
+system_event_listeners = {} # type: dict[int, dict[type[ServerEvent], Callable[[dict], None]]]
+system_inited = False
 
 
 def AddEventListener(event, listener, priority=0):
@@ -25,13 +27,7 @@ def AddEventListener(event, listener, priority=0):
         event (type[Event]): 事件类
         listener ((T) -> None): 事件监听器
     """
-    def custom_listener(data):
-        evt = event.unmarshal(data)
-        listener(evt)
-
-    funcname = listener.__module__ + "." + listener.__name__ # to avoid name conflict
-    custom_listener.__name__ = funcname
-    listeners.setdefault(funcname, {})[event] = (custom_listener, priority)
+    dynListen(event, listener, priority)
 
 def RemoveEventListener(event, listener, priority=0):
     # type: (type[EventT], Callable[[EventT], None], int) -> None
@@ -42,20 +38,7 @@ def RemoveEventListener(event, listener, priority=0):
         event (type[Event]): 事件类
         listener ((T) -> None): 事件监听器
     """
-    funcname = listener.__module__ + "." + listener.__name__
-    cbs = listeners.get(funcname)
-    if cbs is not None:
-        fun_and_priority = cbs.pop(event, None)
-        if fun_and_priority is not None:
-            GetServer().UnListenForEvent(
-                serverApi.GetEngineNamespace(),
-                serverApi.GetEngineSystemName(),
-                event.name, GetServer(),
-                fun_and_priority[0], # pyright: ignore[reportArgumentType]
-                priority
-            )
-        if not cbs:
-            listeners.pop(funcname, None)
+    dynUnListen(event, listener, priority)
 
 def ListenEvent(event, priority=0):
     # type: (type[EventT], int) -> Callable[[Callable[[EventT], None]], Callable[[EventT], None]]
@@ -72,55 +55,88 @@ def ListenEvent(event, priority=0):
 
     return wrapper
 
+def dynListen(event, listener, priority=0):
+    # type: (type[EventT], Callable[[EventT], None], int) -> None
+    global system_inited
+    if priority not in event_listeners or event not in event_listeners[priority]:
+        def event_bus_handler(args):
+            # type: (dict) -> None
+            event_ins = event.unmarshal(args)
+            for cb in event_listeners[priority][event]:
+                cb(event_ins)
+        event_bus_handler.__name__ = "tdsysevent_handler_" + event.__name__ + str(priority)
+        system_event_listeners.setdefault(priority, {})[event] = event_bus_handler
+        if system_inited:
+            addSysEventListener(event, event_bus_handler, priority)
+    event_listeners.setdefault(priority, {}).setdefault(event, []).append(listener)
+        
+def dynUnListen(event, listener, priority=0):
+    # type: (type[EventT], Callable[[EventT], None], int) -> None
+    global system_inited
+    if priority not in event_listeners or event not in event_listeners[priority]:
+        print("[Warning] Remove listener not exists: {}".format(listener))
+        return
+    event_listeners[priority][event].remove(listener)
+    if not event_listeners[priority][event]:
+        del event_listeners[priority][event]
+        syslevel_listeners = system_event_listeners[priority]
+        syslevel_listener = syslevel_listeners.pop(event)
+        if system_inited:
+            remSysEventListener(event, syslevel_listener, priority)
+        if not syslevel_listeners:
+            del system_event_listeners[priority]
+
+
+def addSysEventListener(event, listener, priority=0):
+    # type: (type[EventT], Callable[[dict], None], int) -> None
+    s = GetServer()
+    setattr(s, listener.__name__, listener)
+    if issubclass(event, CustomC2SEvent):
+        namespace = GetModName()
+        system_name = GetModClientEngineName()
+    else:
+        namespace = serverApi.GetEngineNamespace()
+        system_name = serverApi.GetEngineSystemName()
+    s.ListenForEvent(
+        namespace,
+        system_name,
+        event.name, s,
+        listener, # pyright: ignore[reportArgumentType]
+        priority
+    )
+
+def remSysEventListener(event, listener, priority=0):
+    # type: (type[EventT], Callable[[dict], None], int) -> None
+    s = GetServer()
+    if hasattr(s, listener.__name__):
+        delattr(s, listener.__name__)
+    if issubclass(event, CustomC2SEvent):
+        namespace = GetModName()
+        system_name = GetModClientEngineName()
+    else:
+        namespace = serverApi.GetEngineNamespace()
+        system_name = serverApi.GetEngineSystemName()
+    s.UnListenForEvent(
+        namespace,
+        system_name,
+        event.name, s,
+        listener, # pyright: ignore[reportArgumentType]
+        priority
+    )
+
 @ServerInitCallback(-10000)
-def OnServerListen():
+def onServerListen():
     # type: () -> None
-    """
-    需要在 server class 的 ListenEvent 方法下调用 onServerListen()
-    """
-    server = GetServer()
-    for cb_name, event_cbs in listeners.items():
-        for event, (listener, priority) in event_cbs.items():
-            setattr(server, cb_name, listener)
-            if issubclass(event, CustomC2SEvent):
-                server.ListenForEvent(
-                    GetModName(),
-                    GetModClientEngineName(),
-                    event.name, server,
-                    listener, # pyright: ignore[reportArgumentType]
-                    priority
-                )
-            else:
-                server.ListenForEvent(
-                    serverApi.GetEngineNamespace(),
-                    serverApi.GetEngineSystemName(),
-                    event.name, server,
-                    listener, # pyright: ignore[reportArgumentType]
-                    priority
-                )
+    global system_inited
+    for priority, syslevel_cbs in system_event_listeners.items():
+        for event, listener in syslevel_cbs.items():
+            addSysEventListener(event, listener, priority)
+    system_inited = True
 
 @ServerUninitCallback(-10000)
-def OnServerUnlisten():
+def onServerUnlisten():
     # type: () -> None
-    """
-    需要在 server class 的 ListenEvent 方法下调用 onServerUnlisten()
-    """
-    server = GetServer()
-    for _, event_cbs in listeners.items():
-        for event, (listener, priority) in event_cbs.items():
-            if issubclass(event, CustomC2SEvent):
-                server.UnListenForEvent(
-                    GetModName(),
-                    GetModClientEngineName(),
-                    event.name, server,
-                    listener, # pyright: ignore[reportArgumentType]
-                    priority
-                )
-            else:
-                server.UnListenForEvent(
-                    serverApi.GetEngineNamespace(),
-                    serverApi.GetEngineSystemName(),
-                    event.name, server,
-                    listener, # pyright: ignore[reportArgumentType]
-                    priority
-                )
+    for priority, syslevel_cbs in system_event_listeners.items():
+        for event, listener in syslevel_cbs.items():
+            remSysEventListener(event, listener, priority)
+

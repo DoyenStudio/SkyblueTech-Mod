@@ -31,7 +31,7 @@ class ClientEvent(BaseEvent):
     name = "ClientEvent"
 
     @classmethod
-    def Listen(cls, priority=0):
+    def Listen(cls, priority=0, inner_priority=0):
         """
         将以下的方法修饰为监听回调。
 
@@ -39,7 +39,7 @@ class ClientEvent(BaseEvent):
             priority (int, optional): 优先级, 默认为 0
         """
         _requireClientListenerModule()
-        return ClientListenEvent(cls, priority)
+        return ClientListenEvent(cls, priority, inner_priority)
 
 
 class CustomC2SEvent(ServerEvent):

@@ -179,6 +179,7 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
                 self.prev_crack_stage,
         ).sendMulti(GetPlayersInDim(self.dim))
 
+# CLIENT PART
 
 @DiggerWorkModeUpdatedEvent.Listen()
 def clientOnDiggerWorkModeUpdated(event):

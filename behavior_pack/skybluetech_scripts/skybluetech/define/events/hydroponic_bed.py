@@ -8,32 +8,33 @@ MODE_UNLOAD = 1
 class HydroponicBedClientLoadEvent(CustomC2SEvent):
     name = "st:HBCLE"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, mode=0):
+    def __init__(self, dim, x, y, z, mode, player_id=""):
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.mode = mode
+        self.player_id = player_id
 
     def marshal(self):
         return {"d": self.dim, "x": self.x, "y": self.y, "z": self.z, "m": self.mode}
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.player_id = data["__id__"]
-        instance.dim = data["d"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.mode = data["m"]
-        return instance
+        return cls(
+            dim=data["d"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            mode=data["m"],
+            player_id=data["__id__"]
+        )
 
 
 class HydroponicBedModelUpdateEvent(CustomS2CEvent):
     name = "st:HBUPD"
 
-    def __init__(self, x=0, y=0, z=0, crop_id="", aux=0):
+    def __init__(self, x, y, z, crop_id, aux):
         # type: (int, int, int, str | None, int) -> None
         self.x = x
         self.y = y
@@ -46,13 +47,14 @@ class HydroponicBedModelUpdateEvent(CustomS2CEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.crop_id = data["c"]
-        instance.aux = data["a"]
-        return instance
+        return cls(
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            crop_id=data["c"],
+            aux=data["a"]
+        )
+
 
 class HydroponicBedModelUpdatesEvent(CustomS2CEvent):
     name = "st:HBUPD"
@@ -62,10 +64,11 @@ class HydroponicBedModelUpdatesEvent(CustomS2CEvent):
         self.updates = updates
 
     def marshal(self):
-        return {"u": self.updates}
+        return self.updates
 
     @classmethod
-    def unmarshal(cls, data):
-        instance = cls()
-        instance.updates = data["u"]
-        return instance
+    def unmarshal(
+        cls,
+        data # type: list[tuple[int, int, int, str, int]]
+    ):
+        return cls(data)

@@ -128,28 +128,28 @@ class ItemSplitter(GUIControl, UpgradeControl):
 @ItemSplitterSimpleAction.Listen()
 def onSimpleAction(event):
     # type: (ItemSplitterSimpleAction) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, ItemSplitter):
         return
     if event.action == event.ACTION_ADD_SETTING:
-        m.onAddSetting(event.pid)
+        m.onAddSetting(event.player_id)
     elif event.action == event.ACTION_REMOVE_SETTING:
-        m.onDeleteSetting(event.pid, event.extra)
+        m.onDeleteSetting(event.player_id, event.extra)
 
 @ItemSplitterSettingsSetLabel.Listen()
 def onSetLabel(event):
     # type: (ItemSplitterSettingsSetLabel) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, ItemSplitter):
         return
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
-    m.onSetLabel(event.pid, event.setting_index, event.label)
+    m.onSetLabel(event.player_id, event.setting_index, event.label)
 
 @ItemSplitterSettingsSetItem.Listen()
 def onSetItem(event):
     # type: (ItemSplitterSettingsSetItem) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, ItemSplitter):
         return
     if (
@@ -158,4 +158,4 @@ def onSetItem(event):
         or len(event.item_id) > 256
     ):
         return
-    m.onSetItem(event.pid, event.setting_index, event.item_id)
+    m.onSetItem(event.player_id, event.setting_index, event.item_id)

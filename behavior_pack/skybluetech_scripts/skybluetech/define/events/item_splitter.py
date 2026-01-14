@@ -6,14 +6,15 @@ from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent, CustomS2C
 class ItemSplitterSettingsSetLabel(CustomC2SEvent):
     name = "st:ISSSL"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, setting_index=0, label=0):
-        # type : (int, int, int, int, int) -> None
+    def __init__(self, dim, x, y, z, setting_index, label, player_id=""):
+        # type : (int, int, int, int, int, str) -> None
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.setting_index = setting_index
         self.label = label
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -27,21 +28,21 @@ class ItemSplitterSettingsSetLabel(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.pid = data["__id__"]
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.setting_index = data["s"]
-        instance.label = data["l"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            setting_index=data["s"],
+            label=data["l"],
+            player_id=data["__id__"],
+        )
 
 
 class ItemSplitterSettingsSetItem(CustomC2SEvent):
     name = "st:ISSSI"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, setting_index=0, item_id=""):
+    def __init__(self, dim, x, y, z, setting_index, item_id, player_id=""):
         # type : (int, int, int, int, int) -> None
         self.dim = dim
         self.x = x
@@ -49,6 +50,7 @@ class ItemSplitterSettingsSetItem(CustomC2SEvent):
         self.z = z
         self.setting_index = setting_index
         self.item_id = item_id
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -62,15 +64,15 @@ class ItemSplitterSettingsSetItem(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.pid = data["__id__"]
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.setting_index = data["s"]
-        instance.item_id = data["f"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            setting_index=data["s"],
+            item_id=data["f"],
+            player_id=data["__id__"],
+        )
 
 
 class ItemSplitterSimpleAction(CustomC2SEvent):
@@ -79,14 +81,15 @@ class ItemSplitterSimpleAction(CustomC2SEvent):
     ACTION_ADD_SETTING = 0
     ACTION_REMOVE_SETTING = 1
 
-    def __init__(self, dim=0, x=0, y=0, z=0, action=0, extra=0):
-        # type: (int, int, int, int, int, int) -> None
+    def __init__(self, dim, x, y, z, action, extra, player_id=""):
+        # type: (int, int, int, int, int, int, str) -> None
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.action = action
         self.extra = extra
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -100,15 +103,15 @@ class ItemSplitterSimpleAction(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.pid = data["__id__"]
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.action = data["a"]
-        instance.extra = data["e"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            action=data["a"],
+            extra=data["e"],
+            player_id=data["__id__"],
+        )
 
 
 class ItemSplitterSettingsListUpdate(CustomS2CEvent):
@@ -119,10 +122,11 @@ class ItemSplitterSettingsListUpdate(CustomS2CEvent):
         self.lis = lis
 
     def marshal(self):
-        return {"l": self.lis}
+        return self.lis
 
     @classmethod
-    def unmarshal(cls, data):
-        instance = cls()
-        instance.lis = data["l"]
-        return instance
+    def unmarshal(
+        cls,
+        data # type: list[tuple[int, str]]
+    ):
+        return cls(data)

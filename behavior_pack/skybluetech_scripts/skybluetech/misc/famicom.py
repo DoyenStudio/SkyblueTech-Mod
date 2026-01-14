@@ -63,13 +63,16 @@ class FamicomPlaySoundEvent(CustomS2CEvent):
             "stop": self.stop,
         }
 
-    def unmarshal(self, data):
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.sound_name = data["sound_name"]
-        self.stop = data["stop"]
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            sound_name=data["sound_name"],
+            stop=data["stop"],
+        )
 
 
 @ServerBlockUseEvent.Listen()

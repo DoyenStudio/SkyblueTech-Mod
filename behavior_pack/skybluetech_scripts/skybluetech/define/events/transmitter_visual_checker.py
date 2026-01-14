@@ -8,22 +8,26 @@ class TransmitterVisualCheckerCheckRequest(CustomC2SEvent):
     MODE_GET_BY_TRANSMITTER = 0
     MODE_GET_BY_MACHINE = 1
 
-    def __init__(self, x=0, y=0, z=0, mode=0):
-        # type: (int, int, int, int) -> None
+    def __init__(self, x=0, y=0, z=0, mode=0, player_id=""):
+        # type: (int, int, int, int, str) -> None
         self.x = x
         self.y = y
         self.z = z
         self.mode = mode
+        self.player_id = player_id
 
     def marshal(self):
         return {"x": self.x, "y": self.y, "z": self.z, "mode": self.mode}
 
-    def unmarshal(self, data):
-        self.player_id = data["__id__"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.mode = data["mode"]
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            mode=data["mode"],
+            player_id=data["__id__"],
+        )
 
 
 class TransmitterVisualCheckerCheckResponse(CustomS2CEvent):
@@ -54,11 +58,14 @@ class TransmitterVisualCheckerCheckResponse(CustomS2CEvent):
             "type": self.type
         }
 
-    def unmarshal(self, data):
-        self.nodes = data["nodes"]
-        self.inputs = data["inputs"]
-        self.outputs = data["outputs"]
-        self.type = data["type"]
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            nodes=data["nodes"],
+            inputs=data["inputs"],
+            outputs=data["outputs"],
+            type=data["type"],
+        )
 
 
 class TransmitterVisualCheckerCheckMultiResponse(CustomS2CEvent):
@@ -80,5 +87,8 @@ class TransmitterVisualCheckerCheckMultiResponse(CustomS2CEvent):
             "reses": self.reses
         }
 
-    def unmarshal(self, data):
-        self.reses = data["reses"]
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            reses=data["reses"],
+        )

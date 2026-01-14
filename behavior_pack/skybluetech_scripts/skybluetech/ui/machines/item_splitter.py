@@ -122,7 +122,7 @@ class ItemSplitterUI(MachinePanelUIProxy):
     def onAddSetting(self, _):
         dim, x, y, z = self.pos
         ItemSplitterSimpleAction(
-            dim, x, y, z, ItemSplitterSimpleAction.ACTION_ADD_SETTING
+            dim, x, y, z, ItemSplitterSimpleAction.ACTION_ADD_SETTING, 0
         ).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.label_editing")

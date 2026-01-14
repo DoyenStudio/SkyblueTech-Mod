@@ -1,3 +1,4 @@
+# coding=utf-8
 from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
 
 
@@ -21,12 +22,13 @@ class DiggerWorkModeUpdatedEvent(CustomS2CEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.active = data["active"]
-        return instance
+        return cls(
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            active=data["active"],
+        )
+
 
 class DiggerUpdateCrack(CustomS2CEvent):
     name = "st:DUC"
@@ -50,10 +52,10 @@ class DiggerUpdateCrack(CustomS2CEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.level = data["level"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            level=data["level"],
+        )

@@ -6,14 +6,15 @@ from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent, CustomS2C
 class FluidSplitterSettingsSetLabel(CustomC2SEvent):
     name = "st:FSSSL"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, setting_index=0, label=0):
-        # type : (int, int, int, int, int) -> None
+    def __init__(self, dim, x, y, z, setting_index, label, player_id=""):
+        # type : (int, int, int, int, int, str) -> None
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.setting_index = setting_index
         self.label = label
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -27,28 +28,29 @@ class FluidSplitterSettingsSetLabel(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.pid = data["__id__"]
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.setting_index = data["s"]
-        instance.label = data["l"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            setting_index=data["s"],
+            label=data["l"],
+            player_id=data["__id__"],
+        )
 
 
 class FluidSplitterSettingsSetFluid(CustomC2SEvent):
     name = "st:FSSSF"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, setting_index=0, fluid_id=""):
-        # type : (int, int, int, int, int) -> None
+    def __init__(self, dim, x, y, z, setting_index, fluid_id, player_id=""):
+        # type : (int, int, int, int, int, str) -> None
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.setting_index = setting_index
         self.fluid_id = fluid_id
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -62,15 +64,15 @@ class FluidSplitterSettingsSetFluid(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.pid = data["__id__"]
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.setting_index = data["s"]
-        instance.fluid_id = data["f"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            setting_index=data["s"],
+            fluid_id=data["f"],
+            player_id=data["__id__"],
+        )
 
 
 class FluidSplitterSimpleAction(CustomC2SEvent):
@@ -79,14 +81,15 @@ class FluidSplitterSimpleAction(CustomC2SEvent):
     ACTION_ADD_SETTING = 0
     ACTION_REMOVE_SETTING = 1
 
-    def __init__(self, dim=0, x=0, y=0, z=0, action=0, extra=0):
-        # type: (int, int, int, int, int, int) -> None
+    def __init__(self, dim, x, y, z, action, extra, player_id=""):
+        # type: (int, int, int, int, int, int, str) -> None
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.action = action
         self.extra = extra
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -100,29 +103,31 @@ class FluidSplitterSimpleAction(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.pid = data["__id__"]
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.action = data["a"]
-        instance.extra = data["e"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            action=data["a"],
+            extra=data["e"],
+            player_id=data["__id__"],
+        )
 
 
 class FluidSplitterSettingsListUpdate(CustomS2CEvent):
     name = "st:FSSLU"
 
-    def __init__(self, lis=[]):
-        # type: (list[tuple[int, str]]) -> None
+    def __init__(self, lis=[], player_id=""):
+        # type: (list[tuple[int, str]], str) -> None
         self.lis = lis
+        self.player_id = player_id
 
     def marshal(self):
         return {"l": self.lis}
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.lis = data["l"]
-        return instance
+        return cls(
+            lis=data["l"],
+            player_id=data["__id__"],
+        )

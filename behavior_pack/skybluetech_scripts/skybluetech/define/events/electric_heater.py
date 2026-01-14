@@ -4,13 +4,14 @@ from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent
 class ElectricHeaterSetPowerEvent(CustomC2SEvent):
     name = "st:EHS"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, power=0):
-        # type: (int, int, int, int, int) -> None
+    def __init__(self, dim, x, y, z, power, player_id=""):
+        # type: (int, int, int, int, int, str) -> None
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.power = power
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -23,11 +24,11 @@ class ElectricHeaterSetPowerEvent(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.power = data["power"]
-        instance.player_id = data["__id__"]
-        return instance
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            power=data["power"],
+            player_id=data["__id__"],
+        )

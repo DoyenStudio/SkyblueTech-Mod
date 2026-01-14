@@ -4,12 +4,13 @@ from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent
 class FermenterSetTemperatureEvent(CustomC2SEvent):
     name = "st:FST"
 
-    def __init__(self, x=0, y=0, z=0, temperature=0):
-        # type: (int, int, int, float) -> None
+    def __init__(self, x, y, z, temperature, player_id=""):
+        # type: (int, int, int, float, str) -> None
         self.x = x
         self.y = y
         self.z = z
         self.temperature = temperature
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -21,23 +22,25 @@ class FermenterSetTemperatureEvent(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.temperature = data["t"]
-        instance.player_id = data["__id__"]
-        return instance
+        return cls(
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            temperature=data["t"],
+            player_id=data["__id__"]
+        )
+
 
 class FermenterSeMaxVolumeEvent(CustomC2SEvent):
     name = "st:FSMV"
 
-    def __init__(self, x=0, y=0, z=0, volume=0):
-        # type: (int, int, int, float) -> None
+    def __init__(self, x, y, z, volume, player_id=""):
+        # type: (int, int, int, float, str) -> None
         self.x = x
         self.y = y
         self.z = z
         self.volume = volume
+        self.player_id = player_id
 
     def marshal(self):
         return {
@@ -49,10 +52,10 @@ class FermenterSeMaxVolumeEvent(CustomC2SEvent):
 
     @classmethod
     def unmarshal(cls, data):
-        instance = cls()
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.volume = data["v"]
-        instance.player_id = data["__id__"]
-        return instance
+        return cls(
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            volume=data["v"],
+            player_id=data["__id__"]
+        )

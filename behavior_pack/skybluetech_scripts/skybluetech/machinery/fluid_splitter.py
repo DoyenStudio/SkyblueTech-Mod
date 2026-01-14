@@ -134,28 +134,28 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
 @FluidSplitterSimpleAction.Listen()
 def onSimpleAction(event):
     # type: (FluidSplitterSimpleAction) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, FluidSplitter):
         return
     if event.action == event.ACTION_ADD_SETTING:
-        m.onAddSetting(event.pid)
+        m.onAddSetting(event.player_id)
     elif event.action == event.ACTION_REMOVE_SETTING:
-        m.onDeleteSetting(event.pid, event.extra)
+        m.onDeleteSetting(event.player_id, event.extra)
 
 @FluidSplitterSettingsSetLabel.Listen()
 def onSetLabel(event):
     # type: (FluidSplitterSettingsSetLabel) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, FluidSplitter):
         return
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
-    m.onSetLabel(event.pid, event.setting_index, event.label)
+    m.onSetLabel(event.player_id, event.setting_index, event.label)
 
 @FluidSplitterSettingsSetFluid.Listen()
 def onSetFluid(event):
     # type: (FluidSplitterSettingsSetFluid) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.pid)
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, FluidSplitter):
         return
     if (
@@ -164,4 +164,4 @@ def onSetFluid(event):
         or len(event.fluid_id) > 256
     ):
         return
-    m.onSetFluid(event.pid, event.setting_index, event.fluid_id)
+    m.onSetFluid(event.player_id, event.setting_index, event.fluid_id)

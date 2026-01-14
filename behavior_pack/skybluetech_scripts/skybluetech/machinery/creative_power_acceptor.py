@@ -6,6 +6,10 @@ from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
 from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInitCallback
 from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
 from skybluetech_scripts.tooldelta.events.client.block import ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent
+from ..define.events.creative_power_acceptor import (
+    CreativePowerAcceptorPowerUpdate,
+    CreativePowerAcceptorPowerUpdateRequest,
+)
 from ..define.id_enum.machinery import CREATIVE_POWER_ACCEPTOR as MACHINE_ID
 from .basic import BaseMachine, RegisterMachine
 
@@ -55,55 +59,6 @@ class CreativePowerAcceptor(BaseMachine):
 updatePool = {} # type: dict[tuple[int, int, int, int], int]
 lastUpdatePool = {} # type: dict[tuple[int, int, int, int], int]
 cTextPool = {} # type: dict[tuple[int, tuple[float, float, float]], DrawingShapeCompClient]
-
-
-class CreativePowerAcceptorPowerUpdateRequest(CustomC2SEvent):
-    name = "st:CPAPUpdateRequest"
-
-    def __init__(self, dim=-1, x=0, y=0, z=0):
-        self.dim = dim
-        self.x = x
-        self.y = y
-        self.z = z
-
-    def marshal(self):
-        return {
-            "dim": self.dim,
-            "x": self.x,
-            "y": self.y,
-            "z": self.z,
-        }
-
-    @classmethod
-    def unmarshal(cls, data):
-        instance = cls()
-        instance.dim = data["dim"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.mId = data["__id__"]
-        return instance
-
-
-
-class CreativePowerAcceptorPowerUpdate(CustomS2CEvent):
-    name = "st:CPAPUpdate"
-
-    def __init__(self, datas=None):
-        # type: (list[list[int]] | None) -> None
-        self.datas = datas or []
-
-    def marshal(self):
-        return self.datas
-
-    @classmethod
-    def unmarshal(
-        cls, 
-        data # type: list[list[int]]
-    ):
-        instance = cls()
-        instance.datas = data
-        return instance
 
 
 def addText(dim, pos, default_text=""):
@@ -161,15 +116,15 @@ def onPowerUpdateRequest(event):
         # TODO: 客户端可能恶意连续请求以占用过多网络资源
         CreativePowerAcceptorPowerUpdate(
             [list(k) + [v] for k, v in updatePool.items()]
-        ).send(event.mId)
+        ).send(event.player_id)
     else:
         CreativePowerAcceptorPowerUpdate(
             [[dim, x, y, z, updatePool.get((dim, x, y, z), -32768)]]
-        ).send(event.mId)
+        ).send(event.player_id)
 
 @ClientInitCallback()
 def onClientInit():
-    CreativePowerAcceptorPowerUpdateRequest().send()
+    CreativePowerAcceptorPowerUpdateRequest(-1, 0, 0, 0).send()
 
 @ServerInitCallback()
 @AsTimerFunc(1)

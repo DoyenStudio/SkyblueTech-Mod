@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent
 class TransmitterSetLabel(CustomC2SEvent):
     name = "st:TmSL"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, facing=0, label=0):
+    def __init__(self, dim, x, y, z, facing, label, pid=""):
         # type : (int, int, int, int, int) -> None
         self.dim = dim
         self.x = x
@@ -14,6 +14,7 @@ class TransmitterSetLabel(CustomC2SEvent):
         self.z = z
         self.facing = facing
         self.label = label
+        self.pid = pid
 
     def marshal(self):
         return {
@@ -25,20 +26,23 @@ class TransmitterSetLabel(CustomC2SEvent):
             "l": self.label,
         }
 
-    def unmarshal(self, data):
-        self.pid = data["__id__"]
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.facing = data["f"]
-        self.label = data["l"]
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            facing=data["f"],
+            label=data["l"],
+            pid=data["__id__"],
+        )
 
 
 class TransmitterSetPriority(CustomC2SEvent):
     name = "st:TmSP"
 
-    def __init__(self, dim=0, x=0, y=0, z=0, facing=0, priority=0):
+    def __init__(self, dim, x, y, z, facing, priority, sid=""):
         # type : (int, int, int, int, int) -> None
         self.dim = dim
         self.x = x
@@ -46,6 +50,7 @@ class TransmitterSetPriority(CustomC2SEvent):
         self.z = z
         self.facing = facing
         self.priority = priority
+        self.sid = sid
 
     def marshal(self):
         return {
@@ -57,11 +62,14 @@ class TransmitterSetPriority(CustomC2SEvent):
             "p": self.priority,
         }
 
-    def unmarshal(self, data):
-        self.pid = data["__id__"]
-        self.dim = data["dim"]
-        self.x = data["x"]
-        self.y = data["y"]
-        self.z = data["z"]
-        self.facing = data["f"]
-        self.priority = data["p"]
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            dim=data["dim"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            facing=data["f"],
+            priority=data["p"],
+            sid=data["__id__"],
+        )

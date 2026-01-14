@@ -4,6 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.server.block import (
     ServerPlaceBlockEntityEvent,
     BlockNeighborChangedServerEvent,
+    ServerEntityTryPlaceBlockEvent,
 )
 from .. import pool
 from .gui_ctrl import GUIControl
@@ -63,6 +64,11 @@ class BaseMachine(object):
         if not self.is_non_energy_machine:
             self.store_rf = self.bdata[K_STORE_RF] or 0
         self.deactive_flags = self.bdata[K_DEACTIVE_FLAGS] or 0
+
+    @classmethod
+    def OnPrePlaced(cls, event):
+        # type: (ServerEntityTryPlaceBlockEvent) -> None
+        pass
 
     def OnPlaced(self, event):
         # type: (ServerPlaceBlockEntityEvent) -> None

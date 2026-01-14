@@ -6,6 +6,7 @@ from skybluetech_scripts.tooldelta.events.server.block import (
     BlockNeighborChangedServerEvent,
     BlockRemoveServerEvent,
     ServerBlockUseEvent,
+    ServerEntityTryPlaceBlockEvent,
 )
 from skybluetech_scripts.tooldelta.events.server.item import (
     PlayerTryPutCustomContainerItemServerEvent,
@@ -89,6 +90,13 @@ def onUseItem(event):
     m = pool.GetMachineStrict(event.dimensionId, event.x, event.y, event.z)
     if isinstance(m, (FluidContainer, MultiFluidContainer)) and m.ifPlayerInteractWithBucket(event.entityId, test=True):
         event.cancel()
+
+@ServerEntityTryPlaceBlockEvent.Listen()
+def onTryPlace(event):
+    # type: (ServerEntityTryPlaceBlockEvent) -> None
+    m = pool.TryGetMachineCls(event.fullName)
+    if m:
+        m.OnPrePlaced(event)
 
 @ServerPlaceBlockEntityEvent.Listen()
 def onPlaced(event):

@@ -65,8 +65,11 @@ def PopMachineStrict(dimension, x, y, z):
     return cached_machines.pop((dimension, x, y, z), None)
 
 def GetMachineCls(block_name):
-    # type: (str) -> type[BaseMachine]
     return machine_classes[block_name]
+
+def TryGetMachineCls(block_name):
+    # type: (str) -> type[BaseMachine] | None
+    return machine_classes.get(block_name)
 
 @ChunkLoadedServerEvent.Listen()
 def onChunkLoaded(event):

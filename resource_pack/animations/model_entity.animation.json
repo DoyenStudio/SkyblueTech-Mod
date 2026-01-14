@@ -3,7 +3,7 @@
 	"animations": {
 		"animation.skybluetech.model_entity.y_scale": {
 			"animation_length": 4.1667,
-			"anim_time_update": "query.mod.tank_fluid_y_scale",
+			"anim_time_update": "query.mod.skybluetech_y_scale",
 			"bones": {
 				"bb_main": {
 					"scale": {

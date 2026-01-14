@@ -7,7 +7,7 @@
                 "default": "geometry.skybluetech.digger_ani"
             },
             "textures": {
-                "default": "textures/entity/digger_model"
+                "default": "textures/models/digger_model"
             },
             "materials": {
                 "default": "entity_alphatest"

@@ -15,7 +15,7 @@
             },
             "identifier": "skybluetech:model_entity",
             "textures": {
-                "default": "textures/entity/model_entity_texture"
+                "default": "textures/models/model_entity_texture"
             },
             "animations": {
                 "y_scale": "animation.skybluetech.model_entity.y_scale"

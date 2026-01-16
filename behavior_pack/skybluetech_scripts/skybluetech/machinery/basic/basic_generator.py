@@ -24,10 +24,10 @@ class BasicGenerator(BaseMachine):
     def GeneratePower(self, rf):
         # type: (int) -> bool
         "产出能量。"
-        self.rf = min(self.store_rf_max, self.addPowerIntoWireNetwork(rf))
+        self.store_rf = min(self.store_rf_max, self.addPowerIntoWireNetwork(rf))
         if isinstance(self, GUIControl):
             self.OnSync()
-        return self.rf != rf
+        return self.store_rf != rf
 
     def OnLoad(self):
         BaseMachine.OnLoad(self)

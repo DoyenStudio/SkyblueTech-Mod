@@ -1,11 +1,11 @@
 # coding=utf-8
-from ..api.client.item import GetItemTags
 
 
 class RecipeInput:
     def __init__(self, item_id, count, aux_value=0, is_tag=False):
         # type: (str, int, int, bool) -> None
         self.item_id = item_id
+        "当 is_tag=True 时表示物品标签"
         self.count = count
         self.aux_value = aux_value
         self.is_tag = is_tag

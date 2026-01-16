@@ -1,10 +1,12 @@
 # coding=utf-8
 
 from ...internal import ServerComp, ServerLevelId
+from ..internal.cacher import MethodCacher
 
 
-_getRecipesByInput = ServerComp.CreateRecipe(ServerLevelId).GetRecipesByInput
-_getRecipesByResult = ServerComp.CreateRecipe(ServerLevelId).GetRecipesByResult
+_getRecipesByInput = MethodCacher(lambda:ServerComp.CreateRecipe(ServerLevelId).GetRecipesByInput)
+_getRecipesByResult = MethodCacher(lambda:ServerComp.CreateRecipe(ServerLevelId).GetRecipesByResult)
+
 
 def GetRecipesByInput(item_id, recipe_tag, aux_value=0, maxResultNum=-1):
     # type: (str, str, int, int) -> list[dict]
@@ -16,10 +18,13 @@ def GetRecipesByResult(item_id, recipe_tag, aux_value=0, maxResultNum=-1):
 
 GetLocalTime = ServerComp.CreateDimension(ServerLevelId).GetLocalTime
 IsRaining = ServerComp.CreateWeather(ServerLevelId).IsRaining
+GetRecipeByRecipeId = MethodCacher(lambda:ServerComp.CreateRecipe(ServerLevelId).GetRecipeByRecipeId)
+
 
 __all__ = [
     "GetRecipesByInput",
     "GetRecipesByResult",
+    "GetRecipeByRecipeId",
     "GetLocalTime",
     "IsRaining",
 ]

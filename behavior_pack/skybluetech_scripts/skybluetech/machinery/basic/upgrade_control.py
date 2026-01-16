@@ -11,16 +11,28 @@ class UpgradeControl(ItemContainer, SPControl):
     """
     代表可接受升级卡的机器基类。
     
-    派生自 `ItemContainer`, `SPControl`
+    派生自:
+        `ItemContainer`
+        `SPControl`
 
-    需要调用 `__init__()` [基调用]
+    类属性:
+        upgrade_slot_start (int): 升级槽起始槽位
+        upgrade_slots (int): 升级槽数量
+        allow_upgrader_tags (set[str]): 可接受的机器升级卡标签。
+
+    需要调用 `__init__ (super)`
     
-    覆写: `IsValidInput`, `OnSlotUpdate`, `OnLoad`[基调用], `Dump`[基调用], `AddPower`[基调用], `SetDeactiveFlag`[基调用]
+    覆写:
+        `IsValidInput`
+        `OnSlotUpdate`
+        `OnLoad (super)`
+        `Dump (super)`
+        `AddPower (super)`
+        `SetDeactiveFlag (super)`
     """
     upgrade_slot_start = 2 # type: int
     upgrade_slots = 4 # type: int
     allow_upgrader_tags = set() # type: set[str]
-    "可接受的机器升级卡标签。"
 
     def __init__(self, dim, x, y, z, block_entity_data):
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
@@ -45,6 +57,7 @@ class UpgradeControl(ItemContainer, SPControl):
 
     def OnSlotUpdate(self, slot):
         # type: (int) -> None
+        "超类方法更新升级槽数据。"
         if slot < self.upgrade_slot_start or slot >= self.upgrade_slot_start + self.upgrade_slots:
             return
         self.UpdateUpgraders(self.GetAllUpgraders())

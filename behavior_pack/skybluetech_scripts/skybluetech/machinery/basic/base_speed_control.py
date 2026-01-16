@@ -10,7 +10,10 @@ class BaseSpeedControl(BaseMachine):
     """
     基本的速度控制机器基类。
     
-    覆写: `OnLoad`[基调用], `Dump`[基调用], `SetDeactiveFlag`[基调用]
+    覆写:
+        `OnLoad (super)`
+        `Dump (super)`
+        `SetDeactiveFlag (super)`
     """
     origin_process_ticks = 20
 

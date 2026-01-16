@@ -181,6 +181,10 @@ class BaseMachine(object):
         """
         return self.deactive_flags & flag != 0
 
+    def FlushDeactiveFlags(self):
+        # type: () -> None
+        pass
+
     def IsActive(self):
         # type: () -> bool
         """

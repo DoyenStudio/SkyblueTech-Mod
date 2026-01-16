@@ -17,7 +17,14 @@ class HeatCtrl(BaseMachine):
 
     需要: `__init__`
 
-    需要覆写: `OnLoad`, `OnTicking`, `Dump`
+    类属性:
+        heat_loss (float): 热量流失值, 默认为 1.0
+        original_heat_c (float): 原始比热容, 默认为 4000.0
+
+    覆写:
+        `OnLoad`
+        `OnTicking`
+        `Dump`
     """
 
     heat_loss = 1

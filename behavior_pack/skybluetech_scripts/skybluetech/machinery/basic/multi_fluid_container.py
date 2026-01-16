@@ -65,25 +65,28 @@ class MultiFluidContainer(object):
     """
     可存储多种流体的机器基类。
 
-    需要调用 `__init__()`
+    类属性:
+        fluid_io_mode (tuple[int, int, int, int, int, int]): 每个面的流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无
+        fluid_input_slots (set[int]): 可接受输入的流体槽位
+        fluid_output_slots (set[int]): 可输出的流体槽位
+        fluid_slot_max_volumes (tuple[int, ...]): 每个流体槽最多可存储流体容量
+        allow_player_use_bucket (bool): 是否允许玩家直接使用桶与机器进行交互
+        fluid_io_fix_mode (int): 使用 1 时调用 FixIOModeByCardinalFacing; 使用 2 时调用 FixIOModeByDirection; 其他则不适用修复
+        auto_fluid_require_delay (int): 自动索求流体的 tick 间隔; -1 则为从不索取; 此时需要调用 `OnTicking()`
 
-    覆写: `Dump`
+    需要调用 `__init__`
+
+    覆写:
+        `Dump`
     """
 
     fluid_io_mode = (2, 2, 2, 2, 2, 2)  # type: tuple[int, int, int, int, int, int]
-    "每个面的流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无"
     fluid_input_slots = set()  # type: set[int]
-    "可接受输入的流体槽位"
     fluid_output_slots = set()  # type: set[int]
-    "可输出的流体槽位"
     fluid_slot_max_volumes = (4000, 4000)  # type: tuple[int, ...]
-    "每个流体槽最多可存储流体容量"
     allow_player_use_bucket = True
-    "是否允许玩家直接使用桶与机器进行交互"
     fluid_io_fix_mode = 1
-    "使用 1 时调用 FixIOModeByCardinalFacing; 使用 2 时调用 FixIOModeByDirection; 其他则不适用修复"
     auto_fluid_require_delay = -1
-    "自动索求流体的 tick 间隔; -1 则为从不索取; 此时需要调用 `OnTicking()`"
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None

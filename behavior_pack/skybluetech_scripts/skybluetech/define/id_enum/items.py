@@ -62,3 +62,6 @@ class RawOres:
 class Upgraders:
     BASIC_SPEED_UPGRADER = "skybluetech:basic_speed_upgrader"
     BASIC_ENERGY_UPGRADER = "skybluetech:basic_energy_upgrader"
+
+
+CRAFTING_TEMPLATE = "skybluetech:crafting_template"

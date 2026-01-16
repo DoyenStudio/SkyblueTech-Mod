@@ -2,13 +2,17 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from ....tooldelta.define.item import Item
-from ....tooldelta.events import PlayerTryPutCustomContainerItemClientEvent, PlayerTryPutCustomContainerItemServerEvent
-from skybluetech_scripts.tooldelta.api.server.container import (
+from ....tooldelta.events import (
+    PlayerTryPutCustomContainerItemClientEvent,
+    PlayerTryPutCustomContainerItemServerEvent
+)
+from skybluetech_scripts.tooldelta.api.server import (
     GetContainerItem,
     SetContainerItem,
     SetChestBoxItemNum,
     GetContainerSize,
     PutItemIntoContainer,
+    SortItems,
 )
 
 def requireLibraryFunc():
@@ -24,13 +28,15 @@ requireLibraryFunc._imported = False
 class ItemContainer(object):
     """
     可存储物品的机器基类。
-    
+
+    类属性:
+        input_slots (tuple[int, ...]): 可用输入槽位
+        output_slots (tuple[int, ...]): 可用输出槽位
+
     需要调用 `__init__()`
     """
     input_slots = () # type: tuple[int, ...]
-    "可用输入槽位"
     output_slots = () # type: tuple[int, ...]
-    "可用输出槽位"
     
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -132,6 +138,16 @@ class ItemContainer(object):
         if not self.IsValidInput(event.collectionIndex, event.item):
             event.cancel()
 
+    def CanOutputItems(self, items):
+        # type: (list[Item]) -> bool
+        _c = [
+            self.GetSlotItem(slot_pos, get_user_data=True) for slot_pos in self.output_slots
+        ]
+        current_items = [i for i in _c if i is not None]
+        items_sorted = SortItems(items + current_items)
+        return len(items_sorted) <= len(self.output_slots)
+        
+
     def OutputItem(self, item):
         # type: (Item) -> Item | None
         # 在管道逻辑处已经能自动输出物品了
@@ -146,6 +162,6 @@ class ItemContainer(object):
             item (Item): 产出物
 
         Returns:
-            Item: ?
+            Item: 剩余物品, 当没有剩余物时返回 None
         """
         return PutItemIntoContainer(self.dim, self.xyz, item, self.output_slots)

@@ -53,4 +53,5 @@ __all__ = [
     "SetContainerItem",
     "GetContainerSize",
     "SetChestBoxItemNum",
+    "PutItemIntoContainer",
 ]

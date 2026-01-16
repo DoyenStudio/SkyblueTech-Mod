@@ -17,6 +17,10 @@ from .sp_control import SPControl
 class MixedProcessor(BaseProcessor, MultiFluidContainer):
     """
     能使用物品和流体的配方处理器机器基类。
+    
+    派生自:
+        `BaseProcessor`
+        `MultiFluidContainer`
     """
 
     def __init__(self, dim, x, y, z, block_entity_data):

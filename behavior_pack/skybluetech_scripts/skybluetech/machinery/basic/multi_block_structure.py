@@ -342,9 +342,13 @@ class MultiBlockStructure(BaseMachine):
     """
     多方块机器结构的基类。
 
-    需要调用 `__init__()`
+    派生自: `BaseMachine`
 
-    覆写: `OnLoad`, `OnUnload`
+    需要调用 `__init__`
+
+    覆写:
+        `OnLoad`
+        `OnUnload`
     """
 
     structure_palette = None  # type: StructureBlockPalette | None

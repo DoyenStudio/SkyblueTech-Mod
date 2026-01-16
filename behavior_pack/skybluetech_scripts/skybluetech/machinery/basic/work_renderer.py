@@ -8,8 +8,13 @@ class WorkRenderer(BaseMachine):
     """
     表示一个存在 active 状态的机器方块基类。
     机器外观会随 active 状态的改变而改变。
+
+    派生自: `BaseMachine`
     
-    覆写: `SetDeactiveFlag`, `UnsetDeactiveFlag`[基调用]
+    覆写:
+        `SetDeactiveFlag`
+        `UnsetDeactiveFlag (super)`
+        `FlushDeactiveFlags (super)`
     """
 
     _last_work_status = False
@@ -23,14 +28,22 @@ class WorkRenderer(BaseMachine):
             self._last_work_status = active
             self.OnWorkStatusUpdated()
 
+    def SetDeactiveFlag(self, flag, flush=True):
+        # type: (int, bool) -> None
+        if flush:
+            self._updateWorkStatus()
 
-    def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        self._updateWorkStatus()
-
-    def UnsetDeactiveFlag(self, flag):
-        # type: (int) -> None
+    def UnsetDeactiveFlag(self, flag, flush=True):
+        # type: (int, bool) -> None
+        if not self.HasDeactiveFlag(flag):
+            return
+        if flush:
+            self._updateWorkStatus()
         BaseMachine.UnsetDeactiveFlag(self, flag)
+
+    def FlushDeactiveFlags(self):
+        # type: () -> None
+        BaseMachine.FlushDeactiveFlags(self)
         self._updateWorkStatus()
 
     def OnWorkStatusUpdated(self):

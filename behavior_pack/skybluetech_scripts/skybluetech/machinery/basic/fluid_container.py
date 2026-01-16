@@ -34,19 +34,20 @@ class FluidContainer(object):
     """
     可存储单种流体的机器基类。
 
+    类属性:
+        fluid_io_mode (tuple[int, int, int, int, int, int]): 流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无
+        max_fluid_volume (float): 最多可存储流体容量
+        fluid_io_fix_mode (int): 使用 1 时调用 FixIOModeByCardinalFacing; 使用 2 时调用 FixIOModeByDirection; 其他则不适用修复
+        allow_player_use_bucket (bool): 是否允许玩家直接使用桶与机器进行交互
+
     需要调用 `__init__()`
 
     覆写: `Dump`
     """
-
     fluid_io_mode = (2, 2, 2, 2, 2, 2)  # type: tuple[int, int, int, int, int, int]
-    "每个面的流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无"
     max_fluid_volume = 1000
-    "最多可存储流体容量"
     fluid_io_fix_mode = 1
-    "使用 1 时调用 FixIOModeByCardinalFacing; 使用 2 时调用 FixIOModeByDirection; 其他则不适用修复"
     allow_player_use_bucket = True
-    "是否允许玩家直接使用桶与机器进行交互"
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None

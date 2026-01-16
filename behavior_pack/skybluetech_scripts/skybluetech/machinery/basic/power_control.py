@@ -9,8 +9,10 @@ class PowerControl(BaseMachine):
     """
     机器的额定功率控制器。
     自动控制机器的 active 状态。
-    
-    覆写和调用父类: `AddPower`[基调用]
+
+    派生自: `BaseMachine`
+
+    覆写: `AddPower (super)`
     """
     running_power = 1000
     power_pos_rate = 1.0

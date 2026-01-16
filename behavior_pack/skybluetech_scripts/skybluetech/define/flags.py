@@ -1,20 +1,20 @@
-def mov(num):
+def b(num):
     # type: (int) -> int
     return 1 << num
 
 # general
-DEACTIVE_FLAG_NO_RECIPE            = mov(1)
-DEACTIVE_FLAG_OUTPUT_FULL          = mov(2)
-DEACTIVE_FLAG_NO_INPUT             = mov(3)
-DEACTIVE_FLAG_STRUCTURE_BROKEN     = mov(4)
-DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK = mov(5)
+DEACTIVE_FLAG_NO_RECIPE            = b(1)
+DEACTIVE_FLAG_OUTPUT_FULL          = b(2)
+DEACTIVE_FLAG_NO_INPUT             = b(3)
+DEACTIVE_FLAG_STRUCTURE_BROKEN     = b(4)
+DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK = b(5)
 
 # appliance
-DEACTIVE_FLAG_POWER_LACK           = mov(6)
-DEACTIVE_FLAG_FLUID_NOT_MATCH      = mov(7)
-DEACTIVE_FLAG_FLUID_FULL           = mov(8)
+DEACTIVE_FLAG_POWER_LACK           = b(6)
+DEACTIVE_FLAG_FLUID_NOT_MATCH      = b(7)
+DEACTIVE_FLAG_FLUID_FULL           = b(8)
 
 # generator
-DEACTIVE_FLAG_POWER_FULL           = mov(6)
+DEACTIVE_FLAG_POWER_FULL           = b(6)
 
 

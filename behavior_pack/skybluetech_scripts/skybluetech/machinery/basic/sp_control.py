@@ -8,9 +8,15 @@ class SPControl(BaseSpeedControl, PowerControl):
     """
     速度和能量控制基类合并, 并覆写一个更方便合理的 `ProcessOnce()` 方法。
     
-    派生自 `BaseSpeedControl`, `PowerControl`
+    派生自:
+        `BaseSpeedControl`
+        `PowerControl`
 
-    覆写: `OnLoad`[基调用], `Dump`[基调用], `AddPower`[基调用], `SetDeactiveFlag`[基调用]
+    覆写:
+        `OnLoad (super)`
+        `Dump (super)`
+        `AddPower (super)`
+        `SetDeactiveFlag (super)`
     """
     def ProcessOnce(self):
         """

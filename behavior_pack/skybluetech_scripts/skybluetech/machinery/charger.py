@@ -25,7 +25,7 @@ from skybluetech_scripts.tooldelta.events.client import (
 from ..define import flags
 from ..define.id_enum.machinery import CHARGER as MACHINE_ID
 from ..machinery_def.charger import CHARGE_SPEED
-from ..define.events.charger import ChargerItemModelUpdate, ChargeItemModelRequest
+from ..define.events.machinery.charger import ChargerItemModelUpdate, ChargeItemModelRequest
 from ..ui_sync.machines.charger import ChargerUISync
 from ..utils.charge import GetCharge, UpdateCharge, K_STORE_RF, K_STORE_RF_MAX
 from .basic import AutoSaver, GUIControl, UpgradeControl, RegisterMachine

@@ -2,7 +2,7 @@
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
-from ...define.events.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
+from ...define.events.machinery.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
 from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
 from ...machinery_def.fermenter import spec_recipes, TEMPERATURE_MIN, TEMPERATURE_MAX, POOL_MAX_VOLUME
 from ...ui_sync.machines.fermenter import FermenterUISync

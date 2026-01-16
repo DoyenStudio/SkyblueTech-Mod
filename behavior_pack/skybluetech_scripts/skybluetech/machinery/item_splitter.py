@@ -2,7 +2,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
-from ..define.events.item_splitter import (
+from ..define.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
     ItemSplitterSettingsSetLabel,

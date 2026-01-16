@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl, Binder
 from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
-from ...define.events.fluid_splitter import (
+from ...define.events.machinery.fluid_splitter import (
     FluidSplitterSettingsSetFluid,
     FluidSplitterSettingsSetLabel,
     FluidSplitterSettingsListUpdate,
@@ -12,7 +12,7 @@ from ...define.events.fluid_splitter import (
 )
 from ...machinery_def.fluid_splitter import all_fluids
 from ...ui_sync.machines.fluid_splitter import FluidSplitterUISync
-from ..transmitters.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
+from ..misc.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import InitFluidsDisplay
 
@@ -135,7 +135,7 @@ class FluidSplitterUI(MachinePanelUIProxy):
     def onAddSetting(self, _):
         dim, x, y, z = self.pos
         FluidSplitterSimpleAction(
-            dim, x, y, z, FluidSplitterSimpleAction.ACTION_ADD_SETTING
+            dim, x, y, z, FluidSplitterSimpleAction.ACTION_ADD_SETTING, 0
         ).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#FluidSplitterUI.label_editing")

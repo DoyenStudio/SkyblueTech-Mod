@@ -11,7 +11,7 @@ from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
     CreateBlankSingleBlockModelEntity,
 )
 from ..define import flags
-from ..define.events.hydroponic_bed import (
+from ..define.events.machinery.hydroponic_bed import (
     HydroponicBedClientLoadEvent,
     HydroponicBedModelUpdateEvent,
     HydroponicBedModelUpdatesEvent,

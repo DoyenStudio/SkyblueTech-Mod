@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
-from ...define.events.assembler import *
+from ...define.events.machinery.assembler import *
 from ...ui_sync.machines.assembler import AssemblerUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar

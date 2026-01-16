@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockName
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent, BlockNeighborChangedServerEvent
 from ..define import flags
-from ..define.events.assembler import *
+from ..define.events.machinery.assembler import *
 from ..define.facing import DXYZ_FACING, FACING_EN
 from ..define.id_enum.machinery import ASSEMBLER as MACHINE_ID
 from ..machinery_def.assembler import *

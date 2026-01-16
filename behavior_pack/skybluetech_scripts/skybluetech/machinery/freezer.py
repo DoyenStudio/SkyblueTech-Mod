@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from ..define.events.freezer import FreezerModeChangedEvent
+from ..define.events.machinery.freezer import FreezerModeChangedEvent
 from ..define.id_enum.machinery import FREEZER as MACHINE_ID
 from ..machinery_def.freezer import recipes as Recipes
 from ..ui_sync.machines.freezer import FreezerUISync

@@ -1,7 +1,7 @@
 # coding=utf-8
 import random
 from skybluetech_scripts.tooldelta.events.client.control import OnKeyPressInGame
-from skybluetech_scripts.tooldelta.ui import UScreenNode, UBaseCtrl, Binder, RegistScreen, SCREEN_BASE_PATH
+from skybluetech_scripts.tooldelta.ui import ToolDeltaScreen, UBaseCtrl, Binder, RegistToolDeltaScreen, SCREEN_BASE_PATH
 from ...define.events.transmitter_settings import TransmitterSetLabel, TransmitterSetPriority
 
 INDEX_GRID_NODE = SCREEN_BASE_PATH / "network_label_selector_stack"
@@ -26,11 +26,11 @@ def get_opposite_color(r, g, b):
         return 1, 1, 1
 
 
-@RegistScreen("TransmitterSettingsUI.main")
-class TransmitterSettingsUI(UScreenNode):
+@RegistToolDeltaScreen("TransmitterSettingsUI.main")
+class TransmitterSettingsUI(ToolDeltaScreen):
 
-    def __init__(self, namespace, name, params):
-        UScreenNode.__init__(self, namespace, name, params)
+    def __init__(self, screen_name, screen_instance, params):
+        ToolDeltaScreen.__init__(self, screen_name, screen_instance, params)
         self.priority_value = params["priority"] # type: int
         self.label_value = params["label"] # type: int
         self.dim = params["dim"] # type: int
@@ -39,8 +39,7 @@ class TransmitterSettingsUI(UScreenNode):
         self.z = params["z"] # type: int
         self.ap_side = params["side"]
 
-    def Create(self):
-        UScreenNode.Create(self)
+    def On(self):
         self.stack = self.GetElement(INDEX_GRID_NODE)
         self.close_btn = self.GetElement(CLOSE_BTN_NODE).asButton().SetCallback(self.onClose)
         self.main_label = self.GetElement(MAIN_LABEL_NODE)

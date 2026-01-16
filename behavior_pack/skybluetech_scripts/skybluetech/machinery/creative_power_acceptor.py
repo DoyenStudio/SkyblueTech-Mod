@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
 from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInitCallback
 from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
 from skybluetech_scripts.tooldelta.events.client.block import ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent
-from ..define.events.creative_power_acceptor import (
+from ..define.events.machinery.creative_power_acceptor import (
     CreativePowerAcceptorPowerUpdate,
     CreativePowerAcceptorPowerUpdateRequest,
 )

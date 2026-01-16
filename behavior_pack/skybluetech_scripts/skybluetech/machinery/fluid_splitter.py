@@ -1,7 +1,7 @@
 # coding=utf-8
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
-from ..define.events.fluid_splitter import (
+from ..define.events.machinery.fluid_splitter import (
     FluidSplitterSettingsListUpdate,
     FluidSplitterSettingsSetFluid,
     FluidSplitterSettingsSetLabel,

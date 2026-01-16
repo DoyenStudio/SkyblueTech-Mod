@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.api.client import NewSingleBlockPalette, CombineBlockPaletteToGeometry
 from ...ui_sync.machines.hydroponic_bed import HydroponicBedUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
-from .utils import UpdatePowerBar, UpdateGenericProgressL2R
+from .utils import UpdatePowerBar
 
 from ..recipe_checker import AsRecipeCheckerBtn
 from ...machinery_def.hydroponic_bed import recipes

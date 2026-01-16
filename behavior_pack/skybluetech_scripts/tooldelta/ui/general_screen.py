@@ -22,10 +22,11 @@ class ToolDeltaScreen(object):
     _screen_proxy_cls = None # type: type[_CustomUIControlProxy] | None
     _screen_key = "" # type: str
 
-    def __init__(self, screen_name, screen_instance):
-        # type: (str, _ScreenNode | _CustomUIControlProxy) -> None
+    def __init__(self, screen_name, screen_instance, params=None):
+        # type: (str, _ScreenNode | _CustomUIControlProxy, dict | None) -> None
         self._screen_name = screen_name
         self._screen_instance = screen_instance
+        self._init_params = params or {}
         self._screen_node = self.base = screen_instance if isinstance(screen_instance, ScreenNode) else screen_instance.screenNode # type: _ScreenNode # type: ignore
         self._activated = False
         self._element_cacher = {} # type: dict[str, UBaseCtrl]
@@ -50,19 +51,19 @@ class ToolDeltaScreen(object):
     def CreateUI(cls, params={}):
         if cls._screen_cls is None:
             raise Exception("CreateUI failed: screen %s not registered as ScreenNode")
-        s_instance = clientApi.CreateUI(GetModName(), cls._screen_key, params)
-        if not isinstance(s_instance, cls._screen_cls):
-            raise Exception("CreateUI failed: return {} is not {}".format(s_instance, cls))
-        return cls(s_instance.name, s_instance) # pyright: ignore[reportAttributeAccessIssue]
+        screen = clientApi.CreateUI(GetModName(), cls._screen_key, params)
+        if not isinstance(screen, cls._screen_cls):
+            raise Exception("CreateUI failed: return {} is not {}".format(screen, cls))
+        return cls(screen.name, screen, screen._initial_params) # pyright: ignore[reportAttributeAccessIssue]
 
     @classmethod
     def PushUI(cls, params={}):
         if cls._screen_cls is None:
             raise Exception("CreateUI failed: screen %s not registered as ScreenNode")
-        s_instance = clientApi.PushScreen(GetModName(), cls._screen_key, params)
-        if not isinstance(s_instance, cls._screen_cls):
-            raise Exception("CreateUI failed: return {} is not {}".format(s_instance, cls))
-        return cls(s_instance.name, s_instance) # pyright: ignore[reportAttributeAccessIssue]
+        screen = clientApi.PushScreen(GetModName(), cls._screen_key, params)
+        if not isinstance(screen, cls._screen_cls):
+            raise Exception("CreateUI failed: return {} is not {}".format(screen, cls))
+        return cls(screen.name, screen, screen._initial_params) # pyright: ignore[reportAttributeAccessIssue]
 
     def RemoveUI(self):
         self._do_deactive()
@@ -102,6 +103,7 @@ class ToolDeltaScreen(object):
         cls._screen_key = screen_key or screen_name
         def __init__(self, namespace, name, param=None):
             ScreenNode.__init__(self, namespace, name, param) # type: ignore
+            self._initial_params = param
             self._super_screen_ins = cls(name, self)
         def OnCreate(self):
             self._super_screen_ins._on_create()
@@ -134,6 +136,7 @@ class ToolDeltaScreen(object):
                 screenName,
                 screenNode,
             )
+            self._initial_params = None
             self.screenNode = screenNode
         def OnCreate(self):
             self._super_screen_ins._on_create()

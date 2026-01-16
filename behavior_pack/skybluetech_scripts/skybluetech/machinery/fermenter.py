@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
-from ..define.events.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
+from ..define.events.machinery.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
 from ..define.id_enum.machinery import FERMENTER as MACHINE_ID
 from ..machinery_def.fermenter import *
 from ..ui_sync.machines.fermenter import FermenterUISync

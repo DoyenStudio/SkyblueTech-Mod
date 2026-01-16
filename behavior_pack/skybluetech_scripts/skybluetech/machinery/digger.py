@@ -28,7 +28,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayersInDim
 from ..define import flags
-from ..define.events.digger import DiggerWorkModeUpdatedEvent, DiggerUpdateCrack
+from ..define.events.machinery.digger import DiggerWorkModeUpdatedEvent, DiggerUpdateCrack
 from ..define.id_enum.machinery import DIGGER as MACHINE_ID
 from ..utils.facing import GetOppositeDirFromFacing
 from ..ui_sync.machines.digger import DiggerUISync

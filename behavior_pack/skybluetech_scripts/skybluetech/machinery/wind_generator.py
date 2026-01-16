@@ -25,7 +25,7 @@ from skybluetech_scripts.tooldelta.api.client import (
     GetBlockNameAndAux,
     SetBlockEntityMolangValue,
 )
-from ..define.events.wind_generator import (
+from ..define.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,
     WindGeneratorStatesUpdate,
 )

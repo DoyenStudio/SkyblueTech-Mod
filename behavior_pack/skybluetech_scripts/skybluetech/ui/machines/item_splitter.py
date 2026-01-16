@@ -3,14 +3,14 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl, Binder
 from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName, GetLocalPlayerHotbarAndInvItems
-from ...define.events.item_splitter import (
+from ...define.events.machinery.item_splitter import (
     ItemSplitterSettingsSetItem,
     ItemSplitterSettingsSetLabel,
     ItemSplitterSettingsListUpdate,
     ItemSplitterSimpleAction,
 )
 from ...ui_sync.machines.item_splitter import ItemSplitterUISync
-from ..transmitters.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
+from ..misc.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
 from .define import MachinePanelUIProxy, MAIN_PATH
 
 SETTINGS_VIEW_NODE = MAIN_PATH / "settings_view"

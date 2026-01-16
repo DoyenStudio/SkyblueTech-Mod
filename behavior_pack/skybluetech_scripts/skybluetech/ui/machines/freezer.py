@@ -2,7 +2,7 @@
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.define import Item
-from ...define.events.freezer import FreezerModeChangedEvent
+from ...define.events.machinery.freezer import FreezerModeChangedEvent
 from ...machinery_def.freezer import recipes
 from ...ui_sync.machines.freezer import FreezerUISync
 from .define import MachinePanelUIProxy, MAIN_PATH

@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ..define.id_enum.machinery import ELECTRIC_HEATER as MACHINE_ID
-from ..define.events.electric_heater import ElectricHeaterSetPowerEvent
+from ..define.events.machinery.electric_heater import ElectricHeaterSetPowerEvent
 from ..ui_sync.machines.electric_heater import ElectricHeaterUISync
 from ..utils.action_commit import SafeGetMachine
 from .basic import AutoSaver, HeatCtrl, GUIControl, PowerControl, RegisterMachine

@@ -52,6 +52,7 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     running_power = 40
     upgrade_slot_start = 1
     upgrade_slots = 4
+    allow_upgrader_tags = {"skybluetech:upgraders/speed", "skybluetech:upgraders/energy"}
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None

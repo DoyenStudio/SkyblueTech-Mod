@@ -51,6 +51,10 @@ def List(val):
     """ WARNING: 一些地方可以直接使用 list。 """
     return Tp(NBT_LIST, val)
 
+def GenericList(val):
+    # type: (list) -> list
+    return val
+
 def Compound(val):
     # type: (dict) -> dict
     """ WARNING: 大部分地方都可以直接使用 dict。 """
@@ -64,6 +68,15 @@ def GetValueWithDefault(nbt, key, default):
     return nbt.get(key, {}).get("__value__", default)
 
 def Py2NBT(arg):
+    """
+    将 Python 基本类型转换为 NBT dict。
+
+    Args:
+        arg (Any): 传入对象
+
+    Returns:
+        _type_: NBT dict
+    """
     if isinstance(arg, dict):
         return {
             k: Py2NBT(v)
@@ -76,7 +89,7 @@ def Py2NBT(arg):
                 (int, float, str, bool, dict)
             ) and list_item is not None:
                 raise ValueError("NBTList can only contain int, float, str, bool, dict, None, not {}".format(list_item))
-        return List([
+        return GenericList([
             Py2NBT(v)
             for v in arg
         ])
@@ -107,6 +120,16 @@ def Py2NBT(arg):
         raise ValueError("NBT can only contain int, float, str, bool, dict, list, None, not {}".format(arg))
 
 def NBT2Py(arg):
+    """
+    将 NBT dict 转换为剔除 `__type__` 和 `__value__` Python 对象。
+    注意: 这将丢失进一步的数值类型。
+
+    Args:
+        arg (Any): NBT dict
+
+    Returns:
+        Any: 转换后对象
+    """
     if isinstance(arg, list):
         return [
             NBT2Py(v)

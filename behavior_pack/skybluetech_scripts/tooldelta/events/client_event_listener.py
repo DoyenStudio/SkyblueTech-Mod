@@ -20,15 +20,19 @@ system_event_listeners = {} # type: dict[int, dict[type[ClientEvent], Callable[[
 system_inited = False
 
 
-def AddEventListener(event, listener, priority=0, inner_priority=0):
-    # type: (type[EventT], Callable[[EventT], None], int, int) -> None
+def AddEventListener(event, listener, priority=0, inner_priority=0, static=False):
+    # type: (type[EventT], Callable[[EventT], None], int, int, bool) -> None
     """
     监听客户端事件。
 
     Args:
         event (type[Event]): 事件类
         listener ((T) -> None): 事件监听器
+        priority (int): 优先级
     """
+    global system_inited
+    if system_inited and static:
+        return
     dynListen(event, listener, priority, inner_priority)
     
 
@@ -43,8 +47,8 @@ def RemoveEventListener(event, listener, priority=0):
     """
     dynUnListen(event, listener, priority)
 
-def ListenEvent(event, priority=0, inner_priority=0):
-    # type: (type[EventT], int, int) -> Callable[[Callable[[EventT], None]], Callable[[EventT], None]]
+def ListenEvent(event, priority=0, inner_priority=0, static=False):
+    # type: (type[EventT], int, int, bool) -> Callable[[Callable[[EventT], None]], Callable[[EventT], None]]
     """
     监听客户端事件, 作为装饰器使用。
 
@@ -53,7 +57,7 @@ def ListenEvent(event, priority=0, inner_priority=0):
     """
     def wrapper(func):
         # type: (Callable[[EventT], None]) -> Callable[[EventT], None]
-        AddEventListener(event, func, priority, inner_priority)
+        AddEventListener(event, func, priority, inner_priority, static)
         return func
 
     return wrapper
@@ -71,7 +75,10 @@ def dynListen(event, listener, priority=0, inner_priority=0):
         system_event_listeners.setdefault(priority, {})[event] = event_bus_handler
         if system_inited:
             addSysEventListener(event, event_bus_handler, priority)
-    event_listeners.setdefault(priority, {}).setdefault(event, []).append((inner_priority, listener))
+    listeners = event_listeners.setdefault(priority, {}).setdefault(event, [])
+    listener_tupl = (inner_priority, listener)
+    if listener_tupl not in listeners:
+        listeners.append(listener_tupl)
     event_listeners[priority][event].sort(key=lambda x: x[0], reverse=True)
         
 def dynUnListen(event, listener, priority=0, inner_priority=0):

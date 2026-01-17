@@ -24,7 +24,7 @@ class ServerEvent(BaseEvent):
             priority (int, optional): 优先级, 默认为 0
         """
         _requireServerListenerModule()
-        return ServerListenEvent(cls, priority)
+        return ServerListenEvent(cls, priority, static=True)
 
 
 class ClientEvent(BaseEvent):
@@ -39,7 +39,7 @@ class ClientEvent(BaseEvent):
             priority (int, optional): 优先级, 默认为 0
         """
         _requireClientListenerModule()
-        return ClientListenEvent(cls, priority, inner_priority)
+        return ClientListenEvent(cls, priority, inner_priority, static=True)
 
 
 class CustomC2SEvent(ServerEvent):

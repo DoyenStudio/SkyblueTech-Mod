@@ -18,15 +18,20 @@ system_event_listeners = {} # type: dict[int, dict[type[ServerEvent], Callable[[
 system_inited = False
 
 
-def AddEventListener(event, listener, priority=0):
-    # type: (type[EventT], Callable[[EventT], None], int) -> None
+def AddEventListener(event, listener, priority=0, static=False):
+    # type: (type[EventT], Callable[[EventT], None], int, bool) -> None
     """
     监听服务端事件。
 
     Args:
         event (type[Event]): 事件类
         listener ((T) -> None): 事件监听器
+        priority (int): 优先级
+        static (bool): 是否静态监听, 即不被热重载影响
     """
+    global system_inited
+    if system_inited and static:
+        return
     dynListen(event, listener, priority)
 
 def RemoveEventListener(event, listener, priority=0):
@@ -40,8 +45,8 @@ def RemoveEventListener(event, listener, priority=0):
     """
     dynUnListen(event, listener, priority)
 
-def ListenEvent(event, priority=0):
-    # type: (type[EventT], int) -> Callable[[Callable[[EventT], None]], Callable[[EventT], None]]
+def ListenEvent(event, priority=0, static=False):
+    # type: (type[EventT], int, bool) -> Callable[[Callable[[EventT], None]], Callable[[EventT], None]]
     """
     监听服务端事件, 作为装饰器使用。
 
@@ -50,7 +55,7 @@ def ListenEvent(event, priority=0):
     """
     def wrapper(func):
         # type: (Callable[[EventT], None]) -> Callable[[EventT], None]
-        AddEventListener(event, func, priority)
+        AddEventListener(event, func, priority, static)
         return func
 
     return wrapper
@@ -68,7 +73,10 @@ def dynListen(event, listener, priority=0):
         system_event_listeners.setdefault(priority, {})[event] = event_bus_handler
         if system_inited:
             addSysEventListener(event, event_bus_handler, priority)
-    event_listeners.setdefault(priority, {}).setdefault(event, []).append(listener)
+    listeners = event_listeners.setdefault(priority, {}).setdefault(event, [])
+    if listener not in listeners:
+        # to avoid hot reload duplicated
+        listeners.append(listener)
         
 def dynUnListen(event, listener, priority=0):
     # type: (type[EventT], Callable[[EventT], None], int) -> None

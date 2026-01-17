@@ -18,6 +18,9 @@ ScreenProxy = clientApi.GetUIScreenProxyCls()
 
 
 class ToolDeltaScreen(object):
+    _ATTR_EVENT_LISTENER = "_tdscreen_event_listen"
+    _ATTR_EVENT_LISTENER_PRIORITY = "_tdscreen_event_listen_priority"
+
     _screen_cls = None # type: type[_ScreenNode] | None
     _screen_proxy_cls = None # type: type[_CustomUIControlProxy] | None
     _screen_key = "" # type: str
@@ -27,7 +30,7 @@ class ToolDeltaScreen(object):
         self._screen_name = screen_name
         self._screen_instance = screen_instance
         self._init_params = params or {}
-        self._screen_node = self.base = screen_instance if isinstance(screen_instance, ScreenNode) else screen_instance.screenNode # type: _ScreenNode # type: ignore
+        self._screen_node = self.base = screen_instance if isinstance(screen_instance, ScreenNode) else getattr(screen_instance, "screenNode")
         self._activated = False
         self._element_cacher = {} # type: dict[str, UBaseCtrl]
         self._vars = {}
@@ -54,7 +57,10 @@ class ToolDeltaScreen(object):
         screen = clientApi.CreateUI(GetModName(), cls._screen_key, params)
         if not isinstance(screen, cls._screen_cls):
             raise Exception("CreateUI failed: return {} is not {}".format(screen, cls))
-        return cls(screen.name, screen, screen._initial_params) # pyright: ignore[reportAttributeAccessIssue]
+        self = getattr(screen, "_super_screen_ins")
+        if not isinstance(self, cls):
+            raise ValueError("CreateUI failed: internal: return {} is not {}".format(self, cls))
+        return self
 
     @classmethod
     def PushUI(cls, params={}):
@@ -63,7 +69,10 @@ class ToolDeltaScreen(object):
         screen = clientApi.PushScreen(GetModName(), cls._screen_key, params)
         if not isinstance(screen, cls._screen_cls):
             raise Exception("CreateUI failed: return {} is not {}".format(screen, cls))
-        return cls(screen.name, screen, screen._initial_params) # pyright: ignore[reportAttributeAccessIssue]
+        self = getattr(screen, "_super_screen_ins")
+        if not isinstance(self, cls):
+            raise ValueError("CreateUI failed: internal: return {} is not {}".format(self, cls))
+        return self
 
     def RemoveUI(self):
         self._do_deactive()
@@ -89,8 +98,8 @@ class ToolDeltaScreen(object):
         """
         def wrapper(func):
             # type: (CallT) -> CallT
-            setattr(func, "_tdscreen_event_listen", event)
-            setattr(func, "_tdscreen_event_listen_priority", priority)
+            setattr(func, cls._ATTR_EVENT_LISTENER, event)
+            setattr(func, cls._ATTR_EVENT_LISTENER_PRIORITY, priority)
             return func
         return wrapper
 
@@ -104,21 +113,25 @@ class ToolDeltaScreen(object):
         def __init__(self, namespace, name, param=None):
             ScreenNode.__init__(self, namespace, name, param) # type: ignore
             self._initial_params = param
-            self._super_screen_ins = cls(name, self)
-        def OnCreate(self):
+            self._super_screen_ins = cls(name, self, param)
+
+        def Create(self):
             self._super_screen_ins._on_create()
-        def OnDestroy(self):
+
+        def Destory(self):
             self._super_screen_ins._on_destroy()
-        def OnTicking(self):
+
+        def Update(self):
             self._super_screen_ins._on_tick()
+
         attrs = {
             "__init__": __init__,
-            "OnCreate": OnCreate,
-            "OnDestroy": OnDestroy,
-            "OnTicking": OnTicking,
+            "Create": Create,
+            "Destory": Destory,
+            "Update": Update,
         }
         attrs.update(cls._get_tdscreen_bindings())
-        t = type(cls.__name__ + "_Base", (ScreenNode,), {})
+        t = type(cls.__name__ + "_Base", (ScreenNode,), attrs)
         cls._screen_cls = t
         return t
 
@@ -132,16 +145,18 @@ class ToolDeltaScreen(object):
 
         def __init__(self, screenName, screenNode):
             ScreenProxy.__init__(self, screenName, screenNode)
+            self._initial_params = None
+            self.screenNode = screenNode
             self._super_screen_ins = cls(
                 screenName,
                 screenNode,
             )
-            self._initial_params = None
-            self.screenNode = screenNode
         def OnCreate(self):
             self._super_screen_ins._on_create()
+
         def OnDestroy(self):
             self._super_screen_ins._on_destroy()
+
         def OnTicking(self):
             self._super_screen_ins._on_tick()
 
@@ -158,41 +173,41 @@ class ToolDeltaScreen(object):
 
     def _analyze_td_bindings(self):
         for key in dir(self):
-            func = getattr(self, key)
-            if hasattr(func, '_tdscreen_event_listen'):
-                event = func._tdscreen_event_listen
-                priority = func._tdscreen_event_listen_priority
-                self._ui_bound_events.append((event, func, priority))
+            attr = getattr(self, key)
+            if hasattr(attr, self._ATTR_EVENT_LISTENER):
+                event = getattr(attr, self._ATTR_EVENT_LISTENER)
+                priority = getattr(attr, self._ATTR_EVENT_LISTENER_PRIORITY)
+                self._ui_bound_events.append((event, attr, priority))
 
     @classmethod
     def _get_tdscreen_bindings(cls):
         attrs = {} # type: dict[str, Callable]
         for key in dir(cls):
-            func = getattr(cls, key)
-            if hasattr(func, 'collection_name'):
+            attr = getattr(cls, key)
+            if hasattr(attr, 'collection_name'):
                 def wrap(_func):
                     def _wrapper(self, *args):
                         return _func(self._super_screen_ins, *args)
                     return _wrapper
-                custom_binding_collections_func = wrap(func)
-                custom_binding_collections_func.__module__ = func.__module__
+                custom_binding_collections_func = wrap(attr)
+                custom_binding_collections_func.__module__ = attr.__module__
                 new_name = custom_binding_collections_func.__name__ = key + "_bindwrapper"
                 attrs[new_name] = Binder.binding_collection(
-                    func.binding_flags,
-                    func.collection_name,
-                    func.binding_name
+                    attr.binding_flags,
+                    attr.collection_name,
+                    attr.binding_name
                 )(custom_binding_collections_func)
-            elif hasattr(func, 'binding_flags'):
+            elif hasattr(attr, 'binding_flags'):
                 def wrap(_func):
                     def _wrapper(self, *args):
                         return _func(self._super_screen_ins, *args)
                     return _wrapper
-                custom_binding_func = wrap(func)
-                custom_binding_func.__module__ = func.__module__
+                custom_binding_func = wrap(attr)
+                custom_binding_func.__module__ = attr.__module__
                 new_name = custom_binding_func.__name__ = key
                 attrs[new_name] = Binder.binding(
-                    func.binding_flags,
-                    func.binding_name
+                    attr.binding_flags,
+                    attr.binding_name
                 )(custom_binding_func)
         return attrs
 

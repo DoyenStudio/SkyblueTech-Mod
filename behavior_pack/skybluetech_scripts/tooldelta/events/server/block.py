@@ -207,7 +207,7 @@ class ServerBlockUseEvent(ServerEvent):
             clickY=data["clickY"],
             clickZ=data["clickZ"],
             face=data["face"],
-            item=data["itemDict"],
+            item=Item.from_dict(data["itemDict"]),
             dimensionId=data["dimensionId"],
             _orig=data,
         )

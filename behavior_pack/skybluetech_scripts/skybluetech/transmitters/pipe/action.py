@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     UpdateBlockStates,
     SetOnePopupNotice,
 )
-from ...define.events.transmitter_settings import (
+from ...define.events.misc.transmitter_settings import (
     TransmitterSetLabel, TransmitterSetPriority
 )
 from ...define.facing import NEIGHBOR_BLOCKS_ENUM

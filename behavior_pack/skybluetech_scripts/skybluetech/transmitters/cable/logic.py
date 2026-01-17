@@ -296,6 +296,7 @@ def GetNetworkByCable(dim, x, y, z, cacher=None):
 def PostItemIntoNetworks(dim, xyz, item, networks):
     # type: (int, tuple[int, int, int], Item, list[CableNetwork] | None) -> None | Item
     "向网络发送物品, 返回剩余物品"
+    item = item.copy()
     if networks is None:
         x, y, z = xyz
         networks = GetNearbyCableNetworks(dim, x, y, z, enable_cache=True)[1]
@@ -496,7 +497,9 @@ def onContainerItemChanged(event):
                     if nitem.count == item.count:
                         continue
                     else:
-                        SetContainerItem(dim, xyz, slot_not_empty, nitem)
+                        res = SetContainerItem(dim, xyz, slot_not_empty, nitem)
+                        if not res:
+                            print("[Warning] SetItem to container %d %d %d failed" % xyz)
                         if not POST_ALL_ITEMS_IN_ONE_TIME:
                             break
             else:

@@ -2,7 +2,7 @@
 import random
 from skybluetech_scripts.tooldelta.events.client.control import OnKeyPressInGame
 from skybluetech_scripts.tooldelta.ui import ToolDeltaScreen, UBaseCtrl, Binder, RegistToolDeltaScreen, SCREEN_BASE_PATH
-from ...define.events.transmitter_settings import TransmitterSetLabel, TransmitterSetPriority
+from ...define.events.misc.transmitter_settings import TransmitterSetLabel, TransmitterSetPriority
 
 INDEX_GRID_NODE = SCREEN_BASE_PATH / "network_label_selector_stack"
 CLOSE_BTN_NODE = SCREEN_BASE_PATH / "close_btn"

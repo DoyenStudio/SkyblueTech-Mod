@@ -1,3 +1,4 @@
+# coding=utf-8
 NBT_BYTE = 1
 NBT_SHORT = 2
 NBT_INT = 3
@@ -60,5 +61,63 @@ def IntArray(val):
     return Tp(NBT_INT_ARRAY, val)
 
 def GetValueWithDefault(nbt, key, default):
-    return nbt.get(key, {"__value__": default})["__value__"]
+    return nbt.get(key, {}).get("__value__", default)
+
+def Py2NBT(arg):
+    if isinstance(arg, dict):
+        return {
+            k: Py2NBT(v)
+            for k, v in arg.items()
+        }
+    elif isinstance(arg, list):
+        for list_item in arg:
+            if not isinstance(
+                list_item,
+                (int, float, str, bool, dict)
+            ) and list_item is not None:
+                raise ValueError("NBTList can only contain int, float, str, bool, dict, None, not {}".format(list_item))
+        return List([
+            Py2NBT(v)
+            for v in arg
+        ])
+    elif isinstance(arg, int):
+        if -32768 <= arg <= 32767:
+            return Short(arg)
+        elif -2147483648 <= arg <= 2147483647:
+            return Int(arg)
+        elif -9223372036854775808 <= arg <= 9223372036854775807:
+            return Long(arg)
+        else:
+            return Double(arg)
+    elif isinstance(arg, float):
+        if -2147483648 <= arg <= 2147483647:
+            return Float(arg)
+        else:
+            return Double(arg)
+    elif isinstance(arg, str):
+        # str 一定要放在 bytes 上面, 否则会先检测为 bytes
+        return String(arg)
+    elif isinstance(arg, bytes):
+        return ByteArray(list(arg))
+    elif isinstance(arg, bool):
+        return Byte(arg)
+    elif arg is None:
+        return None
+    else:
+        raise ValueError("NBT can only contain int, float, str, bool, dict, list, None, not {}".format(arg))
+
+def NBT2Py(arg):
+    if isinstance(arg, list):
+        return [
+            NBT2Py(v)
+            for v in arg
+        ]
+    elif not isinstance(arg, dict):
+        return arg
+    if "__type__" not in arg:
+        return {
+            k: NBT2Py(v)
+            for k, v in arg.items()
+        }
+    return NBT2Py(arg["__value__"])
 

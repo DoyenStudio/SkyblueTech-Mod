@@ -284,3 +284,9 @@ class BasicItemInfo(object):
             "armorKnockbackResistance": self.armorKnockbackResistance,
             "enchant_slot_type": self.enchant_slot_type,
         }
+
+__all__ = [
+    "Item",
+    "BasicItemInfo",
+    "itemBasicInfoPool",
+]

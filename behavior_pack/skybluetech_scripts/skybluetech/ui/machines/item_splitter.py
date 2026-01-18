@@ -29,7 +29,6 @@ class ItemSplitterUI(MachinePanelUIProxy):
         self.label_selector_window = None
         self.item_selector_window = None
         self.selected_setting_index = -1
-        MachinePanelUIProxy.OnCreate(self)
 
     def OnDestroy(self):
         self.closeLabelSelector()

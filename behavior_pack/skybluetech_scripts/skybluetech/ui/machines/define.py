@@ -92,18 +92,14 @@ class MachinePanelUIProxy(ToolDeltaScreen):
         self.pid = GPlayerId
         self.pos = GPos
     
-    def OnCreate(self):
-        """ 超类方法, 告诉服务端 UI 开启的同时创建一个退出按钮回调。 """
-        # UScreenProxy.OnCreate(self)
-        # NotifyToServer(UIOpen(self.bound_proxier))
+    def _on_create(self):
+        ToolDeltaScreen._on_create(self)
         self.inited = True
         if self.sync:
             self.sync.Activate()
 
-    def OnDestroy(self):
-        """ 超类方法, 告诉服务端 UI 关闭。 """
-        # UScreenProxy.OnDestroy(self)
-        # NotifyToServer(UIClose(self.bound_proxier))
+    def _on_destroy(self):
+        ToolDeltaScreen._on_destroy(self)
         if self.sync:
             self.sync.Deactivate()
 

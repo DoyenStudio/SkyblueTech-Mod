@@ -24,7 +24,6 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         self.confirm_btn = (
             self.GetElement(CONFIRM_BTN_NODE).asButton().SetCallback(self.onSubmitPower)
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

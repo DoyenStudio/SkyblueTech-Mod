@@ -15,7 +15,6 @@ class FarmingStationUI(MachinePanelUIProxy):
         self.sync = FarmingStationUISync.NewClient(dim, x, y, z) # type: FarmingStationUISync
         self.sync.WhenUpdated = self.WhenUpdated
         self.power_bar = self.GetElement(POWER_NODE)
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

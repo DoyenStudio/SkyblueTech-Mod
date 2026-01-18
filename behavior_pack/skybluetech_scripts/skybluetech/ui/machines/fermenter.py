@@ -57,7 +57,6 @@ class FermenterUI(MachinePanelUIProxy):
                 self.sync.out_fluid_max_volume,
             )
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

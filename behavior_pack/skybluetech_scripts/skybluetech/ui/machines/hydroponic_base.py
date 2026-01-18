@@ -33,7 +33,6 @@ class HydroponicBaseUI(MachinePanelUIProxy):
                 self.sync.fluid_2_max_volume,
             )
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

@@ -22,7 +22,6 @@ class GeneralTankUI(MachinePanelUIProxy):
                 self.sync.max_volume,
             )
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

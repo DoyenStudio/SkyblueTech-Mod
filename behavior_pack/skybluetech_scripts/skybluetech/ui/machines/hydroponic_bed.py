@@ -28,7 +28,6 @@ class HydroponicBedUI(MachinePanelUIProxy):
         )
         self.last_render_crop_id = None
         self.last_grow_stage = None
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

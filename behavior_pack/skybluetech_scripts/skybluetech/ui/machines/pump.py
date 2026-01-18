@@ -25,7 +25,6 @@ class PumpUI(MachinePanelUIProxy):
             )
         )
         self.sync.WhenUpdated = self.WhenUpdated
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

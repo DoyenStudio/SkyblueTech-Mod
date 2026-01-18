@@ -19,7 +19,6 @@ class SolarPanelUI(MachinePanelUIProxy):
         self.sun = self.GetElement(SUN_NODE)
         self.text = self.GetElement(TEXT_NODE).asLabel()
         self.sync.WhenUpdated = self.WhenUpdated
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

@@ -17,7 +17,6 @@ class SplitterUI(MachinePanelUIProxy):
         self.sync.WhenUpdated = self.WhenUpdated
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

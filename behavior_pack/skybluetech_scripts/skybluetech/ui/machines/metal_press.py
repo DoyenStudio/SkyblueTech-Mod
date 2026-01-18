@@ -35,7 +35,6 @@ class MetalPressUI(MachinePanelUIProxy):
             "skybluetech:metal_press",
             recipes, # pyright: ignore[reportArgumentType]
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

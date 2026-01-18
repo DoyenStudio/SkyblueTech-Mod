@@ -22,7 +22,6 @@ class AssemblerUI(MachinePanelUIProxy):
         self.power = self.GetElement(POWER_NODE)
         self.upgraders_grid = self.GetElement(UPGRADERS_LIST_NODE).asScrollView().GetContent().asGrid()
         self[MAIN_PATH / "push_btn"].asButton().SetCallback(self.onPush)
-        MachinePanelUIProxy.OnCreate(self)
 
     @Binder.binding(Binder.BF_ButtonClickUp, "#upgrade_arg_click")
     def onclick(self, arg):

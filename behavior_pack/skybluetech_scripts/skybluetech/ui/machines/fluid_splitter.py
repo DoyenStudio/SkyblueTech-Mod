@@ -40,7 +40,6 @@ class FluidSplitterUI(MachinePanelUIProxy):
             self.sync.fluids,
             0,
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def OnDestroy(self):
         MachinePanelUIProxy.OnDestroy(self)

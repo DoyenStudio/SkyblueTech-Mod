@@ -35,7 +35,6 @@ class MixerUI(MachinePanelUIProxy):
             "skybluetech:mixer",
             recipes, # pyright: ignore[reportArgumentType]
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

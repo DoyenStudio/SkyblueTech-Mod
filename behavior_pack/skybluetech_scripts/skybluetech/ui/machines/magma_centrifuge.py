@@ -32,7 +32,6 @@ class MagmaCentrifugeUI(MachinePanelUIProxy):
             "skybluetech:magma_centrifuge",
             recipes, # pyright: ignore[reportArgumentType]
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

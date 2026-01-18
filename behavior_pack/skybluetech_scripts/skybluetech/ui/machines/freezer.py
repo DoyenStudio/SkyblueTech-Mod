@@ -42,7 +42,6 @@ class FreezerUI(MachinePanelUIProxy):
             "skybluetech:freezer",
             list(recipes.values()),
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

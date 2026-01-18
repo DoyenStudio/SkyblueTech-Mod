@@ -26,7 +26,6 @@ class CompressorUI(MachinePanelUIProxy):
             "skybluetech:compressor",
             recipes, # pyright: ignore[reportArgumentType]
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

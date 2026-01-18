@@ -17,7 +17,6 @@ class ThermalGeneratorUI(MachinePanelUIProxy):
         self.power_bar = self.GetElement(POWER_NODE)
         self.flame = self.GetElement(FLAME_NODE)
         self.sync.WhenUpdated = self.WhenUpdated
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

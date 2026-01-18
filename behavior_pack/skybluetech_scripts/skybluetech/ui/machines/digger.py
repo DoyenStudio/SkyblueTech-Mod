@@ -24,7 +24,6 @@ class DiggerUI(MachinePanelUIProxy):
         self.block_disp = self.GetElement(BLOCK_DISP_NODE).asItemRenderer()
         self.work_status = self.GetElement(WORK_STATUS_NODE).asLabel()
         self.block_disp.SetUiItem(Item("minecraft:barrier"))
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

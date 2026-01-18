@@ -15,7 +15,6 @@ class ChargerUI(MachinePanelUIProxy):
         self.sync = ChargerUISync.NewClient(dim, x, y, z) # type: ChargerUISync
         self.sync.WhenUpdated = self.WhenUpdated
         self.power = self.GetElement(POWER_NODE)
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

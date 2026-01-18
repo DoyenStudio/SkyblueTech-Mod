@@ -23,7 +23,6 @@ class GeoThermalGeneratorUI(MachinePanelUIProxy):
         self.sync.WhenUpdated = self.WhenUpdated
         self.fluid_updater1 = InitFluidsDisplay(self.lava_display, self.sync.fluids, 0)
         self.fluid_updater2 = InitFluidsDisplay(self.water_display, self.sync.fluids, 1)
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

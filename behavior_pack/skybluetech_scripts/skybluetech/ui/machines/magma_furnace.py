@@ -35,7 +35,6 @@ class MagmaFurnaceUI(MachinePanelUIProxy):
             "skybluetech:magma_furnace",
             recipes, # pyright: ignore[reportArgumentType]
         )
-        MachinePanelUIProxy.OnCreate(self)
 
     def WhenUpdated(self):
         if not self.inited:

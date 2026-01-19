@@ -26,9 +26,3 @@ def onForceRemoveUIRequest(event):
     if uiNode is None:
         return
     uiNode.RemoveUI()
-
-@OnKeyPressInGame.Listen()
-def onKeyPressInGame(event):
-    # type: (OnKeyPressInGame) -> None
-    for ui in GetActiveScreens() + GetActiveProxyScreens():
-        ui.OnCurrentPageKeyEvent(event)

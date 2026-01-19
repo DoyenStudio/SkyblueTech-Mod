@@ -122,7 +122,7 @@ class ToolDeltaScreen(object):
             self._super_screen_ins._on_destroy()
 
         def Update(self):
-            self._super_screen_ins._on_tick()
+            self._super_screen_ins._on_ticking()
 
         attrs = {
             "__init__": __init__,
@@ -158,7 +158,7 @@ class ToolDeltaScreen(object):
             self._super_screen_ins._on_destroy()
 
         def OnTicking(self):
-            self._super_screen_ins._on_tick()
+            self._super_screen_ins._on_ticking()
 
         attrs = {
             "__init__": __init__,
@@ -247,8 +247,8 @@ class ToolDeltaScreen(object):
         self._do_deactive()
         self.OnDestroy()
 
-    def _on_tick(self):
-        self.OnTick()
+    def _on_ticking(self):
+        self.OnTicking()
 
     __getitem__ = GetElement
 
@@ -269,9 +269,7 @@ class ToolDeltaScreen(object):
         "子类覆写该方法"
         pass
 
-    def OnTick(self):
+    def OnTicking(self):
         "子类覆写该方法"
         pass
 
-    def OnCurrentPageKeyEvent(self, event):
-        pass

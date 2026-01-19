@@ -1,8 +1,7 @@
 # coding=utf-8
-from mod.client.extraClientApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.ui import (
-    UScreenNode,
-    RegistScreen,
+    ToolDeltaScreen,
+    RegistToolDeltaScreen,
     UIPath,
     ViewBinder,
     UBaseCtrl,
@@ -25,21 +24,18 @@ MAIN_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
 )
 
-_ESC = GetMinecraftEnum().KeyBoardType.KEY_ESCAPE
 
-
-@RegistScreen("RecipeCheckerUI.main")
-class RecipeCheckerUI(UScreenNode):
-    def __init__(self, namespace, name, param=None):
-        UScreenNode.__init__(self, namespace, name, param)
+@RegistToolDeltaScreen("RecipeCheckerUI.main")
+class RecipeCheckerUI(ToolDeltaScreen):
+    def __init__(self, screen_name, screen_instance, params):
+        ToolDeltaScreen.__init__(self, screen_name, screen_instance, params)
         self.looking_category_index = 0
         self.inited = False
         self.ctrls_in_fgrid = {}  # type: dict[UBaseCtrl, RecipeBase]
         self.recipes_chain = []  # type: list[list[tuple[str, list[RecipeBase]]]]
         self.update_ticks = 0
 
-    def Create(self):
-        UScreenNode.Create(self)
+    def OnCreate(self):
         self.left_sections_grid = self.GetElement(
             MAIN_PATH / "left_sections_grid"
         ).asGrid()
@@ -64,15 +60,16 @@ class RecipeCheckerUI(UScreenNode):
         self.recipes_chain.pop(-1)
         self.updateAll()
 
-    def Update(self):
+    def OnTicking(self):
         self.update_ticks += 1
         if self.update_ticks % 6 == 0:
             for ctrl, rcp in self.ctrls_in_fgrid.items():
                 rcp.RenderUpdate(ctrl, self.update_ticks)
 
-    def OnCurrentPageKeyEvent(self, event):
+    @ToolDeltaScreen.Listen(OnKeyPressInGame)
+    def onKeyPress(self, event):
         # type: (OnKeyPressInGame) -> None
-        if event.isDown == 1 and event.key == _ESC:
+        if event.isDown and event.key == event.KeyBoardType.KEY_ESCAPE:
             self.RemoveUI()
 
     def PushRecipes(self, recipes):
@@ -138,7 +135,7 @@ class RecipeCheckerUI(UScreenNode):
     def onSelectCategory(self, params):
         griditem_path = UIPath("/".join(params["ButtonPath"].split("/")[1:-1]))
         griditem = self.GetElement(griditem_path)
-        if not self.activated or params["TouchEvent"] != 0:
+        if not self._activated or params["TouchEvent"] != 0:
             return
         click_index = params["#collection_index"]
         if self.category_double_click_helpers[click_index]():

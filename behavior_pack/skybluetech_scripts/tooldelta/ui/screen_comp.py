@@ -58,10 +58,6 @@ class UScreenNode(ScreenNode):
         for element in self._elem_cacher.values():
             element.callDestroy()
 
-    def OnCurrentPageKeyEvent(self, event):
-        # type: (OnKeyPressInGame) -> None
-        pass
-
 
     # ====
 

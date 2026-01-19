@@ -1,6 +1,6 @@
 # coding=utf-8
 import random
-from skybluetech_scripts.tooldelta.events.client.control import OnKeyPressInGame
+from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
 from skybluetech_scripts.tooldelta.ui import ToolDeltaScreen, UBaseCtrl, Binder, RegistToolDeltaScreen, SCREEN_BASE_PATH
 from ...define.events.misc.transmitter_settings import TransmitterSetLabel, TransmitterSetPriority
 
@@ -39,7 +39,7 @@ class TransmitterSettingsUI(ToolDeltaScreen):
         self.z = params["z"] # type: int
         self.ap_side = params["side"]
 
-    def On(self):
+    def OnCreate(self):
         self.stack = self.GetElement(INDEX_GRID_NODE)
         self.close_btn = self.GetElement(CLOSE_BTN_NODE).asButton().SetCallback(self.onClose)
         self.main_label = self.GetElement(MAIN_LABEL_NODE)
@@ -107,9 +107,10 @@ class TransmitterSettingsUI(ToolDeltaScreen):
     def onSubPrior(self, _):
         self.updatePriority(self.priority_value - 1)
 
-    def OnCurrentPageKeyEvent(self, event):
+    @ToolDeltaScreen.Listen(OnKeyPressInGame)
+    def onKeyPress(self, event):
         # type: (OnKeyPressInGame) -> None
-        if event.key == event.KeyBoardType.KEY_ESCAPE:
+        if event.key == event.KeyBoardType.KEY_ESCAPE and event.isDown:
             self.RemoveUI()
 
     def onClose(self, _):

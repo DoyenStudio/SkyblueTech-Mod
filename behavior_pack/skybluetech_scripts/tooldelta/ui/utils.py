@@ -7,14 +7,14 @@ if 0:
 ViewBinder = clientApi.GetViewBinderCls()
 
 
-class SNode(object):
+class UIPath(object):
     def __init__(self, base):
         # type: (str) -> None
         self.base = base
 
     def __truediv__(self, path):
-        # type: (str) -> SNode
-        return SNode(self.base + "/" + path)
+        # type: (str) -> UIPath
+        return UIPath(self.base + "/" + path)
 
     def __mod__(self, val):
         return self.base % val
@@ -25,8 +25,8 @@ class SNode(object):
         return self.base
 
     def __add__(self, path):
-        # type: (str) -> SNode
-        return SNode(self.base + path)
+        # type: (str) -> UIPath
+        return UIPath(self.base + path)
 
     def __hash__(self):
         return hash(self.base)
@@ -45,8 +45,8 @@ class Binder(ViewBinder):
 
 
 
-SCREEN_BASE_PATH = SNode(
+SCREEN_BASE_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
 )
 
-__all__ = ["Binder", "SNode", "SCREEN_BASE_PATH"]
+__all__ = ["Binder", "UIPath", "SCREEN_BASE_PATH"]

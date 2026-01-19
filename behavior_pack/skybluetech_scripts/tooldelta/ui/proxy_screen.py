@@ -67,10 +67,6 @@ class UScreenProxy(CustomUIScreenProxy):
         """ 超类方法用于反激活页面。 """
         pass
 
-    def OnCurrentPageKeyEvent(self, event):
-        # type: (OnKeyPressInGame) -> None
-        pass
-
 
     # ====
 

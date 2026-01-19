@@ -61,7 +61,6 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         self.dx, self.dy, self.dz = GetOppositeDirFromFacing(
             GetBlockFacingDir(self.dim, (x, y, z))
         )
-        print(self.dx, self.dy, self.dz)
         self.front_block, self.front_block_aux = GetBlockNameAndAux(
             self.dim, (x + self.dx, y + self.dy, z + self.dz)
         )  # block is None?

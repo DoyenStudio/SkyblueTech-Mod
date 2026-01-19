@@ -137,7 +137,6 @@ def foresterBFS(dim, _x, _y, _z, rx, ry, rz):
                 or new_y < _y or new_y > _y + ry
                 or new_z < _z - rz or new_z > _z + rz
             ):
-                # print(new_x, new_y, new_z), GetBlockName(dim, (new_x, new_y, new_z))
                 continue
             next_pos = (new_x, new_y, new_z)
             if next_pos in walked:

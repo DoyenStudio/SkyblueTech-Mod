@@ -23,7 +23,6 @@ class WorkRenderer(BaseMachine):
         # type: () -> None
         active = self.deactive_flags == 0
         if active != self._last_work_status:
-        #     print (self.x, self.y, self.z), "change status"
             UpdateBlockStates(self.dim, (self.x, self.y, self.z), {"skybluetech:active": active})
             self._last_work_status = active
             self.OnWorkStatusUpdated()

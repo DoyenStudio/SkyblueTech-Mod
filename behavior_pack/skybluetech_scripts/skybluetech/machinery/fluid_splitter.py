@@ -61,7 +61,6 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
                     fluid_volume = PushFluidToFluidContainer(ap, fluid_id, fluid_volume)
                     if fluid_volume <= 0:
                         break
-                    # print("Left", fluid_volume)
         return fluid_volume
 
     def getLabelByFluid(self, fluid_id):

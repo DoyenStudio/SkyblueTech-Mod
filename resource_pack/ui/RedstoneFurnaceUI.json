@@ -171,10 +171,5 @@
                 }
             }
         ]
-    },
-    "upgrade_img": {
-        "type": "image",
-        "layer": 1,
-        "texture": "textures/ui/slot_upgrade_bg"
     }
 }

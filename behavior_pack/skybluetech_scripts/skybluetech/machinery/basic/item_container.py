@@ -12,8 +12,8 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetChestBoxItemNum,
     GetContainerSize,
     PutItemIntoContainer,
-    SortItems,
 )
+from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
 def requireLibraryFunc():
     global RequireItems, PostItemIntoNetworks

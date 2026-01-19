@@ -1,0 +1,31 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 1,
+            "netease:customtips": {
+                "value": "\n§7为电动合成站提供合成样板。\n下蹲并手持此物品§f右击/点击地面§7可打开设置界面。"
+            },
+            "netease:initial_user_data": {
+                "display": {
+                    "Lore": [
+                        {
+                            "__type__": 8,
+                            "__value__": "§r§7[§6!§7] §6未记录合成配方"
+                        }
+                    ]
+                },
+                "lore_pos": {
+                    "recipe_data_disp": {
+                        "__type__": 3,
+                        "__value__": 0
+                    }
+                }
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:crafting_template"
+        }
+    }
+}

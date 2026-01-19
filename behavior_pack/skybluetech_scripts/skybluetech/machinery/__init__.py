@@ -8,6 +8,7 @@ from .fluid_condenser import FluidCondenser
 from .digger import Digger
 from .distillation_chamber import DistillatorChamber
 from .electric_heater import ElectricHeater
+from .electric_crafter import ElectricCrafter
 from .farming_station import FarmingStation
 from .fermenter import Fermenter
 from .forester import Forester

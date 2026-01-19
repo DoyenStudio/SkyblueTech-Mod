@@ -52,6 +52,9 @@
         "skybluetech:copper_wire": {
             "textures": "textures/wire/copper_wire_item"
         },
+        "skybluetech:crafting_template": {
+            "textures": "textures/items/crafting_template"
+        },
         "skybluetech:creative_wire": {
             "textures": "textures/wire/creative_wire_item"
         },

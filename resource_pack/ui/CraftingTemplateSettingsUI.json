@@ -1,0 +1,320 @@
+{
+    "content": {
+        "type": "panel",
+        "size": [
+            180.0,
+            140.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "keep_ratio": false,
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/dialog_background_opaque"
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0.0,
+                        6.0
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_scale_factor": 1.3,
+                    "font_type": "default",
+                    "text": "合成样板设置",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "close_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/close_button_default",
+                    "$hover_texture": "textures/ui/close_button_default",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/close_button_default",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [
+                        -3.0,
+                        3.0
+                    ],
+                    "size": [
+                        21.0,
+                        21.0
+                    ],
+                    "layer": 2,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "grid": {
+                    "type": "grid",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        12.0,
+                        25.0
+                    ],
+                    "size": [
+                        60.0,
+                        60.0
+                    ],
+                    "layer": 1,
+                    "collection_name": "crafting_template_slots",
+                    "grid_dimensions": [
+                        3,
+                        3
+                    ],
+                    "grid_item_template": "CraftingTemplateSettingsUI.item_slot_emu"
+                }
+            },
+            {
+                "image": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        75.0,
+                        55.0
+                    ],
+                    "size": [
+                        20.0,
+                        20.0
+                    ],
+                    "layer": 1,
+                    "texture": "textures/ui/arrow_img"
+                }
+            },
+            {
+                "out_item@CraftingTemplateSettingsUI.item_slot_emu": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "enabled": false,
+                    "offset": [
+                        99,
+                        45
+                    ]
+                }
+            },
+            {
+                "databoard": {
+                    "type": "image",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [
+                        0.0,
+                        -7.0
+                    ],
+                    "size": [
+                        "100%+-24.5px",
+                        42.0
+                    ],
+                    "layer": 1,
+                    "nineslice_size": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "texture": "textures/ui/bg_frame_01",
+                    "uv": [
+                        0.0,
+                        0.0
+                    ],
+                    "controls": [
+                        {
+                            "label": {
+                                "type": "label",
+                                "size": [
+                                    "100%+-3px",
+                                    "100%+-3px"
+                                ],
+                                "font_type": "default",
+                                "text": "无配方"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "item_slot_emu": {
+        "type": "panel",
+        "$collection_name": "crafting_template_slots",
+        "size": [
+            20.0,
+            20.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/bg_frame_01"
+                }
+            },
+            {
+                "item_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "property_bag": {
+                        "#item_id_aux": 27918336
+                    }
+                }
+            },
+            {
+                "btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "",
+                    "$hover_texture": "",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "#CraftingTemplateSettingsUI.slot_selected",
+                    "$pressed_texture": "",
+                    "$texture_layer": 2,
+                    "layer": 10,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "property_bag": {
+                        "#index": -1
+                    },
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$collection_name",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "$screen_content": "CraftingTemplateSettingsUI.content"
+    },
+    "namespace": "CraftingTemplateSettingsUI"
+}

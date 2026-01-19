@@ -1,0 +1,275 @@
+{
+    "container_slots@netease_container.netease_custom_container_grid": {
+        "grid_dimensions": [
+            5,
+            3
+        ],
+        "layer": 1,
+        "offset": [
+            "0%c+0px",
+            0
+        ],
+        "size": [
+            "100%c+0px",
+            "100%c+0px"
+        ]
+    },
+    "crafting_template_slot_img": {
+        "type": "image",
+        "size": [
+            18.0,
+            18.0
+        ],
+        "layer": 1,
+        "texture": "textures/ui/crafting_template_slot"
+    },
+    "electric_crafter_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 100,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "电动合成台",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "template_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            20.0,
+                                                            -14.0
+                                                        ],
+                                                        "size": [
+                                                            18.0,
+                                                            18.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "$background_images|default": "ElectricCrafterUI.crafting_template_slot_img",
+                                                                    "collection_index": 12
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "layer": 13,
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "crafting_grid@ElectricCrafterUI.container_slots": {
+                                                        "grid_dimensions": [
+                                                            3,
+                                                            3
+                                                        ],
+                                                        "grid_item_template": "ElectricCrafterUI.item_slot_with_void_item",
+                                                        "offset": [
+                                                            34,
+                                                            33
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
+                                                        "offset": [
+                                                            21,
+                                                            -41
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slots": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            52.0,
+                                                            -40.0
+                                                        ],
+                                                        "size": [
+                                                            18.0,
+                                                            54.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "out_slot0@netease_container.custom_grid_item": {
+                                                                    "collection_index": 9
+                                                                }
+                                                            },
+                                                            {
+                                                                "out_slot1@netease_container.custom_grid_item": {
+                                                                    "collection_index": 10
+                                                                }
+                                                            },
+                                                            {
+                                                                "out_slot2@netease_container.custom_grid_item": {
+                                                                    "collection_index": 11
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
+                                                        "$slot0": 13,
+                                                        "$slot1": 14,
+                                                        "$slot2": 15,
+                                                        "$slot3": 16,
+                                                        "offset": [
+                                                            106,
+                                                            -57
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "item_slot_with_void_item@netease_container.custom_grid_item": {
+        "$background_images|default": "ElectricCrafterUI.void_item"
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "ElectricCrafterUI.electric_crafter_ui"
+    },
+    "namespace": "ElectricCrafterUI",
+    "void_item": {
+        "type": "panel",
+        "size": [
+            18.0,
+            18.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "nineslice_size": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "texture": "textures/ui/bg_frame_01"
+                }
+            },
+            {
+                "item_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "property_bag": {
+                        "#item_id_aux": 131072
+                    }
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "color": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "texture": "textures/ui/gray_alpha_mask"
+                }
+            }
+        ]
+    }
+}

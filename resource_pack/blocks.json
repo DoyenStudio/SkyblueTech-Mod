@@ -116,6 +116,13 @@
         "sound": "cloth",
         "textures": "skybluetech:dust_block"
     },
+    "skybluetech:electric_crafter": {
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "side": "skybluetech:frame",
+            "up": "skybluetech:electric_crafter_top"
+        }
+    },
     "skybluetech:famicom": {
         "sound": "iron"
     },

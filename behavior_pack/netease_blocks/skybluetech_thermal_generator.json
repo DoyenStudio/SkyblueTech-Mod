@@ -78,7 +78,7 @@
                             "texture": "skybluetech:generator_frame_side"
                         },
                         "up": {
-                            "texture": "skybluetech:generator_frame_up"
+                            "texture": "skybluetech:generator_frame_top"
                         },
                         "west": {
                             "texture": "skybluetech:generator_frame_side"
@@ -104,7 +104,7 @@
                             "texture": "skybluetech:generator_frame_side"
                         },
                         "up": {
-                            "texture": "skybluetech:generator_frame_up"
+                            "texture": "skybluetech:generator_frame_top"
                         },
                         "west": {
                             "texture": "skybluetech:generator_frame_side"

@@ -111,8 +111,8 @@
         "skybluetech:farming_station_side": {
             "textures": "textures/machines/farming_station_side"
         },
-        "skybluetech:farming_station_up": {
-            "textures": "textures/machines/farming_station_up"
+        "skybluetech:farming_station_top": {
+            "textures": "textures/machines/farming_station_top"
         },
         "skybluetech:fermenter_controller_front": {
             "textures": "textures/machines/fermenter_controller_front"
@@ -144,8 +144,8 @@
         "skybluetech:forester_side": {
             "textures": "textures/machines/forester_side"
         },
-        "skybluetech:forester_up": {
-            "textures": "textures/machines/forester_up"
+        "skybluetech:forester_top": {
+            "textures": "textures/machines/forester_top"
         },
         "skybluetech:frame": {
             "textures": "textures/machines/frame"
@@ -153,8 +153,8 @@
         "skybluetech:frame_bottom": {
             "textures": "textures/machines/frame_bottom"
         },
-        "skybluetech:frame_up": {
-            "textures": "textures/machines/frame_up"
+        "skybluetech:frame_top": {
+            "textures": "textures/machines/frame_top"
         },
         "skybluetech:freezer_front": {
             "textures": "textures/machines/freezer_front"
@@ -171,8 +171,8 @@
         "skybluetech:generator_frame_side": {
             "textures": "textures/machines/generator_frame_side"
         },
-        "skybluetech:generator_frame_up": {
-            "textures": "textures/machines/generator_frame_up"
+        "skybluetech:generator_frame_top": {
+            "textures": "textures/machines/generator_frame_top"
         },
         "skybluetech:geothermal_generator": {
             "textures": "textures/models/geothermal_generator_texture"

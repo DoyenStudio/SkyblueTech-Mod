@@ -10,7 +10,7 @@
             "east": "skybluetech:frame",
             "north": "skybluetech:alloy_furnace_front",
             "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
+            "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
         }
     },
@@ -20,7 +20,7 @@
             "east": "skybluetech:frame",
             "north": "skybluetech:frame",
             "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
+            "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
         }
     },
@@ -45,7 +45,7 @@
             "east": "skybluetech:frame",
             "north": "skybluetech:compressor_front",
             "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
+            "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
         }
     },
@@ -132,7 +132,7 @@
             "east": "skybluetech:farming_station_side",
             "north": "skybluetech:frame",
             "south": "skybluetech:frame",
-            "up": "skybluetech:farming_station_up",
+            "up": "skybluetech:farming_station_top",
             "west": "skybluetech:farming_station_side"
         }
     },
@@ -310,7 +310,7 @@
             "east": "skybluetech:forester_side",
             "north": "skybluetech:frame",
             "south": "skybluetech:frame",
-            "up": "skybluetech:forester_up",
+            "up": "skybluetech:forester_top",
             "west": "skybluetech:forester_side"
         }
     },
@@ -326,7 +326,7 @@
             "east": "skybluetech:frame",
             "north": "skybluetech:heavy_compressor_front",
             "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
+            "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
         }
     },
@@ -501,7 +501,7 @@
             "east": "skybluetech:frame",
             "north": "skybluetech:redstone_furnace_front",
             "south": "skybluetech:frame",
-            "up": "skybluetech:frame_up",
+            "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
         }
     },

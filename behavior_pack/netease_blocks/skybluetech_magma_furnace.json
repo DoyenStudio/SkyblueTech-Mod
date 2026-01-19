@@ -73,7 +73,7 @@
                             "texture": "skybluetech:frame"
                         },
                         "up": {
-                            "texture": "skybluetech:frame_up"
+                            "texture": "skybluetech:frame_top"
                         },
                         "west": {
                             "texture": "skybluetech:frame"
@@ -99,7 +99,7 @@
                             "texture": "skybluetech:frame"
                         },
                         "up": {
-                            "texture": "skybluetech:frame_up"
+                            "texture": "skybluetech:frame_top"
                         },
                         "west": {
                             "texture": "skybluetech:frame"

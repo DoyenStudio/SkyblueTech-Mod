@@ -3,7 +3,7 @@ import mod.client.extraClientApi as clientApi
 from ..events import ClientEvent, clientapi as event_client
 from ..internal import GetModName
 from .elem_comp import UBaseCtrl
-from .utils import SNode, Binder
+from .utils import UIPath, Binder
 
 if 0:
     from typing import Callable, TypeVar
@@ -45,8 +45,8 @@ class ToolDeltaScreen(object):
         )
 
     def GetElement(self, path):
-        # type: (str | SNode) -> UBaseCtrl
-        if isinstance(path, SNode):
+        # type: (str | UIPath) -> UBaseCtrl
+        if isinstance(path, UIPath):
             path = path.base
         return self._get_element_cache(path)
 

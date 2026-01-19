@@ -3,7 +3,7 @@ from mod.client.extraClientApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.ui import (
     UScreenNode,
     RegistScreen,
-    SNode,
+    UIPath,
     ViewBinder,
     UBaseCtrl,
 )
@@ -21,7 +21,7 @@ from ...mini_jei import (
     GetDoubleClickDetecter,
 )
 
-MAIN_PATH = SNode(
+MAIN_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
 )
 
@@ -136,7 +136,7 @@ class RecipeCheckerUI(UScreenNode):
 
     @ViewBinder.binding(ViewBinder.BF_ButtonClick, "#recipe_checker.select_category")  # pyright: ignore[reportOptionalCall]
     def onSelectCategory(self, params):
-        griditem_path = SNode("/".join(params["ButtonPath"].split("/")[1:-1]))
+        griditem_path = UIPath("/".join(params["ButtonPath"].split("/")[1:-1]))
         griditem = self.GetElement(griditem_path)
         if not self.activated or params["TouchEvent"] != 0:
             return

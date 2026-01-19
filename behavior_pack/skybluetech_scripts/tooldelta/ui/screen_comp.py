@@ -3,7 +3,7 @@ import uuid
 import mod.client.extraClientApi as clientApi
 from ..internal import GetModName
 from ..events.client.control import OnKeyPressInGame
-from .utils import SNode
+from .utils import UIPath
 from .elem_comp import UBaseCtrl
 
 
@@ -14,7 +14,7 @@ ViewBinder = clientApi.GetViewBinderCls()
 class UScreenNode(ScreenNode):
     "已废弃, 请使用 ToolDeltaScreen。"
     _key = "???"
-    top_node = None # type: SNode | None
+    top_node = None # type: UIPath | None
 
     def __init__(self, namespace, screenName, param=None):
         # type: (str, str, dict | None) -> None
@@ -73,8 +73,8 @@ class UScreenNode(ScreenNode):
         )
 
     def GetElement(self, path):
-        # type: (str | SNode) -> UBaseCtrl
-        if isinstance(path, SNode):
+        # type: (str | UIPath) -> UBaseCtrl
+        if isinstance(path, UIPath):
             path = path.base
         return self._get_elem_cache(path)
 

@@ -1,14 +1,14 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui.reg import RegistScreen
-from skybluetech_scripts.tooldelta.ui.utils import SNode
+from skybluetech_scripts.tooldelta.ui.utils import UIPath
 from ...utils.fmt import FormatRF
 from ...ui_sync.machines.thermoelectric_generator import ThermoelectricGeneratorUISync
 from .utils import UpdatePowerBar
 from .define import MachinePanelUI, MAIN_PATH
 
 
-TOP_NODE = SNode("/ThermoelectricGenerator")
+TOP_NODE = UIPath("/ThermoelectricGenerator")
 CENTER_NODE = TOP_NODE / "center"
 heat_disp_node = CENTER_NODE / "heat_disp"
 cool_disp_node = CENTER_NODE / "cool_disp"

@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
 from skybluetech_scripts.tooldelta.events import CustomC2SEvent
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent, OnKeyPressInGame
-from skybluetech_scripts.tooldelta.ui import SNode, SCREEN_BASE_PATH, UScreenNode, UScreenProxy, ToolDeltaScreen
+from skybluetech_scripts.tooldelta.ui import UIPath, SCREEN_BASE_PATH, UScreenNode, UScreenProxy, ToolDeltaScreen
 from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync
 
 KeyEnum = GetMinecraftEnum().KeyBoardType

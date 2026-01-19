@@ -6,7 +6,7 @@ from mod.client.ui.screenNode import ScreenNode
 from mod_log import logger
 from ..events.client.control import OnKeyPressInGame
 from .elem_comp import UBaseCtrl
-from .utils import SNode
+from .utils import UIPath
 
 
 CustomUIScreenProxy = clientApi.GetUIScreenProxyCls()
@@ -82,8 +82,8 @@ class UScreenProxy(CustomUIScreenProxy):
         )
 
     def GetElement(self, path):
-        # type: (str | SNode) -> UBaseCtrl
-        if isinstance(path, SNode):
+        # type: (str | UIPath) -> UBaseCtrl
+        if isinstance(path, UIPath):
             path = path.base
         return self._get_elem_cache(path)
 

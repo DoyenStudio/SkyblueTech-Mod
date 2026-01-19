@@ -22,7 +22,7 @@ from mod.client.ui.controls.sliderUIControl import SliderUIControl
 from ..define import UICtrlPosData, Item
 from ..api.timer import ExecLater
 from ..events.client.ui import GridComponentSizeChangedClientEvent
-from .utils import SNode
+from .utils import UIPath
 
 # TYPE_CHECKING
 if 0:
@@ -163,7 +163,7 @@ class UBaseCtrl(object):
         return self._root.base.RemoveChildControl(self.base)
 
     def GetElement(self, path):
-        # type: (str | SNode) -> UBaseCtrl
+        # type: (str | UIPath) -> UBaseCtrl
         return self._get_path_cache(path)
 
     # ====
@@ -184,7 +184,7 @@ class UBaseCtrl(object):
         return obj
 
     def _get_path_cache(self, path):
-        if isinstance(path, SNode):
+        if isinstance(path, UIPath):
             path = path.base
         if path not in self._child_cacher:
             self._child_cacher[path] = UBaseCtrl(self._root, self.base.GetChildByPath("/" + path))

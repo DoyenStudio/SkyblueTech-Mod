@@ -7,4 +7,4 @@ editor.name
 description.txt
 TODO
 
-resource_pack/textures
+resource_pack/textures/*

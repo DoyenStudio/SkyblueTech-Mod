@@ -82,6 +82,7 @@
                                                 {
                                                     "fluid_display@SkybluePanelLib.FluidDisplay": {
                                                         "$text_size": "small",
+                                                        "$text_visible": false,
                                                         "$text_y_offset": [
                                                             0,
                                                             "2%+0px"

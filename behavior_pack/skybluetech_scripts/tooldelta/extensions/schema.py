@@ -1,12 +1,18 @@
 # coding=utf-8
 if 0:
     from typing import Union
-    BASE_TYPE = type[str | int | float | bool | None]
-    _KEY_TYPE = Union[BASE_TYPE, "TupleSchema"]
-    _VALUE_TYPE = BASE_TYPE | Union["ListSchema", "DictSchema", "TupleSchema"]
+    BASE_TYPE = type[str | int | float | bool] | None
+    _KEY_TYPE = Union[BASE_TYPE, "TupleSchema", "FixedTupleSchema"]
+    _VALUE_TYPE = BASE_TYPE | Union[
+        "ListSchema",
+        "DictSchema",
+        "TupleSchema",
+        "KeyDictSchema",
+        "FixedTupleSchema"
+    ]
     KEY_TYPE = _KEY_TYPE | tuple[_KEY_TYPE, ...]
     VALUE_TYPE = _VALUE_TYPE | tuple[_VALUE_TYPE, ...]
-    SCHEMA_TYPE = BASE_TYPE | Union["ListSchema", "DictSchema", "TupleSchema"] | tuple["SCHEMA_TYPE", ...]
+    SCHEMA_TYPE = _VALUE_TYPE | tuple["SCHEMA_TYPE", ...]
 
 def check_generic(
     obj,
@@ -14,10 +20,19 @@ def check_generic(
 ):
     if isinstance(schema, tuple):
         for item in schema:
-            if not check_generic(obj, item):
-                return False
-        return True
-    elif isinstance(schema, (DictSchema, ListSchema, TupleSchema)):
+            if check_generic(obj, item):
+                return True
+        return False
+    elif isinstance(
+        schema,
+        (
+            DictSchema,
+            ListSchema,
+            TupleSchema,
+            KeyDictSchema,
+            FixedTupleSchema,
+        )
+    ):
         return schema.check(obj)
     elif isinstance(schema, type):
         if schema is int:
@@ -37,8 +52,8 @@ def check_generic(
 class DictSchema:
     def __init__(
         self,
-        key_type, # type: type[str | int | float | bool | None] | TupleSchema
-        value_type, # type: type[str | int | float | bool | None] | ListSchema | DictSchema | TupleSchema
+        key_type, # type: KEY_TYPE
+        value_type, # type: SCHEMA_TYPE
     ):
         self.key_type = key_type
         self.value_type = value_type
@@ -55,7 +70,7 @@ class DictSchema:
 class ListSchema:
     def __init__(
         self,
-        value_type, # type: type[str | int | float | bool | None] | ListSchema | DictSchema | TupleSchema
+        value_type, # type: SCHEMA_TYPE
         min_length=None, # type: int | None
         max_length=None, # type: int | None
     ):
@@ -79,7 +94,7 @@ class ListSchema:
 class TupleSchema:
     def __init__(
         self,
-        value_type, # type: type[str | int | float | bool | None] | ListSchema | DictSchema | TupleSchema
+        value_type, # type: SCHEMA_TYPE
         min_length=None, # type: int | None
         max_length=None, # type: int | None
     ):
@@ -96,5 +111,39 @@ class TupleSchema:
             return False
         for v in obj:
             if not check_generic(v, self.value_type):
+                return False
+        return True
+
+
+class FixedTupleSchema:
+    def __init__(self, *tuple_value):
+        # type: (SCHEMA_TYPE) -> None
+        self.tuple_value = tuple_value
+
+    def check(self, obj):
+        if not isinstance(obj, tuple):
+            return False
+        if len(obj) != len(self.tuple_value):
+            return False
+        for schema, val in zip(self.tuple_value, obj):
+            if not check_generic(val, schema):
+                return False
+        return True
+
+
+class KeyDictSchema:
+    def __init__(
+        self,
+        dict_value, # type: dict[str, SCHEMA_TYPE]
+    ):
+        self.dict_value = dict_value
+
+    def check(self, obj):
+        if not isinstance(obj, dict):
+            return False
+        if sorted(obj.keys()) != sorted(self.dict_value.keys()):
+            return False
+        for k, v in self.dict_value.items():
+            if not check_generic(obj[k], v):
                 return False
         return True

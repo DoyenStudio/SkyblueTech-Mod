@@ -20,6 +20,9 @@ class BasicGenerator(BaseMachine):
     """
     发电机基类。
     提供了 GeneratePower() 方法。
+
+    派生自: `BaseMachine`
+
     """
     def GeneratePower(self, rf):
         # type: (int) -> bool

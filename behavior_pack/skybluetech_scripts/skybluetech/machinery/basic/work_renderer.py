@@ -14,6 +14,7 @@ class WorkRenderer(BaseMachine):
     覆写:
         `SetDeactiveFlag`
         `UnsetDeactiveFlag (super)`
+        `ResetDeactiveFlags (super)`
         `FlushDeactiveFlags (super)`
     """
 
@@ -36,9 +37,13 @@ class WorkRenderer(BaseMachine):
         # type: (int, bool) -> None
         if not self.HasDeactiveFlag(flag):
             return
+        BaseMachine.UnsetDeactiveFlag(self, flag)
         if flush:
             self._updateWorkStatus()
-        BaseMachine.UnsetDeactiveFlag(self, flag)
+
+    def ResetDeactiveFlags(self):
+        BaseMachine.ResetDeactiveFlags(self)
+        self._updateWorkStatus()
 
     def FlushDeactiveFlags(self):
         # type: () -> None

@@ -14,7 +14,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7可用于代替合成器更智能化地合成物品。\n插入§f合成模版§7以设定合成配方。"
+                "value": "\n§7可用于代替合成器更智能化地合成物品。\n插入§f合成样板§7以设定合成配方。"
             },
             "netease:listen_block_remove": {
                 "value": true

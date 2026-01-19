@@ -23,6 +23,17 @@ def GetItemBasicInfo(itemName):
     itemBasicInfoPool[itemName] = basic_info
     return basic_info
 
+item_tags_pool = {} # type: dict[str, set[str]]
+
+def GetItemTags(item_id, aux_value=0):
+    # type: (str, int) -> set[str]
+    basic_info = item_tags_pool.get(item_id)
+    if basic_info is not None:
+        return basic_info
+    tags = set(ServerComp.CreateItem(ServerLevelId).GetItemTags(item_id, aux_value))
+    item_tags_pool[item_id] = tags
+    return tags
+
 def SetItemTierSpeed(item, speed):
     # type: (Item, float) -> bool
     item_dict = item.marshal()
@@ -65,8 +76,9 @@ def SetPlayerUIItem(player_id, slot, item, need_back=False, is_netease_ui=False)
 __all__ = [
     "ItemExists",
     "GetItemBasicInfo",
-    "SetItemTierSpeed",
+    "GetItemTags",
     "GetPlayerUIItem",
+    "SetItemTierSpeed",
     "SpawnItemToPlayerInv",
     "SetPlayerUIItem",
     "SetAttackDamage",

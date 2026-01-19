@@ -2,35 +2,39 @@
 
 
 class RecipeInput:
-    def __init__(self, item_id, count, aux_value=0, is_tag=False):
-        # type: (str, int, int, bool) -> None
-        self.item_id = item_id
+    def __init__(self, item_ids, count, aux_value=0):
+        # type: (list[str], int, int) -> None
+        self.item_ids = item_ids
         "当 is_tag=True 时表示物品标签"
         self.count = count
         self.aux_value = aux_value
-        self.is_tag = is_tag
 
     @classmethod
     def from_dict(cls, dic):
-        if isinstance(dic["item"], list):
-            # print("[WARNING] multiple recipes:", dic["item"])
-            dic["item"] = dic["item"][0]
+        if isinstance(dic["item"], str):
+            dic["item"] = [dic["item"]]
         return cls(dic["item"], dic.get("count", 1), dic.get("data", 0))
 
+    def to_dict(self):
+        return {
+            "item": self.item_ids,
+            "count": self.count,
+            "data": self.aux_value,
+        }
+
     def copy(self):
-        return RecipeInput(self.item_id, self.count, self.aux_value, self.is_tag)
+        return RecipeInput(self.item_ids, self.count, self.aux_value)
 
     def __hash__(self):
-        return hash((self.item_id, self.count, self.aux_value))
+        return hash((tuple(self.item_ids), self.count, self.aux_value))
 
     def __eq__(self, other):
         if not isinstance(other, RecipeInput):
             return False
         return (
-            self.item_id == other.item_id
+            self.item_ids == other.item_ids
             and self.count == other.count
             and self.aux_value == other.aux_value
-            and self.is_tag == other.is_tag
         )
 
 
@@ -48,6 +52,13 @@ class RecipeOutput:
             dic.get("count", 1),
             dic.get("data", 0)
         )
+
+    def to_dict(self):
+        return {
+            "item": self.item_id,
+            "count": self.count,
+            "data": self.aux_value
+        }
 
     def copy(self):
         return RecipeOutput(self.item_id, self.count, self.aux_value)
@@ -86,7 +97,7 @@ class CraftingRecipeRes:
         return hash((tuple(self.pattern), tuple(self.pattern_key.values()), tuple(self.result)))
 
     def __eq__(self, other):
-        # type: (CraftingRecipeRes) -> bool
+        # type: (object) -> bool
         if not isinstance(other, CraftingRecipeRes):
             return False
         return (
@@ -107,7 +118,7 @@ class UnorderedCraftingRecipeRes:
         return hash((tuple(self.inputs), tuple(self.result)))
 
     def __eq__(self, other):
-        # type: (UnorderedCraftingRecipeRes) -> bool
+        # type: (object) -> bool
         if not isinstance(other, UnorderedCraftingRecipeRes):
             return False
         return (
@@ -133,6 +144,15 @@ class FurnaceRecipe:
 
     def __hash__(self):
         return hash((self.input_item_id, self.output))
+
+    def __eq__(self, other):
+        # type: (object) -> bool
+        if not isinstance(other, FurnaceRecipe):
+            return False
+        return (
+            self.input_item_id == other.input_item_id
+            and self.output == other.output
+        )
 
 
 def GetCraftingRecipe(

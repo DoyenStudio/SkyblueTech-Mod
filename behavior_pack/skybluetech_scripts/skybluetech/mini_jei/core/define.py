@@ -72,3 +72,6 @@ class Description(RecipeBase):
 
     def GetOutputs(self):
         return self.categories_with_ids
+
+    def __hash__(self):
+        return hash(self.title)

@@ -153,7 +153,7 @@ def GetCompressedResult(item_id, aux_value=0):
             if len(recipe.inputs) == 1:
                 first_item = recipe.inputs[0]
                 if first_item.count == 9:
-                    res = first_item.item_id
+                    res = first_item.item_ids[0]
                     compressed_recipes[item_id] = res
                     return res
         # pattern = recipe.get("pattern")

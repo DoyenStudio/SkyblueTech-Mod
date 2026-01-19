@@ -8,11 +8,23 @@ def RegisterRecipe(recipe):
     "注册配方。"
     for category, inputs in recipe.GetInputs().items():
         for input in inputs:
-            recipesTo.setdefault(category, {}).setdefault(input, []).append(recipe)
+            rcps = recipesTo.setdefault(category, {}).setdefault(input, [])
+            # if recipe in rcps:
+            #     print("1:add multiple recipe")
+            #     # continue
+            rcps.append(recipe)
     for category, outputs in recipe.GetOutputs().items():
         for output in outputs:
-            recipesFrom.setdefault(category, {}).setdefault(output, []).append(recipe)
-    recipesOf.setdefault(recipe.recipe_icon_id, []).append(recipe)
+            rcps = recipesFrom.setdefault(category, {}).setdefault(output, [])
+            # if recipe in rcps:
+            #     print("2:add multiple recipe")
+            #     # continue
+            rcps.append(recipe)
+    rcps = recipesOf.setdefault(recipe.recipe_icon_id, [])
+    # if recipe in rcps:
+    #     print("3:add multiple recipe")
+    #     # return
+    rcps.append(recipe)
 
 def RegisterDescription(categories_with_ids, title, content):
     # type: (dict[str, list[str]], str, str) -> None

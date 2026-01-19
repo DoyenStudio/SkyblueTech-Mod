@@ -139,6 +139,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
             return
         click_index = params["#collection_index"]
         if self.category_double_click_helpers[click_index]():
+            # BUG: 鼠标无法原地双击按钮
             self.renderRecipesOfInput(
                 self.left_sections_grid.GetGridItem(0, click_index)["item_renderer"]
                 .asItemRenderer()
@@ -152,17 +153,17 @@ class RecipeCheckerUI(ToolDeltaScreen):
                 return
             x, y = griditem.GetRootPos()
             if y > 100:
-                offset = -20
+                offset = -40
             else:
-                offset = 20
+                offset = 40
             CreateDisplayBoard(
                 griditem, 
-                    GetItemHoverName(
-                    griditem["item_renderer"]
-                    .asItemRenderer()
-                    .GetUiItem()[0]
+                GetItemHoverName(
+                griditem["item_renderer"]
+                .asItemRenderer()
+                .GetUiItem()[0]
                 )
-            ).SetPos((x, y + offset))
+            ).SetPos((x, y + offset)).SetLayer(20)
             return
         self.looking_category_index = click_index
         self.updateAll()

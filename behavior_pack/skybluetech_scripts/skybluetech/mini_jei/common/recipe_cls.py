@@ -5,16 +5,8 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     CraftingRecipeRes,
     UnorderedCraftingRecipeRes,
     FurnaceRecipe,
-    GetCraftingRecipe,
-    GetFurnaceRecipe,
 )
-from skybluetech_scripts.tooldelta.api.client.world import (
-    GetRecipesByInput,
-    GetRecipesByResult,
-)
-from skybluetech_scripts.tooldelta.extensions.allitems_getter import AddItemGettedCallback
 from ..core.define import CategoryType, RecipeBase
-from ..core.register import RegisterRecipe
 from ..core.render_utils import ItemDisplayer
 
 
@@ -31,13 +23,15 @@ class GenericCraftingTableRecipe(RecipeBase):
         # type: () -> dict[str, list[str]]
         if isinstance(self.base, CraftingRecipeRes):
             return {CategoryType.ITEM: [
-                v.item_id
+                i
                 for v in self.base.pattern_key.values()
+                for i in v.item_ids
             ]}
         else:
             return {CategoryType.ITEM: [
-                v.item_id
+                i
                 for v in self.base.inputs
+                for i in v.item_ids
             ]}
 
     def GetOutputs(self):
@@ -58,16 +52,53 @@ class GenericCraftingTableRecipe(RecipeBase):
                     item = pat_mapping[pat]
                     ItemDisplayer(
                         panel["slot%d" % (row * 3 + col)],
-                        Item(item.item_id, item.aux_value)
+                        Item(item.item_ids[0], item.aux_value)
                     )
         else:
             for i, input in enumerate(self.base.inputs):
-                ItemDisplayer(panel["slot%d" % i], Item(input.item_id, input.aux_value))
+                ItemDisplayer(panel["slot%d" % i], Item(input.item_ids[0], input.aux_value))
         ItemDisplayer(panel["slot9"], Item(
             self.base.result[0].item_id,
             self.base.result[0].aux_value,
             self.base.result[0].count,
         ))
+
+    def RenderUpdate(self, panel, ticks):
+        # type: (UBaseCtrl, int) -> None
+        if ticks % 30:
+            return
+        if isinstance(self.base, CraftingRecipeRes):
+            pat_mapping = self.base.pattern_key
+            for row, rowln in enumerate(self.base.pattern):
+                for col, pat in enumerate(rowln):
+                    if pat == " ":
+                        continue
+                    input = pat_mapping[pat]
+                    item_ids = input.item_ids
+                    if len(item_ids) <= 1:
+                        continue
+                    ItemDisplayer(
+                        panel["slot%d" % (row * 3 + col)],
+                        Item(item_ids[ticks // 30 % len(item_ids)], input.aux_value)
+                    )
+        else:
+            for i, input in enumerate(self.base.inputs):
+                item_ids = input.item_ids
+                if len(item_ids) <= 1:
+                    continue
+                ItemDisplayer(panel["slot%d" % i], Item(
+                    item_ids[ticks // 30 % len(item_ids)], input.aux_value
+                ))
+
+    def __eq__(self, other):
+        # type: (object) -> bool
+        if not isinstance(other, GenericCraftingTableRecipe):
+            return False
+        return self.base == other.base
+
+    def __hash__(self):
+        # type: () -> int
+        return hash(self.base)
 
 
 class GenericFurnaceRecipe(RecipeBase):
@@ -103,3 +134,11 @@ class GenericFurnaceRecipe(RecipeBase):
         p = float(render_ticks % 300) / 300
         panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
 
+    def __eq__(self, other):
+        # type: (object) -> bool
+        if not isinstance(other, GenericFurnaceRecipe):
+            return False
+        return self.base == other.base
+
+    def __hash__(self):
+        return hash(self.base)

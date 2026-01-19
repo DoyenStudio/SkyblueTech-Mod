@@ -57,8 +57,8 @@ class Recipe(RecipeBase):
 
     def GetOutputs(self):
         return {
-            cat: [output.id for output in slot2output.values()]
-            for cat, slot2output in self.outputs.items()
+            category: [output.id for output in slot2output.values()]
+            for category, slot2output in self.outputs.items()
         }
 
 

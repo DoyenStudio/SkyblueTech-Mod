@@ -1,7 +1,7 @@
 # coding=utf-8
 import time
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl, UScreenNode, UScreenProxy
+from skybluetech_scripts.tooldelta.ui import UBaseCtrl, UScreenNode, UScreenProxy, ToolDeltaScreen
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from ...mini_jei import CategoryType
 
@@ -73,7 +73,7 @@ def GetDoubleClickDetecter(delay=0.25):
     return onclick_cb
 
 def RemoveDisplayBoard(root):
-    # type: (UScreenNode | UScreenProxy) -> None
+    # type: (UScreenNode | UScreenProxy | ToolDeltaScreen) -> None
     screen_vars = root._vars
     if DISP_BOARD_KEY in screen_vars:
         screen_vars.pop(DISP_BOARD_KEY).Remove()

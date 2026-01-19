@@ -93,7 +93,7 @@ class FermenterUI(MachinePanelUIProxy):
         self.volume_slider.SetSliderValue(
             1-self.sync.expected_water_max_volume/POOL_MAX_VOLUME
         )
-        self.pool_img.SetFullSize("y", {"followType": "parent", "relativeValue": self.sync.content_volume_pc})
+        self.pool_img.SetFullSize("y", UICtrlPosData("parent", relative_value=self.sync.content_volume_pc))
         sstatus = self.sync.structure_status
         if sstatus == FLAG_OK:
             self.pool_tip.SetText("发酵池 （就绪）")

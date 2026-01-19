@@ -22,7 +22,7 @@ class UICtrlPosData:
             absolute_value=data["absoluteValue"],
         )
 
-    def marshal(self):
+    def to_dict(self):
         return {
             "followType": self.follow_type,
             "relativeValue": self.relative_value,

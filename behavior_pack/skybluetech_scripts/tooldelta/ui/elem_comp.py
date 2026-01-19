@@ -112,7 +112,7 @@ class UBaseCtrl(object):
         axis, # type: Literal["x", "y"]
         posdata, # type: UICtrlPosData
     ):
-        return self.base.SetFullPosition(axis, posdata.marshal())
+        return self.base.SetFullPosition(axis, posdata.to_dict())
 
     def SetVisible(self, visible, forceUpdate=True):
         # type: (bool, bool) -> None
@@ -122,21 +122,33 @@ class UBaseCtrl(object):
         # type: (dict) -> bool
         return self.base.SetPropertyBag(params)
 
-    def SetPos(self, xy):
-        # type: (tuple[float, float]) -> None
+    def SetPos(
+        self,
+        xy # type: tuple[float, float]
+    ):
         self.base.SetPosition(xy)
+        return self
 
-    def SetSize(self, xy):
-        # type: (tuple[float, float]) -> None
+    def SetSize(
+        self,
+        xy # type: tuple[float, float]
+    ):
         self.base.SetSize(xy)
+        return self
 
-    def SetFullSize(self, axis, params):
-        # type: (str, dict) -> None
-        self.base.SetFullSize(axis, params)
+    def SetFullSize(
+        self,
+        axis, # type: Literal["x", "y"]
+        params # type: UICtrlPosData
+    ):
+        return self.base.SetFullSize(axis, params.to_dict())
 
-    def SetLayer(self, layer):
-        # type: (int) -> None
+    def SetLayer(
+        self,
+        layer # type: int
+    ):
         self.base.SetLayer(layer)
+        return self
 
     def AddElement(self, element_def_name, element_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
@@ -376,7 +388,7 @@ class UComboBox(UBaseCtrl):
             )
         self.base = base
 
-    def AddOption(self, text, icon=None, extra_data=None):
+    def AddOption(self, text, icon="", extra_data=None):
         self.base.AddOption(text, icon, extra_data)
 
     def Clear(self):

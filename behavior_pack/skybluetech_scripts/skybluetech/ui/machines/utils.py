@@ -1,4 +1,4 @@
-from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from ...utils.fmt import FormatRF as _formatRF, FormatFluidVolume as _formatFluidVolume
@@ -23,7 +23,7 @@ def UpdatePowerBar(ui, rf_now, rf_max):
     top = ui["bar/mask"]
     label = ui["label"]
     top.SetFullSize(
-        "y", {"followType": "parent", "relativeValue": min(2, float(rf_now) / rf_max)}
+        "y", UICtrlPosData("parent", relative_value=min(2, float(rf_now) / rf_max))
     )
     label.asLabel().SetText(_formatRF(rf_now))
 
@@ -50,7 +50,7 @@ def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     fluid_img = ui["fluid"].asImage()
     volume_disp = ui["text"].asLabel()
     if fluid_id is None:
-        fluid_img.SetFullSize("y", {"followType": "parent", "relativeValue": 0})
+        fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=0))
     else:
         texture, color = fluid_texture.getBaseTexture(fluid_id)
         texture_path = texture
@@ -71,7 +71,7 @@ def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     volume_disp.SetText(
         "%s / %s" % (_formatFluidVolume(fluid_volume), _formatFluidVolume(max_volume))
     )
-    fluid_img.SetFullSize("y", {"followType": "parent", "relativeValue": min(2, prgs)})
+    fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=min(2, prgs)))
 
 
 def InitFluidDisplay(ctrl, data_cb):

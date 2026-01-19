@@ -42,11 +42,10 @@ class AssemblerUI(MachinePanelUIProxy):
         # type: (AssemblerUpgradersUpdate) -> None
         lis = event.lis
         siz = len(lis)
-        self.upgraders_grid.SetGridDimension((1, siz))
-        if siz != self.upgraders_grid.GetGridDimension()[1]:
-            self.upgraders_grid.ExecuteAfterUpdate(lambda :self.updateLater(lis))
-        else:
-            ExecLater(0, lambda: self.updateLater(lis))
+        self.upgraders_grid.SetDimensionAndCall(
+            (1, siz),
+            lambda :self.updateLater(lis)
+        )
         
 
     def updateLater(self, lis):

@@ -51,7 +51,7 @@ class Freezer(MixedProcessor):
         self.recipes = [Recipes[new_mode]]
         self.mode = new_mode
         self.OnSync()
-        self.StartNext()
+        self.start_next()
 
 
 @FreezerModeChangedEvent.Listen()

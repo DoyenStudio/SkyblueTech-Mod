@@ -10,7 +10,7 @@ from ..machinery_def.thermoelectric_generator import COLD_BLOCKS, HOT_BLOCKS
 from ..define.facing import NEIGHBOR_BLOCKS_ENUM
 from ..define.id_enum.machinery import THERMOELECTRIC_GENERATOR as MACHINE_ID
 from ..ui_sync.machines.thermoelectric_generator import ThermoelectricGeneratorUISync
-from ..ui.machines.thermoelectric_generator import ThermoelectricGeneratorUI
+from ..ui.machinery.thermoelectric_generator import ThermoelectricGeneratorUI
 from .basic import BasicGenerator, GUIControl, RegisterMachine
 
 

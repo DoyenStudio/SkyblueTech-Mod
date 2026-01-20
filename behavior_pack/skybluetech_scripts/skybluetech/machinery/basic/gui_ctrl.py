@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.events.notify import NotifyToClient, NotifyTo
 from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync, AddSyncPending, GetAllPlayersInSync
 
 if 0:
-    from ...ui.machines.define import MachinePanelUI
+    from ...ui.machinery.define import MachinePanelUI
 
 
 class GUIControl(object):
@@ -25,13 +25,13 @@ class GUIControl(object):
         "超类方法用于通知玩家打开 GUI。"
         AddSyncPending(event.playerId, self.sync)
         if self.bound_ui is not None:
-            NotifyToClient(event.playerId, PushUIRequest(self.bound_ui._key, self.sync.sync_id))
+            NotifyToClient(event.playerId, PushUIRequest(self.bound_ui._screen_key, self.sync.sync_id))
 
     def OnUnload(self):
         "超类方法用于通知玩家关闭 GUI 和将同步项关闭。"
         if self.bound_ui is not None:
             tIDs = GetAllPlayersInSync(self.sync.sync_id)
-            NotifyToClients(tIDs, ForceRemoveUIRequest(self.bound_ui._key))
+            NotifyToClients(tIDs, ForceRemoveUIRequest(self.bound_ui._screen_key))
         self.sync.Deactivate()
 
     def OnSync(self):

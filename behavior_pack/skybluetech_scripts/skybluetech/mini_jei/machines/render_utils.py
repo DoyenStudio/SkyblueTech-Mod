@@ -26,7 +26,7 @@ class FluidDisplayer:
         self.double_click_detecter = GetDoubleClickDetecter()
 
     def update(self):
-        from ...ui.machines.utils import UpdateFluidDisplay
+        from ...ui.machinery.utils import UpdateFluidDisplay
         UpdateFluidDisplay(self.ctrl, self.fluid_id, self.volume, self.max_volume)
 
     def onBtnReleased(self, params):

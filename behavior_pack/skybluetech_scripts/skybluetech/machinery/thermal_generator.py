@@ -74,7 +74,9 @@ class ThermalGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl, Wor
             self.next_burn()
 
     def OnTryActivate(self):
-        self.ResetDeactiveFlags()
+        self.GeneratePower(0)
+        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL) and self.store_rf < self.store_rf_max:
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None

@@ -19,7 +19,7 @@ class BaseSpeedControl(BaseMachine):
 
     def OnLoad(self):
         BaseMachine.OnLoad(self)
-        self.ticks_left = self.bdata[K_TICKS_LEFT] or 0.0
+        self.ticks_left = self.bdata[K_TICKS_LEFT] or self.origin_process_ticks
         self.reduce_ticks = 1
 
     def SetSpeedRelative(self, speed):

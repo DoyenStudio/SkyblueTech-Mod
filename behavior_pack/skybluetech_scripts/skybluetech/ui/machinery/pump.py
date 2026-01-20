@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.pump import PumpUISync
+from ...ui_sync.machinery.pump import PumpUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, InitFluidDisplay
 

@@ -12,7 +12,7 @@ from ..machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
 from ..utils.action_commit import SafeGetMachine
 from ..utils.lore import GetLorePos, SetLoreAtPos
-from ..ui_sync.machines.assembler import AssemblerUISync
+from ..ui_sync.machinery.assembler import AssemblerUISync
 from ..transmitters.wire.logic import isWire
 from .basic import GUIControl, UpgradeControl, RegisterMachine
 

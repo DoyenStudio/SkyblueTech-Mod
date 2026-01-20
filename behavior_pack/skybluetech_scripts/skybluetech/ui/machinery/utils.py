@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from ...utils.fmt import FormatRF as _formatRF, FormatFluidVolume as _formatFluidVolume
 from ...define.fluids import texture as fluid_texture
-from ...ui_sync.machines.basic_machine_ui_sync import FluidSlotSync
+from ...ui_sync.machinery.basic_machine_ui_sync import FluidSlotSync
 
 # TYPE_CHECKING
 if 0:

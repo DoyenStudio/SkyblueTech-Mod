@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.magma_furnace import MagmaFurnaceUISync
+from ...ui_sync.machinery.magma_furnace import MagmaFurnaceUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, InitFluidDisplay
 

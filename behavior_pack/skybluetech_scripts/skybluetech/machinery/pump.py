@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.api.server.item import ItemExists
 from ..machinery_def.pump import *
 from ..define import flags as rf_flags
 from ..define.id_enum.machinery import PUMP as MACHINE_ID
-from ..ui_sync.machines.pump import PumpUISync
+from ..ui_sync.machinery.pump import PumpUISync
 from .basic import (
     AutoSaver,
     BaseMachine,

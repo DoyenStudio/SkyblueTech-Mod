@@ -2,7 +2,7 @@
 #
 from weakref import ref
 from mod.server.blockEntityData import BlockEntityData
-from ...ui_sync.machines.fluid_interface import FluidInterfaceUISync
+from ...ui_sync.machinery.fluid_interface import FluidInterfaceUISync
 from ..basic import BaseMachine, FluidContainer, GUIControl, RegisterMachine
 
 # LOADED_INTERFACES

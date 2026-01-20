@@ -14,7 +14,7 @@ from ..machinery_def.farming_station import (
     isRipedCrop,
     isBlockCrop,
 )
-from ..ui_sync.machines.farming_station import FarmingStationUISync
+from ..ui_sync.machinery.farming_station import FarmingStationUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, RegisterMachine
 
 DX = 2

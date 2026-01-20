@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import ALLOY_FURNACE as MACHINE_ID
 from ..machinery_def.alloy_furnace import recipes as Recipes
-from ..ui_sync.machines.alloy_furnace import AlloyFurnaceUISync
+from ..ui_sync.machinery.alloy_furnace import AlloyFurnaceUISync
 from .basic import BaseProcessor, RegisterMachine
 
 

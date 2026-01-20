@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
 from ..define.id_enum.machinery import THERMAL_GENERATOR as MACHINE_ID
 from ..machinery_def.thermal_generator import TICK_POWER
-from ..ui_sync.machines.thermal_generator import ThermalGeneratorUISync
+from ..ui_sync.machinery.thermal_generator import ThermalGeneratorUISync
 from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, WorkRenderer, RegisterMachine
 
 K_BURN_SEC_LEFT = "burn_sec_left"

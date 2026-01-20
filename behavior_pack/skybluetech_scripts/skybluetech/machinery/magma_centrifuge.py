@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import MAGMA_CENTRIFUGE as MACHINE_ID
 from ..machinery_def.magma_centrifuge import recipes as Recipes
-from ..ui_sync.machines.magma_centrifuge import MagmaCentrifugeUISync, FluidSlotSync
+from ..ui_sync.machinery.magma_centrifuge import MagmaCentrifugeUISync, FluidSlotSync
 from .basic import MixedProcessor, RegisterMachine
 
 

@@ -11,7 +11,7 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from ..define.id_enum.machinery import SOLAR_PANEL as MACHINE_ID
 from ..define.facing import DXYZ_FACING, FACING_EN
-from ..ui_sync.machines.solar_panel import SolarPanelUISync
+from ..ui_sync.machinery.solar_panel import SolarPanelUISync
 from ..transmitters.wire.logic import isWire
 from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, RegisterMachine
 

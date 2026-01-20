@@ -2,7 +2,7 @@
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl
 from ...define.events.machinery.electric_crafter import ElectricCrafterUpdateRecipe
-from ...ui_sync.machines.electric_crafter import ElectricCrafterUISync
+from ...ui_sync.machinery.electric_crafter import ElectricCrafterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdateGenericProgressL2R, UpdatePowerBar
 

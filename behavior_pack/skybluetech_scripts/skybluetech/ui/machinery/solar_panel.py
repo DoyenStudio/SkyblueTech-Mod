@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.solar_panel import SolarPanelUISync
+from ...ui_sync.machinery.solar_panel import SolarPanelUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressT2B
 

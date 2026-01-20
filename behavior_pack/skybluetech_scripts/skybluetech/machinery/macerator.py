@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import MACERATOR as MACHINE_ID
 from ..machinery_def.macerator import recipes as Recipes
-from ..ui_sync.machines.macerator import MaceratorUISync
+from ..ui_sync.machinery.macerator import MaceratorUISync
 from .basic import RegisterMachine, BaseProcessor
 
 

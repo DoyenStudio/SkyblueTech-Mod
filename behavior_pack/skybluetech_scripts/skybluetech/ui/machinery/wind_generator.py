@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.wind_generator import WindGeneratorUISync
+from ...ui_sync.machinery.wind_generator import WindGeneratorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar
 

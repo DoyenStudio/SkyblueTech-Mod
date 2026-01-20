@@ -19,7 +19,7 @@ from ..define.events.machinery.hydroponic_bed import (
 )
 from ..define.id_enum.machinery import HYDROPONIC_BED as MACHINE_ID
 from ..machinery_def.hydroponic_bed import HydroponicBedRecipe, recipes as Recipes
-from ..ui_sync.machines.hydroponic_bed import HydroponicBedUISync
+from ..ui_sync.machinery.hydroponic_bed import HydroponicBedUISync
 from .basic import (
     AutoSaver,
     BaseMachine,

@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync
+from ...ui_sync.machinery.geothermal_generator import GeoThermalGeneratorUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateFlame, InitFluidsDisplay
 

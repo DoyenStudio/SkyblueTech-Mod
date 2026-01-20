@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.farming_station import FarmingStationUISync
+from ...ui_sync.machinery.farming_station import FarmingStationUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar
 

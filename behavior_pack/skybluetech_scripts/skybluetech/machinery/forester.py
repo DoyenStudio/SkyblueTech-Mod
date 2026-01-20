@@ -12,7 +12,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
 )
 from ..define.id_enum.machinery import FORESTER as MACHINE_ID
 from ..machinery_def.forester import getSaplingId, isLog, isLeave
-from ..ui_sync.machines.forester import ForesterUISync
+from ..ui_sync.machinery.forester import ForesterUISync
 from .basic import (
     AutoSaver,
     BaseMachine,

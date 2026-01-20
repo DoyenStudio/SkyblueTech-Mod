@@ -4,7 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from ..define.events.machinery.freezer import FreezerModeChangedEvent
 from ..define.id_enum.machinery import FREEZER as MACHINE_ID
 from ..machinery_def.freezer import recipes as Recipes
-from ..ui_sync.machines.freezer import FreezerUISync
+from ..ui_sync.machinery.freezer import FreezerUISync
 from ..utils.action_commit import SafeGetMachine
 from .basic import MixedProcessor, RegisterMachine
 

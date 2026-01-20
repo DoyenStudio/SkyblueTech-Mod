@@ -6,7 +6,7 @@ from ..define import flags
 from ..define.events.machinery.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
 from ..define.id_enum.machinery import FERMENTER as MACHINE_ID
 from ..machinery_def.fermenter import *
-from ..ui_sync.machines.fermenter import FermenterUISync
+from ..ui_sync.machinery.fermenter import FermenterUISync
 from ..utils.action_commit import SafeGetMachine
 from .basic import (
     AutoSaver,

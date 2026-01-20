@@ -4,7 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from ..define import flags
 from ..define.id_enum.machinery import GEO_THERMAL_GENERATOR as MACHINE_ID
 from ..machinery_def.geothermal_generator import *
-from ..ui_sync.machines.geothermal_generator import GeoThermalGeneratorUISync, FluidSlotSync
+from ..ui_sync.machinery.geothermal_generator import GeoThermalGeneratorUISync, FluidSlotSync
 from .basic import AutoSaver, BasicGenerator, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
 
 K_BURN_TICKS_LEFT = "burn_ticks_left"

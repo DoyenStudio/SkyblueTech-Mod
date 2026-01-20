@@ -9,7 +9,7 @@ from ...define.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
     ItemSplitterSimpleAction,
 )
-from ...ui_sync.machines.item_splitter import ItemSplitterUISync
+from ...ui_sync.machinery.item_splitter import ItemSplitterUISync
 from ..misc.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
 from .define import MachinePanelUIProxy, MAIN_PATH
 

@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.general_tank import GeneralTankUISync
+from ...ui_sync.machinery.general_tank import GeneralTankUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import InitFluidDisplay, UpdateFluidDisplay
 

@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
 from ..define import flags
 from ..define.id_enum.machinery import SPLITTER as MACHINE_ID
-from ..ui_sync.machines.splitter import SplitterUISync
+from ..ui_sync.machinery.splitter import SplitterUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
 split_recipes = {} # type: dict[str, str]

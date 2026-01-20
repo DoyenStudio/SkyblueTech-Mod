@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import FLUID_CONDENSER as MACHINE_ID
 from ..machinery_def.fluid_condenser import recipes as Recipes
-from ..ui_sync.machines.fluid_condenser import FluidCondenserUISync
+from ..ui_sync.machinery.fluid_condenser import FluidCondenserUISync
 from .basic import MixedProcessor, RegisterMachine
 
 

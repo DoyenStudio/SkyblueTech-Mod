@@ -31,7 +31,7 @@ from ..define.events.machinery.wind_generator import (
 )
 from ..define.id_enum.machinery import WIND_GENERATOR as MACHINE_ID
 from ..define.facing import DXYZ_FACING, FACING_EN
-from ..ui_sync.machines.wind_generator import WindGeneratorUISync
+from ..ui_sync.machinery.wind_generator import WindGeneratorUISync
 from ..transmitters.wire.logic import isWire
 from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, RegisterMachine
 from .pool import GetMachineStrict

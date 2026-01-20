@@ -10,7 +10,7 @@ from ..define.events.machinery.item_splitter import (
 )
 from ..define.id_enum.machinery import ITEM_SPLITTER as MACHINE_ID
 from ..transmitters.cable.logic import GetNearbyCableNetworks, PushItemToGenericContainer
-from ..ui_sync.machines.item_splitter import ItemSplitterUISync
+from ..ui_sync.machinery.item_splitter import ItemSplitterUISync
 from ..utils.action_commit import SafeGetMachine
 from .basic import GUIControl, UpgradeControl, RegisterMachine
 

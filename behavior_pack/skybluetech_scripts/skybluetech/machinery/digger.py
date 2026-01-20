@@ -31,7 +31,7 @@ from ..define import flags
 from ..define.events.machinery.digger import DiggerWorkModeUpdatedEvent, DiggerUpdateCrack
 from ..define.id_enum.machinery import DIGGER as MACHINE_ID
 from ..utils.facing import GetOppositeDirFromFacing
-from ..ui_sync.machines.digger import DiggerUISync
+from ..ui_sync.machinery.digger import DiggerUISync
 from .basic import (
     AutoSaver,
     GUIControl,

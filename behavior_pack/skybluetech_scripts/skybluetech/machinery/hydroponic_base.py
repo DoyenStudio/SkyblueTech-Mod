@@ -2,7 +2,7 @@
 
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import HYDROPONIC_BASE as MACHINE_ID
-from ..ui_sync.machines.hydroponic_base import HydroponicBaseUISync
+from ..ui_sync.machinery.hydroponic_base import HydroponicBaseUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, MultiFluidContainer, GUIControl, RegisterMachine
 
 K_GROW_STAGE = "grow_stage"

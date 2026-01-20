@@ -7,7 +7,7 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
 from ..define import flags
 from ..define.id_enum.machinery import REDSTONE_FURNACE as MACHINE_ID
 from ..machinery_def.redstone_furnace import TICK_POWER
-from ..ui_sync.machines.redstone_furnace import RedstoneFurnaceUISync
+from ..ui_sync.machinery.redstone_furnace import RedstoneFurnaceUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
 

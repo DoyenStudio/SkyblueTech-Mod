@@ -2,7 +2,7 @@
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
 from ...define.events.machinery.electric_heater import ElectricHeaterSetPowerEvent
-from ...ui_sync.machines.electric_heater import ElectricHeaterUISync
+from ...ui_sync.machinery.electric_heater import ElectricHeaterUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar
 

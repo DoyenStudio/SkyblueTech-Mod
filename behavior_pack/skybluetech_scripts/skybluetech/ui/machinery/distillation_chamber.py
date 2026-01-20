@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, ViewBinder
-from ...ui_sync.machines.distillation_chamber import DistillationChamberUISync
+from ...ui_sync.machinery.distillation_chamber import DistillationChamberUISync
 from ...utils.fmt import FormatKelvin, FormatFluidVolume
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import InitFluidDisplay

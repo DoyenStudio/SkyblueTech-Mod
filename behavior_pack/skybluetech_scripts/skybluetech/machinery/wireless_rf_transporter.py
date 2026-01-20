@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
 from ..define.id_enum.machinery import WIRELESS_RF_TRANSPORTER as MACHINE_ID
 from ..machinery_def.battery_cube import *
-from ..ui_sync.machines.battery_cube import BatteryCubeUISync
+from ..ui_sync.machinery.battery_cube import BatteryCubeUISync
 from .basic import BaseMachine, GUIControl, ItemContainer, RegisterMachine
 from .pool import GetMachineStrict
 
@@ -39,29 +39,8 @@ class WirelessRFTransporter(BaseMachine, GUIControl, ItemContainer):
         self.bdata[K_MODE] = self.mode
         self.bdata[K_BOUND_BLOCK_POS] = self.bound_block_pos
 
-    def AddPower(self, rf, is_generator=False, max_limit=None, depth=0):
-        # type: (int, bool, int | None, int) -> tuple[bool, int]
-        if self.mode == MODE_SENDER:
-            if not is_generator:
-                mPos = self.bound_block_pos
-                if not isinstance(mPos, list):
-                    return BaseMachine.AddPower(self, rf, is_generator, max_limit, depth)
-                else:
-                    dim, x, y, z = mPos
-                    m = GetMachineStrict(dim, x, y, z)
-                    if m is None:
-                        return BaseMachine.AddPower(self, rf, is_generator, max_limit, depth)
-                    return m.AddPower(rf, is_generator=True, depth=depth+1)
-            else:
-                # 不应该出现这种情况, 即为发送器模式但是接收充能
-                return False, rf
-        elif self.mode == MODE_RECEIVER:
-            if is_generator:
-                return BaseMachine.AddPower(self, rf, True, max_limit, depth)
-            else:
-                # 电网中受电, 忽略
-                return False, rf
-        else:
-            return False, rf
+    def AddPower(self, rf, max_limit=None, passed=None):
+        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
+        pass
 
         

@@ -16,7 +16,7 @@ from ..define.events.machinery.electric_crafter import (
 )
 from ..define.id_enum.items import CRAFTING_TEMPLATE
 from ..define.id_enum.machinery import ELECTRIC_CRAFTER as MACHINE_ID
-from ..ui_sync.machines.electric_crafter import ElectricCrafterUISync
+from ..ui_sync.machinery.electric_crafter import ElectricCrafterUISync
 from .basic import GUIControl, UpgradeControl, RegisterMachine
 
 TEMPLATE_SLOT = 12

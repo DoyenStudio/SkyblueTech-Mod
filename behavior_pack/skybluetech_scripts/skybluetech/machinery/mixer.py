@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import MIXER as MACHINE_ID
 from ..machinery_def.mixer import recipes as Recipes, MachineRecipe
-from ..ui_sync.machines.mixer import MixerUISync
+from ..ui_sync.machinery.mixer import MixerUISync
 from .basic import MixedProcessor, RegisterMachine
 
 

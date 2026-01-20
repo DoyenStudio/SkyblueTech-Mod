@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import METAL_PRESS as MACHINE_ID
 from ..machinery_def.metal_press import recipes as Recipes
-from ..ui_sync.machines.metal_press import MetalPressUISync
+from ..ui_sync.machinery.metal_press import MetalPressUISync
 from .basic import MixedProcessor, RegisterMachine
 
 

@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.api.client import NewSingleBlockPalette, CombineBlockPaletteToGeometry
-from ...ui_sync.machines.hydroponic_base import HydroponicBaseUISync
+from ...ui_sync.machinery.hydroponic_base import HydroponicBaseUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import InitFluidDisplay
 

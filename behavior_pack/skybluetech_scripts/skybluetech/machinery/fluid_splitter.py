@@ -9,7 +9,7 @@ from ..define.events.machinery.fluid_splitter import (
 )
 from ..define.id_enum.machinery import FLUID_SPLITTER as MACHINE_ID
 from ..transmitters.pipe.logic import GetNearbyPipeNetworks, PushFluidToFluidContainer
-from ..ui_sync.machines.fluid_splitter import FluidSplitterUISync, FluidSlotSync
+from ..ui_sync.machinery.fluid_splitter import FluidSplitterUISync, FluidSlotSync
 from ..utils.action_commit import SafeGetMachine
 from .basic import MultiFluidContainer, GUIControl, UpgradeControl, RegisterMachine
 

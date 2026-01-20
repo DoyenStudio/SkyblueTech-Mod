@@ -11,7 +11,7 @@ from ...define.events.machinery.fluid_splitter import (
     FluidSplitterSimpleAction,
 )
 from ...machinery_def.fluid_splitter import all_fluids
-from ...ui_sync.machines.fluid_splitter import FluidSplitterUISync
+from ...ui_sync.machinery.fluid_splitter import FluidSplitterUISync
 from ..misc.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import InitFluidsDisplay

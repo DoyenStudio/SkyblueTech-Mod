@@ -3,7 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import DISTILLATION_CHAMBER as MACHINE_ID
 from ..machinery_def.distillation_chamber import recipes as Recipes, DistillatorChamberRecipe
-from ..ui_sync.machines.distillation_chamber import DistillationChamberUISync
+from ..ui_sync.machinery.distillation_chamber import DistillationChamberUISync
 from .basic import AutoSaver, BaseMachine, HeatCtrl, MultiFluidContainer, GUIControl, RegisterMachine
 from .basic.multi_fluid_container import FluidSlot
 

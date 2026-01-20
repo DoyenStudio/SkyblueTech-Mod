@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from ...ui_sync.machines.alloy_furnace import AlloyFurnaceUISync
+from ...ui_sync.machinery.alloy_furnace import AlloyFurnaceUISync
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateGenericProgressL2R, UpdateFlame
 

@@ -9,9 +9,8 @@ from ....tooldelta.events import (
 from skybluetech_scripts.tooldelta.api.server import (
     GetContainerItem,
     SetContainerItem,
-    SetChestBoxItemNum,
-    GetContainerSize,
     PutItemIntoContainer,
+    SetChestBoxItemNum,
 )
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
@@ -50,21 +49,54 @@ class ItemContainer(object):
 
     def GetSlotItem(self, slot_pos, get_user_data=True):
         # type: (int, bool) -> Item | None
+        """
+        获取槽位内的物品。
+
+        Args:
+            slot_pos (int): 槽位 ID
+            get_user_data (bool, optional): 是否获取物品的 userData
+
+        Returns:
+            Item (optional): 槽位内物品实例, 如果为空则返回 None
+        """
         return GetContainerItem(self.dim, self.xyz, slot_pos, get_user_data)
 
     def SetSlotItem(self, slot_pos, item):
         # type: (int, Item | None) -> bool
+        """
+        设置槽位内的物品。
+
+        Args:
+            slot_pos (int): 槽位 ID
+            item (Item | None): 设置的物品, 如果为 None 则设置槽位为空
+
+        Returns:
+            _type_: _description_
+        """
         return SetContainerItem(self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0))
 
     def SetSlotItemCount(self, slot_pos, count):
         # type: (int, int) -> None
+        """WARNING: 此 api 对于自定义容器有 bug"""
         SetChestBoxItemNum(None, self.xyz, slot_pos, count, self.dim)
 
     def GetSlotSize(self):
+        """
+        获取输入槽和输出槽的数量。
+
+        Returns:
+            int
+        """
         return len(self.input_slots) + len(self.output_slots)
 
     def GetInputSlotItems(self):
         # type: () -> dict[int, Item]
+        """
+        获取输入槽的所有物品。
+
+        Returns:
+            dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
+        """
         res = {} # type: dict[int, Item]
         for slot_pos in self.input_slots:
             item = self.GetSlotItem(slot_pos)
@@ -74,6 +106,12 @@ class ItemContainer(object):
 
     def GetOutputSlotItems(self):
         # type: () -> dict[int, Item]
+        """
+        获取输出槽的所有物品。
+
+        Returns:
+            dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
+        """
         res = {} # type: dict[int, Item]
         for slot_pos in self.output_slots:
             item = self.GetSlotItem(slot_pos)
@@ -83,11 +121,26 @@ class ItemContainer(object):
 
     def SetSlotItems(self, slotitems):
         # type: (dict[int, Item]) -> None
+        """
+        设置多个槽位内的物品。
+
+        Args:
+            slotitems (dict[int, Item]): 槽位 ID 对应物品实例
+        """
         for slot_pos, item in slotitems.items():
             self.SetSlotItem(slot_pos, item)
 
     def PushItem(self, item):
         # type: (Item) -> Item | None
+        """
+        尝试将物品输入此容器。
+
+        Args:
+            item (Item): 将输入的物品
+
+        Returns:
+            Item (optional): 如有剩余物品则返回物品实例
+        """
         for slot_pos in self.input_slots:
             orig_item = self.GetSlotItem(slot_pos, get_user_data=True)
             if orig_item is None:
@@ -140,6 +193,15 @@ class ItemContainer(object):
 
     def CanOutputItems(self, items):
         # type: (list[Item]) -> bool
+        """
+        机器是否可以输出物品。
+
+        Args:
+            items (list[Item]): 物品列表
+
+        Returns:
+            bool
+        """
         _c = [
             self.GetSlotItem(slot_pos, get_user_data=True) for slot_pos in self.output_slots
         ]

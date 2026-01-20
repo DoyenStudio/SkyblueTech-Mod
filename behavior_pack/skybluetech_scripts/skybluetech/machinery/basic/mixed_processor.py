@@ -31,7 +31,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def OnLoad(self):
         BaseMachine.OnLoad(self)
         SPControl.OnLoad(self)
-        self.current_recipe = self.getRecipe(self.GetInputSlotItems(), self.fluids)
+        self.current_recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
@@ -48,11 +48,11 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         MultiFluidContainer.Dump(self)
         BaseProcessor.Dump(self)
 
-    def StartNext(self, dont_recursive=False):
+    def start_next(self, dont_recursive=False):
         input_slots = self.GetInputSlotItems()
         output_slots = self.GetOutputSlotItems()
         fluids = self.fluids
-        recipe = self.getRecipe(input_slots, fluids)
+        recipe = self.get_recipe(input_slots, fluids)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             if not dont_recursive:
@@ -60,9 +60,9 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 # TODO: RequireFluid
                 ok = self.RequireItems() or self.RequireFluidsFromNetwork()
                 # if ok:
-                self.StartNext(dont_recursive=True)
+                self.start_next(dont_recursive=True)
             return
-        elif not self.canOutput(recipe, output_slots):
+        elif not self.can_output(recipe, output_slots):
             # 输出堵塞
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
@@ -89,20 +89,20 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                     return True
         return False
 
-    def runOnce(self):
+    def run_once(self):
         "进行一次配方产出"
         input_items = self.GetInputSlotItems()
         output_items = self.GetOutputSlotItems()
         if self.current_recipe is None:
             # cannot reach
             raise ValueError("Recipe ERROR")
-        if not self.canOutput(self.current_recipe, output_items):
+        if not self.can_output(self.current_recipe, output_items):
             return
         input_items.update(output_items)
-        self.finishRecipeOnce(input_items, self.current_recipe)
+        self.finish_recipe(input_items, self.current_recipe)
         self.RequireAnyFluidFromNetwork()
 
-    def getRecipe(self, input_items, input_fluids):
+    def get_recipe(self, input_items, input_fluids):
         # type: (dict[int, Item], list[FluidSlot]) -> MachineRecipe | None
         for recipe in self.recipes:
             cont = False
@@ -141,7 +141,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 return recipe
         return None
 
-    def canOutput(self, recipe, output_item_slots):
+    def can_output(self, recipe, output_item_slots):
         # type: (MachineRecipe, dict[int, Item]) -> bool
         outputs = recipe.outputs
         for slot_pos, output in outputs.get(CategoryType.ITEM, {}).items():
@@ -176,12 +176,12 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE):
             input_slots = self.GetInputSlotItems()
             fluids = self.fluids
-            recipe = self.getRecipe(input_slots, fluids)
+            recipe = self.get_recipe(input_slots, fluids)
             if recipe is not None:
                 self.current_recipe = recipe
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
-    def finishRecipeOnce(self, slotitems, recipe):
+    def finish_recipe(self, slotitems, recipe):
         # type: (dict[int, Item], MachineRecipe) -> None
         fluid_slots = self.fluids
         for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
@@ -205,14 +205,14 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
             UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if slot_pos in self.output_slots and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-            self.StartNext()
+            self.start_next()
             return
-        recipe = self.getRecipe(self.GetInputSlotItems(), self.fluids)
+        recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             self.current_recipe = None
         elif not recipe.equals(self.current_recipe):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            self.StartNext()
+            self.start_next()
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)

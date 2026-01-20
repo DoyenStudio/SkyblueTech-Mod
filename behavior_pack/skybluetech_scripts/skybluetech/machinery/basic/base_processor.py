@@ -38,7 +38,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     def OnLoad(self):
         BaseMachine.OnLoad(self)
         SPControl.OnLoad(self)
-        self.current_recipe = self.getRecipe(self.GetInputSlotItems())
+        self.current_recipe = self.get_recipe(self.GetInputSlotItems())
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
@@ -50,9 +50,9 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
             do_break = False
             if self.ProcessOnce():
                 # 1tick 内有可能需要多次生产
-                self.runOnce()
+                self.run_once()
                 self.Dump()
-                self.StartNext()
+                self.start_next()
             else:
                 do_break = True
             self.OnSync()
@@ -65,15 +65,15 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
             UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if slot_pos in self.output_slots and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-            self.StartNext()
+            self.start_next()
             return
-        recipe = self.getRecipe(self.GetInputSlotItems())
+        recipe = self.get_recipe(self.GetInputSlotItems())
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             self.current_recipe = None
         elif not recipe.equals(self.current_recipe):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            self.StartNext()
+            self.start_next()
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
@@ -87,33 +87,33 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     # ==== process ====
 
-    def runOnce(self):
+    def run_once(self):
         "进行一次配方产出"
         inputs = self.GetInputSlotItems()
         outputs = self.GetOutputSlotItems()
-        recipe = self.getRecipe(inputs)
+        recipe = self.get_recipe(inputs)
         if recipe is None:
             # cannot reach
             raise ValueError("Recipe ERROR")
-        if not self.canOutput(recipe, outputs):
+        if not self.can_output(recipe, outputs):
             return
         inputs.update(outputs)
-        self.finishRecipeOnce(inputs, recipe)
+        self.finish_recipe(inputs, recipe)
 
-    def StartNext(self, dont_recursive=False):
+    def start_next(self, dont_recursive=False):
         "开始运行配方"
         input_slots = self.GetInputSlotItems()
         output_slots = self.GetOutputSlotItems()
-        recipe = self.getRecipe(input_slots)
+        recipe = self.get_recipe(input_slots)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             if not dont_recursive:
                 # 可能是物品不够了, 尝试向附近的管道网络索取物品
                 ok = self.RequireItems()
                 if ok:
-                    self.StartNext(dont_recursive=True)
+                    self.start_next(dont_recursive=True)
             return
-        elif not self.canOutput(recipe, output_slots):
+        elif not self.can_output(recipe, output_slots):
             # 输出堵塞
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
@@ -154,7 +154,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
                     return True
         return False
 
-    def getRecipe(self, inputs):
+    def get_recipe(self, inputs):
         # type: (dict[int, Item]) -> MachineRecipe | None
         for recipe in self.recipes:
             cont = False
@@ -175,13 +175,13 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
                 return recipe
         return None
 
-    def canRunRecipe(self):
+    def can_run_recipe(self):
         if self.current_recipe is None:
             return False
         return self.store_rf >= self.current_recipe.power_cost
 
     @staticmethod
-    def canOutput(recipe, output_slots):
+    def can_output(recipe, output_slots):
         # type: (MachineRecipe, dict[int, Item]) -> bool
         outputs = recipe.outputs.get(CategoryType.ITEM, {})
         for slot_pos, output in outputs.items():
@@ -199,7 +199,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
                 return False
         return True
 
-    def finishRecipeOnce(self, slotitems, recipe):
+    def finish_recipe(self, slotitems, recipe):
         # type: (dict[int, Item], MachineRecipe) -> None
         for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
             slotitems[slot_pos].count -= int(input.count)

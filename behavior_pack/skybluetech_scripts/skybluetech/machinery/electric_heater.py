@@ -43,7 +43,7 @@ class ElectricHeater(AutoSaver, HeatCtrl, GUIControl, PowerControl):
         if self.IsActive():
             if self.PowerEnough():
                 self.ReducePower()
-                self.genHeat()
+                self.gen_heat()
         for m in self.machines:
             self.ShareHeat(m)
         self.OnSync()
@@ -65,7 +65,7 @@ class ElectricHeater(AutoSaver, HeatCtrl, GUIControl, PowerControl):
         PowerControl.OnUnload(self)
         GUIControl.OnUnload(self)
 
-    def genHeat(self):
+    def gen_heat(self):
         if self.PowerEnough():
             self.ReducePower()
             self.kelvin = float(self.running_power) / self.heat_c * 100 + self.kelvin

@@ -54,7 +54,6 @@ class PowerControl(BaseMachine):
         if res:
             self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         elif auto_require:
-            self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
             RequireEnergyFromNetwork(self)
             return self.PowerEnough(auto_require=False)
         return res

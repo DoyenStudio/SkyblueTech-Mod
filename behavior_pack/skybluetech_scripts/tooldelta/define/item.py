@@ -4,31 +4,6 @@ from ..internal import ServerComp, ServerLevelId, ClientComp, ClientLevelId, InS
 itemBasicInfoPool = {} # type: dict[str, BasicItemInfo]
 
 class Item(object):
-    newItemName = '' # type: str
-    """必须设置，物品的identifier，即"命名空间:物品名" """
-    newAuxValue = 0 # type: int
-    """必须设置，物品附加值"""
-    itemName = '' # type: str
-    """（废弃）1.22及以前版本的旧identifier，详见1.23版本物品id变更"""
-    auxValue = 0 # type: int
-    """（废弃）1.22及以前版本的旧物品附加值，详见1.23版本物品id变更"""
-    count = 0 # type: int
-    """必须设置，物品数量。设置为0时为空物品"""
-    showInHand = False # type: bool
-    """可选，是否显示在手上，默认为True"""
-    enchantData = None # type: list[tuple[int, int]] | None
-    """可选，附魔数据，tuple中 EnchantType 为附魔类型，int为附魔等级"""
-    modEnchantData = None # type: list[tuple[str, int]] | None
-    """可选，自定义附魔数据，tuple中str为自定义附魔id，int为自定义附魔等级"""
-    customTips = None # type: str | None
-    """可选，物品的自定义tips，修改该内容后会覆盖实例的组件netease:customtips的内容"""
-    extraId = None # type: str | None
-    """可选，物品自定义标识符。可以用于保存数据， 区分物品"""
-    userData = None # type: dict | None
-    """可选，物品userData，用于灾厄旗帜、旗帜等物品，请勿随意设置该值"""
-    durability = 0 # type: int
-    """可选，物品耐久度，不存在耐久概念的物品默认值为零"""
-
     def __init__(
         self,
         newItemName, # type: str
@@ -40,22 +15,30 @@ class Item(object):
         customTips="", # type: str | None
         extraId=None, # type: str | None
         userData=None, # type: dict | None
-        durability=0, # type: int
+        durability=None, # type: int | None
         _orig=None # type: dict | None
     ):
         # type: (...) -> None
         self.newItemName = newItemName
+        """必须设置，物品的identifier，即"命名空间:物品名" """
         self.newAuxValue = newAuxValue
-        self.itemName = newItemName
-        self.auxValue = newAuxValue
+        """必须设置，物品附加值"""
         self.count = count
+        """必须设置，物品数量。设置为0时为空物品"""
         self.showInHand = showInHand
+        """可选，是否显示在手上，默认为True"""
         self.enchantData = enchantData
+        """可选，附魔数据，tuple中 EnchantType 为附魔类型，int为附魔等级"""
         self.modEnchantData = modEnchantData
+        """可选，自定义附魔数据，tuple中str为自定义附魔id，int为自定义附魔等级"""
         self.customTips = customTips
+        """可选，物品的自定义tips，修改该内容后会覆盖实例的组件netease:customtips的内容"""
         self.extraId = extraId
+        """可选，物品自定义标识符。可以用于保存数据， 区分物品"""
         self.userData = userData
+        """可选，物品userData，用于灾厄旗帜、旗帜等物品，请勿随意设置该值"""
         self.durability = durability
+        """可选，物品耐久度，不存在耐久概念的物品默认值为零"""
         self._orig = _orig or {}
 
     @classmethod
@@ -89,7 +72,7 @@ class Item(object):
         self.customTips = data.get("customTips")
         self.extraId = data.get("extraId")
         self.userData = data.get("userData")
-        self.durability = data.get("durability", 0)
+        self.durability = data.get("durability")
 
     def marshal(self):
         # type: () -> dict

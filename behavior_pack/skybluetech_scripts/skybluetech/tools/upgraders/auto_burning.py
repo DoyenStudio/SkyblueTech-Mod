@@ -13,7 +13,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SpawnDroppedItem,
 )
 from ...machinery_def.redstone_furnace import TICK_POWER
-from ...machinery.redstone_furnace import GetFurnaceOutputByInput
+from ...machinery.redstone_furnace import get_furnace_output_by_input
 from ...utils.charge import GetCharge, UpdateCharge
 from .register import RegisterDestroyBlockCallback
 from .utils import GetUpgraderLevel
@@ -27,7 +27,7 @@ def onAutoBurn(event, use_tool, item_ud, upgrader_ud):
     charge, _ = GetCharge(item_ud)
     for item_eid in event.dropEntityIds:
         it = GetDroppedItem(item_eid)
-        res = GetFurnaceOutputByInput(it.id)
+        res = get_furnace_output_by_input(it.id)
         if res is None:
             continue
         if charge < BURN_POWER_SINGLE:

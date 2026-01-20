@@ -11,15 +11,6 @@ from ..ui_sync.machines.redstone_furnace import RedstoneFurnaceUISync
 from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
 
 
-def GetFurnaceOutputByInput(item_id, aux_value=0):
-    # type: (str, int) -> str | None
-    res = GetRecipesByInput(item_id, "furnace", aux_value, maxResultNum=1)
-    if len(res) < 1:
-        return None
-    else:
-        return GetFurnaceRecipe(res[0]).output.item_id
-
-
 @RegisterMachine
 class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = MACHINE_ID
@@ -38,47 +29,44 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = RedstoneFurnaceUISync.NewServer(self).Activate()
         self.OnSync()
-        self.TryStartNext()
+        self.try_start_next()
 
     def OnTicking(self):
         while self.IsActive():
             self.OnSync()
             if self.ProcessOnce():
-                self.runOnce()
-                self.TryStartNext()
+                self.run_once()
+                self.try_start_next()
             else:
                 break
 
-    def TryStartNext(self, dont_recursive=False):
+    def try_start_next(self):
+        self.RequireItems()
         input_item = self.GetSlotItem(0)
-        output_item = self.GetSlotItem(1)
         if input_item is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-            if not dont_recursive:
-                self.RequireItems()
-                self.TryStartNext(dont_recursive=True)
             return
-        expected_output = GetFurnaceOutputByInput(input_item.newItemName)
+        expected_output = get_furnace_output_by_input(input_item.newItemName)
         if expected_output is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
-        if not self.canOutput(expected_output, output_item):
+        if not self.CanOutputItems([Item(expected_output)]):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
                 
-    def runOnce(self):
+    def run_once(self):
         input_item = self.GetSlotItem(0)
         output_item = self.GetSlotItem(1)
         if input_item is None:
             raise ValueError("No input")
-        expected_output = GetFurnaceOutputByInput(input_item.newItemName)
+        expected_output = get_furnace_output_by_input(input_item.newItemName)
         if expected_output is None:
             raise ValueError("Recipe ERROR")
-        if not self.canOutput(expected_output, output_item):
+        if not self.CanOutputItems([Item(expected_output)]):
             return
-        self.finishOnce(input_item, output_item, expected_output)
+        self.finish_once(input_item, output_item, expected_output)
 
-    def finishOnce(self, input, output, expected_output):
+    def finish_once(self, input, output, expected_output):
         # type: (Item, Item | None, str) -> None
         input.count -= 1
         self.SetSlotItem(0, input)
@@ -88,13 +76,6 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         else:
             output_item = Item(expected_output)
         self.SetSlotItem(1, output_item)
-
-    def canOutput(self, expected_output_item_id, output_slot_item):
-        # type: (str, Item | None) -> bool
-        return output_slot_item is None or (
-            output_slot_item.newItemName == expected_output_item_id
-            and not output_slot_item.StackFull()
-        )
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf 
@@ -111,19 +92,18 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         if slot_pos == 1:
             return
         input_item = self.GetSlotItem(0)
-        output_item = self.GetSlotItem(1)
         if input_item is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
             return
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-        expected_output = GetFurnaceOutputByInput(input_item.newItemName)
+        expected_output = get_furnace_output_by_input(input_item.newItemName)
         if expected_output is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-        if not self.canOutput(expected_output, output_item):
+        if not self.CanOutputItems([Item(expected_output)]):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
         else:
@@ -139,3 +119,12 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
+
+
+def get_furnace_output_by_input(item_id, aux_value=0):
+    # type: (str, int) -> str | None
+    res = GetRecipesByInput(item_id, "furnace", aux_value, maxResultNum=1)
+    if len(res) < 1:
+        return None
+    else:
+        return GetFurnaceRecipe(res[0]).output.item_id

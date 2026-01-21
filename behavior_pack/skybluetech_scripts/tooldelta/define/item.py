@@ -63,8 +63,6 @@ class Item(object):
         self._orig = data
         self.newItemName = data["newItemName"]
         self.newAuxValue = data["newAuxValue"]
-        self.itemName = data["itemName"]
-        self.auxValue = data["auxValue"]
         self.count = data["count"]
         self.showInHand = data["showInHand"]
         self.enchantData = data.get("enchantData")
@@ -80,8 +78,6 @@ class Item(object):
         ret.update({
             "newItemName": self.newItemName,
             "newAuxValue": self.newAuxValue,
-            "itemName": self.itemName,
-            "auxValue": self.auxValue,
             "count": self.count,
             "showInHand": self.showInHand,
             "enchantData": self.enchantData,

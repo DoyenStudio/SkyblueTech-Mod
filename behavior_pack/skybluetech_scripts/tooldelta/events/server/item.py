@@ -8,37 +8,50 @@ from ..basic import ServerEvent
 class PlayerTryPutCustomContainerItemServerEvent(ServerEvent):
     name = "PlayerTryPutCustomContainerItemServerEvent"
 
-    item = Item("") # type: Item
-    """ 尝试放入物品的物品信息字典 """
-    collectionName = '' # type: str
-    """ 放入容器名称，对应容器json中"custom_description"字段 """
-    collectionType = '' # type: str
-    """ 放入容器类型，目前仅支持netease_container和netease_ui_container """
-    collectionIndex = 0 # type: int
-    """ 放入容器索引 """
-    playerId = '' # type: str
-    """ 玩家id """
-    x = 0 # type: int
-    """ 容器方块x坐标 """
-    y = 0 # type: int
-    """ 容器方块y坐标 """
-    z = 0 # type: int
-    """ 容器方块z坐标 """
+    def __init__(
+        self,
+        item, # type: Item
+        collectionName, # type: str
+        collectionType, # type: str
+        collectionIndex, # type: int
+        playerId, # type: str
+        x, # type: int
+        y, # type: int
+        z, # type: int
+        _orig, # type: dict
+    ):
+        self.item = item
+        """ 尝试放入物品的物品信息字典 """
+        self.collectionName = collectionName
+        """ 放入容器名称，对应容器json中"custom_description"字段 """
+        self.collectionType = collectionType
+        """ 放入容器类型，目前仅支持netease_container和netease_ui_container """
+        self.collectionIndex = collectionIndex
+        """ 放入容器索引 """
+        self.playerId = playerId
+        """ 玩家id """
+        self.x = x
+        """ 容器方块x坐标 """
+        self.y = y
+        """ 容器方块y坐标 """
+        self.z = z
+        """ 容器方块z坐标 """
+        self._orig = _orig
+        """ 原始事件数据 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> PlayerTryPutCustomContainerItemServerEvent
-        instance = cls()
-        instance._orig = data
-        instance.item = Item.from_dict(data["itemDict"])
-        instance.collectionName = data["collectionName"]
-        instance.collectionType = data["collectionType"]
-        instance.collectionIndex = data["collectionIndex"]
-        instance.playerId = data["playerId"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        return instance
+        return cls(
+            item=Item.from_dict(data["itemDict"]),
+            collectionName=data["collectionName"],
+            collectionType=data["collectionType"],
+            collectionIndex=data["collectionIndex"],
+            playerId=data["playerId"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            _orig=data,
+        )
 
     def marshal(self):
         # type: () -> dict
@@ -51,11 +64,12 @@ class PlayerTryPutCustomContainerItemServerEvent(ServerEvent):
             "x": self.x,
             "y": self.y,
             "z": self.z,
+            "_orig": self._orig,
         }
 
     def cancel(self):
-        """ 拒绝此次放入自定义容器的操作 """
         # type: () -> None
+        "取消该操作，默认为false，事件中改为true时拒绝此次放入自定义容器的操作"
         self._orig["cancel"] = True
 
     @classmethod
@@ -68,37 +82,46 @@ class PlayerTryPutCustomContainerItemServerEvent(ServerEvent):
 class PlayerTryRemoveCustomContainerItemServerEvent(ServerEvent):
     name = "PlayerTryRemoveCustomContainerItemServerEvent"
 
-    item = Item("") # type: Item
-    """ 尝试拿出物品的物品信息字典 """
-    collectionName = '' # type: str
-    """ 拿出容器名称，对应容器json中"custom_description"字段 """
-    collectionType = '' # type: str
-    """ 拿出容器类型，目前仅支持netease_container和netease_ui_container """
-    collectionIndex = 0 # type: int
-    """ 拿出容器索引 """
-    playerId = '' # type: str
-    """ 玩家id """
-    x = 0 # type: int
-    """ 容器方块x坐标 """
-    y = 0 # type: int
-    """ 容器方块y坐标 """
-    z = 0 # type: int
-    """ 容器方块z坐标 """
+    def __init__(
+        self,
+        item, # type: Item
+        collectionName, # type: str
+        collectionType, # type: str
+        collectionIndex, # type: int
+        playerId, # type: str
+        x, # type: int
+        y, # type: int
+        z, # type: int
+    ):
+        self.item = item
+        """ 尝试移除物品的物品信息字典 """
+        self.collectionName = collectionName
+        """ 放入容器名称，对应容器json中"custom_description"字段 """
+        self.collectionType = collectionType
+        """ 放入容器类型，目前仅支持netease_container和netease_ui_container """
+        self.collectionIndex = collectionIndex
+        """ 目标容器索引 """
+        self.playerId = playerId
+        """ 玩家id """
+        self.x = x
+        """ 容器方块x坐标 """
+        self.y = y
+        """ 容器方块y坐标 """
+        self.z = z
+        """ 容器方块z坐标 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> PlayerTryRemoveCustomContainerItemServerEvent
-        instance = cls()
-        instance._orig = data
-        instance.item = Item.from_dict(data["itemDict"])
-        instance.collectionName = data["collectionName"]
-        instance.collectionType = data["collectionType"]
-        instance.collectionIndex = data["collectionIndex"]
-        instance.playerId = data["playerId"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        return instance
+        return cls(
+            item=Item.from_dict(data["itemDict"]),
+            collectionName=data["collectionName"],
+            collectionType=data["collectionType"],
+            collectionIndex=data["collectionIndex"],
+            playerId=data["playerId"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+        )
 
     def marshal(self):
         # type: () -> dict
@@ -112,11 +135,6 @@ class PlayerTryRemoveCustomContainerItemServerEvent(ServerEvent):
             "y": self.y,
             "z": self.z,
         }
-
-    def cancel(self):
-        """ 拒绝此次拿出 自定义容器的操作 """
-        # type: () -> None
-        self._orig["cancel"] = True
 
 
 class ContainerItemChangedServerEvent(ServerEvent):
@@ -168,31 +186,42 @@ class ContainerItemChangedServerEvent(ServerEvent):
 class ItemPushInCustomContainerServerEvent(ServerEvent):
     name = "ItemPushInCustomContainerServerEvent"
 
-    item = Item("")
-    """ 漏斗漏入物品的物品信息字典 """
-    collectionName = '' # type: str
-    """ 目标容器名称，目前仅支持netease_container """
-    collectionIndex = 0 # type: int
-    """ 目标容器索引 """
-    x = 0 # type: int
-    """ 容器方块x坐标 """
-    y = 0 # type: int
-    """ 容器方块y坐标 """
-    z = 0 # type: int
-    """ 容器方块z坐标 """
+    def __init__(
+        self,
+        item, # type: Item
+        collectionName, # type: str
+        collectionIndex, # type: int
+        x, # type: int
+        y, # type: int
+        z, # type: int
+        _orig, # type: dict
+    ):
+        self.item = item
+        """ 漏斗漏入物品的物品信息字典 """
+        self.collectionName = collectionName
+        """ 目标容器名称，目前仅支持netease_container """
+        self.collectionIndex = collectionIndex
+        """ 目标容器索引 """
+        self.x = x
+        """ 容器方块x坐标 """
+        self.y = y
+        """ 容器方块y坐标 """
+        self.z = z
+        """ 容器方块z坐标 """
+        self._orig = _orig
+        """ 原始事件数据 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> ItemPushInCustomContainerServerEvent
-        instance = cls()
-        instance._orig = data
-        instance.item = Item.from_dict(data["itemDict"])
-        instance.collectionName = data["collectionName"]
-        instance.collectionIndex = data["collectionIndex"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        return instance
+        return cls(
+            item=Item.from_dict(data["itemDict"]),
+            collectionName=data["collectionName"],
+            collectionIndex=data["collectionIndex"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            _orig=data,
+        )
 
     def marshal(self):
         # type: () -> dict
@@ -203,43 +232,54 @@ class ItemPushInCustomContainerServerEvent(ServerEvent):
             "x": self.x,
             "y": self.y,
             "z": self.z,
+            "_orig": self._orig,
         }
 
     def cancel(self):
-        """ 取消漏入物品操作 """
         # type: () -> None
+        "取消该操作，默认为false，事件中改为true时拒绝此次漏入物品的操作"
         self._orig["cancel"] = True
 
 
 class ItemPullOutCustomContainerServerEvent(ServerEvent):
     name = "ItemPullOutCustomContainerServerEvent"
 
-    item = Item("")
-    """ 漏斗漏出物品的物品信息 """
-    collectionName = '' # type: str
-    """ 漏出物品的容器名称，目前仅支持netease_container """
-    collectionIndex = 0 # type: int
-    """ 漏出物品的容器索引 """
-    x = 0 # type: int
-    """ 容器方块x坐标 """
-    y = 0 # type: int
-    """ 容器方块y坐标 """
-    z = 0 # type: int
-    """ 容器方块z坐标 """
+    def __init__(
+        self,
+        item, # type: Item
+        collectionName, # type: str
+        collectionIndex, # type: int
+        x, # type: int
+        y, # type: int
+        z, # type: int
+        _orig, # type: dict
+    ):
+        self.item = item
+        """ 漏斗漏出物品的物品信息字典 """
+        self.collectionName = collectionName
+        """ 漏出物品的容器名称，目前仅支持netease_container """
+        self.collectionIndex = collectionIndex
+        """ 漏出物品的容器索引 """
+        self.x = x
+        """ 容器方块x坐标 """
+        self.y = y
+        """ 容器方块y坐标 """
+        self.z = z
+        """ 容器方块z坐标 """
+        self._orig = _orig
+        """ 原始事件数据 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> ItemPullOutCustomContainerServerEvent
-        instance = cls()
-        instance._orig = data
-        instance.item = Item.from_dict(data["itemDict"])
-        instance.collectionName = data["collectionName"]
-        instance.collectionIndex = data["collectionIndex"]
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.cancel = data["cancel"]
-        return instance
+        return cls(
+            item=Item.from_dict(data["itemDict"]),
+            collectionName=data["collectionName"],
+            collectionIndex=data["collectionIndex"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            _orig=data,
+        )
 
     def marshal(self):
         # type: () -> dict
@@ -250,61 +290,78 @@ class ItemPullOutCustomContainerServerEvent(ServerEvent):
             "x": self.x,
             "y": self.y,
             "z": self.z,
-            "cancel": self.cancel,
+            "_orig": self._orig,
         }
 
     def cancel(self):
-        """ 取消漏入物品操作 """
         # type: () -> None
+        "取消该操作，默认为false，事件中改为true时拒绝此次漏出物品的操作"
         self._orig["cancel"] = True
 
 
 class ServerItemUseOnEvent(ServerEvent):
     name = "ServerItemUseOnEvent"
-    
-    entityId = '' # type: str
-    """ 玩家实体id """
-    item = Item("") # type: Item
-    """ 使用的物品的物品信息字典 """
-    x = 0 # type: int
-    """ 方块 x 坐标值 """
-    y = 0 # type: int
-    """ 方块 y 坐标值 """
-    z = 0 # type: int
-    """ 方块 z 坐标值 """
-    blockName = '' # type: str
-    """ 方块的identifier """
-    blockAuxValue = 0 # type: int
-    """ 方块的附加值 """
-    face = 0 # type: int
-    """ 点击方块的面，参考Facing枚举 """
-    dimensionId = 0 # type: int
-    """ 维度id """
-    clickX = 0.0 # type: float
-    """ 点击点的x比例位置 """
-    clickY = 0.0 # type: float
-    """ 点击点的y比例位置 """
-    clickZ = 0.0 # type: float
-    """ 点击点的z比例位置 """
+
+    def __init__(
+        self,
+        entityId, # type: str
+        item, # type: Item
+        x, # type: int
+        y, # type: int
+        z, # type: int
+        blockName, # type: str
+        blockAuxValue, # type: int
+        face, # type: int
+        dimensionId, # type: int
+        clickX, # type: float
+        clickY, # type: float
+        clickZ, # type: float
+        _orig, # type: dict
+    ):
+        self.entityId = entityId
+        """ 玩家实体id """
+        self.item = item
+        """ 使用的物品的物品信息字典 """
+        self.x = x
+        """ 方块 x 坐标值 """
+        self.y = y
+        """ 方块 y 坐标值 """
+        self.z = z
+        """ 方块 z 坐标值 """
+        self.blockName = blockName
+        """ 方块的identifier """
+        self.blockAuxValue = blockAuxValue
+        """ 方块的附加值 """
+        self.face = face
+        """ 点击方块的面，参考Facing枚举 """
+        self.dimensionId = dimensionId
+        """ 维度id """
+        self.clickX = clickX
+        """ 点击点的x比例位置 """
+        self.clickY = clickY
+        """ 点击点的y比例位置 """
+        self.clickZ = clickZ
+        """ 点击点的z比例位置 """
+        self._orig = _orig
+        """ 原始事件数据 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> ServerItemUseOnEvent
-        instance = cls()
-        instance._orig = data
-        instance.entityId = data["entityId"]
-        instance.item = Item.from_dict(data["itemDict"])
-        instance.x = data["x"]
-        instance.y = data["y"]
-        instance.z = data["z"]
-        instance.blockName = data["blockName"]
-        instance.blockAuxValue = data["blockAuxValue"]
-        instance.face = data["face"]
-        instance.dimensionId = data["dimensionId"]
-        instance.clickX = data["clickX"]
-        instance.clickY = data["clickY"]
-        instance.clickZ = data["clickZ"]
-        return instance
+        return cls(
+            entityId=data["entityId"],
+            item=Item.from_dict(data["itemDict"]),
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            blockName=data["blockName"],
+            blockAuxValue=data["blockAuxValue"],
+            face=data["face"],
+            dimensionId=data["dimensionId"],
+            clickX=data["clickX"],
+            clickY=data["clickY"],
+            clickZ=data["clickZ"],
+            _orig=data,
+        )
 
     def marshal(self):
         # type: () -> dict
@@ -321,12 +378,12 @@ class ServerItemUseOnEvent(ServerEvent):
             "clickX": self.clickX,
             "clickY": self.clickY,
             "clickZ": self.clickZ,
-            "ret": self._orig["ret"],
+            "_orig": self._orig,
         }
 
     def cancel(self):
-        """ 取消使用方块 """
         # type: () -> None
+        "设为True可取消物品的使用"
         self._orig["ret"] = True
 
     @classmethod
@@ -334,7 +391,6 @@ class ServerItemUseOnEvent(ServerEvent):
         # print("[TDEvent] Listen with user data: " + cls.name)
         ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
-
 
 class ActorAcquiredItemServerEvent(ServerEvent):
     name = "ActorAcquiredItemServerEvent"
@@ -399,28 +455,36 @@ class OnCarriedNewItemChangedServerEvent(ServerEvent):
 class ItemDurabilityChangedServerEvent(ServerEvent):
     name = "ItemDurabilityChangedServerEvent"
 
-    entityId = '' # type: str
-    """ 物品拥有者的实体id """
-    item = Item("") # type: Item
-    """ 物品的物品信息字典 """
-    durabilityBefore = 0 # type: int
-    """ 变化前耐久度 """
-    durability = 0 # type: int
-    """ 变化后耐久度,支持修改。但是请注意修改范围，支持范围为[-32768,32767) """
-    canChange = False # type: bool
-    """ 是否支持修改，为true时支持通过durability修改，为false时不支持 """
+    def __init__(
+        self,
+        entityId, # type: str
+        item, # type: Item
+        durabilityBefore, # type: int
+        durability, # type: int
+        canChange, # type: bool
+        _orig=None,
+    ):
+        self.entityId = entityId
+        """ 物品拥有者的实体id """
+        self.item = item
+        """ 物品的物品信息字典 """
+        self.durabilityBefore = durabilityBefore
+        """ 变化前耐久度 """
+        self.durability = durability
+        """ 变化后耐久度,支持修改。但是请注意修改范围，支持范围为[-32768,32767) """
+        self.canChange = canChange
+        """ 是否支持修改，为true时支持通过durability修改，为false时不支持 """
+        self._orig = _orig or {}
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> ItemDurabilityChangedServerEvent
-        instance = cls()
-        instance._orig = data
-        instance.entityId = data["entityId"]
-        instance.item = Item.from_dict(data["itemDict"])
-        instance.durabilityBefore = data["durabilityBefore"]
-        instance.durability = data["durability"]
-        instance.canChange = data["canChange"]
-        return instance
+        return cls(
+            entityId=data["entityId"],
+            item=Item.from_dict(data["itemDict"]),
+            durabilityBefore=data["durabilityBefore"],
+            durability=data["durability"],
+            canChange=data["canChange"],
+        )
 
     def marshal(self):
         # type: () -> dict
@@ -446,32 +510,34 @@ class ItemDurabilityChangedServerEvent(ServerEvent):
 class ServerItemTryUseEvent(ServerEvent):
     name = "ServerItemTryUseEvent"
 
-    playerId = '' # type: str
-    """ 玩家id """
-    item = Item("") # type: Item
-    """ 使用的物品的物品信息字典 """
+    def __init__(
+        self,
+        playerId, # type: str
+        item, # type: Item
+        _orig, # type: dict
+    ):
+        self.playerId = playerId
+        """ 玩家id """
+        self.item = item
+        """ 使用的物品的物品信息字典 """
+        self._orig = _orig
+        """ 原始事件数据 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> ServerItemTryUseEvent
-        instance = cls()
-        instance._orig = data
-        instance.playerId = data["playerId"]
-        instance.item = Item.from_dict(data["itemDict"])
-        return instance
+        return cls(
+            playerId=data["playerId"],
+            item=Item.from_dict(data["itemDict"]),
+            _orig=data,
+        )
 
     def marshal(self):
         # type: () -> dict
         return {
             "playerId": self.playerId,
             "itemDict": self.item.marshal(),
-            "cancel": self.cancel,
+            "_orig": self._orig,
         }
-
-    def cancel(self):
-        """ 取消使用物品 """
-        # type: () -> None
-        self._orig["cancel"] = True
 
     @classmethod
     def ListenWithUserData(cls, priority=0):
@@ -479,26 +545,39 @@ class ServerItemTryUseEvent(ServerEvent):
         ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
 
+    def cancel(self):
+        # type: () -> None
+        "设为True可取消物品的使用"
+        self._orig["cancel"] = True
+
 
 class CraftItemOutputChangeServerEvent(ServerEvent):
     name = "CraftItemOutputChangeServerEvent"
 
-    playerId = "" # type: str
-    """ 玩家实体id """
-    item = Item("") # type: Item
-    """ 生成的物品 """
-    screenContainerType = 0 # type: int
-    """ 当前界面类型, 类型含义见：容器类型枚举 """
+    def __init__(
+        self,
+        playerId, # type: str
+        item, # type: Item
+        screenContainerType, # type: int
+        _orig, # type: dict
+    ):
+        self.playerId = playerId
+        """ 玩家实体id """
+        self.item = item
+        """ 生成的物品，格式参考物品信息字典 """
+        self.screenContainerType = screenContainerType
+        """ 当前界面类型,类型含义见：容器类型枚举 """
+        self._orig = _orig
+        """ 原始事件数据 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> CraftItemOutputChangeServerEvent
-        instance = cls()
-        instance._orig = data
-        instance.playerId = data["playerId"]
-        instance.item = Item.from_dict(data["itemDict"])
-        instance.screenContainerType = data["screenContainerType"]
-        return instance
+        return cls(
+            playerId=data["playerId"],
+            item=Item.from_dict(data["itemDict"]),
+            screenContainerType=data["screenContainerType"],
+            _orig=data,
+        )
 
     def marshal(self):
         # type: () -> dict
@@ -506,6 +585,7 @@ class CraftItemOutputChangeServerEvent(ServerEvent):
             "playerId": self.playerId,
             "itemDict": self.item.marshal(),
             "screenContainerType": self.screenContainerType,
+            "_orig": self._orig,
         }
 
     def cancel(self):
@@ -517,31 +597,36 @@ class CraftItemOutputChangeServerEvent(ServerEvent):
 class UIContainerItemChangedServerEvent(ServerEvent):
     name = "UIContainerItemChangedServerEvent"
 
-    playerId = "" # type: str
-    """ 玩家实体id """
-    slot = 0 # type: int
-    """ 容器槽位，含义见：容器类型枚举 """
-    oldItem = Item("") # type: Item
-    """ 旧物品，格式参考物品信息字典 """
-    newItem = Item("") # type: Item
-    """ 生成的物品，格式参考物品信息字典 """
+    def __init__(
+        self,
+        playerId, # type: str
+        slot, # type: int
+        oldItem, # type: Item
+        newItem, # type: Item
+    ):
+        self.playerId = playerId
+        """ 玩家实体id """
+        self.slot = slot
+        """ 容器槽位，含义见：容器类型枚举 """
+        self.oldItem = oldItem
+        """ 旧物品，格式参考物品信息字典 """
+        self.newItem = newItem
+        """ 生成的物品，格式参考物品信息字典 """
 
     @classmethod
     def unmarshal(cls, data):
-        # type: (dict) -> UIContainerItemChangedServerEvent
-        instance = cls()
-        instance.playerId = data["playerId"]
-        instance.slot = data["slot"]
-        instance.oldItem = Item.from_dict(data["oldItemDict"])
-        instance.newItem = Item.from_dict(data["newItemDict"])
-        return instance
+        return cls(
+            playerId=data["playerId"],
+            slot=data["slot"],
+            oldItem=Item.from_dict(data["oldItem"]),
+            newItem=Item.from_dict(data["newItem"]),
+        )
 
     def marshal(self):
         # type: () -> dict
         return {
             "playerId": self.playerId,
             "slot": self.slot,
-            "oldItemDict": self.oldItem.marshal(),
-            "newItemDict": self.newItem.marshal(),
+            "oldItem": self.oldItem.marshal(),
+            "newItem": self.newItem.marshal(),
         }
-

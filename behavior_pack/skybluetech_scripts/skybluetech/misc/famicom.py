@@ -26,8 +26,8 @@ from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
 )
 from skybluetech_scripts.tooldelta.events.notify import NotifyToClients
+from ..define.id_enum.blocks import FAMICOM
 
-FAMICOM_ID = "skybluetech:famicom"
 MUSIC_MAPPING = {
     "skybluetech:famicom_cartidge_1": "music.skybluetech.famicom_1",
     "skybluetech:famicom_cartidge_2": "music.skybluetech.famicom_2",
@@ -78,7 +78,7 @@ class FamicomPlaySoundEvent(CustomS2CEvent):
 @ServerBlockUseEvent.Listen()
 def onBlockUse(event):
     # type: (ServerBlockUseEvent) -> None
-    if event.blockName != FAMICOM_ID:
+    if event.blockName != FAMICOM:
         return
     bdata = GetBlockEntityData(event.dimensionId, event.x, event.y, event.z)
     if bdata is None:
@@ -95,7 +95,7 @@ def onBlockUse(event):
 @ServerItemUseOnEvent.Listen()
 def onUseItemOn(event):
     # type: (ServerItemUseOnEvent) -> None
-    if event.blockName != FAMICOM_ID:
+    if event.blockName != FAMICOM:
         return
     bdata = GetBlockEntityData(event.dimensionId, event.x, event.y, event.z)
     if bdata is None:
@@ -176,7 +176,7 @@ def onFamicomPlaySoundEvent(event):
 @BlockRemoveServerEvent.Listen()
 def onBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
-    if event.fullName != FAMICOM_ID:
+    if event.fullName != FAMICOM:
         return
     bdata = GetBlockEntityData(event.dimension, event.x, event.y, event.z)
     if bdata is None:
@@ -196,7 +196,7 @@ last_used_time = 0
 def onClientBlockUseEvent(event):
     # type: (ClientBlockUseEvent) -> None
     global last_used_time
-    if event.blockName != FAMICOM_ID:
+    if event.blockName != FAMICOM:
         return
     nowtime = time.time()
     if nowtime - last_used_time < 0.5:

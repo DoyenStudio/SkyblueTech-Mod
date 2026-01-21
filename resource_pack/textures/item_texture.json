@@ -19,9 +19,6 @@
         "skybluetech:bronze_ingot": {
             "textures": "textures/items/ingots/bronze_ingot"
         },
-        "skybluetech:bronze_pipe": {
-            "textures": "textures/transmitters/item_transport_cable_item"
-        },
         "skybluetech:bronze_plate": {
             "textures": "textures/items/plates/bronze_plate"
         },
@@ -39,6 +36,15 @@
         },
         "skybluetech:cartidge_3_model": {
             "textures": "textures/models/cartidges/cartidge_purple"
+        },
+        "skybluetech:control_circuit_advanced": {
+            "textures": "textures/items/control_circuit_advanced"
+        },
+        "skybluetech:control_circuit_basic": {
+            "textures": "textures/items/control_circuit_basic"
+        },
+        "skybluetech:control_circuit_professional": {
+            "textures": "textures/items/control_circuit_professional"
         },
         "skybluetech:copper_dust": {
             "textures": "textures/items/dusts/copper_dust"
@@ -102,9 +108,6 @@
         },
         "skybluetech:iron_plate": {
             "textures": "textures/items/plates/iron_plate"
-        },
-        "skybluetech:item_transport_cable": {
-            "textures": "textures/transmitters/item_transport_cable_item"
         },
         "skybluetech:junior_battery": {
             "textures": "textures/items/batterys/junior_battery"
@@ -254,19 +257,19 @@
             "textures": "textures/items/simple_machine_checker"
         },
         "skybluetech:skyblue_axe": {
-            "textures": "textures/objects/tools/skyblue_axe"
+            "textures": "textures/items/skyblue_axe"
         },
         "skybluetech:skyblue_hoe": {
-            "textures": "textures/objects/tools/skyblue_hoe"
+            "textures": "textures/items/skyblue_hoe"
         },
         "skybluetech:skyblue_pickaxe": {
-            "textures": "textures/objects/tools/skyblue_pickaxe"
+            "textures": "textures/items/skyblue_pickaxe"
         },
         "skybluetech:skyblue_shovel": {
-            "textures": "textures/objects/tools/skyblue_shovel "
+            "textures": "textures/items/skyblue_shovel"
         },
         "skybluetech:skyblue_sword": {
-            "textures": "textures/objects/weapons/skyblue_sword"
+            "textures": "textures/items/skyblue_sword"
         },
         "skybluetech:solar_panel_pane": {
             "textures": "textures/items/solar_panel_pane"

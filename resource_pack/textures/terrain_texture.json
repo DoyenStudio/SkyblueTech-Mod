@@ -20,9 +20,6 @@
         "skybluetech:bronze_pipe": {
             "textures": "textures/transmitters/bronze_pipe_model"
         },
-        "skybluetech:tank_bronze": {
-            "textures": "textures/models/tanks/tank_bronze_texture"
-        },
         "skybluetech:cartidge_1_model": {
             "textures": "textures/models/cartidges/cartidge_yellow"
         },
@@ -55,9 +52,6 @@
         },
         "skybluetech:creative_power_acceptor_top": {
             "textures": "textures/machines/creative_power_acceptor_top"
-        },
-        "skybluetech:tank_creative": {
-            "textures": "textures/models/tanks/tank_creative_texture"
         },
         "skybluetech:creative_wire": {
             "textures": "textures/wire/creative_wire"
@@ -107,6 +101,9 @@
         },
         "skybluetech:famicom": {
             "textures": "textures/models/famicom_texture"
+        },
+        "skybluetech:resin_collector": {
+            "textures": "textures/models/resin_collector_texture"
         },
         "skybluetech:farming_station_side": {
             "textures": "textures/machines/farming_station_side"
@@ -197,9 +194,6 @@
         "skybluetech:heavy_compressor_front_active": {
             "textures": "textures/machines/flipbook_textures/heavy_compressor_front_active"
         },
-        "skybluetech:hydroponic_base": {
-            "textures": "textures/machines/hydroponic_base"
-        },
         "skybluetech:hydroponic_base_fluid_side": {
             "textures": "textures/machines/hydroponic_base_fluid_side"
         },
@@ -211,9 +205,6 @@
         },
         "skybluetech:hydroponic_bed": {
             "textures": "textures/models/hydroponic_bed_texture"
-        },
-        "skybluetech:tank_invar": {
-            "textures": "textures/models/tanks/tank_invar_texture"
         },
         "skybluetech:item_transport_cable": {
             "textures": "textures/transmitters/item_transport_cable_model"
@@ -263,9 +254,6 @@
         "skybluetech:platinum_ore": {
             "textures": "textures/blocks/ore/platinum_ore"
         },
-        "skybluetech:tank_platinum": {
-            "textures": "textures/models/tanks/tank_platinum_texture"
-        },
         "skybluetech:pump": {
             "textures": "textures/models/pump_texture"
         },
@@ -314,9 +302,6 @@
         "skybluetech:splitter_front": {
             "textures": "textures/machines/splitter_front"
         },
-        "skybluetech:tank_steel": {
-            "textures": "textures/models/tanks/tank_steel_texture"
-        },
         "skybluetech:sun": {
             "textures": "textures/ui/sun"
         },
@@ -326,14 +311,26 @@
         "skybluetech:superconduct_wire_item": {
             "textures": "textures/wire/superconduct_wire_item"
         },
+        "skybluetech:tank_bronze": {
+            "textures": "textures/models/tanks/tank_bronze_texture"
+        },
+        "skybluetech:tank_creative": {
+            "textures": "textures/models/tanks/tank_creative_texture"
+        },
+        "skybluetech:tank_invar": {
+            "textures": "textures/models/tanks/tank_invar_texture"
+        },
+        "skybluetech:tank_platinum": {
+            "textures": "textures/models/tanks/tank_platinum_texture"
+        },
+        "skybluetech:tank_steel": {
+            "textures": "textures/models/tanks/tank_steel_texture"
+        },
         "skybluetech:thermal_generator_front": {
             "textures": "textures/machines/thermal_generator_front"
         },
         "skybluetech:thermal_generator_front_active": {
             "textures": "textures/machines/flipbook_textures/thermal_generator_front_active"
-        },
-        "skybluetech:thermoelectric_generator_downside": {
-            "textures": "textures/machines/thermoelectric_generator_downside"
         },
         "skybluetech:thermoelectric_generator_side": {
             "textures": "textures/machines/thermoelectric_generator_side"

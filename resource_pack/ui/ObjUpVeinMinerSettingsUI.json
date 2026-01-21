@@ -294,7 +294,7 @@
                 }
             },
             {
-                "close_button(0)@common.close_button": {
+                "close_button@common.close_button": {
                     "size": [
                         21,
                         21
@@ -314,8 +314,8 @@
                 "button@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/grid_bg",
-                    "$hover_texture": "textures/ui/grid_bg",
+                    "$default_texture": "textures/ui/grid_content",
+                    "$hover_texture": "textures/ui/grid_content",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -341,7 +341,7 @@
                         2.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/grid_bg",
+                    "$pressed_texture": "textures/ui/grid_content",
                     "$texture_layer": 2,
                     "layer": 2,
                     "button_mappings": [],

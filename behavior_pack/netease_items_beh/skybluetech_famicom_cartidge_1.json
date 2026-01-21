@@ -4,7 +4,7 @@
         "components": {
             "minecraft:max_stack_size": 1,
             "netease:customtips": {
-                "value": "\n§e8_BIT_MUSIC_POWER.NSF\n§cOrigin Sound !!"
+                "value": "\n§e8_Bit_Music_Power.nsf\n§7Origin. Riki-Riki Studio"
             }
         },
         "description": {

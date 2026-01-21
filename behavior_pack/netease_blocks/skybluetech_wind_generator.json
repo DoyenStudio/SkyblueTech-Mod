@@ -46,7 +46,7 @@
                 "value": false
             },
             "netease:custom_tips": {
-                "value": "\n§7通过风能吹动扇叶产生能量。\n§7高处风强更大； 扇叶前有方块阻挡会降低风速。"
+                "value": "\n§7通过风能吹动扇叶产生能量。\n§b高处风强更大。\n§6扇叶前有方块阻挡会降低风速。"
             },
             "netease:listen_block_remove": {
                 "value": true

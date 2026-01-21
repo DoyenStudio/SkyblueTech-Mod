@@ -28,7 +28,7 @@
 
             },
             "netease:custom_tips": {
-                "value": "\n§7至于橡树侧面， 可用于收集橡胶。"
+                "value": "\n§7置于橡树侧面离地 1 格高的树干侧收集橡胶。\n使用§f树脂采集勺§7取出树脂。"
             },
             "netease:fuel": {
                 "duration": 8

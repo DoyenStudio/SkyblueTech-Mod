@@ -3,7 +3,10 @@
     "minecraft:item": {
         "components": {
             "minecraft:max_damage": 59,
-            "minecraft:max_stack_size": 1
+            "minecraft:max_stack_size": 1,
+            "netease:customtips": {
+                "value": "\n§7对存有树脂的§f树脂采集斗§7使用可取出树脂。"
+            }
         },
         "description": {
             "category": "skybluetech",

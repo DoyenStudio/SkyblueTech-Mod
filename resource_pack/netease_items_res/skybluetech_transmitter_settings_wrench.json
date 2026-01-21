@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:transmitter_settings_wrench"
+        },
+        "description": {
+            "identifier": "skybluetech:transmitter_settings_wrench"
+        }
+    }
+}

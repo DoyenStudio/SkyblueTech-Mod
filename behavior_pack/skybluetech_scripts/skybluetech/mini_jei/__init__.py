@@ -8,5 +8,8 @@ from .core.render_utils import (
     GetDoubleClickDetecter,
 )
 from .core.register import RegisterRecipe, RegisterDescription
-from . import init_common_recipes as _
-from . import init_descriptions as _
+from . import (
+    init_common_recipes,
+    init_descriptions,
+    tutorials,
+)

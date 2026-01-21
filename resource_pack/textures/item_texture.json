@@ -307,14 +307,14 @@
         "skybluetech:tin_wire": {
             "textures": "textures/wire/tin_wire_item"
         },
-        "skybluetech:transmitter_label_wrench": {
-            "textures": "textures/items/transmitter_label_wrench"
+        "skybluetech:transmitter_settings_wrench": {
+            "textures": "textures/items/transmitter_settings_wrench"
         },
         "skybluetech:transmitter_visual_checker": {
             "textures": "textures/items/transmitter_visual_checker"
         },
         "skybluetech:transmitter_wrench": {
-            "textures": "textures/items/cable_wrench"
+            "textures": "textures/items/transmitter_wrench"
         }
     },
     "texture_name": "atlas.items"

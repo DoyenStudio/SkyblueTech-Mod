@@ -67,3 +67,5 @@ class Upgraders:
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
 RESIN = "skybluetech:resin"
 RESIN_SPOON = "skybluetech:resin_spoon"
+TRANSMITTER_WRENCH = "skybluetech:transmitter_wrench"
+TRANSMITTER_SETTINGS_WRENCH = "skybluetech:transmitter_settings_wrench"

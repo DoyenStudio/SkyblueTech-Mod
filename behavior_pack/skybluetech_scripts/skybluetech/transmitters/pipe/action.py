@@ -12,6 +12,7 @@ from skybluetech_scripts.tooldelta.api.server import (
 from ...define.events.misc.transmitter_settings import (
     TransmitterSetLabel, TransmitterSetPriority
 )
+from ...define.id_enum.items import TRANSMITTER_WRENCH, TRANSMITTER_SETTINGS_WRENCH
 from ...define.facing import NEIGHBOR_BLOCKS_ENUM
 from ..constants import FACING_EN, FACING_ZHCN
 from .define import PipeAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
@@ -43,7 +44,7 @@ def onPlayerUseWrench(event):
     # type: (ServerBlockUseEvent) -> None
     if not isPipe(event.blockName):
         return
-    if event.item.newItemName == "skybluetech:transmitter_wrench":
+    if event.item.newItemName == TRANSMITTER_WRENCH:
         blockX = event.x
         blockY = event.y
         blockZ = event.z
@@ -114,7 +115,7 @@ def onPlayerUseWrench(event):
             + ("§a输入", "§c抽出")[newState],
         )
         UpdateBlockStates(event.dimensionId, (blockX, blockY, blockZ), block_orig_status)
-    elif event.item.newItemName == "skybluetech:transmitter_label_wrench":
+    elif event.item.newItemName == TRANSMITTER_SETTINGS_WRENCH:
         facing = get_testing_facing(event.clickX, event.clickY, event.clickZ)
         if facing is None:
             SetOnePopupNotice(event.playerId, "无效扳手设置位置")

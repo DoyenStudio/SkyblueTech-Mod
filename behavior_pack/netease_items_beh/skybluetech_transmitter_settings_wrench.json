@@ -6,7 +6,7 @@
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:transmitter_label_wrench"
+            "identifier": "skybluetech:transmitter_settings_wrench"
         }
     }
 }

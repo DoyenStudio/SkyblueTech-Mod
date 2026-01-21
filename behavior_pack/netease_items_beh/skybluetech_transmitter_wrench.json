@@ -4,7 +4,7 @@
         "components": {
             "minecraft:max_stack_size": 1,
             "netease:customtips": {
-                "value": "\n§7点击物品或流体管道对准输入/输出源的边缘， 可以设置管道的输入/抽取模式。"
+                "value": "\n§7对准物品或流体管道输入/输出源的边缘点击， 可以设置管道的输入/抽取模式。"
             }
         },
         "description": {

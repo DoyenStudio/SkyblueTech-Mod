@@ -1,0 +1,24 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:transmitter_settings_wrench_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "ingredients": [
+            {
+                "item": "skybluetech:transmitter_wrench"
+            },
+            {
+                "item": "minecraft:redstone_torch"
+            }
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:transmitter_settings_wrench"
+        }
+    }
+}

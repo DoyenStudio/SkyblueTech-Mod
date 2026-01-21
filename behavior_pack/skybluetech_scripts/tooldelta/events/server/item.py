@@ -618,8 +618,8 @@ class UIContainerItemChangedServerEvent(ServerEvent):
         return cls(
             playerId=data["playerId"],
             slot=data["slot"],
-            oldItem=Item.from_dict(data["oldItem"]),
-            newItem=Item.from_dict(data["newItem"]),
+            oldItem=Item.from_dict(data["oldItemDict"]),
+            newItem=Item.from_dict(data["oldItemDict"]),
         )
 
     def marshal(self):
@@ -627,6 +627,6 @@ class UIContainerItemChangedServerEvent(ServerEvent):
         return {
             "playerId": self.playerId,
             "slot": self.slot,
-            "oldItem": self.oldItem.marshal(),
-            "newItem": self.newItem.marshal(),
+            "oldItemDict": self.oldItem.marshal(),
+            "oldItemDict": self.newItem.marshal(),
         }

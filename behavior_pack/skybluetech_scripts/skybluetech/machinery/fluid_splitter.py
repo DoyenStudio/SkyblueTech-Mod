@@ -27,7 +27,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
     fluid_output_slots = set()
     fluid_slot_max_volumes = (4000,)
     upgrade_slot_start = 0
-    allow_upgrader_tags = {"skybluetech:upgraders/generic_item_split"}
+    allow_upgrader_tags = {"skybluetech:upgraders/generic_split"}
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -68,7 +68,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         for label, _fluid_id in self.record_settings:
             if fluid_id == _fluid_id:
                 return label
-        return 0 if self.HasUpgrader("skybluetech:generic_split_upgrader") else -1
+        return 0 if self.HasUpgrader("skybluetech:upgrader_generic_split") else -1
 
     def OnSync(self):
         self.sync.fluids = FluidSlotSync.ListFromMachine(self)

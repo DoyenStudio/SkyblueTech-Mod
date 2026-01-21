@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:upgrader_spec_magma_factory"
+        },
+        "description": {
+            "identifier": "skybluetech:upgrader_spec_magma_factory"
+        }
+    }
+}

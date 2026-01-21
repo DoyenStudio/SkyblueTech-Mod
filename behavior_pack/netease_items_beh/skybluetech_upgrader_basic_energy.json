@@ -9,12 +9,12 @@
                 ]
             },
             "netease:customtips": {
-                "value": "\n§7提升红石通量能量的利用率。§b减少能量损耗。\n§a能量消耗倍率： §f§l-0.2x§r§f"
+                "value": "\n§7提升红石通量能量的利用率。\n§b减少能量损耗。\n§a能量消耗倍率： §f§l-0.2x§r§f"
             }
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:basic_energy_upgrader"
+            "identifier": "skybluetech:upgrader_basic_energy"
         }
     }
 }

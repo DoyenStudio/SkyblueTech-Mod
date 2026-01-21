@@ -2,10 +2,10 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:icon": "skybluetech:basic_energy_upgrader"
+            "minecraft:icon": "skybluetech:upgrader_basic_speed"
         },
         "description": {
-            "identifier": "skybluetech:basic_energy_upgrader"
+            "identifier": "skybluetech:upgrader_basic_speed"
         }
     }
 }

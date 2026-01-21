@@ -25,7 +25,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
     block_name = MACHINE_ID
     input_slots = (0, 1, 2)
     upgrade_slot_start = 3
-    allow_upgrader_tags = {"skybluetech:upgraders/generic_item_split"}
+    allow_upgrader_tags = {"skybluetech:upgraders/generic_split"}
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -68,7 +68,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         for label, _item_id in self.record_settings:
             if item_id == _item_id:
                 return label
-        return 0 if self.HasUpgrader("skybluetech:generic_split_upgrader") else -1
+        return 0 if self.HasUpgrader("skybluetech:upgrader_generic_split") else -1
 
     def OnClick(self, event):
         # type: (ServerBlockUseEvent) -> None

@@ -5,16 +5,16 @@
             "minecraft:max_stack_size": 8,
             "minecraft:tags": {
                 "tags": [
-                    "skybluetech:upgraders/generic_item_split"
+                    "skybluetech:upgraders/speed"
                 ]
             },
             "netease:customtips": {
-                "value": "\n§7置于分拣器的升级槽中， 将所有不在过滤列表中的物品\n自动投递到颜色标识为§l§f[§c0§f]§c红色§r§7的输入口中。"
+                "value": "\n§7以消耗更多能量为代价对机器进行超频。\n§b提升机器运作速度。\n§a提速倍率： §f§l0.5x\n§r§c能量消耗倍率： §f§l+0.4x§r§f"
             }
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:generic_split_upgrader"
+            "identifier": "skybluetech:upgrader_basic_speed"
         }
     }
 }

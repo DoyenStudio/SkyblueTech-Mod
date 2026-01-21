@@ -2,10 +2,10 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:icon": "skybluetech:generic_split_upgrader"
+            "minecraft:icon": "skybluetech:upgrader_basic_energy"
         },
         "description": {
-            "identifier": "skybluetech:generic_split_upgrader"
+            "identifier": "skybluetech:upgrader_basic_energy"
         }
     }
 }

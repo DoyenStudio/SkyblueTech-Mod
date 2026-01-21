@@ -2,10 +2,10 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:icon": "skybluetech:basic_speed_upgrader"
+            "minecraft:icon": "skybluetech:upgrader_generic_split"
         },
         "description": {
-            "identifier": "skybluetech:basic_speed_upgrader"
+            "identifier": "skybluetech:upgrader_generic_split"
         }
     }
 }

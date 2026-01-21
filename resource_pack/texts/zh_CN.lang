@@ -217,3 +217,7 @@ item.skybluetech:generic_split_upgrader.name=特化升级： 泛用分拣过滤
 tile.skybluetech:wind_generator.name=风力发电机
 item.skybluetech:crafting_template.name=合成样板
 tile.skybluetech:electric_crafter.name=电动合成台
+item.skybluetech:control_circuit_basic.name=基础控制电路
+item.skybluetech:control_circuit_advanced.name=高级控制电路
+item.skybluetech:control_circuit_professional.name=进阶控制电路
+tile.skybluetech:resin_collector.name=橡胶采集斗

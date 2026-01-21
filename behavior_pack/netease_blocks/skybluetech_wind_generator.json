@@ -2,6 +2,7 @@
     "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
+            "minecraft:light_dampening": 0,
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 2.0
             },
@@ -14,6 +15,35 @@
                 "client_tick": false,
                 "movable": false,
                 "tick": true
+            },
+            "netease:aabb": {
+                "collision": {
+                    "min": [
+                        0.375,
+                        0,
+                        0.375
+                    ],
+                    "max": [
+                        0.625,
+                        1,
+                        0.625
+                    ]
+                },
+                "clip": {
+                    "min": [
+                        0.375,
+                        0,
+                        0.375
+                    ],
+                    "max": [
+                        0.625,
+                        1,
+                        0.625
+                    ]
+                }
+            },
+            "netease:solid": {
+                "value": false
             },
             "netease:custom_tips": {
                 "value": "\n§7通过风能吹动扇叶产生能量。\n§7高处风强更大； 扇叶前有方块阻挡会降低风速。"

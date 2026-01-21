@@ -8,7 +8,7 @@
             "netease:tier": {
                 "destroy_special": true,
                 "digger": "pickaxe",
-                "level": 1
+                "level": 2
             },
             "netease:listen_block_remove": {
                 "value": true
@@ -29,20 +29,19 @@
                 "*": {
                     "isotropic": true,
                     "render_method": "alpha_test",
-                    "texture": "skybluetech:creative_tank"
+                    "texture": "skybluetech:tank_steel"
                 }
             },
             "netease:custom_tips": {
-                "value": "\n§7存储流体， 使用管道进行输入或提取。\n§b容量： §a无限\n§d为空时可作为流体垃圾桶；\n使用桶装入流体后可将其作为无限流体源。"
+                "value": "\n§7存储流体， 使用管道进行输入或提取。\n§b容量： §a24§f 桶"
             },
             "netease:neighborchanged_sendto_script": {
                 "value": true
             },
-            "netease:block_entity": {
-            },
+            "netease:block_entity": {},
             "netease:block_container": {
                 "container_size": 2,
-                "custom_description": "skybluetech:creative_tank",
+                "custom_description": "skybluetech:tank_steel",
                 "screen_name": "GeneralTankUI.main"
             },
             "tag:piston_denier": {},
@@ -51,7 +50,7 @@
         "description": {
             "base_block": "netease_container",
             "category": "skybluetech",
-            "identifier": "skybluetech:creative_tank",
+            "identifier": "skybluetech:tank_steel",
             "states": {
                 "skybluetech:connection_east": [
                     false,

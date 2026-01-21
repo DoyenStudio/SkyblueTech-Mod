@@ -20,8 +20,8 @@
         "skybluetech:bronze_pipe": {
             "textures": "textures/transmitters/bronze_pipe_model"
         },
-        "skybluetech:bronze_tank": {
-            "textures": "textures/models/tanks/bronze_tank_texture"
+        "skybluetech:tank_bronze": {
+            "textures": "textures/models/tanks/tank_bronze_texture"
         },
         "skybluetech:cartidge_1_model": {
             "textures": "textures/models/cartidges/cartidge_yellow"
@@ -56,8 +56,8 @@
         "skybluetech:creative_power_acceptor_top": {
             "textures": "textures/machines/creative_power_acceptor_top"
         },
-        "skybluetech:creative_tank": {
-            "textures": "textures/models/tanks/creative_tank_texture"
+        "skybluetech:tank_creative": {
+            "textures": "textures/models/tanks/tank_creative_texture"
         },
         "skybluetech:creative_wire": {
             "textures": "textures/wire/creative_wire"
@@ -212,8 +212,8 @@
         "skybluetech:hydroponic_bed": {
             "textures": "textures/models/hydroponic_bed_texture"
         },
-        "skybluetech:invar_tank": {
-            "textures": "textures/models/tanks/invar_tank_texture"
+        "skybluetech:tank_invar": {
+            "textures": "textures/models/tanks/tank_invar_texture"
         },
         "skybluetech:item_transport_cable": {
             "textures": "textures/transmitters/item_transport_cable_model"
@@ -263,8 +263,8 @@
         "skybluetech:platinum_ore": {
             "textures": "textures/blocks/ore/platinum_ore"
         },
-        "skybluetech:platinum_tank": {
-            "textures": "textures/models/tanks/platinum_tank_texture"
+        "skybluetech:tank_platinum": {
+            "textures": "textures/models/tanks/tank_platinum_texture"
         },
         "skybluetech:pump": {
             "textures": "textures/models/pump_texture"
@@ -314,8 +314,8 @@
         "skybluetech:splitter_front": {
             "textures": "textures/machines/splitter_front"
         },
-        "skybluetech:steel_tank": {
-            "textures": "textures/models/tanks/steel_tank_texture"
+        "skybluetech:tank_steel": {
+            "textures": "textures/models/tanks/tank_steel_texture"
         },
         "skybluetech:sun": {
             "textures": "textures/ui/sun"

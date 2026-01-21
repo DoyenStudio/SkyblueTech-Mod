@@ -10,7 +10,7 @@ INFINITY = float("inf")
 @RegisterMachine
 @RegisterTank
 class BronzeTank(BasicTank):
-    block_name = "skybluetech:bronze_tank"
+    block_name = "skybluetech:tank_bronze"
     max_fluid_volume = 32000
 
 

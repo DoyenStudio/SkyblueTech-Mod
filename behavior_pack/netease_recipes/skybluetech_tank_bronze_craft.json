@@ -2,7 +2,7 @@
     "format_version": "1.20.10",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "skybluetech:bronze_tank"
+            "identifier": "skybluetech:tank_bronze"
         },
         "key": {
             "A": {
@@ -22,7 +22,7 @@
         "result": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:bronze_tank"
+            "item": "skybluetech:tank_bronze"
         },
         "tags": [
             "crafting_table"

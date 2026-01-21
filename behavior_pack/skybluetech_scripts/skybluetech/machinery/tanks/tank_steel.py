@@ -6,8 +6,8 @@ from .base_tank import BasicTank, RegisterTank
 
 @RegisterMachine
 @RegisterTank
-class PlatinumTank(BasicTank):
-    block_name = "skybluetech:platinum_tank"
-    max_fluid_volume = 128000
+class SteelTank(BasicTank):
+    block_name = "skybluetech:tank_steel"
+    max_fluid_volume = 24000
 
 

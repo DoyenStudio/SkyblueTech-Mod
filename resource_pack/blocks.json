@@ -27,9 +27,9 @@
     "skybluetech:bronze_pipe": {
         "sound": "copper"
     },
-    "skybluetech:bronze_tank": {
+    "skybluetech:tank_bronze": {
         "client_entity": {
-            "identifier": "skybluetech:bronze_tank"
+            "identifier": "skybluetech:tank"
         },
         "sound": "glass"
     },
@@ -65,9 +65,9 @@
             "up": "skybluetech:creative_power_acceptor_top"
         }
     },
-    "skybluetech:creative_tank": {
+    "skybluetech:tank_creative": {
         "client_entity": {
-            "identifier": "skybluetech:creative_tank"
+            "identifier": "skybluetech:tank"
         },
         "sound": "glass"
     },
@@ -354,9 +354,9 @@
         },
         "sound": "iron"
     },
-    "skybluetech:invar_tank": {
+    "skybluetech:tank_invar": {
         "client_entity": {
-            "identifier": "skybluetech:invar_tank"
+            "identifier": "skybluetech:tank"
         },
         "sound": "glass"
     },
@@ -463,9 +463,9 @@
     "skybluetech:platinum_ore": {
         "textures": "skybluetech:platinum_ore"
     },
-    "skybluetech:platinum_tank": {
+    "skybluetech:tank_platinum": {
         "client_entity": {
-            "identifier": "skybluetech:platinum_tank"
+            "identifier": "skybluetech:tank"
         },
         "sound": "glass"
     },
@@ -520,9 +520,9 @@
     "skybluetech:splitter": {
         "sound": "iron"
     },
-    "skybluetech:steel_tank": {
+    "skybluetech:tank_steel": {
         "client_entity": {
-            "identifier": "skybluetech:steel_tank"
+            "identifier": "skybluetech:tank"
         },
         "sound": "glass"
     },

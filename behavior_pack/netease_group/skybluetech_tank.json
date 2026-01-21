@@ -2,13 +2,13 @@
     "groups": [
         {
             "group_name": "itemGroup.skybluetech.tanks",
-            "icon": "skybluetech:bronze_tank",
+            "icon": "skybluetech:tank_bronze",
             "list": [
-                "skybluetech:bronze_tank",
-                "skybluetech:invar_tank",
-                "skybluetech:steel_tank",
-                "skybluetech:platinum_tank",
-                "skybluetech:creative_tank"
+                "skybluetech:tank_bronze",
+                "skybluetech:tank_invar",
+                "skybluetech:tank_steel",
+                "skybluetech:tank_platinum",
+                "skybluetech:tank_creative"
             ]
         }
     ]

@@ -10,7 +10,7 @@ INFINITY = float("inf")
 @RegisterMachine
 @RegisterTank
 class CreativeTank(BasicTank):
-    block_name = "skybluetech:creative_tank"
+    block_name = "skybluetech:tank_creative"
     max_fluid_volume = INFINITY
 
     def __init__(self, dim, x, y, z, block_entity_data):

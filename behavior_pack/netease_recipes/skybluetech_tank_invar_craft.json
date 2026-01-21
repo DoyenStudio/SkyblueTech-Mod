@@ -2,7 +2,7 @@
     "format_version": "1.20.10",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "skybluetech:invar_tank"
+            "identifier": "skybluetech:tank_invar"
         },
         "key": {
             "A": {
@@ -22,7 +22,7 @@
         "result": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:invar_tank"
+            "item": "skybluetech:tank_invar"
         },
         "tags": [
             "crafting_table"

@@ -29,19 +29,20 @@
                 "*": {
                     "isotropic": true,
                     "render_method": "alpha_test",
-                    "texture": "skybluetech:steel_tank"
+                    "texture": "skybluetech:tank_invar"
                 }
             },
             "netease:custom_tips": {
-                "value": "\n§7存储流体， 使用管道进行输入或提取。\n§b容量： §a24§f 桶"
+                "value": "\n§7存储流体， 使用管道进行输入或提取。\n§b容量： §a40§f 桶"
             },
             "netease:neighborchanged_sendto_script": {
                 "value": true
             },
-            "netease:block_entity": {},
+            "netease:block_entity": {
+            },
             "netease:block_container": {
                 "container_size": 2,
-                "custom_description": "skybluetech:steel_tank",
+                "custom_description": "skybluetech:tank_invar",
                 "screen_name": "GeneralTankUI.main"
             },
             "tag:piston_denier": {},
@@ -50,7 +51,7 @@
         "description": {
             "base_block": "netease_container",
             "category": "skybluetech",
-            "identifier": "skybluetech:steel_tank",
+            "identifier": "skybluetech:tank_invar",
             "states": {
                 "skybluetech:connection_east": [
                     false,

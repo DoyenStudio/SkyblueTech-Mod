@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:control_circuit_professional"
+        },
+        "description": {
+            "identifier": "skybluetech:control_circuit_professional"
+        }
+    }
+}

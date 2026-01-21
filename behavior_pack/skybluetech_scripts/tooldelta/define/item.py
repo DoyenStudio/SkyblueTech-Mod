@@ -131,18 +131,19 @@ class Item(object):
 
     def CanMerge(self, other, deny_enchant=True):
         # type: (Item, bool) -> bool
-        if self.durability != 0:
+        if self.durability:
             return False
         elif deny_enchant and (self.enchantData or self.modEnchantData):
             return False
-        return (
+        res = (
             self.newItemName == other.newItemName
             and self.newAuxValue == other.newAuxValue
             and (self.enchantData == other.enchantData or (not self.enchantData and not other.enchantData))
             and (self.modEnchantData == other.modEnchantData or (not self.modEnchantData and not other.modEnchantData))
             and self.userData == other.userData
-            and self.durability == other.durability
+            and not other.durability
         )
+        return res
 
     def StackFull(self):
         return self.count >= self.GetBasicInfo().maxStackSize

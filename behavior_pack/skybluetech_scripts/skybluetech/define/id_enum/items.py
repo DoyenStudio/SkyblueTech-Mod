@@ -65,3 +65,5 @@ class Upgraders:
 
 
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
+RESIN = "skybluetech:resin"
+RESIN_SPOON = "skybluetech:resin_spoon"

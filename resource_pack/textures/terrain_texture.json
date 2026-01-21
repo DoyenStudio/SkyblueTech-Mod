@@ -102,9 +102,6 @@
         "skybluetech:famicom": {
             "textures": "textures/models/famicom_texture"
         },
-        "skybluetech:resin_collector": {
-            "textures": "textures/models/resin_collector_texture"
-        },
         "skybluetech:farming_station_side": {
             "textures": "textures/machines/farming_station_side"
         },
@@ -280,6 +277,9 @@
         },
         "skybluetech:redstone_furnace_front_active": {
             "textures": "textures/machines/redstone_furnace_front_active"
+        },
+        "skybluetech:resin_collector": {
+            "textures": "textures/models/resin_collector_texture"
         },
         "skybluetech:silver_block": {
             "textures": "textures/blocks/ingot_block/silver_block"

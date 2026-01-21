@@ -1,0 +1,126 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:light_dampening": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.0
+            },
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "resin_level_1": "q.block_state('skybluetech:resin_storage') == 1",
+                    "resin_level_2": "q.block_state('skybluetech:resin_storage') == 2",
+                    "resin_level_3": "q.block_state('skybluetech:resin_storage') == 3",
+                    "resin_level_4": "q.block_state('skybluetech:resin_storage') == 4",
+                    "resin_level_5": "q.block_state('skybluetech:resin_storage') == 5",
+                    "resin_level_6": "q.block_state('skybluetech:resin_storage') == 6"
+                },
+                "identifier": "geometry.skybluetech.resin_collector"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:resin_collector",
+                    "isotropic": true,
+                    "render_method": "opaque"
+                }
+            },
+            "netease:block_entity": {
+
+            },
+            "netease:custom_tips": {
+                "value": "\n§7至于橡树侧面， 可用于收集橡胶。"
+            },
+            "netease:fuel": {
+                "duration": 8
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:random_tick": {
+                "enable": true,
+                "tick_to_script": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:resin_collector",
+            "states": {
+                "skybluetech:resin_storage": [
+                    0,
+                    1,
+                    2,
+                    3,
+                    4,
+                    5,
+                    6
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "permutations": [
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'"
+            }
+        ]
+    }
+}

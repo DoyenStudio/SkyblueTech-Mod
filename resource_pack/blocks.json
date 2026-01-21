@@ -27,12 +27,6 @@
     "skybluetech:bronze_pipe": {
         "sound": "copper"
     },
-    "skybluetech:tank_bronze": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
-        "sound": "glass"
-    },
     "skybluetech:charger": {
         "client_entity": {
             "identifier": "skybluetech:charger"
@@ -64,12 +58,6 @@
             "side": "skybluetech:creative_power_acceptor_otherside",
             "up": "skybluetech:creative_power_acceptor_top"
         }
-    },
-    "skybluetech:tank_creative": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
-        "sound": "glass"
     },
     "skybluetech:creative_wire": {
         "sound": "cloth"
@@ -354,12 +342,6 @@
         },
         "sound": "iron"
     },
-    "skybluetech:tank_invar": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
-        "sound": "glass"
-    },
     "skybluetech:item_splitter": {
         "textures": "skybluetech:rect_panel_bg"
     },
@@ -463,12 +445,6 @@
     "skybluetech:platinum_ore": {
         "textures": "skybluetech:platinum_ore"
     },
-    "skybluetech:tank_platinum": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
-        "sound": "glass"
-    },
     "skybluetech:pump": {
         "sound": "stone"
     },
@@ -505,6 +481,9 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:resin_collector": {
+        "sound": "wood"
+    },
     "skybluetech:silver_block": {
         "textures": "skybluetech:silver_block"
     },
@@ -520,14 +499,38 @@
     "skybluetech:splitter": {
         "sound": "iron"
     },
-    "skybluetech:tank_steel": {
+    "skybluetech:superconduct_wire": {
+        "sound": "cloth"
+    },
+    "skybluetech:tank_bronze": {
         "client_entity": {
             "identifier": "skybluetech:tank"
         },
         "sound": "glass"
     },
-    "skybluetech:superconduct_wire": {
-        "sound": "cloth"
+    "skybluetech:tank_creative": {
+        "client_entity": {
+            "identifier": "skybluetech:tank"
+        },
+        "sound": "glass"
+    },
+    "skybluetech:tank_invar": {
+        "client_entity": {
+            "identifier": "skybluetech:tank"
+        },
+        "sound": "glass"
+    },
+    "skybluetech:tank_platinum": {
+        "client_entity": {
+            "identifier": "skybluetech:tank"
+        },
+        "sound": "glass"
+    },
+    "skybluetech:tank_steel": {
+        "client_entity": {
+            "identifier": "skybluetech:tank"
+        },
+        "sound": "glass"
     },
     "skybluetech:thermal_generator": {
         "sound": "iron"

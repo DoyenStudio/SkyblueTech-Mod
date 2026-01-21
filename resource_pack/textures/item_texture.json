@@ -226,6 +226,9 @@
         "skybluetech:resin": {
             "textures": "textures/items/resin"
         },
+        "skybluetech:resin_spoon": {
+            "textures": "textures/items/resin_spoon"
+        },
         "skybluetech:rough_rubber": {
             "textures": "textures/items/rough_rubber"
         },

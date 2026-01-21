@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:resin_spoon"
+        },
+        "description": {
+            "identifier": "skybluetech:resin_spoon"
+        }
+    }
+}

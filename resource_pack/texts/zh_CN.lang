@@ -220,4 +220,5 @@ tile.skybluetech:electric_crafter.name=电动合成台
 item.skybluetech:control_circuit_basic.name=基础控制电路
 item.skybluetech:control_circuit_advanced.name=高级控制电路
 item.skybluetech:control_circuit_professional.name=进阶控制电路
-tile.skybluetech:resin_collector.name=橡胶采集斗
+tile.skybluetech:resin_collector.name=树脂采集斗
+item.skybluetech:resin_spoon.name=树脂采集勺

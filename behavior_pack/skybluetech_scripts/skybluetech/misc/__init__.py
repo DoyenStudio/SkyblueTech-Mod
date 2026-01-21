@@ -1,1 +1,1 @@
-from . import crafting_template, famicom, piston_denier
+from . import crafting_template, famicom, piston_denier, resin_collector

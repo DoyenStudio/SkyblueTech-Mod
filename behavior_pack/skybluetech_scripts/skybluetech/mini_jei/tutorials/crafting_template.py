@@ -1,4 +1,5 @@
 from ...define.id_enum.items import CRAFTING_TEMPLATE
+from ...define.id_enum.machinery import ELECTRIC_CRAFTER
 from ..core import CategoryType, RegisterDescription
 
 content = (
@@ -14,7 +15,7 @@ content = (
 )
 
 RegisterDescription(
-    {CategoryType.ITEM: [CRAFTING_TEMPLATE]},
+    {CategoryType.ITEM: [CRAFTING_TEMPLATE, ELECTRIC_CRAFTER]},
     "自动合成台与合成样板",
     content.strip()
 )

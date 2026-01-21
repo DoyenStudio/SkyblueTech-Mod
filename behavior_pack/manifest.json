@@ -1,0 +1,28 @@
+{
+    "format_version": 1,
+    "header": {
+        "min_engine_version": [
+            1,
+            18,
+            0
+        ],
+        "uuid": "85e9333f-1400-4f9a-8fe5-4c6dbe0f0c67",
+        "version": [
+            0,
+            0,
+            1
+        ],
+        "name": "SkyblueTechDataPack"
+    },
+    "modules": [
+        {
+            "type": "data",
+            "uuid": "828a70b2-0e8c-469e-a0eb-3893b6b722d7",
+            "version": [
+                0,
+                0,
+                1
+            ]
+        }
+    ]
+}

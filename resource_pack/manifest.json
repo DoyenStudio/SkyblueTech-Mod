@@ -1,0 +1,28 @@
+{
+    "format_version": 1,
+    "header": {
+        "min_engine_version": [
+            1,
+            18,
+            0
+        ],
+        "uuid": "778d4c94-d9d4-40ed-ac90-561e91f873b2",
+        "version": [
+            0,
+            0,
+            1
+        ],
+        "name": "SkyblueTechResPack"
+    },
+    "modules": [
+        {
+            "type": "resources",
+            "uuid": "26c380f4-9e15-452b-bd16-b31a1961d3f9",
+            "version": [
+                0,
+                0,
+                1
+            ]
+        }
+    ]
+}

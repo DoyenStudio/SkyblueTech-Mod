@@ -1,5 +1,7 @@
 .mcs
 .vscode
+.*.json
+.*.txt
 
 work.mcscfg
 studio.json

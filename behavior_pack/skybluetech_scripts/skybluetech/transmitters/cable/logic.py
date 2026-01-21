@@ -469,7 +469,7 @@ def onContainerItemChanged(event):
         return
     dim = event.dimensionId
     x, y, z = xyz = event.pos
-    if event.newItem.itemName == "minecraft:air" or event.newItem.count == 0:
+    if event.newItem.id == "minecraft:air" or event.newItem.count == 0:
         m = GetMachineStrict(dim, x, y, z)
         if not isinstance(m, ItemContainer):
             return

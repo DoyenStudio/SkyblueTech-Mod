@@ -24,8 +24,32 @@
                     "render_method": "opaque"
                 }
             },
-            "netease:block_entity": {
-
+            "netease:block_entity": {},
+            "netease:aabb": {
+                "collision": {
+                    "min": [
+                        0,
+                        0.125,
+                        0
+                    ],
+                    "max": [
+                        1,
+                        0.75,
+                        1
+                    ]
+                },
+                "clip": {
+                    "min": [
+                        0,
+                        0.0625,
+                        0
+                    ],
+                    "max": [
+                        1,
+                        0.75,
+                        1
+                    ]
+                }
             },
             "netease:custom_tips": {
                 "value": "\n§7置于橡树侧面离地 1 格高的树干侧收集橡胶。\n使用§f树脂采集勺§7取出树脂。"

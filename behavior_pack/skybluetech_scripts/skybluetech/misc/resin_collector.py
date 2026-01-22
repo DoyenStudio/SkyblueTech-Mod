@@ -53,6 +53,8 @@ def onBlockRandomTick(event):
     # type: (BlockRandomTickServerEvent) -> None
     if event.fullName != RESIN_COLLECTOR:
         return
+    if random.random() < 0.75:
+        return
     blockstates = GetBlockStates(
         event.dimensionId, (event.posX, event.posY, event.posZ)
     )
@@ -79,8 +81,6 @@ def onItemUseOnEvent(event):
     # type: (ServerItemUseOnEvent) -> None
     if event.item.id != RESIN_SPOON or event.blockName != RESIN_COLLECTOR:
         return
-    if random.random() < 0.75:
-        return
     collector_states = GetBlockStates(event.dimensionId, (event.x, event.y, event.z))
     resin_store = collector_states["skybluetech:resin_storage"]
     if resin_store <= 0:
@@ -95,7 +95,7 @@ def onItemUseOnEvent(event):
         collector_states,
     )
     SpawnItemToPlayerCarried(event.entityId, event.item)
-    SpawnDroppedItem(event.dimensionId, (event.x, event.y, event.z), Item(RESIN))
+    SpawnDroppedItem(event.dimensionId, (event.x + 0.5, event.y + 0.5, event.z + 0.5), Item(RESIN))
 
 
 @BlockNeighborChangedServerEvent.Listen()
@@ -124,7 +124,7 @@ def onNeighborChanged(event):
         resin_drop = blockstates["skybluetech:resin_storage"] // 2
         SpawnDroppedItem(
             event.dimensionId,
-            (event.posX, event.posY, event.posZ),
+            (event.posX + 0.5, event.posY + 0.5, event.posZ + 0.5),
             Item(RESIN, count=resin_drop)
         )
 

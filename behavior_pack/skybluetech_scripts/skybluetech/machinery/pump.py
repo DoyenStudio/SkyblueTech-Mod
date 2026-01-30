@@ -79,7 +79,7 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
                 self.fluid_id, _ = M_TYPE_MAPPING_REVERSE[self.pump_type]
             do_break = False
             if self.ProcessOnce():
-                self.fluid_volume = min(self.max_fluid_volume, self.fluid_volume + self.pump_speed)
+                self.OutputFluid(self.fluid_id, self.pump_speed)
                 self.OnSync()
                 if not self.last_1000mb and self.fluid_volume >= 1000:
                     self.last_1000mb = True

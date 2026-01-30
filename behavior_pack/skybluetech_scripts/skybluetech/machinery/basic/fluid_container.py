@@ -168,6 +168,11 @@ class FluidContainer(object):
                 0, fluid_volume - (self.max_fluid_volume - self.fluid_volume)
             )
 
+    def OutputFluid(self, fluid_id, fluid_volume):
+        # type: (str, float) -> tuple[bool, float]
+        # 暂时直接调用 AddFluid
+        return self.AddFluid(fluid_id, fluid_volume)
+
     def CanAddFluid(self, fluid_id):
         # type: (str) -> bool
         """

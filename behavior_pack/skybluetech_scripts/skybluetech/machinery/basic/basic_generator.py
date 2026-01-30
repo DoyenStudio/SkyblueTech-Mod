@@ -27,7 +27,7 @@ class BasicGenerator(BaseMachine):
     def GeneratePower(self, rf):
         # type: (int) -> bool
         "产出能量。"
-        self.store_rf = min(self.store_rf_max, self.addPowerIntoWireNetwork(rf))
+        self.store_rf = min(self.store_rf_max, self.addPowerIntoWireNetwork(self.store_rf + rf))
         if isinstance(self, GUIControl):
             self.OnSync()
         return self.store_rf != rf
@@ -44,9 +44,6 @@ class BasicGenerator(BaseMachine):
         """ 在已连接的电缆网络中为机器添加能量, 包括周围的机器。 返回溢出的能量 """
         if passed is None:
             passed = set()
-        if self.store_rf > 0:
-            rf += self.store_rf
-            self.store_rf = 0
         requireWireModule()
         output_networks = GetNearbyWireNetworks(
             self.dim, self.x, self.y, self.z, enable_cache=True

@@ -841,7 +841,7 @@
                                     2.0,
                                     2.0
                                 ],
-                                "texture": "textures/ui/Indent"
+                                "texture": "textures/ui/bg_frame_01_reversed"
                             }
                         }
                     ]

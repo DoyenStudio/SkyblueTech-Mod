@@ -74,6 +74,7 @@ class GeoThermalGenerator(AutoSaver, BasicGenerator, GUIControl, MultiFluidConta
         self.OnSync()
 
     def OnTryActivate(self):
+        self.GeneratePower(0)
         if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL) and self.store_rf < self.store_rf_max:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 

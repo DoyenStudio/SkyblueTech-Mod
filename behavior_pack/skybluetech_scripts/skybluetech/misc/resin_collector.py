@@ -94,8 +94,12 @@ def onItemUseOnEvent(event):
         {"skybluetech:resin_storage": resin_store - 1},
         collector_states,
     )
-    SpawnItemToPlayerCarried(event.entityId, event.item)
+    if event.item.durability == 0:
+        SpawnItemToPlayerCarried(event.entityId, Item("minecraft:air"))
+    else:
+        SpawnItemToPlayerCarried(event.entityId, event.item)
     SpawnDroppedItem(event.dimensionId, (event.x + 0.5, event.y + 0.5, event.z + 0.5), Item(RESIN))
+
 
 
 @BlockNeighborChangedServerEvent.Listen()

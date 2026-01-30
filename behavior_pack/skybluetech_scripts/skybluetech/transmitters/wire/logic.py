@@ -16,7 +16,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 )
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...machinery.basic import BaseMachine
-from ...machinery.pool import GetMachineStrict, GetMachineCls
+from ...machinery.pool import GetMachineStrict, GetMachineCls, GetMachineWithoutCls
 from ...define.facing import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
 from .define import WireNetwork, WireAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
@@ -340,6 +340,15 @@ def RequireEnergyFromNetwork(machine):
             ok = True
     return ok
 
+@Delay(0)
+def onMachineryPlacedLater(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    for network in GetNearbyWireNetworks(dim, x, y, z)[0]:
+        for ap in network.group_outputs:
+            m = GetMachineWithoutCls(dim, *ap.target_pos)
+            if m is not None:
+                m.OnTryActivate()
+
 @ServerPlaceBlockEntityEvent.Listen()
 def onBlockPlaced(event):
     # type: (ServerPlaceBlockEntityEvent) -> None
@@ -361,6 +370,7 @@ def onBlockPlaced(event):
     elif isRFMachine(event.blockName):
         # 图方便
         cleanContainerNetworks(event.dimension, event.posX, event.posY, event.posZ)
+        onMachineryPlacedLater(event.dimension, event.posX, event.posY, event.posZ)
 
 @BlockRemoveServerEvent.Listen()
 @Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空

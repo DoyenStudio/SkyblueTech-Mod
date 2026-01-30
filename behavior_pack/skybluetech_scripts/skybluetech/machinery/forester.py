@@ -15,11 +15,9 @@ from ..machinery_def.forester import getSaplingId, isLog, isLeave
 from ..ui_sync.machinery.forester import ForesterUISync
 from .basic import (
     AutoSaver,
-    BaseMachine,
-    BaseSpeedControl,
     ItemContainer,
     GUIControl,
-    PowerControl,
+    SPControl,
     RegisterMachine,
 )
 
@@ -38,7 +36,7 @@ ALL_NEIGHBOUR_BLOCKS_ENUM = [
 
 
 @RegisterMachine
-class Forester(AutoSaver, BaseSpeedControl, GUIControl, ItemContainer, PowerControl):
+class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
     block_name = MACHINE_ID
     store_rf_max = 16000
     running_power = 80
@@ -48,7 +46,8 @@ class Forester(AutoSaver, BaseSpeedControl, GUIControl, ItemContainer, PowerCont
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
+        SPControl.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ForesterUISync.NewServer(self).Activate()
         self.OnSync()
@@ -112,7 +111,7 @@ class Forester(AutoSaver, BaseSpeedControl, GUIControl, ItemContainer, PowerCont
 
     def OnUnload(self):
         AutoSaver.OnUnload(self)
-        BaseMachine.OnUnload(self)
+        SPControl.OnUnload(self)
         GUIControl.OnUnload(self)
 
     def OnTryActivate(self):

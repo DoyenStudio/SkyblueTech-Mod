@@ -12,14 +12,13 @@ from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
 )
 from ..define import flags
 from ..define.events.machinery.hydroponic_bed import (
-    HydroponicBedClientLoadEvent,
     HydroponicBedModelUpdateEvent,
     HydroponicBedModelUpdatesEvent,
-    MODE_UNLOAD, MODE_LOAD
 )
 from ..define.id_enum.machinery import HYDROPONIC_BED as MACHINE_ID
 from ..machinery_def.hydroponic_bed import HydroponicBedRecipe, recipes as Recipes
 from ..ui_sync.machinery.hydroponic_bed import HydroponicBedUISync
+from ..utils.block_sync import BlockSync
 from .basic import (
     AutoSaver,
     BaseMachine,
@@ -38,6 +37,8 @@ WORK_TICK_DELAY = 5
 POWER_COST = 4
 ONCE_WATER_COST = 5
 MAX_WATER_STORE = 1000
+
+block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
@@ -75,8 +76,7 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
         AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
-        S_cli_loaded_machinerys.pop((self.dim, self.x, self.y, self.z), None)
-        S_machinery2clis.pop(self, None)
+        block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def OnTicking(self):
         # type: () -> None
@@ -135,6 +135,7 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
     def takeWater(self):
         if self.water_store < MAX_WATER_STORE / 2:
             from .hydroponic_base import HydroponicBase
+
             m = GetMachineStrict(self.dim, self.x, self.y - 1, self.z)
             if isinstance(m, HydroponicBase):
                 vol = m.GetWaterVolume()
@@ -154,6 +155,7 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
     def finishOnce(self, recipe):
         # type: (HydroponicBedRecipe) -> None
         from .hydroponic_base import HydroponicBase
+
         out_seed_count = recipe.rand_seed_count() - 1
         m = GetMachineStrict(self.dim, self.x, self.y - 1, self.z)
         if isinstance(m, HydroponicBase):
@@ -166,61 +168,35 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
             crop_block_id = None
         else:
             crop_block_id = Recipes[self.crop_id].crop_block_id
-        pids = S_machinery2clis.get(self)
-        if pids:
-            HydroponicBedModelUpdateEvent(
-                self.x, self.y, self.z, crop_block_id, self.grow_stage
-            ).sendMulti(list(pids))
+        HydroponicBedModelUpdateEvent(
+            self.x, self.y, self.z, crop_block_id, self.grow_stage
+        ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
 
-# SERVER PART
-
-S_cli_loaded_machinerys = WVDict()  # type: WVDict[tuple[int, int, int, int], HydroponicBed]
-S_machinery2clis = WKDict() # type: WKDict[HydroponicBed, set[str]]
-
-@HydroponicBedClientLoadEvent.Listen()
-def onC2SModBlockLoadEvent(event):
-    # type: (HydroponicBedClientLoadEvent) -> None
-    key = (event.dim, event.x, event.y, event.z)
-    if event.mode == MODE_LOAD:
-        if key not in S_cli_loaded_machinerys:
-            m = GetMachineStrict(event.dim, event.x, event.y, event.z)
-            if not isinstance(m, HydroponicBed):
-                return
-            S_cli_loaded_machinerys[key] = m
-        m = S_cli_loaded_machinerys[key]
-        S_machinery2clis.setdefault(m, set()).add(event.player_id)
-        m.notifyUpdate()
-    elif event.mode == MODE_UNLOAD:
-        if key not in S_cli_loaded_machinerys:
-            return
-        m = S_cli_loaded_machinerys[key]
-        S_machinery2clis.get(m, set()).discard(event.player_id)
 
 # CLIENT PART
 
 C_loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 
+
 @ModBlockEntityLoadedClientEvent.Listen()
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     if event.blockName == HydroponicBed.block_name:
-        C_loaded_models[
-            (event.posX, event.posY, event.posZ)
-        ] = CreateBlankSingleBlockModelEntity((event.posX, event.posY+3.0/16*0.4, event.posZ))
-        HydroponicBedClientLoadEvent(
-            event.dimensionId, event.posX, event.posY, event.posZ, MODE_LOAD
-        ).send()
+        C_loaded_models[(event.posX, event.posY, event.posZ)] = (
+            CreateBlankSingleBlockModelEntity(
+                (event.posX, event.posY + 3.0 / 16 * 0.4, event.posZ)
+            )
+        )
+
 
 @ModBlockEntityRemoveClientEvent.Listen()
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     if event.blockName == HydroponicBed.block_name:
-        HydroponicBedClientLoadEvent(
-            event.dimensionId, event.posX, event.posY, event.posZ, MODE_UNLOAD
-        ).send()
         model = C_loaded_models.pop((event.posX, event.posY, event.posZ), None)
         if model is not None:
             model.Destroy()
+
 
 @HydroponicBedModelUpdateEvent.Listen()
 def onS2CUpdate(event):

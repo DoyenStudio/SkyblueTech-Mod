@@ -28,8 +28,12 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayersInDim
 from ..define import flags
-from ..define.events.machinery.digger import DiggerWorkModeUpdatedEvent, DiggerUpdateCrack
+from ..define.events.machinery.digger import (
+    DiggerWorkModeUpdatedEvent,
+    DiggerUpdateCrack,
+)
 from ..define.id_enum.machinery import DIGGER as MACHINE_ID
+from ..utils.block_sync import BlockSync
 from ..utils.facing import GetOppositeDirFromFacing
 from ..ui_sync.machinery.digger import DiggerUISync
 from .basic import (
@@ -41,6 +45,7 @@ from .basic import (
 )
 
 TICKS_PER_SECOND = 20
+block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
@@ -52,7 +57,10 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     running_power = 40
     upgrade_slot_start = 1
     upgrade_slots = 4
-    allow_upgrader_tags = {"skybluetech:upgraders/speed", "skybluetech:upgraders/energy"}
+    allow_upgrader_tags = {
+        "skybluetech:upgraders/speed",
+        "skybluetech:upgraders/energy",
+    }
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -108,6 +116,7 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         AutoSaver.OnUnload(self)
         UpgradeControl.OnUnload(self)
         GUIControl.OnUnload(self)
+        block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
@@ -118,9 +127,9 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         UpgradeControl.Dump(self)
 
     def OnWorkStatusUpdated(self):
-        DiggerWorkModeUpdatedEvent(
-            self.x, self.y, self.z, self.IsActive()
-        ).sendMulti(GetPlayersInDim(self.dim))
+        DiggerWorkModeUpdatedEvent(self.x, self.y, self.z, self.IsActive()).sendMulti(
+            block_sync.get_players((self.dim, self.x, self.y, self.z))
+        )
 
     def startNext(self, new_block=None):
         # type: (tuple[str, int] | None) -> None
@@ -172,14 +181,16 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     def updateCrackToClients(self):
         DiggerUpdateCrack(
-                self.dim,
-                self.x + self.dx,
-                self.y + self.dy,
-                self.z + self.dz,
-                self.prev_crack_stage,
-        ).sendMulti(GetPlayersInDim(self.dim))
+            self.dim,
+            self.x + self.dx,
+            self.y + self.dy,
+            self.z + self.dz,
+            self.prev_crack_stage,
+        ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
+
 
 # CLIENT PART
+
 
 @DiggerWorkModeUpdatedEvent.Listen()
 def clientOnDiggerWorkModeUpdated(event):
@@ -202,7 +213,9 @@ def onModBlockLoaded(event):
             aux & 0b111,
         )
 
+
 can_play_animation = False
+
 
 @UiInitFinishedEvent.Listen()
 def onUIInitFinished(event):

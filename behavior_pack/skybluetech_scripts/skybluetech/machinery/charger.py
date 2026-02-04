@@ -3,7 +3,6 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
-    GetPlayersInDim,
     GetPos,
     GetPlayerDimensionId as SGetPlayerDim,
 )
@@ -25,11 +24,17 @@ from skybluetech_scripts.tooldelta.events.client import (
 from ..define import flags
 from ..define.id_enum.machinery import CHARGER as MACHINE_ID
 from ..machinery_def.charger import CHARGE_SPEED
-from ..define.events.machinery.charger import ChargerItemModelUpdate, ChargeItemModelRequest
+from ..define.events.machinery.charger import (
+    ChargerItemModelUpdate,
+    ChargeItemModelRequest,
+)
 from ..ui_sync.machinery.charger import ChargerUISync
 from ..utils.charge import GetCharge, UpdateCharge, K_STORE_RF, K_STORE_RF_MAX
+from ..utils.block_sync import BlockSync
 from .basic import AutoSaver, GUIControl, UpgradeControl, RegisterMachine
 from .pool import GetMachineStrict
+
+block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
@@ -62,6 +67,7 @@ class Charger(AutoSaver, GUIControl, UpgradeControl):
         AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
         UpgradeControl.OnUnload(self)
+        block_sync.discard_block((self.dim, self.x, self.y, self.z))
         self.updateCharge()
 
     def OnTicking(self):
@@ -109,7 +115,7 @@ class Charger(AutoSaver, GUIControl, UpgradeControl):
                 self.charge_rf_max = 1
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
                 NotifyToClients(
-                    GetPlayersInDim(self.dim),
+                    block_sync.get_players((self.dim, self.x, self.y, self.z)),
                     ChargerItemModelUpdate(self.x, self.y, self.z, None),
                 )
                 return
@@ -121,7 +127,7 @@ class Charger(AutoSaver, GUIControl, UpgradeControl):
             self.updateCharge()
             self.ResetDeactiveFlags()
             NotifyToClients(
-                GetPlayersInDim(self.dim),
+                block_sync.get_players((self.dim, self.x, self.y, self.z)),
                 ChargerItemModelUpdate(
                     self.x, self.y, self.z, charge_item.id, charge_item.isEnchanted
                 ),
@@ -176,7 +182,9 @@ def onModelUpdate(event):
         model_id = cli_models[pos] = CreateDropItemModelEntity(
             CGetPlayerDim(), pos, Item(event.item_id)
         )
-        SetDropItemTransform(model_id, (event.x+0.4, event.y+0.5, event.z+0.3), (90, 0, 0))
+        SetDropItemTransform(
+            model_id, (event.x + 0.4, event.y + 0.5, event.z + 0.3), (90, 0, 0)
+        )
 
 
 @ModBlockEntityLoadedClientEvent.Listen()

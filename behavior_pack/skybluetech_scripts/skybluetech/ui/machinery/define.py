@@ -5,7 +5,10 @@ from skybluetech_scripts.tooldelta.api.client.player import GetPlayerDimensionId
 from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
 from skybluetech_scripts.tooldelta.events import CustomC2SEvent
-from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent, OnKeyPressInGame
+from skybluetech_scripts.tooldelta.events.client import (
+    ClientBlockUseEvent,
+    OnKeyPressInGame,
+)
 from skybluetech_scripts.tooldelta.ui import SCREEN_BASE_PATH, ToolDeltaScreen
 from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync
 
@@ -50,16 +53,21 @@ class MachinePanelUI(ToolDeltaScreen):
     def __init__(self, namespace, name, param):
         ToolDeltaScreen.__init__(self, namespace, name, param)
         self.inited = False
-        self.sync = None # type: S2CSync | None
-    
+        self.sync = None  # type: S2CSync | None
+        self.dim, self.x, self.y, self.z = self.get_bound_pos()
+
+    def get_bound_pos(self):
+        # type: () -> tuple[int, int, int, int]
+        return self._init_params["st:dmpos"]
+
     def _on_create(self):
         self[self.EXIT_BTN_PATH].asButton().SetCallback(self.OnExit)
         self.inited = True
         if self.sync:
             self.sync.Activate()
-    
+
     def _on_destroy(self):
-        """ 超类方法, 告诉服务端 UI 关闭。 """
+        """超类方法, 告诉服务端 UI 关闭。"""
         if self.sync:
             self.sync.Deactivate()
 
@@ -70,17 +78,16 @@ class MachinePanelUI(ToolDeltaScreen):
         ExecLater(0.1, self.RemoveUI)
 
 
-
 class MachinePanelUIProxy(ToolDeltaScreen):
     def __init__(self, screenName, screenNode):
         global GPlayerId, GPos
         ToolDeltaScreen.__init__(self, screenName, screenNode)
-        self.sync = None # type: S2CSync | None
+        self.sync = None  # type: S2CSync | None
         if GPos is None:
             raise RuntimeError("Player do not click machine but create UI")
         self.pid = GPlayerId
         self.pos = GPos
-    
+
     def _on_create(self):
         ToolDeltaScreen._on_create(self)
         self.inited = True
@@ -99,8 +106,9 @@ class MachinePanelUIProxy(ToolDeltaScreen):
         ExecLater(0, self.RemoveUI)
 
 
-GPlayerId = ''
+GPlayerId = ""
 GPos = None
+
 
 @ClientBlockUseEvent.Listen()
 def onCliBlockUse(event):

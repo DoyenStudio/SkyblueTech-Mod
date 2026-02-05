@@ -92,6 +92,12 @@ class UBaseCtrl(object):
             UTextEditBoxUIControl(self._root, self.base.asTextEditBox())
         )
 
+    def asSwitch(self):
+        # type: () -> USwitch
+        return self._cache_t or self._save_t(
+            USwitch(self._root, self.base.asSwitchToggle())
+        )
+
     def getFullPath(self):
         "未开放接口"
         return self.base.FullPath()  # type: ignore
@@ -493,6 +499,23 @@ class UTextEditBoxUIControl(UBaseCtrl):
         self.base.SetEditText(text)
 
 
+class USwitch(UBaseCtrl):
+    def __init__(self, root, base):
+        # type: (ScreenLike, SwitchToggleUIControl) -> None
+        UBaseCtrl.__init__(self, root, base)
+        if not isinstance(base, SwitchToggleUIControl):
+            raise TypeError("expected SwitchToggleUIControl, got " + str(type(base)))
+        self.base = base
+
+    def GetState(self, toggle_path="/this_toggle"):
+        # type: (str) -> bool
+        return self.base.GetToggleState(toggle_path)
+
+    def SetState(self, state, toggle_path="/this_toggle"):
+        # type: (bool, str) -> None
+        self.base.SetToggleState(state, toggle_path)
+
+
 grid_comp_size_changed_cbs = dict()  # type: dict[str, Callable[[], None]]
 
 
@@ -509,4 +532,16 @@ def onGridComponentSizeChanged(event):
         )  # TODO: 不知道为什么 如果直接 cb() grid 会获取不到新 position。。
 
 
-__all__ = ["UBaseCtrl", "UItemRenderer", "ULabel", "UImage", "UButton"]
+__all__ = [
+    "UBaseCtrl",
+    "UItemRenderer",
+    "ULabel",
+    "UImage",
+    "UButton",
+    "USwitch",
+    "UTextEditBoxUIControl",
+    "UNeteasePaperDoll",
+    "USlider",
+    "UScrollView",
+    "UGrid",
+]

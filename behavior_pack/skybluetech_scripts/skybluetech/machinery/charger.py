@@ -31,6 +31,7 @@ from ..define.events.machinery.charger import (
 from ..ui_sync.machinery.charger import ChargerUISync
 from ..utils.charge import GetCharge, UpdateCharge, K_STORE_RF, K_STORE_RF_MAX
 from ..utils.block_sync import BlockSync
+from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 from .basic import AutoSaver, GUIControl, UpgradeControl, RegisterMachine
 from .pool import GetMachineStrict
 
@@ -187,7 +188,7 @@ def onModelUpdate(event):
         )
 
 
-@ModBlockEntityLoadedClientEvent.Listen()
+@asModBlockLoadedListener(Charger.block_name)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)
@@ -196,7 +197,7 @@ def onModBlockLoaded(event):
     NotifyToServer(ChargeItemModelRequest(event.posX, event.posY, event.posZ))
 
 
-@ModBlockEntityRemoveClientEvent.Listen()
+@asModBlockRemovedListener(Charger.block_name)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)

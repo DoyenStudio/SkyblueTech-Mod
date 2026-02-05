@@ -5,12 +5,16 @@ from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2S
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
 from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInitCallback
 from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
-from skybluetech_scripts.tooldelta.events.client.block import ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent
+from skybluetech_scripts.tooldelta.events.client.block import (
+    ModBlockEntityLoadedClientEvent,
+    ModBlockEntityRemoveClientEvent,
+)
 from ..define.events.machinery.creative_power_acceptor import (
     CreativePowerAcceptorPowerUpdate,
     CreativePowerAcceptorPowerUpdateRequest,
 )
 from ..define.id_enum.machinery import CREATIVE_POWER_ACCEPTOR as MACHINE_ID
+from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 from .basic import BaseMachine, RegisterMachine
 
 # TYPE_CHECKING
@@ -34,7 +38,7 @@ class CreativePowerAcceptor(BaseMachine):
         self.power = 0
         self.delay = 20
 
-    def AddPower(self, rf,  max_limit=None, depth=0):
+    def AddPower(self, rf, max_limit=None, depth=0):
         if max_limit is not None:
             rf = min(rf, max_limit)
         self.power += rf
@@ -56,9 +60,9 @@ class CreativePowerAcceptor(BaseMachine):
         del lastUpdatePool[(self.dim, self.x, self.y, self.z)]
 
 
-updatePool = {} # type: dict[tuple[int, int, int, int], int]
-lastUpdatePool = {} # type: dict[tuple[int, int, int, int], int]
-cTextPool = {} # type: dict[tuple[int, tuple[float, float, float]], DrawingShapeCompClient]
+updatePool = {}  # type: dict[tuple[int, int, int, int], int]
+lastUpdatePool = {}  # type: dict[tuple[int, int, int, int], int]
+cTextPool = {}  # type: dict[tuple[int, tuple[float, float, float]], DrawingShapeCompClient]
 
 
 def addText(dim, pos, default_text=""):
@@ -70,9 +74,11 @@ def addText(dim, pos, default_text=""):
     t = ClientComp.CreateDrawing(ClientLevelId).AddTextShape((tx, ty, tz), default_text)
     cTextPool[(dim, pos)] = t
 
+
 def removeText(dim, pos):
     # type: (int, tuple[int, int, int]) -> None
     cTextPool.pop((dim, pos)).Remove()
+
 
 def updateText(dim, pos, text):
     # type: (int, tuple[int, int, int], str) -> None
@@ -80,20 +86,21 @@ def updateText(dim, pos, text):
     if text_elem is not None:
         text_elem.SetText(text)
 
-@ModBlockEntityLoadedClientEvent.Listen()
+
+@asModBlockLoadedListener(CreativePowerAcceptor.block_name)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
-    if event.blockName == CreativePowerAcceptor.block_name:
-        addText(event.dimensionId, (event.posX, event.posY, event.posZ), "输入功率： --")
-        CreativePowerAcceptorPowerUpdateRequest(
-            event.dimensionId, event.posX, event.posY, event.posZ
-        ).send()
+    addText(event.dimensionId, (event.posX, event.posY, event.posZ), "输入功率： --")
+    CreativePowerAcceptorPowerUpdateRequest(
+        event.dimensionId, event.posX, event.posY, event.posZ
+    ).send()
 
-@ModBlockEntityRemoveClientEvent.Listen()
+
+@asModBlockRemovedListener(CreativePowerAcceptor.block_name)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
-    if event.blockName == CreativePowerAcceptor.block_name:
-        removeText(event.dimensionId, (event.posX, event.posY, event.posZ))
+    removeText(event.dimensionId, (event.posX, event.posY, event.posZ))
+
 
 @CreativePowerAcceptorPowerUpdate.Listen()
 def onPowerUpdate(event):
@@ -104,6 +111,7 @@ def onPowerUpdate(event):
         else:
             text = "输入功率： §a%d RF/t" % power
         updateText(dim, (x, y, z), text)
+
 
 @CreativePowerAcceptorPowerUpdateRequest.Listen()
 def onPowerUpdateRequest(event):
@@ -122,13 +130,17 @@ def onPowerUpdateRequest(event):
             [[dim, x, y, z, updatePool.get((dim, x, y, z), -32768)]]
         ).send(event.player_id)
 
+
 @ClientInitCallback()
 def onClientInit():
     CreativePowerAcceptorPowerUpdateRequest(-1, 0, 0, 0).send()
 
+
 @ServerInitCallback()
 @AsTimerFunc(1)
 def onRepeatUpdate():
-    compared = [list(k) + [v] for k, v in updatePool.items()][:50] # NOTE: 全局至多同时有 50 个功率更新
+    compared = [list(k) + [v] for k, v in updatePool.items()][
+        :50
+    ]  # NOTE: 全局至多同时有 50 个功率更新
     if compared:
         CreativePowerAcceptorPowerUpdate(compared).sendAll()

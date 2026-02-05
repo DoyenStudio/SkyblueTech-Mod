@@ -19,6 +19,10 @@ from ..define.id_enum.machinery import HYDROPONIC_BED as MACHINE_ID
 from ..machinery_def.hydroponic_bed import HydroponicBedRecipe, recipes as Recipes
 from ..ui_sync.machinery.hydroponic_bed import HydroponicBedUISync
 from ..utils.block_sync import BlockSync
+from ..utils.mod_block_event import (
+    asModBlockLoadedListener,
+    asModBlockRemovedListener,
+)
 from .basic import (
     AutoSaver,
     BaseMachine,
@@ -175,27 +179,25 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
 
 # CLIENT PART
 
-C_loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
+loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 
 
-@ModBlockEntityLoadedClientEvent.Listen()
+@asModBlockLoadedListener(HydroponicBed.block_name)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
-    if event.blockName == HydroponicBed.block_name:
-        C_loaded_models[(event.posX, event.posY, event.posZ)] = (
-            CreateBlankSingleBlockModelEntity(
-                (event.posX, event.posY + 3.0 / 16 * 0.4, event.posZ)
-            )
+    loaded_models[(event.posX, event.posY, event.posZ)] = (
+        CreateBlankSingleBlockModelEntity(
+            (event.posX, event.posY + 3.0 / 16 * 0.4, event.posZ)
         )
+    )
 
 
-@ModBlockEntityRemoveClientEvent.Listen()
+@asModBlockRemovedListener(HydroponicBed.block_name)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
-    if event.blockName == HydroponicBed.block_name:
-        model = C_loaded_models.pop((event.posX, event.posY, event.posZ), None)
-        if model is not None:
-            model.Destroy()
+    model = loaded_models.pop((event.posX, event.posY, event.posZ), None)
+    if model is not None:
+        model.Destroy()
 
 
 @HydroponicBedModelUpdateEvent.Listen()
@@ -203,10 +205,10 @@ def onS2CUpdate(event):
     # type: (HydroponicBedModelUpdateEvent) -> None
     key = (event.x, event.y, event.z)
     if event.crop_id is None:
-        model = C_loaded_models.get(key, None)
+        model = loaded_models.get(key, None)
         if model is not None:
             model.SetBlockModel("minecraft:air", 0)
     elif event.crop_id is not None:
-        model = C_loaded_models.get(key)
+        model = loaded_models.get(key)
         if model is not None:
             model.SetBlockModel(event.crop_id, event.aux, (0.8, 0.8, 0.8))

@@ -1,9 +1,13 @@
 # coding=utf-8
 
 from mod.server.blockEntityData import BlockEntityData
+
+from behavior_pack.skybluetech_scripts.tooldelta.events.server.block import (
+    ServerBlockUseEvent,
+)
 from ..define import flags
 from ..define.id_enum.machinery import TESLA_PLANT as MACHINE_ID
-from ..ui_sync.machinery.redstone_furnace import RedstoneFurnaceUISync
+from ..ui_sync.machinery.tesla_plant import TeslaPlantUISync
 from .basic import (
     AutoSaver,
     ItemContainer,
@@ -27,6 +31,7 @@ class TeslaPlant(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
         AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         SPControl.__init__(self, dim, x, y, z, block_entity_data)
+        self.sync = TeslaPlantUISync.NewServer(self).Activate()
 
     def OnLoad(self):
         SPControl.OnLoad(self)
@@ -34,6 +39,14 @@ class TeslaPlant(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
         self.do_enable = self.bdata[K_SETTING_ENABLE] or False
         self.do_attack_player = self.bdata[K_SETTING_ATTACK_PLAYER] or False
         self.do_attack_mob = self.bdata[K_SETTING_ATTACK_MOB] or True
+
+    def OnClick(self, event, extra_datas):
+        GUIControl.OnClick(self, event, extra_datas)
+
+    def OnSync(self):
+        self.sync.storage_rf = self.store_rf
+        self.sync.rf_max = self.store_rf_max
+        self.sync.MarkedAsChanged()
 
     def Dump(self):
         SPControl.Dump(self)
@@ -49,3 +62,6 @@ class TeslaPlant(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
     def SetDeactiveFlag(self, flag):
         SPControl.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)
+
+    def attack_once(self):
+        pass

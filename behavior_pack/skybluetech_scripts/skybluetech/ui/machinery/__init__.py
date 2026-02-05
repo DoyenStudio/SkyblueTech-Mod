@@ -19,6 +19,7 @@ from .freezer import FreezerUI
 from .general_tank import GeneralTankUI
 from .geothermal_generator import GeoThermalGeneratorUI
 from .heavy_compressor import HeavyCompressorUI
+from .hover_text_displayer import HoverTextDisplayerUI
 from .hydroponic_base import HydroponicBaseUI
 from .hydroponic_bed import HydroponicBedUI
 from .item_splitter import ItemSplitterUI
@@ -31,6 +32,7 @@ from .pump import PumpUI
 from .redstone_furnace import RedstoneFurnaceUI
 from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI
+from .tesla_plant_ui import TeslaPlantUI
 from .thermal_generator import ThermalGeneratorUI
 from .thermoelectric_generator import ThermoelectricGeneratorUI
 from .wind_generator import WindGeneratorUI

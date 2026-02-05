@@ -86,6 +86,7 @@ def RegistToolDeltaScreen(
                 "ToolDelta: screen {} already exists. Abort".format(screen_cls)
             )
             return screen_cls
+        screen_cls._screen_key = key
         cls_path = screen_cls.__module__ + "." + screen_cls.__name__ + "_Base"
         registeredToolDeltaScreenClasses[key] = (
             screen_cls,

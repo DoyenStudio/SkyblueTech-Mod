@@ -14,6 +14,7 @@ class PowerControl(BaseMachine):
 
     覆写: `AddPower (super)`
     """
+
     running_power = 1000
     power_pos_rate = 1.0
     power_neg_rate = 1.0
@@ -51,7 +52,7 @@ class PowerControl(BaseMachine):
         "如果能量不足时先尝试向电网索取能源, 后自动将 flag 设置为缺少能源"
         # type: (bool) -> bool
         res = self.store_rf >= self.running_power
-        if res:
+        if res and self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK):
             self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         elif auto_require:
             RequireEnergyFromNetwork(self)
@@ -59,4 +60,3 @@ class PowerControl(BaseMachine):
         else:
             self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         return res
-

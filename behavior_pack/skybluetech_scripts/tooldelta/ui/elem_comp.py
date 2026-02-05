@@ -30,6 +30,7 @@ if 0:
     from .screen_comp import UScreenNode
     from .proxy_screen import UScreenProxy
     from .general_screen import ToolDeltaScreen
+
     ScreenLike = UScreenNode | UScreenProxy | ToolDeltaScreen
 # TYPE_CHECKING END
 
@@ -41,11 +42,11 @@ class UBaseCtrl(object):
             raise ValueError("Can't initialize UBaseCtrl: comp is None")
         self._root = root
         self.base = base
-        self._cache_t = None # type: Any | None
+        self._cache_t = None  # type: Any | None
         self._child_cacher = {}
         self._vars = {}
         self._removed = False
-        self._removed_listeners = [] # type: list[Callable[[], None]]
+        self._removed_listeners = []  # type: list[Callable[[], None]]
 
     def asLabel(self):
         # type: () -> ULabel
@@ -57,7 +58,9 @@ class UBaseCtrl(object):
 
     def asItemRenderer(self):
         # type: () -> UItemRenderer
-        return self._cache_t or self._save_t(UItemRenderer(self._root, self.base.asItemRenderer()))
+        return self._cache_t or self._save_t(
+            UItemRenderer(self._root, self.base.asItemRenderer())
+        )
 
     def asImage(self):
         # type: () -> UImage
@@ -65,7 +68,9 @@ class UBaseCtrl(object):
 
     def asScrollView(self):
         # type: () -> UScrollView
-        return self._cache_t or self._save_t(UScrollView(self._root, self.base.asScrollView()))
+        return self._cache_t or self._save_t(
+            UScrollView(self._root, self.base.asScrollView())
+        )
 
     def asGrid(self):
         # type: () -> UGrid
@@ -77,15 +82,19 @@ class UBaseCtrl(object):
 
     def asNeteasePaperDoll(self):
         # type: () -> UNeteasePaperDoll
-        return self._cache_t or self._save_t(UNeteasePaperDoll(self._root, self.base.asNeteasePaperDoll()))
+        return self._cache_t or self._save_t(
+            UNeteasePaperDoll(self._root, self.base.asNeteasePaperDoll())
+        )
 
     def asTextEditBox(self):
         # type: () -> UTextEditBoxUIControl
-        return self._cache_t or self._save_t(UTextEditBoxUIControl(self._root, self.base.asTextEditBox()))
+        return self._cache_t or self._save_t(
+            UTextEditBoxUIControl(self._root, self.base.asTextEditBox())
+        )
 
     def getFullPath(self):
         "未开放接口"
-        return self.base.FullPath() # type: ignore
+        return self.base.FullPath()  # type: ignore
 
     def GetSize(self):
         # type: () -> tuple[float, float]
@@ -109,8 +118,8 @@ class UBaseCtrl(object):
 
     def SetFullPos(
         self,
-        axis, # type: Literal["x", "y"]
-        posdata, # type: UICtrlPosData
+        axis,  # type: Literal["x", "y"]
+        posdata,  # type: UICtrlPosData
     ):
         return self.base.SetFullPosition(axis, posdata.to_dict())
 
@@ -124,28 +133,28 @@ class UBaseCtrl(object):
 
     def SetPos(
         self,
-        xy # type: tuple[float, float]
+        xy,  # type: tuple[float, float]
     ):
         self.base.SetPosition(xy)
         return self
 
     def SetSize(
         self,
-        xy # type: tuple[float, float]
+        xy,  # type: tuple[float, float]
     ):
         self.base.SetSize(xy)
         return self
 
     def SetFullSize(
         self,
-        axis, # type: Literal["x", "y"]
-        params # type: UICtrlPosData
+        axis,  # type: Literal["x", "y"]
+        params,  # type: UICtrlPosData
     ):
         return self.base.SetFullSize(axis, params.to_dict())
 
     def SetLayer(
         self,
-        layer # type: int
+        layer,  # type: int
     ):
         self.base.SetLayer(layer)
         return self
@@ -156,7 +165,7 @@ class UBaseCtrl(object):
             self._root,
             self._root.base.CreateChildControl(
                 element_def_name, element_name, self.base, force_update
-            )
+            ),
         )
 
     def addDestroyListener(self, func):
@@ -199,7 +208,9 @@ class UBaseCtrl(object):
         if isinstance(path, UIPath):
             path = path.base
         if path not in self._child_cacher:
-            self._child_cacher[path] = UBaseCtrl(self._root, self.base.GetChildByPath("/" + path))
+            self._child_cacher[path] = UBaseCtrl(
+                self._root, self.base.GetChildByPath("/" + path)
+            )
         return self._child_cacher[path]
 
 
@@ -208,14 +219,14 @@ class UItemRenderer(UBaseCtrl):
         # type: (ScreenLike, ItemRendererUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ItemRendererUIControl):
-            raise TypeError(
-                "expected ItemRendererUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected ItemRendererUIControl, got " + str(type(base)))
         self.base = base
 
     def SetUiItem(self, item):
         # type: (Item) -> None
-        self.base.SetUiItem(item.newItemName, item.newAuxValue, item.isEnchanted, item.userData or {})
+        self.base.SetUiItem(
+            item.newItemName, item.newAuxValue, item.isEnchanted, item.userData or {}
+        )
 
     def GetUiItem(self):
         # type: () -> tuple[str, int, bool]
@@ -228,9 +239,7 @@ class ULabel(UBaseCtrl):
         # type: (ScreenLike, LabelUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, LabelUIControl):
-            raise TypeError(
-                "expected LabelUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected LabelUIControl, got " + str(type(base)))
         self.base = base
 
     def SetText(self, text, sync_size=False):
@@ -251,9 +260,7 @@ class UImage(UBaseCtrl):
         # type: (ScreenLike, ImageUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ImageUIControl):
-            raise TypeError(
-                "expected ImageUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected ImageUIControl, got " + str(type(base)))
         self.base = base
 
     def SetSprite(self, sprite_path):
@@ -280,33 +287,31 @@ class UButton(UBaseCtrl):
         # type: (ScreenLike, ButtonUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ButtonUIControl):
-            raise TypeError(
-                "expected ButtonUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected ButtonUIControl, got " + str(type(base)))
         self.base = base
 
     def SetCallback(
         self,
-        callback # type: Callable[[Any], None]
+        callback,  # type: Callable[[Any], None]
     ):
         self.base.AddTouchEventParams({"isSwallow": True})
-        self.base.SetButtonTouchUpCallback(callback) # pyright: ignore[reportArgumentType]
+        self.base.SetButtonTouchUpCallback(callback)  # pyright: ignore[reportArgumentType]
         return self
 
     def SetOnRollOverCallback(
         self,
-        callback # type: Callable[[dict], None]
+        callback,  # type: Callable[[dict], None]
     ):
         self.base.AddHoverEventParams()
-        self.base.SetButtonHoverInCallback(callback) # pyright: ignore[reportArgumentType]
+        self.base.SetButtonHoverInCallback(callback)  # pyright: ignore[reportArgumentType]
         return self
 
     def SetOnRollOutCallback(
         self,
-        callback # type: Callable[[dict], None]
+        callback,  # type: Callable[[dict], None]
     ):
         self.base.AddHoverEventParams()
-        self.base.SetButtonHoverOutCallback(callback) # pyright: ignore[reportArgumentType]
+        self.base.SetButtonHoverOutCallback(callback)  # pyright: ignore[reportArgumentType]
         return self
 
 
@@ -315,9 +320,7 @@ class UScrollView(UBaseCtrl):
         # type: (ScreenLike, ScrollViewUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ScrollViewUIControl):
-            raise TypeError(
-                "expected ScrollViewUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected ScrollViewUIControl, got " + str(type(base)))
         self.base = base
 
     def GetContent(self):
@@ -329,21 +332,17 @@ class UGrid(UBaseCtrl):
         # type: (ScreenLike, GridUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, GridUIControl):
-            raise TypeError(
-                "expected GridUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected GridUIControl, got " + str(type(base)))
         self.path = self.base.GetPath()
         grid_comp_size_changed_cbs[self.path] = self.onGridSizeChanged
-        self.later_exec_cbs = [] # type: list[Callable[[], None]]
+        self.later_exec_cbs = []  # type: list[Callable[[], None]]
         self.base = base
 
     def GetGridDimension(self):
         # type: () -> tuple[int, int]
-        return getattr(
-            ExecLater, "__globals__"
-        )["__builtins__"]["__import__"]("gui").get_grid_dimension(
-            self._root.base.GetScreenName(), self.getFullPath()
-        )
+        return getattr(ExecLater, "__globals__")["__builtins__"]["__import__"](
+            "gui"
+        ).get_grid_dimension(self._root.base.GetScreenName(), self.getFullPath())
 
     def GetGridItem(self, x, y):
         # type: (int, int) -> UBaseCtrl
@@ -383,9 +382,7 @@ class UComboBox(UBaseCtrl):
         # type: (ScreenLike, NeteaseComboBoxUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, NeteaseComboBoxUIControl):
-            raise TypeError(
-                "expected NeteaseComboBoxUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected NeteaseComboBoxUIControl, got " + str(type(base)))
         self.base = base
 
     def AddOption(self, text, icon="", extra_data=None):
@@ -409,9 +406,7 @@ class USlider(UBaseCtrl):
         # type: (ScreenLike, SliderUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, SliderUIControl):
-            raise TypeError(
-                "expected SliderUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected SliderUIControl, got " + str(type(base)))
         self.base = base
 
     def GetSliderValue(self):
@@ -434,19 +429,17 @@ class UNeteasePaperDoll(UBaseCtrl):
 
     def RenderEntity(
         self,
-        entity_id=None, # type: str | None
-        entity_identifier=None, # type: str | None
-        scale=1.0, # type: float
-        render_depth=-50, # type: int
-        init_rot_x=0, # type: float
-        init_rot_y=0, # type: float
-        init_rot_z=0, # type: float
-        molang_dict={}, # type: dict
-        rotation_axis=(0, 0, 0), # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
+        entity_id=None,  # type: str | None
+        entity_identifier=None,  # type: str | None
+        scale=1.0,  # type: float
+        render_depth=-50,  # type: int
+        init_rot_x=0,  # type: float
+        init_rot_y=0,  # type: float
+        init_rot_z=0,  # type: float
+        molang_dict={},  # type: dict
+        rotation_axis=(0, 0, 0),  # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
     ):
-        return self.base.RenderEntity({
-            "entity_id": entity_id,
-            "entity_identifier": entity_identifier,
+        params = {
             "scale": scale,
             "render_depth": render_depth,
             "init_rot_x": init_rot_x,
@@ -454,27 +447,34 @@ class UNeteasePaperDoll(UBaseCtrl):
             "init_rot_z": init_rot_z,
             "molang_dict": molang_dict,
             "rotation_axis": rotation_axis,
-        })
+        }
+        if entity_id is not None:
+            params["entity_id"] = entity_id
+        if entity_identifier is not None:
+            params["entity_identifier"] = entity_identifier
+        return self.base.RenderEntity(params)
 
     def RenderBlockGeometryModel(
         self,
-        block_geometry_model_name, # type: str
-        scale=1.0, # type: float
-        init_rot_y=0, # type: float
-        init_rot_x=0, # type: float
-        init_rot_z=0, # type: float
-        molang_dict=None, # type: dict | None
-        rotation_axis=(1, 0, 0), # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
+        block_geometry_model_name,  # type: str
+        scale=1.0,  # type: float
+        init_rot_y=0,  # type: float
+        init_rot_x=0,  # type: float
+        init_rot_z=0,  # type: float
+        molang_dict=None,  # type: dict | None
+        rotation_axis=(1, 0, 0),  # type: tuple[Literal[0, 1], Literal[0, 1], Literal[0, 1]]
     ):
-        return self.base.RenderBlockGeometryModel({
-            "block_geometry_model_name": block_geometry_model_name,
-            "scale": scale,
-            "init_rot_y": init_rot_y,
-            "init_rot_x": init_rot_x,
-            "init_rot_z": init_rot_z,
-            "molang_dict": molang_dict or {},
-            "rotation_axis": rotation_axis,
-        })
+        return self.base.RenderBlockGeometryModel(
+            {
+                "block_geometry_model_name": block_geometry_model_name,
+                "scale": scale,
+                "init_rot_y": init_rot_y,
+                "init_rot_x": init_rot_x,
+                "init_rot_z": init_rot_z,
+                "molang_dict": molang_dict or {},
+                "rotation_axis": rotation_axis,
+            }
+        )
 
 
 class UTextEditBoxUIControl(UBaseCtrl):
@@ -482,9 +482,7 @@ class UTextEditBoxUIControl(UBaseCtrl):
         # type: (ScreenLike, TextEditBoxUIControl) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, TextEditBoxUIControl):
-            raise TypeError(
-                "expected TextEditBoxUIControl, got " + str(type(base))
-            )
+            raise TypeError("expected TextEditBoxUIControl, got " + str(type(base)))
         self.base = base
 
     def GetText(self):
@@ -495,7 +493,8 @@ class UTextEditBoxUIControl(UBaseCtrl):
         self.base.SetEditText(text)
 
 
-grid_comp_size_changed_cbs = dict() # type: dict[str, Callable[[], None]]
+grid_comp_size_changed_cbs = dict()  # type: dict[str, Callable[[], None]]
+
 
 @GridComponentSizeChangedClientEvent.Listen()
 def onGridComponentSizeChanged(event):
@@ -505,13 +504,9 @@ def onGridComponentSizeChanged(event):
         path = path[5:]
     cb = grid_comp_size_changed_cbs.get(path)
     if cb:
-        ExecLater(0, cb) # TODO: 不知道为什么 如果直接 cb() grid 会获取不到新 position。。
+        ExecLater(
+            0, cb
+        )  # TODO: 不知道为什么 如果直接 cb() grid 会获取不到新 position。。
 
 
-__all__ = [
-    "UBaseCtrl",
-    "UItemRenderer",
-    "ULabel",
-    "UImage",
-    "UButton"
-]
+__all__ = ["UBaseCtrl", "UItemRenderer", "ULabel", "UImage", "UButton"]

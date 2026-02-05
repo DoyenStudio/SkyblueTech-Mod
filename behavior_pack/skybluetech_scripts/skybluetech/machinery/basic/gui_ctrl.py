@@ -1,9 +1,16 @@
 # coding=utf-8
 #
 from skybluetech_scripts.tooldelta.events.server.block import ServerBlockUseEvent
-from skybluetech_scripts.tooldelta.events.server.ui import PushUIRequest, ForceRemoveUIRequest
+from skybluetech_scripts.tooldelta.events.server.ui import (
+    PushUIRequest,
+    ForceRemoveUIRequest,
+)
 from skybluetech_scripts.tooldelta.events.notify import NotifyToClient, NotifyToClients
-from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync, AddSyncPending, GetAllPlayersInSync
+from skybluetech_scripts.tooldelta.extensions.ui_sync import (
+    S2CSync,
+    AddSyncPending,
+    GetAllPlayersInSync,
+)
 
 if 0:
     from ...ui.machinery.define import MachinePanelUI
@@ -12,20 +19,33 @@ if 0:
 class GUIControl(object):
     """
     带有 GUI 的机器基类。
-    
+
     覆写: `OnClick`, `OnUnload`
     """
-    bound_ui = None # type: type[MachinePanelUI] | None
+
+    bound_ui = None  # type: type[MachinePanelUI] | None
     "绑定的 UI, 如果为自定义容器, 此处设置为 None"
     sync = S2CSync.NewServer()
     "UI 同步器"
 
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
+    def OnClick(self, event, extra_datas=None):
+        # type: (ServerBlockUseEvent, dict | None) -> None
         "超类方法用于通知玩家打开 GUI。"
         AddSyncPending(event.playerId, self.sync)
+        params = {
+            "st:dmpos": (event.dimensionId, event.x, event.y, event.z),
+        }
+        if extra_datas is not None:
+            params.update(extra_datas)
         if self.bound_ui is not None:
-            NotifyToClient(event.playerId, PushUIRequest(self.bound_ui._screen_key, self.sync.sync_id))
+            NotifyToClient(
+                event.playerId,
+                PushUIRequest(
+                    self.bound_ui._screen_key,
+                    self.sync.sync_id,
+                    params,
+                ),
+            )
 
     def OnUnload(self):
         "超类方法用于通知玩家关闭 GUI 和将同步项关闭。"
@@ -37,5 +57,3 @@ class GUIControl(object):
     def OnSync(self):
         # type: () -> None
         "覆写方法用于将机器数据同步到客户端 UI。"
-
-

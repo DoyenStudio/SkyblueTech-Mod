@@ -4,7 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import CREATIVE_GENERATOR as MACHINE_ID
 from .basic import BasicGenerator, RegisterMachine
 
-INFINITY = float("inf") # type: int # type: ignore
+INFINITY = float("inf")  # type: int # type: ignore
 
 
 @RegisterMachine

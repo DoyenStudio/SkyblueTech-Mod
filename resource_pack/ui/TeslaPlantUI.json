@@ -1,0 +1,592 @@
+{
+    "main@common.inventory_screen_common": {
+        "$screen_content": "TeslaPlantUI.tesla_plant_ui"
+    },
+    "namespace": "TeslaPlantUI",
+    "tesla_plant_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 100,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "特斯拉电涌塔",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "settings": {
+                                                        "type": "panel",
+                                                        "anchor_from": "top_left",
+                                                        "anchor_to": "top_left",
+                                                        "offset": [
+                                                            25.0,
+                                                            21.0
+                                                        ],
+                                                        "size": [
+                                                            "80%+0px",
+                                                            60.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "label1": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "size": [
+                                                                        52.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "font_scale_factor": 1.2,
+                                                                    "font_type": "default",
+                                                                    "text": "启用电涌塔"
+                                                                }
+                                                            },
+                                                            {
+                                                                "switch1@common_toggles.switch_toggle_collection": {
+                                                                    "type": "panel",
+                                                                    "$default_texture": "textures/ui/toggle_off",
+                                                                    "$hover_texture": "textures/ui/toggle_on",
+                                                                    "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
+                                                                    "$pressed_texture": "textures/ui/toggle_off_hover",
+                                                                    "$toggle_name": "#TeslaPlantUI.switch_1",
+                                                                    "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        46.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        40.0,
+                                                                        15.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "label2": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        16.0
+                                                                    ],
+                                                                    "size": [
+                                                                        52.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "font_scale_factor": 1.2,
+                                                                    "font_type": "default",
+                                                                    "text": "对玩家放电"
+                                                                }
+                                                            },
+                                                            {
+                                                                "switch2@common_toggles.switch_toggle_collection": {
+                                                                    "type": "panel",
+                                                                    "$default_texture": "textures/ui/toggle_off",
+                                                                    "$hover_texture": "textures/ui/toggle_on",
+                                                                    "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
+                                                                    "$pressed_texture": "textures/ui/toggle_off_hover",
+                                                                    "$toggle_name": "#TeslaPlantUI.switch_2",
+                                                                    "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        46.0,
+                                                                        14.0
+                                                                    ],
+                                                                    "size": [
+                                                                        40.0,
+                                                                        15.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "label3": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        30.0
+                                                                    ],
+                                                                    "size": [
+                                                                        52.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "font_scale_factor": 1.2,
+                                                                    "font_type": "default",
+                                                                    "text": "对怪物放电"
+                                                                }
+                                                            },
+                                                            {
+                                                                "switch3@common_toggles.switch_toggle_collection": {
+                                                                    "type": "panel",
+                                                                    "$default_texture": "textures/ui/toggle_off",
+                                                                    "$hover_texture": "textures/ui/toggle_on",
+                                                                    "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
+                                                                    "$pressed_texture": "textures/ui/toggle_off_hover",
+                                                                    "$toggle_name": "#TeslaPlantUI.switch_3",
+                                                                    "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        46.0,
+                                                                        28.0
+                                                                    ],
+                                                                    "size": [
+                                                                        40.0,
+                                                                        15.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "label4": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_right",
+                                                                    "anchor_to": "top_right",
+                                                                    "offset": [
+                                                                        -10.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "size": [
+                                                                        52.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "font_scale_factor": 1.2,
+                                                                    "font_type": "default",
+                                                                    "text": "电涌范围"
+                                                                }
+                                                            },
+                                                            {
+                                                                "range_sub_btn@common.button": {
+                                                                    "type": "button",
+                                                                    "$control_alpha": 1.0,
+                                                                    "$default_texture": "textures/ui/button_default",
+                                                                    "$hover_texture": "textures/ui/button_hovered",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$label_color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "$label_font_scale_factor": 1.0,
+                                                                    "$label_font_size": "normal",
+                                                                    "$label_layer": 3,
+                                                                    "$label_offset": [
+                                                                        0.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "$label_text": "-",
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                                    "$pressed_texture": "textures/ui/button_pressed",
+                                                                    "$texture_layer": 2,
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        82.0,
+                                                                        29.0
+                                                                    ],
+                                                                    "size": [
+                                                                        14.0,
+                                                                        14.0
+                                                                    ],
+                                                                    "layer": 2,
+                                                                    "button_mappings": [],
+                                                                    "default_control": "default",
+                                                                    "hover_control": "hover",
+                                                                    "is_handle_button_move_event": true,
+                                                                    "pressed_control": "pressed",
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ],
+                                                                    "controls": [
+                                                                        {
+                                                                            "default@netease_editor_template_namespace.default": {}
+                                                                        },
+                                                                        {
+                                                                            "hover@netease_editor_template_namespace.hover": {}
+                                                                        },
+                                                                        {
+                                                                            "pressed@netease_editor_template_namespace.pressed": {}
+                                                                        },
+                                                                        {
+                                                                            "button_label@netease_editor_template_namespace.button_label": {}
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "range_add_btn@common.button": {
+                                                                    "type": "button",
+                                                                    "$control_alpha": 1.0,
+                                                                    "$default_texture": "textures/ui/button_default",
+                                                                    "$hover_texture": "textures/ui/button_hovered",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$label_color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "$label_font_scale_factor": 1.0,
+                                                                    "$label_font_size": "normal",
+                                                                    "$label_layer": 3,
+                                                                    "$label_offset": [
+                                                                        0.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "$label_text": "+",
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                                    "$pressed_texture": "textures/ui/button_pressed",
+                                                                    "$texture_layer": 2,
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        125.0,
+                                                                        29.0
+                                                                    ],
+                                                                    "size": [
+                                                                        14.0,
+                                                                        14.0
+                                                                    ],
+                                                                    "layer": 2,
+                                                                    "button_mappings": [],
+                                                                    "default_control": "default",
+                                                                    "hover_control": "hover",
+                                                                    "is_handle_button_move_event": true,
+                                                                    "pressed_control": "pressed",
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ],
+                                                                    "controls": [
+                                                                        {
+                                                                            "default@netease_editor_template_namespace.default": {}
+                                                                        },
+                                                                        {
+                                                                            "hover@netease_editor_template_namespace.hover": {}
+                                                                        },
+                                                                        {
+                                                                            "pressed@netease_editor_template_namespace.pressed": {}
+                                                                        },
+                                                                        {
+                                                                            "button_label@netease_editor_template_namespace.button_label": {}
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "range_preview_btn@common.button": {
+                                                                    "type": "button",
+                                                                    "$control_alpha": 1.0,
+                                                                    "$default_texture": "textures/ui/button_default",
+                                                                    "$hover_texture": "textures/ui/button_hovered",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$label_color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "$label_font_scale_factor": 1.0,
+                                                                    "$label_font_size": "normal",
+                                                                    "$label_layer": 3,
+                                                                    "$label_offset": [
+                                                                        0.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "$label_text": "",
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                                    "$pressed_texture": "textures/ui/button_pressed",
+                                                                    "$texture_layer": 2,
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        125.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "size": [
+                                                                        14.0,
+                                                                        14.0
+                                                                    ],
+                                                                    "layer": 2,
+                                                                    "button_mappings": [],
+                                                                    "default_control": "default",
+                                                                    "hover_control": "hover",
+                                                                    "is_handle_button_move_event": true,
+                                                                    "pressed_control": "pressed",
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ],
+                                                                    "controls": [
+                                                                        {
+                                                                            "default@netease_editor_template_namespace.default": {}
+                                                                        },
+                                                                        {
+                                                                            "hover@netease_editor_template_namespace.hover": {}
+                                                                        },
+                                                                        {
+                                                                            "pressed@netease_editor_template_namespace.pressed": {}
+                                                                        },
+                                                                        {
+                                                                            "button_label@netease_editor_template_namespace.button_label": {}
+                                                                        },
+                                                                        {
+                                                                            "image": {
+                                                                                "type": "image",
+                                                                                "layer": 2,
+                                                                                "texture": "textures/ui/eye_icon"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "range_display": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        96.0,
+                                                                        29.0
+                                                                    ],
+                                                                    "size": [
+                                                                        29.0,
+                                                                        14.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333,
+                                                                        0.3333333333333333
+                                                                    ],
+                                                                    "font_scale_factor": 1.5,
+                                                                    "font_type": "default",
+                                                                    "text": "00",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "ant_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            0.0,
+                                                            -10.0
+                                                        ],
+                                                        "size": [
+                                                            18.0,
+                                                            18.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "$background_images|default": "TeslaPlantUI.crafting_template_slot_img",
+                                                                    "collection_index": 12
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "slot_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            26.0,
+                                                            -10.0
+                                                        ],
+                                                        "color": [
+                                                            0.3333333333333333,
+                                                            0.3333333333333333,
+                                                            0.3333333333333333
+                                                        ],
+                                                        "font_scale_factor": 1.2,
+                                                        "font_type": "default",
+                                                        "text": "电涌天线"
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "layer": 13,
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    }
+}

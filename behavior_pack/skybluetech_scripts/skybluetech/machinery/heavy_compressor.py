@@ -3,21 +3,32 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
-from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
+from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
+    GetCraftingRecipe,
+    CraftingRecipeRes,
+)
 from ..define import flags
 from ..define.id_enum.machinery import HEAVY_COMPRESSOR as MACHINE_ID
 from ..ui_sync.machinery.heavy_compressor import HeavyCompressorUISync
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
+from .basic import (
+    AutoSaver,
+    BaseMachine,
+    ItemContainer,
+    GUIControl,
+    SPControl,
+    WorkRenderer,
+    RegisterMachine,
+)
 
-compressed_recipes = {} # type: dict[str, str]
-cant_compressed_recipes = set() # type: set[str]
+compressed_recipes = {}  # type: dict[str, str]
+cant_compressed_recipes = set()  # type: set[str]
 
 
 @RegisterMachine
 class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 8800
-    origin_process_ticks = 20 * 5 # 8s
+    origin_process_ticks = 20 * 5  # 8s
     running_power = 30
     input_slots = (0,)
     output_slots = (1,)
@@ -51,20 +62,24 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
                 self.RequireItems()
                 self.TryStartNext(dont_recursive=True)
             return
-        expected_output = GetCompressedResult(input_item.newItemName, input_item.auxValue)
+        expected_output = GetCompressedResult(
+            input_item.newItemName, input_item.newAuxValue
+        )
         if expected_output is None or input_item.count < 9:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
         if not self.canOutput(expected_output, output_item):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-                
+
     def runOnce(self):
         input_item = self.GetSlotItem(0, False)
         output_item = self.GetSlotItem(1, False)
         if input_item is None:
             raise ValueError("No input")
-        expected_output = GetCompressedResult(input_item.newItemName, input_item.auxValue)
+        expected_output = GetCompressedResult(
+            input_item.newItemName, input_item.newAuxValue
+        )
         if expected_output is None:
             raise ValueError("Recipe ERROR")
         if not self.canOutput(expected_output, output_item):
@@ -90,7 +105,7 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         )
 
     def OnSync(self):
-        self.sync.storage_rf = self.store_rf 
+        self.sync.storage_rf = self.store_rf
         self.sync.rf_max = self.store_rf_max
         self.sync.progress_relative = self.GetProcessProgress()
         self.sync.MarkedAsChanged()
@@ -110,7 +125,9 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
             return
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-        expected_output = GetCompressedResult(input_item.newItemName, input_item.auxValue)
+        expected_output = GetCompressedResult(
+            input_item.newItemName, input_item.newAuxValue
+        )
         if expected_output is None or input_item.count < 9:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return

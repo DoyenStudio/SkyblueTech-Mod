@@ -6,6 +6,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     ServerPlaceBlockEntityEvent,
+    EntityPlaceBlockAfterServerEvent,
     BlockNeighborChangedServerEvent,
     ContainerItemChangedServerEvent,
 )
@@ -206,14 +207,14 @@ def cleanAccessPoint(dim, x, y, z):
     if network is not None:
         deleteNetwork(network)
     tmp_set = set()
-    GetNearbyCableNetworks(
+    i, o = GetNearbyCableNetworks(
         dim,
         x,
         y,
         z,
         tmp_set,
         enable_cache=False
-    ) # 仅刷新
+    )
 
 def cleanContainerNetworks(dim, x, y, z):
     # type: (int, int, int, int) -> None
@@ -237,14 +238,16 @@ def cleanContainerNetworks(dim, x, y, z):
         z,
         tmp_set
     )
-    GetNearbyCableNetworks(
+    i, o = GetNearbyCableNetworks(
         dim,
         x,
         y,
         z,
         tmp_set,
         enable_cache=False
-    ) # 仅刷新
+    )
+    for network in i + o:
+        ActivateNetwork(network)
 
 def GetNearbyCableNetworks(dim, x, y, z, exists=None, enable_cache=True):
     # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[list[CableNetwork], list[CableNetwork]]
@@ -426,27 +429,43 @@ def RequireItems(dim, xyz):
                     break
     return ok
 
-@ServerPlaceBlockEntityEvent.Listen()
+def ActivateNetwork(network):
+    # type: (CableNetwork) -> None
+    for ap in network.get_input_access_points():
+        target_pos = ap.target_pos
+        RequireItems(network.dim, target_pos)
+
+@Delay(0)
+def onMachineryPlacedLater(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    # 在容器被放置后延迟执行,
+    # 用于使新容器尝试接收一次物品
+    RequireItems(dim, (x, y, z))
+
+@EntityPlaceBlockAfterServerEvent.Listen()
 def onBlockPlaced(event):
-    # type: (ServerPlaceBlockEntityEvent) -> None
-    if isCable(event.blockName):
+    # type: (EntityPlaceBlockAfterServerEvent) -> None
+    if isCable(event.fullName):
         states = {}  # type: dict[str, bool]
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
             facing_key = (
                 "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
             )
             bname = GetBlockName(
-                event.dimension,
-                (event.posX + dx, event.posY + dy, event.posZ + dz),
+                event.dimensionId,
+                (event.x + dx, event.y + dy, event.z + dz),
             )
             if bname is None:
                 continue
             states[facing_key] = canConnect(bname)
-        UpdateBlockStates(event.dimension, (event.posX, event.posY, event.posZ), states)
-        cleanAccessPoint(event.dimension, event.posX, event.posY, event.posZ)
-    elif isContainer(event.blockName):
+        UpdateBlockStates(event.dimensionId, (event.x, event.y, event.z), states)
+        cleanAccessPoint(event.dimensionId, event.x, event.y, event.z)
+        network = GetNetworkByCable(event.dimensionId, event.x, event.y, event.z)
+        if network is not None:
+            ActivateNetwork(network)
+    elif isContainer(event.fullName):
         # 图方便
-        cleanContainerNetworks(event.dimension, event.posX, event.posY, event.posZ)
+        cleanContainerNetworks(event.dimensionId, event.x, event.y, event.z)
 
 
 BlockRemoveServerEvent.AddExtraBlocks(COMMON_CONTAINERS)
@@ -536,3 +555,5 @@ def onNeighbourBlockChanged(event):
                 (event.posX, event.posY, event.posZ),
                 {facing_key: to_block_can_connect},
             )
+    if isContainer(event.toBlockName):
+        onMachineryPlacedLater(event.dimensionId, event.neighborPosX, event.neighborPosY, event.neighborPosZ)

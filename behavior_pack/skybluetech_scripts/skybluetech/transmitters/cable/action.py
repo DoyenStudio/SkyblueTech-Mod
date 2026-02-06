@@ -9,6 +9,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     UpdateBlockStates,
     SetOnePopupNotice,
 )
+from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from ...define.events.misc.transmitter_settings import (
     TransmitterSetLabel, TransmitterSetPriority
 )
@@ -16,7 +17,7 @@ from ...define.id_enum.items import TRANSMITTER_WRENCH, TRANSMITTER_SETTINGS_WRE
 from ...define.facing import NEIGHBOR_BLOCKS_ENUM
 from ..constants import FACING_EN, FACING_ZHCN
 from .define import CableAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
-from .logic import isCable, canConnect, GetNetworkByCable, GetNearbyCableNetworks
+from .logic import isCable, canConnect, GetNetworkByCable, GetNearbyCableNetworks, ActivateNetwork
 from .pool import CableAccessPointPool, CableNetworkPool
 
 
@@ -113,6 +114,7 @@ def onPlayerUseWrench(event):
             + "§f面设置为"
             + ("§a输入", "§c抽出")[newState],
         )
+        ExecLater(0, ActivateNetwork, current_network)
         UpdateBlockStates(event.dimensionId, (blockX, blockY, blockZ), block_orig_status)
     elif event.item.newItemName == TRANSMITTER_SETTINGS_WRENCH:
         facing = get_testing_facing(event.clickX, event.clickY, event.clickZ)

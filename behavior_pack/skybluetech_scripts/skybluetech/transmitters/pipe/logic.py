@@ -17,7 +17,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...machinery.basic.fluid_container import FluidContainer
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
-from ...machinery.pool import GetMachineStrict
+from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
 from ...define.facing import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
 from ..constants import FACING_EN, DXYZ_FACING
 from .define import PipeNetwork, PipeAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
@@ -337,6 +337,13 @@ def RequirePostFluid(dim, xyz):
         m = GetMachineStrict(dim, ap.x + dx, ap.y + dy, ap.z + dz)
         if isinstance(m, (FluidContainer, MultiFluidContainer)):
             m.RequirePost()
+
+@Delay(0)
+def onMachineryPlacedLater(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    # 在流体容器被放置后延迟执行,
+    # 用于使新设备尝试索取流体
+    RequirePostFluid(dim, (x, y, z))
 
 @ServerPlaceBlockEntityEvent.Listen()
 def onBlockPlaced(event):

@@ -343,6 +343,8 @@ def RequireEnergyFromNetwork(machine):
 @Delay(0)
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
+    # 在机器被放置后延迟执行,
+    # 用于尝试激活网络中的其他设备, 使其向新设备尝试进行一次输出
     for network in GetNearbyWireNetworks(dim, x, y, z)[0]:
         for ap in network.group_outputs:
             m = GetMachineWithoutCls(dim, *ap.target_pos)

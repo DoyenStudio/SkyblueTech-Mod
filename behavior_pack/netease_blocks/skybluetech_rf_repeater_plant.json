@@ -1,0 +1,116 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:light_dampening": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.0
+            },
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "block_1": "q.block_state('skybluetech:layer') == 0",
+                    "block_2": "q.block_state('skybluetech:layer') == 1",
+                    "block_3": "q.block_state('skybluetech:layer') == 2",
+                    "east_charge": "q.block_state('skybluetech:connection_east')",
+                    "north_charge": "q.block_state('skybluetech:connection_north')",
+                    "south_charge": "q.block_state('skybluetech:connection_south')",
+                    "west_charge": "q.block_state('skybluetech:connection_west')"
+                },
+                "identifier": "geometry.skybluetech.rf_repeater_plant"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:wind_generator"
+                }
+            },
+            "netease:block_entity": {
+            },
+            "netease:aabb": {
+                "collision": {
+                    "min": [
+                        0.375,
+                        0,
+                        0.375
+                    ],
+                    "max": [
+                        0.625,
+                        1,
+                        0.625
+                    ]
+                },
+                "clip": {
+                    "min": [
+                        0.375,
+                        0,
+                        0.375
+                    ],
+                    "max": [
+                        0.625,
+                        1,
+                        0.625
+                    ]
+                }
+            },
+            "netease:solid": {
+                "value": false
+            },
+            "netease:custom_tips": {
+                "value": "\n§7用于远距离传输红石通量能源。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:redstoneflux_generator": {},
+            "tag:redstoneflux_provider": {},
+            "tag:skybluetech_generator": {},
+            "tag:skybluetech_machine": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:rf_repeater_plant",
+            "states": {
+                "skybluetech:layer": [
+                    0,
+                    1,
+                    2
+                ],
+                "skybluetech:connection_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_south": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_west": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_north": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        }
+    }
+}

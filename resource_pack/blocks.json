@@ -559,5 +559,8 @@
             "identifier": "skybluetech:wind_generator"
         },
         "sound": "iron"
+    },
+    "skybluetech:rf_repeater_plant": {
+        "sound": "iron"
     }
 }

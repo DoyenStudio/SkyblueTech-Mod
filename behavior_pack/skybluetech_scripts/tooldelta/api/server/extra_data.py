@@ -23,3 +23,9 @@ def SetExtraData(
     auto_save=True,
 ):
     return ServerComp.CreateExtraData(entity_id).SetExtraData(key, value, auto_save)
+
+def CleanExtraData(
+    entity_id, # type: str
+    key, # type: str
+):
+    return ServerComp.CreateExtraData(entity_id).CleanExtraData(key)

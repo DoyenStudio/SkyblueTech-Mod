@@ -38,6 +38,7 @@
         "ui/PumpUI.json",
         "ui/RecipeCheckerUI.json",
         "ui/RedstoneFurnaceUI.json",
+        "ui/RFRepeaterPlantUI.json",
         "ui/SkybluePanelLib.json",
         "ui/SolarPanelUI.json",
         "ui/SplitterUI.json",

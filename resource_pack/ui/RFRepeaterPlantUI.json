@@ -1,0 +1,336 @@
+{
+    "energy_ctrl@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "textures/ui/button_default",
+        "$hover_texture": "textures/ui/button_hovered",
+        "$img_rotation": 0,
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.3,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$pressed_texture": "textures/ui/button_pressed",
+        "$texture_layer": 2,
+        "offset": [
+            0.0,
+            24.0
+        ],
+        "size": [
+            20.0,
+            20.0
+        ],
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "is_handle_button_move_event": true,
+        "pressed_control": "pressed",
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "",
+                "binding_condition": "always_when_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {}
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {}
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {}
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {}
+            },
+            {
+                "arrow": {
+                    "type": "image",
+                    "$img_rotation|default": 0,
+                    "layer": 10,
+                    "rotate_angle": "$img_rotation",
+                    "texture": "textures/ui/energy_pull_or_push",
+                    "uv_size": [
+                        16.0,
+                        16.0
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "RFRepeaterPlantUI.rf_repeater_plant_ui"
+    },
+    "namespace": "RFRepeaterPlantUI",
+    "rf_repeater_plant_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 1
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 2
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 403
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {
+                    "layer": 404
+                }
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {
+                                            "layer": 1
+                                        }
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "layer": 784,
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "能源中继塔",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "layer": 785,
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {
+                                            "layer": 966
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "layer": 973,
+                                            "controls": [
+                                                {
+                                                    "energy_io_modes_disp": {
+                                                        "type": "label",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -10.0,
+                                                            60.0
+                                                        ],
+                                                        "size": [
+                                                            66.0,
+                                                            60.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "font_type": "default",
+                                                        "text": "§5E (x+)： 输入\n§tW (x-)： 输入\n§9S (z+)： 输入\n§4N (z-)： 输入"
+                                                    }
+                                                },
+                                                {
+                                                    "energy_io_ctrls": {
+                                                        "type": "panel",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            11.0,
+                                                            60.0
+                                                        ],
+                                                        "size": [
+                                                            60.0,
+                                                            60.0
+                                                        ],
+                                                        "layer": 2,
+                                                        "controls": [
+                                                            {
+                                                                "north_ctrl@RFRepeaterPlantUI.energy_ctrl": {
+                                                                    "$img_rotation": 180,
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "offset": [
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "south_ctrl@RFRepeaterPlantUI.energy_ctrl": {
+                                                                    "anchor_from": "bottom_middle",
+                                                                    "anchor_to": "bottom_middle",
+                                                                    "layer": 21,
+                                                                    "offset": [
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "west_ctrl@RFRepeaterPlantUI.energy_ctrl": {
+                                                                    "$img_rotation": -90,
+                                                                    "anchor_from": "left_middle",
+                                                                    "anchor_to": "left_middle",
+                                                                    "layer": 41,
+                                                                    "offset": [
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "east_ctrl@RFRepeaterPlantUI.energy_ctrl": {
+                                                                    "$img_rotation": 90,
+                                                                    "anchor_from": "right_middle",
+                                                                    "anchor_to": "right_middle",
+                                                                    "layer": 61,
+                                                                    "offset": [
+                                                                        0,
+                                                                        0
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "image": {
+                                                                    "type": "image",
+                                                                    "size": [
+                                                                        20.0,
+                                                                        20.0
+                                                                    ],
+                                                                    "layer": 81,
+                                                                    "texture": "textures/ui/energy_icon"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "databoard": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            0.0,
+                                                            -36.0
+                                                        ],
+                                                        "size": [
+                                                            160.0,
+                                                            80.0
+                                                        ],
+                                                        "layer": 84,
+                                                        "nineslice_size": [
+                                                            2.0,
+                                                            2.0,
+                                                            2.0,
+                                                            2.0
+                                                        ],
+                                                        "rotate_pivot": [
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "texture": "textures/ui/bg_frame_01",
+                                                        "uv": [
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "uv_size": [
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "label": {
+                                                                    "type": "label",
+                                                                    "size": [
+                                                                        "100%+-3px",
+                                                                        "100%+-3px"
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "font_type": "default",
+                                                                    "text": "§a电网架设完毕。\n\n§b电网中继塔数： §f0 （在线 0）\n§4总输出端数： §f0 （在线 0）\n§a总输入端数：§f 0 （在线 0）"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "ctrl_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            10.0,
+                                                            15.0
+                                                        ],
+                                                        "layer": 86,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 1.1,
+                                                        "font_type": "default",
+                                                        "text": "输入输出控制",
+                                                        "text_alignment": "center"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 405,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -202,7 +202,7 @@ class ToolDeltaScreen(ClientListenerService):
             return
         _addActiveToolDeltaScreen(self)
         self._activated = True
-        self.disable_listeners()
+        self.enable_listeners()
 
     def _do_deactive(self):
         from .pool import _removeActiveToolDeltaScreen

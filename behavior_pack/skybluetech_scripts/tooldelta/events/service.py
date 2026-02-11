@@ -1,7 +1,7 @@
 # coding=utf-8
 from .basic import ClientEvent, ServerEvent
-from .client_event_listener import dynListen as cDynListen
-from .server_event_listener import dynListen as sDynListen
+from .client_event_listener import dynListen as cDynListen, dynUnListen as cDynUnListen
+from .server_event_listener import dynListen as sDynListen, dynUnListen as sDynUnListen
 
 if 0:
     from typing import Callable, TypeVar
@@ -31,7 +31,7 @@ class ClientListenerService:
     def disable_listeners(self):
         for event, event_cb, priority in self._bind_listen_events:
             if issubclass(event, ClientEvent):
-                cDynListen(event, event_cb, priority)
+                cDynUnListen(event, event_cb, priority)
 
     def _process_bind_listeners(self):
         for key in dir(self):
@@ -74,7 +74,7 @@ class ServerListenerService:
     def disable_listeners(self):
         for event, event_cb, priority in self._bind_listen_events:
             if issubclass(event, ServerEvent):
-                sDynListen(event, event_cb, priority)
+                sDynUnListen(event, event_cb, priority)
 
     def _process_bind_listeners(self):
         for key in dir(self):

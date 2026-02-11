@@ -1,26 +1,22 @@
 # coding=utf-8
 import mod.client.extraClientApi as clientApi
-from ..events import ClientEvent, clientapi as event_client
+from ..events.service import ClientListenerService
 from ..internal import GetModName
 from .elem_comp import UBaseCtrl
 from .utils import UIPath, Binder
 
 if 0:
-    from typing import Callable, TypeVar
     from mod.client.ui.screenNode import ScreenNode as _ScreenNode
     from mod.client.ui.CustomUIScreenProxy import (
         CustomUIScreenProxy as _CustomUIControlProxy,
     )
-
-    T = TypeVar("T")
-    CallT = TypeVar("CallT", bound=Callable)
 
 
 ScreenNode = clientApi.GetScreenNodeCls()
 ScreenProxy = clientApi.GetUIScreenProxyCls()
 
 
-class ToolDeltaScreen(object):
+class ToolDeltaScreen(ClientListenerService):
     _ATTR_EVENT_LISTENER = "_tdscreen_event_listen"
     _ATTR_EVENT_LISTENER_PRIORITY = "_tdscreen_event_listen_priority"
 
@@ -30,6 +26,7 @@ class ToolDeltaScreen(object):
 
     def __init__(self, screen_name, screen_instance, params=None):
         # type: (str, _ScreenNode | _CustomUIControlProxy, dict | None) -> None
+        ClientListenerService.__init__(self)
         self._screen_name = screen_name
         self._screen_instance = screen_instance
         self._init_params = params or {}
@@ -41,8 +38,6 @@ class ToolDeltaScreen(object):
         self._activated = False
         self._element_cacher = {}  # type: dict[str, UBaseCtrl]
         self._vars = {}
-        self._ui_bound_events = []  # type: list[tuple[type[ClientEvent], Callable[[ClientEvent], None], int]]
-        self._analyze_td_bindings()
 
     def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
@@ -92,29 +87,6 @@ class ToolDeltaScreen(object):
         else:
             if clientApi.GetTopUINode() is self.base:
                 clientApi.PopTopUI()
-
-    @classmethod
-    def Listen(
-        cls,
-        event,  # type: type[ClientEvent]
-        priority=0,
-    ):
-        """
-        类似一般的监听装饰器, 绑定客户端监听回调函数到 Screen 上。
-
-        随着 Screen 的创建被创建, Screen 被销毁同时监听亦被销毁。
-
-        Args:
-            event (type[ClientEvent]): 事件类
-        """
-
-        def wrapper(func):
-            # type: (CallT) -> CallT
-            setattr(func, cls._ATTR_EVENT_LISTENER, event)
-            setattr(func, cls._ATTR_EVENT_LISTENER_PRIORITY, priority)
-            return func
-
-        return wrapper
 
     @classmethod
     def _register_as_screen(
@@ -186,17 +158,9 @@ class ToolDeltaScreen(object):
         cls._screen_proxy_cls = t
         return t
 
-    def _analyze_td_bindings(self):
-        for key in dir(self):
-            attr = getattr(self, key)
-            if hasattr(attr, self._ATTR_EVENT_LISTENER):
-                event = getattr(attr, self._ATTR_EVENT_LISTENER)
-                priority = getattr(attr, self._ATTR_EVENT_LISTENER_PRIORITY)
-                self._ui_bound_events.append((event, attr, priority))
-
     @classmethod
     def _get_tdscreen_bindings(cls):
-        attrs = {}  # type: dict[str, Callable]
+        attrs = {}
         for key in dir(cls):
             attr = getattr(cls, key)
             if hasattr(attr, "collection_name"):
@@ -238,7 +202,7 @@ class ToolDeltaScreen(object):
             return
         _addActiveToolDeltaScreen(self)
         self._activated = True
-        self._enable_ui_bound_listeners()
+        self.disable_listeners()
 
     def _do_deactive(self):
         from .pool import _removeActiveToolDeltaScreen
@@ -247,21 +211,7 @@ class ToolDeltaScreen(object):
             return
         _removeActiveToolDeltaScreen(self)
         self._activated = False
-        self._disable_ui_bound_listeners()
-
-    def _enable_ui_bound_listeners(self):
-        for event, event_cb, priority in self._ui_bound_events:
-            if issubclass(event, ClientEvent):
-                event_client.AddEventListener(event, event_cb, priority)
-            else:
-                raise ValueError(
-                    "[Error] TDScreenListen: Unsupported event type: " + event.__name__
-                )
-
-    def _disable_ui_bound_listeners(self):
-        for event, event_cb, priority in self._ui_bound_events:
-            if issubclass(event, ClientEvent):
-                event_client.RemoveEventListener(event, event_cb, priority)
+        self.disable_listeners()
 
     def _on_create(self):
         self._do_active()

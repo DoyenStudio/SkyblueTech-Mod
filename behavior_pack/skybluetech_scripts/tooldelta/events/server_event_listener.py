@@ -9,12 +9,13 @@ from .basic import ServerEvent, CustomC2SEvent
 # TYPE_CHECKING
 if 0:
     from typing import Any, Callable, TypeVar
-    EventT = TypeVar('EventT', bound="ServerEvent")
+
+    EventT = TypeVar("EventT", bound="ServerEvent")
 # TYPE_CHECKING END
 
 
 event_listeners = {}  # type: dict[int, dict[type[ServerEvent], list[Callable[[Any], None]]]]
-system_event_listeners = {} # type: dict[int, dict[type[ServerEvent], Callable[[dict], None]]]
+system_event_listeners = {}  # type: dict[int, dict[type[ServerEvent], Callable[[dict], None]]]
 system_inited = False
 
 
@@ -34,6 +35,7 @@ def AddEventListener(event, listener, priority=0, static=False):
         return
     dynListen(event, listener, priority)
 
+
 def RemoveEventListener(event, listener, priority=0):
     # type: (type[EventT], Callable[[EventT], None], int) -> None
     """
@@ -45,6 +47,7 @@ def RemoveEventListener(event, listener, priority=0):
     """
     dynUnListen(event, listener, priority)
 
+
 def ListenEvent(event, priority=0, static=False):
     # type: (type[EventT], int, bool) -> Callable[[Callable[[EventT], None]], Callable[[EventT], None]]
     """
@@ -53,6 +56,7 @@ def ListenEvent(event, priority=0, static=False):
     Args:
         event (type[Event]): 事件类
     """
+
     def wrapper(func):
         # type: (Callable[[EventT], None]) -> Callable[[EventT], None]
         AddEventListener(event, func, priority, static)
@@ -60,16 +64,21 @@ def ListenEvent(event, priority=0, static=False):
 
     return wrapper
 
+
 def dynListen(event, listener, priority=0):
     # type: (type[EventT], Callable[[EventT], None], int) -> None
     global system_inited
     if priority not in event_listeners or event not in event_listeners[priority]:
+
         def event_bus_handler(args):
             # type: (dict) -> None
             event_ins = event.unmarshal(args)
             for cb in event_listeners[priority][event]:
                 cb(event_ins)
-        event_bus_handler.__name__ = "tdsysevent_handler_" + event.__name__ + str(priority)
+
+        event_bus_handler.__name__ = (
+            "tdsysevent_handler_" + event.__name__ + str(priority)
+        )
         system_event_listeners.setdefault(priority, {})[event] = event_bus_handler
         if system_inited:
             addSysEventListener(event, event_bus_handler, priority)
@@ -77,7 +86,8 @@ def dynListen(event, listener, priority=0):
     if listener not in listeners:
         # to avoid hot reload duplicated
         listeners.append(listener)
-        
+
+
 def dynUnListen(event, listener, priority=0):
     # type: (type[EventT], Callable[[EventT], None], int) -> None
     global system_inited
@@ -108,10 +118,12 @@ def addSysEventListener(event, listener, priority=0):
     s.ListenForEvent(
         namespace,
         system_name,
-        event.name, s,
-        listener, # pyright: ignore[reportArgumentType]
-        priority
+        event.name,
+        s,
+        listener,  # pyright: ignore[reportArgumentType]
+        priority,
     )
+
 
 def remSysEventListener(event, listener, priority=0):
     # type: (type[EventT], Callable[[dict], None], int) -> None
@@ -127,10 +139,12 @@ def remSysEventListener(event, listener, priority=0):
     s.UnListenForEvent(
         namespace,
         system_name,
-        event.name, s,
-        listener, # pyright: ignore[reportArgumentType]
-        priority
+        event.name,
+        s,
+        listener,  # pyright: ignore[reportArgumentType]
+        priority,
     )
+
 
 @ServerInitCallback(-10000)
 def onServerListen():
@@ -141,10 +155,10 @@ def onServerListen():
             addSysEventListener(event, listener, priority)
     system_inited = True
 
+
 @ServerUninitCallback(-10000)
 def onServerUnlisten():
     # type: () -> None
     for priority, syslevel_cbs in system_event_listeners.items():
         for event, listener in syslevel_cbs.items():
             remSysEventListener(event, listener, priority)
-

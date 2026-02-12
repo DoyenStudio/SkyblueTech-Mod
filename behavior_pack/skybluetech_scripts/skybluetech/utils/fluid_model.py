@@ -11,12 +11,14 @@ from ..define.client_molangs import Y_SCALE
 def GetFluidTexturePath(fluid_id):
     # type: (str) -> str
     return "textures/fluid_models/" + fluid_id.replace(":", ".")
-    
+
 
 class FluidModel:
     def __init__(self, x, y, z):
         # type: (int, int, int) -> None
-        ceid = CreateClientEntity("skybluetech:model_entity", (x+0.5, y, z+0.5), (0, 0))
+        ceid = CreateClientEntity(
+            "skybluetech:model_entity", (x + 0.5, y, z + 0.5), (0, 0)
+        )
         if ceid is None:
             raise Exception("[ST] Failed to create fluid model")
         self.ceid = ceid

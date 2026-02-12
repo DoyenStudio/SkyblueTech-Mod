@@ -5,7 +5,8 @@ from skybluetech_scripts.tooldelta.api.client import (
     SetQueryMolang,
 )
 
-registered_molangs = {} # type: dict[str, float]
+registered_molangs = {}  # type: dict[str, float]
+
 
 @ClientInitCallback()
 def onClientInit():
@@ -22,7 +23,7 @@ class ClientMolang:
 
     def set_to_entity(self, entity_id, value):
         # type: (str, float) -> bool
-        return SetQueryMolang(self.name, entity_id, value)
+        return SetQueryMolang(entity_id, self.name, value)
 
 
 Y_SCALE = ClientMolang("query.mod.skybluetech_y_scale")

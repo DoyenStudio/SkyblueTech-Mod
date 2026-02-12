@@ -9,12 +9,13 @@ K_TICKS_LEFT = "ticks_left"
 class BaseSpeedControl(BaseMachine):
     """
     基本的速度控制机器基类。
-    
+
     覆写:
         `OnLoad (super)`
         `Dump (super)`
         `SetDeactiveFlag (super)`
     """
+
     origin_process_ticks = 20
 
     def OnLoad(self):
@@ -35,7 +36,7 @@ class BaseSpeedControl(BaseMachine):
     def ProcessOnce(self):
         """
         尝试处理一次配方, 如可处理返回 True, 制作中返回 False
-        
+
         值得注意的是, 我们可能要在 1tick 之内进行多次配方产出
         """
         if self.ticks_left <= 0:
@@ -46,8 +47,9 @@ class BaseSpeedControl(BaseMachine):
             return False
 
     def Dump(self):
+        BaseMachine.Dump(self)
         self.bdata[K_TICKS_LEFT] = self.ticks_left
-            
+
     def SetProcessTicks(self, ticks):
         # type: (int) -> None
         """

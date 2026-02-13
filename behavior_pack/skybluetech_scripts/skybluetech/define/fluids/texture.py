@@ -25,9 +25,16 @@ COLORS = {
     fluids.Molten.TIN: ((233, 233, 233), 1),
 }
 
+ALPHA = {
+    "minecraft:water": 0.5,
+    fluids.DISTILLED_WATER: 0.5,
+    fluids.METHANE: 0.3,
+    fluids.LUBRICANT: 0.6,
+}
+
 IDX_MAP = {
-    v: k for k, v in
-    {   
+    v: k
+    for k, v in {
         "gray_lava_flow": 0,
         "gray_molten_metal_still": 1,
         "gray_lava_still": 2,
@@ -43,12 +50,13 @@ BASIC_TEXTURES = {
     "minecraft:flowing_lava": TEXTURE_LAVA,
     #
     fluids.DEEPSLATE_LAVA: ROOT_TEXTURE + "/deepslate_lava_still",
-    fluids.METHANE_MUD: ROOT_TEXTURE + "/methane_mud"
+    fluids.METHANE_MUD: ROOT_TEXTURE + "/methane_mud",
 }
 
 TYPE_BASIC_IMG = 0
 TYPE_SPECIAL_IMG = 1
 TYPE_ERROR = 2
+
 
 def getBaseTexture(fluid_id):
     # type: (str) -> tuple[str, tuple[int, int, int] | None]

@@ -3,6 +3,7 @@ from skybluetech_scripts.tooldelta.api.client import (
     AddTextureToOneActor,
     CreateClientEntity,
     DestroyClientEntity,
+    SetEntityOpacity,
     RebuildRenderForOneActor,
 )
 from ..define.client_molangs import Y_SCALE
@@ -36,6 +37,13 @@ class FluidModel:
             print("[ST] Failed to add texture to fluid model")
             return False
         return RebuildRenderForOneActor(self.ceid)
+
+    def SetOptacity(
+        self,
+        opacity,  # type: float
+    ):
+        SetEntityOpacity(self.ceid, opacity)
+        return self
 
     def SetYScale(self, y_scale):
         # type: (float) -> bool

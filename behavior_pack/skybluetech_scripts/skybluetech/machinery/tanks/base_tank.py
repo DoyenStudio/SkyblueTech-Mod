@@ -12,6 +12,7 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
+from ...define.fluids.texture import ALPHA
 from ...define.facing import DXYZ_FACING, FACING_EN
 from ...ui_sync.machinery.general_tank import GeneralTankUISync
 from ...utils.fluid_model import FluidModel
@@ -20,7 +21,7 @@ from ..basic import BaseMachine, FluidContainer, GUIControl
 from ..basic.fluid_container import K_FLUID_ID, K_FLUID_VOLUME
 
 INFINITY = float("inf")
-registered_tanks = {} # type: dict[str, type[BasicTank]]
+registered_tanks = {}  # type: dict[str, type[BasicTank]]
 FIRST_TANK_LOADED = False
 
 
@@ -37,6 +38,9 @@ class BasicTank(BaseMachine, FluidContainer, GUIControl):
         self.sync = GeneralTankUISync.NewServer(self).Activate()
         self.OnSync()
 
+    def OnTicking(self):
+        FluidContainer.OnTicking(self)
+
     def OnSync(self):
         self.sync.fluid_id = self.fluid_id
         self.sync.fluid_volume = self.fluid_volume
@@ -45,6 +49,9 @@ class BasicTank(BaseMachine, FluidContainer, GUIControl):
 
     def Dump(self):
         FluidContainer.Dump(self)
+
+    def OnTryActivate(self):
+        FluidContainer.OnTryActivate(self)
 
     # RENDER
 
@@ -84,8 +91,8 @@ def RegisterTank(tank_class):
 # CLIENT PARTS
 
 
-client_tank_datas = {} # type: dict[tuple[int, int, int], tuple[type[BasicTank], str | None, float]]
-client_models = {} # type: dict[tuple[int, int, int], tuple[type[BasicTank], FluidModel]]
+client_tank_datas = {}  # type: dict[tuple[int, int, int], tuple[type[BasicTank], str | None, float]]
+client_models = {}  # type: dict[tuple[int, int, int], tuple[type[BasicTank], FluidModel]]
 
 
 @ModBlockEntityLoadedClientEvent.Listen()
@@ -111,6 +118,7 @@ def onModBlockEntityLoadedClientEvent(event):
     else:
         updateClientTanksOnce()
 
+
 @ModBlockEntityRemoveClientEvent.Listen()
 def onModBlockEntityRemoveClientEvent(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
@@ -122,6 +130,7 @@ def onModBlockEntityRemoveClientEvent(event):
     if (x, y, z) in client_tank_datas:
         client_tank_datas.pop((x, y, z))
 
+
 def loadModel(x, y, z, cls):
     # type: (int, int, int, type[BasicTank]) -> FluidModel
     if (x, y, z) in client_models:
@@ -130,6 +139,7 @@ def loadModel(x, y, z, cls):
         model = FluidModel(x, y, z)
         client_models[(x, y, z)] = (cls, model)
         return model
+
 
 def getFluidDataFromBlock(block_entity_data):
     # type: (dict) -> tuple[str | None, float]
@@ -142,6 +152,7 @@ def getFluidDataFromBlock(block_entity_data):
         return None, ex_data[K_FLUID_VOLUME]["__value__"]
     return ex_data[K_FLUID_ID]["__value__"], ex_data[K_FLUID_VOLUME]["__value__"]
 
+
 def getModelScaleRel(fluid_volume, max_volume):
     # type: (float, float) -> float
     if fluid_volume == INFINITY:
@@ -153,8 +164,13 @@ def getModelScaleRel(fluid_volume, max_volume):
     else:
         return fluid_volume / max_volume
 
+
 def updateClientTanksOnce():
-    for (x, y, z), (tank_cls, old_fluid_id, old_fluid_volume) in client_tank_datas.copy().items():
+    for (x, y, z), (
+        tank_cls,
+        old_fluid_id,
+        old_fluid_volume,
+    ) in client_tank_datas.copy().items():
         blockdata = GetBlockEntityData(x, y, z)
         if blockdata is None:
             print("[ERROR] Tank: BlockEntityData is None")
@@ -169,13 +185,21 @@ def updateClientTanksOnce():
         sync_modify = False
         if fluid_id != old_fluid_id:
             if old_fluid_id is None and fluid_id is not None:
-                sync_modify = loadModel(x, y, z, tank_cls).SetTexture(fluid_id)
+                sync_modify = (
+                    loadModel(x, y, z, tank_cls)
+                    .SetOptacity(ALPHA.get(fluid_id, 1))
+                    .SetTexture(fluid_id)
+                )
             elif old_fluid_id is not None and fluid_id is None:
                 client_models.pop((x, y, z))[1].Destroy()
                 sync_modify = True
             elif old_fluid_id is not None and fluid_id is not None:
                 client_models.pop((x, y, z))[1].Destroy()
-                sync_modify = loadModel(x, y, z, tank_cls).SetTexture(fluid_id)
+                sync_modify = (
+                    loadModel(x, y, z, tank_cls)
+                    .SetOptacity(ALPHA.get(fluid_id, 1))
+                    .SetTexture(fluid_id)
+                )
         if fluid_id is not None and fluid_volume != old_fluid_volume:
             res = loadModel(x, y, z, tank_cls).SetYScale(vol_pc)
             sync_modify = sync_modify and res
@@ -183,6 +207,3 @@ def updateClientTanksOnce():
             # 只考虑模型加载失败, 即游戏未完全加载完成时,
             # 不同步更改, 使得下次仍然尝试加载模型
             client_tank_datas[(x, y, z)] = (tank_cls, fluid_id, fluid_volume)
-
-    
-

@@ -32,4 +32,3 @@ class CreativeTank(BasicTank):
         self.OnSync()
         self.Dump()
         return res
-

@@ -38,7 +38,9 @@
             "netease:neighborchanged_sendto_script": {
                 "value": true
             },
-            "netease:block_entity": {},
+            "netease:block_entity": {
+                "tick": true
+            },
             "netease:block_container": {
                 "container_size": 2,
                 "custom_description": "skybluetech:tank_bronze",

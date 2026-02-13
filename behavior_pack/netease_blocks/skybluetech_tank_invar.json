@@ -39,6 +39,7 @@
                 "value": true
             },
             "netease:block_entity": {
+                "tick": true
             },
             "netease:block_container": {
                 "container_size": 2,

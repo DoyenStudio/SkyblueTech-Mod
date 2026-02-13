@@ -29,6 +29,7 @@ class BlockSyncC2S(CustomC2SEvent):
             "y": self.y,
             "z": self.z,
             "block_id": self.block_id,
+            "mode": self.mode,
             "player_id": self.player_id,
         }
 

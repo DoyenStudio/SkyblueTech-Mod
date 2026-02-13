@@ -69,6 +69,11 @@ def RebuildRenderForOneActor(entity_id):
     return ClientComp.CreateActorRender(entity_id).RebuildRenderForOneActor()
 
 
+def SetEntityOpacity(entity_id, opacity):
+    # type: (str, float) -> None
+    return ClientComp.CreateModel(entity_id).SetEntityOpacity(opacity)
+
+
 AddTextureToOneActor = MethodCacher(
     lambda: ClientComp.CreateActorRender(ClientLevelId).AddTextureToOneActor
 )
@@ -81,6 +86,7 @@ __all__ = [
     "SetRenderLocalPlayer",
     "SetNotRenderAtAll",
     "SetActorBlockGeometryScale",
+    "SetEntityOpacity",
     "AddActorBlockGeometry",
     "DeleteActorBlockGeometry",
     "RebuildRenderForOneActor",

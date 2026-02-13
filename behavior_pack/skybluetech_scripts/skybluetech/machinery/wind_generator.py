@@ -32,9 +32,12 @@ from ..define.events.machinery.wind_generator import (
 from ..define.id_enum.machinery import WIND_GENERATOR as MACHINE_ID
 from ..define.facing import DXYZ_FACING, FACING_EN
 from ..ui_sync.machinery.wind_generator import WindGeneratorUISync
+from ..utils.block_sync import BlockSync
 from ..transmitters.wire.logic import isWire
 from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, RegisterMachine
 from .pool import GetMachineStrict
+
+block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
@@ -55,12 +58,11 @@ class WindGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
         states = GetBlockStates(self.dim, (self.x, self.y, self.z))
         if states is None:
             raise ValueError("WindGenerator BlockState None")
-        self.facing = states["minecraft:cardinal_direction"] # type: str
-        self.layer = states["skybluetech:layer"] # type: int
+        self.facing = states["minecraft:cardinal_direction"]  # type: str
+        self.layer = states["skybluetech:layer"]  # type: int
         # 如果不是基座方块则无功能
         self.is_base_block = self.layer == 0
         self.update_power()
-
 
     def OnClick(self, event):
         # type: (ServerBlockUseEvent) -> None
@@ -86,9 +88,8 @@ class WindGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
         y = event.y
         z = event.z
         facing = event.face
-        if (
-            not MayPlace(block_id, (x, y + 1, z), facing, dim)
-            or not MayPlace(block_id, (x, y+2, z), facing, dim)
+        if not MayPlace(block_id, (x, y + 1, z), facing, dim) or not MayPlace(
+            block_id, (x, y + 2, z), facing, dim
         ):
             event.cancel()
 
@@ -111,12 +112,9 @@ class WindGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
         for i in range(1, 3):
             SetBlock(
                 self.dim,
-                (self.x, self.y+i, self.z),
+                (self.x, self.y + i, self.z),
                 self.block_name,
-                GetBlockAuxValueFromStates(
-                    self.block_name,
-                    {"skybluetech:layer": i}
-                )
+                GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": i}),
             )
 
     def OnNeighborChanged(self, event):
@@ -135,9 +133,12 @@ class WindGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
             (self.x, self.y, self.z),
             {"skybluetech:connection_" + facing_en: connectToWire},
         )
-        ExecLater(0, lambda:WindGeneratorStatesUpdate(
-            self.x, self.y, self.z, self.rot_speed
-        ).sendMulti(GetPlayersInDim(self.dim)))
+        ExecLater(
+            0,
+            lambda: WindGeneratorStatesUpdate(
+                self.x, self.y, self.z, self.rot_speed
+            ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z))),
+        )
 
     def update_power(self):
         self.max_mcw = max(0, min(256, self.y - 40)) / 4
@@ -157,9 +158,7 @@ class WindGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
             print("[WindGenerator] facing error: %s" % self.facing)
             return 0
         vol = (pos2[0] - pos1[0]) * (pos2[1] - pos1[1]) * (pos2[2] - pos1[2])
-        pal = GetBlockPaletteBetweenPos(
-            self.dim, pos1, pos2, eliminateAir=False
-        )
+        pal = GetBlockPaletteBetweenPos(self.dim, pos1, pos2, eliminateAir=False)
         air_count = pal.GetBlockCountInBlockPalette("minecraft:air")
         if pal.GetBlockCountInBlockPalette("minecraft:air") < vol * 0.6:
             return 0
@@ -186,32 +185,33 @@ class WindGenerator(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
         BasicGenerator.OnUnload(self)
         AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
+        block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
 
 @WindGeneratorStatesRequest.Listen()
 def onRecvRequest(event):
     # type: (WindGeneratorStatesRequest) -> None
     m = GetMachineStrict(
-        GetPlayerDimensionId(event.player_id),
-        event.x, event.y, event.z
+        GetPlayerDimensionId(event.player_id), event.x, event.y, event.z
     )
     if not isinstance(m, WindGenerator) or not m.is_base_block:
         return
-    WindGeneratorStatesUpdate(
-        event.x, event.y, event.z, m.rot_speed
-    ).send(event.player_id)
+    WindGeneratorStatesUpdate(event.x, event.y, event.z, m.rot_speed).send(
+        event.player_id
+    )
 
 
 # CLIENT PART
+
 
 def updateBlockRender(x, y, z):
     # type: (int, int, int) -> None
     _, aux = GetBlockNameAndAux((x, y, z))
     facing = aux & 0b11
-    layer  = (aux & 0b1100) >> 2
-    is_conn_west  = bool(aux & 0b00010000)
+    layer = (aux & 0b1100) >> 2
+    is_conn_west = bool(aux & 0b00010000)
     is_conn_south = bool(aux & 0b00100000)
-    is_conn_north  = bool(aux & 0b01000000)
+    is_conn_north = bool(aux & 0b01000000)
     is_conn_east = bool(aux & 0b10000000)
     if layer != 0:
         return
@@ -229,16 +229,18 @@ def updateBlockRender(x, y, z):
             value,
         )
 
+
 @ClientBlockUseEvent.Listen(inner_priority=10)
 def onClientBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
     if event.blockName != WindGenerator.block_name:
         return
     _, aux = GetBlockNameAndAux((event.x, event.y, event.z))
-    layer  = (aux & 0b1100) >> 2
+    layer = (aux & 0b1100) >> 2
     if layer != 0:
         # 只改变 GUI 读取到的 xyz。。
         event.y -= layer
+
 
 @ModBlockEntityLoadedClientEvent.Listen()
 def onModBlockLoaded(event):
@@ -246,9 +248,8 @@ def onModBlockLoaded(event):
     if event.blockName != WindGenerator.block_name:
         return
     updateBlockRender(event.posX, event.posY, event.posZ)
-    WindGeneratorStatesRequest(
-        event.posX, event.posY, event.posZ
-    ).send()
+    WindGeneratorStatesRequest(event.posX, event.posY, event.posZ).send()
+
 
 @WindGeneratorStatesUpdate.Listen()
 def onStateUpdated(event):
@@ -259,4 +260,3 @@ def onStateUpdated(event):
         event.rot_speed,
     )
     updateBlockRender(event.x, event.y, event.z)
-

@@ -4,7 +4,7 @@
         "components": {
             "minecraft:max_stack_size": 1,
             "netease:customtips": {
-                "value": "\n§bRAINBOW_STATIC.NSF\n§cWith EPSM Chip !!"
+                "value": "\n§bRainBow_Static.vgm\n§7Origin 2023 ByteBeat"
             }
         },
         "description": {

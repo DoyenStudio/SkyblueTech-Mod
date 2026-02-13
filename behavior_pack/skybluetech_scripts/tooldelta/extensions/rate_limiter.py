@@ -2,12 +2,18 @@
 import time
 from ..api.timer import ExecLater
 
+if 0:
+    from typing import Callable, ParamSpec, TypeVar
+
+    T = TypeVar("T")
+    PT = ParamSpec("PT")
+
 
 class PlayerRateLimiter(object):
     def __init__(self, limit_seconds=0):
         # type: (float) -> None
         self.limit_seconds = limit_seconds
-        self._limits = {} # type: dict[str, float]
+        self._limits = {}  # type: dict[str, float]
 
     def is_limited(self, player_id):
         # type: (str) -> bool
@@ -32,3 +38,19 @@ class PlayerRateLimiter(object):
     def _cancel_delay(self, player_id):
         # type: (str) -> None
         self._limits.pop(player_id, None)
+
+
+def LimitCallRate(delay):
+    def decorator(func):
+        # type: (Callable[PT, T]) -> Callable[PT, T | None]
+        def wrapper(*args, **kwargs):
+            nowtime = time.time()
+            if nowtime - decorator.last_launch_time < delay:
+                return None
+            decorator.last_launch_time = nowtime
+            return func(*args, **kwargs)
+
+        return wrapper
+
+    decorator.last_launch_time = 0
+    return decorator

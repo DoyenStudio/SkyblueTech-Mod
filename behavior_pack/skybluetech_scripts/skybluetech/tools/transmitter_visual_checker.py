@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.api.client import GetLocalPlayerMainhandItem,
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
-from skybluetech_scripts.tooldelta.extensions.player_rate_limit import PlayerRateLimiter
+from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 from ..define.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckRequest,
     TransmitterVisualCheckerCheckResponse,

@@ -17,7 +17,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerItemUseOnEvent,
 )
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
-from skybluetech_scripts.tooldelta.extensions.player_rate_limit import PlayerRateLimiter
+from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 from ..define.id_enum.blocks import RESIN_COLLECTOR
 from ..define.id_enum.items import RESIN, RESIN_SPOON
 from ..define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
@@ -98,8 +98,9 @@ def onItemUseOnEvent(event):
         SpawnItemToPlayerCarried(event.entityId, Item("minecraft:air"))
     else:
         SpawnItemToPlayerCarried(event.entityId, event.item)
-    SpawnDroppedItem(event.dimensionId, (event.x + 0.5, event.y + 0.5, event.z + 0.5), Item(RESIN))
-
+    SpawnDroppedItem(
+        event.dimensionId, (event.x + 0.5, event.y + 0.5, event.z + 0.5), Item(RESIN)
+    )
 
 
 @BlockNeighborChangedServerEvent.Listen()
@@ -129,7 +130,7 @@ def onNeighborChanged(event):
         SpawnDroppedItem(
             event.dimensionId,
             (event.posX + 0.5, event.posY + 0.5, event.posZ + 0.5),
-            Item(RESIN, count=resin_drop)
+            Item(RESIN, count=resin_drop),
         )
 
 

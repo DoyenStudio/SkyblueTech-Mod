@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions import rate_limiter
 from skybluetech_scripts.tooldelta.events.server import (
     ServerItemUseOnEvent,
     PushUIRequest,
@@ -11,7 +12,6 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetRecipesByInput,
 )
 from skybluetech_scripts.tooldelta.extensions import (
-    player_rate_limit,
     recipe_obj,
     schema,
 )
@@ -25,7 +25,7 @@ from ..utils.lore import SetLoreAuto
 
 
 SLOTITEMS_SCHEMA = schema.ListSchema((schema.FixedTupleSchema(str, int), None))
-limiter = player_rate_limit.PlayerRateLimiter(limit_seconds=1)
+limiter = rate_limiter.PlayerRateLimiter(limit_seconds=1)
 
 
 def pack_template_slot_items(o):

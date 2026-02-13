@@ -6,6 +6,9 @@ from skybluetech_scripts.tooldelta.events.server.ui import (
     ForceRemoveUIRequest,
 )
 from skybluetech_scripts.tooldelta.events.notify import NotifyToClient, NotifyToClients
+from skybluetech_scripts.tooldelta.extensions.rate_limiter import (
+    PlayerRateLimiter,
+)
 from skybluetech_scripts.tooldelta.extensions.ui_sync import (
     S2CSync,
     AddSyncPending,
@@ -14,6 +17,8 @@ from skybluetech_scripts.tooldelta.extensions.ui_sync import (
 
 if 0:
     from ...ui.machinery.define import MachinePanelUI
+
+rate_limiter = PlayerRateLimiter(0.4)
 
 
 class GUIControl(object):
@@ -31,6 +36,8 @@ class GUIControl(object):
     def OnClick(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         "超类方法用于通知玩家打开 GUI。"
+        if not rate_limiter.record(event.playerId):
+            return
         AddSyncPending(event.playerId, self.sync)
         params = {
             "st:dmpos": (event.dimensionId, event.x, event.y, event.z),

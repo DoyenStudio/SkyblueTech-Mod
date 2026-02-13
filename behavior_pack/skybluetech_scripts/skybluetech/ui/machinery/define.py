@@ -49,6 +49,7 @@ class UIClose(CustomC2SEvent):
 
 class MachinePanelUI(ToolDeltaScreen):
     EXIT_BTN_PATH = "/ExitBtn"
+    allow_esc_exit = False
 
     def __init__(self, namespace, name, param):
         ToolDeltaScreen.__init__(self, namespace, name, param)
@@ -61,6 +62,7 @@ class MachinePanelUI(ToolDeltaScreen):
         return self._init_params["st:dmpos"]
 
     def _on_create(self):
+        ToolDeltaScreen._on_create(self)
         self[self.EXIT_BTN_PATH].asButton().SetCallback(self.OnExit)
         self.inited = True
         if self.sync:
@@ -68,6 +70,7 @@ class MachinePanelUI(ToolDeltaScreen):
 
     def _on_destroy(self):
         """超类方法, 告诉服务端 UI 关闭。"""
+        ToolDeltaScreen._on_destroy(self)
         if self.sync:
             self.sync.Deactivate()
 
@@ -76,6 +79,12 @@ class MachinePanelUI(ToolDeltaScreen):
 
     def _exitLater(self):
         ExecLater(0.1, self.RemoveUI)
+
+    @ToolDeltaScreen.Listen(OnKeyPressInGame)
+    def onKeyPress(self, event):
+        # type: (OnKeyPressInGame) -> None
+        if event.key == _ESCAPE and self.allow_esc_exit:
+            self.OnExit(None)
 
 
 class MachinePanelUIProxy(ToolDeltaScreen):

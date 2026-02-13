@@ -7,8 +7,8 @@ class BaseEvent(object):
     @classmethod
     def unmarshal(
         cls,
-        data, # type: dict
-    ): 
+        data,  # type: dict
+    ):
         return cls()
 
 
@@ -54,6 +54,7 @@ class CustomC2SEvent(ServerEvent):
 
     def send(self):
         from .notify import NotifyToServer
+
         NotifyToServer(self)
 
 
@@ -70,21 +71,25 @@ class CustomS2CEvent(ClientEvent):
     def send(self, client_id):
         # type: (str) -> None
         from .notify import NotifyToClient
+
         NotifyToClient(client_id, self)
 
     def sendMulti(self, client_ids):
-        # type: (list) -> None
+        # type: (list[str]) -> None
         from .notify import NotifyToClients
+
         NotifyToClients(client_ids, self)
 
     def sendAll(self):
         # type: () -> None
         from .notify import NotifyToAll
+
         NotifyToAll(self)
 
 
 def NewClientEventData():
     return GetClient().CreateEventData()
+
 
 def NewServerEventData():
     return GetServer().CreateEventData()
@@ -93,14 +98,18 @@ def NewServerEventData():
 _serverListenerModLoaded = False
 _clientListenerModLoaded = False
 
+
 def _requireServerListenerModule():
     global ServerListenEvent, _serverListenerModLoaded
     if not _serverListenerModLoaded:
         from .server_event_listener import ListenEvent as ServerListenEvent
+
         _serverListenerModLoaded = True
+
 
 def _requireClientListenerModule():
     global ClientListenEvent, _clientListenerModLoaded
     if not _clientListenerModLoaded:
         from .client_event_listener import ListenEvent as ClientListenEvent
+
         _clientListenerModLoaded = True

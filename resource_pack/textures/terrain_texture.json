@@ -203,8 +203,8 @@
         "skybluetech:hydroponic_bed": {
             "textures": "textures/models/hydroponic_bed_texture"
         },
-        "skybluetech:item_transport_cable": {
-            "textures": "textures/transmitters/item_transport_cable_model"
+        "skybluetech:steel_item_transport_cable": {
+            "textures": "textures/transmitters/steel_item_transport_cable_model"
         },
         "skybluetech:lead_block": {
             "textures": "textures/blocks/ingot_block/lead_block"

@@ -345,7 +345,7 @@
     "skybluetech:item_splitter": {
         "textures": "skybluetech:rect_panel_bg"
     },
-    "skybluetech:item_transport_cable": {
+    "skybluetech:steel_item_transport_cable": {
         "sound": "stone"
     },
     "skybluetech:lead_block": {
@@ -561,6 +561,9 @@
         "sound": "iron"
     },
     "skybluetech:rf_repeater_plant": {
-        "sound": "iron"
+        "sound": "iron",
+        "client_entity": {
+            "identifier": "skybluetech:rf_repeater_plant"
+        }
     }
 }

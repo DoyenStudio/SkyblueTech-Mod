@@ -15,25 +15,28 @@ from .work_renderer import WorkRenderer
 
 # TODO: 两个机器都 deactive 的情况
 
+
 class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
     """
     基本的配方处理器机器基类。
     只运行简单物品配方的机器均可继承此类。
     """
-    recipes = [] # type: list[MachineRecipe]
+
+    recipes = []  # type: list[MachineRecipe]
     "机器配方, 改变配方表时记得重置工作进度"
     # output_slot_index = 0
     # "允许漏斗漏出的槽位"
     energy_mode = (0, 0, 0, 0, 0, 0)
-    allow_upgrader_tags = {"skybluetech:upgraders/speed", "skybluetech:upgraders/energy"}
-    
+    allow_upgrader_tags = {
+        "skybluetech:upgraders/speed",
+        "skybluetech:upgraders/energy",
+    }
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         self.current_recipe = None
         AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
 
     def OnLoad(self):
         BaseMachine.OnLoad(self)
@@ -64,7 +67,9 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         if self.InUpgradeSlot(slot_pos):
             UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
-        if slot_pos in self.output_slots and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+        if slot_pos in self.output_slots and self.HasDeactiveFlag(
+            flags.DEACTIVE_FLAG_OUTPUT_FULL
+        ):
             self.start_next()
             return
         recipe = self.get_recipe(self.GetInputSlotItems())
@@ -78,7 +83,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
     def OnTryActivate(self):
-        self.ResetDeactiveFlags() # TODO: 安全问题?
+        self.ResetDeactiveFlags()  # TODO: 安全问题?
 
     def OnUnload(self):
         AutoSaver.OnUnload(self)
@@ -165,7 +170,8 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
                     break
                 if (
                     input.id not in item.GetBasicInfo().tags
-                    if input.is_tag else input.id != item.newItemName
+                    if input.is_tag
+                    else input.id != item.newItemName
                 ) or item.count < input.count:
                     cont = True
                     break

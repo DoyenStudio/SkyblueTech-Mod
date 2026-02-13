@@ -30,6 +30,7 @@ from .metal_press import MetalPressUI
 from .mixer import MixerUI
 from .pump import PumpUI
 from .redstone_furnace import RedstoneFurnaceUI
+from .rf_repeater_plant import RFRepeaterPlantUI
 from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI
 from .tesla_plant_ui import TeslaPlantUI

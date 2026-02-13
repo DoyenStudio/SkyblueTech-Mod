@@ -1,21 +1,11 @@
 # coding=utf-8
-#
-from collections import deque
-from weakref import WeakValueDictionary as WValueDict
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
-    ServerPlaceBlockEntityEvent,
-    EntityPlaceBlockAfterServerEvent,
-    BlockNeighborChangedServerEvent,
     ContainerItemChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockName,
-    BlockHasTag,
-    GetBlockStates,
-    UpdateBlockStates,
-)
+from skybluetech_scripts.tooldelta.api.server import BlockHasTag
 from skybluetech_scripts.tooldelta.api.server.container import (
     GetContainerItem,
     SetContainerItem,
@@ -24,10 +14,10 @@ from skybluetech_scripts.tooldelta.api.server.container import (
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from ...machinery.basic.item_container import ItemContainer
 from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
-from ...define.facing import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
-from ..constants import COMMON_CONTAINERS, FACING_EN, DXYZ_FACING
-from .define import CableNetwork, CableAccessPoint, AP_MODE_INPUT, AP_MODE_OUTPUT
-from .pool import CableNetworkPool, CableAccessPointPool, GNodes
+from ...define.facing import NEIGHBOR_BLOCKS_ENUM
+from ..base.logic import LogicModule
+from ..constants import COMMON_CONTAINERS
+from .define import CableNetwork, CableAccessPoint
 
 # TYPE_CHECKING
 if 0:
@@ -47,276 +37,51 @@ ITEM_POST_DELAY = 0.2
 #       1. 添加物品过滤功能
 #       2. 如果找到了可投递的容器, 下次优先向此容器进行投递, 提高命中率
 
+# TODO: 在快速取走物品时物品管道有可能不会继续传输物品
+
 
 def isCable(blockName):
     # type: (str) -> bool
     return BlockHasTag(blockName, "skybluetech_cable")
 
 
-def canConnect(blockName):
-    # type: (str) -> bool
-    return (
-        blockName in COMMON_CONTAINERS
-        or blockName == "skybluetech:item_transport_cable"
-        or BlockHasTag(blockName, "skybluetech_container")
-    )
-
 def isContainer(blockName):
-    return blockName in COMMON_CONTAINERS or BlockHasTag(blockName, "skybluetech_container")
-
-def bfsFindConnections(dim, start, connected=None):
-    # type: (int, PosData, set[PosData] | None) -> CableNetwork | None
-    # 从某一管道开始, 建立管道网络
-    # 确保 start 一定是管道 !!!
-
-    start_bname = GetBlockName(dim, start)
-    if start_bname is None:
-        return None
-    if not isCable(start_bname):  # 确保 start 一定是管道 !!!
-        return None
-
-    output_nodes = set()  # type: set[CableAccessPoint]
-    input_nodes = set()  # type: set[CableAccessPoint]
-    if connected is None:
-        connected = set()
-    nodes = set() # type: set[PosData]
-
-    first_cable_name = None
-
-    queue = deque([start])
-    while queue:
-        current = queue.popleft()
-        cx, cy, cz = current
-        block_states = GetBlockStates(dim, current)
-
-        _i = set()  # type: set[CableAccessPoint]
-        _o = set()  # type: set[CableAccessPoint]
-        for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
-            xyz = (cx + dx, cy + dy, cz + dz)
-            if xyz in connected:
-                continue
-            gbname = GetBlockName(dim, xyz)
-            if gbname is None:
-                continue
-            elif isCable(gbname):
-                queue.append(xyz)
-                if not first_cable_name:
-                    first_cable_name = gbname
-                # elif first_cable_name != gbname:
-                #     # 不同等级的管道无法并用
-                #     continue
-                continue
-            elif isContainer(gbname):
-                dir_name = FACING_EN[facing]
-                if block_states["skybluetech:cable_io_" + dir_name]:
-                    _o.add(CableAccessPoint(dim, cx, cy, cz, facing, AP_MODE_OUTPUT))
-                else:
-                    _i.add(CableAccessPoint(dim, cx, cy, cz, facing, AP_MODE_INPUT))
-
-        input_nodes |= _i
-        output_nodes |= _o
-        connected.add(
-            current
-        )  # TODO: 管道过多使得队列内存占用过大; 考虑限制最大 bfs 数
-        nodes.add(current)
-    return CableNetwork(
-        dim,
-        input_nodes,
-        output_nodes,
-        nodes,
-        0,  # 目前无传输限制,
+    return blockName in COMMON_CONTAINERS or BlockHasTag(
+        blockName, "skybluetech_container"
     )
 
-def getAndInitNetwork(dim, start, exists=None):
-    # type: (int, PosData, set[PosData] | None) -> CableNetwork | None
-    """
-    在管道位置获取并初始化传输网络。
-
-    Args:
-        dim (int): 维度 ID
-        start (tuple[int, int, int]): 开始坐标
-        exists (set, optional): 用于缓存路径点的set
-
-    Returns:
-        CableNetwork (optional): 传输网络
-    """
-    network = bfsFindConnections(dim, start, exists)
-    if network is None:
-        return None
-    dim_datas = GNodes.setdefault(dim, WValueDict())
-    for node in network.nodes:
-        dim_datas[node] = network
-    for ap in network.group_inputs | network.group_outputs:
-        CableAccessPointPool[(network.dim, ap.x, ap.y, ap.z, ap.access_facing)] = ap
-    return network
-
-def cleanNearbyNetwork(dim, x, y, z):
-    # type: (int, int, int, int) -> None
-    """
-    清理一个容器附近的所有传输网络。
-    一般是容器消失时调用的。
-
-    Args:
-        dim (int): 维度 ID
-        x (int): x
-        y (int): y
-        z (int): z
-    """
-    CableNetworkPool.pop((dim, (x, y, z)), None)
-    for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
-        opposite_facing = OPPOSITE_FACING[facing]
-        ax, ay, az = x + dx, y + dy, z + dz
-        ap = CableAccessPointPool.pop((dim, ax, ay, az, opposite_facing), None)
-        if ap is not None:
-            bound_network = ap.get_bounded_network()
-            if bound_network is not None:
-                bound_network.group_inputs.discard(ap)
-                bound_network.group_outputs.discard(ap)
-            else:
-                print("[ERROR] Cable access point {} bound network None".format((dim, x, y, z, facing)))
-
-def deleteNetwork(network):
-    # type: (CableNetwork) -> None
-    "完全清除一个网络。"
-    for ap in network.group_inputs | network.group_outputs:
-        CableAccessPointPool.pop((network.dim, ap.x, ap.y, ap.z, ap.access_facing), None)
-        nws = CableNetworkPool.get((network.dim, ap.target_pos))
-        if nws is None:
-            continue
-        i, o = nws
-        if network in i:
-            i.remove(network)
-        elif network in o:
-            o.remove(network)
-        if not i and not o:
-            CableNetworkPool.pop((network.dim, ap.target_pos), None)
-    for node in network.nodes.copy():
-        GNodes.get(network.dim, {}).pop(node, None)
-
-def cleanAccessPoint(dim, x, y, z):
-    """
-    清理一个节点的网络数据。
-
-    Args:
-        dim (int): 维度 ID
-        x (int): x
-        y (int): y
-        z (int): z
-    """
-    network = GNodes.get(dim, {}).pop((x, y, z), None) or GetNetworkByCable(dim, x, y, z)
-    if network is not None:
-        deleteNetwork(network)
-    tmp_set = set()
-    i, o = GetNearbyCableNetworks(
-        dim,
-        x,
-        y,
-        z,
-        tmp_set,
-        enable_cache=False
-    )
-
-def cleanContainerNetworks(dim, x, y, z):
-    # type: (int, int, int, int) -> None
-    """
-    清理一个容器周围的网络数据。
-
-    Args:
-        dim (int): 维度 ID
-        x (int): x
-        y (int): y
-        z (int): z
-    """
-    i, o = GetNearbyCableNetworks(dim, x, y, z)
-    for network in i + o:
-        deleteNetwork(network)
-    tmp_set = set()
-    GetNetworkByCable(
-        dim,
-        x,
-        y,
-        z,
-        tmp_set
-    )
-    i, o = GetNearbyCableNetworks(
-        dim,
-        x,
-        y,
-        z,
-        tmp_set,
-        enable_cache=False
-    )
-    for network in i + o:
-        ActivateNetwork(network)
-
-def GetNearbyCableNetworks(dim, x, y, z, exists=None, enable_cache=True):
-    # type: (int, int, int, int, set[PosData] | None, bool) -> tuple[list[CableNetwork], list[CableNetwork]]
-    """
-    获取一个容器附近的输入和提取网络。
-
-    Args:
-        dim (int): 维度 ID
-        x (int): 容器 x 坐标
-        y (int): 容器 y 坐标
-        z (int): 容器 z 坐标
-        exists (set, optional): 路径缓存set
-        enable_cache (bool, optional): 是否允许使用缓存
-
-    Returns:
-        tuple[set[CableNetwork], set[CableNetwork]]: 分别表示输入和提取模式的传输网络
-    """
-    if enable_cache:
-        cached_network = CableNetworkPool.get((dim, (x, y, z)), None)
-        if cached_network is not None and cached_network[0] and cached_network[1]:
-            # not pretty fix
-            return cached_network
-    input_networks = []  # type: list[CableNetwork]
-    output_networks = []  # type: list[CableNetwork]
-    _exists = exists or set()  # type: set[PosData]
-    for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
-        next_pos = (x + dx, y + dy, z + dz)
-        old_network = GNodes.get(dim, {}).get(next_pos)
-        network = getAndInitNetwork(dim, next_pos, _exists)
-        if network is None:
-            continue
-        if old_network is not None:
-            old_network.flush_from(network)
-        p = CableAccessPoint(dim, x + dx, y + dy, z + dz, OPPOSITE_FACING[facing], -1) # -1 表示输入输出模式未知
-        if p in network.group_inputs:
-            input_networks.append(network)
-        elif p in network.group_outputs:
-            output_networks.append(network)
-    CableNetworkPool[(dim, (x, y, z))] = (input_networks, output_networks)
-    return input_networks, output_networks
-
-def GetNetworkByCable(dim, x, y, z, cacher=None):
-    # type: (int, int, int, int, set[PosData] | None) -> CableNetwork | None
-    network = GNodes.get(dim, {}).get((x, y, z))
-    if network is not None:
-        return network
-    return getAndInitNetwork(dim, (x, y, z), cacher)
 
 def PostItemIntoNetworks(dim, xyz, item, networks):
-    # type: (int, tuple[int, int, int], Item, list[CableNetwork] | None) -> None | Item
+    # type: (int, tuple[int, int, int], Item, set[CableNetwork] | None) -> None | Item
     "向网络发送物品, 返回剩余物品"
     item = item.copy()
     if networks is None:
         x, y, z = xyz
-        networks = GetNearbyCableNetworks(dim, x, y, z, enable_cache=True)[1]
-    for ap in sorted(
-        [i for network in networks for i in network.group_inputs],
-        key=lambda ap: ap.get_priority(),
-        reverse=True,
-    ):
-        if xyz == ap.target_pos:
-            # 别自己给自己装东西 !
-            continue
-        ret_item = PushItemToGenericContainer(ap, item)
-        if ret_item is None:
-            return None
-        else:
-            item = ret_item
+        networks = set(
+            i
+            for i in logic_module.GetContainerNode(
+                dim, x, y, z, enable_cache=True
+            ).outputs.values()
+            if i is not None
+        )
+    for network in networks:
+        transfer_speed = network.transfer_speed
+        send_item = item.copy()
+        if transfer_speed is not None:
+            send_item.count = min(item.count, transfer_speed)
+        for ap in network.get_input_access_points():
+            if xyz == ap.target_pos:
+                # 别自己给自己装东西 !
+                continue
+            ret_item = PushItemToGenericContainer(ap, send_item)
+            if ret_item is not None:
+                item.count = send_item.count - ret_item.count
+            else:
+                item.count -= send_item.count
+            if item.count == 0:
+                return None
     return item
+
 
 def PushItemToGenericContainer(ap, item):
     # type: (CableAccessPoint, Item) -> Item | None
@@ -332,6 +97,7 @@ def PushItemToGenericContainer(ap, item):
         if container_size is None:
             return item
         return PushItemToOrigContainer(ap.dim, cxyz, item, container_size)
+
 
 def PushItemToOrigContainer(dim, xyz, item, container_size):
     # type: (int, tuple[int, int, int], Item, int) -> Item | None
@@ -363,11 +129,18 @@ def PushItemToOrigContainer(dim, xyz, item, container_size):
             return None
     return item
 
+
 def RequireItems(dim, xyz):
     # type: (int, tuple[int, int, int]) -> bool
     "在某一个坐标的容器向周围的网络请求物品。"
     x, y, z = xyz
-    networks = GetNearbyCableNetworks(dim, x, y, z, enable_cache=True)[0]
+    networks = (
+        i
+        for i in logic_module.GetContainerNode(
+            dim, x, y, z, enable_cache=True
+        ).outputs.values()
+        if i is not None
+    )
     om = GetMachineStrict(dim, x, y, z)
     ok = False
     if om is None:
@@ -429,131 +202,96 @@ def RequireItems(dim, xyz):
                     break
     return ok
 
-def ActivateNetwork(network):
+
+def onActivateNetwork(network):
     # type: (CableNetwork) -> None
     for ap in network.get_input_access_points():
         target_pos = ap.target_pos
         RequireItems(network.dim, target_pos)
 
-@Delay(0)
+
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
     # 在容器被放置后延迟执行,
     # 用于使新容器尝试接收一次物品
     RequireItems(dim, (x, y, z))
 
-@EntityPlaceBlockAfterServerEvent.Listen()
-def onBlockPlaced(event):
-    # type: (EntityPlaceBlockAfterServerEvent) -> None
-    if isCable(event.fullName):
-        states = {}  # type: dict[str, bool]
-        for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
-            facing_key = (
-                "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
-            )
-            bname = GetBlockName(
-                event.dimensionId,
-                (event.x + dx, event.y + dy, event.z + dz),
-            )
-            if bname is None:
-                continue
-            states[facing_key] = canConnect(bname)
-        UpdateBlockStates(event.dimensionId, (event.x, event.y, event.z), states)
-        cleanAccessPoint(event.dimensionId, event.x, event.y, event.z)
-        network = GetNetworkByCable(event.dimensionId, event.x, event.y, event.z)
-        if network is not None:
-            ActivateNetwork(network)
-    elif isContainer(event.fullName):
-        # 图方便
-        cleanContainerNetworks(event.dimensionId, event.x, event.y, event.z)
 
+event_queue = set()  # type: set[tuple[int, tuple[int, int, int]]]
 
-BlockRemoveServerEvent.AddExtraBlocks(COMMON_CONTAINERS)
-
-@BlockRemoveServerEvent.Listen()
-@Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
-def onBlockRemoved(event):
-    # type: (BlockRemoveServerEvent) -> None
-    if isContainer(event.fullName):
-        cleanNearbyNetwork(event.dimension, event.x, event.y, event.z)
-    if isCable(event.fullName):
-        cleanAccessPoint(event.dimension, event.x, event.y, event.z)
 
 @ContainerItemChangedServerEvent.Listen()
-@Delay(ITEM_POST_DELAY)
 def onContainerItemChanged(event):
     # type: (ContainerItemChangedServerEvent) -> None
     # 当容器内的物品变化时, 尝试将物品放入网络
     if event.pos is None:
         return
-    dim = event.dimensionId
-    x, y, z = xyz = event.pos
-    if event.newItem.id == "minecraft:air" or event.newItem.count == 0:
+    k = (event.dimensionId, event.pos)
+    if k in event_queue:
+        return
+    event_queue.add(k)
+    CotainerPostItem(event.dimensionId, event.pos, event.slot, event.newItem)
+
+
+@Delay(ITEM_POST_DELAY)
+def CotainerPostItem(dim, xyz, slot, slotitem):
+    # type: (int, tuple[int, int, int], int, Item) -> None
+    x, y, z = xyz
+    event_queue.discard((dim, xyz))
+    if slotitem.id == "minecraft:air" or slotitem.count == 0:
         m = GetMachineStrict(dim, x, y, z)
         if not isinstance(m, ItemContainer):
             return
-        if event.slot in m.input_slots:
+        if slot in m.input_slots:
             m.RequireItems()
+    output_networks = set(
+        i
+        for i in logic_module.GetContainerNode(
+            dim, x, y, z, enable_cache=True
+        ).outputs.values()
+        if i is not None
+    )
+    m = GetMachineStrict(dim, x, y, z)  # 可能是一个机器
+    if m is not None:
+        if not isinstance(m, ItemContainer):
+            raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
+        if slot not in m.output_slots:
+            return
+        else:
+            slots = m.output_slots
     else:
-        output_networks = GetNearbyCableNetworks(dim, x, y, z, enable_cache=True)[1]
-        m = GetMachineStrict(dim, x, y, z)  # 可能是一个机器
-        if m is not None:
-            if not isinstance(m, ItemContainer):
-                raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
-            if event.slot not in m.output_slots:
-                return
-            else:
-                slots = m.output_slots
+        slots = range(GetContainerSize(xyz, dim))
+    if not output_networks:
+        return
+    for slot_not_empty in slots:
+        item = GetContainerItem(dim, xyz, slot_not_empty, getUserData=True)
+        if item is None:
+            continue
+        nitem = PostItemIntoNetworks(dim, xyz, item, output_networks)
+        if nitem is not None:
+            if nitem.count > 0:
+                if nitem.count == item.count:
+                    continue
+                else:
+                    res = SetContainerItem(dim, xyz, slot_not_empty, nitem)
+                    if not res:
+                        print("[Warning] SetItem to container %d %d %d failed" % xyz)
+                    if not POST_ALL_ITEMS_IN_ONE_TIME:
+                        break
         else:
-            slots = range(GetContainerSize(xyz, dim))
-        for slot_not_empty in slots:
-            item = GetContainerItem(dim, xyz, slot_not_empty, getUserData=True)
-            if item is None:
-                continue
-            nitem = PostItemIntoNetworks(dim, xyz, item, output_networks)
-            if nitem is not None:
-                if nitem.count > 0:
-                    if nitem.count == item.count:
-                        continue
-                    else:
-                        res = SetContainerItem(dim, xyz, slot_not_empty, nitem)
-                        if not res:
-                            print("[Warning] SetItem to container %d %d %d failed" % xyz)
-                        if not POST_ALL_ITEMS_IN_ONE_TIME:
-                            break
-            else:
-                SetContainerItem(dim, xyz, slot_not_empty, Item("minecraft:air", 0, 0))
-                if not POST_ALL_ITEMS_IN_ONE_TIME:
-                    break
+            SetContainerItem(dim, xyz, slot_not_empty, Item("minecraft:air", 0, 0))
+            if not POST_ALL_ITEMS_IN_ONE_TIME:
+                break
 
-@BlockNeighborChangedServerEvent.Listen()
-def onNeighbourBlockChanged(event):
-    # type: (BlockNeighborChangedServerEvent) -> None
-    if event.fromBlockName == event.toBlockName:
-        return
-    if not isCable(event.blockName):
-        return
-    from_block_can_connect = canConnect(event.fromBlockName)
-    to_block_can_connect = canConnect(event.toBlockName)
-    if from_block_can_connect != to_block_can_connect:
-        dxyz = (
-            event.neighborPosX - event.posX,
-            event.neighborPosY - event.posY,
-            event.neighborPosZ - event.posZ,
-        )
-        facing_key = "skybluetech:connection_" + FACING_EN[DXYZ_FACING[dxyz]]
-        if isCable(event.toBlockName):
-            io_key = "skybluetech:cable_io_" + FACING_EN[DXYZ_FACING[dxyz]]
-            UpdateBlockStates(
-                event.dimensionId,
-                (event.posX, event.posY, event.posZ),
-                {facing_key: to_block_can_connect, io_key: False},
-            )
-        else:
-            UpdateBlockStates(
-                event.dimensionId,
-                (event.posX, event.posY, event.posZ),
-                {facing_key: to_block_can_connect},
-            )
-    if isContainer(event.toBlockName):
-        onMachineryPlacedLater(event.dimensionId, event.neighborPosX, event.neighborPosY, event.neighborPosZ)
+
+logic_module = LogicModule(
+    CableNetwork,
+    CableAccessPoint,
+    isCable,
+    isContainer,
+    onMachineryPlacedLater,
+    onActivateNetwork,
+)
+
+
+BlockRemoveServerEvent.AddExtraBlocks(COMMON_CONTAINERS)

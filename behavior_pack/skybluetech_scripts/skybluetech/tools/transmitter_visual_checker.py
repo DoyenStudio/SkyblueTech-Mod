@@ -1,7 +1,15 @@
 # coding=utf-8
 from random import random
-from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId, GetBlockName, SetOnePopupNotice
-from skybluetech_scripts.tooldelta.api.client import GetLocalPlayerMainhandItem, GetLocalPlayerId, GetBlockName as CGetBlockName
+from skybluetech_scripts.tooldelta.api.server import (
+    GetPlayerDimensionId,
+    GetBlockName,
+    SetOnePopupNotice,
+)
+from skybluetech_scripts.tooldelta.api.client import (
+    GetLocalPlayerMainhandItem,
+    GetLocalPlayerId,
+    GetBlockName as CGetBlockName,
+)
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
@@ -12,15 +20,16 @@ from ..define.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckMultiResponse,
 )
 from ..transmitters.constants import DXYZ_FACING
-from ..transmitters.cable.logic import GetNetworkByCable, GetNearbyCableNetworks, isCable
-from ..transmitters.pipe.logic import GetNetworkByPipe, GetNearbyPipeNetworks, isPipe
-from ..transmitters.wire.logic import GetNetworkByWire, GetNearbyWireNetworks, isWire
+from ..transmitters.cable.logic import logic_module as cable_logic, isCable
+from ..transmitters.pipe.logic import logic_module as pipe_logic, isPipe
+from ..transmitters.wire.logic import logic_module as wire_logic, isWire
 
 RATE_LIMIT = 0.5
 
 server_limiter = PlayerRateLimiter(RATE_LIMIT)
 
 # SERVER PART
+
 
 @TransmitterVisualCheckerCheckRequest.Listen()
 def onRecvRequest(event):
@@ -36,19 +45,21 @@ def onRecvRequest(event):
         return
     if event.mode == event.MODE_GET_BY_TRANSMITTER:
         if isCable(bname):
-            network = GetNetworkByCable(dim, event.x, event.y, event.z)
+            network = cable_logic.GetNetworkByTransmitter(
+                dim, event.x, event.y, event.z
+            )
             if network is None:
                 SetOnePopupNotice(event.player_id, "§6未找到网络")
                 return
             network_type = TransmitterVisualCheckerCheckResponse.TYPE_CABLE
         elif isPipe(bname):
-            network = GetNetworkByPipe(dim, event.x, event.y, event.z)
+            network = pipe_logic.GetNetworkByTransmitter(dim, event.x, event.y, event.z)
             if network is None:
                 SetOnePopupNotice(event.player_id, "§6未找到网络")
                 return
             network_type = TransmitterVisualCheckerCheckResponse.TYPE_PIPE
         elif isWire(bname):
-            network = GetNetworkByWire(dim, event.x, event.y, event.z)
+            network = wire_logic.GetNetworkByTransmitter(dim, event.x, event.y, event.z)
             if network is None:
                 SetOnePopupNotice(event.player_id, "§6未找到网络")
                 return
@@ -64,24 +75,30 @@ def onRecvRequest(event):
         ).send(event.player_id)
     else:
         T = TransmitterVisualCheckerCheckMultiResponse
-        T(
-            [
+        T([
+            (
+                [ap.target_pos for ap in network.group_inputs],
+                [ap.target_pos for ap in network.group_outputs],
+                [node for node in network.nodes],
+                network_type,
+            )
+            for cnode, network_type in (
                 (
-                    [ap.target_pos for ap in network.group_inputs],
-                    [ap.target_pos for ap in network.group_outputs],
-                    [node for node in network.nodes],
-                    network_type,
-                )
-                for (i, o), network_type in (
-                    (GetNearbyCableNetworks(dim, event.x, event.y, event.z), T.TYPE_CABLE),
-                    (GetNearbyPipeNetworks(dim, event.x, event.y, event.z), T.TYPE_PIPE),
-                    (GetNearbyWireNetworks(dim, event.x, event.y, event.z), T.TYPE_WIRE),
-                )
-                for network in i + o
-            ]
-        ).send(event.player_id)
-            
-        
+                    cable_logic.GetContainerNode(dim, event.x, event.y, event.z),
+                    T.TYPE_CABLE,
+                ),
+                (
+                    pipe_logic.GetContainerNode(dim, event.x, event.y, event.z),
+                    T.TYPE_PIPE,
+                ),
+                (
+                    wire_logic.GetContainerNode(dim, event.x, event.y, event.z),
+                    T.TYPE_WIRE,
+                ),
+            )
+            for network in set(i for i in cnode.inputs.values() if i is not None)
+            | set(o for o in cnode.outputs.values() if o is not None)
+        ]).send(event.player_id)
 
 
 # CLIENT PART
@@ -94,6 +111,7 @@ NETWORK_TYPE_ZHCN = (
     "流体",
     "能量",
 )
+
 
 @ClientBlockUseEvent.Listen()
 def onClientBlockUseEvent(event):
@@ -109,15 +127,20 @@ def onClientBlockUseEvent(event):
         return
     if "cable" in bname or "pipe" in bname or "wire" in bname:
         TransmitterVisualCheckerCheckRequest(
-            event.x, event.y, event.z,
+            event.x,
+            event.y,
+            event.z,
             TransmitterVisualCheckerCheckRequest.MODE_GET_BY_TRANSMITTER,
         ).send()
     else:
         TransmitterVisualCheckerCheckRequest(
-            event.x, event.y, event.z,
+            event.x,
+            event.y,
+            event.z,
             TransmitterVisualCheckerCheckRequest.MODE_GET_BY_MACHINE,
         ).send()
     event.cancel()
+
 
 # @PlayerTryDestroyBlockClientEvent.Listen()
 # def onClientBlockDestroyEvent(event):
@@ -138,10 +161,12 @@ def onResponse(event):
     # type: (TransmitterVisualCheckerCheckResponse) -> None
     displayModel(event)
 
+
 @TransmitterVisualCheckerCheckMultiResponse.Listen()
 def onMultiResponse(event):
     # type: (TransmitterVisualCheckerCheckMultiResponse) -> None
     displayMultiModel(event)
+
 
 def displayModel(event):
     # type: (TransmitterVisualCheckerCheckResponse) -> None
@@ -165,9 +190,7 @@ def displayModel(event):
                 ddy = 1.2 if dy != 0 else 0.2
                 ddz = 1.2 if dz != 0 else 0.2
                 box = draw_comp.AddBoxShape(
-                    (min_x + 0.4, min_y + 1, min_z + 0.4),
-                    (ddx, ddy, ddz),
-                    (0, 1, 1)
+                    (min_x + 0.4, min_y + 1, min_z + 0.4), (ddx, ddy, ddz), (0, 1, 1)
                 )
                 shapes.append(box)
     for input_node in event.inputs:
@@ -175,7 +198,7 @@ def displayModel(event):
         text = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
             "用电器" if event.type == event.TYPE_WIRE else "输入",
-            (0, 1, 0)
+            (0, 1, 0),
         )
         shapes.append(text)
     for output_node in event.outputs:
@@ -183,11 +206,12 @@ def displayModel(event):
         text = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
             "能量源" if event.type == event.TYPE_WIRE else "抽取",
-            (1, 0, 0)
+            (1, 0, 0),
         )
         shapes.append(text)
     g_shapes.append(shapes)
     removeAfter(shapes)
+
 
 @Delay(10)
 def removeAfter(shapes):
@@ -195,6 +219,7 @@ def removeAfter(shapes):
         g_shapes.remove(shapes)
         for shape in shapes:
             shape.Remove()
+
 
 def clean():
     for shape in [j for i in g_shapes for j in i]:
@@ -205,18 +230,17 @@ def clean():
     g_multi_shapes[:] = []
 
 
-
 def displayMultiModel(event):
     # type: (TransmitterVisualCheckerCheckMultiResponse) -> None
     clean()
     shapes = []
     draw_comp = ClientComp.CreateDrawing(ClientLevelId)
-    for (inputs, outputs, nodes, network_type) in event.reses:
+    _DXYZ_FACING = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
+    for inputs, outputs, nodes, network_type in event.reses:
         box_color = (random(), random(), random())
-        nodes = set(nodes)
-        all_nodes = nodes | set(inputs + outputs)
-        for nx, ny, nz in nodes:
-            for dx, dy, dz in DXYZ_FACING:
+        all_nodes = set(nodes) | set(inputs + outputs)
+        for nx, ny, nz in all_nodes:
+            for dx, dy, dz in _DXYZ_FACING:
                 if (nx + dx, ny + dy, nz + dz) in all_nodes:
                     # line = draw_comp.AddLineShape(
                     #     (nx + 0.5, ny + 1, nz + 0.5),
@@ -232,7 +256,7 @@ def displayMultiModel(event):
                     box = draw_comp.AddBoxShape(
                         (min_x + 0.4, min_y + 1, min_z + 0.4),
                         (ddx, ddy, ddz),
-                        box_color
+                        box_color,
                     )
                     shapes.append(box)
         for input_node in inputs:
@@ -240,7 +264,7 @@ def displayMultiModel(event):
             text = draw_comp.AddTextShape(
                 (x + 0.5, y + 0.3 + 0.2 * network_type, z + 0.5),
                 NETWORK_TYPE_ZHCN[network_type] + "： 输入",
-                (0, 1, 0)
+                (0, 1, 0),
             )
             shapes.append(text)
         for output_node in outputs:
@@ -248,11 +272,12 @@ def displayMultiModel(event):
             text = draw_comp.AddTextShape(
                 (x + 0.5, y + 0.3 + 0.2 * network_type, z + 0.5),
                 NETWORK_TYPE_ZHCN[network_type] + "： 抽取",
-                (1, 0, 0)
+                (1, 0, 0),
             )
             shapes.append(text)
     g_multi_shapes.append(shapes)
     removeMultiAfter(shapes)
+
 
 @Delay(10)
 def removeMultiAfter(shapes):
@@ -260,4 +285,3 @@ def removeMultiAfter(shapes):
         g_multi_shapes.remove(shapes)
         for shape in shapes:
             shape.Remove()
-

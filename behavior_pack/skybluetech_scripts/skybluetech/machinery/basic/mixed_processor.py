@@ -17,7 +17,7 @@ from .sp_control import SPControl
 class MixedProcessor(BaseProcessor, MultiFluidContainer):
     """
     能使用物品和流体的配方处理器机器基类。
-    
+
     派生自:
         `BaseProcessor`
         `MultiFluidContainer`
@@ -38,6 +38,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def OnPlaced(self, _):
         self.afterRequireAll()
 
+    def OnTryActivate(self):
+        BaseMachine.OnTryActivate(self)
+        MultiFluidContainer.OnTryActivate(self)
+
     @Delay(1)
     def afterRequireAll(self):
         self.RequireItems()
@@ -49,18 +53,14 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         BaseProcessor.Dump(self)
 
     def start_next(self, dont_recursive=False):
+        self.RequireItems()
+        self.RequireFluidsFromNetwork()
         input_slots = self.GetInputSlotItems()
         output_slots = self.GetOutputSlotItems()
         fluids = self.fluids
         recipe = self.get_recipe(input_slots, fluids)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            if not dont_recursive:
-                # 可能是物品或流体不够了, 尝试向附近的管道网络索取物品
-                # TODO: RequireFluid
-                ok = self.RequireItems() or self.RequireFluidsFromNetwork()
-                # if ok:
-                self.start_next(dont_recursive=True)
             return
         elif not self.can_output(recipe, output_slots):
             # 输出堵塞
@@ -112,12 +112,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                     cont = True
                     break
                 if (
-                    (
-                        input.id not in item.GetBasicInfo().tags
-                        if input.is_tag
-                        else input.id != item.newItemName
-                    ) or item.count < input.count
-                ):
+                    input.id not in item.GetBasicInfo().tags
+                    if input.is_tag
+                    else input.id != item.newItemName
+                ) or item.count < input.count:
                     cont = True
                     break
             for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
@@ -126,13 +124,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                     cont = True
                     break
                 if (
-                    (
-                        input.id not in Item(fluid.fluid_id).GetBasicInfo().tags
-                        if input.is_tag
-                        else fluid.fluid_id != input.id
-                    )
-                    or fluid.volume < input.count
-                ):
+                    input.id not in Item(fluid.fluid_id).GetBasicInfo().tags
+                    if input.is_tag
+                    else fluid.fluid_id != input.id
+                ) or fluid.volume < input.count:
                     cont = True
                     break
             if cont:
@@ -204,7 +199,9 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         if self.InUpgradeSlot(slot_pos):
             UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
-        if slot_pos in self.output_slots and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+        if slot_pos in self.output_slots and self.HasDeactiveFlag(
+            flags.DEACTIVE_FLAG_OUTPUT_FULL
+        ):
             self.start_next()
             return
         recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)

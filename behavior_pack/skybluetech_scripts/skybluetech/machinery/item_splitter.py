@@ -9,7 +9,10 @@ from ..define.events.machinery.item_splitter import (
     ItemSplitterSimpleAction,
 )
 from ..define.id_enum.machinery import ITEM_SPLITTER as MACHINE_ID
-from ..transmitters.cable.logic import GetNearbyCableNetworks, PushItemToGenericContainer
+from ..transmitters.cable.logic import (
+    logic_module as cable_logic,
+    PushItemToGenericContainer,
+)
 from ..ui_sync.machinery.item_splitter import ItemSplitterUISync
 from ..utils.action_commit import SafeGetMachine
 from .basic import GUIControl, UpgradeControl, RegisterMachine
@@ -51,7 +54,13 @@ class ItemSplitter(GUIControl, UpgradeControl):
     def tryPostItemByLabel(self, item):
         # type: (Item) -> Item | None
         matched_label = self.getLabelByItem(item.id)
-        networks = GetNearbyCableNetworks(self.dim, self.x, self.y, self.z, enable_cache=True)[1]
+        networks = (
+            i
+            for i in cable_logic.GetContainerNode(
+                self.dim, self.x, self.y, self.z, enable_cache=True
+            ).outputs.values()
+            if i is not None
+        )
         for network in networks:
             for ap in network.get_input_access_points():
                 ap_label = ap.get_label()
@@ -80,7 +89,9 @@ class ItemSplitter(GUIControl, UpgradeControl):
         UpgradeControl.OnLoad(self)
         self.settings_limit = self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
         record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:apple"]
-        self.record_settings = [(int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings]
+        self.record_settings = [
+            (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
+        ]
 
     def OnUnload(self):
         # type: () -> None
@@ -91,7 +102,9 @@ class ItemSplitter(GUIControl, UpgradeControl):
         # type: () -> None
         UpgradeControl.Dump(self)
         self.bdata[K_SETTINGS_LIMIT] = self.settings_limit
-        self.bdata[K_RECORD_LABELS] = ["%d-%s" % (a, b) for a, b in self.record_settings]
+        self.bdata[K_RECORD_LABELS] = [
+            "%d-%s" % (a, b) for a, b in self.record_settings
+        ]
 
     def onAddSetting(self, player_id):
         # type: (str) -> None
@@ -125,6 +138,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         self.Dump()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
+
 @ItemSplitterSimpleAction.Listen()
 def onSimpleAction(event):
     # type: (ItemSplitterSimpleAction) -> None
@@ -136,6 +150,7 @@ def onSimpleAction(event):
     elif event.action == event.ACTION_REMOVE_SETTING:
         m.onDeleteSetting(event.player_id, event.extra)
 
+
 @ItemSplitterSettingsSetLabel.Listen()
 def onSetLabel(event):
     # type: (ItemSplitterSettingsSetLabel) -> None
@@ -145,6 +160,7 @@ def onSetLabel(event):
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
     m.onSetLabel(event.player_id, event.setting_index, event.label)
+
 
 @ItemSplitterSettingsSetItem.Listen()
 def onSetItem(event):

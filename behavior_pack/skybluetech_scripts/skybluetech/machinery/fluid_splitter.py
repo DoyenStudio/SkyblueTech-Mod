@@ -8,7 +8,10 @@ from ..define.events.machinery.fluid_splitter import (
     FluidSplitterSimpleAction,
 )
 from ..define.id_enum.machinery import FLUID_SPLITTER as MACHINE_ID
-from ..transmitters.pipe.logic import GetNearbyPipeNetworks, PushFluidToFluidContainer
+from ..transmitters.pipe.logic import (
+    logic_module as pipe_logic,
+    PushFluidToFluidContainer,
+)
 from ..ui_sync.machinery.fluid_splitter import FluidSplitterUISync, FluidSlotSync
 from ..utils.action_commit import SafeGetMachine
 from .basic import MultiFluidContainer, GUIControl, UpgradeControl, RegisterMachine
@@ -53,12 +56,20 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
     def tryPostFluidByLabel(self, fluid_id, fluid_volume):
         # type: (str, float) -> float
         matched_label = self.getLabelByFluid(fluid_id)
-        networks = GetNearbyPipeNetworks(self.dim, self.x, self.y, self.z, enable_cache=True)[1]
+        networks = (
+            i
+            for i in pipe_logic.GetContainerNode(
+                self.dim, self.x, self.y, self.z, enable_cache=True
+            ).outputs.values()
+            if i is not None
+        )
         for network in networks:
             for ap in network.group_inputs:
                 ap_label = ap.get_label()
                 if ap_label == matched_label:
-                    fluid_volume = PushFluidToFluidContainer(ap, fluid_id, fluid_volume)
+                    _, fluid_volume = PushFluidToFluidContainer(
+                        ap, fluid_id, fluid_volume
+                    )
                     if fluid_volume <= 0:
                         break
         return fluid_volume
@@ -84,7 +95,9 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         UpgradeControl.OnLoad(self)
         self.settings_limit = self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
         record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:water"]
-        self.record_settings = [(int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings]
+        self.record_settings = [
+            (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
+        ]
 
     def OnUnload(self):
         # type: () -> None
@@ -96,7 +109,9 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         UpgradeControl.Dump(self)
         MultiFluidContainer.Dump(self)
         self.bdata[K_SETTINGS_LIMIT] = self.settings_limit
-        self.bdata[K_RECORD_LABELS] = ["%d-%s" % (a, b) for a, b in self.record_settings]
+        self.bdata[K_RECORD_LABELS] = [
+            "%d-%s" % (a, b) for a, b in self.record_settings
+        ]
 
     def onAddSetting(self, player_id):
         # type: (str) -> None
@@ -130,6 +145,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         self.Dump()
         FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
+
 @FluidSplitterSimpleAction.Listen()
 def onSimpleAction(event):
     # type: (FluidSplitterSimpleAction) -> None
@@ -141,6 +157,7 @@ def onSimpleAction(event):
     elif event.action == event.ACTION_REMOVE_SETTING:
         m.onDeleteSetting(event.player_id, event.extra)
 
+
 @FluidSplitterSettingsSetLabel.Listen()
 def onSetLabel(event):
     # type: (FluidSplitterSettingsSetLabel) -> None
@@ -150,6 +167,7 @@ def onSetLabel(event):
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
     m.onSetLabel(event.player_id, event.setting_index, event.label)
+
 
 @FluidSplitterSettingsSetFluid.Listen()
 def onSetFluid(event):

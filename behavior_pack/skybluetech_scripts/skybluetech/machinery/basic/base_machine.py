@@ -12,33 +12,20 @@ K_STORE_RF = "store_rf"
 K_DEACTIVE_FLAGS = "deactive_flags"
 
 
-_getWireModule = False
-
-def requireWireModule():
-    global _getWireModule, GetNearbyWireNetworks
-    if _getWireModule:
-        return
-    from ...transmitters.wire.logic import (
-        GetNearbyWireNetworks,
-    )
-    _getWireModule = True
-
-
-
 class BaseMachine(object):
     """
     所有机器方块的基类。
     """
-    
+
     block_name = ""  # type: str
     "方块 ID"
-    extra_block_names = () # type: tuple[str, ...]
+    extra_block_names = ()  # type: tuple[str, ...]
     "额外可绑定的方块 ID"
     is_non_energy_machine = False
     "机器是否为非能源型机器"
     store_rf_max = 10000  # type: int
     "储存能量的最大值, 需要覆写"
-    energy_io_mode = (0, 0, 0, 0, 0, 0) # type: tuple[int, int, int, int, int, int]
+    energy_io_mode = (0, 0, 0, 0, 0, 0)  # type: tuple[int, int, int, int, int, int]
     "每个面的能量输入输出模式, 0:输入 1:输出 其他:无"
 
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -104,7 +91,6 @@ class BaseMachine(object):
     def OnTryActivate(self):
         "覆写方法尝试激活机器。"
 
-
     # ==== API ====
 
     def Dump(self):
@@ -143,7 +129,7 @@ class BaseMachine(object):
         if isinstance(self, GUIControl):
             self.OnSync()
         return power_new != power_old, power_overflow
-    
+
     def ReducePower(self, rf):
         # type: (int) -> bool
         """
@@ -217,6 +203,3 @@ class BaseMachine(object):
 
     def __hash__(self):
         return hash((self.dim, self.x, self.y, self.z))
-                
-
-

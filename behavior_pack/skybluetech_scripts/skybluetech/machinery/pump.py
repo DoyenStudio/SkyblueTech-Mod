@@ -2,8 +2,12 @@
 # lang: py2
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.events.server.block import BlockNeighborChangedServerEvent
-from skybluetech_scripts.tooldelta.events.server.item import PlayerTryPutCustomContainerItemServerEvent
+from skybluetech_scripts.tooldelta.events.server.block import (
+    BlockNeighborChangedServerEvent,
+)
+from skybluetech_scripts.tooldelta.events.server.item import (
+    PlayerTryPutCustomContainerItemServerEvent,
+)
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockNameAndAux
 from skybluetech_scripts.tooldelta.api.server.item import ItemExists
 from ..machinery_def.pump import *
@@ -52,7 +56,9 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
         self.pump_type = self.bdata[K_PUMP_TYPE] or M_AIR
 
     def OnPlaced(self, _):
-        under_block_name, aux = GetBlockNameAndAux(self.dim, (self.x, self.y - 1, self.z))
+        under_block_name, aux = GetBlockNameAndAux(
+            self.dim, (self.x, self.y - 1, self.z)
+        )
         if under_block_name is None:
             self.pump_type = M_AIR
             return
@@ -71,6 +77,7 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
         self.bdata[K_PUMP_TYPE] = self.pump_type
 
     def OnTicking(self):
+        FluidContainer.OnTicking(self)
         while self.IsActive():
             if self.pump_type == M_AIR:
                 self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -148,7 +155,11 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
 
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
-        if event.neighborPosX != self.x or event.neighborPosY != self.y - 1 or event.neighborPosZ != self.z:
+        if (
+            event.neighborPosX != self.x
+            or event.neighborPosY != self.y - 1
+            or event.neighborPosZ != self.z
+        ):
             return
         under_block_name = event.toBlockName
         self.pump_type = M_TYPE_MAPPING.get((under_block_name, event.toAuxValue), M_AIR)
@@ -156,7 +167,11 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
 
     def onBlockChanged(self):
         self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_NO_RECIPE)
-        if self.pump_type != M_AIR and self.fluid_id is not None and M_TYPE_MAPPING_REVERSE[self.pump_type][0] != self.fluid_id:
+        if (
+            self.pump_type != M_AIR
+            and self.fluid_id is not None
+            and M_TYPE_MAPPING_REVERSE[self.pump_type][0] != self.fluid_id
+        ):
             self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_NOT_MATCH)
         # elif self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_NOT_MATCH):
         #     self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_NOT_MATCH)

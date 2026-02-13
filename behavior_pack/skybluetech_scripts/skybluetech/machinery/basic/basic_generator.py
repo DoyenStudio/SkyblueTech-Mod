@@ -5,14 +5,16 @@ from .gui_ctrl import GUIControl
 
 
 def requireWireModule():
-    global GetNearbyWireNetworks, pool
+    global GetContainerNode, pool
     if requireWireModule.has_cache:
         return
-    from ...transmitters.wire.logic import (
-        GetNearbyWireNetworks,
-    )
+    from ...transmitters.wire.logic import logic_module
     from .. import pool
+
+    GetContainerNode = logic_module.GetContainerNode
     requireWireModule.has_cache = True
+
+
 requireWireModule.has_cache = False
 
 
@@ -24,10 +26,13 @@ class BasicGenerator(BaseMachine):
     派生自: `BaseMachine`
 
     """
+
     def GeneratePower(self, rf):
         # type: (int) -> bool
         "产出能量。"
-        self.store_rf = min(self.store_rf_max, self.addPowerIntoWireNetwork(self.store_rf + rf))
+        self.store_rf = min(
+            self.store_rf_max, self.addPowerIntoWireNetwork(self.store_rf + rf)
+        )
         if isinstance(self, GUIControl):
             self.OnSync()
         return self.store_rf != rf
@@ -35,26 +40,25 @@ class BasicGenerator(BaseMachine):
     def OnLoad(self):
         BaseMachine.OnLoad(self)
         self._power_output_faces = tuple(
-            i for i, n in enumerate(self.energy_io_mode)
-            if n == 1
+            i for i, n in enumerate(self.energy_io_mode) if n == 1
         )
 
     def addPowerIntoWireNetwork(self, rf, passed=None):
         # type: (int, set[BaseMachine] | None) -> int
-        """ 在已连接的电缆网络中为机器添加能量, 包括周围的机器。 返回溢出的能量 """
+        """在已连接的电缆网络中为机器添加能量, 包括周围的机器。 返回溢出的能量"""
         if passed is None:
             passed = set()
         requireWireModule()
-        output_networks = GetNearbyWireNetworks(
+        output_networks = GetContainerNode(
             self.dim, self.x, self.y, self.z, enable_cache=True
-        )[1]
+        ).outputs.values()
         for network in output_networks:
             if network is None:
                 continue
             for ap in network.get_input_access_points():
                 machine = pool.GetMachineStrict(self.dim, *ap.target_pos)
                 if machine is not None and not machine.is_non_energy_machine:
-                    updated, rf = machine.AddPower(rf, network.get_power_limit(), passed)
+                    updated, rf = machine.AddPower(rf, network.transfer_speed, passed)
                     if updated and isinstance(machine, GUIControl):
                         machine.OnSync()
                     if rf == 0:

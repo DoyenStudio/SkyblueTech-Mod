@@ -1,8 +1,7 @@
 # coding=utf-8
 
 from mod.server.blockEntityData import BlockEntityData
-
-from behavior_pack.skybluetech_scripts.tooldelta.events.server.block import (
+from skybluetech_scripts.tooldelta.events.server.block import (
     ServerBlockUseEvent,
 )
 from ..define import flags

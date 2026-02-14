@@ -191,6 +191,9 @@
         "skybluetech:heavy_compressor_front_active": {
             "textures": "textures/machines/flipbook_textures/heavy_compressor_front_active"
         },
+        "skybluetech:hover_text_displayer": {
+            "textures": "textures/models/hover_text_displayer_texture"
+        },
         "skybluetech:hydroponic_base_fluid_side": {
             "textures": "textures/machines/hydroponic_base_fluid_side"
         },
@@ -202,9 +205,6 @@
         },
         "skybluetech:hydroponic_bed": {
             "textures": "textures/models/hydroponic_bed_texture"
-        },
-        "skybluetech:steel_item_transport_cable": {
-            "textures": "textures/transmitters/steel_item_transport_cable_model"
         },
         "skybluetech:lead_block": {
             "textures": "textures/blocks/ingot_block/lead_block"
@@ -301,6 +301,9 @@
         },
         "skybluetech:splitter_front": {
             "textures": "textures/machines/splitter_front"
+        },
+        "skybluetech:steel_item_transport_cable": {
+            "textures": "textures/transmitters/steel_item_transport_cable_model"
         },
         "skybluetech:sun": {
             "textures": "textures/ui/sun"

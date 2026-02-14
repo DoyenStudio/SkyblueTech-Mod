@@ -1,4 +1,5 @@
 from .block import *
+from .control import *
 from .entity import *
 from .item import *
 from .lang import *

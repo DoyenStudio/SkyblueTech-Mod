@@ -329,6 +329,41 @@
             }
         ]
     },
+    "TextWithBlackBg": {
+        "type": "image",
+        "$font": "default",
+        "$text_content": "Hello World",
+        "$text_size": "normal",
+        "size": [
+            "100%c+5px",
+            "100%c+5px"
+        ],
+        "layer": 1,
+        "clip_direction": "left",
+        "clip_ratio": 0.0,
+        "nineslice_size": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "texture": "textures/ui/black_alpha_bg",
+        "controls": [
+            {
+                "text": {
+                    "type": "label",
+                    "$font|default": "smooth",
+                    "$text": "Hello World",
+                    "$text_size|default": "normal",
+                    "$text|default": "Hello World",
+                    "font_size": "$text_size",
+                    "font_type": "$font",
+                    "text": "$text_content",
+                    "text_alignment": "center"
+                }
+            }
+        ]
+    },
     "UpgradeSlots": {
         "type": "panel",
         "$slot0": 2,

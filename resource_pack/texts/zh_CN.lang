@@ -223,3 +223,4 @@ tile.skybluetech:tin_block.name=锡块
 tile.skybluetech:tin_ore.name=锡矿石
 tile.skybluetech:tin_wire.name=锡线缆
 tile.skybluetech:wind_generator.name=风力发电机
+tile.skybluetech:hover_text_displayer.name=悬浮文本投影器

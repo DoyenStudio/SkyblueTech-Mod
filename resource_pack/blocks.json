@@ -326,6 +326,9 @@
             "up": "skybluetech:gray_lava_still"
         }
     },
+    "skybluetech:hover_text_displayer": {
+        "sound": "iron"
+    },
     "skybluetech:hydroponic_base": {
         "textures": {
             "down": "skybluetech:frame_bottom",
@@ -344,9 +347,6 @@
     },
     "skybluetech:item_splitter": {
         "textures": "skybluetech:rect_panel_bg"
-    },
-    "skybluetech:steel_item_transport_cable": {
-        "sound": "stone"
     },
     "skybluetech:lead_block": {
         "textures": "skybluetech:lead_block"
@@ -484,6 +484,12 @@
     "skybluetech:resin_collector": {
         "sound": "wood"
     },
+    "skybluetech:rf_repeater_plant": {
+        "client_entity": {
+            "identifier": "skybluetech:rf_repeater_plant"
+        },
+        "sound": "iron"
+    },
     "skybluetech:silver_block": {
         "textures": "skybluetech:silver_block"
     },
@@ -498,6 +504,9 @@
     },
     "skybluetech:splitter": {
         "sound": "iron"
+    },
+    "skybluetech:steel_item_transport_cable": {
+        "sound": "stone"
     },
     "skybluetech:superconduct_wire": {
         "sound": "cloth"
@@ -559,11 +568,5 @@
             "identifier": "skybluetech:wind_generator"
         },
         "sound": "iron"
-    },
-    "skybluetech:rf_repeater_plant": {
-        "sound": "iron",
-        "client_entity": {
-            "identifier": "skybluetech:rf_repeater_plant"
-        }
     }
 }

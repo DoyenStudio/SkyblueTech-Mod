@@ -5,15 +5,15 @@ from ...define.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpload,
 )
 from ...ui_sync.machinery.hover_text_displayer import HoverTextDisplayerUISync
-from .define import MachinePanelUI, MAIN_PATH
+from .define import MachinePanelUI, SCREEN_BASE_PATH
 from .utils import UpdatePowerBar
 
-EDIT_BOX_NODE = MAIN_PATH / "edit_box"
-TIP_LABEL_NODE = MAIN_PATH / "tip_label"
-POWER_BAR_NODE = MAIN_PATH / "power_bar"
+EDIT_BOX_NODE = SCREEN_BASE_PATH / "edit_box"
+TIP_LABEL_NODE = SCREEN_BASE_PATH / "tip_label"
+POWER_BAR_NODE = SCREEN_BASE_PATH / "power_bar"
 
 
-@RegistToolDeltaScreen("ItemSplitterUI.main")
+@RegistToolDeltaScreen("HoverTextDisplayerUI.main")
 class HoverTextDisplayerUI(MachinePanelUI):
     EXIT_BTN_PATH = "close_btn"
 

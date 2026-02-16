@@ -66,37 +66,43 @@ def PostItemIntoNetworks(dim, xyz, item, networks):
         )
     for network in networks:
         transfer_speed = network.transfer_speed
-        send_item = item.copy()
-        if transfer_speed is not None:
-            send_item.count = min(item.count, transfer_speed)
         for ap in network.get_input_access_points():
             if xyz == ap.target_pos:
                 # 别自己给自己装东西 !
                 continue
-            ret_item = PushItemToGenericContainer(ap, send_item)
-            if ret_item is not None:
-                item.count = send_item.count - ret_item.count
-            else:
-                item.count -= send_item.count
-            if item.count == 0:
+            ret_item = PushItemToGenericContainer(ap, item, transfer_speed)
+            if ret_item is None:
                 return None
+            item = ret_item
     return item
 
 
-def PushItemToGenericContainer(ap, item):
-    # type: (CableAccessPoint, Item) -> Item | None
+def PushItemToGenericContainer(ap, item, limit_count=None):
+    # type: (CableAccessPoint, Item, int | None) -> Item | None
     cxyz = ap.target_pos
+    send_item = item.copy()
+    if limit_count is not None:
+        send_item.count = min(send_item.count, limit_count)
+    overflow_count = item.count - send_item.count
     m = GetMachineWithoutCls(ap.dim, *cxyz)
     if m is not None:
         # 是机器
         if not isinstance(m, ItemContainer):
             raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
-        return m.PushItem(item)
+        res = m.PushItem(send_item)
     else:
         container_size = GetContainerSize(cxyz, ap.dim)
         if container_size is None:
             return item
-        return PushItemToOrigContainer(ap.dim, cxyz, item, container_size)
+        res = PushItemToOrigContainer(ap.dim, cxyz, send_item, container_size)
+    if res is None:
+        if overflow_count <= 0:
+            return None
+        else:
+            send_item.count = overflow_count
+    else:
+        send_item.count += overflow_count
+    return send_item
 
 
 def PushItemToOrigContainer(dim, xyz, item, container_size):
@@ -130,77 +136,34 @@ def PushItemToOrigContainer(dim, xyz, item, container_size):
     return item
 
 
+require_item_queue = set()  # type: set[tuple[int, tuple[int, int, int]]]
+
+
 def RequireItems(dim, xyz):
-    # type: (int, tuple[int, int, int]) -> bool
+    # type: (int, tuple[int, int, int]) -> None
     "在某一个坐标的容器向周围的网络请求物品。"
+    k = (dim, xyz)
+    if k in require_item_queue:
+        return
+    require_item_queue.add((dim, xyz))
+    _require_items(dim, xyz)
+
+
+def _require_items(dim, xyz):
+    # type: (int, tuple[int, int, int]) -> None
+    require_item_queue.discard((dim, xyz))
     x, y, z = xyz
-    networks = (
-        i
-        for i in logic_module.GetContainerNode(
-            dim, x, y, z, enable_cache=True
-        ).outputs.values()
-        if i is not None
-    )
-    om = GetMachineStrict(dim, x, y, z)
-    ok = False
-    if om is None:
-        myslots = range(GetContainerSize(xyz, dim))
-    elif not isinstance(om, ItemContainer):
-        raise ValueError("Machine %s is not a ItemContainer" % type(om).__name__)
-    else:
-        myslots = om.input_slots
+    cnode = logic_module.GetContainerNode(dim, x, y, z, enable_cache=True)
+    networks = [i for i in cnode.inputs.values() if i is not None]
     for ap in sorted(
-        list(i for network in networks for i in network.group_outputs),
+        (i for network in networks for i in network.group_outputs),
         key=lambda ap: ap.get_priority(),
     ):
-        dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[ap.access_facing]
-        cxyz = (ap.x + dx, ap.y + dy, ap.z + dz)
+        cxyz = ap.target_pos
         if xyz == cxyz:
             # 别自己给自己提取 !
             continue
-        m = GetMachineWithoutCls(dim, ap.x + dx, ap.y + dy, ap.z + dz)
-        if m is not None:
-            # 是机器
-            if not isinstance(m, ItemContainer):
-                raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
-            available_slots = m.output_slots
-        else:
-            container_size = GetContainerSize(cxyz, dim)
-            if container_size is None:
-                continue
-            available_slots = range(container_size)
-        for oslot in myslots:
-            item = GetContainerItem(dim, xyz, oslot, getUserData=True)
-            if item is not None and item.count >= item.GetBasicInfo().maxStackSize:
-                continue
-            for slot in available_slots:
-                sitem = GetContainerItem(dim, cxyz, slot, getUserData=True)
-                if sitem is None:
-                    continue
-                elif item is None:
-                    if om is None or om.IsValidInput(oslot, sitem):
-                        SetContainerItem(dim, cxyz, slot, Item("minecraft:air"))
-                        # SetChestBoxItemNum(None, cxyz, slot, 0, dim)
-                        SetContainerItem(dim, xyz, oslot, sitem)
-                        item = sitem
-                        ok = True
-                elif item.CanMerge(sitem):
-                    if om is not None and not om.IsValidInput(oslot, item):
-                        continue
-                    require_count = min(
-                        item.GetBasicInfo().maxStackSize - item.count, sitem.count
-                    )
-                    count_overflow = max(0, sitem.count - require_count)
-                    newitem = item.copy()
-                    newitem.count = count_overflow
-                    SetContainerItem(dim, cxyz, slot, newitem)
-                    # SetChestBoxItemNum(None, cxyz, slot, count_overflow, dim)
-                    item.count += require_count
-                    SetContainerItem(dim, xyz, oslot, item)
-                    ok = True
-                if item is not None and item.count >= item.GetBasicInfo().maxStackSize:
-                    break
-    return ok
+        ContainerPostItem(dim, cxyz)
 
 
 def onActivateNetwork(network):
@@ -221,29 +184,46 @@ event_queue = set()  # type: set[tuple[int, tuple[int, int, int]]]
 
 
 @ContainerItemChangedServerEvent.Listen()
+@Delay(0)
 def onContainerItemChanged(event):
     # type: (ContainerItemChangedServerEvent) -> None
     # 当容器内的物品变化时, 尝试将物品放入网络
     if event.pos is None:
         return
-    k = (event.dimensionId, event.pos)
+    dim = event.dimensionId
+    xyz = event.pos
+    if event.newItem.count == 0:
+        m = GetMachineStrict(dim, *xyz)
+        if isinstance(m, ItemContainer):
+            if event.slot in m.input_slots:
+                RequireItems(dim, xyz)
+        else:
+            RequireItems(dim, xyz)
+    ContainerPostItem(dim, xyz)
+
+
+def ContainerPostItem(dim, xyz):
+    # type: (int, tuple[int, int, int]) -> None
+    m = GetMachineStrict(dim, *xyz)  # 可能是一个机器
+    if m is not None:
+        if not isinstance(m, ItemContainer):
+            raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
+        else:
+            slots = m.output_slots
+    else:
+        slots = range(GetContainerSize(xyz, dim))
+    k = (dim, xyz)
     if k in event_queue:
         return
-    event_queue.add(k)
-    CotainerPostItem(event.dimensionId, event.pos, event.slot, event.newItem)
+    event_queue.add((dim, xyz))
+    _cotainerPostItems(dim, xyz, slots)  # pyright: ignore[reportArgumentType]
 
 
 @Delay(ITEM_POST_DELAY)
-def CotainerPostItem(dim, xyz, slot, slotitem):
-    # type: (int, tuple[int, int, int], int, Item) -> None
-    x, y, z = xyz
+def _cotainerPostItems(dim, xyz, slots):
+    # type: (int, tuple[int, int, int], tuple[int, ...]) -> None
     event_queue.discard((dim, xyz))
-    if slotitem.id == "minecraft:air" or slotitem.count == 0:
-        m = GetMachineStrict(dim, x, y, z)
-        if not isinstance(m, ItemContainer):
-            return
-        if slot in m.input_slots:
-            m.RequireItems()
+    x, y, z = xyz
     output_networks = set(
         i
         for i in logic_module.GetContainerNode(
@@ -251,37 +231,25 @@ def CotainerPostItem(dim, xyz, slot, slotitem):
         ).outputs.values()
         if i is not None
     )
-    m = GetMachineStrict(dim, x, y, z)  # 可能是一个机器
-    if m is not None:
-        if not isinstance(m, ItemContainer):
-            raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
-        if slot not in m.output_slots:
-            return
-        else:
-            slots = m.output_slots
-    else:
-        slots = range(GetContainerSize(xyz, dim))
-    if not output_networks:
-        return
     for slot_not_empty in slots:
         item = GetContainerItem(dim, xyz, slot_not_empty, getUserData=True)
         if item is None:
             continue
-        nitem = PostItemIntoNetworks(dim, xyz, item, output_networks)
-        if nitem is not None:
-            if nitem.count > 0:
-                if nitem.count == item.count:
+        rest_item = PostItemIntoNetworks(dim, xyz, item, output_networks)
+        if rest_item is not None:
+            if rest_item.count > 0:
+                if rest_item.count == item.count:
                     continue
                 else:
-                    res = SetContainerItem(dim, xyz, slot_not_empty, nitem)
+                    res = SetContainerItem(dim, xyz, slot_not_empty, rest_item)
                     if not res:
                         print("[Warning] SetItem to container %d %d %d failed" % xyz)
                     if not POST_ALL_ITEMS_IN_ONE_TIME:
                         break
         else:
             SetContainerItem(dim, xyz, slot_not_empty, Item("minecraft:air", 0, 0))
-            if not POST_ALL_ITEMS_IN_ONE_TIME:
-                break
+            # if not POST_ALL_ITEMS_IN_ONE_TIME:
+            #     break
 
 
 logic_module = LogicModule(

@@ -12,6 +12,7 @@ from skybluetech_scripts.tooldelta.api.client import (
 )
 from skybluetech_scripts.tooldelta.api.timer import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
+from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 from ..define.events.misc.transmitter_visual_checker import (
@@ -285,3 +286,8 @@ def removeMultiAfter(shapes):
         g_multi_shapes.remove(shapes)
         for shape in shapes:
             shape.Remove()
+
+
+@ClientInitCallback()
+def onClientInit():
+    ClientBlockUseEvent.AddExtraBlocks({"minecraft:chest", "minecraft:barrel"})

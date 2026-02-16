@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
+from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from ...define.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
     HoverTextDisplayerContentUpload,
@@ -15,7 +16,8 @@ POWER_BAR_NODE = SCREEN_BASE_PATH / "power_bar"
 
 @RegistToolDeltaScreen("HoverTextDisplayerUI.main")
 class HoverTextDisplayerUI(MachinePanelUI):
-    EXIT_BTN_PATH = "close_btn"
+    EXIT_BTN_PATH = SCREEN_BASE_PATH / "close_btn"
+    allow_esc_exit = True
 
     def OnCreate(self):
         self.sync = HoverTextDisplayerUISync.NewClient(self.dim, self.x, self.y, self.z)  # type: HoverTextDisplayerUISync
@@ -43,4 +45,6 @@ class HoverTextDisplayerUI(MachinePanelUI):
     @Binder.binding(Binder.BF_EditFinished, "#HoverTextDisplayerUI.text_edit_box")
     def oneEditedText(self, params):
         text = params["Text"]  # type: str
-        HoverTextDisplayerContentUpload(self.x, self.y, self.z, text[:512]).send()
+        HoverTextDisplayerContentUpload(
+            self.x, self.y, self.z, py2_unicode(text)[:512]
+        ).send()

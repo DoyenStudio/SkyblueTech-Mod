@@ -1,17 +1,58 @@
 {
-    "format_version": "1.10.0",
+    "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
             "minecraft:geometry": {
-                "identifier": "geometry.skybluetech.rf_repeater_plant"
+                "identifier": "geometry.skybluetech.hover_text_displayer"
             },
             "minecraft:material_instances": {
                 "*": {
                     "isotropic": true,
                     "render_method": "blend",
-                    "texture": "skybluetech:wind_generator"
+                    "texture": "skybluetech:hover_text_displayer"
                 }
-            }
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7消耗能量以在其上方投影全息文本。\n§b耗能由文本长度和是否彩显决定。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:aabb": {
+                "collision": {
+                    "min": [
+                        0.125,
+                        0,
+                        0.125
+                    ],
+                    "max": [
+                        0.875,
+                        0.375,
+                        0.875
+                    ]
+                },
+                "clip": {
+                    "min": [
+                        0.125,
+                        0,
+                        0.125
+                    ],
+                    "max": [
+                        0.875,
+                        0.375,
+                        0.875
+                    ]
+                }
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_appliance": {},
+            "tag:skybluetech_machine": {}
         },
         "description": {
             "category": "skybluetech",

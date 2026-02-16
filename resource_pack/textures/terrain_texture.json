@@ -135,6 +135,9 @@
         "skybluetech:fluid_condenser_front": {
             "textures": "textures/machines/fluid_condenser_front"
         },
+        "skybluetech:fluid_condenser_front_active": {
+            "textures": "textures/machines/flipbook_textures/fluid_condenser_front_active"
+        },
         "skybluetech:forester_side": {
             "textures": "textures/machines/forester_side"
         },

@@ -6,16 +6,19 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityRemoveClientEvent,
 )
 from skybluetech_scripts.tooldelta.api.client import CreateShapeFactory
+from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from ..define.id_enum.machinery import HOVER_TEXT_DISPLAYER as MACHINE_ID
 from ..define.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
     HoverTextDisplayerContentUpload,
 )
 from ..ui.machinery.hover_text_displayer import HoverTextDisplayerUI
+from ..ui_sync.machinery.hover_text_displayer import HoverTextDisplayerUISync
 from ..utils.action_commit import SafeGetMachine
 from ..utils.block_sync import BlockSync
 from ..utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 from .basic import (
+    BaseClicker,
     GUIControl,
     PowerControl,
     RegisterMachine,
@@ -32,18 +35,19 @@ block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
-class HoverTextDisplayer(GUIControl, PowerControl):
+class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
+    block_name = MACHINE_ID
     bound_ui = HoverTextDisplayerUI
     store_rf_max = 2000
     running_power = 1
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        BaseClicker.__init__(self)
         PowerControl.__init__(self, dim, x, y, z, block_entity_data)
-
-    def OnLoad(self):
-        PowerControl.OnLoad(self)
-        self.set_text(self.bdata[K_TEXT] or "")
+        self.set_text()
         self.can_display = self.PowerEnough()
+        self.sync = HoverTextDisplayerUISync.NewServer(self).Activate()
+        self.OnSync()
 
     def OnClick(self, event):
         GUIControl.OnClick(
@@ -59,22 +63,27 @@ class HoverTextDisplayer(GUIControl, PowerControl):
     def OnTicking(self):
         if self.PowerEnough():
             self.ReducePower()
+            self.OnSync()
 
-    def Dump(self):
-        PowerControl.Dump(self)
-        self.bdata[K_TEXT] = self.text
+    def OnSync(self):
+        self.sync.storage_rf = self.store_rf
+        self.sync.rf_max = self.store_rf_max
+        self.sync.MarkedAsChanged()
 
     def OnUnload(self):
         GUIControl.OnUnload(self)
         PowerControl.OnUnload(self)
+        block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
-    def set_text(self, text):
-        # type: (str) -> None
-        self.text = text
+    def set_text(self, text=None):
+        # type: (str | None) -> None
+        if text is not None:
+            self.text = text
         self.running_power = self.calcuate_power_cost()
-        HoverTextDisplayerContentUpdate(
-            self.x, self.y, self.z, text, self.running_power
-        ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
+        if self.IsActive():
+            HoverTextDisplayerContentUpdate(
+                self.x, self.y, self.z, self.text, self.running_power
+            ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
@@ -102,6 +111,16 @@ class HoverTextDisplayer(GUIControl, PowerControl):
         else:
             return int(cost)
 
+    @property
+    def text(self):
+        # type: () -> str
+        return self.bdata[K_TEXT] or ""
+
+    @text.setter
+    def text(self, value):
+        # type: (str) -> None
+        self.bdata[K_TEXT] = str(value)
+
 
 @HoverTextDisplayerContentUpload.Listen()
 def onTextUploaded(event):
@@ -109,9 +128,28 @@ def onTextUploaded(event):
     m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, HoverTextDisplayer):
         return
-    if len(event.new_text) > 256:
-        event.new_text = event.new_text[:256]
-    m.set_text(event.new_text)
+    text = py2_unicode(event.new_text.strip())
+    if len(text) > 256:
+        text = text[:256]
+    text_list = []
+    cached_text = ""
+    l = 0
+    for char in text:
+        if char == "\n":
+            text_list.append(cached_text)
+            cached_text = ""
+            l = 0
+        else:
+            if char != "§":
+                l += 1
+            if l > 40:
+                text_list.append(cached_text)
+                cached_text = ""
+                l = 0
+            cached_text += char
+    if cached_text != "":
+        text_list.append(cached_text)
+    m.set_text("\n".join(text_list))
 
 
 # CLIENT PART

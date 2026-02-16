@@ -7,7 +7,6 @@ K_RF_MAX = "m"
 
 
 class HoverTextDisplayerUISync(MachineUISync):
-    progress_relative = 0.0
     storage_rf = 0
     rf_max = 0
 

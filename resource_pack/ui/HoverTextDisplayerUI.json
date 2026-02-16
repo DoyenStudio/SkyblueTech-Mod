@@ -211,13 +211,5 @@
     "main@common.base_screen": {
         "$screen_content": "HoverTextDisplayerUI.hover_text_displayer_ui"
     },
-    "namespace": "HoverTextDisplayerUI",
-    "screen": {
-        "type": "screen",
-        "controls": [
-            {
-                "panel@HoverTextDisplayerUI.hover_text_displayer_ui": {}
-            }
-        ]
-    }
+    "namespace": "HoverTextDisplayerUI"
 }

@@ -16,6 +16,7 @@ from .freezer import Freezer
 from .fluid_splitter import FluidSplitter
 from .geothermal_generator import GeoThermalGenerator
 from .heavy_compressor import HeavyCompressor
+from .hover_text_displayer import HoverTextDisplayer
 from .hydroponic_base import HydroponicBase
 from .hydroponic_bed import HydroponicBed
 from .item_splitter import ItemSplitter

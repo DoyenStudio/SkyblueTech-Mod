@@ -327,7 +327,10 @@
         }
     },
     "skybluetech:hover_text_displayer": {
-        "sound": "iron"
+        "sound": "iron",
+        "client_entity": {
+            "identifier": "skybluetech:hover_text_displayer"
+        }
     },
     "skybluetech:hydroponic_base": {
         "textures": {

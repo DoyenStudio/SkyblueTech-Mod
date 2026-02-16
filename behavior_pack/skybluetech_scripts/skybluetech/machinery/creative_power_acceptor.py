@@ -122,13 +122,13 @@ def onPowerUpdateRequest(event):
     z = event.z
     if dim == -1:
         # TODO: 客户端可能恶意连续请求以占用过多网络资源
-        CreativePowerAcceptorPowerUpdate(
-            [list(k) + [v] for k, v in updatePool.items()]
-        ).send(event.player_id)
+        CreativePowerAcceptorPowerUpdate([
+            list(k) + [v] for k, v in updatePool.items()
+        ]).send(event.player_id)
     else:
-        CreativePowerAcceptorPowerUpdate(
-            [[dim, x, y, z, updatePool.get((dim, x, y, z), -32768)]]
-        ).send(event.player_id)
+        CreativePowerAcceptorPowerUpdate([
+            [dim, x, y, z, updatePool.get((dim, x, y, z), -32768)]
+        ]).send(event.player_id)
 
 
 @ClientInitCallback()

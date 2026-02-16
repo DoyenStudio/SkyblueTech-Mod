@@ -2,18 +2,27 @@
 
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import DISTILLATION_CHAMBER as MACHINE_ID
-from ..machinery_def.distillation_chamber import recipes as Recipes, DistillatorChamberRecipe
+from ..machinery_def.distillation_chamber import (
+    recipes as Recipes,
+    DistillatorChamberRecipe,
+)
 from ..ui_sync.machinery.distillation_chamber import DistillationChamberUISync
-from .basic import AutoSaver, BaseMachine, HeatCtrl, MultiFluidContainer, GUIControl, RegisterMachine
+from .basic import (
+    BaseMachine,
+    HeatCtrl,
+    MultiFluidContainer,
+    GUIControl,
+    RegisterMachine,
+)
 from .basic.multi_fluid_container import FluidSlot
 
-recipes_collection = {} # type: dict[str, list[DistillatorChamberRecipe]]
+recipes_collection = {}  # type: dict[str, list[DistillatorChamberRecipe]]
 for recipe in Recipes:
     recipes_collection.setdefault(recipe.collection_name, []).append(recipe)
 
 
 @RegisterMachine
-class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
+class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
     block_name = MACHINE_ID
     is_non_energy_machine = True
     fluid_io_fix_mode = 0
@@ -22,8 +31,7 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
     fluid_slot_max_volumes = (1500, 1000)
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None   
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
+        # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         HeatCtrl.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
@@ -33,11 +41,7 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
 
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
-
-    def OnLoad(self):
-        HeatCtrl.OnLoad(self)
 
     def OnTicking(self):
         # type: () -> None
@@ -58,11 +62,6 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
         self.sync.upper_fluid_volume = self.fluids[1].volume
         self.sync.upper_fluid_max_volume = self.fluids[1].max_volume
         self.sync.MarkedAsChanged()
-
-    def Dump(self):
-        # type: () -> None
-        HeatCtrl.Dump(self)
-        MultiFluidContainer.Dump(self)
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
@@ -86,7 +85,10 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
             return
         if self.locked_recipe_idx is None:
             for idx, rcp in enumerate(rcps):
-                if self.kelvin > rcp.min_temperature and self.kelvin < rcp.max_temperature:
+                if (
+                    self.kelvin > rcp.min_temperature
+                    and self.kelvin < rcp.max_temperature
+                ):
                     self.workWithRecipe(rcp, in_fluid, out_fluid)
                     self.locked_recipe_idx = idx
                     break
@@ -98,10 +100,14 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
     def workWithRecipe(self, rcp, in_fluid, out_fluid):
         # type: (DistillatorChamberRecipe, FluidSlot, FluidSlot) -> None
         if self.kelvin < rcp.fit_temperature:
-            consume_rate = produce_rate = float(rcp.fit_temperature - self.kelvin) / (rcp.fit_temperature - rcp.min_temperature)
+            consume_rate = produce_rate = float(rcp.fit_temperature - self.kelvin) / (
+                rcp.fit_temperature - rcp.min_temperature
+            )
         else:
             consume_rate = 1
-            produce_rate = 1 - float(self.kelvin - rcp.fit_temperature) / (rcp.max_temperature - rcp.fit_temperature)
+            produce_rate = 1 - float(self.kelvin - rcp.fit_temperature) / (
+                rcp.max_temperature - rcp.fit_temperature
+            )
         consume = rcp.consume * consume_rate
         produce = rcp.produce * produce_rate
         if in_fluid.volume >= consume:
@@ -110,6 +116,3 @@ class DistillatorChamber(AutoSaver, HeatCtrl, MultiFluidContainer, GUIControl):
                 in_fluid.volume -= consume
                 self.output_rate = produce_rate
                 self.OutputFluid(rcp.produce_matter, produce, 1)
-
-
-

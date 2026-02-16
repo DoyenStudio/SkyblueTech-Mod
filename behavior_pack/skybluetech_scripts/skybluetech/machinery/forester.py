@@ -14,7 +14,6 @@ from ..define.id_enum.machinery import FORESTER as MACHINE_ID
 from ..machinery_def.forester import getSaplingId, isLog, isLeave
 from ..ui_sync.machinery.forester import ForesterUISync
 from .basic import (
-    AutoSaver,
     ItemContainer,
     GUIControl,
     SPControl,
@@ -36,7 +35,7 @@ ALL_NEIGHBOUR_BLOCKS_ENUM = [
 
 
 @RegisterMachine
-class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
+class Forester(GUIControl, ItemContainer, SPControl):
     block_name = MACHINE_ID
     store_rf_max = 16000
     running_power = 80
@@ -46,7 +45,6 @@ class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         SPControl.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ForesterUISync.NewServer(self).Activate()
@@ -65,7 +63,7 @@ class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
             return False
         item_uqids = GetEntitiesBySelector(
             "@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
-            % (self.x-DX, self.y+Y_OFFSET, self.z-DZ, DX*2+1, DY, DZ*2+1)
+            % (self.x - DX, self.y + Y_OFFSET, self.z - DZ, DX * 2 + 1, DY, DZ * 2 + 1)
         )
         items = [GetDroppedItem(item_uqid, True) for item_uqid in item_uqids]
         for item_uqid in item_uqids:
@@ -77,7 +75,9 @@ class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
         return True
 
     def collectTree(self):
-        main_log_block, logs, leaves = foresterBFS(self.dim, self.x, self.y + Y_OFFSET, self.z, DX, DY, DZ)
+        main_log_block, logs, leaves = foresterBFS(
+            self.dim, self.x, self.y + Y_OFFSET, self.z, DX, DY, DZ
+        )
         sapling_id = getSaplingId(main_log_block)
         if len(logs) + len(leaves) < 10:
             return False
@@ -100,7 +100,7 @@ class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
         )
 
     def OnSync(self):
-        self.sync.storage_rf = self.store_rf 
+        self.sync.storage_rf = self.store_rf
         self.sync.rf_max = self.store_rf_max
         self.sync.progress_relative = self.GetProcessProgress()
         self.sync.MarkedAsChanged()
@@ -110,7 +110,6 @@ class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
         return True
 
     def OnUnload(self):
-        AutoSaver.OnUnload(self)
         SPControl.OnUnload(self)
         GUIControl.OnUnload(self)
 
@@ -120,10 +119,12 @@ class Forester(AutoSaver, GUIControl, ItemContainer, SPControl):
 
 def foresterBFS(dim, _x, _y, _z, rx, ry, rz):
     # type: (int, int, int, int, int, int, int) -> tuple[str, set[tuple[int, int, int]], set[tuple[int, int, int]]]
-    walked = set() # type: set[tuple[int, int, int]]
-    found_logs = set() # type: set[tuple[int, int, int]]
-    found_leaves = set() # type: set[tuple[int, int, int]]
-    remainings = deque((_x+i, _y + 1, _z+j) for i in range(-rx, rx + 1) for j in range(-rz, rz + 1))
+    walked = set()  # type: set[tuple[int, int, int]]
+    found_logs = set()  # type: set[tuple[int, int, int]]
+    found_leaves = set()  # type: set[tuple[int, int, int]]
+    remainings = deque(
+        (_x + i, _y + 1, _z + j) for i in range(-rx, rx + 1) for j in range(-rz, rz + 1)
+    )
     main_log_block = ""
     while len(remainings) > 0:
         x, y, z = remainings.popleft()
@@ -132,9 +133,12 @@ def foresterBFS(dim, _x, _y, _z, rx, ry, rz):
             new_y = y + dy
             new_z = z + dz
             if (
-                new_x < _x - rx or new_x > _x + rx
-                or new_y < _y or new_y > _y + ry
-                or new_z < _z - rz or new_z > _z + rz
+                new_x < _x - rx
+                or new_x > _x + rx
+                or new_y < _y
+                or new_y > _y + ry
+                or new_z < _z - rz
+                or new_z > _z + rz
             ):
                 continue
             next_pos = (new_x, new_y, new_z)
@@ -154,4 +158,3 @@ def foresterBFS(dim, _x, _y, _z, rx, ry, rz):
                 continue
             remainings.append(next_pos)
     return main_log_block, found_logs, found_leaves
-

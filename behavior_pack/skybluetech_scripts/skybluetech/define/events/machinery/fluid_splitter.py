@@ -98,7 +98,7 @@ class FluidSplitterSimpleAction(CustomC2SEvent):
             "y": self.y,
             "z": self.z,
             "a": self.action,
-            "e": self.extra
+            "e": self.extra,
         }
 
     @classmethod
@@ -117,10 +117,9 @@ class FluidSplitterSimpleAction(CustomC2SEvent):
 class FluidSplitterSettingsListUpdate(CustomS2CEvent):
     name = "st:FSSLU"
 
-    def __init__(self, lis=[], player_id=""):
-        # type: (list[tuple[int, str]], str) -> None
+    def __init__(self, lis=[]):
+        # type: (list[tuple[int, str]]) -> None
         self.lis = lis
-        self.player_id = player_id
 
     def marshal(self):
         return {"l": self.lis}
@@ -129,5 +128,4 @@ class FluidSplitterSettingsListUpdate(CustomS2CEvent):
     def unmarshal(cls, data):
         return cls(
             lis=data["l"],
-            player_id=data["__id__"],
         )

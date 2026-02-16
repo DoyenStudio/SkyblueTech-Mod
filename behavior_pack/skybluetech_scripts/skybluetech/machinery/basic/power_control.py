@@ -24,7 +24,7 @@ class PowerControl(BaseMachine):
         res = BaseMachine.AddPower(self, rf, max_limit, passed)
         if self.store_rf < self.running_power:
             self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
-        else:
+        elif self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK):
             self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         return res
 
@@ -58,6 +58,6 @@ class PowerControl(BaseMachine):
         elif auto_require:
             RequireEnergyFromNetwork(self)
             return self.PowerEnough(auto_require=False)
-        else:
+        elif not self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK):
             self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         return res

@@ -4,24 +4,34 @@ from mod.server.blockEntityData import BlockEntityData
 from ..define import flags
 from ..define.id_enum.machinery import GEO_THERMAL_GENERATOR as MACHINE_ID
 from ..machinery_def.geothermal_generator import *
-from ..ui_sync.machinery.geothermal_generator import GeoThermalGeneratorUISync, FluidSlotSync
-from .basic import AutoSaver, BasicGenerator, MultiFluidContainer, GUIControl, WorkRenderer, RegisterMachine
+from ..ui_sync.machinery.geothermal_generator import (
+    GeoThermalGeneratorUISync,
+    FluidSlotSync,
+)
+from .basic import (
+    BasicGenerator,
+    MultiFluidContainer,
+    GUIControl,
+    WorkRenderer,
+    RegisterMachine,
+)
 
 K_BURN_TICKS_LEFT = "burn_ticks_left"
-K_POWER = "power"
 
 
 @RegisterMachine
-class GeoThermalGenerator(AutoSaver, BasicGenerator, GUIControl, MultiFluidContainer, WorkRenderer):
+class GeoThermalGenerator(
+    BasicGenerator, GUIControl, MultiFluidContainer, WorkRenderer
+):
     block_name = MACHINE_ID
     store_rf_max = 28800
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     fluid_input_slots = {0, 1}
     fluid_io_fix_mode = 0
+    fluid_slot_max_volumes = (2000, 2000)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
@@ -42,10 +52,8 @@ class GeoThermalGenerator(AutoSaver, BasicGenerator, GUIControl, MultiFluidConta
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
-        return (
-            (slot == 0 and fluid_id == "minecraft:lava")
-            or
-            (slot == 1 and fluid_id == "minecraft:water")
+        return (slot == 0 and fluid_id == "minecraft:lava") or (
+            slot == 1 and fluid_id == "minecraft:water"
         )
 
     def OnSync(self):
@@ -55,27 +63,16 @@ class GeoThermalGenerator(AutoSaver, BasicGenerator, GUIControl, MultiFluidConta
         self.sync.fluids = FluidSlotSync.ListFromMachine(self)
         self.sync.MarkedAsChanged()
 
-    def OnLoad(self):
-        BasicGenerator.OnLoad(self)
-        data = self.bdata
-        self.burn_ticks = data[K_BURN_TICKS_LEFT] or 0
-        self.power = data[K_POWER] or 0
-
     def OnUnload(self):
-        AutoSaver.OnUnload(self)
         BasicGenerator.OnUnload(self)
         GUIControl.OnUnload(self)
 
-    def Dump(self):
-        BasicGenerator.Dump(self)
-        MultiFluidContainer.Dump(self)
-        self.bdata[K_BURN_TICKS_LEFT] = self.burn_ticks
-        self.bdata[K_POWER] = 0
-        self.OnSync()
-
     def OnTryActivate(self):
         self.GeneratePower(0)
-        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL) and self.store_rf < self.store_rf_max:
+        if (
+            self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
+            and self.store_rf < self.store_rf_max
+        ):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 
     def OnFluidSlotUpdate(self, slot):
@@ -106,3 +103,13 @@ class GeoThermalGenerator(AutoSaver, BasicGenerator, GUIControl, MultiFluidConta
         # type: (int) -> None
         BasicGenerator.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)
+
+    @property
+    def burn_ticks(self):
+        # type: () -> int
+        return self.bdata[K_BURN_TICKS_LEFT] or 0
+
+    @burn_ticks.setter
+    def burn_ticks(self, value):
+        # type: (int) -> None
+        self.bdata[K_BURN_TICKS_LEFT] = value

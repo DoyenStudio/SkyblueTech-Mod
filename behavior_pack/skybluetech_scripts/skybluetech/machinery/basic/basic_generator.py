@@ -1,4 +1,5 @@
 # coding=utf-8
+from mod.server.blockEntityData import BlockEntityData  # noqa: F401
 from ...define.facing import OPPOSITE_FACING
 from .base_machine import BaseMachine
 from .gui_ctrl import GUIControl
@@ -27,21 +28,22 @@ class BasicGenerator(BaseMachine):
 
     """
 
+    def __init__(self, dim, x, y, z, block_entity_data):
+        # type: (int, int, int, int, BlockEntityData) -> None
+        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        self._power_output_faces = tuple(
+            i for i, n in enumerate(self.energy_io_mode) if n == 1
+        )
+
     def GeneratePower(self, rf):
         # type: (int) -> bool
         "产出能量。"
-        self.store_rf = min(
+        srf = self.store_rf = min(
             self.store_rf_max, self.addPowerIntoWireNetwork(self.store_rf + rf)
         )
         if isinstance(self, GUIControl):
             self.OnSync()
-        return self.store_rf != rf
-
-    def OnLoad(self):
-        BaseMachine.OnLoad(self)
-        self._power_output_faces = tuple(
-            i for i, n in enumerate(self.energy_io_mode) if n == 1
-        )
+        return srf != rf
 
     def addPowerIntoWireNetwork(self, rf, passed=None):
         # type: (int, set[BaseMachine] | None) -> int

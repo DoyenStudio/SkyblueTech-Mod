@@ -10,9 +10,13 @@ M_TYPE_MAPPING = {
     ("minecraft:flowing_water", 0): M_WATER,
     ("minecraft:lava", 0): M_LAVA,
     ("minecraft:flowing_lava", 0): M_LAVA,
-    ("skybluetech:oil_source_block", 0): M_OIL
+    ("skybluetech:oil_source_block", 0): M_OIL,
 }
-M_TYPE_MAPPING_REVERSE = {v: k for k, v in M_TYPE_MAPPING.items()}
+M_TYPE_MAPPING_REVERSE = {
+    M_WATER: ("minecraft:water", 0),
+    M_LAVA: ("minecraft:lava", 0),
+    M_OIL: ("skybluetech:oil_source_block", 0),
+}
 
 PUMP_FLUID_AND_POWER = {
     M_AIR: 0,

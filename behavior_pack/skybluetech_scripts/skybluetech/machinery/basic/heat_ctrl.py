@@ -37,13 +37,8 @@ class HeatCtrl(BaseMachine):
     def __init__(self, dim, x, y, z, block_entity_data):
         self.heat_c = self.original_heat_c
 
-
-    def OnLoad(self):
-        self.kelvin = self.bdata[K_KELVIN] or ENV_TEMPERATURE
-
     def OnTicking(self):
-        if self.kelvin > ENV_TEMPERATURE:
-            self._heatLoss()
+        self._heat_loss()
 
     def ShareHeat(self, other):
         # type: (HeatCtrl) -> bool
@@ -71,12 +66,14 @@ class HeatCtrl(BaseMachine):
             other.kelvin -= dQ / other.heat_c
         return True
 
-    def _heatLoss(self):
-        self.kelvin = max(ENV_TEMPERATURE, self.kelvin - (self.kelvin**4 - ENV_TEMPERATURE**4) * self.heat_loss * 1e-10)
+    def _heat_loss(self):
+        k = self.kelvin
+        if k > ENV_TEMPERATURE:
+            self.kelvin = max(
+                ENV_TEMPERATURE,
+                k - (k**4 - ENV_TEMPERATURE**4) * self.heat_loss * 1e-10,
+            )
         # print "val", (self.kelvin**4 - ENV_TEMPERATURE**4) * self.heat_loss * 1e-10
-
-    def Dump(self):
-        self.bdata[K_KELVIN] = self.kelvin
 
     def InputFluidAndUpdateHeat(self, fluid_id, prev_fluid_volume, new_fluid_volume):
         # type: (str, float, float) -> None
@@ -91,7 +88,11 @@ class HeatCtrl(BaseMachine):
         add_fluid_volume = new_fluid_volume - prev_fluid_volume
         orig_q = self.kelvin * self.heat_c * (prev_fluid_volume + SELF_M)
         self.FlushCValueByFluid(fluid_id, add_fluid_volume, new_fluid_volume)
-        self.kelvin = (orig_q + fluid_c_values[fluid_id] * ENV_TEMPERATURE * add_fluid_volume) / self.heat_c / (new_fluid_volume + SELF_M)
+        self.kelvin = (
+            (orig_q + fluid_c_values[fluid_id] * ENV_TEMPERATURE * add_fluid_volume)
+            / self.heat_c
+            / (new_fluid_volume + SELF_M)
+        )
         # print "fluid_c:", fluid_c_values[fluid_id], "my_c:", self.heat_c, "k:", self.kelvin
 
     def FlushCValueByFluid(self, fluid_id, add_volume, new_volume):
@@ -110,3 +111,13 @@ class HeatCtrl(BaseMachine):
             self.heat_c = self.original_heat_c * (
                 float(SELF_M) / (new_volume + SELF_M)
             ) + fluid_c * (float(new_volume) / (new_volume + SELF_M))
+
+    @property
+    def kelvin(self):
+        # type: () -> float
+        return self.bdata[K_KELVIN] or ENV_TEMPERATURE
+
+    @kelvin.setter
+    def kelvin(self, value):
+        # type: (float) -> None
+        self.bdata[K_KELVIN] = value

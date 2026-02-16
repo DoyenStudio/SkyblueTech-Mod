@@ -15,7 +15,8 @@ from .base_machine import BaseMachine
 from .gui_ctrl import GUIControl
 from .utils import FixIOModeByCardinalFacing, FixIOModeByDirection
 
-K_FLUIDS = "fluids"
+K_FLUID_ID = "fluid_id"
+K_FLUID_VOLUME = "fluid_vol"
 
 
 def requireLibraryFunc():
@@ -30,12 +31,36 @@ def requireLibraryFunc():
 requireLibraryFunc._imported = False
 
 
-class FluidSlot:
-    def __init__(self, fluid_id, fluid_volume, max_volume):
-        # type: (str | None, float, float) -> None
-        self.fluid_id = fluid_id
-        self.volume = fluid_volume
+class FluidSlot(object):
+    def __init__(self, block_entity_data, index, max_volume):
+        # type: (BlockEntityData, int, float) -> None
+        self.bdata = block_entity_data
+        self.index = index
         self.max_volume = max_volume
+        self.k_id = K_FLUID_ID + str(index)
+        self.k_vol = K_FLUID_VOLUME + str(index)
+        self._cached_fluid_id = block_entity_data[self.k_id]
+        self._cached_volume = block_entity_data[self.k_vol] or 0.0
+
+    @property
+    def fluid_id(self):
+        # type: () -> str | None
+        return self._cached_fluid_id
+
+    @fluid_id.setter
+    def fluid_id(self, value):
+        # type: (str | None) -> None
+        self._cached_fluid_id = self.bdata[self.k_id] = value
+
+    @property
+    def volume(self):
+        # type: () -> float
+        return self._cached_volume
+
+    @volume.setter
+    def volume(self, value):
+        # type: (float) -> None
+        self._cached_volume = self.bdata[self.k_vol] = value
 
     def isFull(self):
         return self.volume >= self.max_volume
@@ -44,21 +69,11 @@ class FluidSlot:
         # type： (str | None) -> bool
         if self.isFull():
             return False
-        elif self.fluid_id is None or self.volume == 0 or fluid_id == self.fluid_id:
+        fid = self.fluid_id
+        if fid is None or self.volume == 0 or fluid_id == fid:
             return True
         else:
             return False
-
-    def marshal(self):
-        return {
-            "f": self.fluid_id,
-            "v": self.volume,
-        }
-
-    @classmethod
-    def unmarshal(cls, data, max_volume):
-        # type: (dict, float) -> FluidSlot
-        return cls(data["f"], data["v"], max_volume)
 
 
 class MultiFluidContainer(object):
@@ -97,19 +112,11 @@ class MultiFluidContainer(object):
             )
         elif self.fluid_io_fix_mode == 2:
             self.fluid_io_mode = FixIOModeByDirection(dim, x, y, z, self.fluid_io_mode)
-        rawdatas = self.bdata[K_FLUIDS] or []
-        if len(rawdatas) < len(self.fluid_slot_max_volumes):
-            rawdatas += [{"f": None, "v": 0.0}] * (
-                len(self.fluid_slot_max_volumes) - len(rawdatas)
-            )
         self.fluids = [
-            FluidSlot.unmarshal(rawdatas[i], mv)
+            FluidSlot(self.bdata, i, mv)
             for i, mv in enumerate(self.fluid_slot_max_volumes)
         ]
         self._sending_fluid = True
-
-    def Dump(self):
-        self.bdata[K_FLUIDS] = [fluid.marshal() for fluid in self.fluids]
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
@@ -137,15 +144,14 @@ class MultiFluidContainer(object):
         if fluid.fluid_id is None:
             fluid.fluid_id = fluid_id
         orig_volume = fluid.volume
-        fluid.volume += fluid_volume
+        new_vol = fluid.volume = orig_volume + fluid_volume
         ok = False
-        if fluid.volume > orig_volume:
+        if new_vol > orig_volume:
             self.onAddedFluid(slot_pos, fluid_id, fluid_volume)
             ok = True
-        elif fluid.volume < orig_volume:
+        elif new_vol < orig_volume:
             self.onReducedFluid(slot_pos, fluid_id, fluid_volume)
             ok = True
-        self.Dump()
         if fluid.volume > fluid.max_volume:
             overflow_vol = fluid.volume - fluid.max_volume
             fluid.volume = fluid.max_volume
@@ -165,13 +171,11 @@ class MultiFluidContainer(object):
                 if fluid_volume <= free_volume:
                     fluid.volume += fluid_volume
                     self.onAddedFluid(slot, fluid_id, fluid_volume)
-                    self.Dump()
                     return True, 0
                 else:
                     fluid.volume = fluid.max_volume
                     fluid_volume -= free_volume
                     self.onAddedFluid(slot, fluid_id, free_volume)
-                    self.Dump()
         return _orig != fluid_volume, fluid_volume
 
     def CanAddFluid(self, fluid_id):
@@ -194,12 +198,10 @@ class MultiFluidContainer(object):
                 fluid.fluid_id = None
                 fluid.volume = 0.0
                 self.onReducedFluid(slot, fid, fvol)
-                self.Dump()
                 return True, fid, fvol
             else:
-                fluid.volume -= req_fluid_volume
+                fluid.volume = fvol - req_fluid_volume
                 self.onReducedFluid(slot, fid, req_fluid_volume)
-                self.Dump()
                 return True, fid, req_fluid_volume
         return False, "", 0
 
@@ -253,7 +255,6 @@ class MultiFluidContainer(object):
                         )
                         GiveItem(player_id, Item(bucket_id, count=1))
                         self.onReducedFluid(slot, fluid_id, BUCKET_VOLUME)
-                        self.Dump()
                         break
             else:
                 fluid_id = item.newItemName.replace("_bucket", "")
@@ -276,7 +277,6 @@ class MultiFluidContainer(object):
                             player_id, Item("minecraft:bucket", count=1)
                         )
                         self.onAddedFluid(slot, fluid_id, BUCKET_VOLUME)
-                        self.Dump()
             if isinstance(self, GUIControl):
                 self.OnSync()
             return True

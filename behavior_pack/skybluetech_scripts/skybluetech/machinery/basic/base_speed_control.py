@@ -1,5 +1,6 @@
 # coding=utf-8
 #
+from mod.server.blockEntityData import BlockEntityData  # noqa: F401
 from ...define.flags import DEACTIVE_FLAG_POWER_LACK
 from .base_machine import BaseMachine
 
@@ -18,10 +19,11 @@ class BaseSpeedControl(BaseMachine):
 
     origin_process_ticks = 20
 
-    def OnLoad(self):
-        BaseMachine.OnLoad(self)
-        self.ticks_left = self.bdata[K_TICKS_LEFT] or self.origin_process_ticks
+    def __init__(self, dim, x, y, z, block_entity_data):
+        # type: (int, int, int, int, BlockEntityData) -> None
+        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         self.reduce_ticks = 1
+        self._cached_ticks_left = self.bdata[K_TICKS_LEFT] or self.origin_process_ticks
 
     def SetSpeedRelative(self, speed):
         # type: (float) -> None
@@ -45,10 +47,6 @@ class BaseSpeedControl(BaseMachine):
         else:
             self.ticks_left -= self.reduce_ticks
             return False
-
-    def Dump(self):
-        BaseMachine.Dump(self)
-        self.bdata[K_TICKS_LEFT] = self.ticks_left
 
     def SetProcessTicks(self, ticks):
         # type: (int) -> None
@@ -86,3 +84,12 @@ class BaseSpeedControl(BaseMachine):
         BaseMachine.SetDeactiveFlag(self, flag)
         if flag != DEACTIVE_FLAG_POWER_LACK:
             self.ResetProgress()
+
+    @property
+    def ticks_left(self):
+        return self._cached_ticks_left
+
+    @ticks_left.setter
+    def ticks_left(self, value):
+        # type: (float) -> None
+        self._cached_ticks_left = self.bdata[K_TICKS_LEFT] = value

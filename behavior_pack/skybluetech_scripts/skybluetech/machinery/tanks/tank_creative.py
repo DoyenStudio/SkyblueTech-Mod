@@ -30,5 +30,4 @@ class CreativeTank(BasicTank):
         if self.fluid_id is not None:
             self.fluid_volume = INFINITY
         self.OnSync()
-        self.Dump()
         return res

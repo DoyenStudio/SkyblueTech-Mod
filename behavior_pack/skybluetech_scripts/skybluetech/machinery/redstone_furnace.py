@@ -8,25 +8,32 @@ from ..define import flags
 from ..define.id_enum.machinery import REDSTONE_FURNACE as MACHINE_ID
 from ..machinery_def.redstone_furnace import TICK_POWER
 from ..ui_sync.machinery.redstone_furnace import RedstoneFurnaceUISync
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
+from .basic import (
+    ItemContainer,
+    GUIControl,
+    UpgradeControl,
+    WorkRenderer,
+    RegisterMachine,
+)
 
 
 @RegisterMachine
-class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
+class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 8800
-    origin_process_ticks = 20 * 8 # 8s
+    origin_process_ticks = 20 * 8  # 8s
     running_power = TICK_POWER
     input_slots = (0,)
     output_slots = (1,)
     upgrade_slot_start = 2
     upgrade_slots = 4
+    allow_upgrader_tags = {
+        "skybluetech:upgraders/speed",
+    }
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
+        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = RedstoneFurnaceUISync.NewServer(self).Activate()
         self.OnSync()
         self.try_start_next()
@@ -41,7 +48,6 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
                 break
 
     def try_start_next(self):
-        self.RequireItems()
         input_item = self.GetSlotItem(0)
         if input_item is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
@@ -53,7 +59,7 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         if not self.CanOutputItems([Item(expected_output)]):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-                
+
     def run_once(self):
         input_item = self.GetSlotItem(0)
         output_item = self.GetSlotItem(1)
@@ -78,17 +84,20 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
         self.SetSlotItem(1, output_item)
 
     def OnSync(self):
-        self.sync.storage_rf = self.store_rf 
+        self.sync.storage_rf = self.store_rf
         self.sync.rf_max = self.store_rf_max
         self.sync.progress_relative = self.GetProcessProgress()
         self.sync.MarkedAsChanged()
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        return True
+        if self.InUpgradeSlot(slot):
+            return UpgradeControl.IsValidInput(self, slot, item)
+        return ItemContainer.IsValidInput(self, slot, item)
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
+        UpgradeControl.OnSlotUpdate(self, slot_pos)
         if slot_pos == 1:
             return
         input_item = self.GetSlotItem(0)
@@ -111,13 +120,12 @@ class RedstoneFurnace(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
-        SPControl.SetDeactiveFlag(self, flag)
+        UpgradeControl.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)
 
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
-        BaseMachine.OnUnload(self)
+        UpgradeControl.OnUnload(self)
         GUIControl.OnUnload(self)
 
 

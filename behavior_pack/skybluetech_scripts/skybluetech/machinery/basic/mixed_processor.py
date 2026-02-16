@@ -25,12 +25,8 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
-        BaseProcessor.__init__(self, dim, x, y, z, block_entity_data)
-
-    def OnLoad(self):
-        BaseMachine.OnLoad(self)
-        SPControl.OnLoad(self)
         self.current_recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -47,10 +43,6 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         self.RequireItems()
         self.RequireFluidsFromNetwork()
         self.OnSync()
-
-    def Dump(self):
-        MultiFluidContainer.Dump(self)
-        BaseProcessor.Dump(self)
 
     def start_next(self, dont_recursive=False):
         self.RequireItems()

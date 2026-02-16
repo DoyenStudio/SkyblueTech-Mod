@@ -2,7 +2,11 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server.block import GetBlockName, GetBlockStates, SetBlock
+from skybluetech_scripts.tooldelta.api.server.block import (
+    GetBlockName,
+    GetBlockStates,
+    SetBlock,
+)
 from skybluetech_scripts.tooldelta.api.server.entity import (
     GetEntitiesBySelector,
     GetDroppedItem,
@@ -15,7 +19,7 @@ from ..machinery_def.farming_station import (
     isBlockCrop,
 )
 from ..ui_sync.machinery.farming_station import FarmingStationUISync
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, RegisterMachine
+from .basic import BaseMachine, ItemContainer, GUIControl, SPControl, RegisterMachine
 
 DX = 2
 DZ = 2
@@ -23,7 +27,7 @@ Y_OFFSET = 2
 
 
 @RegisterMachine
-class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
+class FarmingStation(GUIControl, ItemContainer, SPControl):
     block_name = MACHINE_ID
     store_rf_max = 16000
     running_power = 30
@@ -33,8 +37,7 @@ class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        SPControl.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FarmingStationUISync.NewServer(self).Activate()
         self.OnSync()
@@ -52,7 +55,7 @@ class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
             return False
         item_uqids = GetEntitiesBySelector(
             "@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
-            % (self.x-DX, self.y+Y_OFFSET, self.z-DZ, DX*2+1, 1, DZ*2+1)
+            % (self.x - DX, self.y + Y_OFFSET, self.z - DZ, DX * 2 + 1, 1, DZ * 2 + 1)
         )
         items = [GetDroppedItem(item_uqid, True) for item_uqid in item_uqids]
         for item_uqid in item_uqids:
@@ -99,7 +102,7 @@ class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
         )
 
     def OnSync(self):
-        self.sync.storage_rf = self.store_rf 
+        self.sync.storage_rf = self.store_rf
         self.sync.rf_max = self.store_rf_max
         self.sync.progress_relative = self.GetProcessProgress()
         self.sync.MarkedAsChanged()
@@ -109,7 +112,6 @@ class FarmingStation(AutoSaver, GUIControl, ItemContainer, SPControl):
 
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 
@@ -118,8 +120,7 @@ def breakBlock(dim, xyz):
     # type: (int, tuple[int, int, int]) -> None
     SetBlock(dim, xyz, "minecraft:air", old_block_handing=1)
 
+
 def breakAndResetBlock(dim, xyz, block_name):
     # type: (int, tuple[int, int, int], str) -> None
     SetBlock(dim, xyz, block_name, old_block_handing=1)
-    
-

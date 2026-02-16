@@ -11,7 +11,6 @@ from ..define import flags
 from ..define.id_enum.machinery import HEAVY_COMPRESSOR as MACHINE_ID
 from ..ui_sync.machinery.heavy_compressor import HeavyCompressorUISync
 from .basic import (
-    AutoSaver,
     BaseMachine,
     ItemContainer,
     GUIControl,
@@ -25,7 +24,7 @@ cant_compressed_recipes = set()  # type: set[str]
 
 
 @RegisterMachine
-class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
+class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 8800
     origin_process_ticks = 20 * 5  # 8s
@@ -37,8 +36,7 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        SPControl.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = HeavyCompressorUISync.NewServer(self).Activate()
         self.OnSync()
@@ -53,14 +51,12 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
             else:
                 break
 
-    def TryStartNext(self, dont_recursive=False):
+    def TryStartNext(self):
+        self.RequireItems()
         input_item = self.GetSlotItem(0)
         output_item = self.GetSlotItem(1)
         if input_item is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-            if not dont_recursive:
-                self.RequireItems()
-                self.TryStartNext(dont_recursive=True)
             return
         expected_output = GetCompressedResult(
             input_item.newItemName, input_item.newAuxValue
@@ -146,7 +142,6 @@ class HeavyCompressor(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRende
 
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 

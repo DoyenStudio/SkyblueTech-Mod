@@ -2,6 +2,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
+from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from ..define.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
@@ -34,6 +35,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         # type: (int, int, int, int, BlockEntityData) -> None
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ItemSplitterUISync.NewServer(self).Activate()
+        self._cached_recorded_settings = None
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
@@ -82,36 +84,24 @@ class ItemSplitter(GUIControl, UpgradeControl):
     def OnClick(self, event):
         # type: (ServerBlockUseEvent) -> None
         GUIControl.OnClick(self, event)
-        ItemSplitterSettingsListUpdate(self.record_settings).send(event.playerId)
-
-    def OnLoad(self):
-        # type: () -> None
-        UpgradeControl.OnLoad(self)
-        self.settings_limit = self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
-        record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:apple"]
-        self.record_settings = [
-            (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
-        ]
+        ExecLater(
+            0.1,
+            lambda: ItemSplitterSettingsListUpdate(self.record_settings).send(
+                event.playerId
+            ),
+        )
 
     def OnUnload(self):
         # type: () -> None
         UpgradeControl.OnUnload(self)
         GUIControl.OnUnload(self)
 
-    def Dump(self):
-        # type: () -> None
-        UpgradeControl.Dump(self)
-        self.bdata[K_SETTINGS_LIMIT] = self.settings_limit
-        self.bdata[K_RECORD_LABELS] = [
-            "%d-%s" % (a, b) for a, b in self.record_settings
-        ]
-
     def onAddSetting(self, player_id):
         # type: (str) -> None
         if len(self.record_settings) >= self.settings_limit:
             return
         self.record_settings.append((0, "minecraft:apple"))
-        self.Dump()
+        self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
     def onDeleteSetting(self, player_id, index):
@@ -119,7 +109,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         if index >= len(self.record_settings):
             return
         self.record_settings.pop(index)
-        self.Dump()
+        self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
     def onSetItem(self, player_id, index, item):
@@ -127,7 +117,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         if index >= len(self.record_settings):
             return
         self.record_settings[index] = (self.record_settings[index][0], item)
-        self.Dump()
+        self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
     def onSetLabel(self, player_id, index, label):
@@ -135,8 +125,38 @@ class ItemSplitter(GUIControl, UpgradeControl):
         if index >= len(self.record_settings):
             return
         self.record_settings[index] = (label, self.record_settings[index][1])
-        self.Dump()
+        self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
+
+    @property
+    def settings_limit(self):
+        # type: () -> int
+        return self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
+
+    @settings_limit.setter
+    def settings_limit(self, value):
+        # type: (int) -> None
+        self.bdata[K_SETTINGS_LIMIT] = value
+
+    @property
+    def record_settings(self):
+        if self._cached_recorded_settings is None:
+            record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:water"]
+            self._cached_recorded_settings = [
+                (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
+            ]
+        return self._cached_recorded_settings
+
+    @record_settings.setter
+    def record_settings(self, value):
+        # type: (list[tuple[int, str]]) -> None
+        self._cached_recorded_settings = value
+        self.bdata[K_RECORD_LABELS] = ["%d-%s" % (a, b) for a, b in value]
+
+    def save_settings(self):
+        self.bdata[K_RECORD_LABELS] = [
+            "%d-%s" % (a, b) for a, b in self.record_settings
+        ]
 
 
 @ItemSplitterSimpleAction.Listen()

@@ -3,7 +3,13 @@
 from mod.server.blockEntityData import BlockEntityData
 from ..define.id_enum.machinery import HYDROPONIC_BASE as MACHINE_ID
 from ..ui_sync.machinery.hydroponic_base import HydroponicBaseUISync
-from .basic import AutoSaver, BaseMachine, ItemContainer, MultiFluidContainer, GUIControl, RegisterMachine
+from .basic import (
+    BaseMachine,
+    ItemContainer,
+    MultiFluidContainer,
+    GUIControl,
+    RegisterMachine,
+)
 
 K_GROW_STAGE = "grow_stage"
 K_STAGE_GROW_TICKS = "stage_grow_ticks"
@@ -12,7 +18,7 @@ POWER_COST = 4
 
 
 @RegisterMachine
-class HydroponicBase(AutoSaver, ItemContainer, MultiFluidContainer, GUIControl):
+class HydroponicBase(BaseMachine, ItemContainer, MultiFluidContainer, GUIControl):
     block_name = MACHINE_ID
     is_non_energy_machine = True
     input_slots = ()
@@ -24,8 +30,7 @@ class HydroponicBase(AutoSaver, ItemContainer, MultiFluidContainer, GUIControl):
     running_power = POWER_COST
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None   
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
+        # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
@@ -35,12 +40,7 @@ class HydroponicBase(AutoSaver, ItemContainer, MultiFluidContainer, GUIControl):
     def OnUnload(self):
         # type: () -> None
         BaseMachine.OnUnload(self)
-        AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
-
-    def Dump(self):
-        # type: () -> None
-        MultiFluidContainer.Dump(self)
 
     def OnSync(self):
         self.sync.fluid_1_type = self.fluids[0].fluid_id
@@ -67,4 +67,3 @@ class HydroponicBase(AutoSaver, ItemContainer, MultiFluidContainer, GUIControl):
     def GetWaterVolume(self):
         # type: () -> float
         return self.fluids[0].volume
-

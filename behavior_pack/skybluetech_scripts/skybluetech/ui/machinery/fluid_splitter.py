@@ -29,10 +29,12 @@ class FluidSplitterUI(MachinePanelUIProxy):
         self.sync.WhenUpdated = self.WhenUpdated
         self.settings_view = self.GetElement(SETTINGS_VIEW_NODE).asScrollView()
         self.settings_grid = self.settings_view.GetContent().asGrid()
-        self.add_btn = self.GetElement(ADD_BTN_NODE).asButton().SetCallback(self.onAddSetting)
+        self.add_btn = (
+            self.GetElement(ADD_BTN_NODE).asButton().SetCallback(self.onAddSetting)
+        )
         self.label_selector_window = None
         self.fluid_selector_window = None
-        self.fluid_selector_window_elements = [None] * 24 # type: list[UBaseCtrl | None]
+        self.fluid_selector_window_elements = [None] * 24  # type: list[UBaseCtrl | None]
         self.current_selected_fluid_id = None
         self.selected_setting_index = -1
         self.fluid_update_cb = InitFluidsDisplay(
@@ -57,22 +59,30 @@ class FluidSplitterUI(MachinePanelUIProxy):
         for i in range(items_count):
             label, fluid_id = lis[i]
             griditem = self.settings_grid.GetGridItem(0, i)
-            griditem["label"].asLabel().SetText(GetItemHoverName(fluid_id).replace("§f", ""))
+            griditem["label"].asLabel().SetText(
+                GetItemHoverName(fluid_id).replace("§f", "")
+            )
             griditem["color_img"].asImage().SetSpriteColor(rand_rgb_by_index(label))
-            griditem["item_renderer"].asItemRenderer().SetUiItem(Item(fluid_id + "_bucket"))
+            griditem["item_renderer"].asItemRenderer().SetUiItem(
+                Item(fluid_id + "_bucket")
+            )
 
     def createLabelSelector(self, x, y):
         # type: (float, float) -> UBaseCtrl
         self.selected_setting_index
         if self.label_selector_window is not None:
             return self.label_selector_window
-        window = self.AddElement("FluidSplitterUI.label_selector_window", "label_selector_window")
+        window = self.AddElement(
+            "FluidSplitterUI.label_selector_window", "label_selector_window"
+        )
         window.SetLayer(80)
         stack = window["stack"]
         stack_sizex, _ = stack.GetSize()
         window.SetPos((x, y))
         self.label_selector_window = window
-        self.label_selector_window["close_btn"].asButton().SetCallback(lambda _:self.closeLabelSelector())
+        self.label_selector_window["close_btn"].asButton().SetCallback(
+            lambda _: self.closeLabelSelector()
+        )
         for i in range(24):
             e = stack.AddElement("FluidSplitterUI.index_selector", "selector%d" % i)
             xsize, ysize = e.GetSize()
@@ -95,12 +105,16 @@ class FluidSplitterUI(MachinePanelUIProxy):
         self.selected_setting_index
         if self.fluid_selector_window is not None:
             return self.fluid_selector_window
-        window = self.AddElement("FluidSplitterUI.fluid_selector_window", "fluid_selector_window")
+        window = self.AddElement(
+            "FluidSplitterUI.fluid_selector_window", "fluid_selector_window"
+        )
         window.SetLayer(80)
         window.SetPos((x - 80, y))
         window["title"].asLabel().SetText("选择流体")
         self.fluid_selector_window = window
-        self.fluid_selector_window["close_btn"].asButton().SetCallback(lambda _:self.closeFluidSelector())
+        self.fluid_selector_window["close_btn"].asButton().SetCallback(
+            lambda _: self.closeFluidSelector()
+        )
         self.flushFluidSelector([])
         return window
 
@@ -185,7 +199,9 @@ class FluidSplitterUI(MachinePanelUIProxy):
         if params["ButtonState"] != 0:
             return
         button_path = params["ButtonPath"][len("main/") :]
-        fluid_id = str(self.GetElement(button_path).GetPropertyBag().get("#fluid_id", ""))
+        fluid_id = str(
+            self.GetElement(button_path).GetPropertyBag().get("#fluid_id", "")
+        )
         if fluid_id == "":
             return
         if self.selected_setting_index == -1:
@@ -207,14 +223,17 @@ class FluidSplitterUI(MachinePanelUIProxy):
         idx = params["#collection_index"]
         dim, x, y, z = self.pos
         FluidSplitterSimpleAction(
-            dim, x, y, z,
+            dim,
+            x,
+            y,
+            z,
             FluidSplitterSimpleAction.ACTION_REMOVE_SETTING,
             idx,
         ).send()
 
     @Binder.binding(Binder.BF_EditChanged, "#FluidSplitterUI.search_fluid")
     def onSearchFluid(self, params):
-        text = params["Text"] # type: str
+        text = params["Text"]  # type: str
         if not text.replace(":", "").strip():
             self.flushFluidSelector([])
             return
@@ -238,8 +257,10 @@ class FluidSplitterUI(MachinePanelUIProxy):
     @Delay(0)
     def onListUpdated(self, event):
         # type: (FluidSplitterSettingsListUpdate) -> None
-        cur =  len(event.lis)
-        self.settings_grid.SetDimensionAndCall((1, cur), lambda: self.onGridUpdated(event.lis))
+        cur = len(event.lis)
+        self.settings_grid.SetDimensionAndCall(
+            (1, cur), lambda: self.onGridUpdated(event.lis)
+        )
 
 
 def fuzzySearch(text, sections):
@@ -248,22 +269,18 @@ def fuzzySearch(text, sections):
     return [
         section
         for section in sections
-        if all(
-            keyword in section
-            for keyword in keywords
-        )
+        if all(keyword in section for keyword in keywords)
     ]
+
 
 def getFluidNamesForSearch():
     if getFluidNamesForSearch.cache is None:
         SEARCHABLE_FLUIDS = {
-            GetItemHoverName(fluid_id): fluid_id
-            for fluid_id in all_fluids
+            GetItemHoverName(fluid_id): fluid_id for fluid_id in all_fluids
         }
-        SEARCHABLE_FLUIDS.update({
-            fluid_id: fluid_id
-            for fluid_id in all_fluids
-        })
+        SEARCHABLE_FLUIDS.update({fluid_id: fluid_id for fluid_id in all_fluids})
         getFluidNamesForSearch.cache = SEARCHABLE_FLUIDS
     return getFluidNamesForSearch.cache
+
+
 getFluidNamesForSearch.cache = None

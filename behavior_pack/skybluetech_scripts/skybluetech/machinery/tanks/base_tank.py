@@ -47,9 +47,6 @@ class BasicTank(BaseMachine, FluidContainer, GUIControl):
         self.sync.max_volume = self.max_fluid_volume
         self.sync.MarkedAsChanged()
 
-    def Dump(self):
-        FluidContainer.Dump(self)
-
     def OnTryActivate(self):
         FluidContainer.OnTryActivate(self)
 

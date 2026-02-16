@@ -3,13 +3,15 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from ..define import flags
-from ..define.events.machinery.fermenter import FermenterSetTemperatureEvent, FermenterSeMaxVolumeEvent
+from ..define.events.machinery.fermenter import (
+    FermenterSetTemperatureEvent,
+    FermenterSeMaxVolumeEvent,
+)
 from ..define.id_enum.machinery import FERMENTER as MACHINE_ID
 from ..machinery_def.fermenter import *
 from ..ui_sync.machinery.fermenter import FermenterUISync
 from ..utils.action_commit import SafeGetMachine
 from .basic import (
-    AutoSaver,
     BaseMachine,
     GUIControl,
     MultiBlockStructure,
@@ -47,7 +49,7 @@ K_INOCULATE_TIME = "st:inoculate_time"
 
 
 @RegisterMachine
-class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
+class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
     block_name = MACHINE_ID
     origin_process_ticks = 1
     running_power = 5
@@ -70,7 +72,6 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
         self.t = 0
         self.sync = FermenterUISync.NewServer(self).Activate()
@@ -93,20 +94,6 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
                 self.lifeCycle(recipe)
                 self.OnSync()
 
-    def OnLoad(self):
-        UpgradeControl.OnLoad(self)
-        self.mud_temperature = self.bdata[K_TEMPERATURE] or 25.0
-        self.mud_vitality = self.bdata[K_MUD_VITALITY] or 0.0
-        self.mud_volume = self.bdata[K_MUD_VOLUME] or 0.0
-        self.water_volume = self.bdata[K_WATER_VOLUME] or 0.0
-        self.bacteria_hunger = self.bdata[K_CELL_HUNGER] or 0.0
-        self.expected_mud_temperature = self.bdata[K_EXPECTED_TEMPERTURE] or 25.0
-        self.expected_water_max_volume = self.bdata[K_EXPECTED_WATER_MAX_VOLUME] or POOL_MAX_VOLUME * 0.4
-        self.recipe_id = self.bdata[K_RECIPE] or 0
-        self.current_inoculating_recipe = self.bdata[K_INOCULATING_RECIPE] or 0
-        self.current_inoculate_time = self.bdata[K_INOCULATE_TIME] or 0.0
-        MultiBlockStructure.OnLoad(self)
-
     def OnStructureChanged(self, ok):
         # type: (bool) -> None
         if ok:
@@ -115,23 +102,8 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
             self.getFluidOutIO().SelfRequireFluid()
         self.OnSync()
 
-    def Dump(self):
-        # type: () -> None
-        UpgradeControl.Dump(self)
-        self.bdata[K_TEMPERATURE] = self.mud_temperature
-        self.bdata[K_MUD_VITALITY] = self.mud_vitality
-        self.bdata[K_MUD_VOLUME] = self.mud_volume
-        self.bdata[K_WATER_VOLUME] = self.water_volume
-        self.bdata[K_CELL_HUNGER] = self.bacteria_hunger
-        self.bdata[K_EXPECTED_TEMPERTURE] = self.expected_mud_temperature
-        self.bdata[K_EXPECTED_WATER_MAX_VOLUME] = self.expected_water_max_volume
-        self.bdata[K_RECIPE] = self.recipe_id
-        self.bdata[K_INOCULATING_RECIPE] = self.current_inoculating_recipe
-        self.bdata[K_INOCULATE_TIME] = self.current_inoculate_time
-
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
         MultiBlockStructure.OnUnload(self)
@@ -156,8 +128,12 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
             self.sync.out_fluid_max_volume = self.getFluidOutIO().max_fluid_volume
             if self.recipe_id > 0:
                 recipe = spec_recipes[self.recipe_id]
-                self.sync.gas_product_speed = self.getGasProduceRate(recipe) * (20.0 / self.work_ticks_delay)
-                self.sync.fluid_product_speed = self.getFluidProduceRate(recipe) * (20.0 / self.work_ticks_delay)
+                self.sync.gas_product_speed = self.getGasProduceRate(recipe) * (
+                    20.0 / self.work_ticks_delay
+                )
+                self.sync.fluid_product_speed = self.getFluidProduceRate(recipe) * (
+                    20.0 / self.work_ticks_delay
+                )
         else:
             self.sync.content_volume_pc = 0.0
             self.sync.out_gas_id = None
@@ -167,7 +143,6 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
             self.sync.out_fluid_volume = 0.0
             self.sync.out_fluid_max_volume = 1.0
         self.sync.MarkedAsChanged()
-
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
@@ -260,8 +235,7 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
         # type: (FermenterRecipe) -> None
         self.bacteria_hunger = max(
             -self.getMaxHunger(recipe),
-            self.bacteria_hunger -
-            recipe.hunger_reduce_speed * self.mud_volume
+            self.bacteria_hunger - recipe.hunger_reduce_speed * self.mud_volume,
         )
         self.tryEat(recipe)
         self.updateVitality(recipe)
@@ -273,17 +247,18 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
     def tryCtrlTemperature(self):
         if self.mud_temperature < self.expected_mud_temperature:
             self.mud_temperature += min(
-                (self.expected_mud_temperature - self.mud_temperature) * 0.1,
-                1
+                (self.expected_mud_temperature - self.mud_temperature) * 0.1, 1
             )
         elif self.mud_temperature > self.expected_mud_temperature:
             self.mud_temperature -= min(
-                (self.mud_temperature - self.expected_mud_temperature) * 0.1,
-                1
+                (self.mud_temperature - self.expected_mud_temperature) * 0.1, 1
             )
 
     def tryAddWater(self):
-        if self.getVolume() + 50 < self.expected_water_max_volume and self.getWaterInIO().fluid_volume > 50:
+        if (
+            self.getVolume() + 50 < self.expected_water_max_volume
+            and self.getWaterInIO().fluid_volume > 50
+        ):
             self.getWaterInIO().fluid_volume -= 200
             self.getWaterInIO().SelfRequireFluid()
             self.water_volume += 200
@@ -301,10 +276,11 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
                 self.SetSlotItem(1, maybe_food)
                 self.bacteria_hunger = min(
                     self.getMaxHunger(recipe),
-                    self.bacteria_hunger + 
-                    float(recipe.nutrition_value)
+                    self.bacteria_hunger + float(recipe.nutrition_value),
                 )
-                self.mud_vitality = min(1, self.mud_vitality + recipe.nutrition_recover_vitality)
+                self.mud_vitality = min(
+                    1, self.mud_vitality + recipe.nutrition_recover_vitality
+                )
             self.SetSlotItem(1, maybe_food)
 
     def tryInoculate(self):
@@ -322,7 +298,6 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
                     self.bacteria_hunger = recipe.nutrition_value
                 self.current_inoculating_recipe = 0
                 self.current_inoculate_time = 0.0
-                
 
     def tryGrow(self, recipe):
         # type: (FermenterRecipe) -> bool
@@ -346,12 +321,10 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
         if self.getVolume() <= 0:
             return
         self.mud_volume = max(
-            0, self.mud_volume -
-            recipe.volume_reduce_rate * self.mud_volume
+            0, self.mud_volume - recipe.volume_reduce_rate * self.mud_volume
         )
         self.water_volume = max(
-            0, self.water_volume -
-            recipe.volume_reduce_rate * self.water_volume
+            0, self.water_volume - recipe.volume_reduce_rate * self.water_volume
         )
         gas_io = self.getGasOutIO()
         fluid_io = self.getFluidOutIO()
@@ -360,15 +333,9 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
         if fluid_io.fluid_id is None:
             fluid_io.fluid_id = recipe.out_fluid_id
         if gas_io.fluid_id == recipe.out_gas_id:
-            gas_io.AddFluid(
-                recipe.out_gas_id,
-                self.getGasProduceRate(recipe)
-            )
+            gas_io.AddFluid(recipe.out_gas_id, self.getGasProduceRate(recipe))
         if fluid_io.fluid_id == recipe.out_fluid_id:
-            fluid_io.AddFluid(
-                recipe.out_fluid_id,
-                self.getFluidProduceRate(recipe)
-            )
+            fluid_io.AddFluid(recipe.out_fluid_id, self.getFluidProduceRate(recipe))
 
     def updateVitality(self, recipe):
         # type: (FermenterRecipe) -> None
@@ -392,8 +359,7 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
             self.mud_vitality = min(
                 1,
                 self.mud_vitality
-                + VITALITY_ADD_MAX
-                * (self.bacteria_hunger / self.getMaxHunger(recipe)),
+                + VITALITY_ADD_MAX * (self.bacteria_hunger / self.getMaxHunger(recipe)),
             )
         if self.bacteria_hunger < 0:
             self.mud_vitality = max(
@@ -407,7 +373,7 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
             self.mud_vitality = max(
                 -1,
                 self.mud_vitality
-                - thickness_overflow * THICKNESS_OVERFLOW_VITALITY_REDUCE
+                - thickness_overflow * THICKNESS_OVERFLOW_VITALITY_REDUCE,
             )
 
     def updateTemperature(self):
@@ -434,7 +400,9 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
         if thickness < recipe.produce_thickness:
             return 0
         if thickness < recipe.fit_thickness:
-            value = 1 - (recipe.fit_thickness - thickness) / (recipe.fit_thickness - recipe.produce_thickness)
+            value = 1 - (recipe.fit_thickness - thickness) / (
+                recipe.fit_thickness - recipe.produce_thickness
+            )
         else:
             value = 1
         return max(0, value * self.mud_vitality)
@@ -468,6 +436,96 @@ class Fermenter(AutoSaver, GUIControl, MultiBlockStructure, UpgradeControl, Work
     def getGasOutIO(self):
         return self.GetMachine(FluidOutputInterface, IO_GAS)
 
+    @property
+    def mud_vitality(self):
+        # type: () -> float
+        return self.bdata[K_MUD_VITALITY] or 0.0
+
+    @mud_vitality.setter
+    def mud_vitality(self, value):
+        # type: (float) -> None
+        self.bdata[K_MUD_VITALITY] = value
+
+    @property
+    def mud_volume(self):
+        # type: () -> float
+        return self.bdata[K_MUD_VOLUME] or 0.0
+
+    @mud_volume.setter
+    def mud_volume(self, value):
+        # type: (float) -> None
+        self.bdata[K_MUD_VOLUME] = value
+
+    @property
+    def water_volume(self):
+        # type: () -> float
+        return self.bdata[K_WATER_VOLUME] or 0.0
+
+    @water_volume.setter
+    def water_volume(self, value):
+        # type: (float) -> None
+        self.bdata[K_WATER_VOLUME] = value
+
+    @property
+    def bacteria_hunger(self):
+        # type: () -> float
+        return self.bdata[K_CELL_HUNGER] or 0.0
+
+    @bacteria_hunger.setter
+    def bacteria_hunger(self, value):
+        # type: (float) -> None
+        self.bdata[K_CELL_HUNGER] = value
+
+    @property
+    def expected_mud_temperature(self):
+        # type: () -> float
+        return self.bdata[K_EXPECTED_TEMPERTURE] or 25.0
+
+    @expected_mud_temperature.setter
+    def expected_mud_temperature(self, value):
+        # type: (float) -> None
+        self.bdata[K_EXPECTED_TEMPERTURE] = value
+
+    @property
+    def expected_water_max_volume(self):
+        # type: () -> float
+        return self.bdata[K_EXPECTED_WATER_MAX_VOLUME] or POOL_MAX_VOLUME * 0.4
+
+    @expected_water_max_volume.setter
+    def expected_water_max_volume(self, value):
+        # type: (float) -> None
+        self.bdata[K_EXPECTED_WATER_MAX_VOLUME] = value
+
+    @property
+    def recipe_id(self):
+        # type: () -> int
+        return self.bdata[K_RECIPE] or 0
+
+    @recipe_id.setter
+    def recipe_id(self, value):
+        # type: (int) -> None
+        self.bdata[K_RECIPE] = value
+
+    @property
+    def current_inoculating_recipe(self):
+        # type: () -> int
+        return self.bdata[K_INOCULATING_RECIPE] or 0
+
+    @current_inoculating_recipe.setter
+    def current_inoculating_recipe(self, value):
+        # type: (int) -> None
+        self.bdata[K_INOCULATING_RECIPE] = value
+
+    @property
+    def current_inoculate_time(self):
+        # type: () -> float
+        return self.bdata[K_INOCULATE_TIME] or 0.0
+
+    @current_inoculate_time.setter
+    def current_inoculate_time(self, value):
+        # type: (float) -> None
+        self.bdata[K_INOCULATE_TIME] = value
+
 
 @FermenterSetTemperatureEvent.Listen()
 def onFermenterSetTemperatureEvent(event):
@@ -480,6 +538,7 @@ def onFermenterSetTemperatureEvent(event):
         return
     m.setExpectedTemperature(event.temperature)
 
+
 @FermenterSeMaxVolumeEvent.Listen()
 def onFermenterSeMaxVolumeEvent(event):
     # type: (FermenterSeMaxVolumeEvent) -> None
@@ -490,5 +549,3 @@ def onFermenterSeMaxVolumeEvent(event):
     if not isinstance(event.volume, float):
         return
     m.setExpectedWaterMaxVolume(event.volume)
-
-

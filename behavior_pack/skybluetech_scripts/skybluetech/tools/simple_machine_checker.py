@@ -30,7 +30,6 @@ def onBlockUse(event):
         else:
             if isinstance(m, GUIControl):
                 m.OnSync()
-            m.Dump()
             SetOnePopupNotice(
                 event.playerId,
                 "此方块 (%d, %d, %d) 是 %s ~%d"

@@ -7,6 +7,7 @@ from ..define.events.machinery.fluid_splitter import (
     FluidSplitterSettingsSetLabel,
     FluidSplitterSimpleAction,
 )
+from skybluetech_scripts.tooldelta.api.timer import ExecLater
 from ..define.id_enum.machinery import FLUID_SPLITTER as MACHINE_ID
 from ..transmitters.pipe.logic import (
     logic_module as pipe_logic,
@@ -38,6 +39,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidSplitterUISync.NewServer(self).Activate()
         self.OnSync()
+        self._cached_recorded_settings = None
 
     def OnFluidSlotUpdate(self, _):
         # type: (int) -> None
@@ -88,37 +90,24 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
     def OnClick(self, event):
         # type: (ServerBlockUseEvent) -> None
         GUIControl.OnClick(self, event)
-        FluidSplitterSettingsListUpdate(self.record_settings).send(event.playerId)
-
-    def OnLoad(self):
-        # type: () -> None
-        UpgradeControl.OnLoad(self)
-        self.settings_limit = self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
-        record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:water"]
-        self.record_settings = [
-            (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
-        ]
+        ExecLater(
+            0.1,
+            lambda: FluidSplitterSettingsListUpdate(self.record_settings).send(
+                event.playerId
+            ),
+        )
 
     def OnUnload(self):
         # type: () -> None
         UpgradeControl.OnUnload(self)
         GUIControl.OnUnload(self)
 
-    def Dump(self):
-        # type: () -> None
-        UpgradeControl.Dump(self)
-        MultiFluidContainer.Dump(self)
-        self.bdata[K_SETTINGS_LIMIT] = self.settings_limit
-        self.bdata[K_RECORD_LABELS] = [
-            "%d-%s" % (a, b) for a, b in self.record_settings
-        ]
-
     def onAddSetting(self, player_id):
         # type: (str) -> None
         if len(self.record_settings) >= self.settings_limit:
             return
         self.record_settings.append((0, "minecraft:water"))
-        self.Dump()
+        self.save_settings()
         FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
     def onDeleteSetting(self, player_id, index):
@@ -126,7 +115,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         if index >= len(self.record_settings):
             return
         self.record_settings.pop(index)
-        self.Dump()
+        self.record_settings = self.record_settings
         FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
     def onSetFluid(self, player_id, index, fluid):
@@ -134,7 +123,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         if index >= len(self.record_settings):
             return
         self.record_settings[index] = (self.record_settings[index][0], fluid)
-        self.Dump()
+        self.save_settings()
         FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
     def onSetLabel(self, player_id, index, label):
@@ -142,8 +131,38 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         if index >= len(self.record_settings):
             return
         self.record_settings[index] = (label, self.record_settings[index][1])
-        self.Dump()
+        self.save_settings()
         FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
+
+    @property
+    def settings_limit(self):
+        # type: () -> int
+        return self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
+
+    @settings_limit.setter
+    def settings_limit(self, value):
+        # type: (int) -> None
+        self.bdata[K_SETTINGS_LIMIT] = value
+
+    @property
+    def record_settings(self):
+        if self._cached_recorded_settings is None:
+            record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:water"]
+            self._cached_recorded_settings = [
+                (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
+            ]
+        return self._cached_recorded_settings
+
+    @record_settings.setter
+    def record_settings(self, value):
+        # type: (list[tuple[int, str]]) -> None
+        self._cached_recorded_settings = value
+        self.bdata[K_RECORD_LABELS] = ["%d-%s" % (a, b) for a, b in value]
+
+    def save_settings(self):
+        self.bdata[K_RECORD_LABELS] = [
+            "%d-%s" % (a, b) for a, b in self.record_settings
+        ]
 
 
 @FluidSplitterSimpleAction.Listen()

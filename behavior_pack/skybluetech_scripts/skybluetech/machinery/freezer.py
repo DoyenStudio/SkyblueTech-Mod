@@ -28,10 +28,6 @@ class Freezer(MixedProcessor):
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FreezerUISync.NewServer(self).Activate()
         self.OnSync()
-
-    def OnLoad(self):
-        MixedProcessor.OnLoad(self)
-        self.recipe_mode = self.bdata[K_MODE] or 0
         self.setMode(self.recipe_mode)
 
     def OnSync(self):
@@ -41,7 +37,7 @@ class Freezer(MixedProcessor):
         self.sync.fluid_id = self.fluids[0].fluid_id
         self.sync.fluid_volume = self.fluids[0].volume
         self.sync.max_volume = self.fluids[0].max_volume
-        self.sync.freezer_mode = self.mode
+        self.sync.freezer_mode = self.recipe_mode
         self.sync.MarkedAsChanged()
 
     def setMode(self, new_mode):
@@ -49,9 +45,19 @@ class Freezer(MixedProcessor):
         if new_mode >= len(Recipes):
             new_mode %= len(Recipes)
         self.recipes = [Recipes[new_mode]]
-        self.mode = new_mode
+        self.recipe_mode = new_mode
         self.OnSync()
         self.start_next()
+
+    @property
+    def recipe_mode(self):
+        # type: () -> int
+        return self.bdata[K_MODE] or 0
+
+    @recipe_mode.setter
+    def recipe_mode(self, value):
+        # type: (int) -> None
+        self.bdata[K_MODE] = value
 
 
 @FreezerModeChangedEvent.Listen()
@@ -62,4 +68,3 @@ def onFreezerModeChanged(event):
         return
     machine.setMode(event.new_mode)
     machine.sync.FastSync(event.player_id)
-

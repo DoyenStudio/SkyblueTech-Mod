@@ -5,7 +5,6 @@ from skybluetech_scripts.tooldelta.define import Item
 from ...mini_jei.core.define import CategoryType
 from ...mini_jei.machines.recipe_cls import MachineRecipe
 from ...define import flags as flags
-from .auto_saver import AutoSaver
 from .base_machine import BaseMachine
 from .gui_ctrl import GUIControl
 from .sp_control import SPControl
@@ -16,7 +15,7 @@ from .work_renderer import WorkRenderer
 # TODO: 两个机器都 deactive 的情况
 
 
-class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
+class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
     """
     基本的配方处理器机器基类。
     只运行简单物品配方的机器均可继承此类。
@@ -34,13 +33,7 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        self.current_recipe = None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
-
-    def OnLoad(self):
-        BaseMachine.OnLoad(self)
-        SPControl.OnLoad(self)
         self.current_recipe = self.get_recipe(self.GetInputSlotItems())
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -54,7 +47,6 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
             if self.ProcessOnce():
                 # 1tick 内有可能需要多次生产
                 self.run_once()
-                self.Dump()
                 self.start_next()
             else:
                 do_break = True
@@ -86,7 +78,6 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         self.ResetDeactiveFlags()  # TODO: 安全问题?
 
     def OnUnload(self):
-        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 
@@ -105,18 +96,14 @@ class BaseProcessor(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         inputs.update(outputs)
         self.finish_recipe(inputs, recipe)
 
-    def start_next(self, dont_recursive=False):
+    def start_next(self):
         "开始运行配方"
+        self.RequireItems()
         input_slots = self.GetInputSlotItems()
         output_slots = self.GetOutputSlotItems()
         recipe = self.get_recipe(input_slots)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            if not dont_recursive:
-                # 可能是物品不够了, 尝试向附近的管道网络索取物品
-                ok = self.RequireItems()
-                if ok:
-                    self.start_next(dont_recursive=True)
             return
         elif not self.can_output(recipe, output_slots):
             # 输出堵塞

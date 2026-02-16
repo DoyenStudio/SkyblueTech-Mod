@@ -24,7 +24,6 @@ from ..utils.mod_block_event import (
     asModBlockRemovedListener,
 )
 from .basic import (
-    AutoSaver,
     BaseMachine,
     ItemContainer,
     GUIControl,
@@ -46,14 +45,13 @@ block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
-class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRenderer):
+class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
     block_name = MACHINE_ID
     input_slots = (0,)
     running_power = POWER_COST
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = HydroponicBedUISync.NewServer(self).Activate()
@@ -62,22 +60,8 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
         self.ticks = 0
         self.OnSync()
 
-    def OnLoad(self):
-        BaseMachine.OnLoad(self)
-        self.grow_stage = self.bdata[K_GROW_STAGE] or 0
-        self.stage_grow_ticks = self.bdata[K_STAGE_GROW_TICKS] or 0
-        self.water_store = self.bdata[K_WATER_STORE] or 0.0
-
-    def Dump(self):
-        # type: () -> None
-        BaseMachine.Dump(self)
-        self.bdata[K_GROW_STAGE] = self.grow_stage
-        self.bdata[K_STAGE_GROW_TICKS] = self.stage_grow_ticks
-        self.bdata[K_WATER_STORE] = self.water_store
-
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
@@ -176,6 +160,36 @@ class HydroponicBed(AutoSaver, ItemContainer, GUIControl, PowerControl, WorkRend
             self.x, self.y, self.z, crop_block_id, self.grow_stage
         ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
 
+    @property
+    def grow_stage(self):
+        # type: () -> int
+        return self.bdata[K_GROW_STAGE] or 0
+
+    @grow_stage.setter
+    def grow_stage(self, value):
+        # type: (int) -> None
+        self.bdata[K_GROW_STAGE] = value
+
+    @property
+    def stage_grow_ticks(self):
+        # type: () -> int
+        return self.bdata[K_STAGE_GROW_TICKS] or 0
+
+    @stage_grow_ticks.setter
+    def stage_grow_ticks(self, value):
+        # type: (int) -> None
+        self.bdata[K_STAGE_GROW_TICKS] = value
+
+    @property
+    def water_store(self):
+        # type: () -> float
+        return self.bdata[K_WATER_STORE]
+
+    @water_store.setter
+    def water_store(self, value):
+        # type: (float) -> None
+        self.bdata[K_WATER_STORE] = value
+
 
 # CLIENT PART
 
@@ -186,9 +200,11 @@ loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     loaded_models[(event.posX, event.posY, event.posZ)] = (
-        CreateBlankSingleBlockModelEntity(
-            (event.posX, event.posY + 3.0 / 16 * 0.4, event.posZ)
-        )
+        CreateBlankSingleBlockModelEntity((
+            event.posX,
+            event.posY + 3.0 / 16 * 0.4,
+            event.posZ,
+        ))
     )
 
 

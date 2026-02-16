@@ -3,18 +3,28 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
-from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetCraftingRecipe, CraftingRecipeRes
+from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
+    GetCraftingRecipe,
+    CraftingRecipeRes,
+)
 from ..define import flags
 from ..define.id_enum.machinery import SPLITTER as MACHINE_ID
 from ..ui_sync.machinery.splitter import SplitterUISync
-from .basic import AutoSaver, BaseMachine, ItemContainer, GUIControl, SPControl, WorkRenderer, RegisterMachine
+from .basic import (
+    BaseMachine,
+    ItemContainer,
+    GUIControl,
+    SPControl,
+    WorkRenderer,
+    RegisterMachine,
+)
 
-split_recipes = {} # type: dict[str, str]
-cant_split_recipes = set() # type: set[str]
+split_recipes = {}  # type: dict[str, str]
+cant_split_recipes = set()  # type: set[str]
 
 
 @RegisterMachine
-class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
+class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 8800
     origin_process_ticks = 20 * 8
@@ -24,8 +34,7 @@ class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        SPControl.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = SplitterUISync.NewServer(self).Activate()
         self.OnSync()
@@ -40,29 +49,27 @@ class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
             else:
                 break
 
-    def TryStartNext(self, dont_recursive=False):
+    def TryStartNext(self):
+        self.RequireItems()
         input_item = self.GetSlotItem(0)
         output_item = self.GetSlotItem(1)
         if input_item is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-            if not dont_recursive:
-                self.RequireItems()
-                self.TryStartNext(dont_recursive=True)
             return
-        expected_output = GetSplitResult(input_item.newItemName, input_item.auxValue)
+        expected_output = GetSplitResult(input_item.newItemName, input_item.newAuxValue)
         if expected_output is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
         if not self.canOutput(expected_output, output_item):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-                
+
     def runOnce(self):
         input_item = self.GetSlotItem(0)
         output_item = self.GetSlotItem(1)
         if input_item is None:
             raise ValueError("No input")
-        expected_output = GetSplitResult(input_item.newItemName, input_item.auxValue)
+        expected_output = GetSplitResult(input_item.newItemName, input_item.newAuxValue)
         if expected_output is None:
             raise ValueError("Recipe ERROR")
         if not self.canOutput(expected_output, output_item):
@@ -84,11 +91,12 @@ class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
         # type: (str, Item | None) -> bool
         return output_slot_item is None or (
             output_slot_item.newItemName == expected_output_item_id
-            and output_slot_item.count + 9 <= output_slot_item.GetBasicInfo().maxStackSize
+            and output_slot_item.count + 9
+            <= output_slot_item.GetBasicInfo().maxStackSize
         )
 
     def OnSync(self):
-        self.sync.storage_rf = self.store_rf 
+        self.sync.storage_rf = self.store_rf
         self.sync.rf_max = self.store_rf_max
         self.sync.progress_relative = self.GetProcessProgress()
         self.sync.MarkedAsChanged()
@@ -108,7 +116,7 @@ class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
             return
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-        expected_output = GetSplitResult(input_item.newItemName, input_item.auxValue)
+        expected_output = GetSplitResult(input_item.newItemName, input_item.newAuxValue)
         if expected_output is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
@@ -127,7 +135,6 @@ class Splitter(AutoSaver, GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
 

@@ -37,19 +37,7 @@ class BaseMachine(object):
         self.x = x
         self.y = y
         self.z = z
-        self.OnLoad()
-
-    # ==== overload ====
-
-    def OnLoad(self):
-        # type: () -> None
-        """
-        父类方法将 self.bdata 中的 BlockEntityData load 到自身;
-        并初始化 / 更新红石通量网络信息。
-        """
-        if not self.is_non_energy_machine:
-            self.store_rf = self.bdata[K_STORE_RF] or 0
-        self.deactive_flags = self.bdata[K_DEACTIVE_FLAGS] or 0
+        self._cached_deactive_flags = None
 
     @classmethod
     def OnPrePlaced(cls, event):
@@ -92,16 +80,6 @@ class BaseMachine(object):
         "覆写方法尝试激活机器。"
 
     # ==== API ====
-
-    def Dump(self):
-        # type: () -> None
-        """
-        超类方法用于将能量数据 dump 到方块实体。
-        覆写时将自身数据 dump 到 block_entity_data 属性。
-        """
-        if not self.is_non_energy_machine:
-            self.bdata[K_STORE_RF] = self.store_rf
-        self.bdata[K_DEACTIVE_FLAGS] = self.deactive_flags
 
     def AddPower(self, rf, max_limit=None, passed=None):
         # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
@@ -200,6 +178,28 @@ class BaseMachine(object):
         重置所有停机标志, 即将机器设置为工作模式。
         """
         self.deactive_flags = 0
+
+    @property
+    def deactive_flags(self):
+        # type: () -> int
+        if self._cached_deactive_flags is None:
+            self._cached_deactive_flags = self.bdata[K_DEACTIVE_FLAGS] or 0
+        return self._cached_deactive_flags
+
+    @deactive_flags.setter
+    def deactive_flags(self, value):
+        # type: (int) -> None
+        self._cached_deactive_flags = self.bdata[K_DEACTIVE_FLAGS] = value
+
+    @property
+    def store_rf(self):
+        # type: () -> int
+        return self.bdata[K_STORE_RF] or 0
+
+    @store_rf.setter
+    def store_rf(self, value):
+        # type: (int) -> None
+        self.bdata[K_STORE_RF] = value
 
     def __hash__(self):
         return hash((self.dim, self.x, self.y, self.z))

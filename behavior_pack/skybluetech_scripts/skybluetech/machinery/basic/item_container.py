@@ -4,7 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from ....tooldelta.define.item import Item
 from ....tooldelta.events import (
     PlayerTryPutCustomContainerItemClientEvent,
-    PlayerTryPutCustomContainerItemServerEvent
+    PlayerTryPutCustomContainerItemServerEvent,
 )
 from skybluetech_scripts.tooldelta.api.server import (
     GetContainerItem,
@@ -14,12 +14,15 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
+
 def requireLibraryFunc():
     global RequireItems, PostItemIntoNetworks
     if requireLibraryFunc._imported:
         return
     from ...transmitters.cable.logic import RequireItems, PostItemIntoNetworks
+
     requireLibraryFunc._imported = True
+
 
 requireLibraryFunc._imported = False
 
@@ -34,9 +37,10 @@ class ItemContainer(object):
 
     需要调用 `__init__()`
     """
-    input_slots = () # type: tuple[int, ...]
-    output_slots = () # type: tuple[int, ...]
-    
+
+    input_slots = ()  # type: tuple[int, ...]
+    output_slots = ()  # type: tuple[int, ...]
+
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         self.dim = dim
@@ -73,7 +77,9 @@ class ItemContainer(object):
         Returns:
             _type_: _description_
         """
-        return SetContainerItem(self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0))
+        return SetContainerItem(
+            self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0)
+        )
 
     def SetSlotItemCount(self, slot_pos, count):
         # type: (int, int) -> None
@@ -97,7 +103,7 @@ class ItemContainer(object):
         Returns:
             dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
         """
-        res = {} # type: dict[int, Item]
+        res = {}  # type: dict[int, Item]
         for slot_pos in self.input_slots:
             item = self.GetSlotItem(slot_pos)
             if item is not None:
@@ -112,7 +118,7 @@ class ItemContainer(object):
         Returns:
             dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
         """
-        res = {} # type: dict[int, Item]
+        res = {}  # type: dict[int, Item]
         for slot_pos in self.output_slots:
             item = self.GetSlotItem(slot_pos)
             if item is not None:
@@ -172,7 +178,6 @@ class ItemContainer(object):
         return item
 
     def RequireItems(self):
-        # type: () -> bool
         """
         此机器向物品管线网络请求一次物品。
 
@@ -180,7 +185,7 @@ class ItemContainer(object):
             bool: 是否请求成功
         """
         requireLibraryFunc()
-        return RequireItems(self.dim, self.xyz)
+        RequireItems(self.dim, self.xyz)
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
@@ -203,12 +208,12 @@ class ItemContainer(object):
             bool
         """
         _c = [
-            self.GetSlotItem(slot_pos, get_user_data=True) for slot_pos in self.output_slots
+            self.GetSlotItem(slot_pos, get_user_data=True)
+            for slot_pos in self.output_slots
         ]
         current_items = [i for i in _c if i is not None]
         items_sorted = SortItems(items + current_items)
         return len(items_sorted) <= len(self.output_slots)
-        
 
     def OutputItem(self, item):
         # type: (Item) -> Item | None

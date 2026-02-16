@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from mod.server.blockEntityData import BlockEntityData
+from mod.server.blockEntityData import BlockEntityData  # noqa: F401
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.item import ItemExists
 from skybluetech_scripts.tooldelta.api.server.player import (
@@ -61,9 +61,9 @@ class FluidContainer(object):
         elif self.fluid_io_fix_mode == 2:
             self.fluid_io_mode = FixIOModeByDirection(dim, x, y, z, self.fluid_io_mode)
         self.bdata = block_entity_data
-        self.fluid_id = block_entity_data[K_FLUID_ID]  # type: str | None
-        self.fluid_volume = block_entity_data[K_FLUID_VOLUME] or 0.0
         self._sending_fluid = True
+        self._cached_fluid_id = self.bdata[K_FLUID_ID]
+        self._cached_fluid_volume = self.bdata[K_FLUID_VOLUME] or 0.0
 
     def OnTicking(self):
         if self._sending_fluid:
@@ -74,32 +74,29 @@ class FluidContainer(object):
     def OnTryActivate(self):
         self._sending_fluid = True
 
-    def Dump(self):
-        self.bdata[K_FLUID_ID] = self.fluid_id
-        self.bdata[K_FLUID_VOLUME] = self.fluid_volume
-
     def AddFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
         if isinstance(self, GUIControl):
             self.OnSync()
-        if self.fluid_id is None:
+        my_fluid_id = self.fluid_id
+        if my_fluid_id is None:
             self.fluid_id = fluid_id
             self.fluid_volume = fluid_volume
-            self.onAddedFluid(self.fluid_id, fluid_volume)
-            self.Dump()
+            self.onAddedFluid(fluid_id, fluid_volume)
             return True, max(0, fluid_volume - self.max_fluid_volume)
-        elif fluid_id != self.fluid_id:
+        elif fluid_id != my_fluid_id:
             return False, fluid_volume
         else:
             orig_volume = self.fluid_volume
-            self.fluid_volume = min(self.max_fluid_volume, orig_volume + fluid_volume)
-            added_fluid_volume = self.fluid_volume - orig_volume
+            new_volume = self.fluid_volume = min(
+                self.max_fluid_volume, orig_volume + fluid_volume
+            )
+            added_fluid_volume = new_volume - orig_volume
             if added_fluid_volume > 0:
-                self.onAddedFluid(self.fluid_id, self.fluid_volume - orig_volume)
-            if self.fluid_volume == 0:
-                self.fluid_id = None
+                self.onAddedFluid(fluid_id, new_volume - orig_volume)
+            # 我们不知道 onAddedFluid 时容器流体体积有没有被改变
+            # 所以不能使用 new_volume 代替 self.fluid_volume
             self._sending_fluid = True
-            self.Dump()
             return self.fluid_volume != orig_volume, max(
                 0, fluid_volume - added_fluid_volume
             )
@@ -111,17 +108,18 @@ class FluidContainer(object):
 
     def PostFluid(self):
         # type: () -> bool
-        if self.fluid_id is None:
+        my_fluid_id = self.fluid_id
+        if my_fluid_id is None:
             return False
         orig_volume = self.fluid_volume
-        ok, self.fluid_volume = self.tryPostFluid(self.fluid_id, orig_volume)
-        if orig_volume > self.fluid_volume:
-            self.onReducedFluid(self.fluid_id, orig_volume - self.fluid_volume)
-        elif orig_volume < self.fluid_volume:
-            self.onAddedFluid(self.fluid_id, self.fluid_volume - orig_volume)
+        ok, new_volume = self.tryPostFluid(my_fluid_id, orig_volume)
+        self.fluid_volume = new_volume
+        if orig_volume > new_volume:
+            self.onReducedFluid(my_fluid_id, orig_volume - new_volume)
+        elif orig_volume < new_volume:
+            self.onAddedFluid(my_fluid_id, new_volume - orig_volume)
         if self.fluid_volume == 0:
             self.fluid_id = None
-        self.Dump()
         return ok
 
     def CanAddFluid(self, fluid_id):
@@ -142,31 +140,28 @@ class FluidContainer(object):
     def RequireFluid(self, req_fluid_id, req_fluid_volume, strict_volume=False):
         # type: (str | None, float | None, bool) -> tuple[bool, str, float]
         # 返回: 获取是否成功, 获取到的流体 ID, 获取到的流体容量
-        if req_fluid_id is None or req_fluid_id == self.fluid_id:
-            fid = self.fluid_id
-            v = self.fluid_volume
+        fid = self.fluid_id
+        v = self.fluid_volume
+        if req_fluid_id is None or req_fluid_id == fid:
             if fid is None:
                 return False, "", 0.0
             if req_fluid_volume is None:
                 self.fluid_id = None
                 self.fluid_volume = 0.0
                 self.onReducedFluid(fid, v)
-                self.Dump()
                 return True, fid, v
             else:
-                if req_fluid_volume <= self.fluid_volume:
-                    self.fluid_volume -= req_fluid_volume
+                if req_fluid_volume <= v:
+                    self.fluid_volume = v - req_fluid_volume
                     if self.fluid_volume <= 0:
                         self.fluid_id = None
                     self.onReducedFluid(fid, v)
-                    self.Dump()
                     return True, fid, v
                 elif not strict_volume:
-                    self.fluid_volume -= req_fluid_volume
+                    self.fluid_volume = v - req_fluid_volume
                     if self.fluid_volume <= 0:
                         self.fluid_id = None
                     self.onReducedFluid(fid, req_fluid_volume)
-                    self.Dump()
                     return True, fid, req_fluid_volume
                 else:
                     return False, "", 0.0
@@ -241,7 +236,6 @@ class FluidContainer(object):
                         )
                         GiveItem(player_id, Item(bucket_id, count=1))
                         self.onReducedFluid(orig_fluid_id, BUCKET_VOLUME)
-                        self.Dump()
             else:
                 fluid_id = item.newItemName.replace("_bucket", "")
                 if self.CanAddFluid(fluid_id) and ItemExists(fluid_id):
@@ -256,7 +250,6 @@ class FluidContainer(object):
                             player_id, Item("minecraft:bucket", count=1)
                         )
                         self.onAddedFluid(fluid_id, BUCKET_VOLUME)
-                        self.Dump()
             if isinstance(self, GUIControl):
                 self.OnSync()
             return True
@@ -273,3 +266,23 @@ class FluidContainer(object):
             self.dim, self.xyz, fluid_id, fluid_volume, None
         )
         return ok, rest
+
+    @property
+    def fluid_id(self):
+        # type: () -> str | None
+        return self._cached_fluid_id
+
+    @fluid_id.setter
+    def fluid_id(self, value):
+        # type: (str | None) -> None
+        self._cached_fluid_id = self.bdata[K_FLUID_ID] = value
+
+    @property
+    def fluid_volume(self):
+        # type: () -> float
+        return self._cached_fluid_volume
+
+    @fluid_volume.setter
+    def fluid_volume(self, value):
+        # type: (float) -> None
+        self._cached_fluid_volume = self.bdata[K_FLUID_VOLUME] = value

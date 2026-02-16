@@ -37,7 +37,6 @@ from ..utils.block_sync import BlockSync
 from ..utils.facing import GetOppositeDirFromFacing
 from ..ui_sync.machinery.digger import DiggerUISync
 from .basic import (
-    AutoSaver,
     GUIControl,
     UpgradeControl,
     WorkRenderer,
@@ -49,7 +48,7 @@ block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
-class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
+class Digger(GUIControl, UpgradeControl, WorkRenderer):
     block_name = MACHINE_ID
     input_slots = ()
     output_slots = (0,)
@@ -64,7 +63,6 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.dx, self.dy, self.dz = GetOppositeDirFromFacing(
             GetBlockFacingDir(self.dim, (x, y, z))
@@ -113,7 +111,6 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
 
     def OnUnload(self):
         # type: () -> None
-        AutoSaver.OnUnload(self)
         UpgradeControl.OnUnload(self)
         GUIControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
@@ -122,9 +119,6 @@ class Digger(AutoSaver, GUIControl, UpgradeControl, WorkRenderer):
         # type: (int) -> None
         UpgradeControl.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)
-
-    def Dump(self):
-        UpgradeControl.Dump(self)
 
     def OnWorkStatusUpdated(self):
         DiggerWorkModeUpdatedEvent(self.x, self.y, self.z, self.IsActive()).sendMulti(

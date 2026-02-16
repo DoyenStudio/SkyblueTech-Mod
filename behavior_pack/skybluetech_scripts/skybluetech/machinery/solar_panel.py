@@ -13,18 +13,17 @@ from ..define.id_enum.machinery import SOLAR_PANEL as MACHINE_ID
 from ..define.facing import DXYZ_FACING, FACING_EN
 from ..ui_sync.machinery.solar_panel import SolarPanelUISync
 from ..transmitters.wire.logic import isWire
-from .basic import AutoSaver, BasicGenerator, ItemContainer, GUIControl, RegisterMachine
+from .basic import BasicGenerator, ItemContainer, GUIControl, RegisterMachine
 
 
 @RegisterMachine
-class SolarPanel(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
+class SolarPanel(BasicGenerator, ItemContainer, GUIControl):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = SolarPanelUISync.NewServer(self).Activate()
@@ -92,7 +91,6 @@ class SolarPanel(AutoSaver, BasicGenerator, ItemContainer, GUIControl):
     def OnUnload(self):
         # type: () -> None
         BasicGenerator.OnUnload(self)
-        AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
 
 

@@ -15,7 +15,6 @@ from ..define import flags as rf_flags
 from ..define.id_enum.machinery import PUMP as MACHINE_ID
 from ..ui_sync.machinery.pump import PumpUISync
 from .basic import (
-    AutoSaver,
     BaseMachine,
     FluidContainer,
     GUIControl,
@@ -29,7 +28,7 @@ K_PUMP_TYPE = "pump_type"
 
 
 @RegisterMachine
-class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
+class Pump(FluidContainer, GUIControl, ItemContainer, SPControl):
     block_name = MACHINE_ID
     store_rf_max = 8800
     running_power = 0
@@ -41,19 +40,13 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        SPControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = PumpUISync.NewServer(self).Activate()
         self.OnSync()
         self.onBlockChanged()
         self.last_1000mb = self.fluid_volume >= 1000
-
-    def OnLoad(self):
-        BaseMachine.OnLoad(self)
-        SPControl.OnLoad(self)
-        self.pump_type = self.bdata[K_PUMP_TYPE] or M_AIR
 
     def OnPlaced(self, _):
         under_block_name, aux = GetBlockNameAndAux(
@@ -66,15 +59,8 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
         self.onBlockChanged()
 
     def OnUnload(self):
-        AutoSaver.OnUnload(self)
         BaseMachine.OnUnload(self)
         GUIControl.OnUnload(self)
-
-    def Dump(self):
-        BaseMachine.Dump(self)
-        SPControl.Dump(self)
-        FluidContainer.Dump(self)
-        self.bdata[K_PUMP_TYPE] = self.pump_type
 
     def OnTicking(self):
         FluidContainer.OnTicking(self)
@@ -153,6 +139,12 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
             if self.fluid_volume < 1000:
                 self.last_1000mb = False
 
+    def OnTryActivate(self):
+        FluidContainer.OnTryActivate(self)
+        if self.fluid_volume < self.max_fluid_volume:
+            if self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_FULL):
+                self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_FULL)
+
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         if (
@@ -184,3 +176,13 @@ class Pump(AutoSaver, FluidContainer, GUIControl, ItemContainer, SPControl):
             self.SetPower(0)
             self.pump_speed = 0
             self.pump_type = M_AIR
+
+    @property
+    def pump_type(self):
+        # type: () -> int
+        return self.bdata[K_PUMP_TYPE] or M_AIR
+
+    @pump_type.setter
+    def pump_type(self, value):
+        # type: (int) -> None
+        self.bdata[K_PUMP_TYPE] = value

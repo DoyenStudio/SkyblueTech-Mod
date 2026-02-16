@@ -27,8 +27,6 @@ class UpgradeControl(ItemContainer, SPControl):
     覆写:
         `IsValidInput`
         `OnSlotUpdate`
-        `OnLoad (super)`
-        `Dump (super)`
         `AddPower (super)`
         `SetDeactiveFlag (super)`
     """

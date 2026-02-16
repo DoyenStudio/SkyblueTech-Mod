@@ -6,7 +6,7 @@ from ..define.id_enum.machinery import ELECTRIC_HEATER as MACHINE_ID
 from ..define.events.machinery.electric_heater import ElectricHeaterSetPowerEvent
 from ..ui_sync.machinery.electric_heater import ElectricHeaterUISync
 from ..utils.action_commit import SafeGetMachine
-from .basic import AutoSaver, HeatCtrl, GUIControl, PowerControl, RegisterMachine
+from .basic import HeatCtrl, GUIControl, PowerControl, RegisterMachine
 from .pool import GetMachineStrict
 
 K_SET_POWER = "set_power"
@@ -14,23 +14,17 @@ MAX_POWER = 1 << 32
 
 
 @RegisterMachine
-class ElectricHeater(AutoSaver, HeatCtrl, GUIControl, PowerControl):
+class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
     block_name = MACHINE_ID
     store_rf_max = 64000
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         HeatCtrl.__init__(self, dim, x, y, z, block_entity_data)
         PowerControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ElectricHeaterUISync.NewServer(self).Activate()
         self.inited = False
-
-    def OnLoad(self):
-        # type: () -> None
-        PowerControl.OnLoad(self)
-        HeatCtrl.OnLoad(self)
-        self.running_power = self.bdata[K_SET_POWER] or 0
+        self._cached_running_power = self.bdata[K_SET_POWER] or 0
         self.initLater()
 
     def OnNeighborChanged(self, evt):
@@ -56,12 +50,9 @@ class ElectricHeater(AutoSaver, HeatCtrl, GUIControl, PowerControl):
         self.sync.MarkedAsChanged()
 
     def Dump(self):
-        PowerControl.Dump(self)
-        HeatCtrl.Dump(self)
         self.bdata[K_SET_POWER] = self.running_power
 
     def OnUnload(self):
-        AutoSaver.OnUnload(self)
         PowerControl.OnUnload(self)
         GUIControl.OnUnload(self)
 
@@ -77,14 +68,8 @@ class ElectricHeater(AutoSaver, HeatCtrl, GUIControl, PowerControl):
         self.OnSync()
 
     def updateHeatersNearby(self):
-        self.machines = [] # type: list[HeatCtrl]
-        for dx, dy, dz in (
-            (1, 0, 0),
-            (-1, 0, 0),
-            (0, 1, 0),
-            (0, 0, 1),
-            (0, 0, -1)
-        ):
+        self.machines = []  # type: list[HeatCtrl]
+        for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, 0, 1), (0, 0, -1)):
             m = GetMachineStrict(self.dim, self.x + dx, self.y + dy, self.z + dz)
             if isinstance(m, HeatCtrl):
                 self.machines.append(m)
@@ -92,6 +77,16 @@ class ElectricHeater(AutoSaver, HeatCtrl, GUIControl, PowerControl):
     def setPower(self, power):
         # type: (int) -> None
         self.running_power = min(MAX_POWER, power)
+
+    @property
+    def running_power(self):
+        # type: () -> int
+        return self._cached_running_power
+
+    @running_power.setter
+    def running_power(self, value):
+        # type: (int) -> None
+        self._cached_running_power = self.bdata[K_SET_POWER] = value
 
 
 @ElectricHeaterSetPowerEvent.Listen()
@@ -103,4 +98,3 @@ def onSetPower(event):
     if not isinstance(event.power, int):
         return
     m.setPower(event.power)
-

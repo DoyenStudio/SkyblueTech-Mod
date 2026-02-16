@@ -32,14 +32,14 @@ from ..ui_sync.machinery.charger import ChargerUISync
 from ..utils.charge import GetCharge, UpdateCharge, K_STORE_RF, K_STORE_RF_MAX
 from ..utils.block_sync import BlockSync
 from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
-from .basic import AutoSaver, GUIControl, UpgradeControl, RegisterMachine
+from .basic import GUIControl, UpgradeControl, RegisterMachine
 from .pool import GetMachineStrict
 
 block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
-class Charger(AutoSaver, GUIControl, UpgradeControl):
+class Charger(GUIControl, UpgradeControl):
     block_name = MACHINE_ID
     allow_upgrader_tags = {"skybluetech:upgraders/charger"}
     input_slots = (0,)
@@ -49,7 +49,6 @@ class Charger(AutoSaver, GUIControl, UpgradeControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        AutoSaver.__init__(self, dim, x, y, z, block_entity_data)
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ChargerUISync.NewServer(self).Activate()
         self.stored_item = None
@@ -65,7 +64,6 @@ class Charger(AutoSaver, GUIControl, UpgradeControl):
         GUIControl.OnClick(self, evt)
 
     def OnUnload(self):
-        AutoSaver.OnUnload(self)
         GUIControl.OnUnload(self)
         UpgradeControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))

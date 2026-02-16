@@ -1,11 +1,11 @@
 # coding=utf-8
 
 try:
-    xrange  # type: ignore
+    py2_xrange = xrange  # type: ignore
 except NameError:
-    xrange = range
+    py2_xrange = range
 
 try:
-    unicode  # type: ignore
+    py2_unicode = unicode  # type: ignore
 except NameError:
-    unicode = str
+    py2_unicode = str

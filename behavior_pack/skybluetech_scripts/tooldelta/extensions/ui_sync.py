@@ -4,7 +4,12 @@ from weakref import WeakValueDictionary as WVD
 from mod_log import logger
 from ..events.notify import NotifyToClient, NotifyToServer
 from ..events.server.world import DelServerPlayerEvent
-from ..events.client.sync import ClientNewSync, ClientPopSync, S2CSyncDatas, ServerDelSync
+from ..events.client.sync import (
+    ClientNewSync,
+    ClientPopSync,
+    S2CSyncDatas,
+    ServerDelSync,
+)
 from ..general import ServerInitCallback
 from ..api.timer import AsTimerFunc
 
@@ -21,13 +26,14 @@ from ..api.timer import AsTimerFunc
 
 SYNC_DELAY = 0.2
 
-EVENT_KEY = "_evtName" # 同步事件里表示同步类型的 key
+EVENT_KEY = "_evtName"  # 同步事件里表示同步类型的 key
 S2C_SERVER = 0
 S2C_CLIENT = 1
 
-DEFAULT_UPDATE_FUNC = lambda :None
+DEFAULT_UPDATE_FUNC = lambda: None
 
 DEBUG = False
+
 
 class S2CSync(object):
     """
@@ -37,11 +43,12 @@ class S2CSync(object):
 
     在创建后, 使用 Activate() 方法激活同步。 (客户端/服务端)
     需要销毁同步, 则使用 Deactivate() 方法。 (客户端/服务端)
-    
+
     服务端: 被实例化时放入服务器同步池, 被销毁时从同步池移出。
 
     客户端: 被实例化时放入客户端活跃池, 被销毁时从活跃池移出。
     """
+
     def __init__(self, mode, sync_id=None):
         # type: (int, str | None) -> None
         if self.__class__ is S2CSync:
@@ -73,7 +80,9 @@ class S2CSync(object):
         self._changed = True
 
     def GetPlayersInSync(self):
-        return [i for i in server_active_syncs if self.sync_id in server_active_syncs[i]]
+        return [
+            i for i in server_active_syncs if self.sync_id in server_active_syncs[i]
+        ]
 
     def PlayerInSync(self, player_id):
         # type: (str) -> bool
@@ -96,14 +105,14 @@ class S2CSync(object):
     @classmethod
     def NewClient(
         cls,
-        sync_id # type: str
+        sync_id,  # type: str
     ):
         return cls(S2C_CLIENT, sync_id)
 
     @classmethod
     def NewServer(
         cls,
-        spec_key=None # type: str | None
+        spec_key=None,  # type: str | None
     ):
         return cls(S2C_SERVER, spec_key)
 
@@ -134,10 +143,11 @@ class S2CSync(object):
         self.Deactivate()
 
 
-server_sync_pool     = WVD() # type: WVD[str, S2CSync]      # [nkey: sync]          # server only
-client_pending_syncs = {} #  type: dict[str, set[str]]      # [cliId: set[nkey]]    # server only
-server_active_syncs  = {} #  type: dict[str, set[str]]      # [cliId: set[nkey]]    # server only
-client_active_syncs  = WVD() # type: WVD[str, S2CSync]      # [nkey: sync]          # client only
+server_sync_pool = WVD()  # type: WVD[str, S2CSync]      # [nkey: sync]          # server only
+client_pending_syncs = {}  #  type: dict[str, set[str]]      # [cliId: set[nkey]]    # server only
+server_active_syncs = {}  #  type: dict[str, set[str]]      # [cliId: set[nkey]]    # server only
+client_active_syncs = WVD()  # type: WVD[str, S2CSync]      # [nkey: sync]          # client only
+
 
 def AddSyncPending(cliId, sync):
     # type: (str, S2CSync) -> None
@@ -153,6 +163,7 @@ def AddSyncPending(cliId, sync):
         logger.info("[SyncServer] Add sync pending {}".format(sync.sync_id))
     client_pending_syncs.setdefault(cliId, set()).add(sync.sync_id)
 
+
 def GetAllPlayersInSync(sync_id):
     # type: (str) -> list[str]
     """
@@ -164,11 +175,12 @@ def GetAllPlayersInSync(sync_id):
     Returns:
         list[str]: playerIds
     """
-    ret = [] # type: list[str]
+    ret = []  # type: list[str]
     for cliId, sync_names in server_active_syncs.items():
         if sync_id in sync_names:
             ret.append(cliId)
     return ret
+
 
 def notifySyncToSingleClient(cliId, sync_ids):
     # type: (str, set[str]) -> None
@@ -182,9 +194,10 @@ def notifySyncToSingleClient(cliId, sync_ids):
             server_active_syncs[cliId].remove(sid)
     NotifyToClient(cliId, S2CSyncDatas(event_body))
 
+
 @AsTimerFunc(SYNC_DELAY)
 def serverBroadcastSyncEvents():
-    posted_sync_ids = set() # type: set[str]
+    posted_sync_ids = set()  # type: set[str]
     for cliId, sync_ids in server_active_syncs.copy().items():
         sync_ids = {i for i in sync_ids if server_sync_pool[i]._changed}
         if sync_ids:
@@ -192,6 +205,7 @@ def serverBroadcastSyncEvents():
         posted_sync_ids |= sync_ids
     for sync_id in posted_sync_ids:
         server_sync_pool[sync_id]._changed = False
+
 
 @S2CSyncDatas.Listen()
 def clientProcessSyncEvent(eventData):
@@ -201,13 +215,17 @@ def clientProcessSyncEvent(eventData):
         if sync is not None:
             sync.updateFromServer(sync_data)
         else:
-            logger.warning("[SyncClient] Client sync {} not exists".format(sync_data[EVENT_KEY]))
+            logger.warning(
+                "[SyncClient] Client sync {} not exists".format(sync_data[EVENT_KEY])
+            )
+
 
 def serverAddSync(sync):
     # type: (S2CSync) -> None
     if DEBUG:
         logger.info("[SyncServer] Add s2c sync {}".format(sync.__class__.__name__))
     server_sync_pool[sync.sync_id] = sync
+
 
 def serverRemoveSync(sync):
     # type: (S2CSync) -> None
@@ -220,7 +238,9 @@ def serverRemoveSync(sync):
             if not sync_names:
                 del server_active_syncs[cliId]
 
+
 # TODO: 玩家有可能同时请求多个同步器
+
 
 def clientAddActiveSync(sync):
     # type: (S2CSync) -> None
@@ -229,10 +249,12 @@ def clientAddActiveSync(sync):
     client_active_syncs[sync.sync_id] = sync
     NotifyToServer(ClientNewSync(sync.sync_id))
 
+
 def clientRemoveActiveSync(sync):
     # type: (S2CSync) -> None
     NotifyToServer(ClientPopSync(sync.sync_id))
     client_active_syncs.pop(sync.sync_id, None)
+
 
 @ClientNewSync.Listen()
 def onClientNewSync(event):
@@ -247,7 +269,10 @@ def onClientNewSync(event):
         server_active_syncs.setdefault(event.pid, set()).add(event.sync_name)
         notifySyncToSingleClient(event.pid, server_active_syncs[event.pid])
     else:
-        logger.warning("[SYNC] Client request new sync {} but not pending".format(event.sync_name))
+        logger.warning(
+            "[SYNC] Client request new sync {} but not pending".format(event.sync_name)
+        )
+
 
 @ClientPopSync.Listen()
 def onClientPopSync(event):
@@ -260,22 +285,25 @@ def onClientPopSync(event):
         if not server_active_syncs[event.pid]:
             del server_active_syncs[event.pid]
 
+
 @DelServerPlayerEvent.Listen()
 def onDelServerPlayerEvent(event):
     # type: (DelServerPlayerEvent) -> None
-    """ Player GC """
+    """Player GC"""
     playerId = event.id
     client_pending_syncs.pop(playerId, None)
     server_active_syncs.pop(playerId, None)
 
+
 @ServerDelSync.Listen()
 def onServerDelSync(event):
     # type: (ServerDelSync) -> None
-    """ Sync GC 目前什么也不做, 因为同步被掐断的时候服务端理应通知客户端退出 UI """
+    """Sync GC 目前什么也不做, 因为同步被掐断的时候服务端理应通知客户端退出 UI"""
     if DEBUG:
         logger.info("[SYNC] Server request pop cli sync {}".format(event.sync_name))
     # server_sync_pool.pop(event.sync_name, None)
     pass
+
 
 @ServerInitCallback()
 def onServerInit():

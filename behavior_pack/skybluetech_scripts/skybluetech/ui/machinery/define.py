@@ -49,7 +49,7 @@ class UIClose(CustomC2SEvent):
 
 class MachinePanelUI(ToolDeltaScreen):
     EXIT_BTN_PATH = "/ExitBtn"
-    allow_esc_exit = False
+    allow_esc_exit = False  # type: bool
 
     def __init__(self, namespace, name, param):
         ToolDeltaScreen.__init__(self, namespace, name, param)

@@ -8,26 +8,47 @@ from ..internal.cacher import MethodCacher
 if 0:
     from mod.server.blockEntityData import BlockEntityData
 
-_getBlockNew = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetBlockNew)
-_getBlockEntityData = MethodCacher(lambda :ServerComp.CreateBlockEntityData(ServerLevelId).GetBlockEntityData)
-_getBlockEntityDict = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetBlockEntityData)
-_getBlockTags = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetBlockTags)
-_setBlockNew = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).SetBlockNew)
-_getBlockStates = MethodCacher(lambda :ServerComp.CreateBlockState(ServerLevelId).GetBlockStates)
-_setBlockStates = MethodCacher(lambda :ServerComp.CreateBlockState(ServerLevelId).SetBlockStates)
-_listenOnBlockRemoveEvent = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).ListenOnBlockRemoveEvent)
-_getBlockBasicInfo = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetBlockBasicInfo)
+_getBlockNew = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockNew
+)
+_getBlockEntityData = MethodCacher(
+    lambda: ServerComp.CreateBlockEntityData(ServerLevelId).GetBlockEntityData
+)
+_getBlockEntityDict = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockEntityData
+)
+_getBlockTags = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockTags
+)
+_setBlockNew = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetBlockNew
+)
+_getBlockStates = MethodCacher(
+    lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockStates
+)
+_setBlockStates = MethodCacher(
+    lambda: ServerComp.CreateBlockState(ServerLevelId).SetBlockStates
+)
+_listenOnBlockRemoveEvent = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).ListenOnBlockRemoveEvent
+)
+_getBlockBasicInfo = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockBasicInfo
+)
 
 
 def GetBlockEntityDataDict(dimension, x, y, z):
     # type: (int, int, int, int) -> dict | None
     return _getBlockEntityDict(dimension, (x, y, z))
 
+
 def GetBlockEntityData(dimension, x, y, z):
     # type: (int, int, int, int) -> BlockEntityData | None
     return _getBlockEntityData(dimension, (x, y, z))
 
-block_tags_cache = {} # type: dict[str, set[str]]
+
+block_tags_cache = {}  # type: dict[str, set[str]]
+
 
 def GetBlockTags(block_name):
     # type: (str) -> set[str]
@@ -37,15 +58,20 @@ def GetBlockTags(block_name):
         tags = block_tags_cache[block_name] = set(_getBlockTags(block_name))
         return tags
 
-block_basic_info_cache = {} # type: dict[str, BlockBasicInfo]
+
+block_basic_info_cache = {}  # type: dict[str, BlockBasicInfo]
+
 
 def GetBlockBasicInfo(block_name):
     # type: (str) -> BlockBasicInfo
     if block_name in block_basic_info_cache:
         return block_basic_info_cache[block_name]
     else:
-        info = block_basic_info_cache[block_name] = BlockBasicInfo.unmarshal(_getBlockBasicInfo(block_name))
+        info = block_basic_info_cache[block_name] = BlockBasicInfo.unmarshal(
+            _getBlockBasicInfo(block_name)
+        )
         return info
+
 
 def GetPosBlockTags(dim, pos):
     # type: (int, tuple[int, int, int]) -> set[str] | None
@@ -54,9 +80,11 @@ def GetPosBlockTags(dim, pos):
         return None
     return GetBlockTags(bname)
 
+
 def BlockHasTag(block_name, tag):
     # type: (str, str) -> bool
     return tag in GetBlockTags(block_name)
+
 
 def GetBlockName(dim, pos):
     # type: (int, tuple[int, int, int]) -> str | None
@@ -66,6 +94,7 @@ def GetBlockName(dim, pos):
     else:
         return b["name"]
 
+
 def GetBlockNameAndAux(dim, pos):
     # type: (int, tuple[int, int, int]) -> tuple[str | None, int]
     b = _getBlockNew(pos, dim)
@@ -74,35 +103,45 @@ def GetBlockNameAndAux(dim, pos):
     else:
         return b["name"], b["aux"]
 
+
 def SetBlock(dim, pos, block_name, aux_value=0, old_block_handing=0):
     # type: (int, tuple[int, int, int], str, int, int) -> bool
-    return _setBlockNew(pos, {"name": block_name, "aux": aux_value}, old_block_handing, dimensionId=dim)
+    return _setBlockNew(
+        pos, {"name": block_name, "aux": aux_value}, old_block_handing, dimensionId=dim
+    )
+
 
 def GetBlockStates(dim, pos):
     # type: (int, tuple[int, int, int]) -> dict
     return _getBlockStates(pos, dim)
 
+
 def GetBlockCardinalFacing(dim, pos):
     # type: (int, tuple[int, int, int]) -> str
     return _getBlockStates(pos, dim)["minecraft:cardinal_facing"]
+
 
 def GetBlockFacingDir(dim, pos):
     # type: (int, tuple[int, int, int]) -> str
     return _getBlockStates(pos, dim)["minecraft:facing_direction"]
 
+
 def UpdateBlockStates(dim, pos, states, prev_states=None):
     # type: (int, tuple[int, int, int], dict, dict | None) -> bool
     if prev_states is None:
         prev_states = _getBlockStates(pos, dim)
-    prev_states.update(states)    
+    prev_states.update(states)
     return _setBlockStates(pos, prev_states, dim)
+
 
 def AddBlocksToBlockRemoveListener(blocks):
     # type: (set[str]) -> None
     for block in blocks:
         _listenOnBlockRemoveEvent(block, True)
 
+
 _CARDINAL_FACING = {"north": 0, "west": 1, "south": 2, "east": 3}
+
 
 def GetActualFacingByCardinalFacing(cardinal_direction, origin_facing):
     # type: (str, int) -> int
@@ -110,30 +149,41 @@ def GetActualFacingByCardinalFacing(cardinal_direction, origin_facing):
         return origin_facing
     return (origin_facing + _CARDINAL_FACING[cardinal_direction]) % 4
 
+
 def GetActualFacingByDirection(direction, origin_facing):
     # type: (int, int) -> int
     if origin_facing < 2:
         return origin_facing
     return (origin_facing + direction - 2) % 4
 
+
 def NewSingleBlockPalette(block_id):
     # type: (str) -> BlockPaletteComponent
     newBlockPalette = ServerComp.CreateBlock(ServerLevelId).GetBlankBlockPalette()
     newBlockPalette.DeserializeBlockPalette({
-        'extra': {},
-        'void': False,
-        'actor': {},
-        'volume': (1, 1, 1),
-        'common': {(block_id, 0): [0]},
-        'eliminateAir': True
+        "extra": {},
+        "void": False,
+        "actor": {},
+        "volume": (1, 1, 1),
+        "common": {(block_id, 0): [0]},
+        "eliminateAir": True,
     })
     return newBlockPalette
 
-GetBlockPaletteFromPosList = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteFromPosList)
-GetBlockPaletteBetweenPos = MethodCacher(lambda:ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteBetweenPos)
-GetTopBlockHeight = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).GetTopBlockHeight)
-GetBlockAuxValueFromStates = MethodCacher(lambda:ServerComp.CreateBlockState(ServerLevelId).GetBlockAuxValueFromStates)
-MayPlace = MethodCacher(lambda :ServerComp.CreateBlockInfo(ServerLevelId).MayPlace)
+
+GetBlockPaletteFromPosList = MethodCacher(
+    lambda: ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteFromPosList
+)
+GetBlockPaletteBetweenPos = MethodCacher(
+    lambda: ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteBetweenPos
+)
+GetTopBlockHeight = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetTopBlockHeight
+)
+GetBlockAuxValueFromStates = MethodCacher(
+    lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockAuxValueFromStates
+)
+MayPlace = MethodCacher(lambda: ServerComp.CreateBlockInfo(ServerLevelId).MayPlace)
 
 __all__ = [
     "AddBlocksToBlockRemoveListener",
@@ -150,5 +200,5 @@ __all__ = [
     "MayPlace",
     "SetBlock",
     "GetBlockStates",
-    "UpdateBlockStates"
+    "UpdateBlockStates",
 ]

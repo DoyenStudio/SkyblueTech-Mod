@@ -35,6 +35,7 @@ class GeoThermalGenerator(
         BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
+        self.CallSync()
 
     def OnTicking(self):
         if self.IsActive():

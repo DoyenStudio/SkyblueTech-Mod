@@ -86,7 +86,7 @@
                                                             "100%cm",
                                                             "100%cm"
                                                         ],
-                                                        "layer": 102,
+                                                        "layer": 3,
                                                         "collection_name": "netease_container",
                                                         "controls": [
                                                             {
@@ -108,7 +108,7 @@
                                                             "100%cm+0px",
                                                             "100%cm+0px"
                                                         ],
-                                                        "layer": 103,
+                                                        "layer": 3,
                                                         "collection_name": "netease_container",
                                                         "controls": [
                                                             {

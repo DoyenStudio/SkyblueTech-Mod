@@ -115,4 +115,4 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
             if out_fluid.max_volume - out_fluid.volume >= produce:
                 in_fluid.volume -= consume
                 self.output_rate = produce_rate
-                self.OutputFluid(rcp.produce_matter, produce, 1)
+                self.OutputFluid(rcp.produce_matter, produce, 1, True)

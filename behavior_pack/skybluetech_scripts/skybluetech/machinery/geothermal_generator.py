@@ -76,8 +76,9 @@ class GeoThermalGenerator(
         ):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 
-    def OnFluidSlotUpdate(self, slot):
-        if slot != 0:
+    def OnFluidSlotUpdate(self, slot, is_final):
+        # type: (int, bool) -> None
+        if slot != 0 or not is_final:
             return
         if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT):
             ok = self.next_burn()

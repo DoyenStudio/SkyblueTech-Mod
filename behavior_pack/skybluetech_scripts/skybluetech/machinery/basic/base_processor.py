@@ -64,15 +64,15 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
         ):
             self.start_next()
             return
-        recipe = self.get_recipe(self.GetInputSlotItems())
-        if recipe is None:
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            self.current_recipe = None
-        elif not recipe.equals(self.current_recipe):
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            self.start_next()
-        else:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+        elif slot_pos in self.input_slots:
+            recipe = self.get_recipe(self.GetInputSlotItems())
+            if recipe is None:
+                if self.current_recipe is not None:
+                    self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+                    self.current_recipe = None
+                    self.ResetProgress()
+            elif not recipe.equals(self.current_recipe):
+                self.start_next()
 
     def OnTryActivate(self):
         self.ResetDeactiveFlags()  # TODO: 安全问题?
@@ -105,16 +105,16 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
-        elif not self.can_output(recipe, output_slots):
+        self.current_recipe = recipe
+        self.SetProcessTicks(recipe.tick_duration)
+        self.ResetProgress()
+        if not self.can_output(recipe, output_slots):
             # 输出堵塞
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-        self.current_recipe = recipe
         self.SetPower(recipe.power_cost)
         if not self.PowerEnough():
             return
-        self.SetProcessTicks(recipe.tick_duration)
-        self.ResetProgress()
         self.ResetDeactiveFlags()
         self.OnSync()
 

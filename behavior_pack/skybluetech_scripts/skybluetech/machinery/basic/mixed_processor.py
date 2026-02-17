@@ -11,7 +11,6 @@ from .base_machine import BaseMachine
 from .base_processor import BaseProcessor
 from .upgrade_control import UpgradeControl
 from .multi_fluid_container import MultiFluidContainer, FluidSlot
-from .sp_control import SPControl
 
 
 class MixedProcessor(BaseProcessor, MultiFluidContainer):
@@ -42,6 +41,67 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         BaseMachine.OnTryActivate(self)
         MultiFluidContainer.OnTryActivate(self)
 
+    def OnSlotUpdate(self, slot_pos):
+        # type: (int) -> None
+        if self.InUpgradeSlot(slot_pos):
+            UpgradeControl.OnSlotUpdate(self, slot_pos)
+            return
+        if slot_pos in self.output_slots and self.HasDeactiveFlag(
+            flags.DEACTIVE_FLAG_OUTPUT_FULL
+        ):
+            self.start_next()
+            return
+        elif slot_pos in self.input_slots:
+            recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)
+            if recipe is None:
+                self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+                self.current_recipe = None
+                self.ResetProgress()
+            elif not recipe.equals(self.current_recipe):
+                self.start_next()
+
+    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
+        if not is_final:
+            return
+        if slot in self.fluid_output_slots:
+            if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+                self.start_next()
+                return
+        elif slot in self.fluid_input_slots:
+            if not self.IsActive():
+                return
+            recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)
+            if recipe is None:
+                if self.current_recipe is not None:
+                    self.current_recipe = None
+                    self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+                    self.ResetProgress()
+            elif not recipe.equals(self.current_recipe):
+                self.start_next()
+
+    def IsValidFluidInput(self, slot, fluid_id):
+        # type: (int, str) -> bool
+        for recipe in self.recipes:
+            slot_input = recipe.inputs.get("fluid", {}).get(slot)
+            if slot_input is None:
+                continue
+            if slot_input.is_tag:
+                if slot_input.id in GetItemBasicInfo(fluid_id).tags:
+                    return True
+            else:
+                if slot_input.id == fluid_id:
+                    return True
+        return False
+
+    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
+        if not is_final:
+            return
+        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE):
+            if self.current_recipe is None:
+                self.start_next()
+
     @Delay(1)
     def afterRequireAll(self):
         self.RequireItems()
@@ -58,7 +118,9 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
-        elif not self.can_output(recipe, output_slots):
+        self.SetProcessTicks(recipe.tick_duration)
+        self.ResetProgress()
+        if not self.can_output(recipe, output_slots):
             # 输出堵塞
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
@@ -66,29 +128,14 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         self.SetPower(recipe.power_cost)
         if not self.PowerEnough():
             return
-        self.SetProcessTicks(recipe.tick_duration)
-        self.ResetProgress()
         self.ResetDeactiveFlags()
         self.OnSync()
-
-    def IsValidFluidInput(self, slot, fluid_id):
-        # type: (int, str) -> bool
-        for recipe in self.recipes:
-            slot_input = recipe.inputs.get("fluid", {}).get(slot)
-            if slot_input is None:
-                continue
-            if slot_input.is_tag:
-                if slot_input.id in GetItemBasicInfo(fluid_id).tags:
-                    return True
-            else:
-                if slot_input.id == fluid_id:
-                    return True
-        return False
 
     def run_once(self):
         "进行一次配方产出"
         input_items = self.GetInputSlotItems()
         output_items = self.GetOutputSlotItems()
+        self.current_recipe = self.get_recipe(input_items, self.fluids)
         if self.current_recipe is None:
             # cannot reach
             raise ValueError("Recipe ERROR")
@@ -162,15 +209,6 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 return False
         return True
 
-    def OnFluidSlotUpdate(self, slot):
-        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE):
-            input_slots = self.GetInputSlotItems()
-            fluids = self.fluids
-            recipe = self.get_recipe(input_slots, fluids)
-            if recipe is not None:
-                self.current_recipe = recipe
-                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-
     def finish_recipe(self, slotitems, recipe):
         # type: (dict[int, Item], MachineRecipe) -> None
         fluid_slots = self.fluids
@@ -185,26 +223,11 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
             else:
                 orig_item.count += int(output.count)
             slotitems[slot_pos] = orig_item
-        for slot_pos, output in recipe.outputs.get(CategoryType.FLUID, {}).items():
-            self.OutputFluid(output.id, output.count, slot_pos)
+        slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
+        if slots_and_outputs:
+            last_slot_pos = slots_and_outputs[-1][0]
+            for slot_pos, output in slots_and_outputs:
+                self.OutputFluid(
+                    output.id, output.count, slot_pos, slot_pos == last_slot_pos
+                )
         self.SetSlotItems(slotitems)
-
-    def OnSlotUpdate(self, slot_pos):
-        # type: (int) -> None
-        if self.InUpgradeSlot(slot_pos):
-            UpgradeControl.OnSlotUpdate(self, slot_pos)
-            return
-        if slot_pos in self.output_slots and self.HasDeactiveFlag(
-            flags.DEACTIVE_FLAG_OUTPUT_FULL
-        ):
-            self.start_next()
-            return
-        recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)
-        if recipe is None:
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            self.current_recipe = None
-        elif not recipe.equals(self.current_recipe):
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            self.start_next()
-        else:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)

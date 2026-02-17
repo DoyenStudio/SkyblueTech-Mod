@@ -41,8 +41,8 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         self.OnSync()
         self._cached_recorded_settings = None
 
-    def OnFluidSlotUpdate(self, _):
-        # type: (int) -> None
+    def OnFluidSlotUpdate(self, _, _2):
+        # type: (int, bool) -> None
         self.readyTryPostFluid()
         self.OnSync()
 

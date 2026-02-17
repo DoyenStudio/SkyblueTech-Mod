@@ -131,8 +131,8 @@ class MultiFluidContainer(object):
     def OnTryActivate(self):
         self._sending_fluid = True
 
-    def OutputFluid(self, fluid_id, fluid_volume, slot_pos):
-        # type: (str, float, int) -> tuple[bool, float]
+    def OutputFluid(self, fluid_id, fluid_volume, slot_pos, is_final):
+        # type: (str, float, int, bool) -> tuple[bool, float]
         fluid = self.fluids[slot_pos]
         if fluid.fluid_id is None:
             fluid.fluid_id = fluid_id
@@ -140,10 +140,10 @@ class MultiFluidContainer(object):
         new_vol = fluid.volume = orig_volume + fluid_volume
         ok = False
         if new_vol > orig_volume:
-            self.onAddedFluid(slot_pos, fluid_id, fluid_volume)
+            self.onAddedFluid(slot_pos, fluid_id, fluid_volume, is_final)
             ok = True
         elif new_vol < orig_volume:
-            self.onReducedFluid(slot_pos, fluid_id, fluid_volume)
+            self.onReducedFluid(slot_pos, fluid_id, fluid_volume, is_final)
             ok = True
         if fluid.volume > fluid.max_volume:
             overflow_vol = fluid.volume - fluid.max_volume
@@ -155,7 +155,8 @@ class MultiFluidContainer(object):
     def AddFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
         _orig = fluid_volume
-        input_slots = ((i, self.fluids[i]) for i in self.fluid_input_slots)
+        input_slots = [(i, self.fluids[i]) for i in self.fluid_input_slots]
+        last_slot = input_slots[-1][0]
         for slot, fluid in input_slots:
             if fluid.canMerge(fluid_id) and self.IsValidFluidInput(slot, fluid_id):
                 if fluid.fluid_id is None or fluid.volume == 0:
@@ -163,12 +164,12 @@ class MultiFluidContainer(object):
                 free_volume = fluid.max_volume - fluid.volume
                 if fluid_volume <= free_volume:
                     fluid.volume += fluid_volume
-                    self.onAddedFluid(slot, fluid_id, fluid_volume)
+                    self.onAddedFluid(slot, fluid_id, fluid_volume, slot == last_slot)
                     return True, 0
                 else:
                     fluid.volume = fluid.max_volume
                     fluid_volume -= free_volume
-                    self.onAddedFluid(slot, fluid_id, free_volume)
+                    self.onAddedFluid(slot, fluid_id, free_volume, slot == last_slot)
         return _orig != fluid_volume, fluid_volume
 
     def CanAddFluid(self, fluid_id):
@@ -178,8 +179,9 @@ class MultiFluidContainer(object):
     def RequireFluid(self, req_fluid_id, req_fluid_volume, strict_volume=False):
         # type: (str | None, float | None, bool) -> tuple[bool, str, float]
         "返回: 获取是否成功, 获取到的流体 ID, 获取到的流体容量"
-        fluids = (self.fluids[i] for i in self.fluid_output_slots)
-        for slot, fluid in enumerate(fluids):
+        fluids = [(i, self.fluids[i]) for i in self.fluid_output_slots]
+        last_slot = fluids[-1][0]
+        for slot, fluid in fluids:
             if fluid.fluid_id is None:
                 continue
             elif req_fluid_id is not None and fluid.fluid_id != req_fluid_id:
@@ -190,11 +192,11 @@ class MultiFluidContainer(object):
                 # NOTE: 遇到第一个有效槽位就立即返回, 不考虑后续槽位
                 fluid.fluid_id = None
                 fluid.volume = 0.0
-                self.onReducedFluid(slot, fid, fvol)
+                self.onReducedFluid(slot, fid, fvol, slot == last_slot)
                 return True, fid, fvol
             else:
                 fluid.volume = fvol - req_fluid_volume
-                self.onReducedFluid(slot, fid, req_fluid_volume)
+                self.onReducedFluid(slot, fid, req_fluid_volume, slot == last_slot)
                 return True, fid, req_fluid_volume
         return False, "", 0
 
@@ -207,7 +209,8 @@ class MultiFluidContainer(object):
         "让此容器向网络输出一次流体。"
         requireLibraryFunc()
         ok = False
-        for slot in self.fluid_output_slots:
+        last_idx = len(self.fluid_output_slots) - 1
+        for i, slot in enumerate(self.fluid_output_slots):
             fluid = self.fluids[slot]
             fluid_id = fluid.fluid_id
             if fluid_id is None:
@@ -217,7 +220,7 @@ class MultiFluidContainer(object):
             ok = ok or _ok
             fluid.volume = rest
             if rest < orig_vol:
-                self.onReducedFluid(slot, fluid_id, orig_vol - rest)
+                self.onReducedFluid(slot, fluid_id, orig_vol - rest, i == last_idx)
 
     def RequireAnyFluidFromNetwork(self):
         """
@@ -241,6 +244,7 @@ class MultiFluidContainer(object):
             if test:
                 return True
             if item.newItemName == "minecraft:bucket":
+                last_fluid = self.fluids[-1]
                 for slot, fluid in enumerate(self.fluids):
                     if fluid.fluid_id is None or fluid.volume < BUCKET_VOLUME:
                         continue
@@ -254,12 +258,15 @@ class MultiFluidContainer(object):
                             player_id, GetSelectedSlot(player_id), item.count - 1
                         )
                         GiveItem(player_id, Item(bucket_id, count=1))
-                        self.onReducedFluid(slot, fluid_id, BUCKET_VOLUME)
+                        self.onReducedFluid(
+                            slot, fluid_id, BUCKET_VOLUME, fluid is last_fluid
+                        )
                         break
             else:
                 fluid_id = item.newItemName.replace("_bucket", "")
                 if ItemExists(fluid_id) and self.CanAddFluid(fluid_id):
-                    for slot in self.fluid_input_slots:
+                    last_idx = len(self.fluid_input_slots) - 1
+                    for i, slot in enumerate(self.fluid_input_slots):
                         fluid = self.fluids[slot]
                         if not self.IsValidFluidInput(slot, fluid_id):
                             continue
@@ -276,7 +283,7 @@ class MultiFluidContainer(object):
                         SpawnItemToPlayerCarried(
                             player_id, Item("minecraft:bucket", count=1)
                         )
-                        self.onAddedFluid(slot, fluid_id, BUCKET_VOLUME)
+                        self.onAddedFluid(slot, fluid_id, BUCKET_VOLUME, i == last_idx)
             if isinstance(self, GUIControl):
                 self.OnSync()
             return True
@@ -288,34 +295,34 @@ class MultiFluidContainer(object):
         requireLibraryFunc()
         return PostFluidIntoNetworks(self.dim, self.xyz, fluid_id, fluid_volume, None)
 
-    def OnAddedFluid(self, slot, fluid_id, added_fluid_volume):
-        # type: (int, str, float) -> None
+    def OnAddedFluid(self, slot, fluid_id, added_fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
         "容器内流体体积已经增加时调用。"
 
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume):
-        # type: (int, str, float) -> None
+    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
         "容器内流体体积已经减少时调用。"
 
-    def OnFluidSlotUpdate(self, slot_pos):
-        # type: (int) -> None
+    def OnFluidSlotUpdate(self, slot_pos, is_final):
+        # type: (int, bool) -> None
         "子类覆写在流体槽位发生更新时执行的回调。"
 
-    def onAddedFluid(self, slot, fluid_id, fluid_volume):
-        # type: (int, str, float) -> None
-        self.OnAddedFluid(slot, fluid_id, fluid_volume)
-        self.onFluidSlotUpdate(slot)
+    def onAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
+        self.OnAddedFluid(slot, fluid_id, fluid_volume, is_final)
+        self.onFluidSlotUpdate(slot, is_final)
         if isinstance(self, GUIControl):
             self.OnSync()
 
-    def onReducedFluid(self, slot, fluid_id, fluid_volume):
-        # type: (int, str, float) -> None
-        self.OnReducedFluid(slot, fluid_id, fluid_volume)
-        self.onFluidSlotUpdate(slot)
+    def onReducedFluid(self, slot, fluid_id, fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
+        self.OnReducedFluid(slot, fluid_id, fluid_volume, is_final)
+        self.onFluidSlotUpdate(slot, is_final)
         if isinstance(self, GUIControl):
             self.OnSync()
 
-    def onFluidSlotUpdate(self, slot_pos):
-        # type: (int) -> None
+    def onFluidSlotUpdate(self, slot_pos, is_final):
+        # type: (int, bool) -> None
         "子类覆写在流体槽位发生更新时执行的回调。"
         self._sending_fluid = True
-        self.OnFluidSlotUpdate(slot_pos)
+        self.OnFluidSlotUpdate(slot_pos, is_final)

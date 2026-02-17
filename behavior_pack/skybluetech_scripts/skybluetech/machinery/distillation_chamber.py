@@ -32,6 +32,7 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
+        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         HeatCtrl.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = DistillationChamberUISync.NewServer(self).Activate()

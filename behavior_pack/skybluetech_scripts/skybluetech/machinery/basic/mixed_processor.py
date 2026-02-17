@@ -34,6 +34,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def OnPlaced(self, _):
         self.afterRequireAll()
 
+    def OnTicking(self):
+        BaseProcessor.OnTicking(self)
+        MultiFluidContainer.OnTicking(self)
+
     def OnTryActivate(self):
         BaseMachine.OnTryActivate(self)
         MultiFluidContainer.OnTryActivate(self)
@@ -159,7 +163,6 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         return True
 
     def OnFluidSlotUpdate(self, slot):
-        MultiFluidContainer.OnFluidSlotUpdate(self, slot)
         if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE):
             input_slots = self.GetInputSlotItems()
             fluids = self.fluids

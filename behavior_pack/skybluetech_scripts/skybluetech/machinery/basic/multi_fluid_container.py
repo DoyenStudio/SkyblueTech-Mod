@@ -124,15 +124,8 @@ class MultiFluidContainer(object):
 
     def OnTicking(self):
         if self._sending_fluid:
-            sent = False
-            for slot, fluid in enumerate(self.fluids):
-                if fluid.fluid_id is None:
-                    continue
-                ok, _ = self.OutputFluid(fluid.fluid_id, 0, slot)
-                if ok:
-                    sent = True
-                    break
-            if not sent:
+            res = self.PostFluid()
+            if not res:
                 self._sending_fluid = False
 
     def OnTryActivate(self):
@@ -213,11 +206,18 @@ class MultiFluidContainer(object):
     def PostFluid(self):
         "让此容器向网络输出一次流体。"
         requireLibraryFunc()
+        ok = False
         for slot in self.fluid_output_slots:
             fluid = self.fluids[slot]
-            if fluid.fluid_id is None:
+            fluid_id = fluid.fluid_id
+            if fluid_id is None:
                 continue
-            self.OutputFluid(fluid.fluid_id, fluid.volume, slot)
+            orig_vol = fluid.volume
+            _ok, rest = self.tryPostFluid(fluid_id, orig_vol)
+            ok = ok or _ok
+            fluid.volume = rest
+            if rest < orig_vol:
+                self.onReducedFluid(slot, fluid_id, orig_vol - rest)
 
     def RequireAnyFluidFromNetwork(self):
         """

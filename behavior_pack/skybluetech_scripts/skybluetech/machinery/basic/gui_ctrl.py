@@ -64,3 +64,6 @@ class GUIControl(object):
     def OnSync(self):
         # type: () -> None
         "覆写方法用于将机器数据同步到客户端 UI。"
+
+    def CallSync(self):
+        self.OnSync()

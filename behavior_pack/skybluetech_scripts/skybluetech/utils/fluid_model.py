@@ -18,7 +18,7 @@ class FluidModel:
     def __init__(self, x, y, z):
         # type: (int, int, int) -> None
         ceid = CreateClientEntity(
-            "skybluetech:model_entity", (x + 0.5, y, z + 0.5), (0, 0)
+            "skybluetech:fluid_model_entity", (x + 0.5, y, z + 0.5), (0, 0)
         )
         if ceid is None:
             raise Exception("[ST] Failed to create fluid model")
@@ -37,13 +37,6 @@ class FluidModel:
             print("[ST] Failed to add texture to fluid model")
             return False
         return RebuildRenderForOneActor(self.ceid)
-
-    def SetOptacity(
-        self,
-        opacity,  # type: float
-    ):
-        SetEntityOpacity(self.ceid, opacity)
-        return self
 
     def SetYScale(self, y_scale):
         # type: (float) -> bool

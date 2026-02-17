@@ -25,13 +25,6 @@ COLORS = {
     fluids.Molten.TIN: ((233, 233, 233), 1),
 }
 
-ALPHA = {
-    "minecraft:water": 0.5,
-    fluids.DISTILLED_WATER: 0.5,
-    fluids.METHANE: 0.3,
-    fluids.LUBRICANT: 0.6,
-}
-
 IDX_MAP = {
     v: k
     for k, v in {

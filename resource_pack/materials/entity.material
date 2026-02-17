@@ -1,0 +1,10 @@
+{
+    "materials": {
+        "version": "1.0.0",
+        "fluid_model:entity": {
+            "+states": [
+                // "Blending", "DisableDepthTest"
+            ]
+        }
+    }
+}

@@ -1,0 +1,25 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.skybluetech.fluid_model_entity.y_scale": {
+			"animation_length": 4.1667,
+			"anim_time_update": "query.anim_time+(query.mod.skybluetech_y_scale-query.anim_time)*0.01",
+			"bones": {
+				"bb_main": {
+					"scale": {
+						"0.0": [
+							1,
+							0,
+							1
+						],
+						"1.0": [
+							1,
+							1,
+							1
+						]
+					}
+				}
+			}
+		}
+	}
+}

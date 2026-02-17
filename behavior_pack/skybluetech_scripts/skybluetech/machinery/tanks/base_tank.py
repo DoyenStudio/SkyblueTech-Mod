@@ -12,7 +12,6 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
-from ...define.fluids.texture import ALPHA
 from ...define.facing import DXYZ_FACING, FACING_EN
 from ...ui_sync.machinery.general_tank import GeneralTankUISync
 from ...utils.fluid_model import FluidModel
@@ -182,21 +181,13 @@ def updateClientTanksOnce():
         sync_modify = False
         if fluid_id != old_fluid_id:
             if old_fluid_id is None and fluid_id is not None:
-                sync_modify = (
-                    loadModel(x, y, z, tank_cls)
-                    .SetOptacity(ALPHA.get(fluid_id, 1))
-                    .SetTexture(fluid_id)
-                )
+                sync_modify = loadModel(x, y, z, tank_cls).SetTexture(fluid_id)
             elif old_fluid_id is not None and fluid_id is None:
                 client_models.pop((x, y, z))[1].Destroy()
                 sync_modify = True
             elif old_fluid_id is not None and fluid_id is not None:
                 client_models.pop((x, y, z))[1].Destroy()
-                sync_modify = (
-                    loadModel(x, y, z, tank_cls)
-                    .SetOptacity(ALPHA.get(fluid_id, 1))
-                    .SetTexture(fluid_id)
-                )
+                sync_modify = loadModel(x, y, z, tank_cls).SetTexture(fluid_id)
         if fluid_id is not None and fluid_volume != old_fluid_volume:
             res = loadModel(x, y, z, tank_cls).SetYScale(vol_pc)
             sync_modify = sync_modify and res

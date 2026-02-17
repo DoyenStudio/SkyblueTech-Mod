@@ -19,7 +19,7 @@
             "minecraft:persistent": {}
         },
         "description": {
-            "identifier": "skybluetech:model_entity",
+            "identifier": "skybluetech:fluid_model_entity",
             "is_experimental": false,
             "is_summonable": true
         },

@@ -38,22 +38,34 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidSplitterUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
         self._cached_recorded_settings = None
 
-    def OnFluidSlotUpdate(self, _, _2):
-        # type: (int, bool) -> None
-        self.readyTryPostFluid()
-        self.OnSync()
+    def OnTicking(self):
+        if self._sending_fluid:
+            self.RequireAnyFluidFromNetwork()
+            ok = self.readyTryPostFluid()
+            if not ok:
+                self._sending_fluid = False
+            self.CallSync()
+
+    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
+        self.OnTryActivate()
 
     def readyTryPostFluid(self):
+        ok = False
         for slot in self.fluid_input_slots:
             fluid = self.fluids[slot]
             fluid_id = fluid.fluid_id
-            if fluid_id is not None and fluid.volume > 0:
-                fluid.volume = self.tryPostFluidByLabel(fluid_id, fluid.volume)
+            fluid_volume = fluid.volume
+            if fluid_id is not None and fluid_volume > 0:
+                rest_volume = self.tryPostFluidByLabel(fluid_id, fluid_volume)
+                ok = ok or rest_volume != fluid_volume
+                fluid.volume = rest_volume
             if fluid.volume <= 0:
                 fluid.fluid_id = None
+        return ok
 
     def tryPostFluidByLabel(self, fluid_id, fluid_volume):
         # type: (str, float) -> float

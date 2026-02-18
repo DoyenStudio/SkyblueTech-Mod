@@ -219,6 +219,8 @@ class MultiFluidContainer(object):
             _ok, rest = self.tryPostFluid(fluid_id, orig_vol)
             ok = ok or _ok
             fluid.volume = rest
+            if rest <= 0:
+                fluid.fluid_id = None
             if rest < orig_vol:
                 self.onReducedFluid(slot, fluid_id, orig_vol - rest, i == last_idx)
 

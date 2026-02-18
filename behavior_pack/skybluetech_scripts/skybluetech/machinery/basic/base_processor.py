@@ -50,7 +50,7 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
                 self.start_next()
             else:
                 do_break = True
-            self.OnSync()
+            self.CallSync()
             if do_break:
                 break
 
@@ -104,6 +104,7 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
         recipe = self.get_recipe(input_slots)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+            self.current_recipe = None
             return
         self.current_recipe = recipe
         self.SetProcessTicks(recipe.tick_duration)

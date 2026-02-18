@@ -101,6 +101,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE):
             if self.current_recipe is None:
                 self.start_next()
+            else:
+                # fix here
+                print("[Warning] MixedProcessor: Recipe ERROR")
+                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
     @Delay(1)
     def afterRequireAll(self):
@@ -117,19 +121,20 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         recipe = self.get_recipe(input_slots, fluids)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+            self.current_recipe = None
             return
+        self.current_recipe = recipe
         self.SetProcessTicks(recipe.tick_duration)
+        self.SetPower(recipe.power_cost)
         self.ResetProgress()
         if not self.can_output(recipe, output_slots):
             # 输出堵塞
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-        self.current_recipe = recipe
-        self.SetPower(recipe.power_cost)
         if not self.PowerEnough():
             return
         self.ResetDeactiveFlags()
-        self.OnSync()
+        self.CallSync()
 
     def run_once(self):
         "进行一次配方产出"

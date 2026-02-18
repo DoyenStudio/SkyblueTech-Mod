@@ -11,7 +11,7 @@
                 "screen_name": "FluidSplitterUI.main"
             },
             "netease:block_entity": {
-
+                "tick": true
             },
             "netease:custom_tips": {
                 "value": "\n§7用于分离流体。"
@@ -24,12 +24,8 @@
                 "digger": "pickaxe",
                 "level": 2
             },
-            "tag:piston_denier": {
-
-            },
-            "tag:skybluetech_fluid_container": {
-
-            }
+            "tag:piston_denier": {},
+            "tag:skybluetech_fluid_container": {}
         },
         "description": {
             "base_block": "netease_container",

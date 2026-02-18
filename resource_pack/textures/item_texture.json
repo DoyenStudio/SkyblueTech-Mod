@@ -4,12 +4,6 @@
         "skybluetech:ancient_debris_dust": {
             "textures": "textures/items/dusts/ancient_debris_dust"
         },
-        "skybluetech:upgrader_basic_energy": {
-            "textures": "textures/items/upgraders/upgrader_basic_energy"
-        },
-        "skybluetech:upgrader_basic_speed": {
-            "textures": "textures/items/upgraders/upgrader_basic_speed"
-        },
         "skybluetech:bio_dust": {
             "textures": "textures/items/dusts/bio_dust"
         },
@@ -81,9 +75,6 @@
         },
         "skybluetech:famicom_cartidge_3": {
             "textures": "textures/items/cartidges/famicom_cartidge_3"
-        },
-        "skybluetech:upgrader_generic_split": {
-            "textures": "textures/items/upgraders/upgrader_generic_split"
         },
         "skybluetech:gold_dust": {
             "textures": "textures/items/dusts/gold_dust"
@@ -277,9 +268,6 @@
         "skybluetech:solar_panel_pane": {
             "textures": "textures/items/solar_panel_pane"
         },
-        "skybluetech:upgrader_spec_magma_factory": {
-            "textures": "textures/items/upgraders/upgrader_spec_magma_factory"
-        },
         "skybluetech:steel_dust": {
             "textures": "textures/items/dusts/steel_dust"
         },
@@ -291,6 +279,9 @@
         },
         "skybluetech:steel_stick": {
             "textures": "textures/items/sticks/steel_stick"
+        },
+        "skybluetech:sunflower_seed": {
+            "textures": "textures/items/sunflower_seeds"
         },
         "skybluetech:superconduct_wire": {
             "textures": "textures/wire/superconduct_wire_item"
@@ -318,6 +309,18 @@
         },
         "skybluetech:transmitter_wrench": {
             "textures": "textures/items/transmitter_wrench"
+        },
+        "skybluetech:upgrader_basic_energy": {
+            "textures": "textures/items/upgraders/upgrader_basic_energy"
+        },
+        "skybluetech:upgrader_basic_speed": {
+            "textures": "textures/items/upgraders/upgrader_basic_speed"
+        },
+        "skybluetech:upgrader_generic_split": {
+            "textures": "textures/items/upgraders/upgrader_generic_split"
+        },
+        "skybluetech:upgrader_spec_magma_factory": {
+            "textures": "textures/items/upgraders/upgrader_spec_magma_factory"
         }
     },
     "texture_name": "atlas.items"

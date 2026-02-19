@@ -71,7 +71,12 @@ def RebuildRenderForOneActor(entity_id):
 
 def SetEntityOpacity(entity_id, opacity):
     # type: (str, float) -> None
-    return ClientComp.CreateModel(entity_id).SetEntityOpacity(opacity)
+    ClientComp.CreateModel(entity_id).SetEntityOpacity(opacity)
+
+
+def SetEntityShadowShow(entity_id, show):
+    # type: (str, bool) -> None
+    ClientComp.CreateModel(entity_id).SetEntityShadowShow(show)
 
 
 AddTextureToOneActor = MethodCacher(
@@ -87,6 +92,7 @@ __all__ = [
     "SetNotRenderAtAll",
     "SetActorBlockGeometryScale",
     "SetEntityOpacity",
+    "SetEntityShadowShow",
     "AddActorBlockGeometry",
     "DeleteActorBlockGeometry",
     "RebuildRenderForOneActor",

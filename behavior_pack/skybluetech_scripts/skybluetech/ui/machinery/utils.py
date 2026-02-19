@@ -1,8 +1,9 @@
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
-from ...utils.fmt import FormatRF as _formatRF, FormatFluidVolume as _formatFluidVolume
 from ...define.fluids import texture as fluid_texture
+from ...define.fluids.gas_enum import IsGas
+from ...utils.fmt import FormatRF as _formatRF, FormatFluidVolume as _formatFluidVolume
 from ...ui_sync.machinery.basic_machine_ui_sync import FluidSlotSync
 
 # TYPE_CHECKING
@@ -37,13 +38,16 @@ def UpdateGenericProgressL2R(ui, percent):
     # type: (UBaseCtrl, float) -> None
     ui["mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - percent)
 
-def UpdateGenericProgressT2B(ui, percent):# -> Any:
+
+def UpdateGenericProgressT2B(ui, percent):  # -> Any:
     # type: (UBaseCtrl, float) -> None
     ui["mask"].asImage().SetSpriteClipRatio("fromTopToBottom", 1 - percent)
+
 
 def UpdateGenericProgressB2T(ui, percent):
     # type: (UBaseCtrl, float) -> None
     ui["mask"].asImage().SetSpriteClipRatio("fromBottomToTop", 1 - percent)
+
 
 def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     # type: (UBaseCtrl, str | None, float, float) -> None
@@ -71,7 +75,15 @@ def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     volume_disp.SetText(
         "%s / %s" % (_formatFluidVolume(fluid_volume), _formatFluidVolume(max_volume))
     )
-    fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=min(2, prgs)))
+    if fluid_id is not None and IsGas(fluid_id):
+        fluid_img.SetAnchorFrom("top_middle")
+        fluid_img.SetAnchorTo("top_middle")
+        fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=min(2, prgs)))
+    else:
+        fluid_img.SetAnchorFrom("bottom_middle")
+        fluid_img.SetAnchorTo("bottom_middle")
+        fluid_img.SetFullPos("y", UICtrlPosData("none", relative_value=0))
+        fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=min(2, prgs)))
 
 
 def InitFluidDisplay(ctrl, data_cb):
@@ -138,7 +150,6 @@ def InitFluidDisplay(ctrl, data_cb):
         screen_vars["disp_board_src"] = ctrl
         current_ctrl[0] = e
         _updateHook()
-            
 
     # btn.SetOnRollOverCallback(onRollOver)
     # btn.SetOnRollOutCallback(onRollOut)
@@ -166,6 +177,7 @@ def InitFluidsDisplay(ui, fluid_slots, index):
 
     return InitFluidDisplay(ui, get_data)
 
+
 def UpdateImageTransformColor(
     img, raw_r, raw_g, raw_b, new_r, new_g, new_b, transform_pc
 ):
@@ -174,5 +186,3 @@ def UpdateImageTransformColor(
     g = raw_g + (new_g - raw_g) * transform_pc
     b = raw_b + (new_b - raw_b) * transform_pc
     img.SetSpriteColor((r / 255, g / 255, b / 255))
-
-

@@ -113,6 +113,10 @@
             {
                 "frame": {
                     "type": "image",
+                    "size": [
+                        "100%+2px",
+                        "100%+2px"
+                    ],
                     "layer": 5,
                     "nineslice_size": [
                         2.0,

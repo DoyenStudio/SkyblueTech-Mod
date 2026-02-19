@@ -1,14 +1,22 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.skybluetech.fluid_model_entity.y_scale": {
+		"animation.skybluetech.gas_model_entity.y_scale": {
 			"animation_length": 4.1667,
 			"anim_time_update": "query.anim_time+(query.mod.skybluetech_y_scale-query.anim_time)*0.05",
 			"bones": {
 				"bb_main": {
+					"relative_to": {
+						"rotation": "entity"
+					},
+					"rotation": [0, 0, 0.01],
+					"position": {
+						"0.0": [0, 15.5, 0],
+						"1.0": [0, 0, 0]
+					},
 					"scale": {
 						"0.0": [1, 0, 1],
-						"1.0": [1, 0.95, 1]
+						"1.0": [1, 0.9875, 1]
 					}
 				}
 			}

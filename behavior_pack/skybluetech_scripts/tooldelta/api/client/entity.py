@@ -23,6 +23,11 @@ def GetFootPos(entity_id):
     return ClientComp.CreatePos(entity_id).GetFootPos()
 
 
+def SetPosForClientEntity(entity_id, xyz):
+    # type: (str, tuple[float, float, float]) -> bool
+    return ClientComp.CreatePos(entity_id).SetPosForClientEntity(xyz)
+
+
 SetDropItemTransform = MethodCacher(
     lambda: ClientComp.CreateItem(ClientLevelId).SetDropItemTransform
 )

@@ -280,7 +280,7 @@
         "skybluetech:steel_stick": {
             "textures": "textures/items/sticks/steel_stick"
         },
-        "skybluetech:sunflower_seed": {
+        "skybluetech:sunflower_seeds": {
             "textures": "textures/items/sunflower_seeds"
         },
         "skybluetech:superconduct_wire": {
@@ -321,6 +321,15 @@
         },
         "skybluetech:upgrader_spec_magma_factory": {
             "textures": "textures/items/upgraders/upgrader_spec_magma_factory"
+        },
+        "skybluetech:methane_bucket": {
+            "textures": "textures/items/buckets/methane_bucket"
+        },
+        "skybluetech:methane_mud_bucket": {
+            "textures": "textures/items/buckets/methane_mud_bucket"
+        },
+        "skybluetech:vegetable_oil_bucket": {
+            "textures": "textures/items/buckets/vegetable_oil_bucket"
         }
     },
     "texture_name": "atlas.items"

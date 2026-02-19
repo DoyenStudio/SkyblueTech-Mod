@@ -13,6 +13,7 @@ all_fluids = [
     METHANE,
     METHANE_MUD,
     DISTILLED_WATER,
+    VEGETABLE_OIL,
     Molten.EARTH,
     Molten.IMPURITY,
     Molten.COPPER,

@@ -286,6 +286,14 @@
             "up": "skybluetech:basic_water_flowing"
         }
     },
+    "skybluetech:flowing_vegetable_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_flowing"
+        }
+    },
     "skybluetech:fluid_condenser": {
         "sound": "iron"
     },
@@ -563,6 +571,14 @@
     },
     "skybluetech:tin_wire": {
         "sound": "cloth"
+    },
+    "skybluetech:vegetable_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_static"
+        }
     },
     "skybluetech:wind_generator": {
         "client_entity": {

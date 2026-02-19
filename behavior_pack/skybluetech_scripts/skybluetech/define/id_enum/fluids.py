@@ -12,6 +12,7 @@ METHANE = "skybluetech:methane"
 METHANE_MUD = "skybluetech:methane_mud"
 
 DISTILLED_WATER = "skybluetech:distilled_water"
+VEGETABLE_OIL = "skybluetech:vegetable_oil"
 
 
 class Molten:

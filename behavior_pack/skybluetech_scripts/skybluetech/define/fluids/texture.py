@@ -13,6 +13,7 @@ COLORS = {
     fluids.METHANE: ((255, 240, 200), 4),
     fluids.LUBRICANT: ((255, 207, 0), 3),
     fluids.DISTILLED_WATER: ((0, 229, 255), 3),
+    fluids.VEGETABLE_OIL: ((170, 255, 0), 3),
     fluids.Molten.COPPER: ((231, 124, 86), 1),
     fluids.Molten.EARTH: ((127, 54, 0), 2),
     fluids.Molten.GOLD: ((255, 255, 0), 1),

@@ -1,0 +1,23 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "can_float_boat": false,
+                "liquid_color": [
+                    170,
+                    255,
+                    0,
+                    192
+                ],
+                "spread_delay": 8,
+                "spread_range": 8
+            }
+        },
+        "description": {
+            "base_block": "flowing_liquid",
+            "category": "none",
+            "identifier": "skybluetech:flowing_vegetable_oil"
+        }
+    }
+}

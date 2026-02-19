@@ -335,10 +335,10 @@
         }
     },
     "skybluetech:hover_text_displayer": {
-        "sound": "iron",
         "client_entity": {
             "identifier": "skybluetech:hover_text_displayer"
-        }
+        },
+        "sound": "iron"
     },
     "skybluetech:hydroponic_base": {
         "textures": {
@@ -449,6 +449,17 @@
     },
     "skybluetech:nickel_ore": {
         "textures": "skybluetech:nickel_ore"
+    },
+    "skybluetech:oil_extractor": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:oil_extractor_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:platinum_block": {
         "textures": "skybluetech:platinum_block"

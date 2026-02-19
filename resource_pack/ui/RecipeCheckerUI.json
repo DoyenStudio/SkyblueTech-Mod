@@ -1584,6 +1584,57 @@
         ]
     },
     "namespace": "RecipeCheckerUI",
+    "oil_extractor_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            60.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "layer": 19,
+                    "offset": [
+                        35,
+                        0
+                    ],
+                    "size": [
+                        30,
+                        50
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "layer": 45
+                }
+            }
+        ]
+    },
     "recipe_fgrid": {
         "type": "panel"
     }

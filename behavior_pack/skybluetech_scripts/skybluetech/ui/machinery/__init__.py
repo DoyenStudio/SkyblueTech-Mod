@@ -28,6 +28,7 @@ from .magma_furnace import MagmaFurnaceUI
 from .magma_centrifuge import MagmaCentrifugeUI
 from .metal_press import MetalPressUI
 from .mixer import MixerUI
+from .oil_extractor import OilExtractorUI
 from .pump import PumpUI
 from .redstone_furnace import RedstoneFurnaceUI
 from .rf_repeater_plant import RFRepeaterPlantUI

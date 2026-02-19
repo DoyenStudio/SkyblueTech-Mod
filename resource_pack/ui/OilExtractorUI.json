@@ -1,0 +1,172 @@
+{
+    "main@common.inventory_screen_common": {
+        "$screen_content": "OilExtractorUI.oil_extractor_ui"
+    },
+    "namespace": "OilExtractorUI",
+    "oil_extractor_ui": {
+        "type": "panel",
+        "offset": [
+            1.0,
+            -1.0
+        ],
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "流体冷却机",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
+                                                        "offset": [
+                                                            -4,
+                                                            -39
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "offset": [
+                                                            36,
+                                                            -40
+                                                        ],
+                                                        "size": [
+                                                            37,
+                                                            70
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            -38.0,
+                                                            -39.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 0
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "upgrades@SkybluePanelLib.UpgradeSlots": {
+                                                        "$slot0": 1,
+                                                        "$slot1": 2,
+                                                        "$slot2": 3,
+                                                        "$slot3": 4,
+                                                        "offset": [
+                                                            106,
+                                                            -57
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            71,
+                                                            0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    }
+}

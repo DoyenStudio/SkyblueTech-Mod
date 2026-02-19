@@ -25,6 +25,7 @@ from .magma_furnace import MagmaFurnace
 from .magma_centrifuge import MagmaCentrifuge
 from .metal_press import MetalPress
 from .mixer import Mixer
+from .oil_extractor import OilExtractor
 from .pump import Pump
 from .redstone_furnace import RedstoneFurnace
 from .rf_repeater_plant import RFRepeaterPlant

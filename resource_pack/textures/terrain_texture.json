@@ -248,6 +248,12 @@
         "skybluetech:nickel_ore": {
             "textures": "textures/blocks/ore/nickel_ore"
         },
+        "skybluetech:oil_extractor_front": {
+            "textures": "textures/machines/oil_extractor_front"
+        },
+        "skybluetech:oil_extractor_front_active": {
+            "textures": "textures/machines/flipbook_textures/oil_extractor_front_active"
+        },
         "skybluetech:platinum_block": {
             "textures": "textures/blocks/ingot_block/platinum_block"
         },

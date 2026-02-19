@@ -36,6 +36,7 @@
         "ui/MixerUI.json",
         "ui/NeteaseContainerUI.json",
         "ui/ObjUpVeinMinerSettingsUI.json",
+        "ui/OilExtractorUI.json",
         "ui/PumpUI.json",
         "ui/RecipeCheckerUI.json",
         "ui/RedstoneFurnaceUI.json",

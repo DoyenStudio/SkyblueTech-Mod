@@ -46,5 +46,7 @@ def onBlockUse(event):
         if isinstance(m, FluidContainer):
             m.OnFluidSlotUpdate()
         elif isinstance(m, MultiFluidContainer):
-            for slot in m.fluid_output_slots | {0}:
-                m.onFluidSlotUpdate(slot)
+            all_slots = list(m.fluid_output_slots | {0})
+            last_idx = len(all_slots) - 1
+            for i, slot in enumerate(all_slots):
+                m.onFluidSlotUpdate(slot, i == last_idx)

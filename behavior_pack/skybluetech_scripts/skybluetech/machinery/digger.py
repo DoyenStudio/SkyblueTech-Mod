@@ -199,8 +199,6 @@ def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     if event.blockName == Digger.block_name:
         _, aux = CGetBlockNameAndAux((event.posX, event.posY, event.posZ))
-        # print("---------------- DONT SET MOLANG ----------------")
-        # return
         SetBlockEntityMolangValue(
             (event.posX, event.posY, event.posZ),
             "variable.mod_block_facing",
@@ -224,7 +222,7 @@ def onUpdateCrack(event):
     # WARNING: 调用不当将导致游戏强制中断
     global can_play_animation
     if not GetBlockName((event.x, event.y, event.z)):
-        print("[WARN] Digger crack was too early to set, may crash game")
+        # Digger crack was too early to set, may crash game
         return
     if can_play_animation:
         SetCrackFrame(event.dim, (event.x, event.y, event.z), event.level)

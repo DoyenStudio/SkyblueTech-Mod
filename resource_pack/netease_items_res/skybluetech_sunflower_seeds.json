@@ -2,10 +2,10 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:icon": "skybluetech:sunflower_seed"
+            "minecraft:icon": "skybluetech:sunflower_seeds"
         },
         "description": {
-            "identifier": "skybluetech:sunflower_seed"
+            "identifier": "skybluetech:sunflower_seeds"
         }
     }
 }

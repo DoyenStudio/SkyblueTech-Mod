@@ -139,12 +139,8 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
             slot_input = recipe.inputs.get(CategoryType.ITEM, {}).get(slot)
             if slot_input is None:
                 continue
-            if slot_input.is_tag:
-                if slot_input.id in item.GetBasicInfo().tags:
-                    return True
-            else:
-                if slot_input.id == item.newItemName:
-                    return True
+            if slot_input.match_item_id(item.id):
+                return True
         return False
 
     def get_recipe(self, inputs):
@@ -156,11 +152,7 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
                 if item is None:
                     cont = True
                     break
-                if (
-                    input.id not in item.GetBasicInfo().tags
-                    if input.is_tag
-                    else input.id != item.newItemName
-                ) or item.count < input.count:
+                if not input.match_item_id(item.id) or item.count < input.count:
                     cont = True
                     break
             if cont:

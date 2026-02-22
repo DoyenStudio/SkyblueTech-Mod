@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
+from skybluetech_scripts.tooldelta.api.common import GetItemTags
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from ..core import CategoryType, RecipeBase, RegisterRecipe
 from ..core.render_utils import ItemDisplayer
@@ -22,6 +23,13 @@ class Input(Element):
         # type: (str, float, bool) -> None
         Element.__init__(self, id, count)
         self.is_tag = is_tag
+
+    def match_item_id(self, item_id):
+        # type: (str) -> bool
+        if self.is_tag:
+            return item_id in GetItemTags(self.id, 0)
+        else:
+            return item_id == self.id
 
 
 class Output(Element):
@@ -106,19 +114,24 @@ class MachineRecipe(Recipe):
             ItemDisplayer(panel["slot%d" % slot], Item(item_id, count=int(input.count)))
         input_fluids = self.inputs.get("fluid", {})
         if input_fluids:
-            max_input_fluid_volume = max(input_fluids.values(), key=lambda x: x.count).count
+            max_input_fluid_volume = max(
+                input_fluids.values(), key=lambda x: x.count
+            ).count
         for slot, input in input_fluids.items():
             FluidDisplayer(
-                panel["fluid%d" % slot],
-                input.id, input.count, max_input_fluid_volume
+                panel["fluid%d" % slot], input.id, input.count, max_input_fluid_volume
             )
         output_fluids = self.outputs.get("fluid", {})
         if output_fluids:
-            max_output_fluid_volume = max(output_fluids.values(), key=lambda x: x.count).count
+            max_output_fluid_volume = max(
+                output_fluids.values(), key=lambda x: x.count
+            ).count
         for slot, output in output_fluids.items():
             FluidDisplayer(
                 panel["fluid%d" % slot],
-                output.id, output.count, max_output_fluid_volume
+                output.id,
+                output.count,
+                max_output_fluid_volume,
             )
 
     def RenderUpdate(self, panel, render_ticks):
@@ -128,6 +141,3 @@ class MachineRecipe(Recipe):
         td = self.tick_duration * 3
         p = (render_ticks * 2.0) % td / td
         panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
-
-
-

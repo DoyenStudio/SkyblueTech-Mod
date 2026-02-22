@@ -86,12 +86,8 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
             slot_input = recipe.inputs.get("fluid", {}).get(slot)
             if slot_input is None:
                 continue
-            if slot_input.is_tag:
-                if slot_input.id in GetItemBasicInfo(fluid_id).tags:
-                    return True
-            else:
-                if slot_input.id == fluid_id:
-                    return True
+            if slot_input.match_item_id(fluid_id):
+                return True
         return False
 
     def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
@@ -159,11 +155,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 if item is None:
                     cont = True
                     break
-                if (
-                    input.id not in item.GetBasicInfo().tags
-                    if input.is_tag
-                    else input.id != item.newItemName
-                ) or item.count < input.count:
+                if not input.match_item_id(item.id) or item.count < input.count:
                     cont = True
                     break
             for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
@@ -172,10 +164,9 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                     cont = True
                     break
                 if (
-                    input.id not in Item(fluid.fluid_id).GetBasicInfo().tags
-                    if input.is_tag
-                    else fluid.fluid_id != input.id
-                ) or fluid.volume < input.count:
+                    not input.match_item_id(fluid.fluid_id)
+                    or fluid.volume < input.count
+                ):
                     cont = True
                     break
             if cont:

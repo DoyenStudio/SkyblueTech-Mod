@@ -212,6 +212,7 @@ class ToolDeltaScreen(ClientListenerService):
         _removeActiveToolDeltaScreen(self)
         self._activated = False
         self.disable_listeners()
+        self._disable_delayed_listeners()
 
     def _on_create(self):
         self._do_active()

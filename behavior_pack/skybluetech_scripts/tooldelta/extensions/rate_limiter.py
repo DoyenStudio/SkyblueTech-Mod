@@ -1,6 +1,6 @@
 # coding=utf-8
 import time
-from ..api.timer import ExecLater
+from ..api.common import ExecLater
 
 if 0:
     from typing import Callable, ParamSpec, TypeVar
@@ -24,7 +24,7 @@ class PlayerRateLimiter(object):
         # type: (str) -> float
         return time.time() - self._limits.get(player_id, 0)
 
-    def record(self, player_id):
+    def record(self, player_id=""):
         # type: (str) -> bool
         if self.is_limited(player_id):
             return False

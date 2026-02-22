@@ -12,7 +12,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerItemUseOnEvent,
 )
 from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId, IsSneaking
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from .. import pool
 from .base_clicker import BaseClicker
 from .base_machine import BaseMachine

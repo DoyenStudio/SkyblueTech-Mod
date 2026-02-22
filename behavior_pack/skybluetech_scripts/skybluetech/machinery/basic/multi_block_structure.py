@@ -3,12 +3,12 @@
 from weakref import WeakKeyDictionary
 from mod.common.component.blockPaletteComp import BlockPaletteComponent
 from mod_log import logger
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     EntityPlaceBlockAfterServerEvent,
     ChunkAcquireDiscardedServerEvent,
-    ChunkLoadedServerEvent,   
+    ChunkLoadedServerEvent,
 )
 
 from skybluetech_scripts.tooldelta.general import ServerInitCallback
@@ -16,7 +16,10 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     AddBlocksToBlockRemoveListener,
     GetBlockPaletteBetweenPos,
 )
-from ...define.flags import DEACTIVE_FLAG_STRUCTURE_BROKEN, DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
+from ...define.flags import (
+    DEACTIVE_FLAG_STRUCTURE_BROKEN,
+    DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
+)
 from .base_machine import BaseMachine, GUIControl
 
 if 0:
@@ -33,14 +36,17 @@ FLAG_OK = 0
 blockRemovedListenPool = set()  # type: set[str]
 server_inited = False
 
+
 @ServerInitCallback()
 def onServerInit():
     global server_inited
     AddBlocksToBlockRemoveListener(blockRemovedListenPool)
     server_inited = True
-    logger.info("[MultiBlockStructure] Add blocks to pool: {}".format(
-        list(blockRemovedListenPool)
-    ))
+    logger.info(
+        "[MultiBlockStructure] Add blocks to pool: {}".format(
+            list(blockRemovedListenPool)
+        )
+    )
 
 
 @EntityPlaceBlockAfterServerEvent.Listen(-1001)
@@ -78,7 +84,10 @@ def onStruBlockRemoved(event):
     # print detect_areas
     for area in detect_areas.get(event.dimension, set()):
         # print area.bound._last_destroy_flag
-        if area.bound.inited and area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
+        if (
+            area.bound.inited
+            and area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN
+        ):
             continue
         if area.isInside(x, y, z):
             flag = area.Detect()
@@ -222,9 +231,12 @@ class DetectArea(object):
         # type: (BlockPaletteComponent, int, int, int) -> None
         self.functional_block_poses = {
             block_id: [
-                (x - co_x + self.center_x, y - co_y + self.min_y, z - co_z + self.center_z)
-                for x, y, z in
-                palette.GetLocalPosListOfBlocks(block_id)
+                (
+                    x - co_x + self.center_x,
+                    y - co_y + self.min_y,
+                    z - co_z + self.center_z,
+                )
+                for x, y, z in palette.GetLocalPosListOfBlocks(block_id)
             ]
             for block_id in self.bound.functional_block_ids
         }
@@ -234,6 +246,7 @@ class StructureBlockPalette(object):
     """
     多方块检测调色板, 用于表示多方块结构的内容。
     """
+
     def __init__(
         self,
         posblock_data,  # type: dict[int, set[tuple[int, int, int]]]
@@ -360,7 +373,7 @@ class MultiBlockStructure(BaseMachine):
         if self.structure_palette is None:
             raise ValueError("StructureBlockPalette: structure_palette is None")
         self._last_destroy_flag = DEACTIVE_FLAG_STRUCTURE_BROKEN
-        self._lacked_blocks = {} # type: dict[str, int]
+        self._lacked_blocks = {}  # type: dict[str, int]
         self._palette = self.structure_palette
         self.dim = dim
         self.x = x
@@ -436,13 +449,13 @@ class MultiBlockStructure(BaseMachine):
         if not pos:
             raise ValueError("Cannot find block: %s" % block_id)
         from ..pool import GetMachineStrict
+
         x, y, z = pos[index]
         machine = GetMachineStrict(self.dim, x, y, z)
         if not isinstance(machine, cls):
             raise ValueError(
                 "({}, {}, {}): {} is not a {}".format(
-                    x, y, z,
-                    type(machine).__name__, cls.__name__
+                    x, y, z, type(machine).__name__, cls.__name__
                 )
             )
         return machine
@@ -455,13 +468,13 @@ class MultiBlockStructure(BaseMachine):
         if not pos:
             return None
         from ..pool import GetMachineStrict
+
         x, y, z = pos[index]
         machine = GetMachineStrict(self.dim, x, y, z)
         if not isinstance(machine, cls):
             raise ValueError(
                 "({}, {}, {}): {} is not a {}".format(
-                    x, y, z,
-                    type(machine).__name__, cls.__name__
+                    x, y, z, type(machine).__name__, cls.__name__
                 )
             )
         return machine
@@ -541,10 +554,11 @@ def GenerateSimpleStructureTemplate(
         require_blocks_count or {},
     )
 
+
 # logics
 
-pending_detect_areas = {} # type: dict[int, WeakKeyDictionary[MultiBlockStructure, MBSLoadPender]]
-loaded_chunks = set() # type: set[tuple[int, int]]
+pending_detect_areas = {}  # type: dict[int, WeakKeyDictionary[MultiBlockStructure, MBSLoadPender]]
+loaded_chunks = set()  # type: set[tuple[int, int]]
 
 
 class MBSLoadPender:
@@ -559,17 +573,13 @@ class MBSLoadPender:
     def Ready(self):
         self.m.detectLater()
 
+
 def addPending(m):
     # type: (MultiBlockStructure) -> None
     chunks_not_loaded = getNotLoadedChunkPosesInRange(
-        m.area.min_x,
-        m.area.min_z,
-        m.area.max_x,
-        m.area.max_z
+        m.area.min_x, m.area.min_z, m.area.max_x, m.area.max_z
     )
-    pender = MBSLoadPender(
-        m, chunks_not_loaded
-    )
+    pender = MBSLoadPender(m, chunks_not_loaded)
     if not chunks_not_loaded:
         pender.Ready()
     else:
@@ -578,7 +588,7 @@ def addPending(m):
 
 def getNotLoadedChunkPosesInRange(startx, startz, endx, endz):
     # type: (int, int, int, int) -> set[tuple[int, int]]
-    res = set() # type: set[tuple[int, int]]
+    res = set()  # type: set[tuple[int, int]]
     startx, endx = sorted([startx, endx])
     startz, endz = sorted([startz, endz])
     for x in range(startx >> 4, endx >> 4 + 1):
@@ -588,6 +598,7 @@ def getNotLoadedChunkPosesInRange(startx, startz, endx, endz):
                 continue
             res.add(p)
     return res
+
 
 @ChunkLoadedServerEvent.Listen(-1001)
 def onChunkLoaded(event):
@@ -606,6 +617,7 @@ def onChunkLoaded(event):
                 if not pending_detect_areas[event.dimension]:
                     del pending_detect_areas[event.dimension]
 
+
 @ChunkAcquireDiscardedServerEvent.Listen(1001)
 def onChunkDiscarded(event):
     # type: (ChunkAcquireDiscardedServerEvent) -> None
@@ -617,4 +629,3 @@ def onChunkDiscarded(event):
     for pender in ms.copy().values():
         if pos in pender.all_pendings and pos not in pender.pending_chunks:
             pender.pending_chunks.add(pos)
-

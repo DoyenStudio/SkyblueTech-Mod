@@ -1,7 +1,7 @@
 # coding=utf-8
 import random
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.timer import ExecLater
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockStates,
     GetBlockName,

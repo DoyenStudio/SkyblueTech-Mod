@@ -20,7 +20,7 @@ from mod.client.ui.controls.neteasePaperDollUIControl import NeteasePaperDollUIC
 from mod.client.ui.controls.scrollViewUIControl import ScrollViewUIControl
 from mod.client.ui.controls.sliderUIControl import SliderUIControl
 from ..define import UICtrlPosData, Item
-from ..api.timer import ExecLater
+from ..api.common import ExecLater
 from ..events.client.ui import GridComponentSizeChangedClientEvent
 from .utils import UIPath
 

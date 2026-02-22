@@ -15,7 +15,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockPaletteBetweenPos,
     GetBlockCardinalFacing,
 )
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from ...define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,

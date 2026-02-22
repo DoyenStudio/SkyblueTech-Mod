@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
 from skybluetech_scripts.tooldelta.api.client import CreateShapeFactory
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from ...define.events.machinery.tesla_plant import (
     TeslaPlantSettingsUpload,
     TeslaPlantSettingsUpdate,
@@ -33,17 +33,20 @@ class TeslaPlantUI(MachinePanelUI):
         self.power_bar = self.GetElement(POWER_BAR_NODE)
         self.range_display_label = self.GetElement(RANGE_DISPLAY_LABEL_NODE).asLabel()
         self.rane_preview_btn = (
-            self.GetElement(RANGE_PREVIEW_BTN_NODE)
+            self
+            .GetElement(RANGE_PREVIEW_BTN_NODE)
             .asButton()
             .SetCallback(self.on_preview_range)
         )
         self.range_add_btn = (
-            self.GetElement(RANGE_ADD_BTN_NODE)
+            self
+            .GetElement(RANGE_ADD_BTN_NODE)
             .asButton()
             .SetCallback(self.on_add_range)
         )
         self.range_sub_btn = (
-            self.GetElement(RANGE_SUB_BTN_NODE)
+            self
+            .GetElement(RANGE_SUB_BTN_NODE)
             .asButton()
             .SetCallback(self.on_sub_range)
         )

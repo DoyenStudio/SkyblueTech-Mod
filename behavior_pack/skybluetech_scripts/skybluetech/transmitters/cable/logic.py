@@ -11,7 +11,7 @@ from skybluetech_scripts.tooldelta.api.server.container import (
     SetContainerItem,
     GetContainerSize,
 )
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from ...machinery.basic.item_container import ItemContainer
 from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
 from ...define.facing import NEIGHBOR_BLOCKS_ENUM

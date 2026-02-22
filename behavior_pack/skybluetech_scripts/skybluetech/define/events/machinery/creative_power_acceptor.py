@@ -4,8 +4,11 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2SEvent
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
 from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInitCallback
-from skybluetech_scripts.tooldelta.api.timer import AsTimerFunc
-from skybluetech_scripts.tooldelta.events.client.block import ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent
+from skybluetech_scripts.tooldelta.api.common import AsTimerFunc
+from skybluetech_scripts.tooldelta.events.client.block import (
+    ModBlockEntityLoadedClientEvent,
+    ModBlockEntityRemoveClientEvent,
+)
 
 
 class CreativePowerAcceptorPowerUpdateRequest(CustomC2SEvent):
@@ -34,9 +37,8 @@ class CreativePowerAcceptorPowerUpdateRequest(CustomC2SEvent):
             x=data["x"],
             y=data["y"],
             z=data["z"],
-            player_id=data["__id__"]
+            player_id=data["__id__"],
         )
-
 
 
 class CreativePowerAcceptorPowerUpdate(CustomS2CEvent):
@@ -51,8 +53,7 @@ class CreativePowerAcceptorPowerUpdate(CustomS2CEvent):
 
     @classmethod
     def unmarshal(
-        cls, 
-        data # type: list[list[int]]
+        cls,
+        data,  # type: list[list[int]]
     ):
         return cls(data)
-

@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server import GetPosBlockTags, SetBlock
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.server import PistonActionServerEvent
 
 
@@ -13,7 +13,13 @@ def onPistonAction(event):
             removePistonLater(event)
             break
 
+
 @Delay(0)
 def removePistonLater(event):
     # type: (PistonActionServerEvent) -> None
-    SetBlock(event.dimensionId, (event.pistonX, event.pistonY, event.pistonZ), "minecraft:air", old_block_handing=1)
+    SetBlock(
+        event.dimensionId,
+        (event.pistonX, event.pistonY, event.pistonZ),
+        "minecraft:air",
+        old_block_handing=1,
+    )

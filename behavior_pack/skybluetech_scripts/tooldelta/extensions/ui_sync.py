@@ -11,7 +11,7 @@ from ..events.client.sync import (
     ServerDelSync,
 )
 from ..general import ServerInitCallback
-from ..api.timer import AsTimerFunc
+from ..api.common import AsTimerFunc
 
 # 主要用于 UI 信息的同步。
 # 比如:

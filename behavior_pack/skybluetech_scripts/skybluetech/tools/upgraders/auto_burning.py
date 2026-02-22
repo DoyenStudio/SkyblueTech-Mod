@@ -3,7 +3,7 @@ from collections import deque
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import DestroyBlockEvent
 from skybluetech_scripts.tooldelta.internal import ServerComp
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
     SetBlock,
@@ -37,11 +37,10 @@ def onAutoBurn(event, use_tool, item_ud, upgrader_ud):
         SpawnDroppedItem(
             event.dimensionId,
             (event.x + 0.5, event.y + 0.5, event.z + 0.5),
-            Item(res, count=it.count)
+            Item(res, count=it.count),
         )
     UpdateCharge(event.playerId, use_tool, charge)
     SpawnItemToPlayerCarried(event.playerId, use_tool)
-        
 
 
 RegisterDestroyBlockCallback(ID, onAutoBurn)

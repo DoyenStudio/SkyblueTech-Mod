@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from ..define.id_enum.machinery import ELECTRIC_HEATER as MACHINE_ID
 from ..define.events.machinery.electric_heater import ElectricHeaterSetPowerEvent
 from ..ui_sync.machinery.electric_heater import ElectricHeaterUISync

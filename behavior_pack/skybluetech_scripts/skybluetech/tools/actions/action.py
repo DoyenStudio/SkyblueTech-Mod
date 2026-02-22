@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     CraftItemOutputChangeServerEvent,
     UIContainerItemChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.api.server import (
     SetItemTierSpeed,
     GetPlayerMainhandItem,
@@ -115,6 +115,7 @@ def onItemTakeout(event):
             # UpdateCharge(event.playerId, item, 0)
             pass
 
+
 @UIContainerItemChangedServerEvent.Listen()
 @Delay(0)
 def onUIItemChanged(event):
@@ -125,5 +126,7 @@ def onUIItemChanged(event):
         event.slot in INVALID_INPUT_SLOTS
         and SKYBLUE_OBJECTS_TAG in event.newItem.GetBasicInfo().tags
     ):
-        SetPlayerUIItem(event.playerId, event.slot, Item("minecraft:air"), need_back=True)
+        SetPlayerUIItem(
+            event.playerId, event.slot, Item("minecraft:air"), need_back=True
+        )
         SetOneTipMessage(event.playerId, "无法将该物品进行附魔/修补/合并等操作")

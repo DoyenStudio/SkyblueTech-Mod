@@ -2,7 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.timer import Repeat
+from skybluetech_scripts.tooldelta.api.common import Repeat
 from skybluetech_scripts.tooldelta.api.server import (
     UpdateBlockStates,
     GetBlockName,

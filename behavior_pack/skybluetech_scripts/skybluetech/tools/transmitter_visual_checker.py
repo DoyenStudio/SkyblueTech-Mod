@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.client import (
     GetLocalPlayerId,
     GetBlockName as CGetBlockName,
 )
-from skybluetech_scripts.tooldelta.api.timer import Delay
+from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId

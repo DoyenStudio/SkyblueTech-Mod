@@ -1,6 +1,6 @@
 # coding=utf-8
 from mod.server.blockEntityData import BlockEntityData
-from skybluetech_scripts.tooldelta.api.timer import ExecLater
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
@@ -31,7 +31,10 @@ class ElectricCrafter(GUIControl, UpgradeControl):
     output_slots = tuple(range(9, 12))
     upgrade_slot_start = TEMPLATE_SLOT + 1
     energy_io_mode = (0, 0, 0, 0, 0, 0)
-    allow_upgrader_tags = {"skybluetech:upgraders/speed", "skybluetech:upgraders/energy"}
+    allow_upgrader_tags = {
+        "skybluetech:upgraders/speed",
+        "skybluetech:upgraders/energy",
+    }
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -52,7 +55,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
     def OnClick(self, event):
         GUIControl.OnClick(self, event)
         ExecLater(0.1, self.notify_crafting_update)
-    
+
     def OnSync(self):
         self.sync.rf = self.store_rf
         self.sync.rf_max = self.store_rf_max
@@ -125,7 +128,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         if self.template is None:
             return False
         recipe_slots, res_items = get_slot_items_by_recipe(self.template)
-        slotitems_new_count = {} # type: dict[int, Item | None]
+        slotitems_new_count = {}  # type: dict[int, Item | None]
         for i in range(9):
             item = self.GetSlotItem(i)
             rcp_slot = recipe_slots[i]
@@ -133,17 +136,13 @@ class ElectricCrafter(GUIControl, UpgradeControl):
                 continue
             if item is None:
                 return False
-            if (
-                item.count < rcp_slot.count
-                or item.id not in rcp_slot.item_ids
-            ):
+            if item.count < rcp_slot.count or item.id not in rcp_slot.item_ids:
                 return False
             it_new = item.copy()
             it_new.count -= rcp_slot.count
-            slotitems_new_count[i] = (it_new if it_new.count > 0 else None)
+            slotitems_new_count[i] = it_new if it_new.count > 0 else None
         output_items = [
-            Item(out.item_id, out.aux_value, out.count)
-            for out in self.template.result
+            Item(out.item_id, out.aux_value, out.count) for out in self.template.result
         ]
         if not self.CanOutputItems(output_items):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
@@ -159,7 +158,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
     def separate_items(self):
         if self.template is None:
             return
-        slotitems = {} # type: dict[int, tuple[Item | None, RecipeInput]]
+        slotitems = {}  # type: dict[int, tuple[Item | None, RecipeInput]]
         rcpitems, _ = get_slot_items_by_recipe(self.template)
         for slot, rcp_input in enumerate(rcpitems):
             if rcp_input is None:
@@ -180,19 +179,19 @@ class ElectricCrafter(GUIControl, UpgradeControl):
 
     def notify_crafting_update(self):
         if self.rcp_items is not None:
-            ElectricCrafterUpdateRecipe(
-                [(i.item_ids[0], i.aux_value) if i else None for i in self.rcp_items]
-            ).sendMulti(self.sync.GetPlayersInSync())
+            ElectricCrafterUpdateRecipe([
+                (i.item_ids[0], i.aux_value) if i else None for i in self.rcp_items
+            ]).sendMulti(self.sync.GetPlayersInSync())
         else:
-            ElectricCrafterUpdateRecipe(
-                [None] * 9
-            ).sendMulti(self.sync.GetPlayersInSync())
-        
+            ElectricCrafterUpdateRecipe([None] * 9).sendMulti(
+                self.sync.GetPlayersInSync()
+            )
+
 
 def get_slot_items_by_recipe(
-    recipe # type: CraftingRecipeRes | UnorderedCraftingRecipeRes
+    recipe,  # type: CraftingRecipeRes | UnorderedCraftingRecipeRes
 ):
-    res = [None] * 9 # type: list[RecipeInput | None]
+    res = [None] * 9  # type: list[RecipeInput | None]
     if isinstance(recipe, CraftingRecipeRes):
         pat = recipe.pattern
         for i, pat_line in enumerate(pat):

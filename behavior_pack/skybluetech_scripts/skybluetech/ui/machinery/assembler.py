@@ -17,16 +17,20 @@ UPGRADERS_LIST_NODE = MAIN_PATH / "upgraders_view"
 class AssemblerUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
-        self.sync = AssemblerUISync.NewClient(dim, x, y, z) # type: AssemblerUISync
+        self.sync = AssemblerUISync.NewClient(dim, x, y, z)  # type: AssemblerUISync
         self.sync.WhenUpdated = self.WhenUpdated
         self.power = self.GetElement(POWER_NODE)
-        self.upgraders_grid = self.GetElement(UPGRADERS_LIST_NODE).asScrollView().GetContent().asGrid()
+        self.upgraders_grid = (
+            self.GetElement(UPGRADERS_LIST_NODE).asScrollView().GetContent().asGrid()
+        )
         self[MAIN_PATH / "push_btn"].asButton().SetCallback(self.onPush)
 
     @Binder.binding(Binder.BF_ButtonClickUp, "#upgrade_arg_click")
     def onclick(self, arg):
         _, x, y, z = self.pos
-        AssemblerActionRequest(x, y, z, ACTION_PULL_UPGRADER, arg["#collection_index"]).send()
+        AssemblerActionRequest(
+            x, y, z, ACTION_PULL_UPGRADER, arg["#collection_index"]
+        ).send()
 
     def onPush(self, _):
         _, x, y, z = self.pos
@@ -42,11 +46,7 @@ class AssemblerUI(MachinePanelUIProxy):
         # type: (AssemblerUpgradersUpdate) -> None
         lis = event.lis
         siz = len(lis)
-        self.upgraders_grid.SetDimensionAndCall(
-            (1, siz),
-            lambda :self.updateLater(lis)
-        )
-        
+        self.upgraders_grid.SetDimensionAndCall((1, siz), lambda: self.updateLater(lis))
 
     def updateLater(self, lis):
         # type: (list[tuple[str, str, int]]) -> None

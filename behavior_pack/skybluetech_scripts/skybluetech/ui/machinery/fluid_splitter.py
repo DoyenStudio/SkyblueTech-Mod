@@ -2,7 +2,6 @@
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl, Binder
-from skybluetech_scripts.tooldelta.api.timer import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from ...define.events.machinery.fluid_splitter import (
     FluidSplitterSettingsSetFluid,
@@ -253,8 +252,7 @@ class FluidSplitterUI(MachinePanelUIProxy):
         ).send()
         self.closeFluidSelector()
 
-    @MachinePanelUIProxy.Listen(FluidSplitterSettingsListUpdate)
-    @Delay(0)
+    @MachinePanelUIProxy.DelayedListen(FluidSplitterSettingsListUpdate)
     def onListUpdated(self, event):
         # type: (FluidSplitterSettingsListUpdate) -> None
         cur = len(event.lis)

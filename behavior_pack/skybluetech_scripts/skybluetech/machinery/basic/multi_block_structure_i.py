@@ -56,7 +56,6 @@ def onEntityPlaceStruBlock(event):
     x = event.x
     y = event.y
     z = event.z
-    # print "ADD", event.marshal()
     for area in detect_areas.get(event.dimensionId, set()):
         if area.bound.inited and area.bound._last_destroy_flag == FLAG_OK:
             continue
@@ -183,16 +182,14 @@ class DetectArea(object):
         )
 
     def __hash__(self):
-        return hash(
-            (
-                self.min_x,
-                self.min_y,
-                self.min_z,
-                self.max_x,
-                self.max_y,
-                self.max_z,
-            )
-        )
+        return hash((
+            self.min_x,
+            self.min_y,
+            self.min_z,
+            self.max_x,
+            self.max_y,
+            self.max_z,
+        ))
 
     def Detect(self):
         spalette = self.palette

@@ -244,7 +244,7 @@ class UItemRenderer(UBaseCtrl):
 
     def GetUiItem(self):
         # type: () -> tuple[str, int, bool]
-        res = self.base.GetUiItem()
+        res = self.base.GetUiItem()  # type: dict
         return res["itemName"], res["auxValue"], res["isEnchanted"]
 
 
@@ -461,7 +461,7 @@ class UNeteasePaperDoll(UBaseCtrl):
             "init_rot_z": init_rot_z,
             "molang_dict": molang_dict,
             "rotation_axis": rotation_axis,
-        }
+        }  # type: dict
         if entity_id is not None:
             params["entity_id"] = entity_id
         if entity_identifier is not None:

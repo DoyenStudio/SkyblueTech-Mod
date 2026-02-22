@@ -144,14 +144,14 @@ class ToolDeltaScreen(ClientListenerService):
         def OnDestroy(self):
             self._super_screen_ins._on_destroy()
 
-        def OnTicking(self):
+        def OnTick(self):
             self._super_screen_ins._on_ticking()
 
         attrs = {
             "__init__": __init__,
             "OnCreate": OnCreate,
             "OnDestroy": OnDestroy,
-            "OnTicking": OnTicking,
+            "OnTick": OnTick,
         }
         attrs.update(cls._get_tdscreen_bindings())
         t = type(cls.__name__ + "_Base", (ScreenProxy,), attrs)

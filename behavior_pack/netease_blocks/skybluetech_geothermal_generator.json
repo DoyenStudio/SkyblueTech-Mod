@@ -8,7 +8,7 @@
             "netease:tier": {
                 "destroy_special": true,
                 "digger": "pickaxe",
-                "level": 1
+                "level": 2
             },
             "minecraft:geometry": {
                 "identifier": "geometry.skybluetech.geothermal_generator"

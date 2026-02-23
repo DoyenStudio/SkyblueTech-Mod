@@ -2,6 +2,14 @@
     "format_version": "1.21.0",
     "minecraft:block": {
         "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
             "netease:block_container": {
                 "container_size": 24,
                 "custom_description": "伐木机",

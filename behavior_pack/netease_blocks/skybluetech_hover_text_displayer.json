@@ -2,6 +2,9 @@
     "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
             "minecraft:geometry": {
                 "identifier": "geometry.skybluetech.hover_text_displayer"
             },
@@ -11,6 +14,11 @@
                     "render_method": "blend",
                     "texture": "skybluetech:hover_text_displayer"
                 }
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
             },
             "netease:block_entity": {
                 "tick": true

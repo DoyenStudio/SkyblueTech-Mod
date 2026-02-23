@@ -27,7 +27,7 @@ class Input(Element):
     def match_item_id(self, item_id):
         # type: (str) -> bool
         if self.is_tag:
-            return item_id in GetItemTags(self.id, 0)
+            return self.id in GetItemTags(item_id, 0)
         else:
             return item_id == self.id
 

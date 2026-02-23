@@ -1,0 +1,22 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:custom_tips": {
+                "value": "\n§7功能性机器的外壳， 可用于机器制造。"
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:machinery_frame"
+        }
+    }
+}

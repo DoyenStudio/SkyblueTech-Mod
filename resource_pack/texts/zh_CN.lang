@@ -179,6 +179,7 @@ tile.skybluetech:lead_ore.name=铅矿石
 tile.skybluetech:light_lava.name=轻熔岩
 tile.skybluetech:lubricant.name=润滑油
 tile.skybluetech:macerator.name=磨粉机
+tile.skybluetech:machinery_frame.name=机器框架
 tile.skybluetech:magma_centrifuge.name=高热流体离心机
 tile.skybluetech:magma_furnace.name=熔岩炉
 tile.skybluetech:metal_press.name=金属冲压机

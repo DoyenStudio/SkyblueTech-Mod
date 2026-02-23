@@ -380,6 +380,13 @@
     "skybluetech:macerator": {
         "sound": "iron"
     },
+    "skybluetech:machinery_frame": {
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "side": "skybluetech:frame",
+            "up": "skybluetech:frame_top"
+        }
+    },
     "skybluetech:magma_centrifuge": {
         "sound": "iron"
     },

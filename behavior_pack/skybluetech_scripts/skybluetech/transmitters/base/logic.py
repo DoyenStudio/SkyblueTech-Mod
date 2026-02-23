@@ -156,6 +156,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         self.on_network_active(network)
 
     def transmitter_can_connect(self, block_name, other_block_name):
+        # type: (str, str) -> bool
         """
         两个传输管线方块是否能够连接。
 
@@ -166,7 +167,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         Returns:
             _type_: _description_
         """
-        # type: (str, str) -> bool
         return (
             self.transmitter_check_func(block_name) and block_name == other_block_name
         )
@@ -192,8 +192,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         connected=None,  # type: set[PosData] | None
     ):
         # type: (...) -> _NT | None
-        # 从某一管道开始, 建立管道网络
-        # 确保 start 一定是管道 !!!
 
         if connected is not None and start in connected:
             return None
@@ -272,7 +270,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             output_nodes |= _o
             connected.add(
                 current
-            )  # TODO: 管道过多使得队列内存占用过大; 考虑限制最大 bfs 数
+            )  # TODO: 管道过多使得队列内存占用过大; 考虑限制最大 bfs 数? 应该不会吧?
             nodes.add(current)
         if first_transmitter_name is None:
             raise ValueError("No transmitter found")

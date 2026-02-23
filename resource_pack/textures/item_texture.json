@@ -97,8 +97,14 @@
         "skybluetech:iron_dust": {
             "textures": "textures/items/dusts/iron_dust"
         },
+        "skybluetech:pincer_iron": {
+            "textures": "textures/items/pincer_iron"
+        },
         "skybluetech:iron_plate": {
             "textures": "textures/items/plates/iron_plate"
+        },
+        "skybluetech:wrench_iron": {
+            "textures": "textures/items/wrench_iron"
         },
         "skybluetech:junior_battery": {
             "textures": "textures/items/batterys/junior_battery"
@@ -120,6 +126,12 @@
         },
         "skybluetech:lubricant_bucket": {
             "textures": "textures/items/buckets/lubricant_bucket"
+        },
+        "skybluetech:methane_bucket": {
+            "textures": "textures/items/buckets/methane_bucket"
+        },
+        "skybluetech:methane_mud_bucket": {
+            "textures": "textures/items/buckets/methane_mud_bucket"
         },
         "skybluetech:mid_lava_bucket": {
             "textures": "textures/items/buckets/mid_lava_bucket"
@@ -321,12 +333,6 @@
         },
         "skybluetech:upgrader_spec_magma_factory": {
             "textures": "textures/items/upgraders/upgrader_spec_magma_factory"
-        },
-        "skybluetech:methane_bucket": {
-            "textures": "textures/items/buckets/methane_bucket"
-        },
-        "skybluetech:methane_mud_bucket": {
-            "textures": "textures/items/buckets/methane_mud_bucket"
         },
         "skybluetech:vegetable_oil_bucket": {
             "textures": "textures/items/buckets/vegetable_oil_bucket"

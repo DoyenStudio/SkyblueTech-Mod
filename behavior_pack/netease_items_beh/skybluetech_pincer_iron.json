@@ -1,0 +1,21 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_damage": 128,
+            "minecraft:max_stack_size": 1,
+            "netease:customtips": {
+                "value": "\n§7放置于§f机件加工台§7以用于制造机器。\n§3加工等级： §7铁"
+            },
+            "minecraft:tags": {
+                "tags": [
+                    "pincer/iron"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:pincer_iron"
+        }
+    }
+}

@@ -1,5 +1,6 @@
 # coding=utf-8
 
+
 class IngotTag:
     TIN = "ingots/tin"
     LEAD = "ingots/lead"
@@ -44,3 +45,13 @@ class PlateTag:
     NICKEL = "plates/nickel"
     SILVER = "plates/silver"
     PLATINUM = "plates/platinum"
+
+
+class Wrench:
+    IRON = "wrench/iron"
+    INVAR = "wrench/invar"
+
+
+class Pincer:
+    IRON = "pincer/iron"
+    INVAR = "pincer/invar"

@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:pincer_iron"
+        },
+        "description": {
+            "identifier": "skybluetech:pincer_iron"
+        }
+    }
+}

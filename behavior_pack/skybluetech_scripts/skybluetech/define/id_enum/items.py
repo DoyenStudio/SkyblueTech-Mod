@@ -64,6 +64,14 @@ class Upgraders:
     BASIC_ENERGY_UPGRADER = "skybluetech:upgrader_basic_energy"
 
 
+class Wrench:
+    IRON = "skybluetech:wrench_iron"
+
+
+class Pincer:
+    IRON = "skybluetech:pincer_iron"
+
+
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
 RESIN = "skybluetech:resin"
 RESIN_SPOON = "skybluetech:resin_spoon"

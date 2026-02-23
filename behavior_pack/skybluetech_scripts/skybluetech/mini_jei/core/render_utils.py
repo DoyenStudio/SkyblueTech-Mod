@@ -1,7 +1,12 @@
 # coding=utf-8
 import time
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl, UScreenNode, UScreenProxy, ToolDeltaScreen
+from skybluetech_scripts.tooldelta.ui import (
+    UBaseCtrl,
+    UScreenNode,
+    UScreenProxy,
+    ToolDeltaScreen,
+)
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from ...mini_jei import CategoryType
 
@@ -43,6 +48,7 @@ class ItemDisplayer:
     def onBtnReleased(self, params):
         if self.double_click_detecter():
             from ...ui.recipe_checker.recipe_checker_ui import RecipeCheckerUI
+
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):
                 root.renderRecipesOfInput(self.item.id, CategoryType.ITEM)
@@ -59,18 +65,21 @@ class ItemDisplayer:
         x, y = self.ctrl.GetRootPos()
         sizex, sizey = self.ctrl.GetSize()
         csizex, csizey = databoard.GetSize()
-        databoard.SetPos((x + sizex / 2 + csizex / 2, y -(sizey / 2 + csizey / 2)))
+        databoard.SetPos((x + sizex / 2 + csizex / 2, y - (sizey / 2 + csizey / 2)))
 
 
 def GetDoubleClickDetecter(delay=0.25):
     ticker = [0.0]
+
     def onclick_cb():
         nowtime = time.time()
         if nowtime - ticker[0] < delay:
             return True
         ticker[0] = nowtime
         return False
+
     return onclick_cb
+
 
 def RemoveDisplayBoard(root):
     # type: (UScreenNode | UScreenProxy | ToolDeltaScreen) -> None
@@ -80,10 +89,12 @@ def RemoveDisplayBoard(root):
     if screen_vars.get(DISP_BOARD_SRC_KEY):
         screen_vars.pop(DISP_BOARD_SRC_KEY)
 
+
 def NeedRemoveDisplayBoard(ctrl):
     # type: (UBaseCtrl) -> bool
     screen_vars = ctrl._root._vars
     return DISP_BOARD_KEY in screen_vars and screen_vars.get(DISP_BOARD_SRC_KEY) is ctrl
+
 
 def CreateDisplayBoard(ctrl, text):
     # type: (UBaseCtrl, str) -> UBaseCtrl

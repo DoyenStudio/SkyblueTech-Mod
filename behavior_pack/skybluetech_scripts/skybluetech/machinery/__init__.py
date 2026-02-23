@@ -21,6 +21,7 @@ from .hydroponic_base import HydroponicBase
 from .hydroponic_bed import HydroponicBed
 from .item_splitter import ItemSplitter
 from .macerator import Macerator
+from .machinery_workstation import MachineryWorkstation
 from .magma_furnace import MagmaFurnace
 from .magma_centrifuge import MagmaCentrifuge
 from .metal_press import MetalPress

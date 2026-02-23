@@ -2,10 +2,10 @@
 
 from ...internal import ServerLevelId, ServerComp
 
-def SendCommand(command):
+
+def SetCommand(command):
     # type: (str) -> None
     ServerComp.CreateCommand(ServerLevelId).SetCommand(command)
 
-__all__ = [
-    'SendCommand'
-]
+
+__all__ = ["SetCommand"]

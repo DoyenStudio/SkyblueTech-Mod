@@ -30,6 +30,7 @@
         "ui/ItemSlot.json",
         "ui/ItemSplitterUI.json",
         "ui/MaceratorUI.json",
+        "ui/MachineryWorkstationUI.json",
         "ui/MagmaCentrifugeUI.json",
         "ui/MagmaFurnaceUI.json",
         "ui/MetalPressUI.json",

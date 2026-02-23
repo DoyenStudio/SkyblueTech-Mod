@@ -221,6 +221,9 @@
         "skybluetech:macerator_front_active": {
             "textures": "textures/machines/flipbook_textures/macerator_front_active"
         },
+        "skybluetech:machinery_workstation": {
+            "textures": "textures/models/machinery_workstation_texture"
+        },
         "skybluetech:magma_furnace_front": {
             "textures": "textures/machines/magma_furnace_front"
         },

@@ -44,7 +44,7 @@ class RecipeBase:
     def RenderUpdate(self, panel_ctrl, render_ticks):
         # type: (UBaseCtrl, int) -> None
         """
-        0.2 秒触发一次。实际传入的 render_ticks 一秒增加 30。
+        0.2 秒触发一次。render_ticks 每次比上一次触发多 5。
         """
         pass
 

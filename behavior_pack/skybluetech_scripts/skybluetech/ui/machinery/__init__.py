@@ -24,6 +24,7 @@ from .hydroponic_base import HydroponicBaseUI
 from .hydroponic_bed import HydroponicBedUI
 from .item_splitter import ItemSplitterUI
 from .macerator import MaceratorUI
+from .machinery_workstation import MachineryWorkstationUI
 from .magma_furnace import MagmaFurnaceUI
 from .magma_centrifuge import MagmaCentrifugeUI
 from .metal_press import MetalPressUI

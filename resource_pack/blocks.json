@@ -387,6 +387,9 @@
             "up": "skybluetech:frame_top"
         }
     },
+    "skybluetech:machinery_workstation": {
+        "sound": "iron"
+    },
     "skybluetech:magma_centrifuge": {
         "sound": "iron"
     },

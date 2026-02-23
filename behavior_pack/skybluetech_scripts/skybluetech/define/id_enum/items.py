@@ -65,10 +65,12 @@ class Upgraders:
 
 
 class Wrench:
+    # 新增物品后需在 machinery_workstation 中同步添加
     IRON = "skybluetech:wrench_iron"
 
 
 class Pincer:
+    # 新增物品后需在 machinery_workstation 中同步添加
     IRON = "skybluetech:pincer_iron"
 
 

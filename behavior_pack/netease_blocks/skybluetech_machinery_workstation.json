@@ -1,0 +1,36 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.machinery_workstation"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:machinery_workstation"
+                }
+            },
+            "netease:block_entity": {},
+            "netease:custom_tips": {
+                "value": "\n§7可用于制造各类机器。 需要配合§f工具扳手§7和§f工具钳§7使用。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:block_container": {
+                "container_size": 12,
+                "custom_description": "机件加工台",
+                "screen_name": "MachineryWorkstationUI.main"
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_container": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:machinery_workstation"
+        }
+    }
+}

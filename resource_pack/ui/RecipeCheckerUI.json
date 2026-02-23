@@ -1261,6 +1261,173 @@
             }
         ]
     },
+    "machinery_workstation_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            80.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -70,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        -50,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "layer": 36,
+                    "offset": [
+                        -30,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.item_displayer": {
+                    "layer": 53,
+                    "offset": [
+                        -70,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.item_displayer": {
+                    "layer": 70,
+                    "offset": [
+                        -50,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot5@SkybluePanelLib.item_displayer": {
+                    "layer": 87,
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot6@SkybluePanelLib.item_displayer": {
+                    "layer": 104,
+                    "offset": [
+                        -70,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot7@SkybluePanelLib.item_displayer": {
+                    "layer": 121,
+                    "offset": [
+                        -50,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot8@SkybluePanelLib.item_displayer": {
+                    "layer": 138,
+                    "offset": [
+                        -30,
+                        20
+                    ]
+                }
+            },
+            {
+                "output_slot@SkybluePanelLib.item_displayer": {
+                    "layer": 155,
+                    "offset": [
+                        28,
+                        20
+                    ]
+                }
+            },
+            {
+                "progress_img": {
+                    "type": "image",
+                    "offset": [
+                        -2.0,
+                        20.0
+                    ],
+                    "size": [
+                        30.0,
+                        30.0
+                    ],
+                    "layer": 172,
+                    "texture": "textures/ui/arrow_img"
+                }
+            },
+            {
+                "pincer_slot@SkybluePanelLib.item_displayer": {
+                    "layer": 155,
+                    "offset": [
+                        48,
+                        -20
+                    ]
+                }
+            },
+            {
+                "wrench_slot@SkybluePanelLib.item_displayer": {
+                    "layer": 155,
+                    "offset": [
+                        28,
+                        -20
+                    ]
+                }
+            },
+            {
+                "level_tip": {
+                    "type": "label",
+                    "offset": [
+                        52.0,
+                        0.0
+                    ],
+                    "size": [
+                        68,
+                        20
+                    ],
+                    "layer": 3,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_type": "default",
+                    "text": "扳手等级： ？\n钳等级： ？"
+                }
+            }
+        ]
+    },
     "magma_centrifuge_recipes": {
         "type": "panel",
         "size": [

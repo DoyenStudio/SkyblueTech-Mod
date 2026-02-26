@@ -40,12 +40,9 @@ def GetBlockNameAndAux(pos):
         return b
 
 
-GetBlockTextures = _getBlockTextures
-
-
 def NewSingleBlockPalette(block_id, aux=0):
     # type: (str, int) -> BlockPaletteComponent
-    newBlockPalette = ClientComp.CreateBlock(ClientLevelId).GetBlankBlockPalette()
+    newBlockPalette = GetBlankBlockPalette()
     newBlockPalette.DeserializeBlockPalette({
         "extra": {},
         "void": False,
@@ -72,6 +69,16 @@ def AddBlockUseListener(block_ids):
         comp.AddBlockItemListenForUseEvent(block_id)
 
 
+GetBlockTextures = _getBlockTextures
+GetBlankBlockPalette = MethodCacher(
+    lambda: ClientComp.CreateBlock(ClientLevelId).GetBlankBlockPalette
+)
+GetBlockPaletteFromPosList = MethodCacher(
+    lambda: ClientComp.CreateBlock(ClientLevelId).GetBlockPaletteFromPosList
+)
+GetBlockPaletteBetweenPos = MethodCacher(
+    lambda: ClientComp.CreateBlock(ClientLevelId).GetBlockPaletteBetweenPos
+)
 SetBlockEntityMolangValue = MethodCacher(
     lambda: ClientComp.CreateBlockInfo(ClientLevelId).SetBlockEntityMolangValue
 )
@@ -79,12 +86,14 @@ SetCrackFrame = MethodCacher(
     lambda: ClientComp.CreateBlockInfo(ClientLevelId).SetCrackFrame
 )
 
-
 __all__ = [
+    "GetBlankBlockPalette",
     "GetBlockName",
     "GetBlockNameAndAux",
     "GetBlockEntityData",
     "GetBlockTextures",
+    "GetBlockPaletteBetweenPos",
+    "GetBlockPaletteFromPosList",
     "NewSingleBlockPalette",
     "CombineBlockPaletteToGeometry",
     "AddBlockUseListener",

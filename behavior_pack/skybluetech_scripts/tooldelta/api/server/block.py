@@ -118,7 +118,7 @@ def GetBlockStates(dim, pos):
 
 def GetBlockCardinalFacing(dim, pos):
     # type: (int, tuple[int, int, int]) -> str
-    return _getBlockStates(pos, dim)["minecraft:cardinal_facing"]
+    return _getBlockStates(pos, dim)["minecraft:cardinal_direction"]
 
 
 def GetBlockFacingDir(dim, pos):

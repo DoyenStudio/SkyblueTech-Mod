@@ -1,20 +1,35 @@
 # coding=utf-8
 #
 from weakref import WeakKeyDictionary
-from mod.common.component.blockPaletteComp import BlockPaletteComponent
 from mod_log import logger
-from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     EntityPlaceBlockAfterServerEvent,
     ChunkAcquireDiscardedServerEvent,
     ChunkLoadedServerEvent,
 )
-
 from skybluetech_scripts.tooldelta.general import ServerInitCallback
 from skybluetech_scripts.tooldelta.api.server.block import (
     AddBlocksToBlockRemoveListener,
     GetBlockPaletteBetweenPos,
+    GetBlockCardinalFacing,
+)
+from skybluetech_scripts.tooldelta.api.client import (
+    CreateClientEntity,
+    DestroyClientEntity,
+    AddActorBlockGeometry,
+    GetBlankBlockPalette,
+)
+from skybluetech_scripts.tooldelta.api.common import Delay
+from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
+    GeometryModel,
+    CreateBlankModel,
+    CreateTempSingleBlockModelEntity,
+    CreateTempBlockGeometryModelEntity,
+)
+from ...define.events.misc.multi_block_structure_check import (
+    MultiBlockStructureCheckRequest,
+    MultiBlockStructureCheckResponse,
 )
 from ...define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
@@ -22,8 +37,10 @@ from ...define.flags import (
 )
 from .base_machine import BaseMachine, GUIControl
 
+
 if 0:
     from typing import TypeVar
+    from mod.common.component.blockPaletteComp import BlockPaletteComponent
     from .base_machine import BaseMachine
 
     MT = TypeVar("MT", bound=BaseMachine)
@@ -35,6 +52,8 @@ DEBUG = False
 FLAG_OK = 0
 blockRemovedListenPool = set()  # type: set[str]
 server_inited = False
+
+ROT_TIMES_MAPPING = {"north": 0, "west": 1, "south": 2, "east": 3}
 
 
 @ServerInitCallback()
@@ -55,7 +74,6 @@ def onEntityPlaceStruBlock(event):
     x = event.x
     y = event.y
     z = event.z
-    # print "ADD", event.marshal()
     for area in detect_areas.get(event.dimensionId, set()):
         if area.bound.inited and area.bound._last_destroy_flag == FLAG_OK:
             continue
@@ -63,14 +81,12 @@ def onEntityPlaceStruBlock(event):
             flag = area.Detect()
             if flag == FLAG_OK:
                 if DEBUG:
-                    print("Detect OK")
+                    logger.info("Detect OK")
                 area.bound.UnsetStructureDestroyed()
             else:
                 if DEBUG:
-                    print("Detect failed")
+                    logger.info("Detect failed, flag is %d" % flag)
                 area.bound.SetStructureDestroyed(flag)
-        # else:
-        #     print("not in side")
 
 
 @BlockRemoveServerEvent.Listen(-1001)
@@ -80,10 +96,7 @@ def onStruBlockRemoved(event):
     x = event.x
     y = event.y
     z = event.z
-    # print "RM", event.marshal()
-    # print detect_areas
     for area in detect_areas.get(event.dimension, set()):
-        # print area.bound._last_destroy_flag
         if (
             area.bound.inited
             and area.bound._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN
@@ -93,14 +106,12 @@ def onStruBlockRemoved(event):
             flag = area.Detect()
             if flag == FLAG_OK:
                 if DEBUG:
-                    print("Detect OK")
+                    logger.info("Detect OK")
                 area.bound.UnsetStructureDestroyed()
             else:
                 if DEBUG:
-                    print("Detect failed")
+                    logger.info("Detect failed")
                 area.bound.SetStructureDestroyed(flag)
-        # else:
-        #     print("not in side")
 
 
 detect_areas = {}  # type: dict[int, set[DetectArea]]
@@ -108,6 +119,19 @@ detect_areas = {}  # type: dict[int, set[DetectArea]]
 
 def addDetectArea(dim, area):
     # type: (int, DetectArea) -> None
+    print(
+        "Add detect area",
+        (
+            area.min_x,
+            area.min_y,
+            area.min_z,
+        ),
+        (
+            area.max_x,
+            area.max_y,
+            area.max_z,
+        ),
+    )
     detect_areas.setdefault(dim, set()).add(area)
 
 
@@ -118,11 +142,11 @@ def removeDetectArea(dim, area):
         del detect_areas[dim]
 
 
-def rotate_90(x, z, x1, z1, y):
+def rotate_90(x, z, center_x, center_z, y):
     # type: (int, int, int, int, int) -> tuple[int, int, int]
-    dx = x - x1
-    dz = z - z1
-    return (x1 + dz, y, z1 - dx)
+    dx = x - center_x
+    dz = z - center_z
+    return (center_x + dz, y, center_z - dx)
 
 
 class DetectArea(object):
@@ -130,12 +154,8 @@ class DetectArea(object):
         # type: (int, int, int, int, MultiBlockStructure) -> None
         pal = bound._palette
         self.dim = dim
-        self.min_x = min(pal.min_x, -pal.min_x, pal.min_z, -pal.min_z) + center_x
         self.min_y = pal.min_y + center_y
-        self.min_z = min(pal.min_x, -pal.min_x, pal.min_z, -pal.min_z) + center_z
-        self.max_x = max(pal.min_x, -pal.min_x, pal.min_z, -pal.min_z) + center_x
         self.max_y = pal.max_y + center_y
-        self.max_z = max(pal.min_x, -pal.min_x, pal.min_z, -pal.min_z) + center_z
         self.center_x = center_x
         self.center_y = center_y
         self.center_z = center_z
@@ -145,6 +165,35 @@ class DetectArea(object):
             raise ValueError("StructureBlockPalette: palette is None")
         self.palette = palette
         self.functional_block_poses = {}  # type: dict[str, list[tuple[int, int, int]]]
+        core_block_facing = GetBlockCardinalFacing(
+            self.dim, (self.center_x, self.center_y, self.center_z)
+        )
+        self.min_x, self.min_z, self.max_x, self.max_z = {
+            "north": (
+                center_x + pal.min_x,
+                center_z + pal.min_z,
+                center_x + pal.max_x,
+                center_z + pal.max_z,
+            ),
+            "south": (
+                center_x - pal.max_x,
+                center_z - pal.max_z,
+                center_x - pal.min_x,
+                center_z - pal.min_z,
+            ),
+            "east": (
+                center_x + -pal.max_z,
+                center_z + pal.min_x,
+                center_x + -pal.min_z,
+                center_z + pal.max_x,
+            ),
+            "west": (
+                center_x + pal.min_z,
+                center_z + -pal.max_x,
+                center_x + pal.max_z,
+                center_z + -pal.min_x,
+            ),
+        }[core_block_facing]
 
     def isInside(self, x, y, z):
         return (
@@ -166,6 +215,25 @@ class DetectArea(object):
             self.max_z,
         ))
 
+    def GetExpectedStructure(self):
+        spalette = self.palette
+        core_block_facing = GetBlockCardinalFacing(
+            self.dim, (self.center_x, self.center_y, self.center_z)
+        )
+        rotation_times = ROT_TIMES_MAPPING[core_block_facing]
+        for _i in range(rotation_times):
+            spalette = spalette.Rotate()
+        return (
+            {
+                k: [
+                    (x + self.center_x, y + self.center_y, z + self.center_z)
+                    for x, y, z in v
+                ]
+                for k, v in spalette.posblock_data.items()
+            },
+            self.palette.palette_data,
+        )
+
     def Detect(self):
         spalette = self.palette
         current_palette = GetBlockPaletteBetweenPos(
@@ -175,54 +243,27 @@ class DetectArea(object):
             eliminateAir=False,
         )
         if current_palette is None:
+            logger.error("[Error] Palette is None")
             return DEACTIVE_FLAG_STRUCTURE_BROKEN
         co_x = self.center_x - self.min_x
         co_y = self.center_y - self.min_y
         co_z = self.center_z - self.min_z
-        # print(
-        #     "Comparing",
-        #     (
-        #         spalette.min_x + self.center_x,
-        #         spalette.min_y + self.center_y,
-        #         spalette.min_z + self.center_z,
-        #     ),
-        #     (
-        #         spalette.max_x + self.center_x,
-        #         spalette.max_y + self.center_y,
-        #         spalette.max_z + self.center_z,
-        #     ),
-        #     "Getting",
-        #     (self.min_x, self.min_y, self.min_z),
-        #     (self.max_x, self.max_y, self.max_z),
-        #     co_x,
-        #     co_z,
-        # )
-        for _i in range(4):
-            if _i != 0:
-                spalette = spalette.Rotate()
-            # print(
-            #     "Comparing",
-            #     (
-            #         spalette.min_x + self.center_x,
-            #         spalette.min_y + self.center_y,
-            #         spalette.min_z + self.center_z,
-            #     ),
-            #     (
-            #         spalette.max_x + self.center_x,
-            #         spalette.max_y + self.center_y,
-            #         spalette.max_z + self.center_z,
-            #     ),
-            # )
-            if spalette.Compare(current_palette, co_x, co_z):
-                lacked_blocks = spalette.GetLackedBlocks(current_palette)
-                if lacked_blocks is None:
-                    self.updateFunctionalBlocks(current_palette, co_x, co_y, co_z)
-                    return FLAG_OK
-                else:
-                    self.bound._lacked_blocks = lacked_blocks
-                    if isinstance(self.bound, GUIControl):
-                        self.bound.OnSync()
-                    return DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
+        core_block_facing = GetBlockCardinalFacing(
+            self.dim, (self.center_x, self.center_y, self.center_z)
+        )
+        rotation_times = ROT_TIMES_MAPPING[core_block_facing]
+        for _i in range(rotation_times):
+            spalette = spalette.Rotate()
+        if spalette.Compare(current_palette, co_x, co_z):
+            lacked_blocks = spalette.GetLackedBlocks(current_palette)
+            if lacked_blocks is None:
+                self.updateFunctionalBlocks(current_palette, co_x, co_y, co_z)
+                return FLAG_OK
+            else:
+                self.bound._lacked_blocks = lacked_blocks
+                if isinstance(self.bound, GUIControl):
+                    self.bound.OnSync()
+                return DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
         if isinstance(self.bound, GUIControl):
             self.bound.OnSync()
         return DEACTIVE_FLAG_STRUCTURE_BROKEN
@@ -245,12 +286,15 @@ class DetectArea(object):
 class StructureBlockPalette(object):
     """
     多方块检测调色板, 用于表示多方块结构的内容。
+    核心方块总是在内部坐标 `(0, 0, 0)` 处。
+
+    注意: 核心只能朝北面放置, 也就是说朝向玩家的那面为南面。
     """
 
     def __init__(
         self,
         posblock_data,  # type: dict[int, set[tuple[int, int, int]]]
-        palette_data,  # type: dict[int, str | set[str]]
+        palette_data,  # type: dict[int, str | list[str]]
         min_x,  # type: int
         min_y,  # type: int
         min_z,  # type: int
@@ -287,30 +331,19 @@ class StructureBlockPalette(object):
 
         Args:
             block_palette (BlockPaletteComponent): 调色板
-            center_x (int): 调色板中心偏移x
-            center_z (int): 调色板中心偏移z
+            co_x (int): 调色板中心偏移x
+            co_z (int): 调色板中心偏移z
         """
         for index, block_ids in self.palette_data.items():
             if isinstance(block_ids, str):
-                block_ids = {block_ids}
-            pal_poses_set = set(
+                block_ids = [block_ids]
+            actua_pos_set = set(
                 (x - co_x, y, z - co_z)
                 for block_id in block_ids
                 for x, y, z in block_palette.GetLocalPosListOfBlocks(block_id)
             )
-            my_poses_set = self.posblock_data[index]
-            # len 比较可能比直接比较好?
-            if len(pal_poses_set & my_poses_set) < len(my_poses_set):
-                # print "======"
-                # print "not equal:"
-                # print len(pal_poses_set & my_poses_set), len(my_poses_set)
-                # print block_ids
-                # print ([
-                #         (x - co_x, y, z - co_z)
-                #         for block_id in block_ids
-                #         for x, y, z in block_palette.GetLocalPosListOfBlocks(block_id)
-                # ])
-                # print my_poses_set.difference(pal_poses_set)
+            expected_pos_set = self.posblock_data[index]
+            if len(actua_pos_set & expected_pos_set) < len(expected_pos_set):
                 return False
         return True
 
@@ -380,8 +413,6 @@ class MultiBlockStructure(BaseMachine):
         self.y = y
         self.z = z
         self.inited = False
-
-    def OnLoad(self):
         self.area = DetectArea(self.dim, self.x, self.y, self.z, self)
         addDetectArea(self.dim, self.area)
         addPending(self)
@@ -427,6 +458,9 @@ class MultiBlockStructure(BaseMachine):
         return self.area.functional_block_poses
 
     # StructureUtils
+
+    def GetExpectedStructure(self):
+        return self.area.GetExpectedStructure()
 
     def GetMachine(self, cls, block_id=None, index=0):
         # type: (type[MT], str | None, int) -> MT
@@ -481,7 +515,7 @@ class MultiBlockStructure(BaseMachine):
 
 
 def GenerateSimpleStructureTemplate(
-    key,  # type: dict[str, str] | dict[str, str | set[str]]
+    key,  # type: dict[str, str] | dict[str, str | list[str]]
     pattern,  # type: dict[int, list[str]]
     center_block_sign="#",  # type: str
     require_blocks_count=None,  # type: dict[str, int] | None
@@ -491,7 +525,7 @@ def GenerateSimpleStructureTemplate(
     key: 单字母键 -> 方块 ID
     """
     orig_posblock_data = {}  # type: dict[BLOCK_PAT_INDEX, POS_SET]
-    palette_data = {}  # type: dict[int, str | set[str]]
+    palette_data = {}  # type: dict[int, str | list[str]]
     pat2idx = {}  # type: dict[str, int]
     offset_x = None  # type: int | None
     offset_y = None  # type: int | None
@@ -629,3 +663,90 @@ def onChunkDiscarded(event):
     for pender in ms.copy().values():
         if pos in pender.all_pendings and pos not in pender.pending_chunks:
             pender.pending_chunks.add(pos)
+
+
+@MultiBlockStructureCheckRequest.Listen()
+def onCheckRequest(event):
+    # type: (MultiBlockStructureCheckRequest) -> None
+    from ...utils.action_commit import SafeGetMachine
+
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
+    if not isinstance(m, MultiBlockStructure):
+        return
+    posblock_data, palette = m.GetExpectedStructure()
+    MultiBlockStructureCheckResponse(
+        event.x, event.y, event.z, palette, posblock_data
+    ).send(event.player_id)
+
+
+# CLIENT PART
+
+multi_block_model_displaying = False
+
+
+@MultiBlockStructureCheckResponse.Listen()
+def onRecvResponse(event):
+    # type: (MultiBlockStructureCheckResponse) -> None
+    global multi_block_model_displaying
+    if multi_block_model_displaying:
+        return
+    posblock_data = event.pos_block_data
+    palette = event.palette
+    min_x = 999
+    max_x = -999
+    min_y = 999
+    max_y = -999
+    min_z = 999
+    max_z = -999
+    for x, y, z in ((_x, _y, _z) for v in posblock_data.values() for _x, _y, _z in v):
+        if x < min_x:
+            min_x = x
+        if x > max_x:
+            max_x = x
+        if y < min_y:
+            min_y = y
+        if y > max_y:
+            max_y = y
+        if z < min_z:
+            min_z = z
+        if z > max_z:
+            max_z = z
+    size_x = max_x - min_x + 1
+    size_y = max_y - min_y + 1
+    size_z = max_z - min_z + 1
+    volume = size_x * size_y * size_z
+    if volume > 48 * 48 * 48:
+        logger.error(
+            "[Error] display multi block structure model too large: %d" % volume
+        )
+        return
+    palette_display = {
+        k: (v if isinstance(v, str) else v[0]) for k, v in palette.items()
+    }
+    pal_dict = {}  # type: dict[tuple[str, int], list[int]]
+    for pal_index, posblocks in posblock_data.items():
+        for x, y, z in posblocks:
+            pal_dict.setdefault((palette_display[pal_index], 0), []).append(
+                (y - min_y) * size_x * size_z + (x - min_x) * size_z + (z - min_z)
+            )
+    pal = GetBlankBlockPalette()
+    pal.DeserializeBlockPalette({
+        "extra": {},
+        "void": False,
+        "actor": {},
+        "volume": (size_x, size_y, size_z),
+        "common": pal_dict,
+        "eliminateAir": True,
+    })
+    multi_block_model_displaying = True
+    geo_model = CreateBlankModel((min_x, min_y, min_z))
+    geo_model.SetBlockPaletteModel(pal, "skybluetech_multi_block_model_display")
+    removeGeoModelLater(geo_model)
+
+
+@Delay(4)
+def removeGeoModelLater(geo_model):
+    # type: (GeometryModel) -> None
+    global multi_block_model_displaying
+    geo_model.Destroy()
+    multi_block_model_displaying = False

@@ -9,27 +9,27 @@ MUDBRICK = "minecraft:mud_bricks"
 GLASS = "minecraft:glass"
 STRUCTURE_PATTERN_MAPPING = {
     "M": MUDBRICK,
-    "m": {MUDBRICK, IO_GAS, IO_ENERGY, IO_ITEM},
-    "i": {MUDBRICK, IO_FLUID1, IO_FLUID2, IO_ENERGY, IO_ITEM},
+    "m": [MUDBRICK, IO_GAS, IO_ENERGY, IO_ITEM],
+    "i": [MUDBRICK, IO_FLUID1, IO_FLUID2, IO_ENERGY, IO_ITEM],
     "G": GLASS,
-    "g": {GLASS, MUDBRICK, IO_ENERGY}
+    "g": [GLASS, MUDBRICK, IO_ENERGY],
 }
-STRUCTURE_PATTERN ={
+STRUCTURE_PATTERN = {
     0: [
-        "iii",
+        "i#i",
         "iMi",
-        "i#i"
+        "iii",
     ],
     1: [
         "MGM",
         "G G",
-        "MGM"
+        "MGM",
     ],
     2: [
         "mmm",
         "mgm",
-        "mmm"
-    ]
+        "mmm",
+    ],
 }
 STRUCTURE_REQUIRE_BLOCKS = {
     IO_ENERGY: 1,
@@ -49,28 +49,29 @@ VITALITY_ADD_MAX = 0.05
 VITALITY_HUNGER_REDUCE_MAX = 0.05
 THICKNESS_OVERFLOW_VITALITY_REDUCE = 2
 
+
 class FermenterRecipe:
     def __init__(
         self,
-        color, # type: int
-        vitality_matter, # type: str
-        inoculate_mud_volume, # type: float
-        inoculate_time, # type: float
-        nutrition_matter, # type: str
-        nutrition_value, # type: float
-        nutrition_recover_vitality, # type: float
-        hunger_reduce_speed, # type: float
-        min_temperature, # type: float
-        max_temperature, # type: float
-        fit_temperature, # type: float
-        max_grow_speed, # type: float
-        max_thickness, # type: float
-        produce_thickness, # type: float
-        out_gas_id, # type: str
-        out_gas_rate, # type: float
-        out_fluid_id, # type: str
-        out_fluid_rate, # type: float
-        volume_reduce_rate, # type: float
+        color,  # type: int
+        vitality_matter,  # type: str
+        inoculate_mud_volume,  # type: float
+        inoculate_time,  # type: float
+        nutrition_matter,  # type: str
+        nutrition_value,  # type: float
+        nutrition_recover_vitality,  # type: float
+        hunger_reduce_speed,  # type: float
+        min_temperature,  # type: float
+        max_temperature,  # type: float
+        fit_temperature,  # type: float
+        max_grow_speed,  # type: float
+        max_thickness,  # type: float
+        produce_thickness,  # type: float
+        out_gas_id,  # type: str
+        out_gas_rate,  # type: float
+        out_fluid_id,  # type: str
+        out_fluid_rate,  # type: float
+        volume_reduce_rate,  # type: float
     ):
         """
         发酵池配方。
@@ -121,7 +122,7 @@ class FermenterRecipe:
 
 spec_recipes = {
     1: FermenterRecipe(
-        color=0x9a6f4f,
+        color=0x9A6F4F,
         vitality_matter="minecraft:dirt",
         inoculate_mud_volume=1,
         inoculate_time=5,
@@ -142,4 +143,3 @@ spec_recipes = {
         volume_reduce_rate=0.02,
     )
 }
-

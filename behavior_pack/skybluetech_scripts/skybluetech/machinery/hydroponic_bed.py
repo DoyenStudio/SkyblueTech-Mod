@@ -8,7 +8,7 @@ from skybluetech_scripts.tooldelta.events.client import (
 )
 from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
     GeometryModel,
-    CreateBlankSingleBlockModelEntity,
+    CreateBlankModel,
 )
 from ..define import flags
 from ..define.events.machinery.hydroponic_bed import (
@@ -199,13 +199,11 @@ loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 @asModBlockLoadedListener(HydroponicBed.block_name)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
-    loaded_models[(event.posX, event.posY, event.posZ)] = (
-        CreateBlankSingleBlockModelEntity((
-            event.posX,
-            event.posY + 3.0 / 16 * 0.4,
-            event.posZ,
-        ))
-    )
+    loaded_models[(event.posX, event.posY, event.posZ)] = CreateBlankModel((
+        event.posX,
+        event.posY + 3.0 / 16 * 0.4,
+        event.posZ,
+    ))
 
 
 @asModBlockRemovedListener(HydroponicBed.block_name)

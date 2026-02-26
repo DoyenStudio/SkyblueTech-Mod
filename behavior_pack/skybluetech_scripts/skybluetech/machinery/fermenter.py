@@ -526,6 +526,16 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         # type: (float) -> None
         self.bdata[K_INOCULATE_TIME] = value
 
+    @property
+    def mud_temperature(self):
+        # type: () -> float
+        return self.bdata[K_TEMPERATURE] or 25.0
+
+    @mud_temperature.setter
+    def mud_temperature(self, value):
+        # type: (float) -> None
+        self.bdata[K_TEMPERATURE] = value
+
 
 @FermenterSetTemperatureEvent.Listen()
 def onFermenterSetTemperatureEvent(event):

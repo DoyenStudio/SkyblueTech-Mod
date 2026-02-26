@@ -24,7 +24,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7在其下放置水培床基座以供给水分或额外养料，\n使得水培床中的作物以更快的速度生长。\n可从顶部输入能量。"
+                "value": "\n§7在其下放置§f水培床基座§7以供给水分或额外养料，\n使得水培床中的作物以更快的速度生长。\n可从顶部输入能量。"
             },
             "netease:listen_block_remove": {
                 "value": true

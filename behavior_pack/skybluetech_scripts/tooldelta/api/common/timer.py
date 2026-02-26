@@ -25,14 +25,11 @@ def ExecLater(t, func, *args, **kwargs):
     "执行延迟方法"
     if inServerEnv():
         LaterFunc = ServerComp.CreateGame(ServerLevelId).AddTimer
-        pool = sTimerPool
     elif inClientEnv():
         LaterFunc = ClientComp.CreateGame(ClientLevelId).AddTimer
-        pool = cTimerPool
     else:
         raise Exception("Not in client or server env")
-    timer = LaterFunc(t, func, *args, **kwargs)  # pyright: ignore[reportArgumentType]
-    pool.add(timer)
+    LaterFunc(t, func, *args, **kwargs)  # pyright: ignore[reportArgumentType]
 
 
 def Delay(t):

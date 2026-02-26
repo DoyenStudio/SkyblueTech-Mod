@@ -37,8 +37,8 @@ def bothCanConnect(origName, blockName):
 
 
 def isRFMachine(blockName):
-    return BlockHasTag(blockName, "redstoneflux_appliance") or BlockHasTag(
-        blockName, "redstoneflux_generator"
+    return BlockHasTag(blockName, "redstoneflux_accepter") or BlockHasTag(
+        blockName, "redstoneflux_provider"
     )
 
 

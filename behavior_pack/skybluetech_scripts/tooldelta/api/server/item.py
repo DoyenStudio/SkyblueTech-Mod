@@ -12,6 +12,7 @@ _setAttackDamage = ServerComp.CreateItem(ServerLevelId).SetAttackDamage
 
 ItemExists = _lookupItemByName
 
+
 def GetItemBasicInfo(itemName):
     # type: (str) -> BasicItemInfo
     basic_info = itemBasicInfoPool.get(itemName)
@@ -23,7 +24,9 @@ def GetItemBasicInfo(itemName):
     itemBasicInfoPool[itemName] = basic_info
     return basic_info
 
-item_tags_pool = {} # type: dict[str, set[str]]
+
+item_tags_pool = {}  # type: dict[str, set[str]]
+
 
 def GetItemTags(item_id, aux_value=0):
     # type: (str, int) -> set[str]
@@ -33,6 +36,7 @@ def GetItemTags(item_id, aux_value=0):
     tags = set(ServerComp.CreateItem(ServerLevelId).GetItemTags(item_id, aux_value))
     item_tags_pool[item_id] = tags
     return tags
+
 
 def SetItemTierSpeed(item, speed):
     # type: (Item, float) -> bool
@@ -47,12 +51,14 @@ def SetItemTierSpeed(item, speed):
     item.unmarshal(item_dict)
     return res
 
+
 def SetAttackDamage(item, damage):
     # type: (Item, int) -> bool
     item_dict = item.marshal()
     res = _setAttackDamage(item_dict, damage)
     item.unmarshal(item_dict)
     return res
+
 
 def GetPlayerUIItem(player_id, slot, get_user_data=False, is_netease_ui=False):
     # type: (str, int, bool, bool) -> Item
@@ -62,9 +68,11 @@ def GetPlayerUIItem(player_id, slot, get_user_data=False, is_netease_ui=False):
         )
     )
 
+
 def SpawnItemToPlayerInv(player_id, item):
     # type: (str, Item) -> None
     ServerComp.CreateItem(ServerLevelId).SpawnItemToPlayerInv(item.marshal(), player_id)
+
 
 def SetPlayerUIItem(player_id, slot, item, need_back=False, is_netease_ui=False):
     # type: (str, int, Item, bool, bool) -> None

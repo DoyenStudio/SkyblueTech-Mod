@@ -11,9 +11,7 @@ from ...machinery_def import (
 )
 #
 
-REG_BLOCK_IDS = (
-    fermenter.IO_ENERGY,
-)
+REG_BLOCK_IDS = (fermenter.IO_ENERGY,)
 
 
 @RegisterMachine
@@ -24,7 +22,7 @@ class EnergyInputInterface(BaseMachine):
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
-        self.machine_ref = None # type: ref[BaseMachine] | None
+        self.machine_ref = None  # type: ref[BaseMachine] | None
 
     def getMachineRef(self):
         # type: () -> BaseMachine | None
@@ -40,7 +38,10 @@ class EnergyInputInterface(BaseMachine):
         # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
         m = self.getMachineRef()
         if m is None:
+            # print("REF is None")
             return False, rf
         else:
-            return m.AddPower(rf, max_limit, passed)
+            # import weakref
 
+            # print("Still add", weakref.getweakrefcount(m), m.x, m.y, m.z)
+            return m.AddPower(rf, max_limit, passed)

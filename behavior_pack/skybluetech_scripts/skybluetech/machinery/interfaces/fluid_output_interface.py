@@ -5,10 +5,11 @@ from mod.server.blockEntityData import BlockEntityData
 from ...ui_sync.machinery.fluid_interface import FluidInterfaceUISync
 from ..basic import BaseMachine, FluidContainer, GUIControl, RegisterMachine
 
+if 0:
+    from typing import Callable
+
 # LOADED_INTERFACES
-from ...machinery_def import (
-    fermenter
-)
+from ...machinery_def import fermenter
 #
 
 REG_BLOCK_IDS = (
@@ -30,6 +31,10 @@ class FluidOutputInterface(BaseMachine, FluidContainer, GUIControl):
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidInterfaceUISync.NewServer(self).Activate()
         self.OnSync()
+        self.on_fluid_slot_update_cb_ref = None
+
+    def OnTicking(self):
+        FluidContainer.OnTicking(self)
 
     def OnSync(self):
         self.sync.fluid_id = self.fluid_id
@@ -37,6 +42,12 @@ class FluidOutputInterface(BaseMachine, FluidContainer, GUIControl):
         self.sync.max_volume = self.max_fluid_volume
         self.sync.MarkedAsChanged()
 
-    def Dump(self):
-        BaseMachine.Dump(self)
-        FluidContainer.Dump(self)
+    def SetOnFluidSlotUpdateCallback(self, callback):
+        # type: (Callable[[], None]) -> None
+        self.on_fluid_slot_update_cb_ref = ref(callback)
+
+    def OnFluidSlotUpdate(self):
+        if self.on_fluid_slot_update_cb_ref is not None:
+            on_fluid_slot_update_cb = self.on_fluid_slot_update_cb_ref()
+            if on_fluid_slot_update_cb is not None:
+                on_fluid_slot_update_cb()

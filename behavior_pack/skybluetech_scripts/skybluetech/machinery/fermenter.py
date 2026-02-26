@@ -72,11 +72,10 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
         self.t = 0
-        self.sync = FermenterUISync.NewServer(self).Activate()
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
-        self.OnSync()
+        self.sync = FermenterUISync.NewServer(self).Activate()
+        MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
 
     def OnTicking(self):
         self.t += 1
@@ -98,7 +97,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         # type: (bool) -> None
         if ok:
             self.getEnergyInIO().SetMachineRef(self)
-            self.getItemInIO().OnSlotUpdate = self.OnOtherSlotUpdate
+            self.getItemInIO().SetOnSlotUpdateCallback(self.OnOtherSlotUpdate)
             self.getFluidOutIO().SelfRequireFluid()
         self.OnSync()
 

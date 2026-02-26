@@ -28,4 +28,3 @@ class Macerator(BaseProcessor):
         self.sync.rf_max = self.store_rf_max
         self.sync.progress_relative = self.GetProgressPercent()
         self.sync.MarkedAsChanged()
-

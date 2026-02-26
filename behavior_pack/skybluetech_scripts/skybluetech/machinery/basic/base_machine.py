@@ -32,7 +32,6 @@ class BaseMachine(object):
         # type: (int, int, int, int, BlockEntityData) -> None
         "超类主要用于获取方块实体数据, 设置 bdata(BlockEntityData) 和获取能量属性; 执行 OnLoad()。"
         self.bdata = block_entity_data
-        "所储存能量的值"
         self.dim = dim
         self.x = x
         self.y = y

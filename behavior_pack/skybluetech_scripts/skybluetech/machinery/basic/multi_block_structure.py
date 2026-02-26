@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from weakref import WeakKeyDictionary
+from weakref import WeakKeyDictionary, ref
 from mod_log import logger
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
@@ -9,10 +9,11 @@ from skybluetech_scripts.tooldelta.events.server import (
     ChunkLoadedServerEvent,
 )
 from skybluetech_scripts.tooldelta.general import ServerInitCallback
-from skybluetech_scripts.tooldelta.api.server.block import (
+from skybluetech_scripts.tooldelta.api.server import (
     AddBlocksToBlockRemoveListener,
     GetBlockPaletteBetweenPos,
     GetBlockCardinalFacing,
+    GetBlockName,
 )
 from skybluetech_scripts.tooldelta.api.client import (
     CreateClientEntity,
@@ -47,10 +48,10 @@ if 0:
     BLOCK_PAT_INDEX = int
     POS_SET = set[tuple[int, int, int]]
 
-DEBUG = False
+DEBUG = True
 
 FLAG_OK = 0
-blockRemovedListenPool = set()  # type: set[str]
+block_removed_listen_pool = set()  # type: set[str]
 server_inited = False
 
 ROT_TIMES_MAPPING = {"north": 0, "west": 1, "south": 2, "east": 3}
@@ -59,13 +60,14 @@ ROT_TIMES_MAPPING = {"north": 0, "west": 1, "south": 2, "east": 3}
 @ServerInitCallback()
 def onServerInit():
     global server_inited
-    AddBlocksToBlockRemoveListener(blockRemovedListenPool)
+    AddBlocksToBlockRemoveListener(block_removed_listen_pool)
     server_inited = True
-    logger.info(
-        "[MultiBlockStructure] Add blocks to pool: {}".format(
-            list(blockRemovedListenPool)
+    if DEBUG:
+        logger.info(
+            "[MultiBlockStructure] Add blocks to pool: {}".format(
+                list(block_removed_listen_pool)
+            )
         )
-    )
 
 
 @EntityPlaceBlockAfterServerEvent.Listen(-1001)
@@ -90,7 +92,7 @@ def onEntityPlaceStruBlock(event):
 
 
 @BlockRemoveServerEvent.Listen(-1001)
-@Delay(0)
+@Delay(0)  # 此时原方块仍然是原方块, 不是空气
 def onStruBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
     x = event.x
@@ -103,15 +105,24 @@ def onStruBlockRemoved(event):
         ):
             continue
         if area.isInside(x, y, z):
-            flag = area.Detect()
-            if flag == FLAG_OK:
-                if DEBUG:
-                    logger.info("Detect OK")
-                area.bound.UnsetStructureDestroyed()
-            else:
-                if DEBUG:
-                    logger.info("Detect failed")
-                area.bound.SetStructureDestroyed(flag)
+            if x == area.center_x and y == area.center_y and z == area.center_z:
+                return
+            area.bound._last_destroy_flag = DEACTIVE_FLAG_STRUCTURE_BROKEN
+            onStruBlockRemovedLater(area)
+
+
+@Delay(0)
+def onStruBlockRemovedLater(area):
+    # type: (DetectArea) -> None
+    flag = area.Detect()
+    if flag == FLAG_OK:
+        if DEBUG:
+            logger.info("Detect OK")
+        area.bound.UnsetStructureDestroyed()
+    else:
+        if DEBUG:
+            logger.info("Detect failed")
+        area.bound.SetStructureDestroyed(flag)
 
 
 detect_areas = {}  # type: dict[int, set[DetectArea]]
@@ -119,19 +130,6 @@ detect_areas = {}  # type: dict[int, set[DetectArea]]
 
 def addDetectArea(dim, area):
     # type: (int, DetectArea) -> None
-    print(
-        "Add detect area",
-        (
-            area.min_x,
-            area.min_y,
-            area.min_z,
-        ),
-        (
-            area.max_x,
-            area.max_y,
-            area.max_z,
-        ),
-    )
     detect_areas.setdefault(dim, set()).add(area)
 
 
@@ -150,17 +148,17 @@ def rotate_90(x, z, center_x, center_z, y):
 
 
 class DetectArea(object):
-    def __init__(self, dim, center_x, center_y, center_z, bound):
+    def __init__(self, dim, center_x, center_y, center_z, bound_machine):
         # type: (int, int, int, int, MultiBlockStructure) -> None
-        pal = bound._palette
+        pal = bound_machine._palette
         self.dim = dim
         self.min_y = pal.min_y + center_y
         self.max_y = pal.max_y + center_y
         self.center_x = center_x
         self.center_y = center_y
         self.center_z = center_z
-        self.bound = bound
-        palette = bound.structure_palette
+        self._bound_machine = ref(bound_machine)
+        palette = bound_machine.structure_palette
         if palette is None:
             raise ValueError("StructureBlockPalette: palette is None")
         self.palette = palette
@@ -261,11 +259,7 @@ class DetectArea(object):
                 return FLAG_OK
             else:
                 self.bound._lacked_blocks = lacked_blocks
-                if isinstance(self.bound, GUIControl):
-                    self.bound.OnSync()
                 return DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
-        if isinstance(self.bound, GUIControl):
-            self.bound.OnSync()
         return DEACTIVE_FLAG_STRUCTURE_BROKEN
 
     def updateFunctionalBlocks(self, palette, co_x, co_y, co_z):
@@ -281,6 +275,13 @@ class DetectArea(object):
             ]
             for block_id in self.bound.functional_block_ids
         }
+
+    @property
+    def bound(self):
+        bound_machine = self._bound_machine()
+        if bound_machine is None:
+            raise ValueError("bound_machine is None")
+        return bound_machine
 
 
 class StructureBlockPalette(object):
@@ -320,9 +321,9 @@ class StructureBlockPalette(object):
         if not server_inited:
             for block_id in palette_data.values():
                 if isinstance(block_id, str):
-                    blockRemovedListenPool.add(block_id)
+                    block_removed_listen_pool.add(block_id)
                 else:
-                    blockRemovedListenPool.update(block_id)
+                    block_removed_listen_pool.update(block_id)
 
     def Compare(self, block_palette, co_x, co_z):
         # type: (BlockPaletteComponent, int, int) -> bool
@@ -344,6 +345,11 @@ class StructureBlockPalette(object):
             )
             expected_pos_set = self.posblock_data[index]
             if len(actua_pos_set & expected_pos_set) < len(expected_pos_set):
+                # print("NO EQUAL:")
+                # print(block_ids)
+                # print(len(actua_pos_set & expected_pos_set))
+                # print(len(expected_pos_set))
+                # print(expected_pos_set.difference(actua_pos_set))
                 return False
         return True
 
@@ -435,8 +441,6 @@ class MultiBlockStructure(BaseMachine):
 
     def SetStructureDestroyed(self, flag):
         # type: (int) -> None
-        if flag == self._last_destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN:
-            return
         self._last_destroy_flag = flag
         self.area.functional_block_poses = {}
         self.SetDeactiveFlag(flag)

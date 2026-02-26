@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, ViewBinder
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from ...ui_sync.machinery.distillation_chamber import DistillationChamberUISync
 from ...utils.fmt import FormatKelvin, FormatFluidVolume
 from .define import MachinePanelUIProxy, MAIN_PATH
@@ -31,7 +31,7 @@ class DistillationChamberUI(MachinePanelUIProxy):
                 self.sync.lower_fluid_id,
                 self.sync.lower_fluid_volume,
                 self.sync.lower_fluid_max_volume,
-            )
+            ),
         )
         self.fluid_updater2 = InitFluidDisplay(
             self.upper_fluid,
@@ -39,12 +39,12 @@ class DistillationChamberUI(MachinePanelUIProxy):
                 self.sync.upper_fluid_id,
                 self.sync.upper_fluid_volume,
                 self.sync.upper_fluid_max_volume,
-            )
+            ),
         )
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
             "skybluetech:distillation_chamber",
-            recipes, # pyright: ignore[reportArgumentType]
+            recipes,  # pyright: ignore[reportArgumentType]
         )
 
     def WhenUpdated(self):
@@ -54,4 +54,3 @@ class DistillationChamberUI(MachinePanelUIProxy):
         self.fluid_updater2()
         self.rate_label.SetText(FormatFluidVolume(self.sync.output_rate) + "/t")
         self.temperature_label.SetText(FormatKelvin(self.sync.current_temperature))
-        

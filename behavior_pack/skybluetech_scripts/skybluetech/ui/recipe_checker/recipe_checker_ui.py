@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.ui import (
     ToolDeltaScreen,
     RegistToolDeltaScreen,
     UIPath,
-    ViewBinder,
+    Binder,
     UBaseCtrl,
 )
 from skybluetech_scripts.tooldelta.define import Item
@@ -42,7 +42,8 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.title = self.GetElement(MAIN_PATH / "title").asLabel()
         self.recipes_view = self.GetElement(MAIN_PATH / "recipes_view").asScrollView()
         self.close_btn = (
-            self.GetElement(MAIN_PATH / "close_btn")
+            self
+            .GetElement(MAIN_PATH / "close_btn")
             .asButton()
             .SetCallback(self.onClose)
         )
@@ -131,7 +132,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
             self.ctrls_in_fgrid[elem] = rcp
         rcp_fake_grid.SetSize((last_xize, last_ysize * len(rcps)))
 
-    @ViewBinder.binding(ViewBinder.BF_ButtonClick, "#recipe_checker.select_category")  # pyright: ignore[reportOptionalCall]
+    @Binder.binding(Binder.BF_ButtonClick, "#recipe_checker.select_category")
     def onSelectCategory(self, params):
         griditem_path = UIPath("/".join(params["ButtonPath"].split("/")[1:-1]))
         griditem = self.GetElement(griditem_path)
@@ -141,7 +142,8 @@ class RecipeCheckerUI(ToolDeltaScreen):
         if self.category_double_click_helpers[click_index]():
             # BUG: 鼠标无法原地双击按钮
             self.renderRecipesOfInput(
-                self.left_sections_grid.GetGridItem(0, click_index)["item_renderer"]
+                self.left_sections_grid
+                .GetGridItem(0, click_index)["item_renderer"]
                 .asItemRenderer()
                 .GetUiItem()[0],
                 CategoryType.ITEM,
@@ -157,12 +159,10 @@ class RecipeCheckerUI(ToolDeltaScreen):
             else:
                 offset = 40
             CreateDisplayBoard(
-                griditem, 
+                griditem,
                 GetItemHoverName(
-                griditem["item_renderer"]
-                .asItemRenderer()
-                .GetUiItem()[0]
-                )
+                    griditem["item_renderer"].asItemRenderer().GetUiItem()[0]
+                ),
             ).SetPos((x, y + offset)).SetLayer(20)
             return
         self.looking_category_index = click_index

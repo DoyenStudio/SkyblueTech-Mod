@@ -27,17 +27,13 @@ from .utils import UIPath
 # TYPE_CHECKING
 if 0:
     from typing import Callable, Any, Literal
-    from .screen_comp import UScreenNode
-    from .proxy_screen import UScreenProxy
     from .general_screen import ToolDeltaScreen
-
-    ScreenLike = UScreenNode | UScreenProxy | ToolDeltaScreen
 # TYPE_CHECKING END
 
 
 class UBaseCtrl(object):
     def __init__(self, root, base):
-        # type: (ScreenLike, BaseUIControl | None) -> None
+        # type: (ToolDeltaScreen, BaseUIControl | None) -> None
         if base is None:
             raise ValueError("Can't initialize UBaseCtrl: comp is None")
         self._root = root
@@ -230,7 +226,7 @@ class UBaseCtrl(object):
 
 class UItemRenderer(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, ItemRendererUIControl | None) -> None
+        # type: (ToolDeltaScreen, ItemRendererUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ItemRendererUIControl):
             raise TypeError("expected ItemRendererUIControl, got " + str(type(base)))
@@ -250,7 +246,7 @@ class UItemRenderer(UBaseCtrl):
 
 class ULabel(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, LabelUIControl | None) -> None
+        # type: (ToolDeltaScreen, LabelUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, LabelUIControl):
             raise TypeError("expected LabelUIControl, got " + str(type(base)))
@@ -271,7 +267,7 @@ class ULabel(UBaseCtrl):
 
 class UImage(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, ImageUIControl | None) -> None
+        # type: (ToolDeltaScreen, ImageUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ImageUIControl):
             raise TypeError("expected ImageUIControl, got " + str(type(base)))
@@ -298,7 +294,7 @@ class UImage(UBaseCtrl):
 
 class UButton(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, ButtonUIControl | None) -> None
+        # type: (ToolDeltaScreen, ButtonUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ButtonUIControl):
             raise TypeError("expected ButtonUIControl, got " + str(type(base)))
@@ -331,7 +327,7 @@ class UButton(UBaseCtrl):
 
 class UScrollView(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, ScrollViewUIControl | None) -> None
+        # type: (ToolDeltaScreen, ScrollViewUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, ScrollViewUIControl):
             raise TypeError("expected ScrollViewUIControl, got " + str(type(base)))
@@ -343,7 +339,7 @@ class UScrollView(UBaseCtrl):
 
 class UGrid(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, GridUIControl | None) -> None
+        # type: (ToolDeltaScreen, GridUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, GridUIControl):
             raise TypeError("expected GridUIControl, got " + str(type(base)))
@@ -393,7 +389,7 @@ class UGrid(UBaseCtrl):
 
 class UComboBox(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, NeteaseComboBoxUIControl | None) -> None
+        # type: (ToolDeltaScreen, NeteaseComboBoxUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, NeteaseComboBoxUIControl):
             raise TypeError("expected NeteaseComboBoxUIControl, got " + str(type(base)))
@@ -417,7 +413,7 @@ class UComboBox(UBaseCtrl):
 
 class USlider(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, SliderUIControl | None) -> None
+        # type: (ToolDeltaScreen, SliderUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, SliderUIControl):
             raise TypeError("expected SliderUIControl, got " + str(type(base)))
@@ -433,7 +429,7 @@ class USlider(UBaseCtrl):
 
 class UNeteasePaperDoll(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, NeteasePaperDollUIControl | None) -> None
+        # type: (ToolDeltaScreen, NeteasePaperDollUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, NeteasePaperDollUIControl):
             raise TypeError(
@@ -491,7 +487,7 @@ class UNeteasePaperDoll(UBaseCtrl):
 
 class UTextEditBoxUIControl(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, TextEditBoxUIControl | None) -> None
+        # type: (ToolDeltaScreen, TextEditBoxUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, TextEditBoxUIControl):
             raise TypeError("expected TextEditBoxUIControl, got " + str(type(base)))
@@ -507,7 +503,7 @@ class UTextEditBoxUIControl(UBaseCtrl):
 
 class USwitch(UBaseCtrl):
     def __init__(self, root, base):
-        # type: (ScreenLike, SwitchToggleUIControl | None) -> None
+        # type: (ToolDeltaScreen, SwitchToggleUIControl | None) -> None
         UBaseCtrl.__init__(self, root, base)
         if not isinstance(base, SwitchToggleUIControl):
             raise TypeError("expected SwitchToggleUIControl, got " + str(type(base)))

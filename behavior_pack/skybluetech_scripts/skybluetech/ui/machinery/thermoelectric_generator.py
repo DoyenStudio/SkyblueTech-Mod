@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.ui.reg import RegistScreen
+from skybluetech_scripts.tooldelta.ui.reg import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.ui.utils import UIPath
 from ...utils.fmt import FormatRF
 from ...ui_sync.machinery.thermoelectric_generator import ThermoelectricGeneratorUISync
@@ -16,12 +16,11 @@ power_disp_node = CENTER_NODE / "power_disp"
 power_bar_node = TOP_NODE / "PowerBar"
 
 
-@RegistScreen("ThermoelectricGeneratorUI.main")
+@RegistToolDeltaScreen("ThermoelectricGeneratorUI.main")
 class ThermoelectricGeneratorUI(MachinePanelUI):
-
     def __init__(self, namespace, name, param):
         MachinePanelUI.__init__(self, namespace, name, param)
-        self.sync = ThermoelectricGeneratorUISync.NewClient(param["sync"]) # type: ThermoelectricGeneratorUISync
+        self.sync = ThermoelectricGeneratorUISync.NewClient(param["sync"])  # type: ThermoelectricGeneratorUISync
         self.sync.WhenUpdated = self.WhenUpdated
 
     def Create(self):

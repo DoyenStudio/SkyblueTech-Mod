@@ -1,7 +1,8 @@
 from ..events.server.ui import CreateUIRequest, PushUIRequest, ForceRemoveUIRequest
 from ..events.client.control import OnKeyPressInGame
 from ..ui.reg import GetScreen
-from .pool import GetActiveScreen, GetActiveScreens, GetActiveProxyScreens
+from .pool import GetActiveToolDeltaScreen
+
 
 @CreateUIRequest.Listen()
 def onCreateUIRequest(event):
@@ -11,6 +12,7 @@ def onCreateUIRequest(event):
         raise ValueError("UI not found: " + event.ui_key)
     ui.CreateUI(params=event.params)
 
+
 @PushUIRequest.Listen()
 def onPushUIRequest(event):
     # type: (PushUIRequest) -> None
@@ -19,10 +21,11 @@ def onPushUIRequest(event):
         raise ValueError("UI not found: " + event.ui_key)
     ui.PushUI(params=event.params)
 
+
 @ForceRemoveUIRequest.Listen()
 def onForceRemoveUIRequest(event):
     # type: (ForceRemoveUIRequest) -> None
-    uiNode = GetActiveScreen(event.ui_key)
+    uiNode = GetActiveToolDeltaScreen(event.ui_key)
     if uiNode is None:
         return
     uiNode.RemoveUI()

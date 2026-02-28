@@ -83,6 +83,10 @@ def IntArray(val):
     return Tp(NBT_INT_ARRAY, val)
 
 
+def GetValue(nbt, key):
+    return nbt.get(key, {}).get("__value__")
+
+
 def GetValueWithDefault(nbt, key, default):
     return nbt.get(key, {}).get("__value__", default)
 

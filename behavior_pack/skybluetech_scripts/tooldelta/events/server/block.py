@@ -9,14 +9,14 @@ class BlockRandomTickServerEvent(ServerEvent):
 
     def __init__(
         self,
-        posX, # type: int
-        posY, # type: int
-        posZ, # type: int
-        blockName, # type: str
-        fullName, # type: str
-        auxValue, # type: int
-        brightness, # type: int
-        dimensionId, # type: int
+        posX,  # type: int
+        posY,  # type: int
+        posZ,  # type: int
+        blockName,  # type: str
+        fullName,  # type: str
+        auxValue,  # type: int
+        brightness,  # type: int
+        dimensionId,  # type: int
     ):
         self.posX = posX
         """ 方块x坐标 """
@@ -67,11 +67,11 @@ class ServerBlockEntityTickEvent(ServerEvent):
 
     def __init__(
         self,
-        blockName, # type: str
-        dimension, # type: int
-        posX, # type: int
-        posY, # type: int
-        posZ, # type: int
+        blockName,  # type: str
+        dimension,  # type: int
+        posX,  # type: int
+        posY,  # type: int
+        posZ,  # type: int
     ):
         self.blockName = blockName
         """ 该方块名称 """
@@ -324,16 +324,16 @@ class ServerPlayerTryDestroyBlockEvent(ServerEvent):
 
     def __init__(
         self,
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        face, # type: int
-        fullName, # type: str
-        auxData, # type: int
-        playerId, # type: str
-        dimensionId, # type: int
-        spawnResources, # type: bool
-        _orig, # type: dict
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        face,  # type: int
+        fullName,  # type: str
+        auxData,  # type: int
+        playerId,  # type: str
+        dimensionId,  # type: int
+        spawnResources,  # type: bool
+        _orig,  # type: dict
     ):
         self.x = x
         """ 方块x坐标 """
@@ -397,12 +397,12 @@ class BlockRemoveServerEvent(ServerEvent):
 
     def __init__(
         self,
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        fullName, # type: str
-        auxValue, # type: int
-        dimension, # type: int
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        fullName,  # type: str
+        auxValue,  # type: int
+        dimension,  # type: int
     ):
         self.x = x
         """ 方块位置x """
@@ -455,18 +455,18 @@ class ServerEntityTryPlaceBlockEvent(ServerEvent):
 
     def __init__(
         self,
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        fullName, # type: str
-        auxData, # type: int
-        entityId, # type: str
-        dimensionId, # type: int
-        face, # type: int
-        clickX, # type: float
-        clickY, # type: float
-        clickZ, # type: float
-        _orig, # type: dict
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        fullName,  # type: str
+        auxData,  # type: int
+        entityId,  # type: str
+        dimensionId,  # type: int
+        face,  # type: int
+        clickX,  # type: float
+        clickY,  # type: float
+        clickZ,  # type: float
+        _orig,  # type: dict
     ):
         self.x = x
         """ 方块x坐标,支持修改 """
@@ -538,15 +538,15 @@ class DestroyBlockEvent(ServerEvent):
 
     def __init__(
         self,
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        face, # type: int
-        fullName, # type: str
-        auxData, # type: int
-        playerId, # type: str
-        dimensionId, # type: int
-        dropEntityIds, # type: list[str]
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        face,  # type: int
+        fullName,  # type: str
+        auxData,  # type: int
+        playerId,  # type: str
+        dimensionId,  # type: int
+        dropEntityIds,  # type: list[str]
     ):
         self.x = x
         """ 方块x坐标 """
@@ -601,14 +601,14 @@ class EntityPlaceBlockAfterServerEvent(ServerEvent):
 
     def __init__(
         self,
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        fullName, # type: str
-        auxData, # type: int
-        entityId, # type: str
-        dimensionId, # type: int
-        face, # type: int
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        fullName,  # type: str
+        auxData,  # type: int
+        entityId,  # type: str
+        dimensionId,  # type: int
+        face,  # type: int
     ):
         self.x = x
         """ 方块x坐标 """
@@ -659,17 +659,17 @@ class PistonActionServerEvent(ServerEvent):
 
     def __init__(
         self,
-        action, # type: str
-        pistonFacing, # type: int
-        pistonMoveFacing, # type: int
-        dimensionId, # type: int
-        pistonX, # type: int
-        pistonY, # type: int
-        pistonZ, # type: int
-        blockList, # type: list[list[int]]
-        breakBlockList, # type: list[list[int]]
-        entityList, # type: list[str]
-        _orig, # type: dict
+        action,  # type: str
+        pistonFacing,  # type: int
+        pistonMoveFacing,  # type: int
+        dimensionId,  # type: int
+        pistonX,  # type: int
+        pistonY,  # type: int
+        pistonZ,  # type: int
+        blockList,  # type: list[list[int]]
+        breakBlockList,  # type: list[list[int]]
+        entityList,  # type: list[str]
+        _orig,  # type: dict
     ):
         self.action = action
         """ 推送时=expanding；缩回时=retracting """

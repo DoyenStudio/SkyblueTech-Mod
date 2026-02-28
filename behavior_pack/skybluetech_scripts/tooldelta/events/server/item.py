@@ -10,15 +10,15 @@ class PlayerTryPutCustomContainerItemServerEvent(ServerEvent):
 
     def __init__(
         self,
-        item, # type: Item
-        collectionName, # type: str
-        collectionType, # type: str
-        collectionIndex, # type: int
-        playerId, # type: str
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        _orig, # type: dict
+        item,  # type: Item
+        collectionName,  # type: str
+        collectionType,  # type: str
+        collectionIndex,  # type: int
+        playerId,  # type: str
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        _orig,  # type: dict
     ):
         self.item = item
         """ 尝试放入物品的物品信息字典 """
@@ -84,14 +84,14 @@ class PlayerTryRemoveCustomContainerItemServerEvent(ServerEvent):
 
     def __init__(
         self,
-        item, # type: Item
-        collectionName, # type: str
-        collectionType, # type: str
-        collectionIndex, # type: int
-        playerId, # type: str
-        x, # type: int
-        y, # type: int
-        z, # type: int
+        item,  # type: Item
+        collectionName,  # type: str
+        collectionType,  # type: str
+        collectionIndex,  # type: int
+        playerId,  # type: str
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
     ):
         self.item = item
         """ 尝试移除物品的物品信息字典 """
@@ -140,13 +140,13 @@ class PlayerTryRemoveCustomContainerItemServerEvent(ServerEvent):
 class ContainerItemChangedServerEvent(ServerEvent):
     name = "ContainerItemChangedServerEvent"
 
-    pos = None # type: tuple[int,int,int] | None
+    pos = None  # type: tuple[int,int,int] | None
     """ 容器坐标 """
-    containerType = 0 # type: int
+    containerType = 0  # type: int
     """ 容器类型，类型含义见：容器类型枚举 """
-    slot = 0 # type: int
+    slot = 0  # type: int
     """ 容器槽位 """
-    dimensionId = 0 # type: int
+    dimensionId = 0  # type: int
     """ 维度id """
     oldItem = Item("")
     """ 旧物品 """
@@ -188,13 +188,13 @@ class ItemPushInCustomContainerServerEvent(ServerEvent):
 
     def __init__(
         self,
-        item, # type: Item
-        collectionName, # type: str
-        collectionIndex, # type: int
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        _orig, # type: dict
+        item,  # type: Item
+        collectionName,  # type: str
+        collectionIndex,  # type: int
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        _orig,  # type: dict
     ):
         self.item = item
         """ 漏斗漏入物品的物品信息字典 """
@@ -246,13 +246,13 @@ class ItemPullOutCustomContainerServerEvent(ServerEvent):
 
     def __init__(
         self,
-        item, # type: Item
-        collectionName, # type: str
-        collectionIndex, # type: int
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        _orig, # type: dict
+        item,  # type: Item
+        collectionName,  # type: str
+        collectionIndex,  # type: int
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        _orig,  # type: dict
     ):
         self.item = item
         """ 漏斗漏出物品的物品信息字典 """
@@ -304,19 +304,19 @@ class ServerItemUseOnEvent(ServerEvent):
 
     def __init__(
         self,
-        entityId, # type: str
-        item, # type: Item
-        x, # type: int
-        y, # type: int
-        z, # type: int
-        blockName, # type: str
-        blockAuxValue, # type: int
-        face, # type: int
-        dimensionId, # type: int
-        clickX, # type: float
-        clickY, # type: float
-        clickZ, # type: float
-        _orig, # type: dict
+        entityId,  # type: str
+        item,  # type: Item
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        blockName,  # type: str
+        blockAuxValue,  # type: int
+        face,  # type: int
+        dimensionId,  # type: int
+        clickX,  # type: float
+        clickY,  # type: float
+        clickZ,  # type: float
+        _orig,  # type: dict
     ):
         self.entityId = entityId
         """ 玩家实体id """
@@ -392,16 +392,17 @@ class ServerItemUseOnEvent(ServerEvent):
         ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
 
+
 class ActorAcquiredItemServerEvent(ServerEvent):
     name = "ActorAcquiredItemServerEvent"
 
-    actor = '' # type: str
+    actor = ""  # type: str
     """ 获得物品玩家实体id """
-    secondaryActor = '' # type: str
+    secondaryActor = ""  # type: str
     """ 物品给予者玩家实体id，如果不存在给予者的话，这里为空字符串 """
-    item = Item("") # type: Item
+    item = Item("")  # type: Item
     """ 获得的物品的物品信息字典 """
-    acquireMethod = 0 # type: int
+    acquireMethod = 0  # type: int
     """ 获得物品的方法，详见ItemAcquisitionMethod枚举 """
 
     @classmethod
@@ -427,19 +428,23 @@ class ActorAcquiredItemServerEvent(ServerEvent):
 class OnCarriedNewItemChangedServerEvent(ServerEvent):
     name = "OnCarriedNewItemChangedServerEvent"
 
-    oldItem = None # type: Item | None
+    oldItem = None  # type: Item | None
     """ 旧物品的物品信息字典，当旧物品为空时，此项属性为None """
-    newItem = None # type: Item | None
+    newItem = None  # type: Item | None
     """ 新物品的物品信息字典，当新物品为空时，此项属性为None """
-    playerId = '' # type: str
+    playerId = ""  # type: str
     """ 玩家 entityId """
 
     @classmethod
     def unmarshal(cls, data):
         # type: (dict) -> OnCarriedNewItemChangedServerEvent
         instance = cls()
-        instance.oldItem = Item.from_dict(data["oldItemDict"]) if data["oldItemDict"] else None
-        instance.newItem = Item.from_dict(data["newItemDict"]) if data["newItemDict"] else None
+        instance.oldItem = (
+            Item.from_dict(data["oldItemDict"]) if data["oldItemDict"] else None
+        )
+        instance.newItem = (
+            Item.from_dict(data["newItemDict"]) if data["newItemDict"] else None
+        )
         instance.playerId = data["playerId"]
         return instance
 
@@ -457,11 +462,11 @@ class ItemDurabilityChangedServerEvent(ServerEvent):
 
     def __init__(
         self,
-        entityId, # type: str
-        item, # type: Item
-        durabilityBefore, # type: int
-        durability, # type: int
-        canChange, # type: bool
+        entityId,  # type: str
+        item,  # type: Item
+        durabilityBefore,  # type: int
+        durability,  # type: int
+        canChange,  # type: bool
         _orig=None,
     ):
         self.entityId = entityId
@@ -512,9 +517,9 @@ class ServerItemTryUseEvent(ServerEvent):
 
     def __init__(
         self,
-        playerId, # type: str
-        item, # type: Item
-        _orig, # type: dict
+        playerId,  # type: str
+        item,  # type: Item
+        _orig,  # type: dict
     ):
         self.playerId = playerId
         """ 玩家id """
@@ -556,10 +561,10 @@ class CraftItemOutputChangeServerEvent(ServerEvent):
 
     def __init__(
         self,
-        playerId, # type: str
-        item, # type: Item
-        screenContainerType, # type: int
-        _orig, # type: dict
+        playerId,  # type: str
+        item,  # type: Item
+        screenContainerType,  # type: int
+        _orig,  # type: dict
     ):
         self.playerId = playerId
         """ 玩家实体id """
@@ -599,10 +604,10 @@ class UIContainerItemChangedServerEvent(ServerEvent):
 
     def __init__(
         self,
-        playerId, # type: str
-        slot, # type: int
-        oldItem, # type: Item
-        newItem, # type: Item
+        playerId,  # type: str
+        slot,  # type: int
+        oldItem,  # type: Item
+        newItem,  # type: Item
     ):
         self.playerId = playerId
         """ 玩家实体id """

@@ -1,5 +1,6 @@
 # coding=utf-8
-from ..machinery.pool import GetMachineStrict
+from ..server.machinery.pool import GetMachineStrict
+
 
 def GetEnergyOfMachine(dimension, x, y, z):
     # type: (int, int, int, int) -> tuple[int, int]
@@ -22,8 +23,11 @@ def GetEnergyOfMachine(dimension, x, y, z):
     if m is None:
         raise Exception("Not a machine at pos [%d] ~ %d, %d, %d" % (dimension, x, y, z))
     if m.is_non_energy_machine:
-        raise Exception("Not an energy machine at pos [%d] ~ %d, %d, %d" % (dimension, x, y, z))
+        raise Exception(
+            "Not an energy machine at pos [%d] ~ %d, %d, %d" % (dimension, x, y, z)
+        )
     return m.store_rf, m.store_rf_max
+
 
 def AddEnergyForMachine(dimension, x, y, z, rf):
     # type: (int, int, int, int, int) -> int
@@ -45,7 +49,8 @@ def AddEnergyForMachine(dimension, x, y, z, rf):
         return -1
     _, overflow = m.AddPower(rf)
     return overflow
-    
+
+
 def MachineIsWorking(dimension, x, y, z):
     # type: (int, int, int, int) -> bool
     """

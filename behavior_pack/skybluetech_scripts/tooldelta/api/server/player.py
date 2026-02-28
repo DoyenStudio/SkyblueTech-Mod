@@ -11,52 +11,71 @@ def GetNameById(player_id):
     # type: (str) -> str
     return ServerComp.CreateName(player_id).GetName()
 
+
 def GetPlayerDimensionId(player_id):
     # type: (str) -> int
     return ServerComp.CreateDimension(player_id).GetEntityDimensionId()
+
 
 def SpawnItemToPlayerCarried(player_id, item):
     # type: (str, Item) -> None
     ServerComp.CreateItem(player_id).SpawnItemToPlayerCarried(item.marshal(), player_id)
 
+
 def GiveItem(player_id, item):
     # type: (str, Item) -> None
     ServerComp.CreateItem(player_id).SpawnItemToPlayerInv(item.marshal(), player_id)
+
 
 def GetAllPlayers():
     # type: () -> list[str]
     return serverApi.GetPlayerList()
 
+
 def GetPlayersInDim(dim):
     # type: (int) -> list[str]
-    return [player_id for player_id in GetAllPlayers() if GetPlayerDimensionId(player_id) == dim]
+    return [
+        player_id
+        for player_id in GetAllPlayers()
+        if GetPlayerDimensionId(player_id) == dim
+    ]
+
 
 def GetPlayerMainhandItem(player_id):
     # type: (str) -> Item | None
-    it = ServerComp.CreateItem(player_id).GetPlayerItem(mcEnum.ItemPosType.CARRIED, 0, True)
+    it = ServerComp.CreateItem(player_id).GetPlayerItem(
+        mcEnum.ItemPosType.CARRIED, 0, True
+    )
     if it is None:
         return None
     return Item.from_dict(it)
+
 
 def GetSelectedSlot(player_id):
     # type: (str) -> int
     return ServerComp.CreateItem(player_id).GetSelectSlotId()
 
+
 def SetInventorySlotItemCount(player_id, slot_id, count):
     # type: (str, int, int) -> bool
     return ServerComp.CreateItem(player_id).SetInvItemNum(slot_id, count)
+
 
 def IsOP(player_id):
     # type: (str) -> bool
     return ServerComp.CreatePlayer(player_id).GetPlayerAbilities().get("op", False)
 
+
 def IsSneaking(player_id):
     # type: (str) -> bool
     return ServerComp.CreatePlayer(player_id).isSneaking()
 
+
 def PlayerUseItemToPos(player_id, pos, pos_type, slot=0, facing=1):
     # type: (str, tuple[int, int, int], int, int, int) -> bool
-    return ServerComp.CreateBlockInfo(player_id).PlayerUseItemToPos(pos, pos_type, slot, facing)
+    return ServerComp.CreateBlockInfo(player_id).PlayerUseItemToPos(
+        pos, pos_type, slot, facing
+    )
 
 
 __all__ = [

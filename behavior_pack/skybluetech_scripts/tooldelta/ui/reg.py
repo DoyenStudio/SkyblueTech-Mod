@@ -57,19 +57,21 @@ def onUiInit(_):
     for key, (
         screen_cls,
         cls_path,
-        bound_ui,
+        bound_ui_name,
         is_proxy,
     ) in registeredToolDeltaScreenClasses.items():
         if is_proxy:
-            ui_base_cls = screen_cls._register_as_proxy(key, bound_ui)
+            ui_base_cls = screen_cls._register_as_proxy(key, bound_ui_name)
             path = _regist_content(ui_base_cls)
-            NSManagerIns.RegisterScreenProxy(bound_ui, path)
+            NSManagerIns.RegisterScreenProxy(bound_ui_name, path)
         else:
-            ui_base_cls = screen_cls._register_as_screen(key, bound_ui)
+            ui_base_cls = screen_cls._register_as_screen(key)
             path = _regist_content(ui_base_cls)
-            res = RegisterUI(GetModName(), key, path, bound_ui)
+            res = RegisterUI(GetModName(), key, path, bound_ui_name)
             if not res:
-                logger.error("RegisterUI failed: {}, {}".format(cls_path, bound_ui))
+                logger.error(
+                    "RegisterUI failed: {}, {}".format(cls_path, bound_ui_name)
+                )
         registeredScreens[key] = screen_cls
 
 

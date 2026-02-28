@@ -91,10 +91,9 @@ class ToolDeltaScreen(ClientListenerService):
     @classmethod
     def _register_as_screen(
         cls,
-        screen_name,  # type: str
-        screen_key=None,  # type: str | None
+        screen_key,  # type: str
     ):
-        cls._screen_key = screen_key or screen_name
+        cls._screen_key = screen_key
 
         def __init__(self, namespace, name, param=None):
             ScreenNode.__init__(self, namespace, name, param)  # type: ignore

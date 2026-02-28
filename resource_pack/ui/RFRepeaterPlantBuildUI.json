@@ -179,6 +179,7 @@
                         },
                         {
                             "key_tip@SkybluePanelLib.TextWithBlackBg": {
+                                "layer": 5,
                                 "$text_content": "键盘 O",
                                 "anchor_from": "left_middle",
                                 "anchor_to": "right_middle"
@@ -258,6 +259,7 @@
                         },
                         {
                             "key_tip@SkybluePanelLib.TextWithBlackBg": {
+                                "layer": 5,
                                 "$text_content": "键盘 F",
                                 "anchor_from": "left_middle",
                                 "anchor_to": "right_middle"

@@ -25,8 +25,7 @@
                     "texture": "skybluetech:wind_generator"
                 }
             },
-            "netease:block_entity": {
-            },
+            "netease:block_entity": {},
             "netease:aabb": {
                 "collision": {
                     "min": [

@@ -69,21 +69,6 @@ def isPowerAccepter(block_name, dim, posdata):
     return "redstoneflux_accepter" in block_tags
 
 
-# def addContainerToNetwork(dim, x, y, z, network):
-#     # type: (int, int, int, int, WireNetwork) -> None
-#     """
-#     初始化一个容器附近的所有传输网络。
-#     一般是容器被创建时调用的。
-
-#     Args:
-#         dim (int): 维度 ID
-#         x (int): x
-#         y (int): y
-#         z (int): z
-#         network (WireNetwork): 传输网络
-#     """
-
-
 def RequireEnergyFromNetwork(machine):
     # type: (BaseMachine) -> bool
     ok = False

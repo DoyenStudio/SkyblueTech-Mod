@@ -2,6 +2,7 @@
 import uuid
 from mod.server.blockEntityData import BlockEntityData
 from mod.server.extraServerApi import GetLevelId
+from mod_log import logger
 from skybluetech_scripts.tooldelta.events.server import (
     ServerEntityTryPlaceBlockEvent,
     ServerBlockUseEvent,
@@ -61,12 +62,6 @@ if 0:
 K_GLOBAL_NETWORK_DATAS = "st:global_rf_repeater_network_datas"
 K_GLOBAL_NODES = "st:global_rf_repeater_nodes"
 
-K_NETWORK_DIM = "dim"
-K_NETWORK_NODES = "nodes"
-
-K_MODE = "mode"
-K_BOUND_NETWORK_UUID = "bound_nuuid"
-K_CONNECT_NODES = "con_nodes"
 
 block_sync = BlockSync(MACHINE_ID)
 
@@ -90,6 +85,7 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
         self.layer = states["skybluetech:layer"]  # type: int
         # 如果不是基座方块则无功能
         self.is_base_block = self.layer == 0
+        self.flush_data()
 
     @classmethod
     def OnPrePlaced(cls, event):
@@ -111,14 +107,16 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
             event.cancel()
             PlayerUseItemToPos(event.playerId, (self.x, self.y - self.layer, self.z), 2)
             return
-        node_data = get_node_data(self.dim, self.x, self.y, self.z)
-        if node_data is None:
+        node = get_node(self.dim, (self.x, self.y, self.z))
+        if node is None:
             mode = 0b1111
+            euid = "??????"
         else:
-            mode = node_data[K_MODE]
-        east_io_mode, west_io_mode, south_io_mode, north_io_mode = get_mode(mode)
+            mode = node.modes
+            euid = node.bound_network_uuid[-6:]
+        east_io_mode, west_io_mode, south_io_mode, north_io_mode = unpack_modes(mode)
         network_prof_data = sum_network_data(
-            (node_data or {}).get(K_BOUND_NETWORK_UUID)
+            node.bound_network_uuid if node is not None else None
         )
         GUIControl.OnClick(
             self,
@@ -129,6 +127,7 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
                     self.x,
                     self.y,
                     self.z,
+                    euid,
                     east_io_mode,
                     west_io_mode,
                     south_io_mode,
@@ -166,7 +165,7 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
                 self.block_name,
                 GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": i}),
             )
-        add_single_node(self.dim, self.x, self.y, self.z)
+        add_single_node(self.dim, (self.x, self.y, self.z))
 
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
@@ -182,11 +181,11 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
         UpdateBlockStates(
             self.dim,
             (self.x, self.y, self.z),
-            {"skybluetech:%s_charge" % facing_en: connectToWire},
+            {"skybluetech:connection_" + facing_en: connectToWire},
         )
 
     def OnDestroy(self):
-        remove_node_and_flush(self.dim, self.x, self.y, self.z)
+        remove_node_and_flush(self.dim, (self.x, self.y, self.z))
         base_y = self.y - self.layer
         for i in range(3):
             if i != self.layer:
@@ -197,15 +196,182 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
         GUIControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
+    def AddPower(self, rf, max_limit=None, passed=None):
+        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
+        ok = False
+        if passed is not None:
+            passed.add(self)
+        for node_pos in self.nodes_in_network:
+            plant = GetMachineStrict(self.dim, *node_pos)
+            if not isinstance(plant, RFRepeaterPlant):
+                continue
+            if passed is not None and plant in passed:
+                continue
+            _ok, rf = plant.transfer_power_to(rf, max_limit, passed)
+            ok = ok or _ok
+            if rf == 0:
+                return ok, 0
+        return ok, rf
+
     def get_nearconn_plants(self):
         # type: () -> list[tuple[int, int, int]] | None
-        node_data = get_nodes_data().get((self.dim, self.x, self.y, self.z))
-        if node_data is None:
+        node = get_node(self.dim, (self.x, self.y, self.z))
+        if node is None:
             return None
-        return node_data[K_CONNECT_NODES]
+        return node.connected_nodes
+
+    def flush_data(self, from_network=None):
+        # type: (NetworkData | None) -> None
+        if from_network is not None:
+            self.nodes_in_network = from_network.nodes
+        else:
+            my_node = get_node(self.dim, (self.x, self.y, self.z))
+            self.nodes_in_network = {}
+            if my_node is not None:
+                network = get_network(my_node.bound_network_uuid)
+                if network is not None:
+                    self.nodes_in_network = network.nodes
+
+    def transfer_power_to(self, rf, max_limit=None, passed=None):
+        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
+        requireWireModule()
+        ok = False
+        east, west, south, north = unpack_modes(self.modes)
+        valid_output_faces = []  # type: list[int]
+        if passed is not None:
+            passed.add(self)
+        if east:
+            valid_output_faces.append(5)
+        if west:
+            valid_output_faces.append(4)
+        if south:
+            valid_output_faces.append(3)
+        if north:
+            valid_output_faces.append(2)
+        cnode = GetContainerNode(self.dim, self.x, self.y, self.z, enable_cache=True)
+        valid_output_networks = [
+            v for k, v in cnode.inputs.items() if k in valid_output_faces
+        ]
+        for network in valid_output_networks:
+            if network is None:
+                continue
+            for ap in network.get_input_access_points():
+                machine = pool.GetMachineStrict(self.dim, *ap.target_pos)
+                if machine is not None and not machine.is_non_energy_machine:
+                    if passed is not None and machine in passed:
+                        continue
+                    updated, rf = machine.AddPower(rf, network.transfer_speed, passed)
+                    ok = ok or updated
+                    if rf == 0:
+                        break
+        return ok, rf
+
+    @property
+    def modes(self):
+        # type: () -> int
+        return self.bdata[NodeData.K_MODES] or 0b0000
+
+    @modes.setter
+    def modes(self, value):
+        # type: (int) -> None
+        print("SetMode", value)
+        self.bdata[NodeData.K_MODES] = value
 
 
 build_speed_limiter = PlayerRateLimiter(1)
+
+
+class NetworkData(object):
+    K_DIM = "dim"
+    K_NODES = "nodes"
+
+    def __init__(self, network_data, network_uuid):
+        # type: (dict, str) -> None
+        self.uuid = network_uuid
+        self.dim = network_data[self.K_DIM]  # type: int
+        self.nodes = network_data[self.K_NODES]  # type: dict[tuple[int, int, int], int]
+
+    @classmethod
+    def new(
+        cls,
+        dim,  # type: int
+    ):
+        return cls(
+            {
+                cls.K_DIM: dim,
+                cls.K_NODES: {},
+            },
+            uuid.uuid4().hex,
+        )
+
+    def add_node(self, node_pos, modes=0b0000):
+        # type: (tuple[int, int, int], int) -> None
+        self.nodes[node_pos] = modes
+
+    def remove_node(self, node_pos):
+        # type: (tuple[int, int, int]) -> None
+        self.nodes.pop(node_pos, None)
+
+    def save_to_global_dict(self, network_datas):
+        network_datas[self.uuid] = {
+            self.K_DIM: self.dim,
+            self.K_NODES: self.nodes,
+        }
+
+
+class NodeData(object):
+    K_MODES = "modes"
+    K_BOUND_NETWORK_UUID = "bound_nuuid"
+    K_CONNECTED_NODES = "con_nodes"
+
+    def __init__(self, dim, pos, node_data):
+        # type: (int, tuple[int, int, int], dict) -> None
+        self.dim = dim
+        self.pos = pos
+        self.bound_network_uuid = node_data[self.K_BOUND_NETWORK_UUID]  # type: str
+        self.connected_nodes = node_data[self.K_CONNECTED_NODES]  # type: list[tuple[int, int, int]]
+        self.modes = node_data[self.K_MODES]  # type: int
+
+    @classmethod
+    def new(
+        cls,
+        dim,  # type: int
+        pos,  # type: tuple[int, int, int]
+        bound_network_uuid,
+    ):
+        return cls(
+            dim,
+            pos,
+            {
+                cls.K_BOUND_NETWORK_UUID: bound_network_uuid,
+                cls.K_MODES: 0b0000,
+                cls.K_CONNECTED_NODES: [],
+            },
+        )
+
+    def connect_to_node(self, node_pos):
+        # type: (tuple[int, int, int]) -> None
+        self.connected_nodes.append(node_pos)
+
+    def disconnect_to_node(self, node_pos):
+        # type: (tuple[int, int, int]) -> None
+        self.connected_nodes.remove(node_pos)
+
+    def save_to_global_dict(self, node_datas):
+        x, y, z = self.pos
+        node_datas[(self.dim, x, y, z)] = {
+            self.K_BOUND_NETWORK_UUID: self.bound_network_uuid,
+            self.K_MODES: self.modes,
+            self.K_CONNECTED_NODES: self.connected_nodes,
+        }
+        # extra
+        bdata = GetBlockEntityData(self.dim, x, y, z)
+        if bdata is None:
+            logger.error("RFRepeaterPlant: Failed to dump: {}".format(self.pos))
+            return
+        bdata[self.K_CONNECTED_NODES] = [[x, y, z] for x, y, z in self.connected_nodes]
+        bdata[self.K_BOUND_NETWORK_UUID] = self.bound_network_uuid
+        bdata[self.K_MODES] = self.modes
 
 
 class SummariedNetworkData:
@@ -220,20 +386,32 @@ class SummariedNetworkData:
         self.init()
 
     def init(self):
-        network_data = get_networks_data().get(self.network_uuid)
-        if network_data is None:
+        network = get_network(self.network_uuid)
+        if network is None:
             return
-        dim = network_data[K_NETWORK_DIM]
-        nodes = get_nodes_in_network(self.network_uuid)
-        self.network_plant_count = len(nodes)
-        for (x, y, z), io_mode in nodes.items():
-            east, west, south, north = get_mode(io_mode)
+        self.network_plant_count = len(network.nodes)
+        for (x, y, z), io_mode in network.nodes.items():
+            east, west, south, north = unpack_modes(io_mode)
             self.total_input_count += 4 - (east + west + south + north)
             self.total_output_count += east + west + south + north
-            if isinstance(GetMachineStrict(dim, x, y, z), RFRepeaterPlant):
+            if isinstance(GetMachineStrict(network.dim, x, y, z), RFRepeaterPlant):
                 self.network_plant_online_count += 1
                 self.total_input_active_count += 4 - (east + west + south + north)
                 self.total_output_active_count += east + west + south + north
+
+
+def requireWireModule():
+    global GetContainerNode, pool
+    if requireWireModule.has_cache:
+        return
+    from ..transmitters.wire.logic import logic_module
+    from . import pool
+
+    GetContainerNode = logic_module.GetContainerNode
+    requireWireModule.has_cache = True
+
+
+requireWireModule.has_cache = False
 
 
 @RFRepeaterPlantBuildRequest.Listen()
@@ -308,15 +486,11 @@ def onSettingUpload(event):
     dim = GetPlayerDimensionId(event.player_id)
     m = GetMachineStrict(dim, event.x, event.y, event.z)
     if not isinstance(m, RFRepeaterPlant):
-        print("no")
         return
     if not m.is_base_block:
-        print("no 2")
         return
     if event.io_dir < 0 or event.io_dir > 3:
-        print("no 3")
         return
-    print("upload io mode", event.io_mode)
     change_node_mode(
         dim,
         event.x,
@@ -325,19 +499,18 @@ def onSettingUpload(event):
         single_dir=event.io_dir,
         single_mode=bool(event.io_mode),
     )
-    print("really changed", event.io_mode)
 
 
 def sum_network_data(network_uuid):
     return SummariedNetworkData(network_uuid)
 
 
-def set_mode(east, west, south, north):
+def pack_modes(east, west, south, north):
     # type: (bool, bool, bool, bool) -> int
     return east << 3 | west << 2 | south << 1 | north
 
 
-def get_mode(mode):
+def unpack_modes(mode):
     # type: (int) -> tuple[bool, bool, bool, bool]
     return (
         bool(mode >> 3 & 1),
@@ -361,11 +534,6 @@ def save_networks_data(networks_data):
     SetExtraData(GetLevelId(), K_GLOBAL_NETWORK_DATAS, networks_data)
 
 
-def get_node_data(dim, x, y, z):
-    # type: (int, int, int, int) -> dict | None
-    return get_nodes_data().get((dim, x, y, z))
-
-
 def get_nodes_data():
     # type: () -> dict[tuple[int, int, int, int], dict]
     return GetExtraData(GetLevelId(), K_GLOBAL_NODES, {})
@@ -376,57 +544,53 @@ def save_nodes_data(nodes_data):
     SetExtraData(GetLevelId(), K_GLOBAL_NODES, nodes_data)
 
 
-def get_node_bound_network(dim, x, y, z):
-    # type: (int, int, int, int) -> str | None
-    res = get_nodes_data().get((dim, x, y, z))
-    if res is None:
+def get_node(dim, pos, global_nodes_data=None):
+    # type: (int, tuple[int, int, int], dict | None) -> NodeData | None
+    x, y, z = pos
+    data = (global_nodes_data or get_nodes_data()).get((dim, x, y, z))
+    if data is None:
         return None
-    return res[K_BOUND_NETWORK_UUID]
+    else:
+        return NodeData(dim, pos, data)
 
 
-def get_nodes_in_network(network_uuid):
-    # type: (str) -> dict[tuple[int, int, int], int]
-    network_data = get_networks_data().get(network_uuid)
-    if not network_data:
-        return {}
-    return network_data[K_NETWORK_NODES]
+def get_network(network_uuid, global_networks_data=None):
+    # type: (str, dict | None) -> NetworkData | None
+    data = (global_networks_data or get_networks_data()).get(network_uuid)
+    if data is None:
+        return None
+    else:
+        return NetworkData(data, network_uuid)
 
 
-def add_single_node(dim, x, y, z):
-    # type: (int, int, int, int) -> None
-    network_uuid = _add_node_to_network(dim, x, y, z)
-    bedata = GetBlockEntityData(dim, x, y, z)
-    if bedata is not None:
-        bedata[K_BOUND_NETWORK_UUID] = network_uuid
-        bedata[K_CONNECT_NODES] = []
+def add_single_node(dim, pos):
+    # type: (int, tuple[int, int, int]) -> None
+    _add_node_to_network(dim, pos)
 
 
 def build_connection(
     dim,  # type: int
-    node,  # type: tuple[int, int, int]
-    node2,  # type: tuple[int, int, int]
+    node_pos1,  # type: tuple[int, int, int]
+    node_pos2,  # type: tuple[int, int, int]
 ):
     nodes_data = get_nodes_data()
     networks_data = get_networks_data()
-    x, y, z = node
-    node_data = nodes_data.get((dim, x, y, z))
-    if node_data is None:
+    node_1 = get_node(dim, node_pos1, nodes_data)
+    if node_1 is None:
         return False
-    nx, ny, nz = node2
-    node2_data = nodes_data.get((dim, nx, ny, nz))
-    if node2_data is None:
+    node_2 = get_node(dim, node_pos2, nodes_data)
+    if node_2 is None:
         return False
-    node2_data[K_CONNECT_NODES].append(node)
-    node_data[K_CONNECT_NODES].append(node2)
-    reinit_network_from_one_node(dim, x, y, z, networks_data, nodes_data)
+    # 移除原有网络数据, 因为要重新初始化网络
+    _delete_network(networks_data, node_1.bound_network_uuid)
+    _delete_network(networks_data, node_2.bound_network_uuid)
+    node_1.connect_to_node(node_2.pos)
+    node_2.connect_to_node(node_1.pos)
+    node_1.save_to_global_dict(nodes_data)
+    node_2.save_to_global_dict(nodes_data)
+    _init_network_from_one_node(dim, node_pos1, networks_data, nodes_data)
     save_networks_data(networks_data)
     save_nodes_data(nodes_data)
-    bedata1 = GetBlockEntityData(dim, x, y, z)
-    if bedata1 is not None:
-        bedata1[K_CONNECT_NODES] = [list(i) for i in node_data[K_CONNECT_NODES]]
-    bedata2 = GetBlockEntityData(dim, nx, ny, nz)
-    if bedata2 is not None:
-        bedata2[K_CONNECT_NODES] = [list(i) for i in node2_data[K_CONNECT_NODES]]
     return True
 
 
@@ -434,46 +598,47 @@ def change_node_mode(dim, x, y, z, new_modes=None, single_dir=None, single_mode=
     # type: (int, int, int, int, int | None, int | None, bool | None) -> None
     m = GetMachineStrict(dim, x, y, z)
     if not isinstance(m, RFRepeaterPlant):
-        print("Retu")
         return
-    orig = m.bdata[K_MODE] or 0b1111
+    orig = m.bdata[NodeData.K_MODES] or 0b0000
     if new_modes is not None:
-        m.bdata[K_MODE] = new_modes
+        m.bdata[NodeData.K_MODES] = new_modes
+        modes = new_modes
     elif single_dir is not None and single_mode is not None:
-        new_modes = m.bdata[K_MODE] = orig & ((1 << single_dir) ^ 0b1111) | (
-            1 << single_dir if single_mode else 0
+        m.bdata[NodeData.K_MODES] = modes = orig & ((1 << single_dir) ^ 0b1111) | (
+            (1 << single_dir) if single_mode else 0
         )
-    if new_modes is not None and single_dir is not None:
-        print(
-            "prev",
-            bin(0b10000 | orig),
-            "&",
-            bin(0b10000 | 1 << single_dir),
-            single_mode,
-            "now",
-            bin(0b10000 | new_modes),
-        )
-    network_uuid = m.bdata[K_BOUND_NETWORK_UUID]
+    else:
+        raise ValueError("new_modes or single_dir and single_mode must be specified")
+    network_uuid = m.bdata[NodeData.K_BOUND_NETWORK_UUID]
     if network_uuid is None:
-        print("giao")
+        logger.error(
+            "RFRepeaterPlant: empty network uuid from blockactor@{}".format((x, y, z))
+        )
         return
     networks_data = get_networks_data()
-    network_data = networks_data.get(network_uuid)
-    if network_data is None:
-        print("[Error] RFRepeaterPlant: Network not found at {}".format((x, y, z)))
-        return
-    network_data[K_NETWORK_NODES][(x, y, z)] = new_modes
     nodes_data = get_nodes_data()
-    nodes_data[(dim, x, y, z)][K_MODE] = new_modes
+    network = get_network(network_uuid, networks_data)
+    if network is None:
+        logger.error("RFRepeaterPlant: Network not found at {}".format((x, y, z)))
+        return
+    node = get_node(dim, (x, y, z), nodes_data)
+    if node is None:
+        logger.error("RFRepeaterPlant: Node not found at {}".format((x, y, z)))
+        return
+    network.nodes[(x, y, z)] = modes
+    node.modes = modes
+    network.save_to_global_dict(networks_data)
+    node.save_to_global_dict(nodes_data)
     save_networks_data(networks_data)
     save_nodes_data(nodes_data)
     s = sum_network_data(network_uuid)
-    east, west, south, north = get_mode(m.bdata[K_MODE])
+    east, west, south, north = unpack_modes(m.bdata[NodeData.K_MODES])
     RFRepeaterPlantSettingsUpdate(
         dim,
         x,
         y,
         z,
+        node.bound_network_uuid[-6:],
         east,
         west,
         south,
@@ -487,122 +652,104 @@ def change_node_mode(dim, x, y, z, new_modes=None, single_dir=None, single_mode=
     ).sendMulti(m.sync.GetPlayersInSync())
 
 
-def remove_node_and_flush(dim, x, y, z):
-    # type: (int, int, int, int) -> None
+def remove_node_and_flush(dim, pos):
+    # type: (int, tuple[int, int, int]) -> None
     nodes_data = get_nodes_data()
-    node_data = nodes_data.pop((dim, x, y, z), None)
+    node_data = nodes_data.pop((dim,) + pos, None)
     if node_data is None:
         return
-    nuuid = node_data[K_BOUND_NETWORK_UUID]
-    if not nuuid:
-        return
-    near_nodes = node_data[K_CONNECT_NODES]
+    node = NodeData(dim, pos, node_data)
+    nuuid = node.bound_network_uuid
     networks_data = get_networks_data()
-    _pop_node_from_network(dim, x, y, z, networks_data, nuuid)
+    _delete_network(networks_data, nuuid)
     nodes_inited = set()
-    for nx, ny, nz in near_nodes:
-        _remove_connected_node(dim, nx, ny, nz, (x, y, z), nodes_data)
-        reinit_network_from_one_node(
-            dim, x, y, z, networks_data, nodes_data, nodes_inited
+    connected_nodes = node.connected_nodes
+    for node_pos in connected_nodes:
+        _remove_connected_node(dim, node_pos, pos, nodes_data)
+        _init_network_from_one_node(
+            dim, node_pos, networks_data, nodes_data, nodes_inited
         )
     save_networks_data(networks_data)
     save_nodes_data(nodes_data)
 
 
-def reinit_network_from_one_node(
+def _init_network_from_one_node(
     dim,  # type: int
-    x,  # type: int
-    y,  # type: int
-    z,  # type: int
+    pos,  # type: tuple[int, int, int]
     networks_data,  # type: dict[str, dict]
     nodes_data,  # type: dict[tuple[int, int, int, int], dict]
     nodes_inited=None,  # type: set[tuple[int, int, int]] | None
 ):
     if nodes_inited is None:
         nodes_inited = set()
-    if (dim, x, y, z) in nodes_inited:
+    if pos in nodes_inited:
         return
-    network_data, nuuid = new_network(networks_data, dim)
-    _dfs_reinit_network(dim, x, y, z, nodes_data, nuuid, network_data, nodes_inited)
+    network = NetworkData.new(dim)
+    _dfs_init_network(dim, pos, nodes_data, network, nodes_inited)
+    network.save_to_global_dict(networks_data)
+    for node_pos in nodes_inited:
+        plant = GetMachineStrict(dim, *node_pos)
+        if isinstance(plant, RFRepeaterPlant):
+            plant.flush_data(network)
 
 
-def new_network(networks_dict, dim):
-    # type: (dict[str, dict], int) -> tuple[dict, str]
-    nuuid = uuid.uuid4().hex
-    network_dict = networks_dict[nuuid] = {
-        K_NETWORK_DIM: dim,
-        K_NETWORK_NODES: {},
-    }
-    return network_dict, nuuid
-
-
-def new_node_data(dim, x, y, z, bound_network_uuid):
-    # type: (int, int, int, int, str) -> dict
-    return {
-        K_BOUND_NETWORK_UUID: bound_network_uuid,
-        K_MODE: 0b0000,
-        K_CONNECT_NODES: [],
-    }
-
-
-def _dfs_reinit_network(
+def _dfs_init_network(
     dim,  # type: int
-    x,  # type: int
-    y,  # type: int
-    z,  # type: int
+    pos,  # type: tuple[int, int, int]
     nodes_data,  # type: dict[tuple[int, int, int, int], dict]
-    nuuid,  # type: str
-    network_data,  # type: dict[str, dict]
+    network,  # type: NetworkData
     nodes_inited,  # type: set[tuple[int, int, int]]
 ):
-    if (x, y, z) in nodes_inited:
+    if pos in nodes_inited:
         return
-    node_data = nodes_data.get((dim, x, y, z))
-    if node_data is None:
+    node = get_node(dim, pos, nodes_data)
+    if node is None:
         return
-    node_data[K_BOUND_NETWORK_UUID] = nuuid
-    network_data[K_NETWORK_NODES][(x, y, z)] = node_data[K_MODE]
-    near_nodes = node_data[K_CONNECT_NODES]  # type: list[tuple[int, int, int]]
-    nodes_inited.add((x, y, z))
-    for node_x, node_y, node_z in near_nodes:
-        _dfs_reinit_network(
-            dim, node_x, node_y, node_z, nodes_data, nuuid, network_data, nodes_inited
-        )
+    node.bound_network_uuid = network.uuid
+    network.nodes[pos] = node.modes
+    nodes_inited.add(pos)
+    node.save_to_global_dict(nodes_data)
+    for node_pos in node.connected_nodes:
+        _dfs_init_network(dim, node_pos, nodes_data, network, nodes_inited)
 
 
-def _add_node_to_network(dim, x, y, z, network_uuid=None):
-    # type: (int, int, int, int, str | None) -> str
-    prev_networks = get_networks_data()
+def _add_node_to_network(dim, pos, network_uuid=None):
+    # type: (int, tuple[int, int, int], str | None) -> str
+    networks_data = get_networks_data()
     nodes_data = get_nodes_data()
-    if prev_networks is None:
-        prev_networks = {}
     if network_uuid is None:
-        network_data, network_uuid = new_network(prev_networks, dim)
+        network = NetworkData.new(dim)
+        network_uuid = network.uuid
     else:
-        network_data = prev_networks[network_uuid]
-    network_data[K_NETWORK_NODES][(x, y, z)] = 0b00
-    nodes_data[(dim, x, y, z)] = new_node_data(dim, x, y, z, network_uuid)
-    save_networks_data(prev_networks)
+        network = get_network(network_uuid, networks_data)
+        if network is None:
+            raise ValueError("Network not found")
+    network.add_node(pos, 0b0000)
+    network.save_to_global_dict(networks_data)
+    NodeData.new(dim, pos, network_uuid).save_to_global_dict(nodes_data)
+    save_networks_data(networks_data)
     save_nodes_data(nodes_data)
+    plant = GetMachineStrict(dim, *pos)
+    if isinstance(plant, RFRepeaterPlant):
+        plant.flush_data(network)
     return network_uuid
 
 
-def _remove_connected_node(dim, x, y, z, nearby_node, nodes_data):
-    # type: (int, int, int, int, tuple[int, int, int], dict[tuple[int, int, int, int], dict]) -> None
-    node_data = nodes_data.get((dim, x, y, z))
-    if node_data is None:
-        return
-    node_data[K_CONNECT_NODES].remove(nearby_node)
+def _remove_connected_node(dim, pos1, pos2, nodes_data):
+    # type: (int, tuple[int, int, int], tuple[int, int, int], dict[tuple[int, int, int, int], dict]) -> None
+    node1 = get_node(dim, pos1, nodes_data)
+    node2 = get_node(dim, pos2, nodes_data)
+    if node1 is not None:
+        node1.disconnect_to_node(pos2)
+        node1.save_to_global_dict(nodes_data)
+    if node2 is not None:
+        node2.disconnect_to_node(pos1)
+        node2.save_to_global_dict(nodes_data)
 
 
-def _pop_node_from_network(dim, x, y, z, network_datas, network_uuid):
-    # type: (int, int, int, int, dict[str, dict], str) -> None
-    network_data = network_datas.get(network_uuid)
-    if network_data is None:
-        return
-    del network_data[K_NETWORK_NODES][(x, y, z)]
-    if not network_data[K_NETWORK_NODES]:
-        del network_datas[network_uuid]
+def _delete_network(network_datas, network_uuid):
+    # type: (dict[str, dict], str) -> None
+    network_datas.pop(network_uuid, None)
 
 
 # CLIENT PART
@@ -620,8 +767,12 @@ class Laser:
             (x2 + 0.5, y2 + 2.8, z2 + 0.5),
             hex2rgb(0x00FFFF),
         )
+        self._removed = False
 
     def Remove(self):
+        if self._removed:
+            return
+        self._removed = True
         self.shape.Remove()
 
     def __hash__(self):
@@ -642,6 +793,12 @@ def hex2rgb(hex):
 def add_laser(xyz1, xyz2):
     # type: (tuple[int, int, int], tuple[int, int, int]) -> None
     laser = Laser(xyz1, xyz2)
+    prev_laser = lasers.get(xyz1, {}).get(xyz2, None)
+    if prev_laser:
+        prev_laser.Remove()
+    prev_laser = lasers.get(xyz2, {}).get(xyz1, None)
+    if prev_laser:
+        prev_laser.Remove()
     lasers.setdefault(xyz1, {})[xyz2] = laser
     lasers.setdefault(xyz2, {})[xyz1] = laser
 
@@ -655,7 +812,9 @@ def remove_laser_src(xyz):
         laser.Remove()
         other_pos_lasers = lasers.get(other_xyz)
         if other_pos_lasers is not None:
-            other_pos_lasers.pop(xyz, None)
+            laser_2 = other_pos_lasers.pop(xyz, None)
+            if laser_2:
+                laser_2.Remove()
             if not other_pos_lasers:
                 del lasers[other_xyz]
 
@@ -679,7 +838,7 @@ def onPlantLoaded(event):
     if block_entity_data is None:
         return
     pydata = NBT2Py(block_entity_data["exData"])
-    con_nodes = pydata.get(K_CONNECT_NODES, [])
+    con_nodes = pydata.get(NodeData.K_CONNECTED_NODES, [])
     for con_node in con_nodes:
         add_laser((event.posX, event.posY, event.posZ), tuple(con_node))
 

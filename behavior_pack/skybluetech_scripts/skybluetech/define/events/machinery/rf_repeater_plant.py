@@ -63,6 +63,7 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
         x,  # type: int
         y,  # type: int
         z,  # type: int
+        network_euid,  # type: str
         east_io_mode,  # type: bool
         west_io_mode,  # type: bool
         south_io_mode,  # type: bool
@@ -74,6 +75,7 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
         total_input_count,  # type: int
         total_input_active_count,  # type: int
     ):
+        self.network_euid = network_euid
         self.dim = dim
         self.x = x
         self.y = y
@@ -95,6 +97,7 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
             "x": self.x,
             "y": self.y,
             "z": self.z,
+            "network_euid": self.network_euid,
             "east": self.east_io_mode,
             "west": self.west_io_mode,
             "north": self.north_io_mode,
@@ -114,10 +117,11 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
             data["x"],
             data["y"],
             data["z"],
+            data["network_euid"],
             data["east"],
             data["west"],
-            data["north"],
             data["south"],
+            data["north"],
             data["npc"],
             data["npco"],
             data["toc"],

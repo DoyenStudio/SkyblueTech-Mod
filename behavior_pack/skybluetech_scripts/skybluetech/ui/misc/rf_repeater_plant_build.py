@@ -96,15 +96,15 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
         self.finish_btn.SetVisible(False)
 
     def test_is_finished(self):
-        nearest = get_nearest_machine()
+        nearest = get_nearest_plant()
         if nearest is None:
             if self.nearest_machine_pos is not None:
                 self.nearest_machine_pos = None
                 self.disable_finish_btn()
         else:
             if self.nearest_machine_pos is None:
-                self.nearest_machine_pos = nearest
                 self.enable_finish_btn()
+            self.nearest_machine_pos = nearest
 
     def on_cancel_build(self, _):
         SetPopupNotice("已退出布线模式")
@@ -170,7 +170,7 @@ def onModBlockRemoved(event):
     loaded_client_machinerys.discard((event.posX, event.posY, event.posZ))
 
 
-def get_nearest_machine():
+def get_nearest_plant():
     if not loaded_client_machinerys:
         return []
     x, y, z = GetFootPos(GetLocalPlayerId())

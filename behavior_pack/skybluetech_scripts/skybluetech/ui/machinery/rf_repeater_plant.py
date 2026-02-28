@@ -4,6 +4,7 @@ from ...define.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantSettingUpload,
     RFRepeaterPlantSettingsUpdate,
 )
+from ...ui_sync.machinery.rf_repeater_plant import RFRepeaterPlantUISync
 from ..misc.rf_repeater_plant_build import RFRepeaterPlantBuildUI
 from .define import MachinePanelUI, SCREEN_BASE_PATH
 
@@ -60,6 +61,9 @@ class RFRepeaterPlantUI(MachinePanelUI):
                 self._init_params["st:init_content"]
             )
         )
+        self.sync = RFRepeaterPlantUISync.NewClient(
+            self.dim, self.x, self.y, self.z
+        ).Activate()
 
     @MachinePanelUI.Listen(RFRepeaterPlantSettingsUpdate)
     def onContentUpdate(self, event):
@@ -70,6 +74,7 @@ class RFRepeaterPlantUI(MachinePanelUI):
         set_ctrl_button_tipimg(self.south_ctrl_btn, event.south_io_mode)
         self.databoard.SetText(
             format_content(
+                event.network_euid,
                 event.network_plant_count,
                 event.network_plant_online_count,
                 event.total_output_count,
@@ -100,7 +105,6 @@ class RFRepeaterPlantUI(MachinePanelUI):
         })
 
     def on_press_north_ctrl(self, _):
-        print("PREV=", self.curr_north_ctrl_mode)
         self.curr_north_ctrl_mode = not self.curr_north_ctrl_mode
         RFRepeaterPlantSettingUpload(
             self.x,
@@ -110,7 +114,6 @@ class RFRepeaterPlantUI(MachinePanelUI):
             self.curr_north_ctrl_mode,
         ).send()
         set_ctrl_button_tipimg(self.north_ctrl_btn, self.curr_north_ctrl_mode)
-        print("CURR=", self.curr_north_ctrl_mode)
 
     def on_press_south_ctrl(self, _):
         self.curr_south_ctrl_mode = not self.curr_south_ctrl_mode
@@ -152,6 +155,7 @@ def mode2str(m):
 
 
 def format_content(
+    network_euid,  # type: str
     network_plant_count,  # type: int
     network_plant_online_count,  # type: int
     total_output_count,  # type: int
@@ -160,12 +164,13 @@ def format_content(
     total_input_active_count,  # type: int
 ):
     return (
-        "§a电网架设完毕。"
+        "§a[%s] 电网架设完毕。"
         "\n"
         "\n§b电网中继塔数： §f%d （在线 %d）"
         "\n§4总输出端数： §f%d （在线 %d）"
         "\n§a总输入端数： §f%d （在线 %d）"
     ) % (
+        network_euid.upper(),
         network_plant_count,
         network_plant_online_count,
         total_output_count,
@@ -179,7 +184,7 @@ def set_ctrl_button_tipimg(ctrl, mode):
     # type: (UBaseCtrl, bool) -> None
     if mode:
         # mode=output=True=green
-        ctrl["arrow"].asImage().SetUV((0, 0), (16, 16))
+        ctrl["arrow"].asImage().SetUV((0, 16), (16, 16))
     else:
         # mode=input=False=red
-        ctrl["arrow"].asImage().SetUV((0, 16), (16, 16))
+        ctrl["arrow"].asImage().SetUV((0, 0), (16, 16))

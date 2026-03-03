@@ -1,0 +1,11 @@
+{
+    "parent": "machinery_toc",
+    "icon": "textures/machines/metal_press_front",
+    "title": "金属冲压机",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "可以使用一份金属原料和润滑油生产金属棒。"
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "parent": "basic_concepts_toc",
+    "icon": "textures/icon/fluid",
+    "title": "流体",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "气体和液体统称为流体， 需要使用§9流体管道§r进行传输。\n§9流体储罐§r可存储液体或气体。\n手持§2空桶§r点击存储了流体的机器可将其中的流体进行装桶； 反之可向其装填流体。"
+        }
+    ]
+}

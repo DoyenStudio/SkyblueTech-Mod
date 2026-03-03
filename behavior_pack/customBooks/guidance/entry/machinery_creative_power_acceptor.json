@@ -1,0 +1,11 @@
+{
+    "parent": "machinery_toc",
+    "icon": "textures/machines/creative_power_acceptor_top",
+    "title": "虚空放电器",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "§c§l本物品仅存于创造模式。§r\n虚空放电器会将输入的能量§4全部排入虚空§r， 同时也会显示实时输入功率。\n\n§4注意：§r 因为其具有无限的输入功率， 所以与其他机器并联接入电网时请调低虚空放电器的优先级， 以避免其他机器无法获得能源。"
+        }
+    ]
+}

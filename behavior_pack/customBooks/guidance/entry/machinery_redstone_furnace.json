@@ -1,0 +1,11 @@
+{
+    "parent": "machinery_toc",
+    "icon": "textures/machines/redstone_furnace_front",
+    "title": "红石炉",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "红石炉将红石能作为燃料， 和熔炉一样§c烧制物品§r。"
+        }
+    ]
+}

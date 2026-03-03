@@ -1,0 +1,11 @@
+{
+    "parent": "machinery_toc",
+    "icon": "textures/machines/mixer_front",
+    "title": "固液搅拌机",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "可以将固体与流体进行混合搅拌得到固体新产物。"
+        }
+    ]
+}

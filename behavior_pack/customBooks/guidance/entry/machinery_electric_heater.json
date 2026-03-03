@@ -1,0 +1,11 @@
+{
+    "parent": "machinery_toc",
+    "icon": "textures/icon/electric_heater_icon",
+    "title": "电力加热仓",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "通电后可按照设置的温度向上前后左右五个铜盘面输出§c热能§r， 供一些需热机器使用。"
+        }
+    ]
+}

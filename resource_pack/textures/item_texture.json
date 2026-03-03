@@ -82,6 +82,9 @@
         "skybluetech:gold_plate": {
             "textures": "textures/items/plates/gold_plate"
         },
+        "skybluetech:guidance": {
+            "textures": "textures/items/guidance"
+        },
         "skybluetech:heavy_lava_bucket": {
             "textures": "textures/items/buckets/heavy_lava_bucket"
         },
@@ -97,14 +100,8 @@
         "skybluetech:iron_dust": {
             "textures": "textures/items/dusts/iron_dust"
         },
-        "skybluetech:pincer_iron": {
-            "textures": "textures/items/pincer_iron"
-        },
         "skybluetech:iron_plate": {
             "textures": "textures/items/plates/iron_plate"
-        },
-        "skybluetech:wrench_iron": {
-            "textures": "textures/items/wrench_iron"
         },
         "skybluetech:junior_battery": {
             "textures": "textures/items/batterys/junior_battery"
@@ -193,8 +190,14 @@
         "skybluetech:obj_upgrader_spec_farming": {
             "textures": "textures/items/object_upgraders/obj_upgrader_spec_farming"
         },
+        "skybluetech:obj_upgrader_spec_nofarm": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_spec_nofarm"
+        },
         "skybluetech:obj_upgrader_veinminer": {
             "textures": "textures/items/object_upgraders/obj_upgrader_veinminer"
+        },
+        "skybluetech:pincer_iron": {
+            "textures": "textures/items/pincer_iron"
         },
         "skybluetech:platinum_dust": {
             "textures": "textures/items/dusts/platinum_dust"
@@ -225,6 +228,9 @@
         },
         "skybluetech:raw_tin": {
             "textures": "textures/items/raw_ore/raw_tin"
+        },
+        "skybluetech:redstoneflux_core": {
+            "textures": "textures/items/redstoneflux_core"
         },
         "skybluetech:resin": {
             "textures": "textures/items/resin"
@@ -264,6 +270,9 @@
         },
         "skybluetech:skyblue_axe": {
             "textures": "textures/items/skyblue_axe"
+        },
+        "skybluetech:skyblue_core": {
+            "textures": "textures/items/skyblue_core"
         },
         "skybluetech:skyblue_hoe": {
             "textures": "textures/items/skyblue_hoe"
@@ -336,6 +345,9 @@
         },
         "skybluetech:vegetable_oil_bucket": {
             "textures": "textures/items/buckets/vegetable_oil_bucket"
+        },
+        "skybluetech:wrench_iron": {
+            "textures": "textures/items/wrench_iron"
         }
     },
     "texture_name": "atlas.items"

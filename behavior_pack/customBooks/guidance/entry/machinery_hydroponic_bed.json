@@ -1,0 +1,15 @@
+{
+    "parent": "machinery_toc",
+    "icon": "textures/icon/hydroponic_bed_icon",
+    "title": "水培床",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "水培床可给予其中的作物恒定稳定的光照和水分， §2加快作物生长§r。\n为水培床下方的§9水培基座§r供水， 在水培床内放置作物种子， 再在水培床上方使用线缆进行供能， 即可使作物进入生长周期。"
+        },
+        {
+            "type": "textPage",
+            "content": "水培床会§2自动§r从产出中收取一枚种子进行补种， 剩余产物会被存入下方的§9水培基座§r。"
+        }
+    ]
+}

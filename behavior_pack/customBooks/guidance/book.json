@@ -1,16 +1,18 @@
 {
     "item": "skybluetech:guidance",
-    "title1": "蔚蓝科技漫游指南",
-    "title2": "自定义书本的二级标题",
-    "content": "在蔚蓝的天空下， 搭建天空下属于你的工厂。",
-    "titleArea":{
-        "offset": [-10,0],
+    "title1": "蔚蓝科技 · 红石能漫游指南",
+    "title2": "蔚蓝空域出版社",
+    "content": "在蔚蓝的天空下， 搭建天空下属于你的工厂。\n\n这里展示了蔚蓝科技的一切教程。",
+    "titleArea": {
+        "offset": [
+            -10,
+            0
+        ],
         "textSize1": 9,
-        "textSize2":8,
+        "textSize2": 8,
         "padding": 1
     },
     "pageConfig": {
-        "subtitle":"默认的副标题"
+        "subtitle": "蔚蓝科技漫游指南"
     }
-
 }

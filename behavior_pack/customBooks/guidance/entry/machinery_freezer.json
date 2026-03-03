@@ -1,0 +1,11 @@
+{
+    "parent": "machinery_toc",
+    "icon": "textures/machines/freezer_front",
+    "title": "冷冻机",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "可按照设置将水§9冷冻§r为冰雪。 可以选择生产冰块、 浮冰、 蓝冰、 雪块或雪球， 所需水量、 加工时间和能耗各不相同。"
+        }
+    ]
+}

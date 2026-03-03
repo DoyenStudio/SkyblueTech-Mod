@@ -1,0 +1,6 @@
+{
+    "title": "发电机",
+    "icon": "textures/machines/thermal_generator_front",
+    "content": "本章展示关于所有发电机的说明。",
+    "isLocked": false
+}

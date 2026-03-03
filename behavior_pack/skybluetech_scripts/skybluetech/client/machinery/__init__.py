@@ -5,6 +5,7 @@ from . import (
     hover_text_displayer,
     hydroponic_bed,
     rf_repeater_plant,
+    wind_generator,
 )
 
 from . import tanks

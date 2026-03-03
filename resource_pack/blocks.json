@@ -357,7 +357,11 @@
         "sound": "iron"
     },
     "skybluetech:item_splitter": {
-        "textures": "skybluetech:rect_panel_bg"
+        "textures": {
+            "down": "skybluetech:item_splitter_bottom",
+            "side": "skybluetech:item_splitter_side",
+            "up": "skybluetech:item_splitter_top"
+        }
     },
     "skybluetech:lead_block": {
         "textures": "skybluetech:lead_block"

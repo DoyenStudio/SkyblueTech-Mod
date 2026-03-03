@@ -100,7 +100,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         # type: (str) -> None
         if len(self.record_settings) >= self.settings_limit:
             return
-        self.record_settings.append((0, "minecraft:apple"))
+        self.record_settings.append((0, "minecraft:iron_ingot"))
         self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
@@ -141,7 +141,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
     @property
     def record_settings(self):
         if self._cached_recorded_settings is None:
-            record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:water"]
+            record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:iron_ingot"]
             self._cached_recorded_settings = [
                 (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
             ]

@@ -209,6 +209,15 @@
         "skybluetech:hydroponic_bed": {
             "textures": "textures/models/hydroponic_bed_texture"
         },
+        "skybluetech:item_splitter_bottom": {
+            "textures": "textures/machines/item_splitter_bottom"
+        },
+        "skybluetech:item_splitter_side": {
+            "textures": "textures/machines/item_splitter_side"
+        },
+        "skybluetech:item_splitter_top": {
+            "textures": "textures/machines/item_splitter_top"
+        },
         "skybluetech:lead_block": {
             "textures": "textures/blocks/ingot_block/lead_block"
         },

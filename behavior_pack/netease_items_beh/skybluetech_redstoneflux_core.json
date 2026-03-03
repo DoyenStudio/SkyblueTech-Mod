@@ -1,0 +1,14 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "netease:customtips": {
+                "value": "\n§7作为§c红石通量能量系统§7的核心， \n可自发调整周围红石通量的强度，\n或将其与动能亦或热能进行相互转化。"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:redstoneflux_core"
+        }
+    }
+}

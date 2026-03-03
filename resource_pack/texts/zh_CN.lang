@@ -235,3 +235,6 @@ tile.skybluetech:flowing_vegetable_oil.name=流动植物油
 item.skybluetech:pincer_iron.name=铁工具钳
 item.skybluetech:wrench_iron.name=铁工具扳手
 tile.skybluetech:machinery_workstation.name=机件加工台
+item.skybluetech:redstoneflux_core.name=红石通量核心
+tile.skybluetech:rf_repeater_plant.name=能源中继塔
+item.skybluetech:skyblue_core.name=蔚蓝核心

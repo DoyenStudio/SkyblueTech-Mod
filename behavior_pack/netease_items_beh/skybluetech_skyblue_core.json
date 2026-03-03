@@ -1,0 +1,14 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "netease:customtips": {
+                "value": "\n§7进阶§b蔚蓝科技机械§7的核心。"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:skyblue_core"
+        }
+    }
+}

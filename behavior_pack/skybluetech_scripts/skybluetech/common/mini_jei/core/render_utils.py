@@ -45,7 +45,7 @@ class ItemDisplayer:
 
     def onBtnReleased(self, params):
         if self.double_click_detecter():
-            from ...ui.recipe_checker.recipe_checker_ui import RecipeCheckerUI
+            from ....client.ui.recipe_checker.recipe_checker_ui import RecipeCheckerUI
 
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):

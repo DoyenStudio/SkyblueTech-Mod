@@ -2,23 +2,18 @@
 from collections import deque
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import DestroyBlockEvent
-from skybluetech_scripts.tooldelta.internal import ServerComp
-from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockName,
-    SetBlock,
     SpawnItemToPlayerCarried,
     GetDroppedItem,
     DestroyEntity,
     SpawnDroppedItem,
 )
+from ....common.define.id_enum import ObjectUpgraders
 from ....common.machinery_def.redstone_furnace import TICK_POWER
 from ...machinery.redstone_furnace import get_furnace_output_by_input
 from ...machinery.utils.charge import GetCharge, UpdateCharge
 from .register import RegisterDestroyBlockCallback
-from .utils import GetUpgraderLevel
 
-ID = "skybluetech:obj_upgrader_autoburning"
 BURN_POWER_SINGLE = TICK_POWER * 20 * 10
 
 
@@ -45,4 +40,4 @@ def onAutoBurn(event, use_tool, item_ud, upgrader_ud):
     SpawnItemToPlayerCarried(event.playerId, use_tool)
 
 
-RegisterDestroyBlockCallback(ID, onAutoBurn)
+RegisterDestroyBlockCallback(ObjectUpgraders.AUTO_BURNING, onAutoBurn)

@@ -1,11 +1,10 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.utils import nbt
+from ....common.define.id_enum import ObjectUpgraders
 from ..actions.register import orig_tier_speed
 from .register import RegisterUpdateCallback
 from .utils import GetUpgraderLevel
-
-ID = "skybluetech:obj_upgrader_digspeed"
 
 
 def onUpgrade(item, item_ud, up_ud):
@@ -24,4 +23,4 @@ def onReset(item, item_ud):
     item_ud["ModTierSpeed"] = nbt.Float(orig_tier_speed[item.id])
 
 
-RegisterUpdateCallback(ID, onUpgrade, onReset)
+RegisterUpdateCallback(ObjectUpgraders.DIGSPEED, onUpgrade, onReset)

@@ -3,14 +3,13 @@ from collections import deque
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import ServerPlayerTryDestroyBlockEvent
 from skybluetech_scripts.tooldelta.internal import ServerComp
-from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.api.server import GetBlockName
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
+from ....common.define.id_enum import ObjectUpgraders
 from ...machinery.utils.charge import GetCharge, GetChargeCost
 from .register import RegisterBlockDestroyCallback
 from .utils import GetUpgraderLevel
 
-ID = "skybluetech:obj_upgrader_veinminer"
 
 veining = set()  # type: set[tuple[int, int, int, int]]
 
@@ -87,4 +86,4 @@ def delayBreakBlock(
     delayBreakBlock(player_id, blocks, block_id, digfunc)
 
 
-RegisterBlockDestroyCallback(ID, onVeinMine)
+RegisterBlockDestroyCallback(ObjectUpgraders.VEINMINER, onVeinMine)

@@ -6,12 +6,12 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetBlock,
     SpawnItemToPlayerCarried,
 )
+from ....common.define.id_enum import ObjectUpgraders
 from ....common.machinery_def.farming_station import isRipedCrop
 from ...machinery.utils.charge import GetCharge, UpdateCharge
 from .register import RegisterItemUseOnCallback
 from .utils import GetUpgraderLevel
 
-ID = "skybluetech:obj_upgrader_spec_farming"
 POWER_COST = 2000
 
 DIRTLIKE_BLOCK = {"minecraft:dirt", "minecraft:grass_block"}
@@ -57,4 +57,4 @@ def onHarvest(event, item_ud, upgrader_ud):
         SpawnItemToPlayerCarried(event.entityId, item)
 
 
-RegisterItemUseOnCallback(ID, onHarvest)
+RegisterItemUseOnCallback(ObjectUpgraders.SPEC_FARMING, onHarvest)

@@ -64,6 +64,21 @@ class Upgraders:
     BASIC_ENERGY_UPGRADER = "skybluetech:upgrader_basic_energy"
 
 
+class ObjectUpgraders:
+    AUTO_BURNING = "skybluetech:obj_upgrader_autoburning"
+    DIGSPEED = "skybluetech:obj_upgrader_digspeed"
+    FORTUNE = "skybluetech:obj_upgrader_fortune"
+    VEINMINER = "skybluetech:obj_upgrader_veinminer"
+    SPEC_FARMING = "skybluetech:obj_upgrader_spec_farming"
+    SPEC_NOFARM = "skybluetech:obj_upgrader_spec_nofarm"
+
+
+class ControlCircuit:
+    BASIC = "skybluetech:control_circuit_basic"
+    ADVANCED = "skybluetech:control_circuit_advanced"
+    PROFESSIONAL = "skybluetech:control_circuit_professional"
+
+
 class Wrench:
     # 新增物品后需在 machinery_workstation 中同步添加
     IRON = "skybluetech:wrench_iron"

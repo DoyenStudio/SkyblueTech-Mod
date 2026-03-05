@@ -75,6 +75,16 @@ class ClientBlockUseEvent(ClientEvent):
         "设置为True可拦截与方块交互的逻辑。"
         self._orig["cancel"] = True
 
+    @classmethod
+    def AddExtraBlocks(
+        cls,
+        blocks,  # type: set[str]
+    ):
+        from ...api.client import AddBlockUseListener
+
+        AddBlockUseListener(blocks)
+        return cls
+
 
 class ModBlockEntityLoadedClientEvent(ClientEvent):
     name = "ModBlockEntityLoadedClientEvent"

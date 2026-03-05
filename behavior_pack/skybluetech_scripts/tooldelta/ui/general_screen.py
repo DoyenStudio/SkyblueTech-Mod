@@ -39,6 +39,14 @@ class ToolDeltaScreen(ClientListenerService):
         self._element_cacher = {}  # type: dict[str, UBaseCtrl]
         self._vars = {}
 
+    @classmethod
+    def convertFrom(
+        cls,
+        screen_node,  # type: _ScreenNode
+    ):
+        "将原版 ScreenNode 转换为 ToolDeltaScreen"
+        return cls(screen_node.name, screen_node)
+
     def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
         return UBaseCtrl(

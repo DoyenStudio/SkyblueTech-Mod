@@ -61,6 +61,8 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
         for item_uqid in item_uqids:
             DestroyEntity(item_uqid)
         for item in items:
+            if item is None:
+                continue
             item_rest = self.OutputItem(item)
             if item_rest is not None:
                 SpawnDroppedItem(self.dim, (self.x, self.y - 1, self.z), item_rest)

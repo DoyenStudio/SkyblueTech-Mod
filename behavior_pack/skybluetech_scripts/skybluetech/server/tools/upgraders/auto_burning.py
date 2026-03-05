@@ -27,6 +27,8 @@ def onAutoBurn(event, use_tool, item_ud, upgrader_ud):
     charge, _ = GetCharge(item_ud)
     for item_eid in event.dropEntityIds:
         it = GetDroppedItem(item_eid)
+        if it is None:
+            continue
         res = get_furnace_output_by_input(it.id)
         if res is None:
             continue

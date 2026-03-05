@@ -13,7 +13,7 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11
+                    "layer": 100
                 }
             },
             {
@@ -90,7 +90,7 @@
                                                             "100%cm",
                                                             "100%cm"
                                                         ],
-                                                        "layer": 102,
+                                                        "layer": 5,
                                                         "collection_name": "netease_container",
                                                         "controls": [
                                                             {
@@ -112,7 +112,7 @@
                                                             "100%cm+0px",
                                                             "100%cm+0px"
                                                         ],
-                                                        "layer": 103,
+                                                        "layer": 5,
                                                         "collection_name": "netease_container",
                                                         "controls": [
                                                             {

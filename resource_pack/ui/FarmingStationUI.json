@@ -43,7 +43,7 @@
                                                 0.0,
                                                 4.0
                                             ],
-                                            "layer": 784,
+                                            "layer": 5,
                                             "font_scale_factor": 1.4,
                                             "font_type": "default",
                                             "shadow": true,

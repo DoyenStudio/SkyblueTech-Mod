@@ -2,9 +2,7 @@
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
-from ..core import Recipe, Input, Output, CategoryType
-from ..core.render_utils import ItemDisplayer
-from .render_utils import FluidDisplayer
+from ..core import Recipe, Input, Output, CategoryType, ItemDisplayer, FluidDisplayer
 
 
 class MachineRecipe(Recipe):

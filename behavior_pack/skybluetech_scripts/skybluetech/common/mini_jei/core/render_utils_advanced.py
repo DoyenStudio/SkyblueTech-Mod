@@ -3,8 +3,8 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
-from ..core import CategoryType
-from ..core.render_utils import (
+from .define import CategoryType
+from .render_utils import (
     ItemDisplayer,
     GetDoubleClickDetecter,
     CreateDisplayBoard,
@@ -13,7 +13,7 @@ from ..core.render_utils import (
 )
 
 if 0:
-    from .recipe_cls import Input
+    from . import Input
 
 
 class FluidDisplayer:

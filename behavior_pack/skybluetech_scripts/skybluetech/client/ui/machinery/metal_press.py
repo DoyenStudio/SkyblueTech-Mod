@@ -37,7 +37,6 @@ class MetalPressUI(MachinePanelUIProxy):
         )
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:metal_press",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

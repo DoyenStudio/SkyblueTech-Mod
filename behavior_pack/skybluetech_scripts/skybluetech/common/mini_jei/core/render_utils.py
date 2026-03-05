@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.ui import (
     ToolDeltaScreen,
 )
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
-from ....common.mini_jei import CategoryType
+from ..core.define import CategoryType
 
 
 DISP_BOARD_KEY = "disp_board"

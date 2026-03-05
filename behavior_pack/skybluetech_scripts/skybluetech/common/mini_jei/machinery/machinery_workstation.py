@@ -1,11 +1,17 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from ....common.define.id_enum import machinery, items
 from ....common.define.tag_enum import Wrench, Pincer
-from ..core import CategoryType, Recipe, Input, Output
-from .render_utils import ItemDisplayer, InputDisplayer, MultiItemsDisplayer
+from ..core import (
+    CategoryType,
+    Recipe,
+    Input,
+    Output,
+    ItemDisplayer,
+    InputDisplayer,
+    MultiItemsDisplayer,
+)
 
 
 class MachineryWorkstationRecipe(Recipe):

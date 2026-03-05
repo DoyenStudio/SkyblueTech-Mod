@@ -31,7 +31,6 @@ class MagmaCentrifugeUI(MachinePanelUIProxy):
             self.update_cbs.append(InitFluidsDisplay(ui, self.sync.fluids, i + 1))
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:magma_centrifuge",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

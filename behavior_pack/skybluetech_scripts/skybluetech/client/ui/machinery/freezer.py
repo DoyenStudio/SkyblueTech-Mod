@@ -38,7 +38,6 @@ class FreezerUI(MachinePanelUIProxy):
         )
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:freezer",
             list(recipes.values()),
         )
 

@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.api.client.block import (
     CombineBlockPaletteToGeometry,
 )
 from ....common.define.id_enum import machinery
-from ..core.render_utils import ItemDisplayer
+from ..core import ItemDisplayer
 from .recipe_cls import CategoryType, MachineRecipe, Input, Output, UBaseCtrl
 
 gUid = 0

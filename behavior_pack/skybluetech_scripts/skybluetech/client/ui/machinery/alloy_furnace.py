@@ -24,7 +24,6 @@ class AlloyFurnaceUI(MachinePanelUIProxy):
         self.flame = self.GetElement(FLAME_NODE)
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:alloy_furnace",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

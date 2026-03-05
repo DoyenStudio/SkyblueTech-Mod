@@ -37,7 +37,6 @@ class MixerUI(MachinePanelUIProxy):
         )
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:mixer",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

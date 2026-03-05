@@ -12,7 +12,6 @@ from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from ....common.mini_jei import (
     CategoryType,
     RecipeBase,
-    GetRecipesByInput,
     GetRecipesByOutput,
     CreateDisplayBoard,
     NeedRemoveDisplayBoard,
@@ -32,7 +31,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.looking_category_index = 0
         self.inited = False
         self.ctrls_in_fgrid = {}  # type: dict[UBaseCtrl, RecipeBase]
-        self.recipes_chain = []  # type: list[list[tuple[str, list[RecipeBase]]]]
+        self.recipes_chain = [params["recipes"]] if params.get("recipes") else []  # type: list[list[tuple[str, str, list[RecipeBase]]]]
         self.update_ticks = 0
 
     def OnCreate(self):
@@ -74,8 +73,11 @@ class RecipeCheckerUI(ToolDeltaScreen):
             self.RemoveUI()
 
     def PushRecipes(self, recipes):
-        # type: (dict[str, list[RecipeBase]]) -> None
-        r = [(recipe_name, recipes[recipe_name]) for recipe_name in recipes]
+        # type: (dict[tuple[str, str], list[RecipeBase]]) -> None
+        r = [
+            (recipe_icon_id, recipe_name, recipes[(recipe_icon_id, recipe_name)])
+            for (recipe_icon_id, recipe_name) in recipes
+        ]
         if len(self.recipes_chain) > 64:
             self.recipes_chain.pop(4)
         self.recipes_chain.append(r)
@@ -101,9 +103,11 @@ class RecipeCheckerUI(ToolDeltaScreen):
             self.updateRecipeCategoriesNext()
 
     def updateRecipeCategoriesNext(self):
-        for i, (rcp_name, _) in enumerate(self.recipes_chain[-1]):
+        for i, (rcp_icon_id, _, _) in enumerate(self.recipes_chain[-1]):
             category_panel = self.left_sections_grid.GetGridItem(0, i)
-            category_panel["item_renderer"].asItemRenderer().SetUiItem(Item(rcp_name))
+            category_panel["item_renderer"].asItemRenderer().SetUiItem(
+                Item(rcp_icon_id)
+            )
             if i == self.looking_category_index:
                 category_panel.SetLayer(3)
             else:
@@ -114,8 +118,8 @@ class RecipeCheckerUI(ToolDeltaScreen):
 
     def updateCurrentRecipePage(self):
         rcp_fake_grid = self.recipes_view.GetContent()
-        rcp_name, rcps = self.recipes_chain[-1][self.looking_category_index]
-        self.title.SetText(GetItemHoverName(rcp_name))
+        _, rcp_title, rcps = self.recipes_chain[-1][self.looking_category_index]
+        self.title.SetText(rcp_title)
         for fgrid_ctrl in self.ctrls_in_fgrid:
             fgrid_ctrl.Remove()
         self.ctrls_in_fgrid.clear()
@@ -140,7 +144,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
             return
         click_index = params["#collection_index"]
         if self.category_double_click_helpers[click_index]():
-            # BUG: 鼠标无法原地双击按钮
+            # BUG: 无法原地双击按钮
             self.renderRecipesOfInput(
                 self.left_sections_grid
                 .GetGridItem(0, click_index)["item_renderer"]
@@ -170,7 +174,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
 
     def renderRecipesOfInput(self, id, category):
         # type: (str, str) -> None
-        recipe_dic = {}  # type: dict[str, list[RecipeBase]]
+        recipe_dic = {}  # type: dict[tuple[str, str], list[RecipeBase]]
         rcps = GetRecipesByOutput(category, id)
         if not rcps:
             print(
@@ -182,6 +186,12 @@ class RecipeCheckerUI(ToolDeltaScreen):
             )
             return
         for rcp in rcps:
-            recipe_dic.setdefault(rcp.recipe_icon_id, []).append(rcp)
+            recipe_dic.setdefault(
+                (
+                    rcp.recipe_icon_id,
+                    rcp.minijei_title or GetItemHoverName(rcp.recipe_icon_id),
+                ),
+                [],
+            ).append(rcp)
         self.PushRecipes(recipe_dic)
         self.updateAll()

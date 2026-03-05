@@ -49,7 +49,6 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         self.output_item_previewer.SetVisible(False)
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:machinery_workstation",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

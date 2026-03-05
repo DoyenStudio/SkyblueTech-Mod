@@ -32,7 +32,6 @@ class FluidCondenserUI(MachinePanelUIProxy):
         )
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:fluid_condenser",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

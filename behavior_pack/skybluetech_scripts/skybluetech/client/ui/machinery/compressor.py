@@ -22,7 +22,6 @@ class CompressorUI(MachinePanelUIProxy):
         self.progress = self.GetElement(PRGS_NODE)
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:compressor",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

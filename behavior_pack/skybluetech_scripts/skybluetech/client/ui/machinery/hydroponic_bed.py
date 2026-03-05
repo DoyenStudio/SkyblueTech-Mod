@@ -25,7 +25,6 @@ class HydroponicBedUI(MachinePanelUIProxy):
         self.crop_disp = self.GetElement(CROP_DISP_NODE).asNeteasePaperDoll()
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:hydroponic_bed",
             list(recipes.values()),  # pyright: ignore[reportArgumentType]
         )
         self.last_render_crop_id = None

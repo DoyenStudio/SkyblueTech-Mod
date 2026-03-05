@@ -42,7 +42,6 @@ class DistillationChamberUI(MachinePanelUIProxy):
         )
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            "skybluetech:distillation_chamber",
             recipes,  # pyright: ignore[reportArgumentType]
         )
 

@@ -489,7 +489,7 @@
             },
             {
                 "slot6@SkybluePanelLib.item_displayer": {
-                    "layer": 104,
+                    "layer": 2,
                     "offset": [
                         -50,
                         20
@@ -498,7 +498,7 @@
             },
             {
                 "slot7@SkybluePanelLib.item_displayer": {
-                    "layer": 121,
+                    "layer": 2,
                     "offset": [
                         -30,
                         20
@@ -507,7 +507,7 @@
             },
             {
                 "slot8@SkybluePanelLib.item_displayer": {
-                    "layer": 138,
+                    "layer": 2,
                     "offset": [
                         -10,
                         20
@@ -516,7 +516,7 @@
             },
             {
                 "slot9@SkybluePanelLib.item_displayer": {
-                    "layer": 155,
+                    "layer": 2,
                     "offset": [
                         50,
                         0
@@ -534,7 +534,7 @@
                         30.0,
                         30.0
                     ],
-                    "layer": 172,
+                    "layer": 2,
                     "texture": "textures/ui/arrow_img"
                 }
             }
@@ -1338,7 +1338,7 @@
             },
             {
                 "slot6@SkybluePanelLib.item_displayer": {
-                    "layer": 104,
+                    "layer": 2,
                     "offset": [
                         -70,
                         20
@@ -1347,7 +1347,7 @@
             },
             {
                 "slot7@SkybluePanelLib.item_displayer": {
-                    "layer": 121,
+                    "layer": 2,
                     "offset": [
                         -50,
                         20
@@ -1356,7 +1356,7 @@
             },
             {
                 "slot8@SkybluePanelLib.item_displayer": {
-                    "layer": 138,
+                    "layer": 2,
                     "offset": [
                         -30,
                         20
@@ -1365,7 +1365,7 @@
             },
             {
                 "output_slot@SkybluePanelLib.item_displayer": {
-                    "layer": 155,
+                    "layer": 2,
                     "offset": [
                         28,
                         20
@@ -1383,13 +1383,13 @@
                         30.0,
                         30.0
                     ],
-                    "layer": 172,
+                    "layer": 2,
                     "texture": "textures/ui/arrow_img"
                 }
             },
             {
                 "pincer_slot@SkybluePanelLib.item_displayer": {
-                    "layer": 155,
+                    "layer": 2,
                     "offset": [
                         48,
                         -20
@@ -1398,7 +1398,7 @@
             },
             {
                 "wrench_slot@SkybluePanelLib.item_displayer": {
-                    "layer": 155,
+                    "layer": 2,
                     "offset": [
                         28,
                         -20

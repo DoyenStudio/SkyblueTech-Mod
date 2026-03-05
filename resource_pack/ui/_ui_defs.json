@@ -21,6 +21,7 @@
         "ui/FreezerUI.json",
         "ui/GeneralTankUI.json",
         "ui/GeoThermalGeneratorUI.json",
+        "ui/GuidanceComps.json",
         "ui/HeavyCompressorUI.json",
         "ui/HoverTextDisplayerUI.json",
         "ui/HydroponicBaseUI.json",

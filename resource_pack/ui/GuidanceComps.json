@@ -1,0 +1,293 @@
+{
+    "machinery_workstation_recipe": {
+        "type": "panel",
+        "size": [
+            110.0,
+            56.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "output_slot@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "layer": 2,
+                    "offset": [
+                        -24,
+                        -4
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "progress_img": {
+                    "type": "image",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [
+                        6.0,
+                        -4.0
+                    ],
+                    "size": [
+                        16.0,
+                        16.0
+                    ],
+                    "layer": 2,
+                    "texture": "textures/ui/arrow_img"
+                }
+            },
+            {
+                "pincer_slot@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "layer": 2,
+                    "offset": [
+                        -8,
+                        4
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "wrench_slot@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "layer": 2,
+                    "offset": [
+                        -24,
+                        4
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "level_tip": {
+                    "type": "label",
+                    "offset": [
+                        35.0,
+                        0.0
+                    ],
+                    "size": [
+                        39.0,
+                        16.0
+                    ],
+                    "layer": 3,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_scale_factor": 1.6,
+                    "font_size": "small",
+                    "font_type": "default",
+                    "text": "扳手等级： ？\n钳等级： ？"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        4,
+                        4
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        20,
+                        4
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        4
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        4,
+                        20
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        20,
+                        20
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot5@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        20
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot6@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        4,
+                        36
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot7@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        20,
+                        36
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot8@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        36
+                    ],
+                    "size": [
+                        16,
+                        16
+                    ]
+                }
+            }
+        ]
+    },
+    "main": {
+        "type": "screen",
+        "controls": [
+            {
+                "comps": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": [
+                        "100.0%+0.0px",
+                        "100.0%+0.0px"
+                    ],
+                    "min_size": [
+                        0,
+                        0
+                    ],
+                    "max_size": [
+                        0,
+                        0
+                    ],
+                    "priority": 0,
+                    "layer": 0,
+                    "alpha": 1.0,
+                    "propagate_alpha": false,
+                    "clip_offset": [
+                        0,
+                        0
+                    ],
+                    "clips_children": false,
+                    "visible": true,
+                    "enabled": true,
+                    "controls": [
+                        {
+                            "machinery_workstation_recipe_comp@GuidanceComps.machinery_workstation_recipe": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "namespace": "GuidanceComps"
+}

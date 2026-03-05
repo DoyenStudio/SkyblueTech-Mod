@@ -72,6 +72,34 @@ class MachineryWorkstationRecipe(Recipe):
         for input_render in self.dyn_item_renders:
             input_render.tick(render_ticks)
 
+    @classmethod
+    def from_dict(
+        cls,
+        data,  # type: dict | str
+    ):
+        if isinstance(data, str):
+            from ..core.storage import recipesFrom
+
+            rs = recipesFrom.get(CategoryType.ITEM, {}).get(data)
+            if rs is None:
+                raise ValueError("Can't find recipe for " + data)
+            getted_recipe = None
+            for rcp in rs:
+                if isinstance(rcp, cls):
+                    getted_recipe = rcp
+                    break
+            if getted_recipe is None:
+                raise ValueError("Can't find recipe for " + data)
+            return getted_recipe
+        else:
+            return cls(
+                {int(k): Input.from_dict(v) for k, v in data["inputs"].items()},
+                data["output"],
+                data.get("wrench_level", 1),
+                data.get("pincer_level", 1),
+                data.get("craft_times", 1),
+            )
+
 
 PINCER_LEVEL2ITEM = {
     MachineryWorkstationRecipe.LEVEL_IRON: items.Pincer.IRON,

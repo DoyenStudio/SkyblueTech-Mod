@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "磨粉机能被用于物品磨粉、 矿物粉碎等。 它能将金属锭隔绝空气磨成金属粉， 也能对部分自然资源进行粉碎处理， 还能对粗矿甚至远古残骸进行研磨增产。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:macerator"
         }
     ]
 }

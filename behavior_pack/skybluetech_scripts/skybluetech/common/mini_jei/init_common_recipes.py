@@ -7,17 +7,24 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
 from skybluetech_scripts.tooldelta.api.client.world import (
     GetRecipesByResult,
 )
-from skybluetech_scripts.tooldelta.extensions.allitems_getter import AddItemGettedCallback
+from skybluetech_scripts.tooldelta.extensions.allitems_getter import (
+    AddItemGettedCallback,
+)
 from .core.register import RegisterRecipe
 from .common.recipe_cls import (
     GenericCraftingTableRecipe,
     GenericFurnaceRecipe,
+    GenericBlastFurnaceRecipe,
+    GenericSmokerRecipe,
 )
 
 
-items_from_recipe_loaded = set() # type: set[str]
-reg_crafting_table_recipes = set() # type: set[GenericCraftingTableRecipe]
-reg_furnace_recipes = set() # type: set[GenericFurnaceRecipe]
+items_from_recipe_loaded = set()  # type: set[str]
+reg_crafting_table_recipes = set()  # type: set[GenericCraftingTableRecipe]
+reg_furnace_recipes = set()  # type: set[GenericFurnaceRecipe]
+reg_blast_furnace_recipes = set()  # type: set[GenericBlastFurnaceRecipe]
+reg_smoker_recipes = set()  # type: set[GenericSmokerRecipe]
+
 
 def RegisterItemToRecipe(item_id):
     # type: (str) -> None
@@ -35,7 +42,11 @@ def RegisterItemToRecipe(item_id):
     for res in from_reses:
         if "reagent" in res:
             # TODO: BUG: 接口会获取到酿造台配方
-            print("[Warning] SkyblueTech: got brewing recipe from crafting_table: {}".format(res))
+            print(
+                "[Warning] SkyblueTech: got brewing recipe from crafting_table: {}".format(
+                    res
+                )
+            )
             continue
         rcp = GenericCraftingTableRecipe(GetCraftingRecipe(res))
         if rcp in reg_crafting_table_recipes:
@@ -59,6 +70,24 @@ def RegisterItemToRecipe(item_id):
         RegisterRecipe(rcp)
         reg_furnace_recipes.add(rcp)
         RegisterItemToRecipe(rcp.base.input_item_id)
+    # 高炉
+    from_reses = GetRecipesByResult(item_id, "blast_furnace")
+    for res in from_reses:
+        rcp = GenericBlastFurnaceRecipe(GetFurnaceRecipe(res))
+        if rcp in reg_furnace_recipes:
+            continue
+        RegisterRecipe(rcp)
+        reg_blast_furnace_recipes.add(rcp)
+        RegisterItemToRecipe(rcp.base.input_item_id)
+    from_reses = GetRecipesByResult(item_id, "smoker")
+    for res in from_reses:
+        rcp = GenericSmokerRecipe(GetFurnaceRecipe(res))
+        if rcp in reg_furnace_recipes:
+            continue
+        RegisterRecipe(rcp)
+        reg_smoker_recipes.add(rcp)
+        RegisterItemToRecipe(rcp.base.input_item_id)
+
 
 def onItemsLoaded(item_ids):
     for item_id in item_ids:

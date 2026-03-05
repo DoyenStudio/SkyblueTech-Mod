@@ -10,7 +10,6 @@ from ..core.define import CategoryType, RecipeBase
 from ..core.render_utils import ItemDisplayer
 
 
-
 class GenericCraftingTableRecipe(RecipeBase):
     recipe_icon_id = "minecraft:crafting_table"
     render_ui_def_name = "RecipeCheckerUI.crafting_table_recipes"
@@ -22,24 +21,19 @@ class GenericCraftingTableRecipe(RecipeBase):
     def GetInputs(self):
         # type: () -> dict[str, list[str]]
         if isinstance(self.base, CraftingRecipeRes):
-            return {CategoryType.ITEM: [
-                i
-                for v in self.base.pattern_key.values()
-                for i in v.item_ids
-            ]}
+            return {
+                CategoryType.ITEM: [
+                    i for v in self.base.pattern_key.values() for i in v.item_ids
+                ]
+            }
         else:
-            return {CategoryType.ITEM: [
-                i
-                for v in self.base.inputs
-                for i in v.item_ids
-            ]}
+            return {
+                CategoryType.ITEM: [i for v in self.base.inputs for i in v.item_ids]
+            }
 
     def GetOutputs(self):
         # type: () -> dict[str, list[str]]
-        return {CategoryType.ITEM: [
-            v.item_id
-            for v in self.base.result
-        ]}
+        return {CategoryType.ITEM: [v.item_id for v in self.base.result]}
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
@@ -52,16 +46,21 @@ class GenericCraftingTableRecipe(RecipeBase):
                     item = pat_mapping[pat]
                     ItemDisplayer(
                         panel["slot%d" % (row * 3 + col)],
-                        Item(item.item_ids[0], item.aux_value)
+                        Item(item.item_ids[0], item.aux_value),
                     )
         else:
             for i, input in enumerate(self.base.inputs):
-                ItemDisplayer(panel["slot%d" % i], Item(input.item_ids[0], input.aux_value))
-        ItemDisplayer(panel["slot9"], Item(
-            self.base.result[0].item_id,
-            self.base.result[0].aux_value,
-            self.base.result[0].count,
-        ))
+                ItemDisplayer(
+                    panel["slot%d" % i], Item(input.item_ids[0], input.aux_value)
+                )
+        ItemDisplayer(
+            panel["slot9"],
+            Item(
+                self.base.result[0].item_id,
+                self.base.result[0].aux_value,
+                self.base.result[0].count,
+            ),
+        )
 
     def RenderUpdate(self, panel, ticks):
         # type: (UBaseCtrl, int) -> None
@@ -79,16 +78,17 @@ class GenericCraftingTableRecipe(RecipeBase):
                         continue
                     ItemDisplayer(
                         panel["slot%d" % (row * 3 + col)],
-                        Item(item_ids[ticks // 30 % len(item_ids)], input.aux_value)
+                        Item(item_ids[ticks // 30 % len(item_ids)], input.aux_value),
                     )
         else:
             for i, input in enumerate(self.base.inputs):
                 item_ids = input.item_ids
                 if len(item_ids) <= 1:
                     continue
-                ItemDisplayer(panel["slot%d" % i], Item(
-                    item_ids[ticks // 30 % len(item_ids)], input.aux_value
-                ))
+                ItemDisplayer(
+                    panel["slot%d" % i],
+                    Item(item_ids[ticks // 30 % len(item_ids)], input.aux_value),
+                )
 
     def __eq__(self, other):
         # type: (object) -> bool
@@ -119,14 +119,10 @@ class GenericFurnaceRecipe(RecipeBase):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
-            # type: (UBaseCtrl, GenericFurnaceRecipe) -> None
+        # type: (UBaseCtrl, GenericFurnaceRecipe) -> None
         ItemDisplayer(panel["slot0"], Item(self.base.input_item_id))
         ItemDisplayer(
-            panel["slot1"],
-            Item(
-                self.base.output.item_id,
-                self.base.output.aux_value
-            )
+            panel["slot1"], Item(self.base.output.item_id, self.base.output.aux_value)
         )
 
     def RenderUpdate(self, panel, render_ticks):
@@ -142,3 +138,11 @@ class GenericFurnaceRecipe(RecipeBase):
 
     def __hash__(self):
         return hash(self.base)
+
+
+class GenericBlastFurnaceRecipe(GenericFurnaceRecipe):
+    recipe_icon_id = "minecraft:blast_furnace"
+
+
+class GenericSmokerRecipe(GenericFurnaceRecipe):
+    recipe_icon_id = "minecraft:smoker"

@@ -1,9 +1,5 @@
 # coding=utf-8
 
-FAMICOM = "skybluetech:famicom"
-RESIN_COLLECTOR = "skybluetech:resin_collector"
-DUST_BLOCK = "skybluetech:dust_block"
-
 
 class Cable:
     STEEL = "skybluetech:steel_item_transport_cable"
@@ -19,3 +15,9 @@ class Wire:
     SILVER = "skybluetech:silver_wire"
     SUPER_CONDUCT = "skybluetech:superconduct_wire"
     CREATIVE = "skybluetech:creative_wire"
+
+
+FAMICOM = "skybluetech:famicom"
+RESIN_COLLECTOR = "skybluetech:resin_collector"
+DUST_BLOCK = "skybluetech:dust_block"
+MACHINERY_FRAME = "skybluetech:machinery_frame"

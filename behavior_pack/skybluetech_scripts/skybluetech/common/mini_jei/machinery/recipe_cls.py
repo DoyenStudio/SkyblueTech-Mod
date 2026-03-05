@@ -1,73 +1,10 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from skybluetech_scripts.tooldelta.api.common import GetItemTags
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
-from ..core import CategoryType, RecipeBase, RegisterRecipe
+from ..core import Recipe, Input, Output
 from ..core.render_utils import ItemDisplayer
 from .render_utils import FluidDisplayer
-
-
-class Element(object):
-    def __init__(self, id, count=1):
-        # type: (str, float) -> None
-        self.id = id
-        self.count = count
-
-    def __repr__(self):
-        return "io(%s, %d)" % (self.id, self.count)
-
-
-class Input(Element):
-    def __init__(self, id, count=1, is_tag=False):
-        # type: (str, float, bool) -> None
-        Element.__init__(self, id, count)
-        self.is_tag = is_tag
-
-    def match_item_id(self, item_id):
-        # type: (str) -> bool
-        if self.is_tag:
-            return self.id in GetItemTags(item_id, 0)
-        else:
-            return item_id == self.id
-
-
-class Output(Element):
-    def __init__(self, id, count=1, prob=1):
-        # type: (str, float, float) -> None
-        Element.__init__(self, id, count)
-        self.prob = prob
-
-
-class Recipe(RecipeBase):
-    def __init__(self, inputs, outputs):
-        # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]]) -> None
-        self.inputs = inputs
-        "配方输入: [配方类型: [槽位: 输入元素]]"
-        self.outputs = outputs
-        "配方输出: [配方类型: [槽位: 输出元素]]"
-        RegisterRecipe(self)
-
-    def equals(self, other):
-        # type: (Recipe | None) -> bool
-        if other is None:
-            return False
-        return self.inputs == other.inputs and self.outputs == other.outputs
-
-    def GetInputs(self):
-        return {
-            cat: [
-                ("tag:" + input.id if input.is_tag else input.id)
-                for input in slot2input.values()
-            ]
-            for cat, slot2input in self.inputs.items()
-        }
-
-    def GetOutputs(self):
-        return {
-            category: [output.id for output in slot2output.values()]
-            for category, slot2output in self.outputs.items()
-        }
 
 
 class MachineRecipe(Recipe):

@@ -67,6 +67,12 @@
         "skybluetech:distilled_water_bucket": {
             "textures": "textures/items/buckets/distilled_water_bucket"
         },
+        "skybluetech:drill_top": {
+            "textures": "textures/items/drill_top_steel"
+        },
+        "skybluetech:electric_motor": {
+            "textures": "textures/items/electric_motor"
+        },
         "skybluetech:famicom_cartidge_1": {
             "textures": "textures/items/cartidges/famicom_cartidge_1"
         },
@@ -123,6 +129,9 @@
         },
         "skybluetech:lubricant_bucket": {
             "textures": "textures/items/buckets/lubricant_bucket"
+        },
+        "skybluetech:metal_hammer": {
+            "textures": "textures/items/metal_hammer"
         },
         "skybluetech:methane_bucket": {
             "textures": "textures/items/buckets/methane_bucket"
@@ -231,6 +240,9 @@
         },
         "skybluetech:redstoneflux_core": {
             "textures": "textures/items/redstoneflux_core"
+        },
+        "skybluetech:refined_iron_ingot": {
+            "textures": "textures/items/ingots/refined_iron_ingot"
         },
         "skybluetech:resin": {
             "textures": "textures/items/resin"

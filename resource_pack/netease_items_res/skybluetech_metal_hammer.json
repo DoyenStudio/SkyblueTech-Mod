@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:metal_hammer"
+        },
+        "description": {
+            "identifier": "skybluetech:metal_hammer"
+        }
+    }
+}

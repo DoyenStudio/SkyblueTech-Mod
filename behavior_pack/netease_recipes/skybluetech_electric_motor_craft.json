@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:electric_motor_craft"
+        },
+        "key": {
+            "D": {
+                "data": 0,
+                "item": "skybluetech:tin_plate"
+            },
+            "E": {
+                "data": 0,
+                "item": "minecraft:copper_ingot"
+            },
+            "F": {
+                "data": 0,
+                "item": "skybluetech:tin_ingot"
+            },
+            "I": {
+                "data": 0,
+                "item": "skybluetech:iron_plate"
+            }
+        },
+        "pattern": [
+            "III",
+            "DEF",
+            "III"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:electric_motor"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

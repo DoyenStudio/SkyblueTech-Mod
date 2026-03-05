@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:drill_top"
+        },
+        "description": {
+            "identifier": "skybluetech:drill_top"
+        }
+    }
+}

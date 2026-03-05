@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:refined_iron_ingot"
+        },
+        "description": {
+            "identifier": "skybluetech:refined_iron_ingot"
+        }
+    }
+}

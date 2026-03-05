@@ -1,0 +1,35 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:machinery_frame"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:tin_ingot"
+            },
+            "B": {
+                "data": 0,
+                "item": "minecraft:iron_ingot"
+            },
+            "C": {
+                "data": 0,
+                "item": "skybluetech:redstoneflux_core"
+            }
+        },
+        "pattern": [
+            "ABA",
+            "BCB",
+            "ABA"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:machinery_frame"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

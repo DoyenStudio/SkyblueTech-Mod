@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_damage": 96
+        },
+        "description": {
+            "identifier": "skybluetech:metal_hammer"
+        }
+    }
+}

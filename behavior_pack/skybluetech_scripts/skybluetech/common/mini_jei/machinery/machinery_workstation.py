@@ -4,8 +4,8 @@ from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from ....common.define.id_enum import machinery, items
 from ....common.define.tag_enum import Wrench, Pincer
+from ..core import CategoryType, Recipe, Input, Output
 from .render_utils import ItemDisplayer, InputDisplayer, MultiItemsDisplayer
-from .recipe_cls import CategoryType, Recipe, Input, Output
 
 
 class MachineryWorkstationRecipe(Recipe):

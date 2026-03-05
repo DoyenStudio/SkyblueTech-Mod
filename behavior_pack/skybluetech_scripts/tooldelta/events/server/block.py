@@ -1,5 +1,5 @@
 # coding=utf-8
-
+from mod.server.extraServerApi import GetMinecraftEnum
 from ..basic import ServerEvent
 from ...define.item import Item
 
@@ -729,4 +729,109 @@ class PistonActionServerEvent(ServerEvent):
     def cancel(self):
         # type: () -> None
         "允许触发，默认为False，若设为True，可阻止触发后续的事件"
+        self._orig["cancel"] = True
+
+
+class FarmBlockToDirtBlockServerEvent(ServerEvent):
+    name = "FarmBlockToDirtBlockServerEvent"
+
+    def __init__(
+        self,
+        dimension,  # type: int
+        x,  # type: int
+        y,  # type: int
+        z,  # type: int
+        setBlockType,  # type: int
+    ):
+        self.dimension = dimension
+        """ 方块维度 """
+        self.x = x
+        """ 方块x坐标 """
+        self.y = y
+        """ 方块y坐标 """
+        self.z = z
+        """ 方块z坐标 """
+        self.setBlockType = setBlockType
+        """ 耕地退化为泥土的原因，参考SetBlockType """
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            dimension=data["dimension"],
+            x=data["x"],
+            y=data["y"],
+            z=data["z"],
+            setBlockType=data["setBlockType"],
+        )
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "dimension": self.dimension,
+            "x": self.x,
+            "y": self.y,
+            "z": self.z,
+            "setBlockType": self.setBlockType,
+        }
+
+    @property
+    def is_manual(self):
+        return self.setBlockType == GetMinecraftEnum().SetBlockType.MAN_MADE
+
+
+class StartDestroyBlockServerEvent(ServerEvent):
+    name = "StartDestroyBlockServerEvent"
+
+    def __init__(
+        self,
+        pos,  # type: tuple[float,float,float]
+        blockName,  # type: str
+        auxValue,  # type: int
+        playerId,  # type: str
+        dimensionId,  # type: int
+        face,  # type: int
+        _orig,  # type: dict
+    ):
+        self.pos = pos
+        """ 方块的坐标 """
+        self.blockName = blockName
+        """ 方块的identifier，包含命名空间及名称 """
+        self.auxValue = auxValue
+        """ 方块的附加值 """
+        self.playerId = playerId
+        """ 玩家id """
+        self.dimensionId = dimensionId
+        """ 维度id """
+        self.face = face
+        """ 方块被敲击面,参考Facing枚举 """
+        self._orig = _orig
+        """ 原始事件数据 """
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            pos=data["pos"],
+            blockName=data["blockName"],
+            auxValue=data["auxValue"],
+            playerId=data["playerId"],
+            dimensionId=data["dimensionId"],
+            face=data["face"],
+            _orig=data,
+        )
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "pos": self.pos,
+            "blockName": self.blockName,
+            "auxValue": self.auxValue,
+            "playerId": self.playerId,
+            "dimensionId": self.dimensionId,
+            "face": self.face,
+            "_orig": self._orig,
+        }
+
+    def cancel(self):
+        # type: () -> None
+        "修改为True时，可阻止玩家进入挖方块的状态。需要与StartDestroyBlockClientEvent一起修改。"
         self._orig["cancel"] = True

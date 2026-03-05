@@ -7,6 +7,9 @@ class IngotTag:
     NICKEL = "ingots/nickel"
     SILVER = "ingots/silver"
     PLATINUM = "ingots/platinum"
+    BRONZE = "ingots/bronze"
+    INVAR = "ingots/invar"
+    REFINED_IRON = "ingots/refined_iron"
 
 
 class DustTag:
@@ -46,6 +49,9 @@ class PlateTag:
     SILVER = "plates/silver"
     PLATINUM = "plates/platinum"
 
+    BRONZE = "plates/bronze"
+    STEEL = "plates/steel"
+    INVAR = "plates/invar"
 
 class Wrench:
     IRON = "wrench/iron"

@@ -8,6 +8,7 @@ class Ingots:
     BRONZE = "skybluetech:bronze_ingot"
     INVAR = "skybluetech:invar_ingot"
     STEEL = "skybluetech:steel_ingot"
+    REFINED_IRON = "skybluetech:refined_iron_ingot"
 
 
 class Plates:
@@ -92,6 +93,7 @@ class Pincer:
 
 
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
+METAL_HAMMER = "skybluetech:metal_hammer"
 RESIN = "skybluetech:resin"
 RESIN_SPOON = "skybluetech:resin_spoon"
 TRANSMITTER_WRENCH = "skybluetech:transmitter_wrench"

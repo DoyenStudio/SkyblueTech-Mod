@@ -26,18 +26,23 @@ def GetDroppedItem(entity_id, get_user_data=False):
 
 
 def SpawnDroppedItem(dim, pos, item):
-    # type: (int, tuple[float, float, float], Item) -> None
-    GetServer().CreateEngineItemEntity(item.marshal(), dim, pos)
+    # type: (int, tuple[float, float, float], Item) -> str | None
+    return GetServer().CreateEngineItemEntity(item.marshal(), dim, pos)
 
 
 def DestroyEntity(entity_id):
-    # type: (str) -> None
-    GetServer().DestroyEntity(entity_id)
+    # type: (str) -> bool
+    return GetServer().DestroyEntity(entity_id)
 
 
 def GetPos(entity_id):
     # type: (str) -> tuple[float, float, float]
     return ServerComp.CreatePos(entity_id).GetPos()
+
+
+def SetMotion(entity_id, motion):
+    # type: (str, tuple[float, float, float]) -> bool
+    return ServerComp.CreateActorMotion(entity_id).SetMotion(motion)
 
 
 __all__ = [
@@ -46,5 +51,6 @@ __all__ = [
     "GetDroppedItem",
     "GetPos",
     "SpawnDroppedItem",
+    "SetMotion",
     "DestroyEntity",
 ]

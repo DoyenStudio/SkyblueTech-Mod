@@ -1,6 +1,6 @@
 from . import (
     actions,
-    upgraders,
+    metal_hammer,
     simple_block_debugger,
     simple_nbt_debugger,
     simple_machine_checker,
@@ -9,4 +9,5 @@ from . import (
     skyblue_pickaxe,
     skyblue_shovel,
     transmitter_visual_checker,
+    upgraders,
 )

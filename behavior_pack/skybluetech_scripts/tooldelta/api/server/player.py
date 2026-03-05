@@ -18,13 +18,17 @@ def GetPlayerDimensionId(player_id):
 
 
 def SpawnItemToPlayerCarried(player_id, item):
-    # type: (str, Item) -> None
-    ServerComp.CreateItem(player_id).SpawnItemToPlayerCarried(item.marshal(), player_id)
+    # type: (str, Item) -> bool
+    return ServerComp.CreateItem(player_id).SpawnItemToPlayerCarried(
+        item.marshal(), player_id
+    )
 
 
 def GiveItem(player_id, item):
-    # type: (str, Item) -> None
-    ServerComp.CreateItem(player_id).SpawnItemToPlayerInv(item.marshal(), player_id)
+    # type: (str, Item) -> bool
+    return ServerComp.CreateItem(player_id).SpawnItemToPlayerInv(
+        item.marshal(), player_id
+    )
 
 
 def GetAllPlayers():

@@ -12,6 +12,7 @@ Github-Contact-Me: SuperScript-PRC
 
 from .internal import (
     GetServer,
+    GetClient,
     GetModName,
     ServerComp,
     ClientComp,

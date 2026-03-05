@@ -2,6 +2,12 @@
 #
 from ...define.item import Item
 from ...internal import ServerComp, ServerLevelId, GetServer
+from ..internal.cacher import MethodCacher
+
+
+GetEntitiesInSquareArea = MethodCacher(
+    lambda: ServerComp.CreateGame(ServerLevelId).GetEntitiesInSquareArea
+)
 
 
 def GetEntitiesBySelector(selector, from_entity=""):
@@ -10,10 +16,13 @@ def GetEntitiesBySelector(selector, from_entity=""):
 
 
 def GetDroppedItem(entity_id, get_user_data=False):
-    # type: (str, bool) -> Item
-    return Item.from_dict(
-        ServerComp.CreateItem(ServerLevelId).GetDroppedItem(entity_id, get_user_data)
+    # type: (str, bool) -> Item | None
+    itemdict = ServerComp.CreateItem(ServerLevelId).GetDroppedItem(
+        entity_id, get_user_data
     )
+    if itemdict is None:
+        return None
+    return Item.from_dict(itemdict)
 
 
 def SpawnDroppedItem(dim, pos, item):
@@ -32,6 +41,7 @@ def GetPos(entity_id):
 
 
 __all__ = [
+    "GetEntitiesInSquareArea",
     "GetEntitiesBySelector",
     "GetDroppedItem",
     "GetPos",

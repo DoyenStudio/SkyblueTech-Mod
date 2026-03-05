@@ -78,6 +78,12 @@ def PlayerUseItemToPos(player_id, pos, pos_type, slot=0, facing=1):
     )
 
 
+def GetPlayerItem(player_id, pos_type, slot, get_userdata=False):
+    # type: (str, int, int, bool) -> Item | None
+    res = ServerComp.CreateItem(player_id).GetPlayerItem(pos_type, slot, get_userdata)
+    return Item.from_dict(res) if res is not None else None
+
+
 __all__ = [
     "GetAllPlayers",
     "GetNameById",
@@ -85,6 +91,7 @@ __all__ = [
     "GetPlayerMainhandItem",
     "GetSelectedSlot",
     "GetPlayersInDim",
+    "GetPlayerItem",
     "IsOP",
     "IsSneaking",
     "PlayerUseItemToPos",

@@ -11,6 +11,7 @@ class CategoryType:
 class RecipeBase:
     recipe_icon_id = "minecraft:barrier"
     render_ui_def_name = ""
+    minijei_title = None  # type: str | None
 
     def GetInputs(self):
         # type: () -> dict[str, list[str]]

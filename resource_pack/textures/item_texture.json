@@ -53,13 +53,13 @@
             "textures": "textures/items/sticks/copper_stick"
         },
         "skybluetech:copper_wire": {
-            "textures": "textures/wire/copper_wire_item"
+            "textures": "textures/transmitters/copper_wire_item"
         },
         "skybluetech:crafting_template": {
             "textures": "textures/items/crafting_template"
         },
         "skybluetech:creative_wire": {
-            "textures": "textures/wire/creative_wire_item"
+            "textures": "textures/transmitters/creative_wire_item"
         },
         "skybluetech:cupronickel_dust": {
             "textures": "textures/items/dusts/cupronickel_dust"
@@ -296,7 +296,7 @@
             "textures": "textures/items/sticks/silver_stick"
         },
         "skybluetech:silver_wire": {
-            "textures": "textures/wire/silver_wire_item"
+            "textures": "textures/transmitters/silver_wire_item"
         },
         "skybluetech:simple_block_debugger": {
             "textures": "textures/items/simple_block_debugger"
@@ -350,7 +350,7 @@
             "textures": "textures/items/sunflower_seeds"
         },
         "skybluetech:superconduct_wire": {
-            "textures": "textures/wire/superconduct_wire_item"
+            "textures": "textures/transmitters/superconduct_wire_item"
         },
         "skybluetech:tin_dust": {
             "textures": "textures/items/dusts/tin_dust"
@@ -365,7 +365,7 @@
             "textures": "textures/items/sticks/tin_stick"
         },
         "skybluetech:tin_wire": {
-            "textures": "textures/wire/tin_wire_item"
+            "textures": "textures/transmitters/tin_wire_item"
         },
         "skybluetech:transmitter_settings_wrench": {
             "textures": "textures/items/transmitter_settings_wrench"

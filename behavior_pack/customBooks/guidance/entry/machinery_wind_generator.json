@@ -6,6 +6,14 @@
         {
             "type": "textPage",
             "content": "风力发电机可使用§9风能§r进行发电。\n\n高处风能更强， 意味着将风力发电机放在高处可增大发电功率。\n\n若风力发电机的扇面前后被方块挡住， 其工作效率会下降。"
+        },
+        {
+            "type": "textPage",
+            "content": "风力发电机需要使用§9扇叶§r进行工作。 工作时会消耗扇叶§2耐久度§r。 不同的扇叶会提供不同的§3输出功率§r和耐久度。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:wind_generator"
         }
     ]
 }

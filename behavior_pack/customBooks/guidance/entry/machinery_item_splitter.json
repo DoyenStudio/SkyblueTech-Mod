@@ -23,6 +23,10 @@
         {
             "type": "textPage",
             "content": "如果你只需要从物品中§2分离出部分物品§r， 可以使用§3特化升级： 泛用物品过滤§r， 将其插入到分拣器的升级槽内， 可以将所有§c未在分类设置中§r的物品全部发送到§c红色标记（默认颜色标记）§r的物品管道输入口中。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:item_splitter"
         }
     ]
 }

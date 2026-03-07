@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "电力挖掘钻可消耗能量挖掘其钻尖所指向的方块。\n\n建议从侧面输入能量， 背对钻头的一面提取物品。\n\n§8§o将两个面对面的钻头通电试试看？"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:digger"
         }
     ]
 }

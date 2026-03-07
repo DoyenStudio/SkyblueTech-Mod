@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "合金炉可以将多种金属或非金属混合烧制为§5合金§r。\n钢锭、 青铜锭、 殷钢锭等都需要合金炉进行烧制。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:alloy_furnace"
         }
     ]
 }

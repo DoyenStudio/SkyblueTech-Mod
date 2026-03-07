@@ -17,6 +17,14 @@ class Wire:
     CREATIVE = "skybluetech:creative_wire"
 
 
+class Tank:
+    BRONZE = "skybluetech:tank_bronze"
+    INVAR = "skybluetech:tank_invar"
+    STEEL = "skybluetech:tank_steel"
+    PLATINUM = "skybluetech:tank_platinum"
+    CREATIVE = "skybluetech:tank_creative"
+
+
 FAMICOM = "skybluetech:famicom"
 RESIN_COLLECTOR = "skybluetech:resin_collector"
 DUST_BLOCK = "skybluetech:dust_block"

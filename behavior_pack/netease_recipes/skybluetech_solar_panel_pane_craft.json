@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:solar_panel_pane_craft"
+        },
+        "key": {
+            "C": {
+                "data": 0,
+                "item": "minecraft:glass_pane"
+            },
+            "E": {
+                "data": 0,
+                "item": "skybluetech:low_purity_silicon_panel"
+            },
+            "F": {
+                "data": 0,
+                "item": "skybluetech:tin_plate"
+            },
+            "I": {
+                "data": 0,
+                "item": "minecraft:lapis_lazuli"
+            }
+        },
+        "pattern": [
+            "CCC",
+            "FEF",
+            "III"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:solar_panel_pane"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

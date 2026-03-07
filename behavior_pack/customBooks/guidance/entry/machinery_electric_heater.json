@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "通电后可按照设置的温度向上前后左右五个铜盘面输出§c热能§r， 供一些需热机器使用。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:electric_heater"
         }
     ]
 }

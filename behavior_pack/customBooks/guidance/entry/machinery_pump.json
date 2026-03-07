@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "电动泵消耗能量§9抽取§r其下方的流体方块， 可以使用流体管道导出。\n\n如果抽取的是水， 水方块不会被消耗。\n\n如果抽取的是其它流体，则会寻找该流体方块的§c流体源§r（例如熔岩源）并直接吸取。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:pump"
         }
     ]
 }

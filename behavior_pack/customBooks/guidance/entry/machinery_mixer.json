@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "可以将固体与流体进行混合搅拌得到固体新产物。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:mixer"
         }
     ]
 }

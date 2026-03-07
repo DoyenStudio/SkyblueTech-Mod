@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "可§2自动收获并补种§r其上方 5x5 范围内耕地上的作物。\n支持我的世界原版及棱花农夫乐事的作物。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:farming_station"
         }
     ]
 }

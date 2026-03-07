@@ -10,7 +10,9 @@
                 "custom_description": "物品分拣器",
                 "screen_name": "ItemSplitterUI.main"
             },
-            "netease:block_entity": {},
+            "netease:block_entity": {
+
+            },
             "netease:custom_tips": {
                 "value": "\n§7用于分拣物品。"
             },
@@ -22,8 +24,12 @@
                 "digger": "pickaxe",
                 "level": 2
             },
-            "tag:piston_denier": {},
-            "tag:skybluetech_container": {}
+            "tag:piston_denier": {
+
+            },
+            "tag:skybluetech_container": {
+
+            }
         },
         "description": {
             "base_block": "netease_container",

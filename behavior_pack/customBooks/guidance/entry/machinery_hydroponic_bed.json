@@ -10,6 +10,10 @@
         {
             "type": "textPage",
             "content": "水培床会§2自动§r从产出中收取一枚种子进行补种， 剩余产物会被存入下方的§9水培基座§r。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:hydroponic_bed"
         }
     ]
 }

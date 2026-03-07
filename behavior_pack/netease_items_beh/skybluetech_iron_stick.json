@@ -4,13 +4,13 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/cupronickel"
+                    "sticks/iron"
                 ]
             }
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:cupronickel_plate"
+            "identifier": "skybluetech:iron_stick"
         }
     }
 }

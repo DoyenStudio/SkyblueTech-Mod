@@ -109,9 +109,11 @@ class MachineryWorkstationRecipe(Recipe):
 
 PINCER_LEVEL2ITEM = {
     MachineryWorkstationRecipe.LEVEL_IRON: items.Pincer.IRON,
+    MachineryWorkstationRecipe.LEVEL_INVAR: items.Pincer.INVAR,
 }
 WRENCH_LEVEL2ITEM = {
     MachineryWorkstationRecipe.LEVEL_IRON: items.Wrench.IRON,
+    MachineryWorkstationRecipe.LEVEL_INVAR: items.Wrench.INVAR,
 }
 
 

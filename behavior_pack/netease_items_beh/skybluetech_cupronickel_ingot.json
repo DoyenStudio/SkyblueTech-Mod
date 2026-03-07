@@ -2,7 +2,11 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-
+            "minecraft:tags": {
+                "tags": [
+                    "ingots/cupronickel"
+                ]
+            }
         },
         "description": {
             "category": "skybluetech",

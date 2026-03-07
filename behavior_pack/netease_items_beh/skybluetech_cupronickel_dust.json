@@ -4,13 +4,13 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/cupronickel"
+                    "dusts/cupronickel"
                 ]
             }
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:cupronickel_plate"
+            "identifier": "skybluetech:cupronickel_dust"
         }
     }
 }

@@ -1,0 +1,24 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_furnace": {
+        "description": {
+            "identifier": "skybluetech:low_purity_silicon_panel_burn"
+        },
+        "input": {
+            "count": 1,
+            "data": 0,
+            "item": "minecraft:quartz"
+        },
+        "output": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:low_purity_silicon_panel"
+        },
+        "tags": [
+            "blast_furnace"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

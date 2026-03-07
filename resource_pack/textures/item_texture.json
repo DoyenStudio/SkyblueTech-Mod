@@ -61,6 +61,9 @@
         "skybluetech:creative_wire": {
             "textures": "textures/wire/creative_wire_item"
         },
+        "skybluetech:cupronickel_dust": {
+            "textures": "textures/items/dusts/cupronickel_dust"
+        },
         "skybluetech:cupronickel_ingot": {
             "textures": "textures/items/ingots/cupronickel_ingot"
         },
@@ -121,11 +124,8 @@
         "skybluetech:iron_dust": {
             "textures": "textures/items/dusts/iron_dust"
         },
-        "skybluetech:paddle_iron": {
-            "textures": "textures/items/paddle_iron"
-        },
-        "skybluetech:iron_plate": {
-            "textures": "textures/items/plates/iron_plate"
+        "skybluetech:iron_stick": {
+            "textures": "textures/items/sticks/iron_stick"
         },
         "skybluetech:junior_battery": {
             "textures": "textures/items/batterys/junior_battery"
@@ -144,6 +144,9 @@
         },
         "skybluetech:light_lava_bucket": {
             "textures": "textures/items/buckets/light_lava_bucket"
+        },
+        "skybluetech:low_purity_silicon_panel": {
+            "textures": "textures/items/low_purity_silicon_panel"
         },
         "skybluetech:lubricant_bucket": {
             "textures": "textures/items/buckets/lubricant_bucket"
@@ -222,6 +225,12 @@
         },
         "skybluetech:obj_upgrader_veinminer": {
             "textures": "textures/items/object_upgraders/obj_upgrader_veinminer"
+        },
+        "skybluetech:paddle_iron": {
+            "textures": "textures/items/paddle_iron"
+        },
+        "skybluetech:pincer_invar": {
+            "textures": "textures/items/pincer_invar"
         },
         "skybluetech:pincer_iron": {
             "textures": "textures/items/pincer_iron"
@@ -381,6 +390,9 @@
         },
         "skybluetech:vegetable_oil_bucket": {
             "textures": "textures/items/buckets/vegetable_oil_bucket"
+        },
+        "skybluetech:wrench_invar": {
+            "textures": "textures/items/wrench_invar"
         },
         "skybluetech:wrench_iron": {
             "textures": "textures/items/wrench_iron"

@@ -86,11 +86,11 @@
                 "level_tip": {
                     "type": "label",
                     "offset": [
-                        35.0,
+                        23.0,
                         0.0
                     ],
                     "size": [
-                        39.0,
+                        49.0,
                         16.0
                     ],
                     "layer": 3,
@@ -102,7 +102,8 @@
                     "font_scale_factor": 1.6,
                     "font_size": "small",
                     "font_type": "default",
-                    "text": "扳手等级： ？\n钳等级： ？"
+                    "text": "扳手等级： ？\n钳等级： ？",
+                    "text_alignment": "right"
                 }
             },
             {

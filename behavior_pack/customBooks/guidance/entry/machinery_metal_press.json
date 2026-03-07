@@ -6,6 +6,10 @@
         {
             "type": "textPage",
             "content": "可以使用一份金属原料和润滑油生产金属棒。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:metal_press"
         }
     ]
 }

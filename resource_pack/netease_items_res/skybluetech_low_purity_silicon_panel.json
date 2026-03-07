@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:low_purity_silicon_panel"
+        },
+        "description": {
+            "identifier": "skybluetech:low_purity_silicon_panel"
+        }
+    }
+}

@@ -2,7 +2,6 @@
     "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
-            "minecraft:light_dampening": 0,
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 2.0
             },
@@ -18,43 +17,41 @@
                 },
                 "identifier": "geometry.skybluetech.rf_repeater_plant"
             },
+            "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
                 "*": {
                     "isotropic": true,
                     "render_method": "blend",
-                    "texture": "skybluetech:wind_generator"
+                    "texture": "skybluetech:rf_repeater_plant"
+                }
+            },
+            "netease:aabb": {
+                "clip": {
+                    "max": [
+                        0.625,
+                        1,
+                        0.625
+                    ],
+                    "min": [
+                        0.375,
+                        0,
+                        0.375
+                    ]
+                },
+                "collision": {
+                    "max": [
+                        0.625,
+                        1,
+                        0.625
+                    ],
+                    "min": [
+                        0.375,
+                        0,
+                        0.375
+                    ]
                 }
             },
             "netease:block_entity": {},
-            "netease:aabb": {
-                "collision": {
-                    "min": [
-                        0.375,
-                        0,
-                        0.375
-                    ],
-                    "max": [
-                        0.625,
-                        1,
-                        0.625
-                    ]
-                },
-                "clip": {
-                    "min": [
-                        0.375,
-                        0,
-                        0.375
-                    ],
-                    "max": [
-                        0.625,
-                        1,
-                        0.625
-                    ]
-                }
-            },
-            "netease:solid": {
-                "value": false
-            },
             "netease:custom_tips": {
                 "value": "\n§7用于远距离传输红石通量能源。"
             },
@@ -63,6 +60,9 @@
             },
             "netease:neighborchanged_sendto_script": {
                 "value": true
+            },
+            "netease:solid": {
+                "value": false
             },
             "netease:tier": {
                 "destroy_special": true,
@@ -80,12 +80,11 @@
             "category": "skybluetech",
             "identifier": "skybluetech:rf_repeater_plant",
             "states": {
-                "skybluetech:layer": [
-                    0,
-                    1,
-                    2
-                ],
                 "skybluetech:connection_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_north": [
                     false,
                     true
                 ],
@@ -97,9 +96,10 @@
                     false,
                     true
                 ],
-                "skybluetech:connection_north": [
-                    false,
-                    true
+                "skybluetech:layer": [
+                    0,
+                    1,
+                    2
                 ]
             },
             "traits": {

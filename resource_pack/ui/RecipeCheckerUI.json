@@ -1616,6 +1616,94 @@
     "main@common.base_screen": {
         "$screen_content": "RecipeCheckerUI.content"
     },
+    "metal_hammer_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            40.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        30,
+                        0
+                    ]
+                }
+            },
+            {
+                "arrow_img": {
+                    "type": "image",
+                    "size": [
+                        30.0,
+                        30.0
+                    ],
+                    "layer": 3,
+                    "texture": "textures/ui/arrow_img"
+                }
+            },
+            {
+                "hammer_img": {
+                    "type": "image",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        10.0,
+                        0.0
+                    ],
+                    "size": [
+                        20.0,
+                        20.0
+                    ],
+                    "layer": 3,
+                    "rotate_angle": -45.0,
+                    "texture": "textures/items/metal_hammer"
+                }
+            },
+            {
+                "ingot_img": {
+                    "type": "image",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        22.0,
+                        3.0
+                    ],
+                    "size": [
+                        15.0,
+                        15.0
+                    ],
+                    "layer": 2,
+                    "rotate_angle": -15.0,
+                    "texture": "textures/items/ingots/tin_ingot"
+                }
+            }
+        ]
+    },
     "metal_press_recipes": {
         "type": "panel",
         "size": [

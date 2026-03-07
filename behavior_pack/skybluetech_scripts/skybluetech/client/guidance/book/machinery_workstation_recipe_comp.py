@@ -45,7 +45,7 @@ class MachineryWorkstationRecipeComp(BaseComp):
             "skybluetech:machinery_workstation_recipe_comp",
             "GuidanceComps.main",
             "machinery_workstation_recipe_comp",
-            recycled=True,
+            recycled=False,
         )
         self.display_recipe = None
 

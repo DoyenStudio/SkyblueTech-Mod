@@ -15,7 +15,7 @@ from ..core import (
 
 
 class MachineryWorkstationRecipe(Recipe):
-    recipe_icon_id = machinery.MACERATOR
+    recipe_icon_id = machinery.MACHINERY_WORKSTATION
     render_ui_def_name = "RecipeCheckerUI.machinery_workstation_recipes"
 
     LEVEL_IRON = 1

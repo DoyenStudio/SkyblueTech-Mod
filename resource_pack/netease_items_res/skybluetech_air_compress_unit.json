@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:air_compress_unit"
+        },
+        "description": {
+            "identifier": "skybluetech:air_compress_unit"
+        }
+    }
+}

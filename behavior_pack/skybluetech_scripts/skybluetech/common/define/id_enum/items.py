@@ -95,10 +95,23 @@ class Pincer:
 class Paddle:
     IRON = "skybluetech:paddle_iron"
     STEEL = "skybluetech:paddle_steel"
+
+
+AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
+DRILL_TOP = "skybluetech:drill_top"
+ELECTRIC_MOTOR = "skybluetech:electric_motor"
+HEAT_EXCHANGER = "skybluetech:heat_exchanger"
+HEAT_PLATE = "skybluetech:heat_plate"
 METAL_HAMMER = "skybluetech:metal_hammer"
+REDSTONEFLUX_CORE = "skybluetech:redstoneflux_core"
 RESIN = "skybluetech:resin"
 RESIN_SPOON = "skybluetech:resin_spoon"
+SUNFLOWER_SEEDS = "skybluetech:sunflower_seeds"
 TRANSMITTER_WRENCH = "skybluetech:transmitter_wrench"
 TRANSMITTER_SETTINGS_WRENCH = "skybluetech:transmitter_settings_wrench"
-SUNFLOWER_SEEDS = "skybluetech:sunflower_seeds"
+
+SKYBLUE_HELMET = "skybluetech:skyblue_helmet"
+SKYBLUE_CHESTPLATE = "skybluetech:skyblue_chestplate"
+SKYBLUE_LEGGINGS = "skybluetech:skyblue_leggings"
+SKYBLUE_BOOTS = "skybluetech:skyblue_boots"

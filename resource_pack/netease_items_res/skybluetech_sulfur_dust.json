@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:sulfur_dust"
+        },
+        "description": {
+            "identifier": "skybluetech:sulfur_dust"
+        }
+    }
+}

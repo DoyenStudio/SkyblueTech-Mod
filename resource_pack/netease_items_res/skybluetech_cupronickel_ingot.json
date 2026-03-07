@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:cupronickel_ingot"
+        },
+        "description": {
+            "identifier": "skybluetech:cupronickel_ingot"
+        }
+    }
+}

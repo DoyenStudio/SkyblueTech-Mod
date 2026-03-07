@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:air_compress_unit": {
+            "textures": "textures/items/air_compress_unit"
+        },
         "skybluetech:ancient_debris_dust": {
             "textures": "textures/items/dusts/ancient_debris_dust"
         },
@@ -58,6 +61,12 @@
         "skybluetech:creative_wire": {
             "textures": "textures/wire/creative_wire_item"
         },
+        "skybluetech:cupronickel_ingot": {
+            "textures": "textures/items/ingots/cupronickel_ingot"
+        },
+        "skybluetech:cupronickel_plate": {
+            "textures": "textures/items/plates/cupronickel_plate"
+        },
         "skybluetech:deepslate_lava_bucket": {
             "textures": "textures/items/buckets/deepslate_lava_bucket"
         },
@@ -91,6 +100,12 @@
         "skybluetech:guidance": {
             "textures": "textures/items/guidance"
         },
+        "skybluetech:heat_exchanger": {
+            "textures": "textures/items/heat_exchanger"
+        },
+        "skybluetech:heat_plate": {
+            "textures": "textures/items/heat_plate"
+        },
         "skybluetech:heavy_lava_bucket": {
             "textures": "textures/items/buckets/heavy_lava_bucket"
         },
@@ -105,6 +120,9 @@
         },
         "skybluetech:iron_dust": {
             "textures": "textures/items/dusts/iron_dust"
+        },
+        "skybluetech:paddle_iron": {
+            "textures": "textures/items/paddle_iron"
         },
         "skybluetech:iron_plate": {
             "textures": "textures/items/plates/iron_plate"
@@ -312,6 +330,12 @@
         },
         "skybluetech:steel_stick": {
             "textures": "textures/items/sticks/steel_stick"
+        },
+        "skybluetech:sulfur": {
+            "textures": "textures/items/sulfur"
+        },
+        "skybluetech:sulfur_dust": {
+            "textures": "textures/items/dusts/sulfur_dust"
         },
         "skybluetech:sunflower_seeds": {
             "textures": "textures/items/sunflower_seeds"

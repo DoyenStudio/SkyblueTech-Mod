@@ -53,6 +53,19 @@ class PlateTag:
     STEEL = "plates/steel"
     INVAR = "plates/invar"
 
+
+class StickTag:
+    COPPER = "sticks/copper"
+    IRON = "sticks/iron"
+    GOLD = "sticks/gold"
+
+    TIN = "sticks/tin"
+    LEAD = "sticks/lead"
+    NICKEL = "sticks/nickel"
+    SILVER = "sticks/silver"
+    PLATINUM = "sticks/platinum"
+
+
 class Wrench:
     IRON = "wrench/iron"
     INVAR = "wrench/invar"

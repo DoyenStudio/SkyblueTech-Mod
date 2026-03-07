@@ -1,0 +1,68 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.skybluetech.wind_generator_model.work": {
+			"loop": true,
+			"animation_length": 1,
+			"anim_time_update": "q.anim_time+q.mod.skybluetech_anim_speed",
+			"bones": {
+				"paddles": {
+					"rotation": {
+						"0.0": [
+							0,
+							0,
+							0
+						],
+						"1.0": [
+							0,
+							0,
+							360
+						]
+					}
+				}
+			}
+		},
+		"animation.skybluetech.wind_generator_model.still": {
+			"loop": false
+		},
+		"animation.skybluetech.wind_generator_model.facing_north": {
+			"loop": true
+		},
+		"animation.skybluetech.wind_generator_model.facing_south": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": [
+						0,
+						-180,
+						0
+					]
+				}
+			}
+		},
+		"animation.skybluetech.wind_generator_model.facing_east": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": [
+						0,
+						90,
+						0
+					]
+				}
+			}
+		},
+		"animation.skybluetech.wind_generator_model.facing_west": {
+			"loop": true,
+			"bones": {
+				"body": {
+					"rotation": [
+						0,
+						-90,
+						0
+					]
+				}
+			}
+		}
+	}
+}

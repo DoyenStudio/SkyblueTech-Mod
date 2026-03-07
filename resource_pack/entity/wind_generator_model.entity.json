@@ -1,0 +1,35 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:wind_generator_model",
+            "geometry": {
+                "default": "geometry.skybluetech.wind_generator"
+            },
+            "textures": {
+                "default": "textures/models/wind_generator_empty_texture"
+            },
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "scripts": {
+                "animate": [
+                    "facing_ctrl",
+                    "rot"
+                ]
+            },
+            "animations": {
+                "facing_east": "animation.skybluetech.wind_generator_model.facing_east",
+                "facing_west": "animation.skybluetech.wind_generator_model.facing_west",
+                "facing_south": "animation.skybluetech.wind_generator_model.facing_south",
+                "facing_north": "animation.skybluetech.wind_generator_model.facing_north",
+                "work": "animation.skybluetech.wind_generator_model.work",
+                "facing_ctrl": "controller.animation.skybluetech.wind_generator_model.facing_ctrl",
+                "rot": "controller.animation.skybluetech.wind_generator_model.work"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.wind_generator_model"
+            ]
+        }
+    }
+}

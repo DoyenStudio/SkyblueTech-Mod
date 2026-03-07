@@ -28,11 +28,16 @@ class WindGeneratorStatesRequest(CustomC2SEvent):
 class WindGeneratorStatesUpdate(CustomS2CEvent):
     name = "st:WGSU"
 
-    def __init__(self, x, y, z, rot_speed):
-        # type: (int, int, int, float) -> None
+    PADDLE_EMPTY = 0
+    PADDLE_IRON = 1
+    PADDLE_STEEL = 2
+
+    def __init__(self, x, y, z, paddle_type, rot_speed):
+        # type: (int, int, int, int | None, float) -> None
         self.x = x
         self.y = y
         self.z = z
+        self.paddle_type = paddle_type
         self.rot_speed = rot_speed
 
     def marshal(self):
@@ -40,6 +45,7 @@ class WindGeneratorStatesUpdate(CustomS2CEvent):
             "x": self.x,
             "y": self.y,
             "z": self.z,
+            "pt": self.paddle_type,
             "rs": self.rot_speed,
         }
 
@@ -49,6 +55,7 @@ class WindGeneratorStatesUpdate(CustomS2CEvent):
             x=data["x"],
             y=data["y"],
             z=data["z"],
+            paddle_type=data["pt"],
             rot_speed=data["rs"],
         )
 

@@ -92,6 +92,9 @@ class Pincer:
     INVAR = "skybluetech:pincer_invar"
 
 
+class Paddle:
+    IRON = "skybluetech:paddle_iron"
+    STEEL = "skybluetech:paddle_steel"
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
 METAL_HAMMER = "skybluetech:metal_hammer"
 RESIN = "skybluetech:resin"

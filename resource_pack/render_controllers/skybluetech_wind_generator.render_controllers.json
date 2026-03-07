@@ -1,25 +1,22 @@
 {
 	"format_version": "1.8.0",
 	"render_controllers": {
-		"controller.render.skybluetech.wind_generator": {
+		"controller.render.skybluetech.wind_generator_model": {
 			"part_visibility": [
 				{
-					"body": "variable.mod_is_base_block"
+					"body": "query.mod.skybluetech_is_base_block==1.0"
 				},
 				{
-					"paddles": "variable.mod_is_base_block"
+					"east_charge": "query.mod.skybluetech_wire_connect_east==1.0"
 				},
 				{
-					"east_charge": "variable.is_connect_east"
+					"north_charge": "query.mod.skybluetech_wire_connect_north==1.0"
 				},
 				{
-					"north_charge": "variable.is_connect_north"
+					"south_charge": "query.mod.skybluetech_wire_connect_south==1.0"
 				},
 				{
-					"south_charge": "variable.is_connect_south"
-				},
-				{
-					"west_charge": "variable.is_connect_west"
+					"west_charge": "query.mod.skybluetech_wire_connect_west==1.0"
 				}
 			],
 			"geometry": "Geometry.default",

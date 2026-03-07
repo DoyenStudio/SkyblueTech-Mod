@@ -11,6 +11,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetContainerItem,
     PutItemIntoContainer,
     SetChestBoxItemNum,
+    SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
@@ -80,6 +81,13 @@ class ItemContainer(object):
         return SetContainerItem(
             self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0)
         )
+
+    def DropAllItems(self):
+        for slot in self.input_slots + self.output_slots:
+            item = self.GetSlotItem(slot)
+            if item is not None:
+                SpawnDroppedItem(self.dim, self.xyz, item)
+                self.SetSlotItem(slot, None)
 
     def SetSlotItemCount(self, slot_pos, count):
         # type: (int, int) -> None

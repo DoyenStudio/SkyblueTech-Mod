@@ -302,6 +302,9 @@
         "skybluetech:resin_collector": {
             "textures": "textures/models/resin_collector_texture"
         },
+        "skybluetech:rf_repeater_plant": {
+            "textures": "textures/models/rf_repeater_plant_texture"
+        },
         "skybluetech:silver_block": {
             "textures": "textures/blocks/ingot_block/silver_block"
         },
@@ -375,7 +378,7 @@
             "textures": "textures/wire/tin_wire_item"
         },
         "skybluetech:wind_generator": {
-            "textures": "textures/models/wind_generator_texture"
+            "textures": "textures/models/wind_generator_empty_texture"
         },
         "skybluetech:wind_generator_icon": {
             "textures": "textures/machines/wind_generator"

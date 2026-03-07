@@ -1,0 +1,22 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:attachable": {
+        "description": {
+            "geometry": {
+                "default": "geometry.skybluetech.wind_generator_paddle"
+            },
+            "identifier": "skybluetech:iron_paddle",
+            "materials": {
+                "default": "entity_alphatest",
+                "enchanted": "entity_alphatest_glint"
+            },
+            "render_controllers": [
+                "controller.render.item_default"
+            ],
+            "textures": {
+                "default": "textures/models/iron_paddle_texture",
+                "enchanted": "textures/models/iron_paddle_texture"
+            }
+        }
+    }
+}

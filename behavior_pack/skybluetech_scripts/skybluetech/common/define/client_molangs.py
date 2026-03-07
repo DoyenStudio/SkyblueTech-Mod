@@ -27,3 +27,10 @@ class ClientMolang:
 
 
 Y_SCALE = ClientMolang("query.mod.skybluetech_y_scale")
+FACE = ClientMolang("query.mod.skybluetech_face")
+ANIM_SPEED = ClientMolang("query.mod.skybluetech_anim_speed")
+IS_BASE_BLOCK = ClientMolang("query.mod.skybluetech_is_base_block")
+WIRE_CONNECT_EAST = ClientMolang("query.mod.skybluetech_wire_connect_east")
+WIRE_CONNECT_WEST = ClientMolang("query.mod.skybluetech_wire_connect_west")
+WIRE_CONNECT_NORTH = ClientMolang("query.mod.skybluetech_wire_connect_north")
+WIRE_CONNECT_SOUTH = ClientMolang("query.mod.skybluetech_wire_connect_south")

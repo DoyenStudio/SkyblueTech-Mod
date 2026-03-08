@@ -24,6 +24,16 @@ class Tank:
     PLATINUM = "skybluetech:tank_platinum"
     CREATIVE = "skybluetech:tank_creative"
 
+    @classmethod
+    def all(cls):
+        return {
+            cls.BRONZE,
+            cls.INVAR,
+            cls.STEEL,
+            cls.PLATINUM,
+            cls.CREATIVE,
+        }
+
 
 FAMICOM = "skybluetech:famicom"
 RESIN_COLLECTOR = "skybluetech:resin_collector"

@@ -7,6 +7,7 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityRemoveClientEvent,
 )
 from skybluetech_scripts.tooldelta.utils.nbt import GetValue
+from ....common.define.id_enum import Tank
 from ....common.machinery.basic.fluid_container import (
     K_FLUID_ID,
     K_FLUID_VOLUME,
@@ -26,6 +27,8 @@ client_models = {}  # type: dict[tuple[int, int, int], FluidModel]
 def onModBlockEntityLoadedClientEvent(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     global FIRST_TANK_LOADED
+    if event.blockName not in Tank.all():
+        return
     x = event.posX
     y = event.posY
     z = event.posZ
@@ -46,6 +49,8 @@ def onModBlockEntityLoadedClientEvent(event):
 @ModBlockEntityRemoveClientEvent.Listen()
 def onModBlockEntityRemoveClientEvent(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
+    if event.blockName not in Tank.all():
+        return
     x = event.posX
     y = event.posY
     z = event.posZ
@@ -105,7 +110,8 @@ def updateClientTanksOnce():
     ) in client_tank_datas.copy().items():
         blockdata = GetBlockEntityData(x, y, z)
         if blockdata is None:
-            print("[ERROR] Tank: BlockEntityData is None")
+            # TODO: BUG: 切换维度不触发
+            # print("[ERROR] Tank: BlockEntityData is None")
             continue
         fluid_id, fluid_volume, max_volume = getFluidDataFromBlock(blockdata)
         if fluid_volume == INFINITY:

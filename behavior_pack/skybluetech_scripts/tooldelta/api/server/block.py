@@ -20,20 +20,26 @@ _getBlockEntityDict = MethodCacher(
 _getBlockTags = MethodCacher(
     lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockTags
 )
-_setBlockNew = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetBlockNew
-)
 _getBlockStates = MethodCacher(
     lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockStates
 )
-_setBlockStates = MethodCacher(
-    lambda: ServerComp.CreateBlockState(ServerLevelId).SetBlockStates
+_getBlockBasicInfo = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockBasicInfo
+)
+_getLiquidBlock = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetLiquidBlock
 )
 _listenOnBlockRemoveEvent = MethodCacher(
     lambda: ServerComp.CreateBlockInfo(ServerLevelId).ListenOnBlockRemoveEvent
 )
-_getBlockBasicInfo = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockBasicInfo
+_setBlockStates = MethodCacher(
+    lambda: ServerComp.CreateBlockState(ServerLevelId).SetBlockStates
+)
+_setBlockNew = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetBlockNew
+)
+_setLiquidBlock = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetLiquidBlock
 )
 
 
@@ -104,11 +110,25 @@ def GetBlockNameAndAux(dim, pos):
         return b["name"], b["aux"]
 
 
+def GetLiquidBlock(dim, pos):
+    # type: (int, tuple[int, int, int]) -> tuple[str | None, int]
+    b = _getLiquidBlock(pos, dim)
+    if b is None:
+        return None, 0
+    else:
+        return b["name"], b["aux"]
+
+
 def SetBlock(dim, pos, block_name, aux_value=0, old_block_handing=0):
     # type: (int, tuple[int, int, int], str, int, int) -> bool
     return _setBlockNew(
         pos, {"name": block_name, "aux": aux_value}, old_block_handing, dimensionId=dim
     )
+
+
+def SetLiquidBlock(dim, pos, block_name, aux_value=0):
+    # type: (int, tuple[int, int, int], str, int) -> bool
+    return _setLiquidBlock(pos, {"name": block_name, "aux": aux_value}, dimensionId=dim)
 
 
 def GetBlockStates(dim, pos):
@@ -183,7 +203,11 @@ GetTopBlockHeight = MethodCacher(
 GetBlockAuxValueFromStates = MethodCacher(
     lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockAuxValueFromStates
 )
+GetBlockStatesFromAuxValue = MethodCacher(
+    lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockStatesFromAuxValue
+)
 MayPlace = MethodCacher(lambda: ServerComp.CreateBlockInfo(ServerLevelId).MayPlace)
+
 
 __all__ = [
     "AddBlocksToBlockRemoveListener",
@@ -192,7 +216,9 @@ __all__ = [
     "GetBlockBasicInfo",
     "GetPosBlockTags",
     "GetTopBlockHeight",
+    "GetLiquidBlock",
     "GetBlockAuxValueFromStates",
+    "GetBlockStatesFromAuxValue",
     "GetBlockPaletteFromPosList",
     "GetBlockPaletteBetweenPos",
     "GetBlockCardinalFacing",
@@ -200,6 +226,7 @@ __all__ = [
     "BlockHasTag",
     "MayPlace",
     "SetBlock",
+    "SetLiquidBlock",
     "GetBlockStates",
     "UpdateBlockStates",
 ]

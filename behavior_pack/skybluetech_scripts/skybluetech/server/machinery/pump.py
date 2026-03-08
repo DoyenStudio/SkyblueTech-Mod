@@ -1,188 +1,238 @@
 # coding=utf-8
 # lang: py2
 from mod.server.blockEntityData import BlockEntityData
-from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.events.server.block import (
-    BlockNeighborChangedServerEvent,
+from skybluetech_scripts.tooldelta.api.server.block import (
+    GetLiquidBlock,
+    GetBlockNameAndAux,
+    GetBlockStatesFromAuxValue,
+    SetBlock,
+    SetLiquidBlock,
 )
-from skybluetech_scripts.tooldelta.events.server.item import (
-    PlayerTryPutCustomContainerItemServerEvent,
-)
-from skybluetech_scripts.tooldelta.api.server.block import GetBlockNameAndAux
-from skybluetech_scripts.tooldelta.api.server.item import ItemExists
-from ...common.machinery_def.pump import *
 from ...common.define import flags as rf_flags
-from ...common.define.id_enum.machinery import PUMP as MACHINE_ID
+from ...common.define.id_enum import PUMP as MACHINE_ID, Upgraders
+from ...common.define.global_config import BUCKET_VOLUME
 from ...common.ui_sync.machinery.pump import PumpUISync
 from .basic import (
-    BaseMachine,
     FluidContainer,
     GUIControl,
-    ItemContainer,
-    SPControl,
+    UpgradeControl,
     RegisterMachine,
 )
 
-
-K_PUMP_TYPE = "pump_type"
+K_CACHED_VOLUME = "cached_volume"
 
 
 @RegisterMachine
-class Pump(FluidContainer, GUIControl, ItemContainer, SPControl):
+class Pump(FluidContainer, GUIControl, UpgradeControl):
     block_name = MACHINE_ID
     store_rf_max = 8800
-    running_power = 0
+    running_power = 20
     input_slots = (0,)
     output_slots = (1,)
     fluid_io_mode = (2, 1, 2, 2, 2, 2)
     max_fluid_volume = 4000
     origin_process_ticks = 5
+    upgrade_slot_start = 0
+    allow_player_use_bucket_push = False
+    allow_upgrader_tags = {
+        "skybluetech:upgraders/speed",
+        "skybluetech:upgraders/energy",
+        "skybluetech:upgraders/expansion",
+    }
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
-        SPControl.__init__(self, dim, x, y, z, block_entity_data)
+        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = PumpUISync.NewServer(self).Activate()
         self.OnSync()
-        self.onBlockChanged()
-        self.last_1000mb = self.fluid_volume >= 1000
-
-    def OnPlaced(self, _):
-        under_block_name, aux = GetBlockNameAndAux(
-            self.dim, (self.x, self.y - 1, self.z)
-        )
-        if under_block_name is None:
-            self.pump_type = M_AIR
-            return
-        self.pump_type = M_TYPE_MAPPING.get((under_block_name, aux), M_AIR)
-        self.onBlockChanged()
-
-    def OnUnload(self):
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+        self.last_over_one_bucket = False
 
     def OnTicking(self):
         FluidContainer.OnTicking(self)
-        while self.IsActive():
-            if self.pump_type == M_AIR:
-                self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_NO_RECIPE)
-                return
-            if self.fluid_id is None:
-                self.fluid_id, _ = M_TYPE_MAPPING_REVERSE[self.pump_type]
-            do_break = False
-            if self.ProcessOnce():
-                self.OutputFluid(self.fluid_id, self.pump_speed)
-                self.OnSync()
-                if not self.last_1000mb and self.fluid_volume >= 1000:
-                    self.last_1000mb = True
-                    self.OnSlotUpdate(None)
-            else:
-                do_break = True
-            if self.fluid_volume >= self.max_fluid_volume:
-                self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_FULL)
-            if do_break:
-                break
+        if self.ProcessOnce():
+            self.work_once()
+            self.OnSync()
+            self._sending_fluid = True
 
     def OnSync(self):
-        self.sync.storage_rf = self.store_rf
-        self.sync.rf_max = self.store_rf_max
         self.sync.fluid_id = self.fluid_id
         self.sync.fluid_volume = self.fluid_volume
         self.sync.max_volume = self.max_fluid_volume
+        self.sync.storage_rf = self.store_rf
+        self.sync.rf_max = self.store_rf_max
         self.sync.MarkedAsChanged()
-
-    def OnCustomCotainerPutItem(self, event):
-        # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
-        if not self.IsValidInput(event.collectionIndex, event.item):
-            event.cancel()
-
-    def IsValidInput(self, slot, item):
-        # type: (int, Item) -> bool
-        if slot not in self.input_slots:
-            return False
-        elif item.newItemName != "minecraft:bucket":
-            # TODO: 兼容其他桶类似物
-            return False
-        return True
-
-    def OnSlotUpdate(self, _):
-        input_slot_item = self.GetSlotItem(0)
-        output_slot_item = self.GetSlotItem(1)
-        if input_slot_item is None:
-            return
-        if (
-            output_slot_item is not None
-            and output_slot_item.count >= output_slot_item.GetBasicInfo().maxStackSize
-        ):
-            return
-        # NOTE: 我们假设水桶命名为 液体id_bucket
-        if self.fluid_id is None:
-            return
-        excepted_output = self.fluid_id + "_bucket"
-        if not ItemExists(excepted_output):
-            return
-        if output_slot_item is None:
-            output_slot_item = Item(excepted_output, 0)
-        can_output, _, _ = self.RequireFluid(None, 1000, True)
-        if can_output:
-            output_slot_item.count += 1
-            self.SetSlotItem(1, output_slot_item)
-            input_slot_item.count -= 1
-            self.SetSlotItem(0, input_slot_item)
-            self.OnSync()
-            if (
-                self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_FULL)
-                and self.fluid_volume < self.max_fluid_volume
-            ):
-                self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_FULL)
-            if self.fluid_volume < 1000:
-                self.last_1000mb = False
 
     def OnTryActivate(self):
         FluidContainer.OnTryActivate(self)
-        if self.fluid_volume < self.max_fluid_volume:
-            if self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_FULL):
-                self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_FULL)
 
-    def OnNeighborChanged(self, event):
-        # type: (BlockNeighborChangedServerEvent) -> None
-        if (
-            event.neighborPosX != self.x
-            or event.neighborPosY != self.y - 1
-            or event.neighborPosZ != self.z
-        ):
-            return
-        under_block_name = event.toBlockName
-        self.pump_type = M_TYPE_MAPPING.get((under_block_name, event.toAuxValue), M_AIR)
-        self.onBlockChanged()
-
-    def onBlockChanged(self):
-        self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_NO_RECIPE)
-        if (
-            self.pump_type != M_AIR
-            and self.fluid_id is not None
-            and M_TYPE_MAPPING_REVERSE[self.pump_type][0] != self.fluid_id
-        ):
-            self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_NOT_MATCH)
-        # elif self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_NOT_MATCH):
-        #     self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_FLUID_NOT_MATCH)
-        if self.pump_type != M_AIR:
-            self.SetPower(PUMP_FLUID_AND_POWER[self.pump_type])
-            self.pump_speed = PUMP_SPEED[self.pump_type]
-            self.fluid_id, _ = M_TYPE_MAPPING_REVERSE[self.pump_type]
+    def work_once(self):
+        if self.cached_volume >= BUCKET_VOLUME * 0.2:
+            self.fluid_volume += BUCKET_VOLUME * 0.2
+            self.cached_volume -= BUCKET_VOLUME * 0.2
         else:
-            self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_NO_RECIPE)
-            self.SetPower(0)
-            self.pump_speed = 0
-            self.pump_type = M_AIR
+            if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
+                max_dfs_depth = 64
+            else:
+                max_dfs_depth = 16
+            if self.fluid_volume > self.max_fluid_volume - BUCKET_VOLUME:
+                return
+            res = find_source_block(
+                self.dim, self.x, self.y - 1, self.z, self.fluid_id, max_dfs_depth
+            )
+            if res is None:
+                return
+            fluid_id, src_pos = res
+            src_block_id, _ = GetBlockNameAndAux(self.dim, src_pos)
+            if src_block_id != fluid_id:
+                SetLiquidBlock(self.dim, src_pos, fluid_id, 1)
+            else:
+                SetBlock(self.dim, src_pos, fluid_id, 1)
+            self.cached_volume += BUCKET_VOLUME * 0.8
+            self.fluid_volume += BUCKET_VOLUME * 0.2
+            if self.fluid_id is None:
+                self.fluid_id = fluid_id
 
     @property
-    def pump_type(self):
-        # type: () -> int
-        return self.bdata[K_PUMP_TYPE] or M_AIR
+    def cached_volume(self):
+        # type: () -> float
+        return self.bdata[K_CACHED_VOLUME] or 0.0
 
-    @pump_type.setter
-    def pump_type(self, value):
-        # type: (int) -> None
-        self.bdata[K_PUMP_TYPE] = value
+    @cached_volume.setter
+    def cached_volume(self, value):
+        # type: (float) -> None
+        self.bdata[K_CACHED_VOLUME] = value
+
+
+def find_source_block(dim, x, y, z, allowed_fluid, max_depth):
+    # type: (int, int, int, int, str | None, int) -> tuple[str, tuple[int, int, int]] | None
+    block_id, aux = GetLiquidBlock(dim, (x, y, z))
+    if block_id is None:
+        return None
+    if allowed_fluid is not None:
+        if block_id != allowed_fluid:
+            return None
+    fluid_depth = GetBlockStatesFromAuxValue(block_id, aux).get("liquid_depth")
+    if fluid_depth is None:
+        return None
+    elif fluid_depth == 0:
+        return block_id, (x, y, z)
+    walked = set()
+    if fluid_depth >= 8:
+        res = _vertical_find_source_block(dim, x, y, z, block_id, walked, 0, max_depth)
+    else:
+        res = _dfs_find_source_block(
+            dim, x, y, z, block_id, walked, fluid_depth, 0, max_depth
+        )
+    if res is None:
+        return None
+    else:
+        return block_id, res
+
+
+def _dfs_find_source_block(
+    dim,  # type: int
+    x,  # type: int
+    y,  # type: int
+    z,  # type: int
+    fluid_id,  # type: str
+    walked,  # type: set[tuple[int, int, int]]
+    last_fluid_depth,  # type: int
+    current_depth,  # type: int
+    max_depth,  # type: int
+):
+    # type: (...) -> tuple[int, int, int] | None
+    if current_depth > max_depth:
+        return None
+    for new_pos in (
+        (x - 1, y, z),
+        (x + 1, y, z),
+        (x, y, z - 1),
+        (x, y, z + 1),
+    ):
+        if new_pos in walked:
+            continue
+        walked.add(new_pos)
+        block_id, aux = GetLiquidBlock(dim, new_pos)
+        if block_id is None or block_id != fluid_id:
+            continue
+        fluid_depth = GetBlockStatesFromAuxValue(block_id, aux).get("liquid_depth")
+        if fluid_depth is None:
+            continue
+        elif fluid_depth == 0:
+            return new_pos
+        elif fluid_depth >= 8:
+            nx, ny, nz = new_pos
+            res = _vertical_find_source_block(
+                dim,
+                nx,
+                ny,
+                nz,
+                fluid_id,
+                walked,
+                current_depth + 1,
+                max_depth,
+            )
+            if res is not None:
+                return res
+            else:
+                continue
+        else:
+            nx, ny, nz = new_pos
+            if last_fluid_depth < 8 and fluid_depth >= last_fluid_depth:
+                continue
+            res = _dfs_find_source_block(
+                dim,
+                nx,
+                ny,
+                nz,
+                fluid_id,
+                walked,
+                fluid_depth,
+                current_depth + 1,
+                max_depth,
+            )
+            if res is not None:
+                return res
+            else:
+                continue
+    return None
+
+
+def _vertical_find_source_block(
+    dim,  # type: int
+    x,  # type: int
+    y,  # type: int
+    z,  # type: int
+    fluid_id,  # type: str
+    walked,  # type: set[tuple[int, int, int]]
+    current_depth,  # type: int
+    max_depth,  # type: int
+):
+    current_y = y
+    while True:
+        current_y += 1
+        current_depth += 1
+        if current_depth > max_depth:
+            return None
+        walked.add((x, current_y, z))
+        block_id, aux = GetLiquidBlock(dim, (x, current_y, z))
+        if block_id is None or block_id != fluid_id:
+            return None
+        liquid_depth = GetBlockStatesFromAuxValue(block_id, aux).get("liquid_depth")
+        if liquid_depth is None:
+            continue
+        elif liquid_depth == 0:
+            return (x, current_y, z)
+        elif liquid_depth < 8:
+            return _dfs_find_source_block(
+                dim,
+                x,
+                current_y,
+                z,
+                fluid_id,
+                walked,
+                liquid_depth,
+                current_depth,
+                max_depth,
+            )

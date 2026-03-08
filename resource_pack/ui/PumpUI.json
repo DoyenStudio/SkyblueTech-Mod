@@ -13,7 +13,11 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100
+                    "layer": 100,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {
@@ -70,56 +74,12 @@
                                                     "fluid_display@SkybluePanelLib.FluidDisplay": {
                                                         "layer": 2,
                                                         "offset": [
-                                                            -3,
-                                                            -32
+                                                            3.5,
+                                                            -40
                                                         ],
                                                         "size": [
-                                                            118,
-                                                            53
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            72.0,
-                                                            -47.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "layer": 5,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "output_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            72.0,
-                                                            -17.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm+0px",
-                                                            "100%cm+0px"
-                                                        ],
-                                                        "layer": 5,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 1
-                                                                }
-                                                            }
+                                                            131,
+                                                            69
                                                         ]
                                                     }
                                                 },
@@ -134,6 +94,10 @@
                                                 },
                                                 {
                                                     "upgrades@SkybluePanelLib.UpgradeSlots": {
+                                                        "$slot0": 0,
+                                                        "$slot1": 1,
+                                                        "$slot2": 2,
+                                                        "$slot3": 3,
                                                         "offset": [
                                                             106,
                                                             -57

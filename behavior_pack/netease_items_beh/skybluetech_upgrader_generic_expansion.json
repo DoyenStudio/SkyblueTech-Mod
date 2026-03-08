@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 8,
+            "minecraft:tags": {
+                "tags": [
+                    "skybluetech:upgraders/expansion"
+                ]
+            },
+            "netease:customtips": {
+                "value": "\n§7提升机器的有效工作范围。\n§b减少能量损耗。\n§a能量消耗倍率： §f§l0.4x§r§f"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:upgrader_generic_expansion"
+        }
+    }
+}

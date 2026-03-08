@@ -2,7 +2,12 @@
 #
 from skybluetech_scripts.tooldelta.define.item import Item
 from ....common.define import flags
-from ....common.machinery_def.upgraders import *
+from ....common.machinery_def.upgraders import (
+    SPEED_NEGATIVE,
+    SPEED_POSITIVE,
+    POWER_NEGATIVE,
+    POWER_POSITIVE,
+)
 from ...transmitters.wire.logic import RequireEnergyFromNetwork
 from .base_machine import BaseMachine
 from .item_container import ItemContainer
@@ -118,11 +123,11 @@ class UpgradeControl(ItemContainer, SPControl):
         power_neg = 1.0
         for upgrader, count in upgraders.items():
             # speed
-            speed_add, power_redu = SPEED_UPGRADER_MAPPINGS.get(upgrader, (0, 0))
-            speed_pos += speed_add * count
-            power_pos += power_redu * count
+            speed_pos += SPEED_POSITIVE.get(upgrader, 0) * count
+            speed_neg += SPEED_NEGATIVE.get(upgrader, 0) * count
             # power
-            power_neg += POWER_UPGRADER_MAPPINGS.get(upgrader, 0) * count
+            power_pos += POWER_POSITIVE.get(upgrader, 0) * count
+            power_neg += POWER_NEGATIVE.get(upgrader, 0) * count
         self.SetSpeedRelative(speed_pos / speed_neg)
         self._power_cost_relative = power_pos / power_neg
 

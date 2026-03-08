@@ -382,6 +382,9 @@
         "skybluetech:upgrader_basic_speed": {
             "textures": "textures/items/upgraders/upgrader_basic_speed"
         },
+        "skybluetech:upgrader_generic_expansion": {
+            "textures": "textures/items/upgraders/upgrader_generic_expansion"
+        },
         "skybluetech:upgrader_generic_split": {
             "textures": "textures/items/upgraders/upgrader_generic_split"
         },

@@ -40,7 +40,9 @@ class FluidContainer(object):
         fluid_io_mode (tuple[int, int, int, int, int, int]): 流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无
         max_fluid_volume (float): 最多可存储流体容量
         fluid_io_fix_mode (int): 使用 1 时调用 FixIOModeByCardinalFacing; 使用 2 时调用 FixIOModeByDirection; 其他则不适用修复
-        allow_player_use_bucket (bool): 是否允许玩家直接使用桶与机器进行交互
+        allow_player_use_bucket_interact (bool): 是否允许玩家直接使用桶交互
+        allow_player_use_bucket_push (bool): 是否允许玩家直接使用桶装填流体
+        allow_player_use_bucket_pull (bool): 是否允许玩家直接使用桶取出流体
 
     需要调用 `__init__()`
 
@@ -50,7 +52,9 @@ class FluidContainer(object):
     fluid_io_mode = (2, 2, 2, 2, 2, 2)  # type: tuple[int, int, int, int, int, int]
     max_fluid_volume = 1000
     fluid_io_fix_mode = 1
-    allow_player_use_bucket = True
+    allow_player_use_bucket_interact = True
+    allow_player_use_bucket_push = True
+    allow_player_use_bucket_pull = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -214,7 +218,7 @@ class FluidContainer(object):
 
     def ifPlayerInteractWithBucket(self, player_id, test=False):
         # type: (str, bool) -> bool
-        if not self.allow_player_use_bucket:
+        if not self.allow_player_use_bucket_interact:
             return False
         item = GetPlayerMainhandItem(player_id)
         if item is None:
@@ -227,6 +231,8 @@ class FluidContainer(object):
             if test:
                 return True
             elif item.newItemName == "minecraft:bucket":
+                if not self.allow_player_use_bucket_pull:
+                    return False
                 if self.fluid_id is not None and self.fluid_volume >= BUCKET_VOLUME:
                     bucket_id = self.fluid_id + "_bucket"
                     if ItemExists(bucket_id):
@@ -240,6 +246,8 @@ class FluidContainer(object):
                         GiveItem(player_id, Item(bucket_id, count=1))
                         self.onReducedFluid(orig_fluid_id, BUCKET_VOLUME)
             else:
+                if not self.allow_player_use_bucket_push:
+                    return False
                 fluid_id = item.newItemName.replace("_bucket", "")
                 if self.CanAddFluid(fluid_id) and ItemExists(fluid_id):
                     if self.max_fluid_volume - self.fluid_volume >= BUCKET_VOLUME:

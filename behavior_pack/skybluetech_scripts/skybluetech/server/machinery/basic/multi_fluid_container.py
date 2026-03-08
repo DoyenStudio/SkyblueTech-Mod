@@ -87,6 +87,9 @@ class MultiFluidContainer(object):
         fluid_slot_max_volumes (tuple[int, ...]): 每个流体槽最多可存储流体容量
         allow_player_use_bucket (bool): 是否允许玩家直接使用桶与机器进行交互
         fluid_io_fix_mode (int): 使用 1 时调用 FixIOModeByCardinalFacing; 使用 2 时调用 FixIOModeByDirection; 其他则不适用修复
+        allow_player_use_bucket_interact (bool): 是否允许玩家直接使用桶交互
+        allow_player_use_bucket_push (bool): 是否允许玩家直接使用桶装填流体
+        allow_player_use_bucket_pull (bool): 是否允许玩家直接使用桶取出流体
 
     需要调用 `__init__`
 
@@ -98,8 +101,10 @@ class MultiFluidContainer(object):
     fluid_input_slots = set()  # type: set[int]
     fluid_output_slots = set()  # type: set[int]
     fluid_slot_max_volumes = (4000, 4000)  # type: tuple[int, ...]
-    allow_player_use_bucket = True
     fluid_io_fix_mode = 1
+    allow_player_use_bucket_interact = True
+    allow_player_use_bucket_push = True
+    allow_player_use_bucket_pull = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -233,7 +238,7 @@ class MultiFluidContainer(object):
 
     def ifPlayerInteractWithBucket(self, player_id, test=False):
         # type: (str, bool) -> bool
-        if not self.allow_player_use_bucket:
+        if not self.allow_player_use_bucket_interact:
             return False
         item = GetPlayerMainhandItem(player_id)
         if item is None:
@@ -246,6 +251,8 @@ class MultiFluidContainer(object):
             if test:
                 return True
             if item.newItemName == "minecraft:bucket":
+                if not self.allow_player_use_bucket_pull:
+                    return False
                 last_fluid = self.fluids[-1]
                 for slot, fluid in enumerate(self.fluids):
                     if fluid.fluid_id is None or fluid.volume < BUCKET_VOLUME:
@@ -265,6 +272,8 @@ class MultiFluidContainer(object):
                         )
                         break
             else:
+                if not self.allow_player_use_bucket_push:
+                    return False
                 fluid_id = item.newItemName.replace("_bucket", "")
                 if ItemExists(fluid_id) and self.CanAddFluid(fluid_id):
                     last_idx = len(self.fluid_input_slots) - 1

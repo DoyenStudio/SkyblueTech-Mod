@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:obj_upgrader_spec_nofarm"
+        },
+        "description": {
+            "identifier": "skybluetech:obj_upgrader_spec_nofarm"
+        }
+    }
+}

@@ -1,0 +1,21 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 1,
+            "minecraft:tags": {
+                "tags": [
+                    "skybluetech:object_upgrader",
+                    "skybluetech:object_upgrader/armor/boots"
+                ]
+            },
+            "netease:customtips": {
+                "value": "\n§7使得穿上靴子时不再会踩塌作物。\n§3可用于：\n §b- 护靴"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:obj_upgrader_spec_nofarm"
+        }
+    }
+}

@@ -117,11 +117,19 @@ class ToolDeltaScreen(ClientListenerService):
         def Update(self):
             self._super_screen_ins._on_ticking()
 
+        def OnActive(self):
+            self._super_screen_ins._on_active()
+
+        def OnDeactive(self):
+            self._super_screen_ins._on_deactive()
+
         attrs = {
             "__init__": __init__,
             "Create": Create,
             "Destory": Destory,
             "Update": Update,
+            "OnActive": OnActive,
+            "OnDeactive": OnDeactive,
         }
         attrs.update(cls._get_tdscreen_bindings())
         t = type(cls.__name__ + "_Base", (ScreenNode,), attrs)
@@ -229,6 +237,12 @@ class ToolDeltaScreen(ClientListenerService):
         self._do_deactive()
         self.OnDestroy()
 
+    def _on_active(self):
+        self.OnActive()
+
+    def _on_deactive(self):
+        self.OnDeactive()
+
     def _on_ticking(self):
         self.OnTicking()
 
@@ -248,6 +262,14 @@ class ToolDeltaScreen(ClientListenerService):
         pass
 
     def OnDestroy(self):
+        "子类覆写该方法"
+        pass
+
+    def OnActive(self):
+        "子类覆写该方法"
+        pass
+
+    def OnDeactive(self):
         "子类覆写该方法"
         pass
 

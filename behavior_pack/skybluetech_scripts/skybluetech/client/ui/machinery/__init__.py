@@ -37,5 +37,4 @@ from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI
 from .tesla_plant_ui import TeslaPlantUI
 from .thermal_generator import ThermalGeneratorUI
-from .thermoelectric_generator import ThermoelectricGeneratorUI
 from .wind_generator import WindGeneratorUI

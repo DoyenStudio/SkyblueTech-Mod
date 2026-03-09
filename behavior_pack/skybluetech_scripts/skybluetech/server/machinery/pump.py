@@ -20,6 +20,7 @@ from .basic import (
 )
 
 K_CACHED_VOLUME = "cached_volume"
+K_CACHED_FLUID_ID = "cached_fluid_id"
 
 
 @RegisterMachine
@@ -68,8 +69,12 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
 
     def work_once(self):
         if self.cached_volume >= BUCKET_VOLUME * 0.2:
+            if self.fluid_id is None:
+                self.fluid_id = self.cached_fluid_id
             self.fluid_volume += BUCKET_VOLUME * 0.2
             self.cached_volume -= BUCKET_VOLUME * 0.2
+            if self.cached_volume <= 0.0:
+                self.cached_fluid_id = None
         else:
             if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
                 max_dfs_depth = 64
@@ -88,6 +93,7 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
                 SetLiquidBlock(self.dim, src_pos, fluid_id, 1)
             else:
                 SetBlock(self.dim, src_pos, fluid_id, 1)
+            self.cached_fluid_id = fluid_id
             self.cached_volume += BUCKET_VOLUME * 0.8
             self.fluid_volume += BUCKET_VOLUME * 0.2
             if self.fluid_id is None:
@@ -102,6 +108,16 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
     def cached_volume(self, value):
         # type: (float) -> None
         self.bdata[K_CACHED_VOLUME] = value
+
+    @property
+    def cached_fluid_id(self):
+        # type: () -> str | None
+        return self.bdata[K_CACHED_FLUID_ID]
+
+    @cached_fluid_id.setter
+    def cached_fluid_id(self, value):
+        # type: (str | None) -> None
+        self.bdata[K_CACHED_FLUID_ID] = value
 
 
 def find_source_block(dim, x, y, z, allowed_fluid, max_depth):

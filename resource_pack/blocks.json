@@ -522,6 +522,8 @@
     },
     "skybluetech:rf_repeater_plant": {
         "client_entity": {
+            "block_icon": "skybluetech:rf_repeater_plant_icon",
+            "hand_model_use_client_entity": true,
             "identifier": "skybluetech:rf_repeater_plant"
         },
         "sound": "iron"

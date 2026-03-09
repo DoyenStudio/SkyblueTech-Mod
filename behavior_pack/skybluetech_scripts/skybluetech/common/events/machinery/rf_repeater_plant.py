@@ -202,7 +202,7 @@ class RFRepeaterPlantBuildResponse(CustomS2CEvent):
 
 
 class RFRepeaterPlantBuildAddWire(CustomS2CEvent):
-    name = "st:RFRPBR"
+    name = "st:RFRPBAW"
 
     def __init__(
         self,

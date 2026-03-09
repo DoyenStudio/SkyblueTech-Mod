@@ -305,6 +305,9 @@
         "skybluetech:rf_repeater_plant": {
             "textures": "textures/models/rf_repeater_plant_texture"
         },
+        "skybluetech:rf_repeater_plant_icon": {
+            "textures": "textures/machines/rf_repeater_plant"
+        },
         "skybluetech:silver_block": {
             "textures": "textures/blocks/ingot_block/silver_block"
         },

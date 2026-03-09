@@ -108,7 +108,7 @@
                     "font_scale_factor": 1.4,
                     "font_type": "default",
                     "shadow": true,
-                    "text": "能源中继塔",
+                    "text": "能源中继器",
                     "text_alignment": "center"
                 }
             },
@@ -246,7 +246,7 @@
                                 ],
                                 "layer": 1,
                                 "font_type": "default",
-                                "text": "§a电网架设完毕。\n\n§b电网中继塔数： §f0 （在线 0）\n§4总输出端数： §f0 （在线 0）\n§a总输入端数：§f 0 （在线 0）"
+                                "text": "§a电网架设完毕。\n\n§b电网中继器数： §f0 （在线 0）\n§4总输出端数： §f0 （在线 0）\n§a总输入端数：§f 0 （在线 0）"
                             }
                         }
                     ]

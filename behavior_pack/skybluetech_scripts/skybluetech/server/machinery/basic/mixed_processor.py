@@ -2,7 +2,6 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server.item import GetItemBasicInfo
 from skybluetech_scripts.tooldelta.api.common import Delay
 from ....common.define import flags
 from ....common.mini_jei.core.define import CategoryType

@@ -1,8 +1,10 @@
 # coding=utf-8
 import mod.client.extraClientApi as clientApi
+
 if 0:
     from typing import Callable, TypeVar
-    FuncT = TypeVar("FuncT", bound=Callable[..., int | None])
+
+    FuncT = TypeVar("FuncT", bound=Callable)
 
 ViewBinder = clientApi.GetViewBinderCls()
 
@@ -36,13 +38,12 @@ class Binder(ViewBinder):
     @classmethod
     def binding(cls, bind_flag, binding_name):
         # type: (int, str) -> Callable[[FuncT], FuncT]
-        return ViewBinder.binding(bind_flag, binding_name) # pyright: ignore[reportReturnType]
+        return ViewBinder.binding(bind_flag, binding_name)  # pyright: ignore[reportReturnType]
 
     @classmethod
     def binding_collection(cls, bind_flag, collection_name, binding_name):
         # type: (int, str, str) -> Callable[[FuncT], FuncT]
-        return ViewBinder.binding_collection(bind_flag, collection_name, binding_name) # pyright: ignore[reportReturnType]
-
+        return ViewBinder.binding_collection(bind_flag, collection_name, binding_name)  # pyright: ignore[reportReturnType]
 
 
 SCREEN_BASE_PATH = UIPath(

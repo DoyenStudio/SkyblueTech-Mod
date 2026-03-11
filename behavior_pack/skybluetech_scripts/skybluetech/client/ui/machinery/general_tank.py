@@ -14,7 +14,7 @@ class GeneralTankUI(MachinePanelUIProxy):
         dim, x, y, z = self.pos
         self.sync = GeneralTankUISync.NewClient(dim, x, y, z)  # type: GeneralTankUISync
         self.fluid_display = self.GetElement(FLUID_NODE)
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.fluid_updater = InitFluidDisplay(
             self.fluid_display,
             lambda: (

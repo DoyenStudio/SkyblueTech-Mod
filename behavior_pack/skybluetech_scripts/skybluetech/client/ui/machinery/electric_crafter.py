@@ -21,7 +21,7 @@ class ElectricCrafterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = ElectricCrafterUISync.NewClient(dim, x, y, z)  # type: ElectricCrafterUISync
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.power = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PROGRESS_NODE)
         self.grid = self.GetElement(GRID_NODE).asGrid()

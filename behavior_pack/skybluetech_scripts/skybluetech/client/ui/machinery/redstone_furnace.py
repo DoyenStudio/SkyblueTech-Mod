@@ -15,7 +15,7 @@ class RedstoneFurnaceUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = RedstoneFurnaceUISync.NewClient(dim, x, y, z)  # type: RedstoneFurnaceUISync
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         self.flame = self.GetElement(FLAME_NODE)

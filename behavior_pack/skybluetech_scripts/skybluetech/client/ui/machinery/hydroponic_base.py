@@ -13,7 +13,7 @@ class HydroponicBaseUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = HydroponicBaseUISync.NewClient(dim, x, y, z)  # type: HydroponicBaseUISync
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.fluid_0 = self.GetElement(FLUID_0_NODE)
         self.fluid_1 = self.GetElement(FLUID_1_NODE)
         self.fluid_0_updater = InitFluidDisplay(

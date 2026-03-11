@@ -13,7 +13,7 @@ class ChargerUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = ChargerUISync.NewClient(dim, x, y, z)  # type: ChargerUISync
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.power = self.GetElement(POWER_NODE)
 
     def WhenUpdated(self):

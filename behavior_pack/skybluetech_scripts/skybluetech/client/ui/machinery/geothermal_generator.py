@@ -20,7 +20,7 @@ class GeoThermalGeneratorUI(MachinePanelUIProxy):
         self.lava_display = self.GetElement(FLUID_LAVA_NODE)
         self.water_display = self.GetElement(FLUID_WATER_NODE)
         self.flame = self.GetElement(FLAME_NODE)
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.fluid_updater1 = InitFluidsDisplay(self.lava_display, self.sync.fluids, 0)
         self.fluid_updater2 = InitFluidsDisplay(self.water_display, self.sync.fluids, 1)
 

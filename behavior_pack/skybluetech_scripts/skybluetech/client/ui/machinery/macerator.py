@@ -17,7 +17,7 @@ class MaceratorUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = MaceratorUISync.NewClient(dim, x, y, z)  # type: MaceratorUISync
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         AsRecipeCheckerBtn(

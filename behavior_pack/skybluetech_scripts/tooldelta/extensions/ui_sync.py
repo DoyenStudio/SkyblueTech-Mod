@@ -13,6 +13,9 @@ from ..events.client.sync import (
 from ..general import ServerInitCallback
 from ..api.common import AsTimerFunc
 
+if 0:
+    from typing import Callable
+
 # 主要用于 UI 信息的同步。
 # 比如:
 #   1. 服务端 - 服务端开启 ui 同步(例如玩家点击方块) -> 挂起预请求, 将准备好的同步器放入同步池, 同时要求客户端打开界面
@@ -60,6 +63,10 @@ class S2CSync(object):
         if mode == S2C_CLIENT:
             self.WhenUpdated = DEFAULT_UPDATE_FUNC
         self._changed = True
+
+    def SetWhenUpdatedCallback(self, func):
+        # type: (Callable[[], None]) -> None
+        self.WhenUpdated = func
 
     def GenerateSpecName(self):
         # type: () -> str

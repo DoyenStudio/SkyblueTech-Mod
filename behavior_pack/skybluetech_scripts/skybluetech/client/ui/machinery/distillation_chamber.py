@@ -19,7 +19,7 @@ class DistillationChamberUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = DistillationChamberUISync.NewClient(dim, x, y, z)  # type: DistillationChamberUISync
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.upper_fluid = self.GetElement(UPPER_FLUID_NODE)
         self.lower_fluid = self.GetElement(LOWER_FLUID_NODE)
         self.temperature_label = self.GetElement(TEMPERATURE_NODE).asLabel()

@@ -42,7 +42,7 @@ class FermenterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = FermenterUISync.NewClient(dim, x, y, z)  # type: FermenterUISync
-        self.sync.WhenUpdated = self.WhenUpdated
+        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.out_gas_display = self.GetElement(OUT_GAS_DISP_NODE)
         self.out_fluid_display = self.GetElement(OUT_FLUID_DISP_NODE)

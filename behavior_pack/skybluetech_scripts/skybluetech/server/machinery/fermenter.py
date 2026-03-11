@@ -115,8 +115,8 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         self.sync.expected_temperature = self.expected_mud_temperature
         self.sync.expected_water_max_volume = self.expected_water_max_volume
         self.sync.recipe_id = self.recipe_id
-        self.sync.structure_status = self._last_destroy_flag
-        self.sync.structure_lack_blocks = self._lacked_blocks
+        self.sync.structure_status = self.GetStructureDestroyFlag()
+        self.sync.structure_lack_blocks = self.GetStructureLackedBlocks()
         if self.sync.structure_status == 0:
             self.sync.content_volume_pc = float(self.getVolume()) / POOL_MAX_VOLUME
             self.sync.out_gas_id = self.getGasOutIO().fluid_id

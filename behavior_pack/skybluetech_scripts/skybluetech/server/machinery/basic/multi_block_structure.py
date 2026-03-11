@@ -457,6 +457,12 @@ class MultiBlockStructure(BaseMachine):
             if isinstance(self, GUIControl):
                 self.OnSync()
 
+    def GetStructureDestroyFlag(self):
+        return self._last_destroy_flag
+
+    def GetStructureLackedBlocks(self):
+        return self._lacked_blocks
+
     def GetFunctionalBlockPoses(self):
         "返回功能性方块对于多方块结构核心位置的相对坐标。"
         return self.area.functional_block_poses

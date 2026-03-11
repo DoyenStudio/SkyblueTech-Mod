@@ -64,7 +64,6 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
             raise ValueError("RFRepeaterPlant BlockState None")
         self.facing = states["minecraft:cardinal_direction"]  # type: str
         self.layer = states["skybluetech:layer"]  # type: int
-        # 如果不是基座方块则无功能
         self.is_base_block = self.layer == 0
         self.flush_data()
 

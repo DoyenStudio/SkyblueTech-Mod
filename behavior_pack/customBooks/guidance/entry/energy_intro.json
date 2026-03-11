@@ -1,11 +1,11 @@
 {
-    "parent": "basic_concepts_toc",
-    "icon": "textures/icon/energy",
+    "parent": "energy_toc",
+    "icon": "textures/icon/energy_icon",
     "title": "能源",
     "pages": [
         {
             "type": "textPage",
-            "content": "作为几乎唯一通用的能源， §4红石能§r是整个蔚蓝科技工业系统的核心。\n几乎一切机器都需要消耗红石能以维持运行； 发电机可以产生红石能， 而各种线缆与中继塔可以传导红石能。\n§c红石通量 (RedstoneFlux, 简称 RF) §r是度量红石能的能源单位。"
+            "content": "作为几乎唯一通用的能源， §4红石能§r是整个蔚蓝科技工业系统的核心。\n几乎一切机器都需要消耗红石能以维持运行； 发电机可以产生红石能， 而各种线缆与中继器可以传导红石能。\n§c红石通量 (RedstoneFlux, 简称 RF) §r是度量红石能的能源单位。"
         },
         {
             "type": "textPage",

@@ -1,6 +1,6 @@
 {
-    "parent": "basic_concepts_toc",
-    "icon": "textures/icon/fluid",
+    "parent": "fluid_toc",
+    "icon": "textures/icon/fluid_icon",
     "title": "流体",
     "pages": [
         {

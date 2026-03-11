@@ -16,17 +16,12 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
 )
 from skybluetech_scripts.tooldelta.api.client import (
-    CreateClientEntity,
-    DestroyClientEntity,
-    AddActorBlockGeometry,
     GetBlankBlockPalette,
 )
 from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
     GeometryModel,
     CreateBlankModel,
-    CreateTempSingleBlockModelEntity,
-    CreateTempBlockGeometryModelEntity,
 )
 from ....common.events.misc.multi_block_structure_check import (
     MultiBlockStructureCheckRequest,
@@ -252,7 +247,16 @@ class DetectArea(object):
         rotation_times = ROT_TIMES_MAPPING[core_block_facing]
         for _i in range(rotation_times):
             spalette = spalette.Rotate()
-        if spalette.Compare(current_palette, co_x, co_z):
+        if spalette.Compare(
+            current_palette,
+            self.dim,
+            co_x,
+            co_y,
+            co_z,
+            self.center_x,  # debug param
+            self.center_y,  # debug param
+            self.center_z,  # debug param
+        ):
             lacked_blocks = spalette.GetLackedBlocks(current_palette)
             if lacked_blocks is None:
                 self.updateFunctionalBlocks(current_palette, co_x, co_y, co_z)
@@ -268,7 +272,7 @@ class DetectArea(object):
             block_id: [
                 (
                     x - co_x + self.center_x,
-                    y - co_y + self.min_y,
+                    y - co_y + self.center_y,
                     z - co_z + self.center_z,
                 )
                 for x, y, z in palette.GetLocalPosListOfBlocks(block_id)
@@ -325,8 +329,8 @@ class StructureBlockPalette(object):
                 else:
                     block_removed_listen_pool.update(block_id)
 
-    def Compare(self, block_palette, co_x, co_z):
-        # type: (BlockPaletteComponent, int, int) -> bool
+    def Compare(self, block_palette, dim, co_x, co_y, co_z, cx, cy, cz):
+        # type: (BlockPaletteComponent, int, int, int, int, int, int, int) -> bool
         """
         比较方块调色板内容是否与此调色板匹配。
 
@@ -339,17 +343,15 @@ class StructureBlockPalette(object):
             if isinstance(block_ids, str):
                 block_ids = [block_ids]
             actua_pos_set = set(
-                (x - co_x, y, z - co_z)
+                (x - co_x, y - co_y, z - co_z)
                 for block_id in block_ids
                 for x, y, z in block_palette.GetLocalPosListOfBlocks(block_id)
             )
             expected_pos_set = self.posblock_data[index]
             if len(actua_pos_set & expected_pos_set) < len(expected_pos_set):
-                # print("NO EQUAL:")
-                # print(block_ids)
-                # print(len(actua_pos_set & expected_pos_set))
-                # print(len(expected_pos_set))
-                # print(expected_pos_set.difference(actua_pos_set))
+                debug_show_diff(
+                    dim, cx, cy, cz, expected_pos_set, actua_pos_set, block_ids
+                )
                 return False
         return True
 
@@ -760,3 +762,25 @@ def removeGeoModelLater(geo_model):
     global multi_block_model_displaying
     geo_model.Destroy()
     multi_block_model_displaying = False
+
+
+def debug_show_diff(
+    dim,  # type: int
+    x,  # type: int
+    y,  # type: int
+    z,  # type: int
+    expected,  # type: set[tuple[int, int, int]]
+    actual,  # type: set[tuple[int, int, int]]
+    expected_block_ids,
+):
+    return
+    print("====== Structure not equal ======")
+    print("Expected blocks: {}".format(expected_block_ids))
+    print("No equal poses ({} < {}) :".format(len(actual & expected), len(expected)))
+    for _x, _y, _z in expected.difference(actual):
+        print(
+            " ({} {} {}) : {}".format(
+                x + _x, y + _y, z + _z, GetBlockName(dim, (x + _x, y + _y, z + _z))
+            )
+        )
+    print("====== Structure debug end ======")

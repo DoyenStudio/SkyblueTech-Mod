@@ -9,11 +9,8 @@ if 0:
 
 K_STORE_RF = "store_rf"
 K_STORE_RF_MAX = "store_rf_max"
+K_OUTPUT_POWER = "output_power"
 K_CHARGE_COST = "st:cost_rf"
-
-
-def g(dic, key):
-    return dic[key]["__value__"]
 
 
 update_charge_callbacks = {}  # type: dict[str, Callable[[str, Item, int], None]]
@@ -25,14 +22,22 @@ def UpdateCharge(owner, item, store_rf):
     if ud is None:
         return
     ud[K_STORE_RF]["__value__"] = store_rf
-    lore = "§r§e⚡ §b已储能 §a%d / %d RF" % (g(ud, K_STORE_RF), g(ud, K_STORE_RF_MAX))
+    lore = "§r§e⚡ §b已储能 §a%d / %d RF" % (
+        nbt.GetValueWithDefault(ud, K_STORE_RF, 0),
+        nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1),
+    )
     SetLoreAtPos(ud, GetLorePos(ud, "charge"), lore)
     max_durability = item.GetBasicInfo().maxDurability
     if max_durability > 0:
         if ud is None:
             ud = item.userData = {}
         item.durability = max(
-            2, int(float(store_rf) / g(ud, K_STORE_RF_MAX) * max_durability)
+            2,
+            int(
+                float(store_rf)
+                / nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1)
+                * max_durability
+            ),
         )
         ud.setdefault("Damage", nbt.Int(0))["__value__"] = (
             max_durability - item.durability
@@ -44,12 +49,19 @@ def UpdateCharge(owner, item, store_rf):
 
 def GetCharge(item_userdata):
     # type: (dict) -> tuple[int, int]
-    return g(item_userdata, K_STORE_RF), g(item_userdata, K_STORE_RF_MAX)
+    return nbt.GetValueWithDefault(
+        item_userdata, K_STORE_RF, 0
+    ), nbt.GetValueWithDefault(item_userdata, K_STORE_RF_MAX, 1)
+
+
+def GetOutputPower(item_userdata):
+    # type: (dict) -> int
+    return nbt.GetValueWithDefault(item_userdata, K_OUTPUT_POWER, 0)
 
 
 def GetChargeCost(item_userdata):
     # type: (dict) -> int
-    return g(item_userdata, K_CHARGE_COST)
+    return nbt.GetValueWithDefault(item_userdata, K_CHARGE_COST, 0)
 
 
 def ChargeEnough(item_userdata):

@@ -108,6 +108,10 @@ class UBaseCtrl(object):
 
         return cls(ToolDeltaScreen.convertFrom(base_ui_control.mNode), base_ui_control)
 
+    def GetVisible(self):
+        # type: () -> bool
+        return self.base.GetVisible()
+
     def GetSize(self):
         # type: () -> tuple[float, float]
         return self.base.GetSize()

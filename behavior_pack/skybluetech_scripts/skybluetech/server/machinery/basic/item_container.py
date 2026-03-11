@@ -103,8 +103,8 @@ class ItemContainer(object):
         """
         return len(self.input_slots) + len(self.output_slots)
 
-    def GetInputSlotItems(self):
-        # type: () -> dict[int, Item]
+    def GetInputSlotItems(self, get_user_data=True):
+        # type: (bool) -> dict[int, Item]
         """
         获取输入槽的所有物品。
 
@@ -113,7 +113,7 @@ class ItemContainer(object):
         """
         res = {}  # type: dict[int, Item]
         for slot_pos in self.input_slots:
-            item = self.GetSlotItem(slot_pos)
+            item = self.GetSlotItem(slot_pos, get_user_data=get_user_data)
             if item is not None:
                 res[slot_pos] = item
         return res

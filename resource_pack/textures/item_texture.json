@@ -124,6 +124,9 @@
         "skybluetech:iron_dust": {
             "textures": "textures/items/dusts/iron_dust"
         },
+        "skybluetech:iron_plate": {
+            "textures": "textures/items/plates/iron_plate"
+        },
         "skybluetech:iron_stick": {
             "textures": "textures/items/sticks/iron_stick"
         },

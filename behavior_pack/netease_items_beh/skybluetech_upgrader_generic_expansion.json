@@ -9,7 +9,7 @@
                 ]
             },
             "netease:customtips": {
-                "value": "\n§7提升机器的有效工作范围。\n§b减少能量损耗。\n§a能量消耗倍率： §f§l0.4x§r§f"
+                "value": "\n§7提升机器的有效工作范围。\n§b增加部分机器的方块交互/工作范围。\n§a能量消耗倍率： §f§l0.4x§r§f"
             }
         },
         "description": {

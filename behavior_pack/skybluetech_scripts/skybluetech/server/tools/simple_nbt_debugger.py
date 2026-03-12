@@ -24,7 +24,7 @@ def onBlockUse(event):
         )
         if blockName is None:
             return
-        nbts = GetBlockEntityDataDict(event.dimensionId, event.x, event.y, event.z)
+        nbts = GetBlockEntityDataDict(event.dimensionId, (event.x, event.y, event.z))
         output = (
             "§a方块 ID: §f"
             + blockName

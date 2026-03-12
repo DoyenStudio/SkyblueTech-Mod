@@ -9,7 +9,7 @@ if 0:
 
 K_STORE_RF = "store_rf"
 K_STORE_RF_MAX = "store_rf_max"
-K_OUTPUT_POWER = "output_power"
+K_MAX_OUTPUT_POWER = "max_output_power"
 K_CHARGE_COST = "st:cost_rf"
 
 
@@ -56,7 +56,7 @@ def GetCharge(item_userdata):
 
 def GetOutputPower(item_userdata):
     # type: (dict) -> int
-    return nbt.GetValueWithDefault(item_userdata, K_OUTPUT_POWER, 0)
+    return nbt.GetValueWithDefault(item_userdata, K_MAX_OUTPUT_POWER, 0)
 
 
 def GetChargeCost(item_userdata):

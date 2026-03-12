@@ -45,6 +45,14 @@ class BasicGenerator(BaseMachine):
             self.OnSync()
         return srf != rf
 
+    def GeneratePowerWithOverflow(self, rf):
+        # type: (int) -> tuple[bool, int]
+        "仅产出能量并直接添加到电网。"
+        overflow = self.addPowerIntoWireNetwork(rf)
+        if isinstance(self, GUIControl):
+            self.OnSync()
+        return rf != overflow, overflow
+
     def addPowerIntoWireNetwork(self, rf, passed=None):
         # type: (int, set[BaseMachine] | None) -> int
         """在已连接的电缆网络中为机器添加能量, 包括周围的机器。 返回溢出的能量"""

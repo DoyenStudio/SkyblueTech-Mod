@@ -98,7 +98,7 @@ def onMachineryPlacedLater(dim, x, y, z):
     # 用于尝试激活网络中的其他设备, 使其向新设备尝试进行一次输出
     for network in (
         i
-        for i in logic_module.GetContainerNode(dim, x, y, z).outputs.values()
+        for i in logic_module.GetContainerNode(dim, x, y, z).inputs.values()
         if i is not None
     ):
         for ap in network.group_outputs:
@@ -109,7 +109,12 @@ def onMachineryPlacedLater(dim, x, y, z):
 
 
 def onActivateNetwork(network):
-    pass
+    # type: (WireNetwork) -> None
+    for ap in network.get_output_access_points():
+        mx, my, mz = ap.target_pos
+        m = GetMachineWithoutCls(network.dim, mx, my, mz)
+        if m is not None:
+            m.OnTryActivate()
 
 
 logic_module = LogicModule(

@@ -22,7 +22,7 @@ class HoverTextDisplayerUI(MachinePanelUI):
 
     def OnCreate(self):
         self.sync = HoverTextDisplayerUISync.NewClient(self.dim, self.x, self.y, self.z)  # type: HoverTextDisplayerUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.tip_label = self.GetElement(TIP_LABEL_NODE).asLabel()
         self.edit_box = self.GetElement(EDIT_BOX_NODE).asTextEditBox()
         self.power_bar = self.GetElement(POWER_BAR_NODE)

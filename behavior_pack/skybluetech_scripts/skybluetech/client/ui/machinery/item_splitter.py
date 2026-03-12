@@ -24,7 +24,7 @@ class ItemSplitterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = ItemSplitterUISync.NewClient(dim, x, y, z)  # type: ItemSplitterUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.settings_view = self.GetElement(SETTINGS_VIEW_NODE).asScrollView()
         self.settings_grid = self.settings_view.GetContent().asGrid()
         self.add_btn = (

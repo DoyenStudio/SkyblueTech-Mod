@@ -23,7 +23,7 @@ class AssemblerUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = AssemblerUISync.NewClient(dim, x, y, z)  # type: AssemblerUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.power = self.GetElement(POWER_NODE)
         self.upgraders_grid = (
             self.GetElement(UPGRADERS_LIST_NODE).asScrollView().GetContent().asGrid()

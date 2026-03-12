@@ -19,7 +19,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = ElectricHeaterUISync.NewClient(dim, x, y, z)  # type: ElectricHeaterUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.databar_text = self.GetElement(DATABAR_TEXT_NODE).asLabel()
         self.input = self.GetElement(INPUT_NODE).asTextEditBox()

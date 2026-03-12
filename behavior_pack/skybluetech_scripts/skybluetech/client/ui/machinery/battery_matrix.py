@@ -77,7 +77,7 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         self.battery_slots_data = []  # type: list[tuple[str, int, int]]
         dim, x, y, z = self.pos
         self.sync = BatteryMatrixUISync.NewClient(dim, x, y, z)  # type: BatteryMatrixUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
 
     def WhenUpdated(self):
         if not self.inited:

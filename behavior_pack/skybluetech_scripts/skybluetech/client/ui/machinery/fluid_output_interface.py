@@ -13,7 +13,7 @@ class FluidOutputInterfaceUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = FluidInterfaceUISync.NewClient(dim, x, y, z)  # type: FluidInterfaceUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.fluid_display = self.GetElement(FLUID_NODE)
         self.fluid_updater = InitFluidDisplay(
             self.fluid_display,

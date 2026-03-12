@@ -20,7 +20,7 @@ class HydroponicBedUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = HydroponicBedUISync.NewClient(dim, x, y, z)  # type: HydroponicBedUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.crop_disp = self.GetElement(CROP_DISP_NODE).asNeteasePaperDoll()
         AsRecipeCheckerBtn(

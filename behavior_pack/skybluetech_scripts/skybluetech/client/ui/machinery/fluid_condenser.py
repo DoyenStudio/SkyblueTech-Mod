@@ -18,7 +18,7 @@ class FluidCondenserUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = FluidCondenserUISync.NewClient(dim, x, y, z)  # type: FluidCondenserUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         self.fluid_display = self.GetElement(FLUID_NODE)

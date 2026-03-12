@@ -32,7 +32,7 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = MachineryWorkstationUISync.NewClient(dim, x, y, z)  # type: MachineryWorkstationUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.craft_strength = 0.0
         self.warning_bar_shown = False
         self.warning_bar_display_time = 0

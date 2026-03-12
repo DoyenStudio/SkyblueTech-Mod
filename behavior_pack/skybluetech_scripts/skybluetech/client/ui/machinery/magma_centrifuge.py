@@ -19,7 +19,7 @@ class MagmaCentrifugeUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = MagmaCentrifugeUISync.NewClient(dim, x, y, z)  # type: MagmaCentrifugeUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         self.left_fluid_updater = self.GetElement(LEFT_FLUID)

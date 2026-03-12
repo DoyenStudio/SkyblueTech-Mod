@@ -24,7 +24,7 @@ class PumpUI(MachinePanelUIProxy):
                 self.sync.max_volume,
             ),
         )
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
 
     def WhenUpdated(self):
         if not self.inited:

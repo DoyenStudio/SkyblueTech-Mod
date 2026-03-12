@@ -13,7 +13,7 @@ class FarmingStationUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = FarmingStationUISync.NewClient(dim, x, y, z)  # type: FarmingStationUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
 
     def WhenUpdated(self):

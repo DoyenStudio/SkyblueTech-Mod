@@ -16,7 +16,7 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
         self.sync = BedrockLavaDrillUISync.NewClient(dim, x, y, z)  # type: BedrockLavaDrillUISync
         self.power_bar = self.GetElement(POWER_NODE)
         self.fluid_display = self.GetElement(FLUID_NODE)
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
 
     def WhenUpdated(self):
         if not self.inited:

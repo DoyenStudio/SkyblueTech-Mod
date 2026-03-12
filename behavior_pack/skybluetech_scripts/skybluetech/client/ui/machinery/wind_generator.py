@@ -16,7 +16,7 @@ class WindGeneratorUI(MachinePanelUIProxy):
         self.sync = WindGeneratorUISync.NewClient(dim, x, y, z)  # type: WindGeneratorUISync
         self.power_bar = self.GetElement(POWER_NODE)
         self.text = self.GetElement(TEXT_NODE).asLabel()
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
 
     def WhenUpdated(self):
         if not self.inited:

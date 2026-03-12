@@ -18,7 +18,7 @@ class DiggerUI(MachinePanelUIProxy):
     def OnCreate(self):
         dim, x, y, z = self.pos
         self.sync = DiggerUISync.NewClient(dim, x, y, z)  # type: DiggerUISync
-        self.sync.SetWhenUpdatedCallback(self.WhenUpdated)
+        self.sync.SetUpdateCallback(self.WhenUpdated)
         self.power_bar = self.GetElement(POWER_NODE)
         self.progress = self.GetElement(PRGS_NODE)
         self.block_disp = self.GetElement(BLOCK_DISP_NODE).asItemRenderer()

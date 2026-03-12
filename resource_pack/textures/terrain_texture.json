@@ -68,8 +68,8 @@
         "skybluetech:creative_generator": {
             "textures": "textures/machines/creative_generator"
         },
-        "skybluetech:creative_power_acceptor_otherside": {
-            "textures": "textures/machines/creative_power_acceptor_otherside"
+        "skybluetech:creative_power_acceptor_side": {
+            "textures": "textures/machines/creative_power_acceptor_side"
         },
         "skybluetech:creative_power_acceptor_top": {
             "textures": "textures/machines/creative_power_acceptor_top"

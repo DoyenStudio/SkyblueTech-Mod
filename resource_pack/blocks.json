@@ -69,8 +69,8 @@
             "identifier": "skybluetech:creative_power_acceptor"
         },
         "textures": {
-            "down": "skybluetech:creative_power_acceptor_otherside",
-            "side": "skybluetech:creative_power_acceptor_otherside",
+            "down": "skybluetech:creative_power_acceptor_side",
+            "side": "skybluetech:creative_power_acceptor_side",
             "up": "skybluetech:creative_power_acceptor_top"
         }
     },

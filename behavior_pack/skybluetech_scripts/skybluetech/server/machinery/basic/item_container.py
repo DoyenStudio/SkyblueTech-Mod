@@ -232,6 +232,7 @@ class ItemContainer(object):
         #     return None
         """
         输出产出的物品。
+        需要机器设置了 output_slots
 
         Args:
             item (Item): 产出物

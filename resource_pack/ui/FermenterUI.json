@@ -8,7 +8,11 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {

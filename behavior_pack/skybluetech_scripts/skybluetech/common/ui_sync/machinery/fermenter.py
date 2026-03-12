@@ -32,11 +32,11 @@ class FermenterUISync(MachineUISync):
     expected_water_max_volume = 0.0
     recipe_id = 0
     structure_status = 0
-    structure_lack_blocks = {} # type: dict[str, int]
-    out_gas_id = None # type: str | None
+    structure_lacked_blocks = {}  # type: dict[str, int]
+    out_gas_id = None  # type: str | None
     out_gas_volume = 0.0
     out_gas_max_volume = 0.0
-    out_fluid_id = None # type: str | None
+    out_fluid_id = None  # type: str | None
     out_fluid_volume = 0.0
     out_fluid_max_volume = 0.0
     gas_product_speed = 0.0

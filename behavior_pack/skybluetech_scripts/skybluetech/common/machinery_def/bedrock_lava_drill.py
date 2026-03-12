@@ -1,7 +1,7 @@
 # coding=utf-8
 
 IO_ENERGY = "skybluetech:drill_io_energy"
-IO_FLUID2 = "skybluetech:drill_io_fluid"
+IO_FLUID1 = "skybluetech:drill_io_fluid"
 IO_ITEM = "skybluetech:fermenter_io_item"
 HEAVY_FRAME = "skybluetech:heavy_frame"
 STRUCTURE_PATTERN_MAPPING = {
@@ -34,5 +34,9 @@ STRUCTURE_PATTERN = {
         "   H   ",
         "       ",
         "       ",
-    ]
+    ],
+}
+STRUCTURE_REQUIRE_BLOCKS = {
+    IO_ENERGY: 1,
+    IO_FLUID1: 1,
 }

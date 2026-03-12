@@ -1,22 +1,29 @@
 # coding=utf-8
-from ..internal import ServerComp, ServerLevelId, ClientComp, ClientLevelId, InServerEnv, InClientEnv
+from ..internal import (
+    ServerComp,
+    ServerLevelId,
+    ClientComp,
+    ClientLevelId,
+    InServerEnv,
+)
 
-itemBasicInfoPool = {} # type: dict[str, BasicItemInfo]
+itemBasicInfoPool = {}  # type: dict[str, BasicItemInfo]
+
 
 class Item(object):
     def __init__(
         self,
-        newItemName, # type: str
-        newAuxValue=0, # type: int
-        count=1, # type: int
-        showInHand=True, # type: bool
-        enchantData=None, # type: list[tuple[int, int]] | None
-        modEnchantData=None, # type: list[tuple[str, int]] | None
-        customTips="", # type: str | None
-        extraId=None, # type: str | None
-        userData=None, # type: dict | None
-        durability=None, # type: int | None
-        _orig=None # type: dict | None
+        newItemName,  # type: str
+        newAuxValue=0,  # type: int
+        count=1,  # type: int
+        showInHand=True,  # type: bool
+        enchantData=None,  # type: list[tuple[int, int]] | None
+        modEnchantData=None,  # type: list[tuple[str, int]] | None
+        customTips=None,  # type: str | None
+        extraId=None,  # type: str | None
+        userData=None,  # type: dict | None
+        durability=None,  # type: int | None
+        _orig=None,  # type: dict | None
     ):
         # type: (...) -> None
         self.newItemName = newItemName
@@ -55,7 +62,7 @@ class Item(object):
             data.get("extraId"),
             data.get("userData"),
             data.get("durability", 0),
-            _orig = data,
+            _orig=data,
         )
 
     def unmarshal(self, data):
@@ -82,7 +89,7 @@ class Item(object):
             "showInHand": self.showInHand,
             "enchantData": self.enchantData,
             "modEnchantData": self.modEnchantData,
-        }) # type: dict
+        })  # type: dict
         if self.enchantData is not None:
             ret["enchantData"] = self.enchantData
         if self.modEnchantData is not None:
@@ -98,7 +105,7 @@ class Item(object):
         return ret
 
     def ApplyModifies(self):
-        """ 将修改应用于物品指向的 itemDict。 """
+        """将修改应用于物品指向的 itemDict。"""
         self._orig.update(self.marshal())
 
     @property
@@ -138,8 +145,14 @@ class Item(object):
         res = (
             self.newItemName == other.newItemName
             and self.newAuxValue == other.newAuxValue
-            and (self.enchantData == other.enchantData or (not self.enchantData and not other.enchantData))
-            and (self.modEnchantData == other.modEnchantData or (not self.modEnchantData and not other.modEnchantData))
+            and (
+                self.enchantData == other.enchantData
+                or (not self.enchantData and not other.enchantData)
+            )
+            and (
+                self.modEnchantData == other.modEnchantData
+                or (not self.modEnchantData and not other.modEnchantData)
+            )
             and self.userData == other.userData
             and not other.durability
         )
@@ -170,52 +183,51 @@ class Item(object):
             self.extraId,
             self.userData.copy() if self.userData else None,
             self.durability,
-            _orig = self._orig.copy(),
+            _orig=self._orig.copy(),
         )
 
 
 class BasicItemInfo(object):
-    itemName = '' # type: str
+    itemName = ""  # type: str
     """ 本地化的物品名字 """
-    maxStackSize = 0 # type: int
+    maxStackSize = 0  # type: int
     """ 物品最大堆叠数目 """
-    maxDurability = 0 # type: int
+    maxDurability = 0  # type: int
     """ 物品最大耐久值 """
-    id_aux = 0 # type: int
+    id_aux = 0  # type: int
     """ 主要用于客户端的ui绑定，详见客户端接口 """
-    tierDict = {} # type: dict
+    tierDict = {}  # type: dict
     """ 自定义方块定义的挖掘相关的属性 netease:tier,没有设置时返回None """
-    itemCategory = '' # type: str
+    itemCategory = ""  # type: str
     """ 创造栏分类 """
-    itemType = '' # type: str
+    itemType = ""  # type: str
     """ 物品类型 """
-    customItemType = '' # type: str
+    customItemType = ""  # type: str
     """ 自定义物品类型 """
-    tags = set() # type: set[str]
+    tags = set()  # type: set[str]
     """ 物品的tags列表，如['minecraft:is_food'] """
-    customTips = '' # type: str
+    customTips = ""  # type: str
     """ 自定义物品/方块tips """
-    itemTierLevel = 0 # type: int
+    itemTierLevel = 0  # type: int
     """ 工具等级 """
-    fuelDuration = 0.0 # type: float
+    fuelDuration = 0.0  # type: float
     """ 燃料时长 """
-    foodNutrition = 0 # type: int
+    foodNutrition = 0  # type: int
     """ 食物营养值 """
-    foodSaturation = 0.0 # type: float
+    foodSaturation = 0.0  # type: float
     """ 食物饱食度 """
-    weaponDamage = 0 # type: int
+    weaponDamage = 0  # type: int
     """ 武器攻击力 """
-    armorDefense = 0 # type: int
+    armorDefense = 0  # type: int
     """ 防具防御力 """
-    armorSlot = 0 # type: int
+    armorSlot = 0  # type: int
     """ 防具槽位 """
-    armorToughness = 0 # type: int
+    armorToughness = 0  # type: int
     """ 防具韧性 """
-    armorKnockbackResistance = 0.0 # type: float
+    armorKnockbackResistance = 0.0  # type: float
     """ 防具击退抗性 """
-    enchant_slot_type = 0 # type: int
+    enchant_slot_type = 0  # type: int
     """ 附魔槽位枚举标志 自定义附魔文档 """
-
 
     def unmarshal(self, data):
         self.itemName = data["itemName"]
@@ -264,6 +276,7 @@ class BasicItemInfo(object):
             "armorKnockbackResistance": self.armorKnockbackResistance,
             "enchant_slot_type": self.enchant_slot_type,
         }
+
 
 __all__ = [
     "Item",

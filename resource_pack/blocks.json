@@ -24,6 +24,21 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:battery_matrix_controller": {
+        "sound": "iron"
+    },
+    "skybluetech:battery_matrix_core": {
+        "textures": "skybluetech:battery_matrix_core"
+    },
+    "skybluetech:battery_matrix_frame": {
+        "textures": "skybluetech:battery_matrix_frame"
+    },
+    "skybluetech:battery_matrix_io_energy1": {
+        "textures": "skybluetech:battery_matrix_energy_input_interface"
+    },
+    "skybluetech:battery_matrix_io_energy2": {
+        "textures": "skybluetech:battery_matrix_energy_output_interface"
+    },
     "skybluetech:bronze_pipe": {
         "sound": "copper"
     },

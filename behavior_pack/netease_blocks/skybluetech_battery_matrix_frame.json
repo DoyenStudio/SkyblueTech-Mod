@@ -1,0 +1,16 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "tag:minecraft:iron_tier_destructible": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:battery_matrix_frame"
+        }
+    }
+}

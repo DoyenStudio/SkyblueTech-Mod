@@ -17,6 +17,27 @@
         "skybluetech:basic_water_static": {
             "textures": "textures/fluid/basic_water_static"
         },
+        "skybluetech:battery_matrix_controller_front": {
+            "textures": "textures/machines/battery_matrix_controller_front"
+        },
+        "skybluetech:battery_matrix_controller_front_active": {
+            "textures": "textures/machines/battery_matrix_controller_front_active"
+        },
+        "skybluetech:battery_matrix_controller_side": {
+            "textures": "textures/machines/battery_matrix_controller_side"
+        },
+        "skybluetech:battery_matrix_core": {
+            "textures": "textures/machines/battery_matrix_core"
+        },
+        "skybluetech:battery_matrix_energy_input_interface": {
+            "textures": "textures/machines/battery_matrix_energy_input_interface"
+        },
+        "skybluetech:battery_matrix_energy_output_interface": {
+            "textures": "textures/machines/battery_matrix_energy_output_interface"
+        },
+        "skybluetech:battery_matrix_frame": {
+            "textures": "textures/blocks/battery_matrix_frame"
+        },
         "skybluetech:bronze_pipe": {
             "textures": "textures/transmitters/bronze_pipe_model"
         },

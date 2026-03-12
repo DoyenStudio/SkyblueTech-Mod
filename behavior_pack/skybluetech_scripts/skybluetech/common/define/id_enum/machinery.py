@@ -1,5 +1,7 @@
 ALLOY_FURNACE = "skybluetech:alloy_furnace"
 ASSEMBLER = "skybluetech:assembler"
+BATTERY_MATRIX_CONTROLLER = "skybluetech:battery_matrix_controller"
+BATTERY_MATRIX_CORE = "skybluetech:battery_matrix_core"
 BEDROCK_LAVA_DRILL = "skybluetech:bedrock_lava_drill"
 CHARGER = "skybluetech:charger"
 COMPRESSOR = "skybluetech:compressor"

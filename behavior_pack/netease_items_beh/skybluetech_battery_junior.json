@@ -25,6 +25,10 @@
                     "__type__": 4,
                     "__value__": 100000
                 },
+                "max_output_power": {
+                    "__type__": 4,
+                    "__value__": 100
+                },
                 "lore_pos": {
                     "charge": {
                         "__type__": 3,
@@ -35,7 +39,7 @@
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:junior_battery"
+            "identifier": "skybluetech:battery_junior"
         }
     }
 }

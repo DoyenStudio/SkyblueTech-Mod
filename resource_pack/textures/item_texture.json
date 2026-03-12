@@ -130,8 +130,8 @@
         "skybluetech:iron_stick": {
             "textures": "textures/items/sticks/iron_stick"
         },
-        "skybluetech:junior_battery": {
-            "textures": "textures/items/batterys/junior_battery"
+        "skybluetech:battery_junior": {
+            "textures": "textures/items/batterys/battery_junior"
         },
         "skybluetech:lapis_dust": {
             "textures": "textures/items/dusts/lapis_dust"

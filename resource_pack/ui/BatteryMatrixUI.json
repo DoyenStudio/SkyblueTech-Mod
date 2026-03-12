@@ -1,0 +1,1094 @@
+{
+    "battery_matrix_ui": {
+        "type": "panel",
+        "offset": [
+            1.0,
+            0.0
+        ],
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg_down": {
+                                "type": "image",
+                                "offset": [
+                                    0.0,
+                                    60.0
+                                ],
+                                "size": [
+                                    "default",
+                                    93
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "nineslice_size": [
+                                    4.0,
+                                    4.0,
+                                    4.0,
+                                    4.0
+                                ],
+                                "texture": "textures/ui/dialog_background_opaque",
+                                "controls": [
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                -7
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "电池仓",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {
+                                            "button_mappings": [
+                                                {
+                                                    "from_button_id": "button.menu_select",
+                                                    "mapping_type": "pressed",
+                                                    "to_button_id": "button.menu_exit"
+                                                }
+                                            ],
+                                            "layer": 5
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "total_power": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            12.0,
+                                                            8.0
+                                                        ],
+                                                        "size": [
+                                                            86.0,
+                                                            "default"
+                                                        ],
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "8.20M / 8.20M RF",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "battery_icon": {
+                                                        "type": "panel",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            10.0,
+                                                            -16.0
+                                                        ],
+                                                        "size": [
+                                                            96.0,
+                                                            36.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "bg": {
+                                                                    "type": "image",
+                                                                    "layer": 1,
+                                                                    "texture": "textures/ui/battery_big_img"
+                                                                }
+                                                            },
+                                                            {
+                                                                "mask": {
+                                                                    "type": "image",
+                                                                    "layer": 1,
+                                                                    "texture": "textures/ui/battery_big_mask"
+                                                                }
+                                                            },
+                                                            {
+                                                                "energy_label": {
+                                                                    "type": "label",
+                                                                    "offset": [
+                                                                        -4.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        "default",
+                                                                        18.0
+                                                                    ],
+                                                                    "layer": 4,
+                                                                    "font_scale_factor": 1.1,
+                                                                    "font_size": "large",
+                                                                    "font_type": "MinecraftTen",
+                                                                    "text": "100.0%%",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input_power": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            24.0,
+                                                            20.0
+                                                        ],
+                                                        "color": [
+                                                            0.6666666666666666,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "font_scale_factor": 1.2,
+                                                        "font_type": "rune",
+                                                        "text": "输入 0.0 RF/t",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "output_power": {
+                                                        "type": "label",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            24.0,
+                                                            32.0
+                                                        ],
+                                                        "color": [
+                                                            0.0,
+                                                            0.0,
+                                                            1.0
+                                                        ],
+                                                        "font_scale_factor": 1.2,
+                                                        "font_type": "rune",
+                                                        "text": "输出 0.0 RF/t",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "input_switch@common_toggles.switch_toggle_collection": {
+                                                        "type": "panel",
+                                                        "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                                        "$default_texture": "textures/ui/simple_switch_off",
+                                                        "$hover_texture": "textures/ui/simple_switch_on",
+                                                        "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
+                                                        "$pressed_texture": "textures/ui/simple_switch_off",
+                                                        "$toggle_name": "#BatteryMatrixUI.input_switch",
+                                                        "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                        "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -12.0,
+                                                            18.0
+                                                        ],
+                                                        "size": [
+                                                            25.0,
+                                                            25.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "bindings": [
+                                                            {
+                                                                "binding_type": "collection_details",
+                                                                "binding_collection_name": "",
+                                                                "binding_condition": "always_when_visible"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_switch@common_toggles.switch_toggle_collection": {
+                                                        "type": "panel",
+                                                        "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                                        "$default_border_visible|default": false,
+                                                        "$default_texture": "textures/ui/simple_switch_off",
+                                                        "$hover_texture": "textures/ui/simple_switch_on",
+                                                        "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
+                                                        "$pressed_texture": "textures/ui/simple_switch_off",
+                                                        "$toggle_name": "#BatteryMatrixUI.output_switch",
+                                                        "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                        "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -12.0,
+                                                            34.0
+                                                        ],
+                                                        "size": [
+                                                            25.0,
+                                                            25.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "bindings": [
+                                                            {
+                                                                "binding_type": "collection_details",
+                                                                "binding_collection_name": "",
+                                                                "binding_condition": "always_when_visible"
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -40.0,
+                                                            18.0
+                                                        ],
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "允许输入",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "output_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -40.0,
+                                                            34.0
+                                                        ],
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "允许输出",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "storage_window": {
+                                                        "type": "panel",
+                                                        "size": [
+                                                            174.0,
+                                                            116.0
+                                                        ],
+                                                        "layer": 11,
+                                                        "visible": false,
+                                                        "controls": [
+                                                            {
+                                                                "push_storage_btn@common.button": {
+                                                                    "type": "button",
+                                                                    "$control_alpha": 1.0,
+                                                                    "$default_texture": "textures/ui/button_default",
+                                                                    "$hover_texture": "textures/ui/button_hovered",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$label_color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "$label_font_scale_factor": 1.0,
+                                                                    "$label_font_size": "normal",
+                                                                    "$label_layer": 3,
+                                                                    "$label_offset": [
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$label_text": "一键存入",
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                                    "$pressed_texture": "textures/ui/button_pressed",
+                                                                    "$texture_layer": 2,
+                                                                    "anchor_from": "bottom_right",
+                                                                    "anchor_to": "bottom_right",
+                                                                    "offset": [
+                                                                        -6.0,
+                                                                        -7.0
+                                                                    ],
+                                                                    "size": [
+                                                                        46.0,
+                                                                        20.0
+                                                                    ],
+                                                                    "layer": 2,
+                                                                    "button_mappings": [],
+                                                                    "default_control": "default",
+                                                                    "hover_control": "hover",
+                                                                    "is_handle_button_move_event": true,
+                                                                    "pressed_control": "pressed",
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ],
+                                                                    "controls": [
+                                                                        {
+                                                                            "default@netease_editor_template_namespace.default": {}
+                                                                        },
+                                                                        {
+                                                                            "hover@netease_editor_template_namespace.hover": {}
+                                                                        },
+                                                                        {
+                                                                            "pressed@netease_editor_template_namespace.pressed": {}
+                                                                        },
+                                                                        {
+                                                                            "button_label@netease_editor_template_namespace.button_label": {}
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "bg": {
+                                                                    "type": "image",
+                                                                    "nineslice_size": [
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "texture": "textures/ui/panel_bg_rect_slim"
+                                                                }
+                                                            },
+                                                            {
+                                                                "win_label": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        6.0,
+                                                                        3.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "电池仓储管理",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            },
+                                                            {
+                                                                "my_slots@netease_container.netease_custom_container_grid": {
+                                                                    "anchor_from": "bottom_left",
+                                                                    "anchor_to": "bottom_left",
+                                                                    "grid_dimensions": [
+                                                                        6,
+                                                                        1
+                                                                    ],
+                                                                    "offset": [
+                                                                        6,
+                                                                        -8
+                                                                    ],
+                                                                    "size": [
+                                                                        "default",
+                                                                        "default"
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "scroll_view@common.scrolling_panel": {
+                                                                    "$background_nine_slice_buttom": 0,
+                                                                    "$background_nine_slice_left": 0,
+                                                                    "$background_nine_slice_right": 0,
+                                                                    "$background_nine_slice_top": 0,
+                                                                    "$background_nineslice_size": [
+                                                                        1,
+                                                                        1,
+                                                                        1,
+                                                                        1
+                                                                    ],
+                                                                    "$background_offset|default": [
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$background_size|default": [
+                                                                        "100%+0px",
+                                                                        "100%+0px"
+                                                                    ],
+                                                                    "$box_nine_slice_buttom": 0,
+                                                                    "$box_nine_slice_left": 0,
+                                                                    "$box_nine_slice_right": 0,
+                                                                    "$box_nine_slice_top": 0,
+                                                                    "$box_nineslice_size": [
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$collection_name": "battery_slots_grid",
+                                                                    "$is_background_nine_slice": false,
+                                                                    "$is_box_nine_slice": false,
+                                                                    "$is_track_nine_slice": false,
+                                                                    "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                                                                    "$scroll_background_texture": "textures/ui/bg_frame_slim",
+                                                                    "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                                                    "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                                                                    "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                                                    "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                                                                    "$scroll_track_texture": "textures/ui/ScrollRail",
+                                                                    "$scrolling_content": "BatteryMatrixUI.battery_slots_grid",
+                                                                    "$scrolling_pane_size|default": [
+                                                                        "100%+0px",
+                                                                        "100%+0px"
+                                                                    ],
+                                                                    "$show_background": true,
+                                                                    "$track_nine_slice_buttom": 0,
+                                                                    "$track_nine_slice_left": 0,
+                                                                    "$track_nine_slice_right": 0,
+                                                                    "$track_nine_slice_top": 0,
+                                                                    "$track_nineslice_size": [
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$view_port_size|default": [
+                                                                        "100%+0px",
+                                                                        "100%+0px"
+                                                                    ],
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "layer": 1,
+                                                                    "offset": [
+                                                                        6,
+                                                                        16
+                                                                    ],
+                                                                    "size": [
+                                                                        162,
+                                                                        54
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "tip_1": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        6.0,
+                                                                        71.0
+                                                                    ],
+                                                                    "layer": 2,
+                                                                    "color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "点击电池图标可取下电池",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            },
+                                                            {
+                                                                "close_btn@common.button": {
+                                                                    "type": "button",
+                                                                    "$control_alpha": 1.0,
+                                                                    "$default_texture": "textures/ui/close_button_default",
+                                                                    "$hover_texture": "textures/ui/close_button_default",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$label_color": [
+                                                                        1,
+                                                                        1,
+                                                                        1
+                                                                    ],
+                                                                    "$label_font_scale_factor": 1.0,
+                                                                    "$label_font_size": "large",
+                                                                    "$label_layer": 3,
+                                                                    "$label_offset": [
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$label_text": "",
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                                    "$pressed_texture": "textures/ui/close_button_default",
+                                                                    "$texture_layer": 2,
+                                                                    "anchor_from": "top_right",
+                                                                    "anchor_to": "top_right",
+                                                                    "offset": [
+                                                                        -2.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "size": [
+                                                                        14.0,
+                                                                        14.0
+                                                                    ],
+                                                                    "layer": 2,
+                                                                    "button_mappings": [],
+                                                                    "default_control": "default",
+                                                                    "hover_control": "hover",
+                                                                    "is_handle_button_move_event": true,
+                                                                    "pressed_control": "pressed",
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ],
+                                                                    "controls": [
+                                                                        {
+                                                                            "default@netease_editor_template_namespace.default": {}
+                                                                        },
+                                                                        {
+                                                                            "hover@netease_editor_template_namespace.hover": {}
+                                                                        },
+                                                                        {
+                                                                            "pressed@netease_editor_template_namespace.pressed": {}
+                                                                        },
+                                                                        {
+                                                                            "button_label@netease_editor_template_namespace.button_label": {}
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "open_storage_btn@common.button": {
+                                                        "type": "button",
+                                                        "$control_alpha": 1.0,
+                                                        "$default_texture": "textures/ui/button_default",
+                                                        "$hover_texture": "textures/ui/button_hovered",
+                                                        "$is_new_nine_slice": false,
+                                                        "$label_color": [
+                                                            1,
+                                                            1,
+                                                            1
+                                                        ],
+                                                        "$label_font_scale_factor": 1.0,
+                                                        "$label_font_size": "normal",
+                                                        "$label_layer": 3,
+                                                        "$label_offset": [
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                        "$pressed_texture": "textures/ui/button_pressed",
+                                                        "$texture_layer": 2,
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -14.0,
+                                                            28.0
+                                                        ],
+                                                        "size": [
+                                                            48.0,
+                                                            32.0
+                                                        ],
+                                                        "layer": 2,
+                                                        "button_mappings": [],
+                                                        "default_control": "default",
+                                                        "hover_control": "hover",
+                                                        "is_handle_button_move_event": true,
+                                                        "pressed_control": "pressed",
+                                                        "bindings": [
+                                                            {
+                                                                "binding_type": "collection_details",
+                                                                "binding_collection_name": "",
+                                                                "binding_condition": "always_when_visible"
+                                                            }
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "chest_image": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "size": [
+                                                                        "100%+-32px",
+                                                                        "100%x+0px"
+                                                                    ],
+                                                                    "layer": 4,
+                                                                    "texture": "textures/ui/storage_icon"
+                                                                }
+                                                            },
+                                                            {
+                                                                "default@netease_editor_template_namespace.default": {}
+                                                            },
+                                                            {
+                                                                "hover@netease_editor_template_namespace.hover": {}
+                                                            },
+                                                            {
+                                                                "pressed@netease_editor_template_namespace.pressed": {}
+                                                            },
+                                                            {
+                                                                "tip": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "bottom_middle",
+                                                                    "anchor_to": "bottom_middle",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        -3.0
+                                                                    ],
+                                                                    "layer": 4,
+                                                                    "color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "shadow": true,
+                                                                    "text": "打开仓储",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "structure_not_finished_tip": {
+                                                        "type": "panel",
+                                                        "anchor_from": "bottom_middle",
+                                                        "anchor_to": "bottom_middle",
+                                                        "offset": [
+                                                            0.0,
+                                                            -4.0
+                                                        ],
+                                                        "size": [
+                                                            92.0,
+                                                            16.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "bg": {
+                                                                    "type": "image",
+                                                                    "layer": 1,
+                                                                    "nineslice_size": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "texture": "textures/ui/black_alpha_bg"
+                                                                }
+                                                            },
+                                                            {
+                                                                "label": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "left_middle",
+                                                                    "anchor_to": "left_middle",
+                                                                    "offset": [
+                                                                        16.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "layer": 4,
+                                                                    "color": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "font_scale_factor": 1.1,
+                                                                    "font_type": "default",
+                                                                    "text": "多方块结构未成型",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            },
+                                                            {
+                                                                "image": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "left_middle",
+                                                                    "anchor_to": "left_middle",
+                                                                    "offset": [
+                                                                        2.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        12.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "texture": "textures/ui/warning_icon"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "multi_block_structure_check_btn@common.button": {
+                                                        "type": "button",
+                                                        "$control_alpha": 1.0,
+                                                        "$default_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$hover_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$is_new_nine_slice": false,
+                                                        "$label_color": [
+                                                            1,
+                                                            1,
+                                                            1
+                                                        ],
+                                                        "$label_font_scale_factor": 1.0,
+                                                        "$label_font_size": "large",
+                                                        "$label_layer": 3,
+                                                        "$label_offset": [
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                        "$pressed_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$texture_layer": 2,
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            -26.0,
+                                                            2.0
+                                                        ],
+                                                        "size": [
+                                                            14.0,
+                                                            16.0
+                                                        ],
+                                                        "layer": 5,
+                                                        "button_mappings": [],
+                                                        "default_control": "default",
+                                                        "hover_control": "hover",
+                                                        "is_handle_button_move_event": true,
+                                                        "pressed_control": "pressed",
+                                                        "bindings": [
+                                                            {
+                                                                "binding_type": "collection_details",
+                                                                "binding_collection_name": "",
+                                                                "binding_condition": "always_when_visible"
+                                                            }
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "default@netease_editor_template_namespace.default": {}
+                                                            },
+                                                            {
+                                                                "hover@netease_editor_template_namespace.hover": {}
+                                                            },
+                                                            {
+                                                                "pressed@netease_editor_template_namespace.pressed": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "offset": [
+                                    0,
+                                    -45
+                                ],
+                                "size": [
+                                    "default",
+                                    120
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "battery_slot": {
+        "type": "panel",
+        "size": [
+            18.0,
+            18.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "image": {
+                    "type": "image",
+                    "nineslice_size": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "battery_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "property_bag": {
+                        "#item_id_aux": 131072
+                    },
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$collection_name",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_name_override": "#item_id_aux",
+                            "binding_collection_name": "$collection_name",
+                            "binding_condition": "always_when_visible",
+                            "binding_type": "collection",
+                            "binding_name": "#BatteryMatrixUI.battery_slot_item_id_aux"
+                        }
+                    ]
+                }
+            },
+            {
+                "slot_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "",
+                    "$hover_texture": "",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "#BatteryMatrixUI.slot_btn",
+                    "$pressed_texture": "",
+                    "$texture_layer": 2,
+                    "layer": 2,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$collection_name",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ]
+                }
+            },
+            {
+                "energy_bar_bg": {
+                    "type": "image",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [
+                        0.0,
+                        -2.0
+                    ],
+                    "size": [
+                        16.0,
+                        2.0
+                    ],
+                    "layer": 1,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "texture": "textures/ui/azure_bar"
+                }
+            },
+            {
+                "energy_bar_mask": {
+                    "type": "image",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [
+                        0.0,
+                        -2.0
+                    ],
+                    "size": [
+                        16.0,
+                        2.0
+                    ],
+                    "layer": 1,
+                    "clip_direction": "left",
+                    "clip_ratio": "#BatteryMatrixUI.energy_bar_mask_clip",
+                    "texture": "textures/ui/azure_bar",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$collection_name",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "$collection_name",
+                            "binding_condition": "always_when_visible",
+                            "binding_name": "#BatteryMatrixUI.energy_bar_mask_clip"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "battery_slots_grid": {
+        "type": "grid",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            162.0,
+            "default"
+        ],
+        "layer": 1,
+        "collection_name": "battery_slots_grid",
+        "grid_dimensions": [
+            9,
+            3
+        ],
+        "grid_item_template": "BatteryMatrixUI.battery_slot",
+        "grid_rescaling_type": "horizontal",
+        "property_bag": {
+            "#maximum_grid_items": 1
+        },
+        "bindings": [
+            {
+                "binding_name_override": "#maximum_grid_items",
+                "binding_collection_name": "$collection_name",
+                "binding_condition": "always_when_visible",
+                "binding_type": "collection",
+                "binding_name": "#BatteryMatrixUI.battery_slot_nums"
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "BatteryMatrixUI.battery_matrix_ui"
+    },
+    "namespace": "BatteryMatrixUI",
+    "screen": {
+        "type": "screen",
+        "controls": [
+            {
+                "panel@BatteryMatrixUI.battery_matrix_ui": {}
+            }
+        ]
+    }
+}

@@ -7,11 +7,15 @@ from ..basic.register import BaseMachine, RegisterMachine
 
 # LOADED_INTERFACES
 from ....common.machinery_def import (
+    battery_matrix,
     fermenter,
 )
 #
 
-REG_BLOCK_IDS = (fermenter.IO_ENERGY,)
+REG_BLOCK_IDS = (
+    battery_matrix.IO_ENERGY_INPUT,
+    fermenter.IO_ENERGY,
+)
 
 
 @RegisterMachine

@@ -1,0 +1,15 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.upgraders",
+            "icon": "skybluetech:upgrader_basic_energy",
+            "list": [
+                "skybluetech:upgrader_basic_energy",
+                "skybluetech:upgrader_basic_speed",
+                "skybluetech:upgrader_generic_split",
+                "skybluetech:upgrader_generic_expansion",
+                "skybluetech:upgrader_spec_magma_factory"
+            ]
+        }
+    ]
+}

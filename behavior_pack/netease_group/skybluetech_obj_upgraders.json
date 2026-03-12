@@ -1,0 +1,18 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.obj_upgraders",
+            "icon": "skybluetech:obj_upgrader_attack",
+            "list": [
+                "skybluetech:obj_upgrader_attack",
+                "skybluetech:obj_upgrader_autoburning",
+                "skybluetech:obj_upgrader_digspeed",
+                "skybluetech:obj_upgrader_energy",
+                "skybluetech:obj_upgrader_fortune",
+                "skybluetech:obj_upgrader_spec_farming",
+                "skybluetech:obj_upgrader_veinminer",
+                "skybluetech:obj_upgrader_spec_nofarm"
+            ]
+        }
+    ]
+}

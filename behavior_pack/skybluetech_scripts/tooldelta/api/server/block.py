@@ -41,6 +41,9 @@ _setBlockNew = MethodCacher(
 _setLiquidBlock = MethodCacher(
     lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetLiquidBlock
 )
+_setBlockEntityData = MethodCacher(
+    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetBlockEntityData
+)
 
 
 def GetBlockEntityDataDict(dim, xyz):
@@ -51,6 +54,11 @@ def GetBlockEntityDataDict(dim, xyz):
 def GetBlockEntityData(dim, xyz):
     # type: (int, tuple[int, int, int]) -> BlockEntityData | None
     return _getBlockEntityData(dim, xyz)
+
+
+def SetBlockEntityData(dim, xyz, data):
+    # type: (int, tuple[int, int, int], dict) -> None
+    _setBlockEntityData(dim, xyz, data)
 
 
 block_tags_cache = {}  # type: dict[str, set[str]]
@@ -224,10 +232,11 @@ __all__ = [
     "GetBlockPaletteBetweenPos",
     "GetBlockCardinalFacing",
     "GetBlockName",
+    "GetBlockStates",
     "BlockHasTag",
     "MayPlace",
     "SetBlock",
     "SetLiquidBlock",
-    "GetBlockStates",
+    "SetBlockEntityData",
     "UpdateBlockStates",
 ]

@@ -61,12 +61,12 @@ class S2CSync(object):
         self._mode = mode
         self.activated = False
         if mode == S2C_CLIENT:
-            self.WhenUpdated = DEFAULT_UPDATE_FUNC
+            self.update_cb = DEFAULT_UPDATE_FUNC
         self._changed = True
 
-    def SetWhenUpdatedCallback(self, func):
+    def SetUpdateCallback(self, func):
         # type: (Callable[[], None]) -> None
-        self.WhenUpdated = func
+        self.update_cb = func
 
     def GenerateSpecName(self):
         # type: () -> str
@@ -107,7 +107,7 @@ class S2CSync(object):
 
     def updateFromServer(self, event_data):
         self.Unmarshal(event_data)
-        self.WhenUpdated()
+        self.update_cb()
 
     @classmethod
     def NewClient(

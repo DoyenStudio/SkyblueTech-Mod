@@ -1,0 +1,38 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:machinery_workstation_craft"
+        },
+        "key": {
+            "C": {
+                "data": 0,
+                "item": "skybluetech:refined_iron_ingot"
+            },
+            "E": {
+                "data": 0,
+                "item": "minecraft:crafting_table"
+            },
+            "H": {
+                "data": 0,
+                "item": "skybluetech:tin_ingot"
+            }
+        },
+        "pattern": [
+            "CCC",
+            "HEH",
+            "H H"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:machinery_workstation"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

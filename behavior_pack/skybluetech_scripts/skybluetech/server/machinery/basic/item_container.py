@@ -134,7 +134,7 @@ class ItemContainer(object):
         return res
 
     def SetSlotItems(self, slotitems):
-        # type: (dict[int, Item | None]) -> None
+        # type: (dict[int, Item | None] | dict[int, Item]) -> None
         """
         设置多个槽位内的物品。
 

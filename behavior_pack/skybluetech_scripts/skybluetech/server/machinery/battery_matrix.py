@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-import time
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
@@ -65,11 +63,8 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
     def OnTicking(self):
         if self.IsActive():
             if self.output_mode:
-                s = time.time()
                 self.provide_energy()
-                print("Provide energy", time.time() - s)
             self.get_core().core_tick()
-            print("Provide energy2", time.time() - s)
             self.OnSync()
         self._last_input = 0
         self._last_output = 0
@@ -148,11 +143,10 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         for slot, item in slotitems.items():
             if item is None:
                 continue
-            rest = core.PushItem(item)
-            if rest is None:
+            ok = core.add_battery(item)
+            if ok:
                 self.SetSlotItem(slot, None)
             else:
-                self.SetSlotItem(slot, rest)
                 break
         core.update_core_data()
         self.OnSync()
@@ -169,15 +163,13 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         if index >= len(core.slots) or index < 0:
             return
         core.save_core_data()
-        battery_item = core.GetSlotItem(index, get_user_data=True)
+        battery_item = core.pop_battery(index)
         if battery_item is None:
-            core.clean_slots()
             return
         res = self.OutputItem(battery_item)
         if res is not None:
             # cannot happen
             SpawnDroppedItem(self.dim, (self.x, self.y, self.z), res)
-        core.SetSlotItem(index, None)
         core.update_core_data()
         self.OnSync()
         core.gen_update_event().sendMulti(self.sync.GetPlayersInSync())
@@ -269,8 +261,6 @@ def onRecvPopRequest(event):
     if not isinstance(m, BatteryMatrix):
         return
     m.pop_battery_from_core(event.index)
-    m.get_core().gen_update_event().send(event.player_id)
-    m.OnSync()
 
 
 @BatteryMatrixStoreBatteryRequest.Listen()

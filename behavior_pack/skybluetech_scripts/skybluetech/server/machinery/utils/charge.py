@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.api.server import GetItemBasicInfo
 from skybluetech_scripts.tooldelta.utils import nbt
 from .lore import GetLorePos, SetLoreAtPos
 
@@ -31,13 +32,10 @@ def UpdateCharge(owner, item, store_rf):
     if max_durability > 0:
         if ud is None:
             ud = item.userData = {}
+        store_rf_max = nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1)
         item.durability = max(
             2,
-            int(
-                float(store_rf)
-                / nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1)
-                * max_durability
-            ),
+            int(float(store_rf) / store_rf_max * max_durability),
         )
         ud.setdefault("Damage", nbt.Int(0))["__value__"] = (
             max_durability - item.durability
@@ -45,6 +43,25 @@ def UpdateCharge(owner, item, store_rf):
     cb = update_charge_callbacks.get(item.id)
     if cb is not None:
         cb(owner, item, store_rf)
+
+
+def UpdateChargeNBT(item_id, ud, store_rf):
+    # type: (str, dict, int) -> None
+    ud[K_STORE_RF]["__value__"] = store_rf
+    lore = "§r§e⚡ §b已储能 §a%d / %d RF" % (
+        nbt.GetValueWithDefault(ud, K_STORE_RF, 0),
+        nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1),
+    )
+    SetLoreAtPos(ud, GetLorePos(ud, "charge"), lore)
+    max_durability = GetItemBasicInfo(item_id).maxDurability
+    store_rf_max = nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1)
+    if max_durability > 0:
+        ud["Damage"] = nbt.Int(
+            max(
+                2,
+                int(1 - float(store_rf) / store_rf_max),
+            )
+        )
 
 
 def GetCharge(item_userdata):

@@ -6,11 +6,6 @@
                 "seconds_to_destroy": 3.0
             },
             "netease:block_entity": {},
-            "netease:block_container": {
-                "container_size": 27,
-                "custom_description": "电池仓核心",
-                "screen_name": "BatteryMatrixCoreUI.main"
-            },
             "netease:listen_block_remove": {
                 "value": true
             },
@@ -19,7 +14,6 @@
             "tag:piston_denier": {}
         },
         "description": {
-            "base_block": "netease_container",
             "category": "skybluetech",
             "identifier": "skybluetech:battery_matrix_core"
         }

@@ -24,7 +24,7 @@ def GetMachine(dimension, x, y, z, machine_cls):
     if cache is not None:
         return cache
     else:
-        bdata = GetBlockEntityData(dimension, x, y, z)
+        bdata = GetBlockEntityData(dimension, (x, y, z))
         if bdata is None:
             raise RuntimeError(
                 "BlockEntityData load failed in %d ~ %d %d %d" % (dimension, x, y, z)
@@ -73,7 +73,7 @@ def PopMachine(dimension, x, y, z, machine_cls):
     if k in cached_machines:
         return cached_machines.pop(k)
     else:
-        bdata = GetBlockEntityData(dimension, x, y, z)
+        bdata = GetBlockEntityData(dimension, (x, y, z))
         if bdata is None:
             raise RuntimeError("BlockEntityData load failed")
         return machine_cls(dimension, x, y, z, bdata)
@@ -106,7 +106,7 @@ def onChunkLoaded(event):
         machine_cls = machine_classes.get(blockName)
         if machine_cls is None:
             continue
-        bdata = GetBlockEntityData(event.dimension, x, y, z)
+        bdata = GetBlockEntityData(event.dimension, (x, y, z))
         if bdata is None:
             raise RuntimeError(
                 "BlockEntityData load failed in %d ~ %d %d %d"

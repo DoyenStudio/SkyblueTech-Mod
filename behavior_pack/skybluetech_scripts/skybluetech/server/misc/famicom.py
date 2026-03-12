@@ -80,7 +80,7 @@ def onBlockUse(event):
     # type: (ServerBlockUseEvent) -> None
     if event.blockName != FAMICOM:
         return
-    bdata = GetBlockEntityData(event.dimensionId, event.x, event.y, event.z)
+    bdata = GetBlockEntityData(event.dimensionId, (event.x, event.y, event.z))
     if bdata is None:
         return
     x = event.x
@@ -97,7 +97,7 @@ def onUseItemOn(event):
     # type: (ServerItemUseOnEvent) -> None
     if event.blockName != FAMICOM:
         return
-    bdata = GetBlockEntityData(event.dimensionId, event.x, event.y, event.z)
+    bdata = GetBlockEntityData(event.dimensionId, (event.x, event.y, event.z))
     if bdata is None:
         return
     x = event.x
@@ -179,7 +179,7 @@ def onBlockRemoved(event):
     # type: (BlockRemoveServerEvent) -> None
     if event.fullName != FAMICOM:
         return
-    bdata = GetBlockEntityData(event.dimension, event.x, event.y, event.z)
+    bdata = GetBlockEntityData(event.dimension, (event.x, event.y, event.z))
     if bdata is None:
         return
     x = event.x

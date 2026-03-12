@@ -89,7 +89,7 @@ class BaseAccessPoint(Generic[_NT]):
         self.z = z
         self.access_facing = access_facing
         self.io_mode = io_mode
-        bdata = GetBlockEntityData(self.dim, self.x, self.y, self.z)
+        bdata = GetBlockEntityData(self.dim, (self.x, self.y, self.z))
         if bdata is None:
             raise Exception(
                 "[ERROR] No block entity data at {}".format((self.x, self.y, self.z))

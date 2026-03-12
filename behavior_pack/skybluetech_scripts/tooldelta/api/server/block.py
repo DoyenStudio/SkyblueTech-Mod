@@ -43,14 +43,14 @@ _setLiquidBlock = MethodCacher(
 )
 
 
-def GetBlockEntityDataDict(dimension, x, y, z):
-    # type: (int, int, int, int) -> dict | None
-    return _getBlockEntityDict(dimension, (x, y, z))
+def GetBlockEntityDataDict(dim, xyz):
+    # type: (int, tuple[int, int, int]) -> dict | None
+    return _getBlockEntityDict(dim, xyz)
 
 
-def GetBlockEntityData(dimension, x, y, z):
-    # type: (int, int, int, int) -> BlockEntityData | None
-    return _getBlockEntityData(dimension, (x, y, z))
+def GetBlockEntityData(dim, xyz):
+    # type: (int, tuple[int, int, int]) -> BlockEntityData | None
+    return _getBlockEntityData(dim, xyz)
 
 
 block_tags_cache = {}  # type: dict[str, set[str]]
@@ -212,6 +212,7 @@ MayPlace = MethodCacher(lambda: ServerComp.CreateBlockInfo(ServerLevelId).MayPla
 __all__ = [
     "AddBlocksToBlockRemoveListener",
     "GetBlockEntityData",
+    "GetBlockEntityDataDict",
     "GetBlockTags",
     "GetBlockBasicInfo",
     "GetPosBlockTags",

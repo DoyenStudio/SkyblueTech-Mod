@@ -60,6 +60,7 @@ item.skybluetech:obj_upgrader_energy.name=强化： 能量利用
 item.skybluetech:obj_upgrader_fortune.name=强化： 时运提升
 item.skybluetech:obj_upgrader_spec_farming.name=特化： 自动播种
 item.skybluetech:obj_upgrader_veinminer.name=强化： 连锁采掘
+item.skybluetech:obj_upgrader_spec_nofarm.name=特化： 耕地保护
 item.skybluetech:platinum_dust.name=铂粉
 item.skybluetech:platinum_ingot.name=铂锭
 item.skybluetech:platinum_plate.name=铂板

@@ -255,6 +255,7 @@ item.skybluetech:cupronickel_plate.name=白铜板
 item.skybluetech:sulfur.name=硫块
 item.skybluetech:sulfur_dust.name=硫粉
 item.skybluetech:paddle_iron.name=铁扇叶
+item.skybluetech:ultraheatinum_ingot.name=耐热锭
 item.skybluetech:low_purity_silicon_panel.name=低纯硅晶板
 item.skybluetech:cupronickel_dust.name=白铜粉
 item.skybluetech:pincer_invar.name=殷钢工具钳
@@ -265,3 +266,4 @@ tile.skybluetech:battery_matrix_controller.name=电池仓控制器
 tile.skybluetech:battery_matrix_io_energy1.name=电池仓能量输入口
 tile.skybluetech:battery_matrix_io_energy2.name=电池仓能量输出口
 tile.skybluetech:battery_matrix_core.name=电池仓储能核心
+

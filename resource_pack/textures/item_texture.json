@@ -7,6 +7,9 @@
         "skybluetech:ancient_debris_dust": {
             "textures": "textures/items/dusts/ancient_debris_dust"
         },
+        "skybluetech:battery_junior": {
+            "textures": "textures/items/batterys/battery_junior"
+        },
         "skybluetech:bio_dust": {
             "textures": "textures/items/dusts/bio_dust"
         },
@@ -129,9 +132,6 @@
         },
         "skybluetech:iron_stick": {
             "textures": "textures/items/sticks/iron_stick"
-        },
-        "skybluetech:battery_junior": {
-            "textures": "textures/items/batterys/battery_junior"
         },
         "skybluetech:lapis_dust": {
             "textures": "textures/items/dusts/lapis_dust"
@@ -378,6 +378,9 @@
         },
         "skybluetech:transmitter_wrench": {
             "textures": "textures/items/transmitter_wrench"
+        },
+        "skybluetech:ultraheatinum_ingot": {
+            "textures": "textures/items/ingots/ultraheatinum_ingot"
         },
         "skybluetech:upgrader_basic_energy": {
             "textures": "textures/items/upgraders/upgrader_basic_energy"

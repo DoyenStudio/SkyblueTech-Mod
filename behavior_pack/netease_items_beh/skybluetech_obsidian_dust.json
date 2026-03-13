@@ -1,0 +1,16 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "dusts/obsidian"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:obsidian_dust"
+        }
+    }
+}

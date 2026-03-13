@@ -266,4 +266,4 @@ tile.skybluetech:battery_matrix_controller.name=电池仓控制器
 tile.skybluetech:battery_matrix_io_energy1.name=电池仓能量输入口
 tile.skybluetech:battery_matrix_io_energy2.name=电池仓能量输出口
 tile.skybluetech:battery_matrix_core.name=电池仓储能核心
-
+item.skybluetech:obsidian_dust.name=黑曜石粉

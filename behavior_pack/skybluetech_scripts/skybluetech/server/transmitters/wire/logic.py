@@ -92,6 +92,19 @@ def RequireEnergyFromNetwork(machine):
     return ok
 
 
+def PushEnergyIntoNetwork(network, rf, passed):
+    # type: (WireNetwork, int, set[BaseMachine]) -> tuple[bool, int]
+    updated = False
+    for ap in network.get_input_access_points():
+        machine = GetMachineStrict(network.dim, *ap.target_pos)
+        if machine is not None and not machine.is_non_energy_machine:
+            _updated, rf = machine.AddPower(rf, network.transfer_speed, passed)
+            updated = updated or _updated
+            if rf == 0:
+                break
+    return updated, rf
+
+
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
     # 在机器被放置后延迟执行,

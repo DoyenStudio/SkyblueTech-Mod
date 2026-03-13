@@ -6,10 +6,10 @@ from .gui_ctrl import GUIControl
 
 
 def requireWireModule():
-    global GetContainerNode, pool
+    global GetContainerNode, pool, PushEnergyIntoNetwork
     if requireWireModule.has_cache:
         return
-    from ...transmitters.wire.logic import logic_module
+    from ...transmitters.wire.logic import logic_module, PushEnergyIntoNetwork
     from .. import pool
 
     GetContainerNode = logic_module.GetContainerNode
@@ -39,7 +39,7 @@ class BasicGenerator(BaseMachine):
         # type: (int) -> bool
         "产出能量。"
         srf = self.store_rf = min(
-            self.store_rf_max, self.addPowerIntoWireNetwork(self.store_rf + rf)
+            self.store_rf_max, self.add_power_into_wire_network(self.store_rf + rf)
         )
         if isinstance(self, GUIControl):
             self.OnSync()
@@ -48,12 +48,12 @@ class BasicGenerator(BaseMachine):
     def GeneratePowerWithOverflow(self, rf):
         # type: (int) -> tuple[bool, int]
         "仅产出能量并直接添加到电网。"
-        overflow = self.addPowerIntoWireNetwork(rf)
+        overflow = self.add_power_into_wire_network(rf)
         if isinstance(self, GUIControl):
             self.OnSync()
         return rf != overflow, overflow
 
-    def addPowerIntoWireNetwork(self, rf, passed=None):
+    def add_power_into_wire_network(self, rf, passed=None):
         # type: (int, set[BaseMachine] | None) -> int
         """在已连接的电缆网络中为机器添加能量, 包括周围的机器。 返回溢出的能量"""
         if passed is None:
@@ -65,14 +65,9 @@ class BasicGenerator(BaseMachine):
         for network in output_networks:
             if network is None:
                 continue
-            for ap in network.get_input_access_points():
-                machine = pool.GetMachineStrict(self.dim, *ap.target_pos)
-                if machine is not None and not machine.is_non_energy_machine:
-                    updated, rf = machine.AddPower(rf, network.transfer_speed, passed)
-                    if updated and isinstance(machine, GUIControl):
-                        machine.OnSync()
-                    if rf == 0:
-                        break
+            rf, updated = PushEnergyIntoNetwork(network, rf, passed)
+            if rf <= 0:
+                break
         if rf != 0:
             for machine, facing in pool.GetNearbyMachines(
                 self.dim, self.x, self.y, self.z, self._power_output_faces
@@ -81,6 +76,6 @@ class BasicGenerator(BaseMachine):
                 if io_mode != 0:
                     continue
                 updated, rf = machine.AddPower(rf, None, passed)
-                if rf == 0:
+                if rf <= 0:
                     break
         return rf

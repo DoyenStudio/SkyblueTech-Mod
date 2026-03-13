@@ -19,14 +19,14 @@ class BaseMachine(object):
 
     block_name = ""  # type: str
     "方块 ID"
-    extra_block_names = ()  # type: tuple[str, ...]
-    "额外可绑定的方块 ID"
     is_non_energy_machine = False
     "机器是否为非能源型机器"
     store_rf_max = 10000  # type: int
     "储存能量的最大值, 需要覆写"
     energy_io_mode = (0, 0, 0, 0, 0, 0)  # type: tuple[int, int, int, int, int, int]
     "每个面的能量输入输出模式, 0:输入 1:输出 其他:无"
+    _extra_block_names = {}  # type: dict[type[BaseMachine], list[str]]
+    "额外可绑定的方块 ID"
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -37,6 +37,12 @@ class BaseMachine(object):
         self.y = y
         self.z = z
         self._cached_deactive_flags = None
+
+    @classmethod
+    def AddExtraMachineId(cls, id):
+        # type: (str) -> None
+        "注册额外的方块 ID。"
+        cls._extra_block_names.setdefault(cls, []).append(id)
 
     @classmethod
     def OnPrePlaced(cls, event):

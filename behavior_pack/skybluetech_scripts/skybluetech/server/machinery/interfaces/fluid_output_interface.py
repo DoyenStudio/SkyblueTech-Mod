@@ -3,31 +3,22 @@
 from weakref import ref
 from mod.server.blockEntityData import BlockEntityData
 from ....common.ui_sync.machinery.fluid_interface import FluidInterfaceUISync
-from ..basic import BaseMachine, FluidContainer, GUIControl, RegisterMachine
+from ..basic import FluidContainer, GUIControl, RegisterMachine
+from .base_interface import BaseInterface
 
 if 0:
     from typing import Callable
 
-# LOADED_INTERFACES
-from ....common.machinery_def import fermenter
-#
-
-REG_BLOCK_IDS = (
-    fermenter.IO_FLUID2,
-    fermenter.IO_GAS,
-)
-
 
 @RegisterMachine
-class FluidOutputInterface(BaseMachine, FluidContainer, GUIControl):
-    extra_block_names = REG_BLOCK_IDS
+class FluidOutputInterface(BaseInterface, FluidContainer, GUIControl):
     fluid_io_mode = (1, 1, 1, 1, 1, 1)
     fluid_io_fix_mode = 0
     max_fluid_volume = 8000
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        BaseInterface.__init__(self, dim, x, y, z, block_entity_data)
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidInterfaceUISync.NewServer(self).Activate()
         self.OnSync()

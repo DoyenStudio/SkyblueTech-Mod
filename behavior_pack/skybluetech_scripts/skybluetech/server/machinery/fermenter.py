@@ -47,6 +47,12 @@ K_CELL_HUNGER = "st:bacteria_hunger"
 K_INOCULATING_RECIPE = "st:inoculate_recipe"
 K_INOCULATE_TIME = "st:inoculate_time"
 
+EnergyInputInterface.AddExtraMachineId(IO_ENERGY)
+FluidInputInterface.AddExtraMachineId(IO_FLUID1)
+FluidOutputInterface.AddExtraMachineId(IO_FLUID2)
+FluidOutputInterface.AddExtraMachineId(IO_GAS)
+ItemInputInterface.AddExtraMachineId(IO_ITEM)
+
 
 @RegisterMachine
 class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):

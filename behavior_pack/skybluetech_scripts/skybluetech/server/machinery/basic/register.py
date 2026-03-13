@@ -36,8 +36,9 @@ def RegisterMachine(machine_cls):
     """
     if machine_cls.block_name:
         pool.machine_classes[machine_cls.block_name] = machine_cls
-    for extra_block_name in machine_cls.extra_block_names:
-        pool.machine_classes[extra_block_name] = machine_cls
+    for interface_cls, extra_block_names in machine_cls._extra_block_names.items():
+        for extra_block_name in extra_block_names:
+            pool.machine_classes[extra_block_name] = interface_cls
     return machine_cls
 
 

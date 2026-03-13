@@ -38,6 +38,10 @@ K_ENABLE_INPUT = "st:enable_input"
 K_ENABLE_OUTPUT = "st:enable_output"
 
 
+EnergyInputInterface.AddExtraMachineId(IO_ENERGY_INPUT)
+EnergyOutputInterface.AddExtraMachineId(IO_ENERGY_OUTPUT)
+
+
 @RegisterMachine
 class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
     block_name = MACHINE_ID

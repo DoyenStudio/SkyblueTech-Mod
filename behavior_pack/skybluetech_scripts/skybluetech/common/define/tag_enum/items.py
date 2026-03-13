@@ -12,6 +12,7 @@ class IngotTag:
     STEEL = "ingots/steel"
     REFINED_IRON = "ingots/refined_iron"
     CUPRONICKEL = "ingots/cupronickel"
+    ULTRAHEATINUM = "ingots/ultraheatinum"
 
 
 class DustTag:
@@ -30,6 +31,7 @@ class DustTag:
     DIAMOND = "dusts/diamond"
     BIO = "dusts/bio"
     ANCIENT_DEBRIS = "dusts/ancient_debris"
+    OBSIDIAN = "dusts/obsidian"
 
 
 class RawTag:
@@ -77,3 +79,7 @@ class Wrench:
 class Pincer:
     IRON = "pincer/iron"
     INVAR = "pincer/invar"
+
+
+class BatteryTag:
+    COMMON = "skybluetech:battery"

@@ -9,6 +9,7 @@ class Ingots:
     INVAR = "skybluetech:invar_ingot"
     STEEL = "skybluetech:steel_ingot"
     REFINED_IRON = "skybluetech:refined_iron_ingot"
+    ULTRAHEATINUM = "skybluetech:ultraheatinum_ingot"
 
 
 class Plates:
@@ -41,6 +42,9 @@ class Dusts:
     BRONZE = "skybluetech:bronze_dust"
     INVAR = "skybluetech:invar_dust"
     STEEL = "skybluetech:steel_dust"
+
+    ANCIENT_DEBRIS = "skybluetech:ancient_debris_dust"
+    OBSIDIAN = "skybluetech:obsidian_dust"
 
 
 class Sticks:

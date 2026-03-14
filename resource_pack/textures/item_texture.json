@@ -229,6 +229,9 @@
         "skybluetech:obj_upgrader_veinminer": {
             "textures": "textures/items/object_upgraders/obj_upgrader_veinminer"
         },
+        "skybluetech:obsidian_dust": {
+            "textures": "textures/items/dusts/obsidian_dust"
+        },
         "skybluetech:paddle_iron": {
             "textures": "textures/items/paddle_iron"
         },

@@ -1,5 +1,5 @@
-from .basic_generator import BasicGenerator
 from .base_clicker import BaseClicker
+from .base_generator import BasicGenerator
 from .base_machine import BaseMachine
 from .base_processor import BaseProcessor
 from .base_speed_control import BaseSpeedControl

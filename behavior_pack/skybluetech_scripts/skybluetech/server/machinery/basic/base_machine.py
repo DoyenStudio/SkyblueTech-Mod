@@ -47,16 +47,17 @@ class BaseMachine(object):
     @classmethod
     def OnPrePlaced(cls, event):
         # type: (ServerEntityTryPlaceBlockEvent) -> None
+        "事件方法, 机器被放置前调用, 可 cancel()"
         pass
 
     def OnPlaced(self, event):
         # type: (ServerPlaceBlockEntityEvent) -> None
-        "超类方法用于初始化机器的能源数据。"
+        "事件方法, 机器被放置时调用。"
         pass
 
     def OnTicking(self):
         # type: () -> None
-        "事件方法, 超类方法什么也不做。"
+        "事件方法, 方块实体 tick 调用。"
         return None
 
     # def OnFakeTicking(self):
@@ -66,20 +67,20 @@ class BaseMachine(object):
 
     def OnUnload(self):
         # type: () -> None
-        "超类方法, 方块实体被卸载时调用。"
+        "事件方法, 方块实体被卸载时调用。"
         pass
 
     def OnDestroy(self):
         # type: () -> None
-        "超类方法, 方块被破坏时调用。"
+        "事件方法, 方块被破坏时调用。"
 
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
-        "什么也不做。"
+        "事件方法, 邻近方块变化时调用。"
 
-    def OnMonitorCheck(self):
-        # type: () -> str | None
-        return None
+    def OnDeactiveFlagsChanged(self):
+        "机器激活状态更改时调用。"
+        pass
 
     def OnTryActivate(self):
         "覆写方法尝试激活机器。"
@@ -132,10 +133,12 @@ class BaseMachine(object):
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
         self.deactive_flags |= flag
+        self.OnDeactiveFlagsChanged()
 
     def UnsetDeactiveFlag(self, flag):
         # type: (int) -> None
         self.deactive_flags &= ~flag
+        self.OnDeactiveFlagsChanged()
 
     def HasDeactiveFlag(self, flag):
         # type: (int) -> bool
@@ -183,6 +186,7 @@ class BaseMachine(object):
         重置所有停机标志, 即将机器设置为工作模式。
         """
         self.deactive_flags = 0
+        self.OnDeactiveFlagsChanged()
 
     @property
     def deactive_flags(self):

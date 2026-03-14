@@ -37,6 +37,7 @@
         "ui/MagmaCentrifugeUI.json",
         "ui/MagmaFurnaceUI.json",
         "ui/MetalPressUI.json",
+        "ui/MiniMinerUI.json",
         "ui/MixerUI.json",
         "ui/NeteaseContainerUI.json",
         "ui/ObjUpVeinMinerSettingsUI.json",

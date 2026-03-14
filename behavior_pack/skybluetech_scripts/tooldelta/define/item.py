@@ -1,9 +1,5 @@
 # coding=utf-8
 from ..internal import (
-    ServerComp,
-    ServerLevelId,
-    ClientComp,
-    ClientLevelId,
     InServerEnv,
 )
 
@@ -121,17 +117,23 @@ class Item(object):
         if cached is not None:
             return cached
         if InServerEnv():
-            raw_info = ServerComp.CreateItem(ServerLevelId).GetItemBasicInfo(
-                self.newItemName, self.newAuxValue, self.isEnchanted
+            from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
+
+            raw_info = (
+                GetEngineCompFactory()
+                .CreateItem(GetLevelId())
+                .GetItemBasicInfo(self.newItemName, self.newAuxValue, self.isEnchanted)
             )
             if raw_info is None:
                 raise ValueError("Can't get basic info of " + self.newItemName)
             res = BasicItemInfo().unmarshal(raw_info)
         else:
+            from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+
             res = BasicItemInfo().unmarshal(
-                ClientComp.CreateItem(ClientLevelId).GetItemBasicInfo(
-                    self.newItemName, self.newAuxValue, self.isEnchanted
-                )
+                GetEngineCompFactory()
+                .CreateItem(GetLevelId())
+                .GetItemBasicInfo(self.newItemName, self.newAuxValue, self.isEnchanted)
             )
         itemBasicInfoPool[self.newItemName] = res
         return res

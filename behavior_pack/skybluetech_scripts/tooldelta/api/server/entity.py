@@ -1,25 +1,24 @@
 # coding=utf-8
-#
+from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
 from ...define.item import Item
-from ...internal import ServerComp, ServerLevelId, GetServer
-from ..internal.cacher import MethodCacher
+from ...internal import GetServer
+from ..common.cacher import MethodCacher
 
+CF = GetEngineCompFactory()
 
 GetEntitiesInSquareArea = MethodCacher(
-    lambda: ServerComp.CreateGame(ServerLevelId).GetEntitiesInSquareArea
+    lambda: CF.CreateGame(GetLevelId()).GetEntitiesInSquareArea
 )
 
 
 def GetEntitiesBySelector(selector, from_entity=""):
     # type: (str, str) -> list[str]
-    return ServerComp.CreateEntityComponent(from_entity).GetEntitiesBySelector(selector)
+    return CF.CreateEntityComponent(from_entity).GetEntitiesBySelector(selector)
 
 
 def GetDroppedItem(entity_id, get_user_data=False):
     # type: (str, bool) -> Item | None
-    itemdict = ServerComp.CreateItem(ServerLevelId).GetDroppedItem(
-        entity_id, get_user_data
-    )
+    itemdict = CF.CreateItem(GetLevelId()).GetDroppedItem(entity_id, get_user_data)
     if itemdict is None:
         return None
     return Item.from_dict(itemdict)
@@ -37,12 +36,12 @@ def DestroyEntity(entity_id):
 
 def GetPos(entity_id):
     # type: (str) -> tuple[float, float, float]
-    return ServerComp.CreatePos(entity_id).GetPos()
+    return CF.CreatePos(entity_id).GetPos()
 
 
 def SetMotion(entity_id, motion):
     # type: (str, tuple[float, float, float]) -> bool
-    return ServerComp.CreateActorMotion(entity_id).SetMotion(motion)
+    return CF.CreateActorMotion(entity_id).SetMotion(motion)
 
 
 __all__ = [

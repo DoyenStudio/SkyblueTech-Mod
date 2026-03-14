@@ -1,9 +1,9 @@
 # coding=utf-8
-#
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
 
-from ...internal import ClientComp, ClientLevelId
+CF = GetEngineCompFactory()
 
 
 def ZHCN(text):
     # type: (str) -> str
-    return ClientComp.CreateGame(ClientLevelId).GetChinese(text)
+    return CF.CreateGame(GetLevelId()).GetChinese(text)

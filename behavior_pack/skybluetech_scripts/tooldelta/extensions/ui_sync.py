@@ -10,7 +10,7 @@ from ..events.client.sync import (
     S2CSyncDatas,
     ServerDelSync,
 )
-from ..general import ServerInitCallback
+from ..general import ServerInitCallback, ClientInitCallback
 from ..api.common import AsTimerFunc
 
 if 0:
@@ -202,31 +202,6 @@ def notifySyncToSingleClient(cliId, sync_ids):
     NotifyToClient(cliId, S2CSyncDatas(event_body))
 
 
-@AsTimerFunc(SYNC_DELAY)
-def serverBroadcastSyncEvents():
-    posted_sync_ids = set()  # type: set[str]
-    for cliId, sync_ids in server_active_syncs.copy().items():
-        sync_ids = {i for i in sync_ids if server_sync_pool[i]._changed}
-        if sync_ids:
-            notifySyncToSingleClient(cliId, sync_ids)
-        posted_sync_ids |= sync_ids
-    for sync_id in posted_sync_ids:
-        server_sync_pool[sync_id]._changed = False
-
-
-@S2CSyncDatas.Listen()
-def clientProcessSyncEvent(eventData):
-    # type: (S2CSyncDatas) -> None
-    for sync_data in eventData.sync_datas:
-        sync = client_active_syncs.get(sync_data[EVENT_KEY])
-        if sync is not None:
-            sync.updateFromServer(sync_data)
-        else:
-            logger.warning(
-                "[SyncClient] Client sync {} not exists".format(sync_data[EVENT_KEY])
-            )
-
-
 def serverAddSync(sync):
     # type: (S2CSync) -> None
     if DEBUG:
@@ -263,45 +238,6 @@ def clientRemoveActiveSync(sync):
     client_active_syncs.pop(sync.sync_id, None)
 
 
-@ClientNewSync.Listen()
-def onClientNewSync(event):
-    # type: (ClientNewSync) -> None
-    if DEBUG:
-        logger.info("[SYNC] Client request new sync {}".format(event.sync_name))
-    pendingsync_ids = client_pending_syncs.get(event.pid)
-    if pendingsync_ids is not None and event.sync_name in pendingsync_ids:
-        pendingsync_ids.remove(event.sync_name)
-        if not pendingsync_ids:
-            del client_pending_syncs[event.pid]
-        server_active_syncs.setdefault(event.pid, set()).add(event.sync_name)
-        notifySyncToSingleClient(event.pid, server_active_syncs[event.pid])
-    else:
-        logger.warning(
-            "[SYNC] Client request new sync {} but not pending".format(event.sync_name)
-        )
-
-
-@ClientPopSync.Listen()
-def onClientPopSync(event):
-    # type: (ClientPopSync) -> None
-    # 考虑到可能执行在 serverRemoveSync 之后
-    if DEBUG:
-        logger.info("[SYNC] Client request pop sync {}".format(event.sync_name))
-    if event.sync_name in server_active_syncs.get(event.pid, set()):
-        server_active_syncs[event.pid].remove(event.sync_name)
-        if not server_active_syncs[event.pid]:
-            del server_active_syncs[event.pid]
-
-
-@DelServerPlayerEvent.Listen()
-def onDelServerPlayerEvent(event):
-    # type: (DelServerPlayerEvent) -> None
-    """Player GC"""
-    playerId = event.id
-    client_pending_syncs.pop(playerId, None)
-    server_active_syncs.pop(playerId, None)
-
-
 @ServerDelSync.Listen()
 def onServerDelSync(event):
     # type: (ServerDelSync) -> None
@@ -314,7 +250,73 @@ def onServerDelSync(event):
 
 @ServerInitCallback()
 def onServerInit():
+    @AsTimerFunc(SYNC_DELAY)
+    def serverBroadcastSyncEvents():
+        posted_sync_ids = set()  # type: set[str]
+        for cliId, sync_ids in server_active_syncs.copy().items():
+            sync_ids = {i for i in sync_ids if server_sync_pool[i]._changed}
+            if sync_ids:
+                notifySyncToSingleClient(cliId, sync_ids)
+            posted_sync_ids |= sync_ids
+        for sync_id in posted_sync_ids:
+            server_sync_pool[sync_id]._changed = False
+
+    @ClientNewSync.Listen()
+    def onClientNewSync(event):
+        # type: (ClientNewSync) -> None
+        if DEBUG:
+            logger.info("[SYNC] Client request new sync {}".format(event.sync_name))
+        pendingsync_ids = client_pending_syncs.get(event.pid)
+        if pendingsync_ids is not None and event.sync_name in pendingsync_ids:
+            pendingsync_ids.remove(event.sync_name)
+            if not pendingsync_ids:
+                del client_pending_syncs[event.pid]
+            server_active_syncs.setdefault(event.pid, set()).add(event.sync_name)
+            notifySyncToSingleClient(event.pid, server_active_syncs[event.pid])
+        else:
+            logger.warning(
+                "[SYNC] Client request new sync {} but not pending".format(
+                    event.sync_name
+                )
+            )
+
+    @ClientPopSync.Listen()
+    def onClientPopSync(event):
+        # type: (ClientPopSync) -> None
+        # 考虑到可能执行在 serverRemoveSync 之后
+        if DEBUG:
+            logger.info("[SYNC] Client request pop sync {}".format(event.sync_name))
+        if event.sync_name in server_active_syncs.get(event.pid, set()):
+            server_active_syncs[event.pid].remove(event.sync_name)
+            if not server_active_syncs[event.pid]:
+                del server_active_syncs[event.pid]
+
+    @DelServerPlayerEvent.Listen()
+    def onDelServerPlayerEvent(event):
+        # type: (DelServerPlayerEvent) -> None
+        """Player GC"""
+        playerId = event.id
+        client_pending_syncs.pop(playerId, None)
+        server_active_syncs.pop(playerId, None)
+
     serverBroadcastSyncEvents()
+
+
+@ClientInitCallback()
+def onClientInit():
+    @S2CSyncDatas.Listen()
+    def clientProcessSyncEvent(eventData):
+        # type: (S2CSyncDatas) -> None
+        for sync_data in eventData.sync_datas:
+            sync = client_active_syncs.get(sync_data[EVENT_KEY])
+            if sync is not None:
+                sync.updateFromServer(sync_data)
+            else:
+                logger.warning(
+                    "[SyncClient] Client sync {} not exists".format(
+                        sync_data[EVENT_KEY]
+                    )
+                )
 
 
 __all__ = [

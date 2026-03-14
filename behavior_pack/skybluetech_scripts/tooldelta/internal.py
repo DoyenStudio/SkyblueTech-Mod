@@ -15,14 +15,9 @@ if 0:
 class Runtime:
     server = None  # type: Server | None
     client = None  # type: Client | None
-    modName = None # type: str | None
-    ServerComp = serverApi.GetEngineCompFactory()
-    ClientComp = clientApi.GetEngineCompFactory()
-    ServerLevelId = serverApi.GetLevelId()
-    ClientLevelId = clientApi.GetLevelId()
-
-    server_thread_ident = None # type: int | None
-    client_thread_ident = None # type: int | None
+    modName = None  # type: str | None
+    server_thread_ident = None  # type: int | None
+    client_thread_ident = None  # type: int | None
 
 
 def GetServer():
@@ -34,11 +29,8 @@ def GetServer():
 
 def setServer(server):
     # type: (Server) -> None
-    global ServerLevelId
     Runtime.server = server
     Runtime.server_thread_ident = current_thread().ident
-    #
-    ServerLevelId = Runtime.ServerLevelId = serverApi.GetLevelId()
 
 
 def GetClient():  # type: () -> Client
@@ -49,32 +41,36 @@ def GetClient():  # type: () -> Client
 
 def setClient(client):
     # type: (Client) -> None
-    global ClientLevelId
     Runtime.client = client
     Runtime.client_thread_ident = current_thread().ident
-    #
-    ClientLevelId = Runtime.ClientLevelId = clientApi.GetLevelId()
+
 
 def GetModName():
     if Runtime.modName is None:
         raise RuntimeError("modName is not initialized")
     return Runtime.modName
 
+
 def setModName(mod_name):
     # type: (str) -> None
     Runtime.modName = mod_name
 
+
 def GetModServerEngineName():
     return GetModName() + ".TDServer"
+
 
 def GetModClientEngineName():
     return GetModName() + ".TDClient"
 
+
 def inClientEnv():
     return current_thread().ident == Runtime.client_thread_ident
 
+
 def inServerEnv():
     return current_thread().ident == Runtime.server_thread_ident
+
 
 def InServerEnv():
     if inServerEnv():
@@ -84,14 +80,9 @@ def InServerEnv():
     else:
         return False
 
+
 InClientEnv = inClientEnv
 
-
-ServerComp = Runtime.ServerComp
-ClientComp = Runtime.ClientComp
-ServerLevelId = Runtime.ServerLevelId
-ClientLevelId = Runtime.ClientLevelId
-LocalPlayerId = clientApi.GetLocalPlayerId()
 
 def GetCurrentClientLevelId():
     return clientApi.GetLevelId()

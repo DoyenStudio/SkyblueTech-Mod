@@ -1,7 +1,6 @@
 # coding=utf-8
 
 from ...define.item import Item
-from ...internal import ServerComp, ServerLevelId
 from ..basic import ServerEvent
 
 
@@ -75,7 +74,9 @@ class PlayerTryPutCustomContainerItemServerEvent(ServerEvent):
     @classmethod
     def ListenWithUserData(cls, priority=0):
         # print("[TDEvent] Listen with user data: " + cls.name)
-        ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
+        from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
+
+        GetEngineCompFactory().CreateItem(GetLevelId()).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
 
 
@@ -179,7 +180,9 @@ class ContainerItemChangedServerEvent(ServerEvent):
     @classmethod
     def ListenWithUserData(cls, priority=0):
         # print("[TDEvent] Listen with user data: " + cls.name)
-        ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
+        from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
+
+        GetEngineCompFactory().CreateItem(GetLevelId()).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
 
 
@@ -389,7 +392,9 @@ class ServerItemUseOnEvent(ServerEvent):
     @classmethod
     def ListenWithUserData(cls, priority=0):
         # print("[TDEvent] Listen with user data: " + cls.name)
-        ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
+        from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
+
+        GetEngineCompFactory().CreateItem(GetLevelId()).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
 
 
@@ -508,7 +513,9 @@ class ItemDurabilityChangedServerEvent(ServerEvent):
     @classmethod
     def ListenWithUserData(cls, priority=0):
         # print("[TDEvent] Listen with user data: " + cls.name)
-        ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
+        from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
+
+        GetEngineCompFactory().CreateItem(GetLevelId()).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
 
 
@@ -547,7 +554,9 @@ class ServerItemTryUseEvent(ServerEvent):
     @classmethod
     def ListenWithUserData(cls, priority=0):
         # print("[TDEvent] Listen with user data: " + cls.name)
-        ServerComp.CreateItem(ServerLevelId).GetUserDataInEvent(cls.name)
+        from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
+
+        GetEngineCompFactory().CreateItem(GetLevelId()).GetUserDataInEvent(cls.name)
         return cls.Listen(priority)
 
     def cancel(self):

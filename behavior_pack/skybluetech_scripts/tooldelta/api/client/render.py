@@ -1,13 +1,16 @@
 # coding=utf-8
 
-from ...internal import ClientComp, GetClient, ClientLevelId
-from ..internal.cacher import MethodCacher, AttrCacher
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+from ...internal import GetClient
+from ..common.cacher import MethodCacher, AttrCacher
+
+CF = GetEngineCompFactory()
 
 _copyActorTextureFromPlayer = MethodCacher(
-    lambda: ClientComp.CreateActorRender(ClientLevelId).CopyActorTextureFromPlayer
+    lambda: CF.CreateActorRender(GetLevelId()).CopyActorTextureFromPlayer
 )
 _setRenderLocalPlayer = MethodCacher(
-    lambda: ClientComp.CreateActorRender(ClientLevelId).SetNotRenderAtAll
+    lambda: CF.CreateActorRender(GetLevelId()).SetNotRenderAtAll
 )
 
 
@@ -27,7 +30,7 @@ def SetRenderLocalPlayer(enable):
 
 def SetNotRenderAtAll(entity_id, not_render):
     # type: (str, bool) -> bool
-    return ClientComp.CreateActorRender(entity_id).SetNotRenderAtAll(not_render)
+    return CF.CreateActorRender(entity_id).SetNotRenderAtAll(not_render)
 
 
 def PlayParticleAt(particle_path, pos):
@@ -35,54 +38,52 @@ def PlayParticleAt(particle_path, pos):
     par_id = GetClient().CreateEngineParticle(particle_path, pos)
     if par_id is None:
         raise ValueError("Particle path not found: " + particle_path)
-    return ClientComp.CreateParticleControl(par_id).Play()
+    return CF.CreateParticleControl(par_id).Play()
 
 
 def PlayParticleOn(particle_name, entity_id):
     # type: (str, str) -> bool
-    comp = ClientComp.CreateParticleSystem(None)
+    comp = CF.CreateParticleSystem(None)
     par_id = comp.Create(particle_name)
     return comp.BindEntity(par_id, entity_id)
 
 
 def AddActorBlockGeometry(entity_id, geo_id, offset=(0, 0, 0), rotation=(0, 0, 0)):
     # type: (str, str, tuple[float, float, float], tuple[float, float, float]) -> bool
-    return ClientComp.CreateActorRender(entity_id).AddActorBlockGeometry(
+    return CF.CreateActorRender(entity_id).AddActorBlockGeometry(
         geo_id, offset, rotation
     )
 
 
 def DeleteActorBlockGeometry(entity_id, geo_id):
     # type: (str, str) -> bool
-    return ClientComp.CreateActorRender(entity_id).DeleteActorBlockGeometry(geo_id)
+    return CF.CreateActorRender(entity_id).DeleteActorBlockGeometry(geo_id)
 
 
 def SetActorBlockGeometryScale(entity_id, geo_id, scale):
     # type: (str, str, tuple[float, float, float]) -> bool
-    return ClientComp.CreateActorRender(entity_id).SetActorBlockGeometryScale(
-        geo_id, scale
-    )
+    return CF.CreateActorRender(entity_id).SetActorBlockGeometryScale(geo_id, scale)
 
 
 def RebuildRenderForOneActor(entity_id):
     # type: (str) -> bool
-    return ClientComp.CreateActorRender(entity_id).RebuildRenderForOneActor()
+    return CF.CreateActorRender(entity_id).RebuildRenderForOneActor()
 
 
 def SetEntityOpacity(entity_id, opacity):
     # type: (str, float) -> None
-    ClientComp.CreateModel(entity_id).SetEntityOpacity(opacity)
+    CF.CreateModel(entity_id).SetEntityOpacity(opacity)
 
 
 def SetEntityShadowShow(entity_id, show):
     # type: (str, bool) -> None
-    ClientComp.CreateModel(entity_id).SetEntityShadowShow(show)
+    CF.CreateModel(entity_id).SetEntityShadowShow(show)
 
 
 AddTextureToOneActor = MethodCacher(
-    lambda: ClientComp.CreateActorRender(ClientLevelId).AddTextureToOneActor
+    lambda: CF.CreateActorRender(GetLevelId()).AddTextureToOneActor
 )
-CreateShapeFactory = AttrCacher(lambda: ClientComp.CreateDrawing(ClientLevelId))
+CreateShapeFactory = AttrCacher(lambda: CF.CreateDrawing(GetLevelId()))
 
 
 __all__ = [

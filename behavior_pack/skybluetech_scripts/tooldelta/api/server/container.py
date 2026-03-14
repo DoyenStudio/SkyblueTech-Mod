@@ -1,13 +1,18 @@
 # coding=utf-8
-#
-from ...internal import ServerComp, ServerLevelId
+from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
 from ...define.item import Item
+from ..common.cacher import MethodCacher
 
-# 缓存方法
-_getContainerItem = ServerComp.CreateItem(ServerLevelId).GetContainerItem
-_spawnItemToContainer = ServerComp.CreateItem(ServerLevelId).SpawnItemToContainer
-_getContainerSize = ServerComp.CreateItem(ServerLevelId).GetContainerSize
-_setChestBoxItemNum = ServerComp.CreateChestBlock(ServerLevelId).SetChestBoxItemNum
+CF = GetEngineCompFactory()
+
+_getContainerItem = MethodCacher(lambda: CF.CreateItem(GetLevelId()).GetContainerItem)
+_spawnItemToContainer = MethodCacher(
+    lambda: CF.CreateItem(GetLevelId()).SpawnItemToContainer
+)
+_getContainerSize = MethodCacher(lambda: CF.CreateItem(GetLevelId()).GetContainerSize)
+_setChestBoxItemNum = MethodCacher(
+    lambda: CF.CreateChestBlock(GetLevelId()).SetChestBoxItemNum
+)
 
 
 def GetContainerItem(dim, pos, slotPos, getUserData=False):

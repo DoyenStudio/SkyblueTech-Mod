@@ -1,22 +1,22 @@
 # coding=utf-8
-import mod.client.extraClientApi as clientApi
-from ...internal import ClientComp, ClientLevelId, GetClient
-from ..internal.cacher import MethodCacher
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId, GetMinecraftEnum
+
+CF = GetEngineCompFactory()
 
 
 def GetControlMode():
-    return ClientComp.CreatePlayerView(ClientLevelId).GetToggleOption(
-        clientApi.GetMinecraftEnum().OptionId.INPUT_MODE
+    return CF.CreatePlayerView(GetLevelId()).GetToggleOption(
+        GetMinecraftEnum().OptionId.INPUT_MODE
     )
 
 
 def GetControlModeEnum():
-    return clientApi.GetMinecraftEnum().InputMode
+    return GetMinecraftEnum().InputMode
 
 
 def SetCanMove(enable):
     # type: (bool) -> None
-    clientApi.GetEngineCompFactory().CreateOperation(ClientLevelId).SetCanMove(enable)
+    GetEngineCompFactory().CreateOperation(GetLevelId()).SetCanMove(enable)
 
 
 __all__ = ["GetControlMode", "GetControlModeEnum", "SetCanMove"]

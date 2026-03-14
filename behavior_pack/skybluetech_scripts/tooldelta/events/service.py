@@ -1,8 +1,7 @@
 # coding=utf-8
 from collections import deque
 from .basic import ClientEvent, ServerEvent
-from .client_event_listener import dynListen as cDynListen, dynUnListen as cDynUnListen
-from .server_event_listener import dynListen as sDynListen, dynUnListen as sDynUnListen
+
 
 if 0:
     from typing import Callable, TypeVar
@@ -63,6 +62,8 @@ class ClientListenerService:
         return wrapper
 
     def enable_listeners(self):
+        from .client_event_listener import dynListen as cDynListen
+
         self._listen_service_enabled = True
         self._process_all_delayed_events()
         for event, event_cb, priority in self._bind_listen_events:
@@ -70,17 +71,23 @@ class ClientListenerService:
                 cDynListen(event, event_cb, priority)
 
     def disable_listeners(self):
+        from .client_event_listener import dynUnListen as cDynUnListen
+
         self._listen_service_enabled = False
         for event, event_cb, priority in self._bind_listen_events:
             if issubclass(event, ClientEvent):
                 cDynUnListen(event, event_cb, priority)
 
     def _enable_delayed_listeners(self):
+        from .client_event_listener import dynListen as cDynListen
+
         for event in self._bind_delayed_listen_events:
             if issubclass(event, ClientEvent):
                 cDynListen(event, self._process_delayed_event)
 
     def _disable_delayed_listeners(self):
+        from .client_event_listener import dynUnListen as cDynUnListen
+
         for event in self._bind_delayed_listen_events:
             if issubclass(event, ClientEvent):
                 cDynUnListen(event, self._process_delayed_event)
@@ -120,11 +127,15 @@ class ServerListenerService:
         self._process_bind_listeners()
 
     def enable_listeners(self):
+        from .server_event_listener import dynListen as sDynListen
+
         for event, event_cb, priority in self._bind_listen_events:
             if issubclass(event, ServerEvent):
                 sDynListen(event, event_cb, priority)
 
     def disable_listeners(self):
+        from .server_event_listener import dynUnListen as sDynUnListen
+
         for event, event_cb, priority in self._bind_listen_events:
             if issubclass(event, ServerEvent):
                 sDynUnListen(event, event_cb, priority)

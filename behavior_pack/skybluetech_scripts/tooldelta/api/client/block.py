@@ -1,16 +1,16 @@
 # coding=utf-8
 from mod.common.component.blockPaletteComp import BlockPaletteComponent
-from mod.client import extraClientApi as clientApi
-from ...internal import ClientComp, ClientLevelId
-from ..internal.cacher import MethodCacher
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+from ..common.cacher import MethodCacher
 
+CF = GetEngineCompFactory()
 
-_getBlock = MethodCacher(lambda: ClientComp.CreateBlockInfo(ClientLevelId).GetBlock)
+_getBlock = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).GetBlock)
 _getBlockEntityData = MethodCacher(
-    lambda: ClientComp.CreateBlockInfo(ClientLevelId).GetBlockEntityData
+    lambda: CF.CreateBlockInfo(GetLevelId()).GetBlockEntityData
 )
 _getBlockTextures = MethodCacher(
-    lambda: ClientComp.CreateBlockInfo(ClientLevelId).GetBlockTextures
+    lambda: CF.CreateBlockInfo(GetLevelId()).GetBlockTextures
 )
 
 
@@ -56,35 +56,31 @@ def NewSingleBlockPalette(block_id, aux=0):
 
 def CombineBlockPaletteToGeometry(palette, geo_name):
     # type: (BlockPaletteComponent, str) -> str
-    blockGeometryComp = clientApi.GetEngineCompFactory().CreateBlockGeometry(
-        ClientLevelId
-    )
+    blockGeometryComp = GetEngineCompFactory().CreateBlockGeometry(GetLevelId())
     return blockGeometryComp.CombineBlockPaletteToGeometry(palette, geo_name)
 
 
 def AddBlockUseListener(block_ids):
     # type: (set[str]) -> None
-    comp = ClientComp.CreateBlockUseEventWhiteList(ClientLevelId)
+    comp = CF.CreateBlockUseEventWhiteList(GetLevelId())
     for block_id in block_ids:
         comp.AddBlockItemListenForUseEvent(block_id)
 
 
 GetBlockTextures = _getBlockTextures
 GetBlankBlockPalette = MethodCacher(
-    lambda: ClientComp.CreateBlock(ClientLevelId).GetBlankBlockPalette
+    lambda: CF.CreateBlock(GetLevelId()).GetBlankBlockPalette
 )
 GetBlockPaletteFromPosList = MethodCacher(
-    lambda: ClientComp.CreateBlock(ClientLevelId).GetBlockPaletteFromPosList
+    lambda: CF.CreateBlock(GetLevelId()).GetBlockPaletteFromPosList
 )
 GetBlockPaletteBetweenPos = MethodCacher(
-    lambda: ClientComp.CreateBlock(ClientLevelId).GetBlockPaletteBetweenPos
+    lambda: CF.CreateBlock(GetLevelId()).GetBlockPaletteBetweenPos
 )
 SetBlockEntityMolangValue = MethodCacher(
-    lambda: ClientComp.CreateBlockInfo(ClientLevelId).SetBlockEntityMolangValue
+    lambda: CF.CreateBlockInfo(GetLevelId()).SetBlockEntityMolangValue
 )
-SetCrackFrame = MethodCacher(
-    lambda: ClientComp.CreateBlockInfo(ClientLevelId).SetCrackFrame
-)
+SetCrackFrame = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).SetCrackFrame)
 
 __all__ = [
     "GetBlankBlockPalette",

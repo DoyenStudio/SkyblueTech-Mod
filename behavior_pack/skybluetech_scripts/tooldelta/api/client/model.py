@@ -1,14 +1,13 @@
 # coding=utf-8
-from mod.client.extraClientApi import GetEngineCompFactory
-from ...internal import ClientComp, ClientLevelId, inClientEnv
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+
+CF = GetEngineCompFactory()
 
 
 class FreeModel(object):
     def __init__(self, model_name):
         # type: (str) -> None
-        if not inClientEnv():
-            raise RuntimeError("Not in client")
-        self.model_comp = GetEngineCompFactory().CreateModel(ClientLevelId)
+        self.model_comp = GetEngineCompFactory().CreateModel(GetLevelId())
         self.model_id = self.model_comp.CreateFreeModel(model_name)
         if self.model_id == 0:
             print("[ERROR] model invalid: " + model_name)
@@ -32,5 +31,3 @@ class FreeModel(object):
 def CreateFreeModel(model_name):
     # type: (str) -> FreeModel
     return FreeModel(model_name)
-
-

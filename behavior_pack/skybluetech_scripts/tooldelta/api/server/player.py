@@ -1,39 +1,38 @@
 # coding=utf-8
 #
-from mod.server import extraServerApi as serverApi
-from ... import ServerComp
+from mod.server.extraServerApi import (
+    GetEngineCompFactory,
+    GetMinecraftEnum,
+    GetPlayerList,
+)
 from ...define.item import Item
 
-mcEnum = serverApi.GetMinecraftEnum()
+CF = GetEngineCompFactory()
 
 
 def GetNameById(player_id):
     # type: (str) -> str
-    return ServerComp.CreateName(player_id).GetName()
+    return CF.CreateName(player_id).GetName()
 
 
 def GetPlayerDimensionId(player_id):
     # type: (str) -> int
-    return ServerComp.CreateDimension(player_id).GetEntityDimensionId()
+    return CF.CreateDimension(player_id).GetEntityDimensionId()
 
 
 def SpawnItemToPlayerCarried(player_id, item):
     # type: (str, Item) -> bool
-    return ServerComp.CreateItem(player_id).SpawnItemToPlayerCarried(
-        item.marshal(), player_id
-    )
+    return CF.CreateItem(player_id).SpawnItemToPlayerCarried(item.marshal(), player_id)
 
 
 def GiveItem(player_id, item):
     # type: (str, Item) -> bool
-    return ServerComp.CreateItem(player_id).SpawnItemToPlayerInv(
-        item.marshal(), player_id
-    )
+    return CF.CreateItem(player_id).SpawnItemToPlayerInv(item.marshal(), player_id)
 
 
 def GetAllPlayers():
     # type: () -> list[str]
-    return serverApi.GetPlayerList()
+    return GetPlayerList()
 
 
 def GetPlayersInDim(dim):
@@ -47,8 +46,8 @@ def GetPlayersInDim(dim):
 
 def GetPlayerMainhandItem(player_id):
     # type: (str) -> Item | None
-    it = ServerComp.CreateItem(player_id).GetPlayerItem(
-        mcEnum.ItemPosType.CARRIED, 0, True
+    it = CF.CreateItem(player_id).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED, 0, True
     )
     if it is None:
         return None
@@ -57,34 +56,32 @@ def GetPlayerMainhandItem(player_id):
 
 def GetSelectedSlot(player_id):
     # type: (str) -> int
-    return ServerComp.CreateItem(player_id).GetSelectSlotId()
+    return CF.CreateItem(player_id).GetSelectSlotId()
 
 
 def SetInventorySlotItemCount(player_id, slot_id, count):
     # type: (str, int, int) -> bool
-    return ServerComp.CreateItem(player_id).SetInvItemNum(slot_id, count)
+    return CF.CreateItem(player_id).SetInvItemNum(slot_id, count)
 
 
 def IsOP(player_id):
     # type: (str) -> bool
-    return ServerComp.CreatePlayer(player_id).GetPlayerAbilities().get("op", False)
+    return CF.CreatePlayer(player_id).GetPlayerAbilities().get("op", False)
 
 
 def IsSneaking(player_id):
     # type: (str) -> bool
-    return ServerComp.CreatePlayer(player_id).isSneaking()
+    return CF.CreatePlayer(player_id).isSneaking()
 
 
 def PlayerUseItemToPos(player_id, pos, pos_type, slot=0, facing=1):
     # type: (str, tuple[int, int, int], int, int, int) -> bool
-    return ServerComp.CreateBlockInfo(player_id).PlayerUseItemToPos(
-        pos, pos_type, slot, facing
-    )
+    return CF.CreateBlockInfo(player_id).PlayerUseItemToPos(pos, pos_type, slot, facing)
 
 
 def GetPlayerItem(player_id, pos_type, slot, get_userdata=False):
     # type: (str, int, int, bool) -> Item | None
-    res = ServerComp.CreateItem(player_id).GetPlayerItem(pos_type, slot, get_userdata)
+    res = CF.CreateItem(player_id).GetPlayerItem(pos_type, slot, get_userdata)
     return Item.from_dict(res) if res is not None else None
 
 

@@ -1,38 +1,34 @@
 # coding=utf-8
-#
-from mod.client import extraClientApi as clientApi
-from ...define.item import Item
-from ... import ClientComp
-from ...internal import inClientEnv
+from mod.client.extraClientApi import (
+    GetEngineCompFactory,
+    GetPlayerList,
+    GetLocalPlayerId,
+    GetMinecraftEnum,
+)
+from ...define import Item
 
-mcEnum = clientApi.GetMinecraftEnum()
+CF = GetEngineCompFactory()
 
 
 def GetNameById(player_id):
     # type: (str) -> str
-    return ClientComp.CreateName(player_id).GetName()
+    return CF.CreateName(player_id).GetName()
 
 
 def GetPlayerDimensionId():
     # type: () -> int
-    return ClientComp.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
+    return CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
 
 
 def GetAllPlayers():
     # type: () -> list[str]
-    return clientApi.GetPlayerList()
-
-
-def GetLocalPlayerId():
-    if not inClientEnv():
-        raise Exception("Not in client env")
-    return clientApi.GetLocalPlayerId()
+    return GetPlayerList()
 
 
 def GetPlayerMainhandItem(player_id):
     # type: (str) -> Item | None
-    it = ClientComp.CreateItem(player_id).GetPlayerItem(
-        mcEnum.ItemPosType.CARRIED, 0, True
+    it = CF.CreateItem(player_id).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED, 0, True
     )
     if it is None:
         return None
@@ -41,8 +37,8 @@ def GetPlayerMainhandItem(player_id):
 
 def GetLocalPlayerMainhandItem():
     # type: () -> Item | None
-    it = ClientComp.CreateItem(GetLocalPlayerId()).GetPlayerItem(
-        mcEnum.ItemPosType.CARRIED, 0, True
+    it = CF.CreateItem(GetLocalPlayerId()).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED, 0, True
     )
     if it is None:
         return None
@@ -52,8 +48,8 @@ def GetLocalPlayerMainhandItem():
 def GetLocalPlayerHotbarAndInvItems(get_user_data=False):
     return [
         (Item.from_dict(it) if it is not None else None)
-        for it in ClientComp.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
-            mcEnum.ItemPosType.INVENTORY, get_user_data
+        for it in CF.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
+            GetMinecraftEnum().ItemPosType.INVENTORY, get_user_data
         )
     ]
 

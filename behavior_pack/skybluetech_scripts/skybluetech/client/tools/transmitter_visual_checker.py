@@ -1,5 +1,6 @@
 # coding=utf-8
 from random import random
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
 from skybluetech_scripts.tooldelta.api.client import (
     GetLocalPlayerMainhandItem,
     GetLocalPlayerId,
@@ -8,7 +9,6 @@ from skybluetech_scripts.tooldelta.api.client import (
 from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
-from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 from ...common.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckRequest,
@@ -16,6 +16,7 @@ from ...common.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckMultiResponse,
 )
 
+CF = GetEngineCompFactory()
 RATE_LIMIT = 0.5
 
 
@@ -90,7 +91,7 @@ def displayModel(event):
     # type: (TransmitterVisualCheckerCheckResponse) -> None
     clean()
     shapes = []
-    draw_comp = ClientComp.CreateDrawing(ClientLevelId)
+    draw_comp = CF.CreateDrawing(GetLevelId())
     nodes = set(event.nodes)
     all_nodes = nodes | set(event.inputs + event.outputs)
     for nx, ny, nz in nodes:
@@ -159,7 +160,7 @@ def displayMultiModel(event):
     # type: (TransmitterVisualCheckerCheckMultiResponse) -> None
     clean()
     shapes = []
-    draw_comp = ClientComp.CreateDrawing(ClientLevelId)
+    draw_comp = CF.CreateDrawing(GetLevelId())
     _DXYZ_FACING = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
     for inputs, outputs, nodes, network_type in event.reses:
         box_color = (random(), random(), random())

@@ -1,25 +1,35 @@
 # coding=utf-8
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+from ..common.cacher import MethodCacher
 
-from ...internal import ClientComp, ClientLevelId
-from ..internal.cacher import MethodCacher
+CF = GetEngineCompFactory()
 
+_getRecipesByInput = MethodCacher(
+    lambda: CF.CreateRecipe(GetLevelId()).GetRecipesByInput
+)
+_getRecipesByResult = MethodCacher(
+    lambda: CF.CreateRecipe(GetLevelId()).GetRecipesByResult
+)
 
-_getRecipesByInput = MethodCacher(lambda:ClientComp.CreateRecipe(ClientLevelId).GetRecipesByInput)
-_getRecipesByResult = MethodCacher(lambda:ClientComp.CreateRecipe(ClientLevelId).GetRecipesByResult)
 
 def GetRecipesByInput(item_id, recipe_tag, aux_value=0, maxResultNum=-1):
     # type: (str, str, int, int) -> list[dict]
     return _getRecipesByInput(item_id, recipe_tag, aux_value, maxResultNum)
 
+
 def GetRecipesByResult(item_id, recipe_tag, aux_value=0, maxResultNum=-1):
     # type: (str, str, int, int) -> list[dict]
     return _getRecipesByResult(item_id, recipe_tag, aux_value, maxResultNum)
 
+
 def SetQueryMolang(entity_id, var_name, value):
     # type: (str, str, float) -> bool
-    return ClientComp.CreateQueryVariable(entity_id).Set(var_name, value)
+    return CF.CreateQueryVariable(entity_id).Set(var_name, value)
 
-RegisterQueryMolang = MethodCacher(lambda:ClientComp.CreateQueryVariable(ClientLevelId).Register)
+
+RegisterQueryMolang = MethodCacher(
+    lambda: CF.CreateQueryVariable(GetLevelId()).Register
+)
 
 
 __all__ = [

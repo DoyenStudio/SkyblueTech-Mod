@@ -1,14 +1,14 @@
 # coding=utf-8
+from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
+from ..common.cacher import MethodCacher
 
-from ...internal import ServerComp, ServerLevelId
-from ..internal.cacher import MethodCacher
-
+CF = GetEngineCompFactory()
 
 _getRecipesByInput = MethodCacher(
-    lambda: ServerComp.CreateRecipe(ServerLevelId).GetRecipesByInput
+    lambda: CF.CreateRecipe(GetLevelId()).GetRecipesByInput
 )
 _getRecipesByResult = MethodCacher(
-    lambda: ServerComp.CreateRecipe(ServerLevelId).GetRecipesByResult
+    lambda: CF.CreateRecipe(GetLevelId()).GetRecipesByResult
 )
 
 
@@ -22,12 +22,12 @@ def GetRecipesByResult(item_id, recipe_tag, aux_value=0, maxResultNum=-1):
     return _getRecipesByResult(item_id, recipe_tag, aux_value, maxResultNum)
 
 
-GetLocalTime = ServerComp.CreateDimension(ServerLevelId).GetLocalTime
-IsRaining = ServerComp.CreateWeather(ServerLevelId).IsRaining
+GetLocalTime = CF.CreateDimension(GetLevelId()).GetLocalTime
+IsRaining = CF.CreateWeather(GetLevelId()).IsRaining
 GetRecipeByRecipeId = MethodCacher(
-    lambda: ServerComp.CreateRecipe(ServerLevelId).GetRecipeByRecipeId
+    lambda: CF.CreateRecipe(GetLevelId()).GetRecipeByRecipeId
 )
-GetSeed = MethodCacher(lambda: ServerComp.CreateGame(ServerLevelId).GetSeed)
+GetSeed = MethodCacher(lambda: CF.CreateGame(GetLevelId()).GetSeed)
 
 
 __all__ = [

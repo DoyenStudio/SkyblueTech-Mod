@@ -1,48 +1,36 @@
 # coding=utf-8
 
 from mod.common.component.blockPaletteComp import BlockPaletteComponent
+from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
 from ...define.block import BlockBasicInfo
-from ...internal import ServerComp, ServerLevelId
-from ..internal.cacher import MethodCacher
+from ..common.cacher import MethodCacher
+
+CF = GetEngineCompFactory()
 
 if 0:
     from mod.server.blockEntityData import BlockEntityData
 
-_getBlockNew = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockNew
-)
+_getBlockNew = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).GetBlockNew)
 _getBlockEntityData = MethodCacher(
-    lambda: ServerComp.CreateBlockEntityData(ServerLevelId).GetBlockEntityData
+    lambda: CF.CreateBlockEntityData(GetLevelId()).GetBlockEntityData
 )
 _getBlockEntityDict = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockEntityData
+    lambda: CF.CreateBlockInfo(GetLevelId()).GetBlockEntityData
 )
-_getBlockTags = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockTags
-)
-_getBlockStates = MethodCacher(
-    lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockStates
-)
+_getBlockTags = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).GetBlockTags)
+_getBlockStates = MethodCacher(lambda: CF.CreateBlockState(GetLevelId()).GetBlockStates)
 _getBlockBasicInfo = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetBlockBasicInfo
+    lambda: CF.CreateBlockInfo(GetLevelId()).GetBlockBasicInfo
 )
-_getLiquidBlock = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetLiquidBlock
-)
+_getLiquidBlock = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).GetLiquidBlock)
 _listenOnBlockRemoveEvent = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).ListenOnBlockRemoveEvent
+    lambda: CF.CreateBlockInfo(GetLevelId()).ListenOnBlockRemoveEvent
 )
-_setBlockStates = MethodCacher(
-    lambda: ServerComp.CreateBlockState(ServerLevelId).SetBlockStates
-)
-_setBlockNew = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetBlockNew
-)
-_setLiquidBlock = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetLiquidBlock
-)
+_setBlockStates = MethodCacher(lambda: CF.CreateBlockState(GetLevelId()).SetBlockStates)
+_setBlockNew = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).SetBlockNew)
+_setLiquidBlock = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).SetLiquidBlock)
 _setBlockEntityData = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).SetBlockEntityData
+    lambda: CF.CreateBlockInfo(GetLevelId()).SetBlockEntityData
 )
 
 
@@ -187,7 +175,7 @@ def GetActualFacingByDirection(direction, origin_facing):
 
 def NewSingleBlockPalette(block_id):
     # type: (str) -> BlockPaletteComponent
-    newBlockPalette = ServerComp.CreateBlock(ServerLevelId).GetBlankBlockPalette()
+    newBlockPalette = CF.CreateBlock(GetLevelId()).GetBlankBlockPalette()
     newBlockPalette.DeserializeBlockPalette({
         "extra": {},
         "void": False,
@@ -200,21 +188,21 @@ def NewSingleBlockPalette(block_id):
 
 
 GetBlockPaletteFromPosList = MethodCacher(
-    lambda: ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteFromPosList
+    lambda: CF.CreateBlock(GetLevelId()).GetBlockPaletteFromPosList
 )
 GetBlockPaletteBetweenPos = MethodCacher(
-    lambda: ServerComp.CreateBlock(ServerLevelId).GetBlockPaletteBetweenPos
+    lambda: CF.CreateBlock(GetLevelId()).GetBlockPaletteBetweenPos
 )
 GetTopBlockHeight = MethodCacher(
-    lambda: ServerComp.CreateBlockInfo(ServerLevelId).GetTopBlockHeight
+    lambda: CF.CreateBlockInfo(GetLevelId()).GetTopBlockHeight
 )
 GetBlockAuxValueFromStates = MethodCacher(
-    lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockAuxValueFromStates
+    lambda: CF.CreateBlockState(GetLevelId()).GetBlockAuxValueFromStates
 )
 GetBlockStatesFromAuxValue = MethodCacher(
-    lambda: ServerComp.CreateBlockState(ServerLevelId).GetBlockStatesFromAuxValue
+    lambda: CF.CreateBlockState(GetLevelId()).GetBlockStatesFromAuxValue
 )
-MayPlace = MethodCacher(lambda: ServerComp.CreateBlockInfo(ServerLevelId).MayPlace)
+MayPlace = MethodCacher(lambda: CF.CreateBlockInfo(GetLevelId()).MayPlace)
 
 
 __all__ = [

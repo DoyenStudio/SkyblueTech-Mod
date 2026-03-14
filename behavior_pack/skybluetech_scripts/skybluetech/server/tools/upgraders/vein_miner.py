@@ -1,8 +1,8 @@
 # coding=utf-8
 from collections import deque
+from mod.server.extraServerApi import GetEngineCompFactory
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import ServerPlayerTryDestroyBlockEvent
-from skybluetech_scripts.tooldelta.internal import ServerComp
 from skybluetech_scripts.tooldelta.api.server import GetBlockName
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from ....common.define.id_enum import ObjectUpgraders
@@ -11,6 +11,7 @@ from .register import RegisterBlockDestroyCallback
 from .utils import GetUpgraderLevel
 
 
+CF = GetEngineCompFactory()
 veining = set()  # type: set[tuple[int, int, int, int]]
 
 
@@ -57,7 +58,7 @@ def onVeinMine(event, item, item_ud, upgrader_ud):
     )
     if not blocks:
         return
-    digfunc = ServerComp.CreateBlockInfo(event.playerId).PlayerDestoryBlock
+    digfunc = CF.CreateBlockInfo(event.playerId).PlayerDestoryBlock
     veining |= set(blocks)
     delayBreakBlock(event.playerId, blocks, event.fullName, digfunc)
     # last_idx = len(blocks) - 1

@@ -1,11 +1,12 @@
 # coding=utf-8
+from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
 
-from ...internal import ServerLevelId, ServerComp
+CF = GetEngineCompFactory()
 
 
 def SetCommand(command, entity_id=None):
     # type: (str, str | None) -> None
-    ServerComp.CreateCommand(ServerLevelId).SetCommand(command, entity_id)
+    CF.CreateCommand(GetLevelId()).SetCommand(command, entity_id)
 
 
 __all__ = ["SetCommand"]

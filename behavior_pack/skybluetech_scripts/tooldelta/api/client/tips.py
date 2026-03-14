@@ -1,9 +1,9 @@
-from ...internal import ClientComp, ClientLevelId
-from ..internal.cacher import MethodCacher
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+from ..common.cacher import MethodCacher
 
-_setOnePopupNotice = MethodCacher(
-    lambda: ClientComp.CreateGame(ClientLevelId).SetPopupNotice
-)
+CF = GetEngineCompFactory()
+
+_setOnePopupNotice = MethodCacher(lambda: CF.CreateGame(GetLevelId()).SetPopupNotice)
 
 
 def SetPopupNotice(message, subtitle="§6提示§f"):

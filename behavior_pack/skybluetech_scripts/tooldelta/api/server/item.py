@@ -1,14 +1,17 @@
 # coding=utf-8
 #
+from mod.server.extraServerApi import GetEngineCompFactory, GetLevelId
 from ...define import itemBasicInfoPool, BasicItemInfo, Item
-from ...internal import ServerComp, ServerLevelId
+from ..common.cacher import MethodCacher
 
 if 0:
     from typing import Callable
 
-_lookupItemByName = ServerComp.CreateGame(ServerLevelId).LookupItemByName
-_setItemTierSpeed = ServerComp.CreateItem(ServerLevelId).SetItemTierSpeed
-_setAttackDamage = ServerComp.CreateItem(ServerLevelId).SetAttackDamage
+CF = GetEngineCompFactory()
+
+_lookupItemByName = MethodCacher(lambda: CF.CreateGame(GetLevelId()).LookupItemByName)
+_setItemTierSpeed = MethodCacher(lambda: CF.CreateItem(GetLevelId()).SetItemTierSpeed)
+_setAttackDamage = MethodCacher(lambda: CF.CreateItem(GetLevelId()).SetAttackDamage)
 
 ItemExists = _lookupItemByName
 
@@ -19,7 +22,7 @@ def GetItemBasicInfo(itemName):
     if basic_info is not None:
         return basic_info
     basic_info = BasicItemInfo().unmarshal(
-        ServerComp.CreateItem(ServerLevelId).GetItemBasicInfo(itemName)
+        CF.CreateItem(GetLevelId()).GetItemBasicInfo(itemName)
     )
     itemBasicInfoPool[itemName] = basic_info
     return basic_info
@@ -33,7 +36,7 @@ def GetItemTags(item_id, aux_value=0):
     basic_info = item_tags_pool.get(item_id)
     if basic_info is not None:
         return basic_info
-    tags = set(ServerComp.CreateItem(ServerLevelId).GetItemTags(item_id, aux_value))
+    tags = set(CF.CreateItem(GetLevelId()).GetItemTags(item_id, aux_value))
     item_tags_pool[item_id] = tags
     return tags
 
@@ -61,22 +64,21 @@ def SetAttackDamage(item, damage):
 
 
 def GetPlayerUIItem(player_id, slot, get_user_data=False, is_netease_ui=False):
-    # type: (str, int, bool, bool) -> Item
-    return Item.from_dict(
-        ServerComp.CreateItem(ServerLevelId).GetPlayerUIItem(
-            player_id, slot, get_user_data, is_netease_ui
-        )
+    # type: (str, int, bool, bool) -> Item | None
+    res = CF.CreateItem(GetLevelId()).GetPlayerUIItem(
+        player_id, slot, get_user_data, is_netease_ui
     )
+    return Item.from_dict(res) if res is not None else None
 
 
 def SpawnItemToPlayerInv(player_id, item):
     # type: (str, Item) -> None
-    ServerComp.CreateItem(ServerLevelId).SpawnItemToPlayerInv(item.marshal(), player_id)
+    CF.CreateItem(GetLevelId()).SpawnItemToPlayerInv(item.marshal(), player_id)
 
 
 def SetPlayerUIItem(player_id, slot, item, need_back=False, is_netease_ui=False):
     # type: (str, int, Item, bool, bool) -> None
-    ServerComp.CreateItem(ServerLevelId).SetPlayerUIItem(
+    CF.CreateItem(GetLevelId()).SetPlayerUIItem(
         player_id, slot, item.marshal(), need_back, is_netease_ui
     )
 

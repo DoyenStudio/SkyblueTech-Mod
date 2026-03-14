@@ -1,7 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from skybluetech_scripts.tooldelta.internal import ClientComp, ClientLevelId
+from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.events.client.block import (
     ModBlockEntityLoadedClientEvent,
@@ -19,6 +19,7 @@ if 0:
     from mod.client.component.drawingShapeCompClient import DrawingShapeCompClient
 # TYPE_CHECKING END
 
+CF = GetEngineCompFactory()
 INFINITY = float("inf")
 
 
@@ -31,7 +32,7 @@ def addText(dim, pos, default_text=""):
     tx = x + 0.5
     ty = y + 1.1
     tz = z + 0.5
-    t = ClientComp.CreateDrawing(ClientLevelId).AddTextShape((tx, ty, tz), default_text)
+    t = CF.CreateDrawing(GetLevelId()).AddTextShape((tx, ty, tz), default_text)
     texts[(dim, pos)] = t
 
 

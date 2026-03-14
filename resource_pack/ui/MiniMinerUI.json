@@ -1,0 +1,220 @@
+{
+    "container_slots@netease_container.netease_custom_container_grid": {
+        "grid_dimensions": [
+            8,
+            1
+        ],
+        "layer": 1,
+        "offset": [
+            "0%c+0px",
+            0
+        ],
+        "size": [
+            "100%c+0px",
+            "100%c+0px"
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "MiniMinerUI.mini_miner_ui"
+    },
+    "mini_miner_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 100,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "迷你采矿机",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "layer": 13,
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "container@MiniMinerUI.container_slots": {
+                                                        "anchor_from": "center",
+                                                        "anchor_to": "center",
+                                                        "offset": [
+                                                            9,
+                                                            -12
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "drill_img": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            54.0,
+                                                            -56.0
+                                                        ],
+                                                        "size": [
+                                                            50.0,
+                                                            44.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "alpha": 0.2,
+                                                        "texture": "textures/ui/miner_drill"
+                                                    }
+                                                },
+                                                {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_size": "small",
+                                                        "$text_visible": false,
+                                                        "offset": [
+                                                            54,
+                                                            -52.5
+                                                        ],
+                                                        "size": [
+                                                            52,
+                                                            51
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "panel_bg": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            -18.5,
+                                                            -52.5
+                                                        ],
+                                                        "size": [
+                                                            87,
+                                                            53
+                                                        ],
+                                                        "layer": 1,
+                                                        "nineslice_size": [
+                                                            1.0,
+                                                            1.0,
+                                                            1.0,
+                                                            1.0
+                                                        ],
+                                                        "texture": "textures/ui/bg_frame_slim",
+                                                        "controls": [
+                                                            {
+                                                                "info_label": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "size": [
+                                                                        "100%+-2px",
+                                                                        "100%+-2px"
+                                                                    ],
+                                                                    "color": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "§a正在挖掘： (0, 0, 0)\n\n进度： 0%%\n\n未知状态。"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "upgraders@SkybluePanelLib.UpgradeSlots": {
+                                                        "$slot0": 8,
+                                                        "$slot1": 9,
+                                                        "$slot2": 10,
+                                                        "$slot3": 11,
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            32,
+                                                            0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "namespace": "MiniMinerUI"
+}

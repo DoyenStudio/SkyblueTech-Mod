@@ -269,6 +269,9 @@
         "skybluetech:methane_mud": {
             "textures": "textures/fluid/methane_mud"
         },
+        "skybluetech:mini_miner": {
+            "textures": "textures/models/mini_miner_texture"
+        },
         "skybluetech:mixer_front": {
             "textures": "textures/machines/mixer_front"
         },

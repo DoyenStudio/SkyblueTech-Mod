@@ -430,6 +430,9 @@
         "blockshape": "water",
         "textures": "skybluetech:gray_lava_flow"
     },
+    "skybluetech:mini_miner": {
+        "sound": "iron"
+    },
     "skybluetech:mixer": {
         "sound": "iron"
     },

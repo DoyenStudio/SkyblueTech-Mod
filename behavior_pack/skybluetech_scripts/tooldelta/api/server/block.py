@@ -232,6 +232,7 @@ __all__ = [
     "GetBlockPaletteBetweenPos",
     "GetBlockCardinalFacing",
     "GetBlockName",
+    "GetBlockNameAndAux",
     "GetBlockStates",
     "BlockHasTag",
     "MayPlace",

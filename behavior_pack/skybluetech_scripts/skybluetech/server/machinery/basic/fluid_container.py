@@ -46,7 +46,7 @@ class FluidContainer(object):
 
     需要调用 `__init__()`
 
-    覆写: `OnTicking`, `OnTryActivate`, `Dump`
+    覆写: `OnTicking`, `OnTryActivate`
     """
 
     fluid_io_mode = (2, 2, 2, 2, 2, 2)  # type: tuple[int, int, int, int, int, int]

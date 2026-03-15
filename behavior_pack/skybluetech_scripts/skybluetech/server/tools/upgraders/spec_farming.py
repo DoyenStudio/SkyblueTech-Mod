@@ -53,7 +53,7 @@ def onHarvest(event, item_ud, upgrader_ud):
         charge -= POWER_COST
         for dim, x, y, z, block_id in crops_riped:
             SetBlock(dim, (x, y, z), block_id, aux_value=0, old_block_handing=1)
-        UpdateCharge(event.entityId, item, charge)
+        UpdateCharge(item, charge)
         SpawnItemToPlayerCarried(event.entityId, item)
 
 

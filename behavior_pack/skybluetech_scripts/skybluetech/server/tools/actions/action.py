@@ -100,7 +100,7 @@ def onItemDurabilityChanged(event):
     durability = mainhand_item.durability
     if durability is not None and event.canChange:
         event.ModifyDurability(durability)
-    UpdateCharge(mPlayerId, mainhand_item, cur_charge)
+    UpdateCharge(mainhand_item, cur_charge)
     SpawnItemToPlayerCarried(mPlayerId, mainhand_item)
 
 

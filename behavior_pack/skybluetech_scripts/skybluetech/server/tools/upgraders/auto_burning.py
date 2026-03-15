@@ -36,7 +36,7 @@ def onAutoBurn(event, use_tool, item_ud, upgrader_ud):
             (event.x + 0.5, event.y + 0.5, event.z + 0.5),
             Item(res, count=it.count),
         )
-    UpdateCharge(event.playerId, use_tool, charge)
+    UpdateCharge(use_tool, charge)
     SpawnItemToPlayerCarried(event.playerId, use_tool)
 
 

@@ -20,7 +20,12 @@ from ...common.events.machinery.charger import (
     ChargeItemModelRequest,
 )
 from ...common.ui_sync.machinery.charger import ChargerUISync
-from .utils.charge import GetCharge, UpdateCharge, K_STORE_RF, K_STORE_RF_MAX
+from .utils.charge import (
+    GetCharge,
+    ChargeItem,
+    UpdateCharge,
+    GetIOPower,
+)
 from ...common.machinery.utils.block_sync import BlockSync
 from .basic import GUIControl, UpgradeControl, RegisterMachine
 from .pool import GetMachineStrict
@@ -44,29 +49,23 @@ class Charger(GUIControl, UpgradeControl):
         self.stored_item = None
         self.charge_rf = 0
         self.charge_rf_max = 1
-        self.charge_speed = CHARGE_SPEED
         self.t = 0
         self.OnSync()
 
     def OnClick(self, evt):
-        # 被打开时才更新充能信息
-        self.updateCharge()
         GUIControl.OnClick(self, evt)
 
     def OnUnload(self):
         GUIControl.OnUnload(self)
         UpgradeControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
-        self.updateCharge()
 
     def OnTicking(self):
         if self.IsActive():
-            self.chargeOnce()
             self.t += 1
             if self.t >= 5:
                 self.t = 0
-                if self.sync.AnyoneInSync():
-                    self.updateCharge()
+                self.charge_once()
             self.OnSync()
 
     def OnSync(self):
@@ -79,9 +78,7 @@ class Charger(GUIControl, UpgradeControl):
         # type: (int, Item) -> bool
         if slot != 0:
             return False
-        if item.userData is None or (
-            K_STORE_RF not in item.userData or K_STORE_RF_MAX not in item.userData
-        ):
+        if item.userData is None or GetIOPower(item.userData, -1, -1) == (-1, -1):
             return False
         return True
 
@@ -113,7 +110,6 @@ class Charger(GUIControl, UpgradeControl):
                 print("[WARN] Charger: ud is None: " + charge_item.newItemName)
                 return
             self.charge_rf, self.charge_rf_max = GetCharge(ud)
-            self.updateCharge()
             self.ResetDeactiveFlags()
             NotifyToClients(
                 block_sync.get_players((self.dim, self.x, self.y, self.z)),
@@ -122,27 +118,21 @@ class Charger(GUIControl, UpgradeControl):
                 ),
             )
 
-    def updateCharge(self):
-        charge_item = self.GetSlotItem(0, get_user_data=True)
-        if charge_item is None or charge_item.userData is None:
-            # if charge_item is not None:
-            #     print ("Charge userdata=None", charge_item.userData is None)
-            return
-        UpdateCharge("", charge_item, self.charge_rf)
-        self.SetSlotItem(0, charge_item)
-
-    def chargeOnce(self):
+    def charge_once(self):
         if self.charge_rf_max == 0 or self.charge_rf_max == 1:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
             return
         elif self.store_rf == 0:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
             return
-        charge_power = min(self.store_rf, max(self.charge_rf_max - self.charge_rf, 0))
-        self.store_rf -= charge_power
-        self.charge_rf += charge_power
+        charged_item = self.GetSlotItem(0)
+        if charged_item is None:
+            return
+        self.store_rf, _in, self.charge_rf = ChargeItem(
+            self.store_rf, charged_item, times=5
+        )
+        self.SetSlotItem(0, charged_item)
         if self.charge_rf >= self.charge_rf_max:
-            self.updateCharge()
             if self.GetSlotItem(1) is None:
                 charge_item = self.GetSlotItem(0, get_user_data=True)
                 if charge_item is None:

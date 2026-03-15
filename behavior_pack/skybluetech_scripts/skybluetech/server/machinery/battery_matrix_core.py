@@ -14,7 +14,7 @@ from .basic import (
     BaseMachine,
     RegisterMachine,
 )
-from .utils.charge import GetCharge, UpdateCharge, GetOutputPower, UpdateChargeNBT
+from .utils.charge import GetCharge, UpdateCharge, GetIOPower, UpdateChargeNBT
 
 INFINITY = float("inf")
 K_ITEMS = "st:items"
@@ -132,11 +132,12 @@ class BatteryMatrixCore(BaseMachine):
 
 
 class BatterySlotAbstract(object):
-    def __init__(self, item_id, store_rf, store_rf_max, output_power):
-        # type: (str, int, int, int) -> None
+    def __init__(self, item_id, store_rf, store_rf_max, input_power, output_power):
+        # type: (str, int, int, int, int) -> None
         self._orig_store_rf = self.store_rf = store_rf
         self.item_id = item_id
         self.store_rf_max = store_rf_max
+        self.input_power = input_power
         self.output_power = output_power
 
     @classmethod
@@ -146,15 +147,15 @@ class BatterySlotAbstract(object):
         ud,  # type: dict
     ):
         charge, charge_max = GetCharge(ud)
-        output_power = GetOutputPower(ud)
-        return cls(item_id, charge, charge_max, output_power)
+        input_power, output_power = GetIOPower(ud)
+        return cls(item_id, charge, charge_max, input_power, output_power)
 
     def save_to_item(self, item, owner=None):
         # type: (Item, str | None) -> None
         ud = item.userData
         if not ud:
             return
-        UpdateCharge(owner or "", item, self.store_rf)
+        UpdateCharge(item, self.store_rf)
         self._orig_store_rf = self.store_rf
 
     def save_to_item_userdata(self, ud, owner=None):
@@ -164,9 +165,12 @@ class BatterySlotAbstract(object):
 
     def add_rf(self, rf):
         # type: (int) -> int
-        overflow = max(0, self.store_rf + rf - self.store_rf_max)
-        self.store_rf = min(self.store_rf + rf, self.store_rf_max)
-        return overflow
+        power_in = min(self.input_power, rf)
+        power_in_overflow = rf - power_in
+        charge_in = min(power_in, self.store_rf_max - self.store_rf)
+        charge_in_overflow = power_in - charge_in
+        self.store_rf += charge_in
+        return power_in_overflow + charge_in_overflow
 
     def output_rf(self):
         rf = min(self.store_rf, self.output_power)

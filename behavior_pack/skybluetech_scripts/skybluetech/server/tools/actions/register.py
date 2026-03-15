@@ -46,8 +46,8 @@ def SetOriginTierSpeed(item_id, tier_speed):
     # type: (str, float) -> None
     "设置工具的原始 TierSpeed 值。"
 
-    def regfunc(owner, item, charge):
-        # type: (str, Item, int) -> None
+    def regfunc(item, charge):
+        # type: (Item, int) -> None
         ud = item.userData
         if ud is None:
             return
@@ -62,8 +62,8 @@ def SetOriginAttackDamage(item_id, attack_damage):
     # type: (str, int) -> None
     "设置工具的原始 AttackDamage 值。"
 
-    def regfunc(owner, item, charge):
-        # type: (str, Item, int) -> None
+    def regfunc(item, charge):
+        # type: (Item, int) -> None
         ud = item.userData
         if ud is None:
             return

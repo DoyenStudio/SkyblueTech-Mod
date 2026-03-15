@@ -187,7 +187,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         ok, overflow = output_io.GeneratePowerWithOverflow(rf_out)
         core.add_energy(overflow, from_overflow=True)
         self._last_output += rf_out - overflow
-        if not ok:
+        if not ok and overflow > 0:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 
     def get_core(self):

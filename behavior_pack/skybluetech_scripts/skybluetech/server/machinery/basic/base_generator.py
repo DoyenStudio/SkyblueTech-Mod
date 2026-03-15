@@ -65,7 +65,7 @@ class BasicGenerator(BaseMachine):
         for network in output_networks:
             if network is None:
                 continue
-            rf, updated = PushEnergyIntoNetwork(network, rf, passed)
+            updated, rf = PushEnergyIntoNetwork(network, rf, passed)
             if rf <= 0:
                 break
         if rf != 0:

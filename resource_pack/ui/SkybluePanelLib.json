@@ -335,6 +335,8 @@
     },
     "TextWithBlackBg": {
         "type": "image",
+        "$alpha": 0.4,
+        "$alpha|default": 0,
         "$font": "default",
         "$text_content": "Hello World",
         "$text_size": "normal",
@@ -343,15 +345,21 @@
             "100%c+5px"
         ],
         "layer": 1,
+        "alpha": "$alpha",
         "clip_direction": "left",
         "clip_ratio": 0.0,
+        "color": [
+            0.0,
+            0.0,
+            0.0
+        ],
         "nineslice_size": [
             1.0,
             1.0,
             1.0,
             1.0
         ],
-        "texture": "textures/ui/black_alpha_bg",
+        "texture": "textures/ui/white",
         "controls": [
             {
                 "text": {

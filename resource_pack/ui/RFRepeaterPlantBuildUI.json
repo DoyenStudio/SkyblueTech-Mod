@@ -16,15 +16,21 @@
                         34.0
                     ],
                     "layer": 1,
+                    "alpha": 0.5,
                     "clip_direction": "left",
                     "clip_ratio": 0.0,
-                    "nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0
                     ],
-                    "texture": "textures/ui/black_alpha_bg",
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/white",
                     "controls": [
                         {
                             "title_label": {
@@ -179,10 +185,10 @@
                         },
                         {
                             "key_tip@SkybluePanelLib.TextWithBlackBg": {
-                                "layer": 5,
                                 "$text_content": "键盘 O",
                                 "anchor_from": "left_middle",
-                                "anchor_to": "right_middle"
+                                "anchor_to": "right_middle",
+                                "layer": 5
                             }
                         }
                     ]
@@ -259,10 +265,10 @@
                         },
                         {
                             "key_tip@SkybluePanelLib.TextWithBlackBg": {
-                                "layer": 5,
                                 "$text_content": "键盘 F",
                                 "anchor_from": "left_middle",
-                                "anchor_to": "right_middle"
+                                "anchor_to": "right_middle",
+                                "layer": 5
                             }
                         }
                     ]

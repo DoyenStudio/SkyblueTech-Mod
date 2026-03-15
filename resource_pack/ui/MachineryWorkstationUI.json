@@ -302,8 +302,20 @@
                                                                 "bg": {
                                                                     "type": "image",
                                                                     "layer": 1,
-                                                                    "texture": "textures/ui/black_alpha_bg",
-                                                                    "tiled": true
+                                                                    "alpha": 0.5,
+                                                                    "color": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "keep_ratio": false,
+                                                                    "nineslice_size": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "texture": "textures/ui/white"
                                                                 }
                                                             },
                                                             {

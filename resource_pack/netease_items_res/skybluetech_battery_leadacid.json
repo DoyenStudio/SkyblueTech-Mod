@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:battery_leadacid"
+        },
+        "description": {
+            "identifier": "skybluetech:battery_leadacid"
+        }
+    }
+}

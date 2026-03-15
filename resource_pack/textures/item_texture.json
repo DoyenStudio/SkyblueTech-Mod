@@ -10,6 +10,9 @@
         "skybluetech:battery_junior": {
             "textures": "textures/items/batterys/battery_junior"
         },
+        "skybluetech:battery_leadacid": {
+            "textures": "textures/items/batterys/battery_leadacid"
+        },
         "skybluetech:bio_dust": {
             "textures": "textures/items/dusts/bio_dust"
         },

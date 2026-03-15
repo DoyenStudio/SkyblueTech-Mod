@@ -9,14 +9,14 @@
                 ]
             },
             "netease:customtips": {
-                "value": "\n§7可作为便携储能的物品。\n§c充电速率： 100 RF/t\n§a放电速率： 100 RF/t\n§e● 便捷充能： 可用"
+                "value": "\n§7可作为便携储能的物品。\n§c充电速率： 1000 RF/t\n§a放电速率： 800 RF/t\n§6● 便捷充能： 不可用"
             },
             "netease:initial_user_data": {
                 "display": {
                     "Lore": [
                         {
                             "__type__": 8,
-                            "__value__": "§r§e⚡ §b已储能 §a0 / 100000 RF"
+                            "__value__": "§r§e⚡ §b已储能 §a0 / 1200000 RF"
                         }
                     ]
                 },
@@ -28,11 +28,11 @@
                 },
                 "max_input_power": {
                     "__type__": 4,
-                    "__value__": 100
+                    "__value__": 1000
                 },
                 "max_output_power": {
                     "__type__": 4,
-                    "__value__": 100
+                    "__value__": 800
                 },
                 "store_rf": {
                     "__type__": 4,
@@ -40,17 +40,17 @@
                 },
                 "store_rf_max": {
                     "__type__": 4,
-                    "__value__": 100000
+                    "__value__": 1200000
                 },
                 "can_charge_inventory": {
                     "__type__": 1,
-                    "__value__": 1
+                    "__value__": 0
                 }
             }
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:battery_junior"
+            "identifier": "skybluetech:battery_leadacid"
         }
     }
 }

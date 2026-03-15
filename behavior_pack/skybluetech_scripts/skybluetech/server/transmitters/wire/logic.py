@@ -72,13 +72,13 @@ def isPowerAccepter(block_name, dim, posdata):
 def RequireEnergyFromNetwork(machine):
     # type: (BaseMachine) -> bool
     ok = False
-    networks = (
+    networks = [
         i
         for i in logic_module.GetContainerNode(
             machine.dim, machine.x, machine.y, machine.z
-        ).outputs.values()
+        ).inputs.values()
         if i is not None
-    )
+    ]
     for network in networks:
         if network is None:
             continue

@@ -2,13 +2,16 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:max_damage": 250,
+            "minecraft:max_damage": 300,
             "minecraft:max_stack_size": 1,
             "minecraft:tags": {
                 "tags": [
                     "skybluetech:wind_generator_paddle",
                     "paddle/iron"
                 ]
+            },
+            "netease:customtips": {
+                "value": "\n§7放入§f风力发电机§7以为其安装发电所需扇叶。\n§b◆ 最大使用时长： §f20 分钟\n§e◆ 相对转换效率： 1.0"
             }
         },
         "description": {

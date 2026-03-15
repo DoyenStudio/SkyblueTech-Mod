@@ -469,6 +469,9 @@ class MultiBlockStructure(BaseMachine):
         "返回功能性方块对于多方块结构核心位置的相对坐标。"
         return self.area.functional_block_poses
 
+    def StructureFinished(self):
+        return self._last_destroy_flag == 0
+
     # StructureUtils
 
     def GetExpectedStructure(self):

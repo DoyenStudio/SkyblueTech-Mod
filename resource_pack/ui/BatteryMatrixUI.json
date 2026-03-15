@@ -3,7 +3,7 @@
         "type": "panel",
         "offset": [
             1.0,
-            0.0
+            1.0
         ],
         "size": [
             180.0,
@@ -334,6 +334,7 @@
                                                             116.0
                                                         ],
                                                         "layer": 11,
+                                                        "visible": false,
                                                         "controls": [
                                                             {
                                                                 "push_storage_btn@common.button": {
@@ -733,40 +734,86 @@
                                                 },
                                                 {
                                                     "structure_not_finished_tip": {
-                                                        "type": "panel",
+                                                        "type": "input_panel",
                                                         "anchor_from": "bottom_middle",
                                                         "anchor_to": "bottom_middle",
                                                         "offset": [
                                                             0.0,
-                                                            -4.0
+                                                            -8.0
                                                         ],
                                                         "size": [
-                                                            92.0,
-                                                            16.0
+                                                            166.0,
+                                                            95.0
                                                         ],
-                                                        "layer": 1,
+                                                        "priority": 5,
+                                                        "layer": 50,
                                                         "controls": [
                                                             {
                                                                 "bg": {
                                                                     "type": "image",
+                                                                    "priority": 5,
                                                                     "layer": 1,
-                                                                    "nineslice_size": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
+                                                                    "alpha": 0.6,
+                                                                    "color": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0
                                                                     ],
-                                                                    "texture": "textures/ui/black_alpha_bg"
+                                                                    "nineslice_size": [
+                                                                        4.0,
+                                                                        4.0,
+                                                                        4.0,
+                                                                        4.0
+                                                                    ],
+                                                                    "texture": "textures/ui/white_with_smooth_edge"
                                                                 }
                                                             },
                                                             {
-                                                                "label": {
-                                                                    "type": "label",
-                                                                    "anchor_from": "left_middle",
-                                                                    "anchor_to": "left_middle",
+                                                                "warning_img": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        16.0,
+                                                                        4.0,
+                                                                        4.0
+                                                                    ],
+                                                                    "size": [
+                                                                        12.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "texture": "textures/ui/warning_icon"
+                                                                }
+                                                            },
+                                                            {
+                                                                "top_tip": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        20.0,
+                                                                        4.0
+                                                                    ],
+                                                                    "layer": 4,
+                                                                    "color": [
+                                                                        1.0,
+                                                                        0.6666666666666666,
                                                                         0.0
+                                                                    ],
+                                                                    "font_scale_factor": 1.2,
+                                                                    "font_type": "default",
+                                                                    "text": "多方块结构未成型",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            },
+                                                            {
+                                                                "desc_tip": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        20.0,
+                                                                        20.0
                                                                     ],
                                                                     "layer": 4,
                                                                     "color": [
@@ -776,25 +823,32 @@
                                                                     ],
                                                                     "font_scale_factor": 1.1,
                                                                     "font_type": "default",
-                                                                    "text": "多方块结构未成型",
+                                                                    "text": "详情：",
                                                                     "text_alignment": "center"
                                                                 }
                                                             },
                                                             {
-                                                                "image": {
-                                                                    "type": "image",
-                                                                    "anchor_from": "left_middle",
-                                                                    "anchor_to": "left_middle",
+                                                                "desc_label": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        2.0,
-                                                                        0.0
+                                                                        20.0,
+                                                                        36.0
                                                                     ],
                                                                     "size": [
-                                                                        12.0,
-                                                                        12.0
+                                                                        120.0,
+                                                                        70.0
                                                                     ],
-                                                                    "layer": 1,
-                                                                    "texture": "textures/ui/warning_icon"
+                                                                    "layer": 4,
+                                                                    "color": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "font_scale_factor": 1.1,
+                                                                    "font_type": "default",
+                                                                    "text": "未知情况"
                                                                 }
                                                             }
                                                         ]

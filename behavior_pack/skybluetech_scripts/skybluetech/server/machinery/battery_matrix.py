@@ -240,7 +240,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
 def onRequest(event):
     # type: (BatteryMatrixActionRequest) -> None
     m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix):
+    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
         return
     if event.op == event.OPERATION_INPUT:
         m.set_input_mode(event.value)
@@ -253,7 +253,7 @@ def onRequest(event):
 def onRecvCheckRequest(event):
     # type: (BatteryMatrixCheckCoreBatterysRequest) -> None
     m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix):
+    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
         return
     m.get_core().gen_update_event(first=True).send(event.player_id)
 
@@ -262,7 +262,7 @@ def onRecvCheckRequest(event):
 def onRecvPopRequest(event):
     # type: (BatteryMatrixPopBatteryRequest) -> None
     m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix):
+    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
         return
     m.pop_battery_from_core(event.index)
 
@@ -271,6 +271,6 @@ def onRecvPopRequest(event):
 def onRecvStoreRequest(event):
     # type: (BatteryMatrixStoreBatteryRequest) -> None
     m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix):
+    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
         return
     m.push_batteries_to_core()

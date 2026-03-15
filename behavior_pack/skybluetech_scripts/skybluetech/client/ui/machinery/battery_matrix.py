@@ -1,6 +1,7 @@
 # BatteryMatrixUI.battery_slot_nums
 # # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from skybluetech_scripts.tooldelta.events.client import (
     PlayerTryPutCustomContainerItemClientEvent,
 )
@@ -31,6 +32,7 @@ OUTPUT_SWITCH_NODE = MAIN_PATH / "output_switch"
 INPUT_POWER_LABEL_NODE = MAIN_PATH / "input_power"
 OUTPUT_POWER_LABEL_NODE = MAIN_PATH / "output_power"
 STRUCTURE_NOT_FINISHED_TIP_NODE = MAIN_PATH / "structure_not_finished_tip"
+STRUCTURE_DESC_LABEL_NODE = STRUCTURE_NOT_FINISHED_TIP_NODE / "desc_label"
 MULTIBLOCK_STRUCTURE_CHECK_BTN_NODE = MAIN_PATH / "multi_block_structure_check_btn"
 
 
@@ -48,6 +50,7 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         self.structure_not_finished_tip = self.GetElement(
             STRUCTURE_NOT_FINISHED_TIP_NODE
         )
+        self.structure_desc_label = self.GetElement(STRUCTURE_DESC_LABEL_NODE).asLabel()
         self.open_storage_btn = (
             self
             .GetElement(OPEN_STORAGE_BTN_NODE)
@@ -101,6 +104,16 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         if self.sync.structure_flag != self._last_structure_flag:
             self.structure_not_finished_tip.SetVisible(self.sync.structure_flag != 0)
             self._last_structure_flag = self.sync.structure_flag
+            if self.sync.structure_lacked_blocks:
+                self.structure_desc_label.SetText(
+                    "缺失组件： "
+                    + "， ".join(
+                        GetItemHoverName(b) + "x" + str(n)
+                        for b, n in self.sync.structure_lacked_blocks.items()
+                    )
+                )
+            else:
+                self.structure_desc_label.SetText("多方块结构未完成")
 
     def onOpenStorageWindow(self, _):
         _, x, y, z = self.pos
@@ -121,7 +134,6 @@ class BatteryMatrixUI(MachinePanelUIProxy):
     def onRecvUpdate(self, event):
         # type: (BatteryMatrixCoreStatusUpdate) -> None
         self.battery_slots_data = event.battery_datas
-        print("Okay.")
         if event.first:
             self.storage_window.SetVisible(True)
 

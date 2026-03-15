@@ -1,17 +1,27 @@
 # coding=utf-8
-#
+import random
 from mod.server.blockEntityData import BlockEntityData
+from skybluetech_scripts.tooldelta.define import Item
 from ...common.define import flags
-from ...common.define.id_enum.machinery import GEO_THERMAL_GENERATOR as MACHINE_ID
-from ...common.machinery_def.geothermal_generator import *
+from ...common.define.id_enum import GEO_THERMAL_GENERATOR as MACHINE_ID, Dusts
+from ...common.machinery_def.geothermal_generator import (
+    WATER_ID,
+    LAVA_ID,
+    ONCE_BURNING_TICKS,
+    ONCE_LAVA_REDUCE_VOLUME,
+    ONCE_WATER_REDUCE_VOLUME,
+    ORIGIN_GENERATED_POWER,
+    GENERATED_POWER_WITH_WATER,
+)
 from ...common.ui_sync.machinery.geothermal_generator import (
     GeoThermalGeneratorUISync,
     FluidSlotSync,
 )
 from .basic import (
     BasicGenerator,
-    MultiFluidContainer,
     GUIControl,
+    ItemContainer,
+    MultiFluidContainer,
     WorkRenderer,
     RegisterMachine,
 )
@@ -21,7 +31,7 @@ K_BURN_TICKS_LEFT = "burn_ticks_left"
 
 @RegisterMachine
 class GeoThermalGenerator(
-    BasicGenerator, GUIControl, MultiFluidContainer, WorkRenderer
+    BasicGenerator, GUIControl, ItemContainer, MultiFluidContainer, WorkRenderer
 ):
     block_name = MACHINE_ID
     store_rf_max = 28800
@@ -29,10 +39,12 @@ class GeoThermalGenerator(
     fluid_input_slots = {0, 1}
     fluid_io_fix_mode = 0
     fluid_slot_max_volumes = (2000, 2000)
+    output_slots = (0,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
+        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
         self.CallSync()
@@ -44,18 +56,18 @@ class GeoThermalGenerator(
                 if self.store_rf == self.store_rf_max:
                     self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
                     return
-                self.next_burn()
-                if self.power == 0:
+                res = self.next_burn()
+                if not res:
                     self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-                    return
             self.GeneratePower(self.power)
             self.OnSync()
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
-        return (slot == 0 and fluid_id == "minecraft:lava") or (
-            slot == 1 and fluid_id == "minecraft:water"
-        )
+        return fluid_id == {
+            0: LAVA_ID,
+            1: WATER_ID,
+        }.get(slot)
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf
@@ -76,35 +88,47 @@ class GeoThermalGenerator(
         ):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 
-    def OnFluidSlotUpdate(self, slot, is_final):
-        # type: (int, bool) -> None
-        if slot != 0 or not is_final:
+    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
+        if slot != 0:
             return
         if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT):
             ok = self.next_burn()
             if ok:
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
 
-    def next_burn(self):
-        self.power = 0
-        f0, f1 = self.fluids
-        self.RequireAnyFluidFromNetwork()
-        if f0.fluid_id == LAVA_ID and f0.volume > ONCE_LAVA_REDUCE_VOLUME:
-            f0.volume -= ONCE_LAVA_REDUCE_VOLUME
-            if f1.fluid_id == WATER_ID and f1.volume > ONCE_WATER_REDUCE_VOLUME:
-                f1.volume -= ONCE_WATER_REDUCE_VOLUME
-                self.power = GENERATED_POWER_WITH_WATER
-            else:
-                self.power = ORIGIN_GENERATED_POWER
-            self.burn_ticks = ONCE_BURNING_TICKS
-            return True
-        self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-        return False
+    def OnSlotUpdate(self, slot_pos):
+        # type: (int) -> None
+        if slot_pos == 0 and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+            slotitem = self.GetSlotItem(0)
+            if slotitem is None or (
+                slotitem.id == Dusts.OBSIDIAN and not slotitem.StackFull()
+            ):
+                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
         BasicGenerator.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)
+
+    def next_burn(self):
+        self.power = 0
+        f0, f1 = self.fluids
+        self.RequireAnyFluidFromNetwork()
+        if f0.fluid_id == LAVA_ID and f0.volume >= ONCE_LAVA_REDUCE_VOLUME:
+            f0.volume -= ONCE_LAVA_REDUCE_VOLUME
+            if f1.fluid_id == WATER_ID and f1.volume >= ONCE_WATER_REDUCE_VOLUME:
+                f1.volume -= ONCE_WATER_REDUCE_VOLUME
+                self.power = GENERATED_POWER_WITH_WATER
+            else:
+                self.power = ORIGIN_GENERATED_POWER
+            self.burn_ticks = ONCE_BURNING_TICKS
+            if random.random() > 0.9:
+                rest = self.OutputItem(Item(Dusts.OBSIDIAN))
+                if rest is not None:
+                    self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+            return True
+        return False
 
     @property
     def burn_ticks(self):

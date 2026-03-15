@@ -1,6 +1,10 @@
 {
     "geo_thermal_generator_ui": {
         "type": "panel",
+        "offset": [
+            -1.0,
+            0.0
+        ],
         "size": [
             180.0,
             200.0
@@ -9,7 +13,11 @@
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {
@@ -103,7 +111,29 @@
                                                     "flame@SkybluePanelLib.Flame": {
                                                         "offset": [
                                                             8,
-                                                            -41.5
+                                                            -54
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            8.0,
+                                                            -20.0
+                                                        ],
+                                                        "size": [
+                                                            18.0,
+                                                            18.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 0
+                                                                }
+                                                            }
                                                         ]
                                                     }
                                                 }

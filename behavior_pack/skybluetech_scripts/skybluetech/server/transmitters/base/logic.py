@@ -189,11 +189,10 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         self,
         dim,  # type: int
         start,  # type: PosData
-        connected=None,  # type: set[PosData] | None
+        walked=None,  # type: set[PosData] | None
     ):
         # type: (...) -> _NT | None
-
-        if connected is not None and start in connected:
+        if walked is not None and start in walked:
             return None
 
         start_bname = GetBlockName(dim, start)
@@ -204,8 +203,8 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
 
         output_nodes = set()  # type: set[_APT]
         input_nodes = set()  # type: set[_APT]
-        if connected is None:
-            connected = set()
+        if walked is None:
+            walked = set()
         nodes = set()  # type: set[PosData]
 
         first_transmitter_name = start_bname
@@ -220,8 +219,9 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             _o = set()  # type: set[_APT]
             for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
                 xyz = (cx + dx, cy + dy, cz + dz)
-                if xyz in connected:
+                if xyz in walked:
                     continue
+                walked.add(xyz)
                 block_name = GetBlockName(dim, xyz)
                 if block_name is None:
                     continue
@@ -268,9 +268,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
 
             input_nodes |= _i
             output_nodes |= _o
-            connected.add(
-                current
-            )  # TODO: 管道过多使得队列内存占用过大; 考虑限制最大 bfs 数? 应该不会吧?
             nodes.add(current)
         if first_transmitter_name is None:
             raise ValueError("No transmitter found")

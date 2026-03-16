@@ -2,6 +2,7 @@
 
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import HOVER_TEXT_DISPLAYER as MACHINE_ID
 from ...common.define.ui_keys import HOVER_TEXT_DISPLAYER_UI
 from ...common.events.machinery.hover_text_displayer import (
@@ -18,11 +19,6 @@ from .basic import (
     RegisterMachine,
 )
 
-# TYPE_CHECKING
-if 0:
-    from mod.client.component.drawingShapeCompClient import DrawingShapeCompClient
-# TYPE_CHECKING END
-
 K_TEXT = "st:text"
 block_sync = BlockSync(MACHINE_ID)
 
@@ -34,13 +30,12 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
     store_rf_max = 2000
     running_power = 1
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        BaseClicker.__init__(self)
-        PowerControl.__init__(self, dim, x, y, z, block_entity_data)
         self.set_text()
         self.can_display = self.PowerEnough()
         self.sync = HoverTextDisplayerUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
 
     def OnClick(self, event):
         GUIControl.OnClick(
@@ -63,9 +58,8 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
         self.sync.rf_max = self.store_rf_max
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        GUIControl.OnUnload(self)
-        PowerControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def set_text(self, text=None):
@@ -78,16 +72,16 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
                 self.x, self.y, self.z, self.text, self.running_power
             ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
-        PowerControl.SetDeactiveFlag(self, flag)
         HoverTextDisplayerContentUpdate(
             self.x, self.y, self.z, "", self.running_power
         ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
 
+    @SuperExecutorMeta.execute_super
     def UnsetDeactiveFlag(self, flag):
         # type: (int) -> None
-        PowerControl.UnsetDeactiveFlag(self, flag)
         if self.deactive_flags == 0:
             HoverTextDisplayerContentUpdate(
                 self.x,

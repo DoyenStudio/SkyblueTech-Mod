@@ -1,6 +1,7 @@
 # coding=utf-8
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.events.machinery.hydroponic_bed import (
     HydroponicBedModelUpdateEvent,
@@ -40,20 +41,18 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
     input_slots = (0,)
     running_power = POWER_COST
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = HydroponicBedUISync.NewServer(self).Activate()
         seed_item = self.GetSlotItem(0)
         self.crop_id = seed_item.id if seed_item else None
         self.ticks = 0
-        self.OnSync()
+        self.CallSync()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
         # type: () -> None
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def OnTicking(self):
@@ -66,8 +65,8 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
                     if not self.takeWater():
                         return
                     self.ReducePower()
-                    self.workOnce()
-                    self.OnSync()
+                    self.work_once()
+                    self.CallSync()
 
     def OnSync(self):
         # type: () -> None
@@ -84,6 +83,7 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
         # type: (int, Item) -> bool
         return item.id in Recipes
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         seed_item = self.GetSlotItem(0)
@@ -95,18 +95,18 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
         self.OnSync()
         self.notifyUpdate()
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        BaseMachine.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
-    def workOnce(self):
+    def work_once(self):
         if self.crop_id is not None:
             self.stage_grow_ticks += WORK_TICK_DELAY
             if self.stage_grow_ticks >= Recipes[self.crop_id].grow_stage_ticks:
                 self.grow_stage += 1
                 self.stage_grow_ticks = 0
                 if self.grow_stage + 1 >= Recipes[self.crop_id].stages:
-                    self.finishOnce(Recipes[self.crop_id])
+                    self.finish_once(Recipes[self.crop_id])
                     self.grow_stage = 0
                 self.notifyUpdate()
 
@@ -130,7 +130,7 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
         else:
             return False
 
-    def finishOnce(self, recipe):
+    def finish_once(self, recipe):
         # type: (HydroponicBedRecipe) -> None
         from .hydroponic_base import HydroponicBase
 

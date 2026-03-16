@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from skybluetech_scripts.tooldelta.api.server.block import UpdateBlockStates
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from .base_machine import BaseMachine
 
 
@@ -20,6 +21,7 @@ class WorkRenderer(BaseMachine):
 
     _last_work_status = False
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag, flush=True):
         # type: (int, bool) -> None
         """
@@ -30,6 +32,7 @@ class WorkRenderer(BaseMachine):
         if flush:
             self._update_work_status()
 
+    @SuperExecutorMeta.execute_super
     def UnsetDeactiveFlag(self, flag, flush=True):
         # type: (int, bool) -> None
         """
@@ -37,19 +40,16 @@ class WorkRenderer(BaseMachine):
             flag (int): flag
             flush (bool, optional): 是否更新机器的工作状态, 即改变 skybluetech:active state
         """
-        if not self.HasDeactiveFlag(flag):
-            return
-        BaseMachine.UnsetDeactiveFlag(self, flag)
         if flush:
             self._update_work_status()
 
+    @SuperExecutorMeta.execute_super
     def ResetDeactiveFlags(self):
-        BaseMachine.ResetDeactiveFlags(self)
         self._update_work_status()
 
+    @SuperExecutorMeta.execute_super
     def FlushDeactiveFlags(self):
         # type: () -> None
-        BaseMachine.FlushDeactiveFlags(self)
         self._update_work_status()
 
     def OnWorkStatusUpdated(self):

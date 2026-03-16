@@ -7,6 +7,7 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     GetCraftingRecipe,
     CraftingRecipeRes,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import SPLITTER as MACHINE_ID
 from ...common.ui_sync.machinery.splitter import SplitterUISync
@@ -32,19 +33,19 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
     input_slots = (0,)
     output_slots = (1,)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        SPControl.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = SplitterUISync.NewServer(self).Activate()
         self.OnSync()
         self.TryStartNext()
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
         while self.IsActive():
             self.OnSync()
             if self.ProcessOnce():
-                self.runOnce()
+                self.run_once()
                 self.TryStartNext()
             else:
                 break
@@ -60,50 +61,9 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
         if expected_output is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
-        if not self.canOutput(expected_output, output_item):
+        if not self.can_output(expected_output, output_item):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-
-    def runOnce(self):
-        input_item = self.GetSlotItem(0)
-        output_item = self.GetSlotItem(1)
-        if input_item is None:
-            raise ValueError("No input")
-        expected_output = GetSplitResult(input_item.newItemName, input_item.newAuxValue)
-        if expected_output is None:
-            raise ValueError("Recipe ERROR")
-        if not self.canOutput(expected_output, output_item):
-            return
-        self.finishOnce(input_item, output_item, expected_output)
-
-    def finishOnce(self, input, output, expected_output):
-        # type: (Item, Item | None, str) -> None
-        input.count -= 1
-        self.SetSlotItem(0, input)
-        if output is not None:
-            output_item = output
-            output_item.count += 9
-        else:
-            output_item = Item(expected_output, count=9)
-        self.SetSlotItem(1, output_item)
-
-    def canOutput(self, expected_output_item_id, output_slot_item):
-        # type: (str, Item | None) -> bool
-        return output_slot_item is None or (
-            output_slot_item.newItemName == expected_output_item_id
-            and output_slot_item.count + 9
-            <= output_slot_item.GetBasicInfo().maxStackSize
-        )
-
-    def OnSync(self):
-        self.sync.storage_rf = self.store_rf
-        self.sync.rf_max = self.store_rf_max
-        self.sync.progress_relative = self.GetProcessProgress()
-        self.sync.MarkedAsChanged()
-
-    def IsValidInput(self, slot, item):
-        # type: (int, Item) -> bool
-        return True
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
@@ -122,21 +82,60 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
             return
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-        if not self.canOutput(expected_output, output_item):
+        if not self.can_output(expected_output, output_item):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        SPControl.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
+
+    def run_once(self):
+        input_item = self.GetSlotItem(0)
+        output_item = self.GetSlotItem(1)
+        if input_item is None:
+            raise ValueError("No input")
+        expected_output = GetSplitResult(input_item.newItemName, input_item.newAuxValue)
+        if expected_output is None:
+            raise ValueError("Recipe ERROR")
+        if not self.can_output(expected_output, output_item):
+            return
+        self.finish_once(input_item, output_item, expected_output)
+
+    def finish_once(self, input, output, expected_output):
+        # type: (Item, Item | None, str) -> None
+        input.count -= 1
+        self.SetSlotItem(0, input)
+        if output is not None:
+            output_item = output
+            output_item.count += 9
+        else:
+            output_item = Item(expected_output, count=9)
+        self.SetSlotItem(1, output_item)
+
+    def can_output(self, expected_output_item_id, output_slot_item):
+        # type: (str, Item | None) -> bool
+        return output_slot_item is None or (
+            output_slot_item.newItemName == expected_output_item_id
+            and output_slot_item.count + 9
+            <= output_slot_item.GetBasicInfo().maxStackSize
+        )
+
+    def OnSync(self):
+        self.sync.storage_rf = self.store_rf
+        self.sync.rf_max = self.store_rf_max
+        self.sync.progress_relative = self.GetProcessProgress()
+        self.sync.MarkedAsChanged()
+
+    def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        return True
 
 
 def GetSplitResult(item_id, aux_value=0):

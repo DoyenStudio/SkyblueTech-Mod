@@ -34,6 +34,9 @@ class GUIControl(object):
     sync = S2CSync.NewServer()
     "UI 同步器"
 
+    def __init__(self, dim, x, y, z, block_entity_data):
+        pass
+
     def OnClick(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         "超类方法用于通知玩家打开 GUI。"

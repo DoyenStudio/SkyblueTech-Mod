@@ -3,6 +3,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.common import Delay
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define import flags
 from ....common.mini_jei.core.define import CategoryType
 from ....common.mini_jei.machinery.recipe_cls import MachineRecipe
@@ -21,10 +22,9 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         `MultiFluidContainer`
     """
 
+    @SuperExecutorMeta.execute_super_with_blacklist(BaseProcessor)
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
-        MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.current_recipe = self.get_recipe(self.GetInputSlotItems(), self.fluids)
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -32,18 +32,19 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def OnPlaced(self, _):
         self.afterRequireAll()
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
-        BaseProcessor.OnTicking(self)
-        MultiFluidContainer.OnTicking(self)
+        pass
 
+    @SuperExecutorMeta.execute_super
     def OnTryActivate(self):
         BaseMachine.OnTryActivate(self)
         MultiFluidContainer.OnTryActivate(self)
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):
-            UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if slot_pos in self.output_slots and self.HasDeactiveFlag(
             flags.DEACTIVE_FLAG_OUTPUT_FULL
@@ -59,6 +60,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
             elif not recipe.equals(self.current_recipe):
                 self.start_next()
 
+    @SuperExecutorMeta.execute_super
     def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if not is_final:
@@ -89,6 +91,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 return True
         return False
 
+    @SuperExecutorMeta.execute_super
     def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if not is_final:

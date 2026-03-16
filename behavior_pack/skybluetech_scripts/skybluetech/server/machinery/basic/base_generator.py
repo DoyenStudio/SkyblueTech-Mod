@@ -1,5 +1,6 @@
 # coding=utf-8
 from mod.server.blockEntityData import BlockEntityData  # noqa: F401
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define.facing import OPPOSITE_FACING
 from .base_machine import BaseMachine
 from .gui_ctrl import GUIControl
@@ -19,7 +20,7 @@ def requireWireModule():
 requireWireModule.has_cache = False
 
 
-class BasicGenerator(BaseMachine):
+class BaseGenerator(BaseMachine):
     """
     发电机基类。
     提供了 GeneratePower() 方法。
@@ -28,9 +29,11 @@ class BasicGenerator(BaseMachine):
 
     """
 
+    __metaclass__ = SuperExecutorMeta
+
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         self._power_output_faces = tuple(
             i for i, n in enumerate(self.energy_io_mode) if n == 1
         )

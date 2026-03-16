@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from mod.server.blockEntityData import BlockEntityData
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import HYDROPONIC_BASE as MACHINE_ID
 from ...common.ui_sync.machinery.hydroponic_base import HydroponicBaseUISync
 from .basic import (
@@ -29,18 +30,15 @@ class HydroponicBase(BaseMachine, ItemContainer, MultiFluidContainer, GUIControl
     fluid_io_fix_mode = -1
     running_power = POWER_COST
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
-        MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = HydroponicBaseUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     def OnSync(self):
         self.sync.fluid_1_type = self.fluids[0].fluid_id

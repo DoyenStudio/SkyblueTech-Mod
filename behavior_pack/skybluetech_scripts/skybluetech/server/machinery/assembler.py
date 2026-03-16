@@ -7,6 +7,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerBlockUseEvent,
     BlockNeighborChangedServerEvent,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.events.machinery.assembler import (
     AssemblerActionRequest,
@@ -35,14 +36,14 @@ class Assembler(GUIControl, UpgradeControl):
     store_rf_max = 100000
     energy_io_mode = (0, 0, 0, 0, 0, 0)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = AssemblerUISync.NewServer(self).Activate()
         self.power = 0
         self.delay = 20
         self.lis = []  # type: list[tuple[str, str, int]]
-        self.updateList()
+        self.update_list()
         self.OnSync()
 
     def AddPower(self, rf, max_limit=None, passed=None):
@@ -83,9 +84,9 @@ class Assembler(GUIControl, UpgradeControl):
         # type: () -> None
         self.ResetDeactiveFlags()
 
+    @SuperExecutorMeta.execute_super
     def OnClick(self, event):
         # type: (ServerBlockUseEvent) -> None
-        GUIControl.OnClick(self, event)
         AssemblerUpgradersUpdate(self.lis).send(event.playerId)
 
     def OnSync(self):
@@ -93,15 +94,16 @@ class Assembler(GUIControl, UpgradeControl):
         self.sync.rf_max = self.store_rf_max
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
-        self.updateList()
+        self.update_list()
         AssemblerUpgradersUpdate(self.lis).sendMulti(self.sync.GetPlayersInSync())
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
         # type: () -> None
-        UpgradeControl.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
@@ -119,7 +121,7 @@ class Assembler(GUIControl, UpgradeControl):
         else:
             return False
 
-    def updateList(self):
+    def update_list(self):
         it = self.GetSlotItem(0, get_user_data=True)
         if it is None:
             self.lis = [("minecraft:barrier", "请放入待改装道具", -1)]
@@ -130,7 +132,7 @@ class Assembler(GUIControl, UpgradeControl):
             return
         self.lis = [(id, id, 0) for id in upgraders]
 
-    def onPushUpgrader(self):
+    def on_push_upgrader(self):
         slot0_item = self.GetSlotItem(0, get_user_data=True)
         slot1_item = self.GetSlotItem(1, get_user_data=True)
         if (
@@ -143,16 +145,16 @@ class Assembler(GUIControl, UpgradeControl):
         upgraders = getUpgraders(slot0_item)
         if slot1_item.id in upgraders:
             return
-        if not self.canAddNewUpgrader(slot0_item, upgraders, slot1_item):
+        if not self.can_add_new_upgrader(slot0_item, upgraders, slot1_item):
             return
         upgraders[slot1_item.id] = slot1_item
         setUpgraders(slot0_item, upgraders)
         self.SetSlotItem(1, None)
         self.SetSlotItem(0, slot0_item)
-        self.updateList()
+        self.update_list()
         self.OnSync()
 
-    def onPullUpgrader(self, index):
+    def on_pull_upgrader(self, index):
         # type: (int) -> None
         if index < 0 or index >= len(self.lis):
             return
@@ -171,10 +173,10 @@ class Assembler(GUIControl, UpgradeControl):
         self.SetSlotItem(1, upgraders.pop(upid_to_pull))
         setUpgraders(slot0_item, upgraders)
         self.SetSlotItem(0, slot0_item)
-        self.updateList()
+        self.update_list()
         self.OnSync()
 
-    def canAddNewUpgrader(self, item, exist_upgraders, upgrader):
+    def can_add_new_upgrader(self, item, exist_upgraders, upgrader):
         # type: (Item, dict[str, Item], Item) -> bool
         if upgrader.id in exist_upgraders:
             return False
@@ -240,6 +242,6 @@ def onHandleAction(event):
     if event.action == ACTION_PULL_UPGRADER:
         if not isinstance(event.index, int):
             return
-        m.onPullUpgrader(event.index)
+        m.on_pull_upgrader(event.index)
     elif event.action == ACTION_PUSH_UPGRADER:
-        m.onPushUpgrader()
+        m.on_push_upgrader()

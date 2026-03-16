@@ -7,6 +7,7 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     GetCraftingRecipe,
     CraftingRecipeRes,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import HEAVY_COMPRESSOR as MACHINE_ID
 from ...common.ui_sync.machinery.heavy_compressor import HeavyCompressorUISync
@@ -34,19 +35,18 @@ class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
     upgrade_slot_start = 2
     upgrade_slots = 4
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        SPControl.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = HeavyCompressorUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
         self.TryStartNext()
 
     def OnTicking(self):
         while self.IsActive():
             self.OnSync()
             if self.ProcessOnce():
-                self.runOnce()
+                self.run_once()
                 self.TryStartNext()
             else:
                 break
@@ -68,7 +68,7 @@ class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
 
-    def runOnce(self):
+    def run_once(self):
         input_item = self.GetSlotItem(0, False)
         output_item = self.GetSlotItem(1, False)
         if input_item is None:
@@ -80,9 +80,9 @@ class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
             raise ValueError("Recipe ERROR")
         if not self.canOutput(expected_output, output_item):
             return
-        self.finishOnce(input_item, output_item, expected_output)
+        self.finish_once(input_item, output_item, expected_output)
 
-    def finishOnce(self, input, output, expected_output):
+    def finish_once(self, input, output, expected_output):
         # type: (Item, Item | None, str) -> None
         input.count -= 9
         self.SetSlotItem(0, input)
@@ -135,15 +135,14 @@ class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
-        SPControl.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
 
 def GetCompressedResult(item_id, aux_value=0):

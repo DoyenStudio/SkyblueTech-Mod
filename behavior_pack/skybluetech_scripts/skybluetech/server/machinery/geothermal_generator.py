@@ -1,6 +1,7 @@
 # coding=utf-8
 import random
 from mod.server.blockEntityData import BlockEntityData
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.define import Item
 from ...common.define import flags
 from ...common.define.id_enum import GEO_THERMAL_GENERATOR as MACHINE_ID, Dusts
@@ -18,7 +19,7 @@ from ...common.ui_sync.machinery.geothermal_generator import (
     FluidSlotSync,
 )
 from .basic import (
-    BasicGenerator,
+    BaseGenerator,
     GUIControl,
     ItemContainer,
     MultiFluidContainer,
@@ -31,7 +32,7 @@ K_BURN_TICKS_LEFT = "burn_ticks_left"
 
 @RegisterMachine
 class GeoThermalGenerator(
-    BasicGenerator, GUIControl, ItemContainer, MultiFluidContainer, WorkRenderer
+    BaseGenerator, GUIControl, ItemContainer, MultiFluidContainer, WorkRenderer
 ):
     block_name = MACHINE_ID
     store_rf_max = 28800
@@ -41,11 +42,9 @@ class GeoThermalGenerator(
     fluid_slot_max_volumes = (2000, 2000)
     output_slots = (0,)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
-        MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
         self.CallSync()
         self.power = 0
@@ -61,7 +60,7 @@ class GeoThermalGenerator(
                 if not res:
                     self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
             self.GeneratePower(self.power)
-            self.OnSync()
+            self.CallSync()
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
@@ -77,9 +76,9 @@ class GeoThermalGenerator(
         self.sync.fluids = FluidSlotSync.ListFromMachine(self)
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        BasicGenerator.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     def OnTryActivate(self):
         self.GeneratePower(0)
@@ -98,6 +97,7 @@ class GeoThermalGenerator(
             if ok:
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if slot_pos == 0 and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
@@ -107,10 +107,9 @@ class GeoThermalGenerator(
             ):
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        BasicGenerator.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
     def next_burn(self):
         self.power = 0

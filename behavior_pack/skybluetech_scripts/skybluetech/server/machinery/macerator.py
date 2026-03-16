@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import MACERATOR as MACHINE_ID
 from ...common.machinery_def.macerator import recipes as Recipes
 from ...common.ui_sync.machinery.macerator import MaceratorUISync
@@ -17,11 +18,11 @@ class Macerator(BaseProcessor):
     upgrade_slot_start = 2
     upgrade_slots = 4
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = MaceratorUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

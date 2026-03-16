@@ -1,4 +1,4 @@
-class FuncMeta(type):
+class SuperExecutorMeta(type):
     """
     类方法覆盖执行类。
 
@@ -8,11 +8,13 @@ class FuncMeta(type):
     """
 
     _ATTR_KEY = "_execute_super"
+    _ATTR_BLACKLIST_KEY = "_execute_super_blacklist"
 
     def __new__(cls, name, bases, attrs):
         for attr_name, attr in attrs.items():
             if hasattr(attr, cls._ATTR_KEY):
-                super_methods = cls._get_super_methods(attr_name, bases)
+                cls_blacklist = getattr(attr, cls._ATTR_BLACKLIST_KEY, set())
+                super_methods = cls._get_super_methods(attr_name, bases, cls_blacklist)
 
                 def get_wrapper(_func, _methods):
 
@@ -29,21 +31,21 @@ class FuncMeta(type):
                     return _func_wrapper
 
                 attrs[attr_name] = get_wrapper(attr, super_methods[:])
-        return super(FuncMeta, cls).__new__(cls, name, bases, attrs)
+        return super(SuperExecutorMeta, cls).__new__(cls, name, bases, attrs)
 
     @classmethod
-    def _get_super_methods(cls, name, bases):
-        # type: (str, list) -> list
+    def _get_super_methods(cls, name, bases, cls_blacklist):
+        # type: (str, list, set[type]) -> list
         methods = []
         for base_cls in bases:
-            for meth in cls.__get_super_methods(base_cls, name):
+            for meth in cls.__get_super_methods(base_cls, name, cls_blacklist):
                 if meth not in methods:
                     methods.append(meth)
         return methods
 
     @classmethod
-    def __get_super_methods(cls, current, name):
-        # type: (type, str) -> list
+    def __get_super_methods(cls, current, name, cls_blacklist):
+        # type: (type, str, set[type]) -> list
         methods = []
         this_meth = getattr(current, name, None)
         if this_meth is None:
@@ -53,15 +55,29 @@ class FuncMeta(type):
                 meth = getattr(base_cls, name, None)
                 if meth is not None:
                     if hasattr(meth, cls._ATTR_KEY):
-                        for sub_meth in cls.__get_super_methods(base_cls, name):
+                        sub_meths = cls.__get_super_methods(
+                            base_cls, name, cls_blacklist
+                        )
+                        for sub_meth in sub_meths:
                             if sub_meth not in methods:
                                 methods.append(sub_meth)
                     if meth not in methods:
                         methods.append(meth)
-        methods.append(this_meth)
+        if current not in cls_blacklist:
+            methods.append(this_meth)
         return methods
 
     @classmethod
     def execute_super(cls, func):
         func._execute_super = True
+        func._execute_super_blacklist = set()
         return func
+
+    @classmethod
+    def execute_super_with_blacklist(cls, *blacklist_args):
+        def wrapper(func):
+            func._execute_super = True
+            func._execute_super_blacklist = set(blacklist_args)
+            return func
+
+        return wrapper

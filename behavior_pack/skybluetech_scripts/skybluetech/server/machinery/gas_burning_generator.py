@@ -2,6 +2,7 @@
 import random
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum import GAS_BURNING_GENERATOR as MACHINE_ID
 from ...common.machinery_def.gas_burning_generator import recipes as Recipes
@@ -10,7 +11,7 @@ from ...common.ui_sync.machinery.gas_burning_generator import (
     FluidSlotSync,
 )
 from .basic import (
-    BasicGenerator,
+    BaseGenerator,
     GUIControl,
     MultiFluidContainer,
     UpgradeControl,
@@ -21,7 +22,7 @@ from .basic import (
 
 @RegisterMachine
 class GasBurningGenerator(
-    BasicGenerator, GUIControl, MultiFluidContainer, UpgradeControl, WorkRenderer
+    BaseGenerator, GUIControl, MultiFluidContainer, UpgradeControl, WorkRenderer
 ):
     block_name = MACHINE_ID
     store_rf_max = 28800
@@ -31,11 +32,9 @@ class GasBurningGenerator(
     fluid_slot_max_volumes = (2000, 2000)
     output_slots = (0,)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
-        MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GasBurningGeneratorUISync.NewServer(self).Activate()
         self.CallSync()
         self.power = 0
@@ -44,7 +43,7 @@ class GasBurningGenerator(
         if self.IsActive():
             if self.burn_once():
                 self.GeneratePower(self.power)
-                self.OnSync()
+                self.CallSync()
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
@@ -57,9 +56,9 @@ class GasBurningGenerator(
         self.sync.fluids = FluidSlotSync.ListFromMachine(self)
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        BasicGenerator.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     def OnTryActivate(self):
         self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
@@ -79,7 +78,7 @@ class GasBurningGenerator(
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
-        BasicGenerator.SetDeactiveFlag(self, flag)
+        BaseGenerator.SetDeactiveFlag(self, flag)
         WorkRenderer.SetDeactiveFlag(self, flag)
 
     def UnsetDeactiveFlag(self, flag, flush=True):

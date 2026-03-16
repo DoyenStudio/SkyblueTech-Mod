@@ -17,6 +17,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetBlockAuxValueFromStates,
     GetBlockPaletteBetweenPos,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum import WIND_GENERATOR as MACHINE_ID, Paddle
 from ...common.define.facing import DXYZ_FACING, FACING_EN
@@ -28,24 +29,23 @@ from ...common.machinery_def.wind_generator import get_paddle_output, item2paddl
 from ...common.ui_sync.machinery.wind_generator import WindGeneratorUISync
 from ...common.machinery.utils.block_sync import BlockSync
 from ..transmitters.wire.logic import isWire
-from .basic import BasicGenerator, ItemContainer, GUIControl, RegisterMachine
+from .basic import BaseGenerator, ItemContainer, GUIControl, RegisterMachine
 from .pool import GetMachineStrict
 
 block_sync = BlockSync(MACHINE_ID)
 
 
 @RegisterMachine
-class WindGenerator(BasicGenerator, ItemContainer, GUIControl):
+class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     input_slots = (0,)
     output_slots = ()
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = WindGeneratorUISync.NewServer(self).Activate()
         self.t = 0
         states = GetBlockStates(self.dim, (self.x, self.y, self.z))
@@ -69,6 +69,7 @@ class WindGenerator(BasicGenerator, ItemContainer, GUIControl):
             event.cancel()
             PlayerUseItemToPos(event.playerId, (self.x, self.y - self.layer, self.z), 2)
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
         if not self.is_base_block:
             return
@@ -161,12 +162,11 @@ class WindGenerator(BasicGenerator, ItemContainer, GUIControl):
             if i != self.layer:
                 SetBlock(self.dim, (self.x, base_y + i, self.z), "minecraft:air")
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        BasicGenerator.OnUnload(self)
-        GUIControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         if slot_pos == 0:
             self._cached_paddle_type = None

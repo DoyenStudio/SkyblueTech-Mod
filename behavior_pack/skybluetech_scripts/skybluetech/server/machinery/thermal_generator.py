@@ -2,12 +2,13 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import THERMAL_GENERATOR as MACHINE_ID
 from ...common.machinery_def.thermal_generator import TICK_POWER
 from ...common.ui_sync.machinery.thermal_generator import ThermalGeneratorUISync
 from .basic import (
-    BasicGenerator,
+    BaseGenerator,
     ItemContainer,
     GUIControl,
     WorkRenderer,
@@ -21,24 +22,24 @@ SecondsPerTick = 0.05
 
 
 @RegisterMachine
-class ThermalGenerator(BasicGenerator, ItemContainer, GUIControl, WorkRenderer):
+class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     input_slots = (0,)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ThermalGeneratorUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
         self.is_burning = self.burn_seconds_left > 0
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        BasicGenerator.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
         if self.IsActive():
             if self.burn_seconds_left <= 0:
@@ -64,6 +65,7 @@ class ThermalGenerator(BasicGenerator, ItemContainer, GUIControl, WorkRenderer):
         )
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if self.store_rf < self.store_rf_max and self.HasDeactiveFlag(
@@ -80,10 +82,9 @@ class ThermalGenerator(BasicGenerator, ItemContainer, GUIControl, WorkRenderer):
         ):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        BasicGenerator.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
     def next_burn(self):
         if self.store_rf >= self.store_rf_max:

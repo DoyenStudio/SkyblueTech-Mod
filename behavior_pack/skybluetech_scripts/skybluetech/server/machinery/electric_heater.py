@@ -2,6 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.api.common import Delay
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import ELECTRIC_HEATER as MACHINE_ID
 from ...common.events.machinery.electric_heater import ElectricHeaterSetPowerEvent
 from ...common.ui_sync.machinery.electric_heater import ElectricHeaterUISync
@@ -18,17 +19,16 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
     block_name = MACHINE_ID
     store_rf_max = 64000
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        HeatCtrl.__init__(self, dim, x, y, z, block_entity_data)
-        PowerControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ElectricHeaterUISync.NewServer(self).Activate()
         self.inited = False
         self._cached_running_power = self.bdata[K_SET_POWER] or 0
-        self.initLater()
+        self._init_later()
 
     def OnNeighborChanged(self, evt):
-        self.updateHeatersNearby()
+        self.update_heaters_nearby()
 
     def OnTicking(self):
         if not self.inited:
@@ -40,7 +40,7 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
                 self.gen_heat()
         for m in self.machines:
             self.ShareHeat(m)
-        self.OnSync()
+        self.CallSync()
 
     def OnSync(self):
         self.sync.rf_max = self.store_rf_max
@@ -49,12 +49,9 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
         self.sync.current_temperature = self.kelvin
         self.sync.MarkedAsChanged()
 
-    def Dump(self):
-        self.bdata[K_SET_POWER] = self.running_power
-
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        PowerControl.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     def gen_heat(self):
         if self.PowerEnough():
@@ -62,19 +59,19 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
             self.kelvin = float(self.running_power) / self.heat_c * 100 + self.kelvin
 
     @Delay(0)
-    def initLater(self):
-        self.updateHeatersNearby()
+    def _init_later(self):
+        self.update_heaters_nearby()
         self.inited = True
-        self.OnSync()
+        self.CallSync()
 
-    def updateHeatersNearby(self):
+    def update_heaters_nearby(self):
         self.machines = []  # type: list[HeatCtrl]
         for dx, dy, dz in ((1, 0, 0), (-1, 0, 0), (0, 1, 0), (0, 0, 1), (0, 0, -1)):
             m = GetMachineStrict(self.dim, self.x + dx, self.y + dy, self.z + dz)
             if isinstance(m, HeatCtrl):
                 self.machines.append(m)
 
-    def setPower(self, power):
+    def set_power(self, power):
         # type: (int) -> None
         self.running_power = min(MAX_POWER, power)
 
@@ -97,4 +94,4 @@ def onSetPower(event):
         return
     if not isinstance(event.power, int):
         return
-    m.setPower(event.power)
+    m.set_power(event.power)

@@ -2,6 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.events.machinery.fermenter import (
     FermenterSetTemperatureEvent,
@@ -76,12 +77,11 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         IO_GAS,
     }
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         self.t = 0
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FermenterUISync.NewServer(self).Activate()
-        MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
 
     def OnTicking(self):
         self.t += 1
@@ -107,11 +107,9 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
             self.getFluidOutIO().SelfRequireFluid()
         self.OnSync()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
-        MultiBlockStructure.OnUnload(self)
+        pass
 
     def OnSync(self):
         self.sync.store_rf = self.store_rf
@@ -149,6 +147,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
             self.sync.out_fluid_max_volume = 1.0
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if slot_pos == 0:
@@ -206,11 +205,9 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         else:
             return False
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        BaseMachine.SetDeactiveFlag(self, flag)
-        UpgradeControl.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
     def setExpectedTemperature(self, temperature):
         # type: (float) -> None

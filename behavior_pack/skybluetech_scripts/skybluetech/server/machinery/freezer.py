@@ -27,8 +27,8 @@ class Freezer(MixedProcessor):
         # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FreezerUISync.NewServer(self).Activate()
-        self.OnSync()
-        self.setMode(self.recipe_mode)
+        self.CallSync()
+        self.set_mode(self.recipe_mode)
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf
@@ -40,7 +40,7 @@ class Freezer(MixedProcessor):
         self.sync.freezer_mode = self.recipe_mode
         self.sync.MarkedAsChanged()
 
-    def setMode(self, new_mode):
+    def set_mode(self, new_mode):
         # type: (int) -> None
         if new_mode >= len(Recipes):
             new_mode %= len(Recipes)
@@ -66,5 +66,5 @@ def onFreezerModeChanged(event):
     machine = SafeGetMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(machine, Freezer):
         return
-    machine.setMode(event.new_mode)
+    machine.set_mode(event.new_mode)
     machine.sync.FastSync(event.player_id)

@@ -9,28 +9,29 @@ from skybluetech_scripts.tooldelta.api.server import (
     UpdateBlockStates,
     GetBlockName,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import SOLAR_PANEL as MACHINE_ID
 from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.ui_sync.machinery.solar_panel import SolarPanelUISync
 from ..transmitters.wire.logic import isWire
-from .basic import BasicGenerator, ItemContainer, GUIControl, RegisterMachine
+from .basic import BaseGenerator, ItemContainer, GUIControl, RegisterMachine
 
 
 @RegisterMachine
-class SolarPanel(BasicGenerator, ItemContainer, GUIControl):
+class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
     block_name = MACHINE_ID
     store_rf_max = 14400
     energy_io_mode = (1, 1, 1, 1, 1, 1)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BasicGenerator.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = SolarPanelUISync.NewServer(self).Activate()
         self.t = 0
         self.power_output = 0
         self.light_level = 0
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
         self.t += 1
         if self.t >= 20:
@@ -88,10 +89,9 @@ class SolarPanel(BasicGenerator, ItemContainer, GUIControl):
         self.sync.power = self.power_output
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        BasicGenerator.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
 
 def GetSkylightLevelClear(time):

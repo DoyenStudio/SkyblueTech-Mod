@@ -2,6 +2,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum import BATTERY_MATRIX_CONTROLLER as MACHINE_ID
 from ...common.define.tag_enum import BatteryTag
@@ -55,6 +56,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
     )
     functional_block_ids = set(STRUCTURE_REQUIRE_BLOCKS)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
@@ -77,8 +79,9 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         # type: () -> None
         self.ResetDeactiveFlags()
 
+    @SuperExecutorMeta.execute_super
     def OnClick(self, event, extra_datas=None):
-        GUIControl.OnClick(self, event, extra_datas)
+        pass
 
     def OnSync(self):
         self.sync.enable_input = self.input_mode
@@ -95,6 +98,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
             self.sync.rf_max = 1
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         pass
@@ -134,10 +138,10 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         overflow = power_overflow + wire_overflow
         return overflow != rf, overflow
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
         # type: () -> None
-        MultiBlockStructure.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     def push_batteries_to_core(self):
         if self.GetStructureDestroyFlag() != 0:

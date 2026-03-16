@@ -1,6 +1,7 @@
 # coding=utf-8
 #
 from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define import flags
 from ....common.machinery_def.upgraders import (
     SPEED_NEGATIVE,
@@ -40,9 +41,8 @@ class UpgradeControl(ItemContainer, SPControl):
     upgrade_slots = 4  # type: int
     allow_upgrader_tags = set()  # type: set[str]
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
-        SPControl.__init__(self, dim, x, y, z, block_entity_data)
         self._basic_max_rf_store = self.store_rf_max
         self._power_cost_relative = 1.0
         self.UpdateUpgraders(self.GetAllUpgraders())

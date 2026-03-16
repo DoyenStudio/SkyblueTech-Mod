@@ -1,8 +1,9 @@
 # coding=utf-8
 #
 from mod.server.blockEntityData import BlockEntityData
-from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInitCallback
+from skybluetech_scripts.tooldelta.general import ServerInitCallback
 from skybluetech_scripts.tooldelta.api.common import AsTimerFunc
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.events.machinery.creative_power_acceptor import (
     CreativePowerAcceptorPowerUpdate,
     CreativePowerAcceptorPowerUpdateRequest,
@@ -19,6 +20,7 @@ class CreativePowerAcceptor(BaseMachine):
     block_name = MACHINE_ID
     store_rf_max = 0
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
@@ -43,6 +45,7 @@ class CreativePowerAcceptor(BaseMachine):
             self.power = 0
             self.delay = 20
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
         self.active = False
         del updatePool[(self.dim, self.x, self.y, self.z)]

@@ -2,6 +2,7 @@
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from ...common.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
@@ -31,9 +32,9 @@ class ItemSplitter(GUIControl, UpgradeControl):
     upgrade_slot_start = 3
     allow_upgrader_tags = {"skybluetech:upgraders/generic_split"}
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ItemSplitterUISync.NewServer(self).Activate()
         self._cached_recorded_settings = None
 
@@ -43,19 +44,32 @@ class ItemSplitter(GUIControl, UpgradeControl):
             return UpgradeControl.IsValidInput(self, slot, item)
         return True
 
+    @SuperExecutorMeta.execute_super
+    def OnClick(self, event):
+        # type: (ServerBlockUseEvent) -> None
+        ExecLater(
+            0.1,
+            lambda: ItemSplitterSettingsListUpdate(self.record_settings).send(
+                event.playerId
+            ),
+        )
+
+    @SuperExecutorMeta.execute_super
+    def OnUnload(self):
+        pass
+
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot):
         if slot in self.input_slots:
             item = self.GetSlotItem(slot)
             if item is None:
                 return
-            res = self.tryPostItemByLabel(item)
+            res = self.try_post_item_by_label(item)
             self.SetSlotItem(slot, res)
-        elif self.InUpgradeSlot(slot):
-            UpgradeControl.OnSlotUpdate(self, slot)
 
-    def tryPostItemByLabel(self, item):
+    def try_post_item_by_label(self, item):
         # type: (Item) -> Item | None
-        matched_label = self.getLabelByItem(item.id)
+        matched_label = self.get_label_by_item(item.id)
         networks = (
             i
             for i in cable_logic.GetContainerNode(
@@ -74,29 +88,14 @@ class ItemSplitter(GUIControl, UpgradeControl):
                         item = ret_item
         return item
 
-    def getLabelByItem(self, item_id):
+    def get_label_by_item(self, item_id):
         # type: (str) -> int
         for label, _item_id in self.record_settings:
             if item_id == _item_id:
                 return label
         return 0 if self.HasUpgrader("skybluetech:upgrader_generic_split") else -1
 
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
-        GUIControl.OnClick(self, event)
-        ExecLater(
-            0.1,
-            lambda: ItemSplitterSettingsListUpdate(self.record_settings).send(
-                event.playerId
-            ),
-        )
-
-    def OnUnload(self):
-        # type: () -> None
-        UpgradeControl.OnUnload(self)
-        GUIControl.OnUnload(self)
-
-    def onAddSetting(self, player_id):
+    def on_add_setting(self, player_id):
         # type: (str) -> None
         if len(self.record_settings) >= self.settings_limit:
             return
@@ -104,7 +103,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
-    def onDeleteSetting(self, player_id, index):
+    def on_delete_setting(self, player_id, index):
         # type: (str, int) -> None
         if index >= len(self.record_settings):
             return
@@ -112,7 +111,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
-    def onSetItem(self, player_id, index, item):
+    def on_set_item(self, player_id, index, item):
         # type: (str, int, str) -> None
         if index >= len(self.record_settings):
             return
@@ -120,7 +119,7 @@ class ItemSplitter(GUIControl, UpgradeControl):
         self.save_settings()
         ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
-    def onSetLabel(self, player_id, index, label):
+    def on_set_label(self, player_id, index, label):
         # type: (str, int, int) -> None
         if index >= len(self.record_settings):
             return
@@ -166,9 +165,9 @@ def onSimpleAction(event):
     if not isinstance(m, ItemSplitter):
         return
     if event.action == event.ACTION_ADD_SETTING:
-        m.onAddSetting(event.player_id)
+        m.on_add_setting(event.player_id)
     elif event.action == event.ACTION_REMOVE_SETTING:
-        m.onDeleteSetting(event.player_id, event.extra)
+        m.on_delete_setting(event.player_id, event.extra)
 
 
 @ItemSplitterSettingsSetLabel.Listen()
@@ -179,7 +178,7 @@ def onSetLabel(event):
         return
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
-    m.onSetLabel(event.player_id, event.setting_index, event.label)
+    m.on_set_label(event.player_id, event.setting_index, event.label)
 
 
 @ItemSplitterSettingsSetItem.Listen()
@@ -194,4 +193,4 @@ def onSetItem(event):
         or len(event.item_id) > 256
     ):
         return
-    m.onSetItem(event.player_id, event.setting_index, event.item_id)
+    m.on_set_item(event.player_id, event.setting_index, event.item_id)

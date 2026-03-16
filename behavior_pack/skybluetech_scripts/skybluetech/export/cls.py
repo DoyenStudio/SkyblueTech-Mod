@@ -2,7 +2,7 @@
 
 from ..server.machinery.basic import (
     BaseClicker,
-    BasicGenerator,
+    BaseGenerator,
     BaseMachine,
     BaseProcessor,
     BaseSpeedControl,
@@ -27,8 +27,8 @@ class MachineryDefine:
         return BaseClicker
 
     @staticmethod
-    def GetBasicGeneratorCls():
-        return BasicGenerator
+    def GetBaseGeneratorCls():
+        return BaseGenerator
 
     @staticmethod
     def GetBaseMachineCls():

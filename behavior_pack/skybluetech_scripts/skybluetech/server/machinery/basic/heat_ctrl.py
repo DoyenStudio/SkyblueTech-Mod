@@ -1,5 +1,6 @@
 # coding=utf-8
 from .base_machine import BaseMachine
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define.fluids.fluid_c import fluid_c_values
 
 K_KELVIN = "kelvin"

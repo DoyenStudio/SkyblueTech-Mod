@@ -11,7 +11,7 @@ from skybluetech_scripts.tooldelta.events.notify import (
     NotifyToClients,
     NotifyToClient,
 )
-
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import CHARGER as MACHINE_ID
 from ...common.machinery_def.charger import CHARGE_SPEED
@@ -82,10 +82,9 @@ class Charger(GUIControl, UpgradeControl):
             return False
         return True
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
-        if self.InUpgradeSlot(slot_pos):
-            return UpgradeControl.OnSlotUpdate(self, slot_pos)
         if slot_pos == 1:
             if self.GetSlotItem(1) is None:
                 # 可能可以输出充能完成的物品了

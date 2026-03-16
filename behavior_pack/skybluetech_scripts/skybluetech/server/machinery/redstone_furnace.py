@@ -4,6 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import REDSTONE_FURNACE as MACHINE_ID
 from ...common.machinery_def.redstone_furnace import TICK_POWER
@@ -31,13 +32,14 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
         "skybluetech:upgraders/speed",
     }
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = RedstoneFurnaceUISync.NewServer(self).Activate()
         self.OnSync()
         self.try_start_next()
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
         while self.IsActive():
             self.OnSync()
@@ -95,9 +97,9 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
             return UpgradeControl.IsValidInput(self, slot, item)
         return ItemContainer.IsValidInput(self, slot, item)
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
-        UpgradeControl.OnSlotUpdate(self, slot_pos)
         if slot_pos == 1:
             return
         input_item = self.GetSlotItem(0)
@@ -118,15 +120,13 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        UpgradeControl.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        UpgradeControl.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
 
 def get_furnace_output_by_input(item_id, aux_value=0):

@@ -13,6 +13,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     DestroyEntity,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import FARMING_STATION as MACHINE_ID
 from ...common.machinery_def.farming_station import (
     isRipedCrop,
@@ -35,10 +36,9 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
     input_slots = ()
     output_slots = tuple(range(24))
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        SPControl.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FarmingStationUISync.NewServer(self).Activate()
         self.OnSync()
 
@@ -46,11 +46,11 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
         # 1t 内如果处理多次任务会导致卡顿
         # 直接忽略 1t 内任务的多次处理
         if self.ProcessOnce():
-            if self.runOnce():
-                self.OnSync()
+            if self.run_once():
+                self.CallSync()
 
-    def runOnce(self):
-        ok = self.collectCrops()
+    def run_once(self):
+        ok = self.collect_crops()
         if not ok:
             return False
         item_uqids = GetEntitiesBySelector(
@@ -68,7 +68,7 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
                 SpawnDroppedItem(self.dim, (self.x, self.y - 1, self.z), item_rest)
         return True
 
-    def collectCrops(self):
+    def collect_crops(self):
         dim = self.dim
         _x = self.x
         _y = self.y + Y_OFFSET
@@ -96,7 +96,7 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
                         return collected
         return collected
 
-    def canOutput(self, expected_output_item_id, output_slot_item):
+    def can_output(self, expected_output_item_id, output_slot_item):
         # type: (str, Item | None) -> bool
         return output_slot_item is None or (
             output_slot_item.newItemName == expected_output_item_id
@@ -112,10 +112,9 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
     def OnTryActivate(self):
         self.ResetDeactiveFlags()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
 
 def breakBlock(dim, xyz):

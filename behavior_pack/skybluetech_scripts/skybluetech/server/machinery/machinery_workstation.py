@@ -1,6 +1,7 @@
 # coding=utf-8
 import random
 from mod.server.blockEntityData import BlockEntityData
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import SetCommand, GetNameById
 from ...common.events.machinery.machinery_workstation import (
@@ -25,16 +26,15 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
     input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     output_slots = (11,)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = MachineryWorkstationUISync.NewServer(self).Activate()
         self.load_recipe(init=True)
-        self.OnSync()
+        self.CallSync()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     def OnSync(self):
         self.sync.progress = (

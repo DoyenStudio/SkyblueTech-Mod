@@ -10,6 +10,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     DestroyEntity,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import FORESTER as MACHINE_ID
 from ...common.machinery_def.forester import getSaplingId, isLog, isLeave
 from ...common.ui_sync.machinery.forester import ForesterUISync
@@ -43,22 +44,38 @@ class Forester(GUIControl, ItemContainer, SPControl):
     input_slots = ()
     output_slots = tuple(range(24))
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        SPControl.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ForesterUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
 
     def OnTicking(self):
         # 1t 内如果处理多次任务会导致卡顿
         # 直接忽略 1t 内任务的多次处理
         if self.ProcessOnce():
-            if self.runOnce():
-                self.OnSync()
+            if self.run_once():
+                self.CallSync()
 
-    def runOnce(self):
-        ok = self.collectTree()
+    def OnSync(self):
+        self.sync.storage_rf = self.store_rf
+        self.sync.rf_max = self.store_rf_max
+        self.sync.progress_relative = self.GetProcessProgress()
+        self.sync.MarkedAsChanged()
+
+    def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        return True
+
+    @SuperExecutorMeta.execute_super
+    def OnUnload(self):
+        pass
+
+    def OnTryActivate(self):
+        self.ResetDeactiveFlags()
+
+    def run_once(self):
+        ok = self.collect_tree()
         if not ok:
             return False
         item_uqids = GetEntitiesBySelector(
@@ -76,8 +93,8 @@ class Forester(GUIControl, ItemContainer, SPControl):
                 SpawnDroppedItem(self.dim, (self.x, self.y - 1, self.z), item_rest)
         return True
 
-    def collectTree(self):
-        main_log_block, logs, leaves = foresterBFS(
+    def collect_tree(self):
+        main_log_block, logs, leaves = forester_bfs(
             self.dim, self.x, self.y + Y_OFFSET, self.z, DX, DY, DZ
         )
         sapling_id = getSaplingId(main_log_block)
@@ -94,32 +111,15 @@ class Forester(GUIControl, ItemContainer, SPControl):
             SetBlock(self.dim, (x, y, z), "minecraft:air", old_block_handing=1)
         return True
 
-    def canOutput(self, expected_output_item_id, output_slot_item):
+    def can_output(self, expected_output_item_id, output_slot_item):
         # type: (str, Item | None) -> bool
         return output_slot_item is None or (
             output_slot_item.newItemName == expected_output_item_id
             and not output_slot_item.StackFull()
         )
 
-    def OnSync(self):
-        self.sync.storage_rf = self.store_rf
-        self.sync.rf_max = self.store_rf_max
-        self.sync.progress_relative = self.GetProcessProgress()
-        self.sync.MarkedAsChanged()
 
-    def IsValidInput(self, slot, item):
-        # type: (int, Item) -> bool
-        return True
-
-    def OnUnload(self):
-        SPControl.OnUnload(self)
-        GUIControl.OnUnload(self)
-
-    def OnTryActivate(self):
-        self.ResetDeactiveFlags()
-
-
-def foresterBFS(dim, _x, _y, _z, rx, ry, rz):
+def forester_bfs(dim, _x, _y, _z, rx, ry, rz):
     # type: (int, int, int, int, int, int, int) -> tuple[str, set[tuple[int, int, int]], set[tuple[int, int, int]]]
     walked = set()  # type: set[tuple[int, int, int]]
     found_logs = set()  # type: set[tuple[int, int, int]]

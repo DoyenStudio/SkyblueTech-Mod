@@ -10,6 +10,7 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     RecipeInput,
     RecipeOutput,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.events.machinery.electric_crafter import (
     ElectricCrafterUpdateRecipe,
@@ -36,24 +37,24 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         "skybluetech:upgraders/energy",
     }
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ElectricCrafterUISync.NewServer(self).Activate()
         self.try_update_template()
-        self.OnSync()
+        self.CallSync()
 
     def OnTicking(self):
         while self.IsActive():
-            self.OnSync()
+            self.CallSync()
             if self.ProcessOnce():
                 self.run_once()
                 self.detect_next()
             else:
                 break
 
+    @SuperExecutorMeta.execute_super
     def OnClick(self, event):
-        GUIControl.OnClick(self, event)
         ExecLater(0.1, self.notify_crafting_update)
 
     def OnSync(self):
@@ -62,9 +63,9 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         self.sync.progress = self.GetProcessProgress()
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        GUIControl.OnUnload(self)
-        UpgradeControl.OnUnload(self)
+        pass
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
@@ -75,6 +76,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         else:
             return self.check_crafting_input_valid(slot, item)
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot):
         # type: (int) -> None
         if slot == TEMPLATE_SLOT:
@@ -84,7 +86,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
             self.separate_items()
             self.detect_next()
         elif self.InUpgradeSlot(slot):
-            UpgradeControl.OnSlotUpdate(self, slot)
+            pass
         else:
             self.detect_next()
 

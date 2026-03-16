@@ -8,6 +8,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     SetBlock,
     SetLiquidBlock,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags as rf_flags
 from ...common.define.id_enum import PUMP as MACHINE_ID, Upgraders
 from ...common.define.global_config import BUCKET_VOLUME
@@ -41,16 +42,15 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
         "skybluetech:upgraders/expansion",
     }
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = PumpUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
         self.last_over_one_bucket = False
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
-        FluidContainer.OnTicking(self)
         if self.ProcessOnce():
             self.work_once()
             self.OnSync()
@@ -64,8 +64,13 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
         self.sync.rf_max = self.store_rf_max
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnTryActivate(self):
-        FluidContainer.OnTryActivate(self)
+        pass
+
+    @SuperExecutorMeta.execute_super
+    def OnUnload(self):
+        pass
 
     def work_once(self):
         if self.cached_volume >= BUCKET_VOLUME * 0.2:

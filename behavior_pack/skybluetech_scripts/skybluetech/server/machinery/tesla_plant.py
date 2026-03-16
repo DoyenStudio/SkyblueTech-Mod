@@ -4,6 +4,7 @@ from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.server.block import (
     ServerBlockUseEvent,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import TESLA_PLANT as MACHINE_ID
 from ...common.ui_sync.machinery.tesla_plant import TeslaPlantUISync
@@ -25,29 +26,30 @@ K_SETTING_WORK_RANGE = "st:work_range"
 class TeslaPlant(GUIControl, ItemContainer, SPControl, WorkRenderer):
     block_name = MACHINE_ID
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
-        SPControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = TeslaPlantUISync.NewServer(self).Activate()
         self._cached_setting_do_enable = None
         self._cached_setting_do_attack_mob = None
         self._cached_setting_do_attack_player = None
         self._cached_work_range = None
 
+    @SuperExecutorMeta.execute_super
     def OnClick(self, event, extra_datas):
-        GUIControl.OnClick(self, event, extra_datas)
+        pass
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf
         self.sync.rf_max = self.store_rf_max
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        GUIControl.OnUnload(self)
+        pass
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        SPControl.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass
 
     def attack_once(self):
         pass

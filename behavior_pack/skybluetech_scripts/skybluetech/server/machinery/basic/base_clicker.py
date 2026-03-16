@@ -14,7 +14,7 @@ class BaseClicker(object):
 
     onclick_delay = 0.25
 
-    def __init__(self):
+    def __init__(self, dim, x, y, z, block_entity_data):
         self.rate_limiter = PlayerRateLimiter(self.onclick_delay)
 
     def _revOnClick(self, event):

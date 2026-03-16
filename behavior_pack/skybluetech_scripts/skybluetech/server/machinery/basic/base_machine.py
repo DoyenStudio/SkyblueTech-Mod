@@ -6,6 +6,7 @@ from skybluetech_scripts.tooldelta.events.server.block import (
     BlockNeighborChangedServerEvent,
     ServerEntityTryPlaceBlockEvent,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from .gui_ctrl import GUIControl
 
 K_STORE_RF = "store_rf"
@@ -27,6 +28,8 @@ class BaseMachine(object):
     "每个面的能量输入输出模式, 0:输入 1:输出 其他:无"
     _extra_block_names = {}  # type: dict[type[BaseMachine], list[str]]
     "额外可绑定的方块 ID"
+
+    __metaclass__ = SuperExecutorMeta
 
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
@@ -137,6 +140,8 @@ class BaseMachine(object):
 
     def UnsetDeactiveFlag(self, flag):
         # type: (int) -> None
+        if not self.HasDeactiveFlag(flag):
+            return
         self.deactive_flags &= ~flag
         self.OnDeactiveFlagsChanged()
 

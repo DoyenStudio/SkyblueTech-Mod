@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from mod.server.blockEntityData import BlockEntityData
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import DISTILLATION_CHAMBER as MACHINE_ID
 from ...common.machinery_def.distillation_chamber import (
     recipes as Recipes,
@@ -30,26 +31,22 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
     fluid_output_slots = {1}
     fluid_slot_max_volumes = (1500, 1000)
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
-        HeatCtrl.__init__(self, dim, x, y, z, block_entity_data)
-        MultiFluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = DistillationChamberUISync.NewServer(self).Activate()
         self.locked_recipe_idx = None
         self.output_rate = 0
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        # type: () -> None
-        GUIControl.OnUnload(self)
+        pass
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
-        # type: () -> None
-        HeatCtrl.OnTicking(self)
-        MultiFluidContainer.OnTicking(self)
         self.output_rate = 0
-        self.workOnce()
-        self.OnSync()
+        self.work_once()
+        self.CallSync()
 
     def OnSync(self):
         # type: () -> None
@@ -74,7 +71,7 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
             prev_volume = cur_volume - add_fluid_volume
             self.InputFluidAndUpdateHeat(fluid_id, prev_volume, cur_volume)
 
-    def workOnce(self):
+    def work_once(self):
         in_fluid = self.fluids[0]
         out_fluid = self.fluids[1]
         input_fluid_id = in_fluid.fluid_id
@@ -89,15 +86,15 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
                     self.kelvin > rcp.min_temperature
                     and self.kelvin < rcp.max_temperature
                 ):
-                    self.workWithRecipe(rcp, in_fluid, out_fluid)
+                    self.work_with_recipe(rcp, in_fluid, out_fluid)
                     self.locked_recipe_idx = idx
                     break
         else:
             rcp = rcps[self.locked_recipe_idx]
             if self.kelvin > rcp.min_temperature and self.kelvin < rcp.max_temperature:
-                self.workWithRecipe(rcp, in_fluid, out_fluid)
+                self.work_with_recipe(rcp, in_fluid, out_fluid)
 
-    def workWithRecipe(self, rcp, in_fluid, out_fluid):
+    def work_with_recipe(self, rcp, in_fluid, out_fluid):
         # type: (DistillatorChamberRecipe, FluidSlot, FluidSlot) -> None
         if self.kelvin < rcp.fit_temperature:
             consume_rate = produce_rate = float(rcp.fit_temperature - self.kelvin) / (

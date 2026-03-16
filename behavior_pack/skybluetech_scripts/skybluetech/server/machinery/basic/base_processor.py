@@ -2,6 +2,7 @@
 #
 from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.mini_jei.core.define import CategoryType
 from ....common.mini_jei.machinery.recipe_cls import MachineRecipe
 from ....common.define import flags as flags
@@ -31,9 +32,9 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
         "skybluetech:upgraders/energy",
     }
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         # type: (int, int, int, int, BlockEntityData) -> None
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.current_recipe = self.get_recipe(self.GetInputSlotItems())
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -54,10 +55,10 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
             if do_break:
                 break
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):
-            UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if slot_pos in self.output_slots and self.HasDeactiveFlag(
             flags.DEACTIVE_FLAG_OUTPUT_FULL
@@ -74,12 +75,13 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
             elif not recipe.equals(self.current_recipe):
                 self.start_next()
 
+    @SuperExecutorMeta.execute_super
     def OnTryActivate(self):
         self.ResetDeactiveFlags()  # TODO: 安全问题?
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+        pass
 
     # ==== process ====
 
@@ -117,7 +119,7 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
         if not self.PowerEnough():
             return
         self.ResetDeactiveFlags()
-        self.OnSync()
+        self.CallSync()
 
     # ==== utils ====
 
@@ -198,7 +200,6 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
             slotitems[slot_pos] = orig_item
         self.SetSlotItems(slotitems)
 
+    @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        BaseMachine.SetDeactiveFlag(self, flag)
-        WorkRenderer.SetDeactiveFlag(self, flag)
+        pass

@@ -10,6 +10,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetBlock,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import MINI_MINER as MACHINE_ID
 from ...common.machinery_def.mini_miner import (
@@ -36,9 +37,8 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
     upgrade_slot_start = 8
     origin_process_ticks = 20
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = MiniMinerUISync.NewServer(self).Activate()
         self.size_x = 15
         self.size_y = 64
@@ -52,9 +52,9 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             self.mine_pos_iterator = None
         self.init_flags()
 
+    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot):
-        # type: (int) -> None
-        UpgradeControl.OnSlotUpdate(self, slot)
+        pass
 
     def OnFluidSlotUpdate(self):
         if self.fluid_id != USE_FLUID or self.fluid_volume < VOLUME_COST_ONCE:
@@ -63,8 +63,8 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
-        FluidContainer.OnTicking(self)
         if not self.mining_finished:
             if not self.fast_skip():
                 return
@@ -81,13 +81,14 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         self.sync.max_volume = self.max_fluid_volume
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        GUIControl.OnUnload(self)
-        UpgradeControl.OnUnload(self)
+        pass
 
     def OnTryActivate(self):
         FluidContainer.OnTryActivate(self)
 
+    @SuperExecutorMeta.execute_super
     def OnDeactiveFlagsChanged(self):
         self.update_gui_states()
     

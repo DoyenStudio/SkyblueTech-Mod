@@ -23,7 +23,7 @@ class MagmaFurnace(MixedProcessor):
         # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = MagmaFurnaceUISync.NewServer(self).Activate()
-        self.OnSync()
+        self.CallSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

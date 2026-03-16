@@ -269,3 +269,4 @@ tile.skybluetech:battery_matrix_core.name=电池仓储能核心
 item.skybluetech:obsidian_dust.name=黑曜石粉
 tile.skybluetech:mini_miner.name=迷你采矿机
 item.skybluetech:battery_leadacid.name=铅酸电池
+tile.skybluetech:gas_burning_generator.name=小型燃气发电机

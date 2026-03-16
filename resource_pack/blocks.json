@@ -328,6 +328,9 @@
     "skybluetech:freezer": {
         "sound": "iron"
     },
+    "skybluetech:gas_burning_generator": {
+        "sound": "iron"
+    },
     "skybluetech:geothermal_generator": {
         "sound": "copper"
     },

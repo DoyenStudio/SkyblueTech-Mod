@@ -183,6 +183,9 @@
         "skybluetech:gas": {
             "textures": "textures/fluid/gas"
         },
+        "skybluetech:gas_burning_generator": {
+            "textures": "textures/models/gas_burning_generator_texture"
+        },
         "skybluetech:generator_frame_down": {
             "textures": "textures/machines/generator_frame_down"
         },

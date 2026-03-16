@@ -6,6 +6,7 @@ from skybluetech_scripts.tooldelta.api.common import GetItemTags
 class CategoryType:
     ITEM = "item"
     FLUID = "fluid"
+    ENERGY = "energy"
 
 
 class RecipeBase:

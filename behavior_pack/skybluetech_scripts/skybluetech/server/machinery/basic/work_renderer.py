@@ -22,11 +22,21 @@ class WorkRenderer(BaseMachine):
 
     def SetDeactiveFlag(self, flag, flush=True):
         # type: (int, bool) -> None
+        """
+        Args:
+            flag (int): flag
+            flush (bool, optional): 是否更新机器的工作状态, 即改变 skybluetech:active state
+        """
         if flush:
             self._update_work_status()
 
     def UnsetDeactiveFlag(self, flag, flush=True):
         # type: (int, bool) -> None
+        """
+        Args:
+            flag (int): flag
+            flush (bool, optional): 是否更新机器的工作状态, 即改变 skybluetech:active state
+        """
         if not self.HasDeactiveFlag(flag):
             return
         BaseMachine.UnsetDeactiveFlag(self, flag)

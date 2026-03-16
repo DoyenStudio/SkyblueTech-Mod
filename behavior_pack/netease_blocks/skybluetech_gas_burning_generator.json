@@ -1,0 +1,82 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "south_pipe_conn": "q.block_state('skybluetech:south_pipe_connection')",
+                    "north_pipe_conn": "q.block_state('skybluetech:north_pipe_connection')",
+                    "east_pipe_conn": "q.block_state('skybluetech:east_pipe_connection')",
+                    "west_pipe_conn": "q.block_state('skybluetech:west_pipe_connection')"
+                },
+                "identifier": "geometry.skybluetech.gas_burning_generator"
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:gas_burning_generator"
+                }
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7可燃烧可燃气体产出能量。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:pathable": {
+                "value": true
+            },
+            "netease:solid": {
+                "value": true
+            },
+            "netease:block_container": {
+                "container_size": 1,
+                "custom_description": "小型燃气发电机",
+                "screen_name": "GasBurningGenerator.main"
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_provider": {},
+            "tag:redstoneflux_generator": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_generator": {},
+            "tag:skybluetech_machine": {},
+            "tag:skybluetech_fluid_container": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:gas_burning_generator",
+            "states": {
+                "skybluetech:south_pipe_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:north_pipe_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:east_pipe_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:west_pipe_connection": [
+                    false,
+                    true
+                ]
+            }
+        }
+    }
+}

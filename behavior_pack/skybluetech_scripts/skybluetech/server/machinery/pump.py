@@ -54,7 +54,7 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
         if self.ProcessOnce():
             self.work_once()
             self.OnSync()
-            self._sending_fluid = True
+            self._reset_send_fluid_retries()
 
     def OnSync(self):
         self.sync.fluid_id = self.fluid_id

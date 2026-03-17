@@ -45,11 +45,11 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         self._cached_recorded_settings = None
 
     def OnTicking(self):
-        if self._sending_fluid:
+        if self._can_send_fluid():
             self.RequireAnyFluidFromNetwork()
             ok = self.ready_try_post_fluid()
             if not ok:
-                self._sending_fluid = False
+                self._add_send_fluid_retries()
             self.CallSync()
 
     def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):

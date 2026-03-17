@@ -68,18 +68,20 @@ class FluidContainer(object):
             self.fluid_io_mode = FixIOModeByDirection(dim, x, y, z, self.fluid_io_mode)
         self.bdata = block_entity_data
         self.bdata[K_MAX_VOLUME] = self.max_fluid_volume  # TODO: 改到 OnPlaced
-        self._sending_fluid = True
+        self._reset_send_fluid_retries()
         self._cached_fluid_id = self.bdata[K_FLUID_ID]
         self._cached_fluid_volume = self.bdata[K_FLUID_VOLUME] or 0.0
 
     def OnTicking(self):
-        if self._sending_fluid:
+        if self._can_send_fluid():
             ok = self.PostFluid()
             if not ok:
-                self._sending_fluid = False
+                self._add_send_fluid_retries()
+            else:
+                self._reset_send_fluid_retries()
 
     def OnTryActivate(self):
-        self._sending_fluid = True
+        self._reset_send_fluid_retries()
 
     def AddFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
@@ -103,7 +105,7 @@ class FluidContainer(object):
                 self.onAddedFluid(fluid_id, new_volume - orig_volume)
             # 我们不知道 onAddedFluid 时容器流体体积有没有被改变
             # 所以不能使用 new_volume 代替 self.fluid_volume
-            self._sending_fluid = True
+            self._reset_send_fluid_retries()
             return self.fluid_volume != orig_volume, max(
                 0, fluid_volume - added_fluid_volume
             )
@@ -119,7 +121,7 @@ class FluidContainer(object):
         if my_fluid_id is None:
             return False
         orig_volume = self.fluid_volume
-        ok, new_volume = self.tryPostFluid(my_fluid_id, orig_volume)
+        ok, new_volume = self._try_post_fluid(my_fluid_id, orig_volume)
         self.fluid_volume = new_volume
         if orig_volume > new_volume:
             self.onReducedFluid(my_fluid_id, orig_volume - new_volume)
@@ -213,7 +215,7 @@ class FluidContainer(object):
 
     def onFluidSlotUpdate(self):
         # type: () -> None
-        self._sending_fluid = True
+        self._reset_send_fluid_retries()
         self.OnFluidSlotUpdate()
 
     def ifPlayerInteractWithBucket(self, player_id, test=False):
@@ -267,7 +269,7 @@ class FluidContainer(object):
         else:
             return False
 
-    def tryPostFluid(self, fluid_id, fluid_volume):
+    def _try_post_fluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
         """
         尝试向容器已连接的管道网络输出流体。
@@ -277,6 +279,18 @@ class FluidContainer(object):
             self.dim, self.xyz, fluid_id, fluid_volume, None
         )
         return ok, rest
+
+    def _can_send_fluid(self):
+        # type: () -> bool
+        return self._sending_fluid_retries < 20
+
+    def _add_send_fluid_retries(self):
+        # type: () -> None
+        self._sending_fluid_retries += 1
+
+    def _reset_send_fluid_retries(self):
+        # type: () -> None
+        self._sending_fluid_retries = 0
 
     @property
     def fluid_id(self):

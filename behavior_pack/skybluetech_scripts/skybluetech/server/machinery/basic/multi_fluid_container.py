@@ -121,20 +121,22 @@ class MultiFluidContainer(object):
             FluidSlot(self.bdata, i, mv)
             for i, mv in enumerate(self.fluid_slot_max_volumes)
         ]
-        self._sending_fluid = True
+        self._reset_send_fluid_retries()
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
         return True
 
     def OnTicking(self):
-        if self._sending_fluid:
+        if self._can_send_fluid():
             res = self.PostFluid()
             if not res:
-                self._sending_fluid = False
+                self._add_send_fluid_retries()
+            else:
+                self._reset_send_fluid_retries()
 
     def OnTryActivate(self):
-        self._sending_fluid = True
+        self._reset_send_fluid_retries()
 
     def OutputFluid(self, fluid_id, fluid_volume, slot_pos, is_final):
         # type: (str, float, int, bool) -> tuple[bool, float]
@@ -221,7 +223,7 @@ class MultiFluidContainer(object):
             if fluid_id is None:
                 continue
             orig_vol = fluid.volume
-            _ok, rest = self.tryPostFluid(fluid_id, orig_vol)
+            _ok, rest = self._try_post_fluid(fluid_id, orig_vol)
             ok = ok or _ok
             fluid.volume = rest
             if rest <= 0:
@@ -301,7 +303,7 @@ class MultiFluidContainer(object):
         else:
             return False
 
-    def tryPostFluid(self, fluid_id, fluid_volume):
+    def _try_post_fluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
         requireLibraryFunc()
         return PostFluidIntoNetworks(self.dim, self.xyz, fluid_id, fluid_volume, None)
@@ -335,5 +337,17 @@ class MultiFluidContainer(object):
     def onFluidSlotUpdate(self, slot_pos, is_final):
         # type: (int, bool) -> None
         "子类覆写在流体槽位发生更新时执行的回调。"
-        self._sending_fluid = True
+        self._reset_send_fluid_retries()
         self.OnFluidSlotUpdate(slot_pos, is_final)
+
+    def _can_send_fluid(self):
+        # type: () -> bool
+        return self._sending_fluid_retries < 20
+
+    def _add_send_fluid_retries(self):
+        # type: () -> None
+        self._sending_fluid_retries += 1
+
+    def _reset_send_fluid_retries(self):
+        # type: () -> None
+        self._sending_fluid_retries = 0

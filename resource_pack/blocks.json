@@ -201,7 +201,7 @@
         "blockshape": "water",
         "textures": "skybluetech:gas"
     },
-    "skybluetech:flowing_hydrogen_gas": {
+    "skybluetech:flowing_hydrogen": {
         "blockshape": "water",
         "textures": "skybluetech:gas"
     },

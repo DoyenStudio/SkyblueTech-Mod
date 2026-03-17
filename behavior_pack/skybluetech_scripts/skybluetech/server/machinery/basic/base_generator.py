@@ -62,9 +62,11 @@ class BaseGenerator(BaseMachine):
         if passed is None:
             passed = set()
         requireWireModule()
-        output_networks = GetContainerNode(
-            self.dim, self.x, self.y, self.z, enable_cache=True
-        ).outputs.values()
+        output_networks = set(
+            GetContainerNode(
+                self.dim, self.x, self.y, self.z, enable_cache=True
+            ).outputs.values()
+        )
         for network in output_networks:
             if network is None:
                 continue

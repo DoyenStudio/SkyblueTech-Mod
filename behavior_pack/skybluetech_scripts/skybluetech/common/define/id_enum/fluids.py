@@ -1,18 +1,19 @@
 # coding=utf-8
+DISTILLED_WATER = "skybluetech:distilled_water"
 
 DEEPSLATE_LAVA = "skybluetech:deepslate_lava"
 HEAVY_LAVA = "skybluetech:heavy_lava"
 MID_LAVA = "skybluetech:mid_lava"
 LIGHT_LAVA = "skybluetech:light_lava"
 
-RAW_OIL = "skybluetech:raw_oil"
-LUBRICANT = "skybluetech:lubricant"
-
-METHANE = "skybluetech:methane"
 METHANE_MUD = "skybluetech:methane_mud"
 
-DISTILLED_WATER = "skybluetech:distilled_water"
+RAW_OIL = "skybluetech:raw_oil"
 VEGETABLE_OIL = "skybluetech:vegetable_oil"
+LUBRICANT = "skybluetech:lubricant"
+
+HYDROGEN = "skybluetech:hydrogen"
+METHANE = "skybluetech:methane"
 
 
 class Molten:

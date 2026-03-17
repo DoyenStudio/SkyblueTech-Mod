@@ -411,6 +411,9 @@
         },
         "skybluetech:wrench_iron": {
             "textures": "textures/items/wrench_iron"
+        },
+        "skybluetech:hydrogen_bucket": {
+            "textures": "textures/items/buckets/hydrogen_bucket"
         }
     },
     "texture_name": "atlas.items"

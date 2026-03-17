@@ -201,6 +201,10 @@
         "blockshape": "water",
         "textures": "skybluetech:gas"
     },
+    "skybluetech:flowing_hydrogen_gas": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
     "skybluetech:flowing_methane_mud": {
         "blockshape": "water",
         "textures": "skybluetech:methane_mud"
@@ -422,6 +426,10 @@
         "sound": "iron"
     },
     "skybluetech:methane": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
+    "skybluetech:hydrogen": {
         "blockshape": "water",
         "textures": "skybluetech:gas"
     },

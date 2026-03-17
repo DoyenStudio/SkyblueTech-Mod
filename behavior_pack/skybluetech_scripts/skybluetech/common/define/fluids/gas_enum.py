@@ -2,6 +2,7 @@ from ..id_enum import fluids
 
 GAS = {
     fluids.METHANE,
+    fluids.HYDROGEN,
 }
 
 

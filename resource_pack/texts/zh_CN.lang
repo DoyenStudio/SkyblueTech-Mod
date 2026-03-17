@@ -270,3 +270,6 @@ item.skybluetech:obsidian_dust.name=黑曜石粉
 tile.skybluetech:mini_miner.name=迷你采矿机
 item.skybluetech:battery_leadacid.name=铅酸电池
 tile.skybluetech:gas_burning_generator.name=小型燃气发电机
+tile.skybluetech:hydrogen.name=氢气
+tile.skybluetech:flowing_hydrogen.name=流动氢气
+item.skybluetech:hydrogen_bucket.name=氢气桶

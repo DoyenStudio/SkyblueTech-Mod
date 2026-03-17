@@ -8,7 +8,43 @@
             "netease:block_container": {
                 "container_size": 6,
                 "custom_description": "重压机",
-                "screen_name": "HeavyCompressorUI.main"
+                "screen_name": "HeavyCompressorUI.main",
+                "hopper": {
+                    "input": true,
+                    "output": true,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0
+                            ]
+                        }
+                    ]
+                }
             },
             "netease:block_entity": {
                 "tick": true

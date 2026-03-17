@@ -8,11 +8,55 @@
             "netease:block_container": {
                 "container_size": 7,
                 "custom_description": "物品分拣器",
-                "screen_name": "ItemSplitterUI.main"
+                "screen_name": "ItemSplitterUI.main",
+                "hopper": {
+                    "input": true,
+                    "output": false,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0,
+                                1,
+                                2
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0,
+                                1,
+                                2
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0,
+                                1,
+                                2
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0,
+                                1,
+                                2
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0,
+                                1,
+                                2
+                            ]
+                        }
+                    ]
+                }
             },
-            "netease:block_entity": {
-
-            },
+            "netease:block_entity": {},
             "netease:custom_tips": {
                 "value": "\n§7用于分拣物品。"
             },
@@ -24,12 +68,8 @@
                 "digger": "pickaxe",
                 "level": 2
             },
-            "tag:piston_denier": {
-
-            },
-            "tag:skybluetech_container": {
-
-            }
+            "tag:piston_denier": {},
+            "tag:skybluetech_container": {}
         },
         "description": {
             "base_block": "netease_container",

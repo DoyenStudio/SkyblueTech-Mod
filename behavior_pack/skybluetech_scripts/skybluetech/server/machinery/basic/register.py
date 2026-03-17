@@ -9,6 +9,8 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerEntityTryPlaceBlockEvent,
     PlayerTryPutCustomContainerItemServerEvent,
     ContainerItemChangedServerEvent,
+    ItemPushInCustomContainerServerEvent,
+    ItemPullOutCustomContainerServerEvent,
     ServerItemUseOnEvent,
 )
 from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId, IsSneaking
@@ -138,3 +140,26 @@ def OnUnload(event):
     if m is not None:
         m.OnDestroy()
         m.OnUnload()
+
+
+@ItemPushInCustomContainerServerEvent.Listen()
+def onItemPushIn(event):
+    # type: (ItemPushInCustomContainerServerEvent) -> None
+    m = pool.GetMachineStrict(event.dimension, event.x, event.y, event.z)
+    if not isinstance(m, ItemContainer):
+        return
+    if (
+        not m.IsValidInput(event.collectionIndex, event.item)
+        or event.collectionIndex not in m.input_slots
+    ):
+        event.cancel()
+
+
+@ItemPullOutCustomContainerServerEvent.Listen()
+def onItemPullOut(event):
+    # type: (ItemPullOutCustomContainerServerEvent) -> None
+    m = pool.GetMachineStrict(event.dimension, event.x, event.y, event.z)
+    if not isinstance(m, ItemContainer):
+        return
+    if event.collectionIndex not in m.output_slots:
+        event.cancel()

@@ -8,7 +8,11 @@
             "minecraft:light_dampening": 0,
             "netease:block_container": {
                 "container_size": 16,
-                "screen_name": "HydroponicBaseUI.main"
+                "screen_name": "HydroponicBaseUI.main",
+                "hopper": {
+                    "input": false,
+                    "output": true
+                }
             },
             "netease:block_entity": {},
             "netease:custom_tips": {

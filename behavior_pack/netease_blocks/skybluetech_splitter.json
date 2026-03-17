@@ -22,7 +22,43 @@
             "netease:block_container": {
                 "container_size": 6,
                 "custom_description": "拆分机",
-                "screen_name": "SplitterUI.main"
+                "screen_name": "SplitterUI.main",
+                "hopper": {
+                    "input": true,
+                    "output": true,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0
+                            ]
+                        }
+                    ]
+                }
             },
             "netease:custom_tips": {
                 "value": "\n§7和重压机相反， 可逆向合成由 3x3 配方制作的物品， 如将铁块拆分为铁锭。"

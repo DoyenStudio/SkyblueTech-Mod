@@ -13,8 +13,39 @@
                 "custom_description": "火力发电机",
                 "hopper": {
                     "input": true,
-                    "input_slot": [],
-                    "output": false
+                    "output": false,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0
+                            ]
+                        }
+                    ]
                 },
                 "screen_name": "ThermalGeneratorUI.main"
             },

@@ -47,7 +47,11 @@
             "netease:block_container": {
                 "container_size": 5,
                 "custom_description": "挖掘钻头",
-                "screen_name": "DiggerUI.main"
+                "screen_name": "DiggerUI.main",
+                "hopper": {
+                    "input": false,
+                    "output": true
+                }
             },
             "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},

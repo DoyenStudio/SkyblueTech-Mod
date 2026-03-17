@@ -197,6 +197,7 @@ class ItemPushInCustomContainerServerEvent(ServerEvent):
         x,  # type: int
         y,  # type: int
         z,  # type: int
+        dimension,  # type: int
         _orig,  # type: dict
     ):
         self.item = item
@@ -211,6 +212,8 @@ class ItemPushInCustomContainerServerEvent(ServerEvent):
         """ 容器方块y坐标 """
         self.z = z
         """ 容器方块z坐标 """
+        self.dimension = dimension
+        """ 容器方块所在的维度id """
         self._orig = _orig
         """ 原始事件数据 """
 
@@ -223,18 +226,20 @@ class ItemPushInCustomContainerServerEvent(ServerEvent):
             x=data["x"],
             y=data["y"],
             z=data["z"],
+            dimension=data["dimension"],
             _orig=data,
         )
 
     def marshal(self):
         # type: () -> dict
         return {
-            "itemDict": self.item.marshal(),
+            "item": self.item.marshal(),
             "collectionName": self.collectionName,
             "collectionIndex": self.collectionIndex,
             "x": self.x,
             "y": self.y,
             "z": self.z,
+            "dimension": self.dimension,
             "_orig": self._orig,
         }
 
@@ -255,6 +260,7 @@ class ItemPullOutCustomContainerServerEvent(ServerEvent):
         x,  # type: int
         y,  # type: int
         z,  # type: int
+        dimension,  # type: int
         _orig,  # type: dict
     ):
         self.item = item
@@ -269,6 +275,8 @@ class ItemPullOutCustomContainerServerEvent(ServerEvent):
         """ 容器方块y坐标 """
         self.z = z
         """ 容器方块z坐标 """
+        self.dimension = dimension
+        """ 容器方块所在的维度id """
         self._orig = _orig
         """ 原始事件数据 """
 
@@ -281,18 +289,20 @@ class ItemPullOutCustomContainerServerEvent(ServerEvent):
             x=data["x"],
             y=data["y"],
             z=data["z"],
+            dimension=data["dimension"],
             _orig=data,
         )
 
     def marshal(self):
         # type: () -> dict
         return {
-            "itemDict": self.item.marshal(),
+            "item": self.item.marshal(),
             "collectionName": self.collectionName,
             "collectionIndex": self.collectionIndex,
             "x": self.x,
             "y": self.y,
             "z": self.z,
+            "dimension": self.dimension,
             "_orig": self._orig,
         }
 

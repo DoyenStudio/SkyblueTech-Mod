@@ -22,7 +22,43 @@
             "netease:block_container": {
                 "container_size": 6,
                 "custom_description": "固液搅拌机",
-                "screen_name": "MixerUI.main"
+                "screen_name": "MixerUI.main",
+                "hopper": {
+                    "input": true,
+                    "output": true,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0
+                            ]
+                        }
+                    ]
+                }
             },
             "minecraft:geometry": {
                 "identifier": "minecraft:geometry.full_block"

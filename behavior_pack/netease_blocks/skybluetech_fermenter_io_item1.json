@@ -11,8 +11,7 @@
                 "level": 2
             },
             "minecraft:light_dampening": 0,
-            "netease:block_entity": {
-            },
+            "netease:block_entity": {},
             "netease:custom_tips": {
                 "value": "\n§7用于作为发酵池的气体输出接口。"
             },
@@ -25,7 +24,63 @@
             "netease:block_container": {
                 "container_size": 5,
                 "custom_description": "发酵物品输入口",
-                "screen_name": "ItemInputInterfaceUI.main"
+                "screen_name": "ItemInputInterfaceUI.main",
+                "hopper": {
+                    "input": true,
+                    "output": false,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3,
+                                4
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3,
+                                4
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3,
+                                4
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3,
+                                4
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3,
+                                4
+                            ]
+                        }
+                    ]
+                }
             },
             "tag:piston_denier": {},
             "tag:skybluetech_container": {}

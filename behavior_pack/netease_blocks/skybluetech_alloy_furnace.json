@@ -11,7 +11,58 @@
             "netease:block_container": {
                 "container_size": 10,
                 "custom_description": "合金炉",
-                "screen_name": "AlloyFurnaceUI.main"
+                "screen_name": "AlloyFurnaceUI.main",
+                "hopper": {
+                    "input": true,
+                    "output": true,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0,
+                                1,
+                                2,
+                                3
+                            ]
+                        }
+                    ]
+                }
             },
             "netease:block_entity": {
                 "movable": false,

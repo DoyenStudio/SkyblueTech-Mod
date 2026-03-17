@@ -80,8 +80,8 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
         ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
 
     @SuperExecutorMeta.execute_super
-    def UnsetDeactiveFlag(self, flag):
-        # type: (int) -> None
+    def UnsetDeactiveFlag(self, flag, flush=True):
+        # type: (int, bool) -> None
         if self.deactive_flags == 0:
             HoverTextDisplayerContentUpdate(
                 self.x,

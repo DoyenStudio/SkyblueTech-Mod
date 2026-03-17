@@ -138,7 +138,8 @@ class BaseMachine(object):
         self.deactive_flags |= flag
         self.OnDeactiveFlagsChanged()
 
-    def UnsetDeactiveFlag(self, flag):
+    def UnsetDeactiveFlag(self, flag, flush=True):
+        # type: (int, bool) -> None
         # type: (int) -> None
         if not self.HasDeactiveFlag(flag):
             return

@@ -6,7 +6,7 @@ from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 class MetalPressRecipe(MachineRecipe):
     recipe_icon_id = machinery.METAL_PRESS
-    render_ui_def_name = "RecipeCheckerUI.metal_press_recipes"
+    render_ui_def_name = "RecipeCheckerLib.metal_press_recipes"
 
     def __init__(
         self,

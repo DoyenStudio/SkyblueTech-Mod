@@ -7,7 +7,7 @@ from ..core import CategoryType, Recipe, Input, Output, InputDisplayer, ItemDisp
 
 class MetalHammerRecipe(Recipe):
     recipe_icon_id = METAL_HAMMER
-    render_ui_def_name = "RecipeCheckerUI.metal_hammer_recipes"
+    render_ui_def_name = "RecipeCheckerLib.metal_hammer_recipes"
     minijei_title = "金属锤锤锭获得"
 
     def __init__(self, input, output_id):

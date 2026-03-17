@@ -24,7 +24,7 @@ def uid():
 class HydroponicBedRecipe(MachineRecipe):
     render_progress = False
     recipe_icon_id = machinery.HYDROPONIC_BED
-    render_ui_def_name = "RecipeCheckerUI.hydroponic_bed_recipes"
+    render_ui_def_name = "RecipeCheckerLib.hydroponic_bed_recipes"
 
     def __init__(
         self,

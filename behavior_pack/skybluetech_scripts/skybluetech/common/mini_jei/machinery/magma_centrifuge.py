@@ -6,7 +6,7 @@ from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 class MagmaCentrifugeRecipe(MachineRecipe):
     recipe_icon_id = machinery.MAGMA_CENTRIFUGE
-    render_ui_def_name = "RecipeCheckerUI.magma_centrifuge_recipes"
+    render_ui_def_name = "RecipeCheckerLib.magma_centrifuge_recipes"
 
     def __init__(self, input_fluid, input_volume, outputs, power_cost, tick_duration):
         # type: (str, float, dict[int, Output], int, int) -> None

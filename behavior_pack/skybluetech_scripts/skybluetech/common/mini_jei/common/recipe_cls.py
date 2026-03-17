@@ -12,7 +12,7 @@ from ..core.render_utils import ItemDisplayer
 
 class GenericCraftingTableRecipe(RecipeBase):
     recipe_icon_id = "minecraft:crafting_table"
-    render_ui_def_name = "RecipeCheckerUI.crafting_table_recipes"
+    render_ui_def_name = "RecipeCheckerLib.crafting_table_recipes"
 
     def __init__(self, base):
         # type: (CraftingRecipeRes | UnorderedCraftingRecipeRes) -> None
@@ -103,7 +103,7 @@ class GenericCraftingTableRecipe(RecipeBase):
 
 class GenericFurnaceRecipe(RecipeBase):
     recipe_icon_id = "minecraft:furnace"
-    render_ui_def_name = "RecipeCheckerUI.furnace_recipes"
+    render_ui_def_name = "RecipeCheckerLib.furnace_recipes"
 
     def __init__(self, base):
         # type: (FurnaceRecipe) -> None

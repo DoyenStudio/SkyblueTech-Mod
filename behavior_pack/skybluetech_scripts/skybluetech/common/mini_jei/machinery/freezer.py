@@ -8,7 +8,7 @@ from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 class FreezerRecipe(MachineRecipe):
     recipe_icon_id = machinery.FREEZER
-    render_ui_def_name = "RecipeCheckerUI.freezer_recipes"
+    render_ui_def_name = "RecipeCheckerLib.freezer_recipes"
 
     def __init__(
         self,

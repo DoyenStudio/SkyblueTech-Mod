@@ -44,6 +44,7 @@
         "ui/ObjUpVeinMinerSettingsUI.json",
         "ui/OilExtractorUI.json",
         "ui/PumpUI.json",
+        "ui/RecipeCheckerLib.json",
         "ui/RecipeCheckerUI.json",
         "ui/RedstoneFurnaceUI.json",
         "ui/RFRepeaterPlantBuildUI.json",

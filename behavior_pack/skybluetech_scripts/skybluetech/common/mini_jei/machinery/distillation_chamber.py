@@ -7,7 +7,7 @@ from .recipe_cls import CategoryType, MachineRecipe, Input, Output, UBaseCtrl
 class DistillatorChamberRecipe(MachineRecipe):
     render_progress = False
     recipe_icon_id = machinery.DISTILLATION_CHAMBER
-    render_ui_def_name = "RecipeCheckerUI.distillation_chamber_recipes"
+    render_ui_def_name = "RecipeCheckerLib.distillation_chamber_recipes"
 
     def __init__(
         self,

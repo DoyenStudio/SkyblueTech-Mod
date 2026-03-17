@@ -6,7 +6,7 @@ from .recipe_cls import CategoryType, MachineRecipe, Input, Output
 
 class CompressorRecipe(MachineRecipe):
     recipe_icon_id = machinery.COMPRESSOR
-    render_ui_def_name = "RecipeCheckerUI.compressor_recipes"
+    render_ui_def_name = "RecipeCheckerLib.compressor_recipes"
 
     def __init__(self, inputs, outputs, power_cost, tick_duration):
         # type: (dict[int, Input], dict[int, Output], int, int) -> None

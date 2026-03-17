@@ -66,6 +66,16 @@ class ItemDisplayer:
         databoard.SetPos((x + sizex / 2 + csizex / 2, y - (sizey / 2 + csizey / 2)))
 
 
+class RFOutputDisplayer:
+    def __init__(self, ctrl, rf):
+        # type: (UBaseCtrl, int) -> None
+        from ....client.ui.machinery.utils import FormatRF
+
+        self.ctrl = ctrl
+        self.rf = rf
+        self.ctrl["rf_label"].asLabel().SetText(FormatRF(rf))
+
+
 def GetDoubleClickDetecter(delay=0.25):
     ticker = [0.0]
 

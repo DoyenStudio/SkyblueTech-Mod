@@ -2,29 +2,19 @@
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
-from ..core import Recipe, Input, Output, CategoryType, ItemDisplayer, FluidDisplayer
+from ...define.id_enum import RF
+from ..core import (
+    Recipe,
+    Input,
+    Output,
+    CategoryType,
+    ItemDisplayer,
+    FluidDisplayer,
+    RFOutputDisplayer,
+)
 
 
-class MachineRecipe(Recipe):
-    render_progress = True
-
-    def __init__(self, inputs, outputs, power_cost, tick_duration):
-        # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]], int, int) -> None
-        Recipe.__init__(self, inputs, outputs)
-        self.power_cost = power_cost
-        self.tick_duration = tick_duration
-
-    def __repr__(self):
-        return "MachineRecipe(%s, %s, %d, %d)" % (
-            self.inputs,
-            self.outputs,
-            self.power_cost,
-            self.tick_duration,
-        )
-
-    def __hash__(self):
-        return hash((tuple(self.inputs), tuple(self.outputs)))
-
+class MachineRecipeBase(Recipe):
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
         input_items = self.inputs.get("item", {})
@@ -69,6 +59,27 @@ class MachineRecipe(Recipe):
                 max_output_fluid_volume,
             )
 
+
+class MachineRecipe(MachineRecipeBase):
+    render_progress = True
+
+    def __init__(self, inputs, outputs, power_cost, tick_duration):
+        # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]], int, int) -> None
+        Recipe.__init__(self, inputs, outputs)
+        self.power_cost = power_cost
+        self.tick_duration = tick_duration
+
+    def __repr__(self):
+        return "MachineRecipe(%s, %s, %d, %d)" % (
+            self.inputs,
+            self.outputs,
+            self.power_cost,
+            self.tick_duration,
+        )
+
+    def __hash__(self):
+        return hash((tuple(self.inputs), tuple(self.outputs)))
+
     def RenderUpdate(self, panel, render_ticks):
         # type: (UBaseCtrl, int) -> None
         if not self.render_progress:
@@ -76,3 +87,32 @@ class MachineRecipe(Recipe):
         td = self.tick_duration * 3
         p = (render_ticks * 2.0) % td / td
         panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
+
+
+class GeneratorRecipe(MachineRecipeBase):
+    def __init__(self, inputs, output_power, tick_duration, outputs=None):
+        # type: (dict[str, dict[int, Input]], int, int, dict[str, dict[int, Output]] | None) -> None
+        _outputs = {CategoryType.ENERGY: {0: Output(RF, output_power)}}
+        if outputs is not None:
+            _outputs.update(outputs)
+        MachineRecipeBase.__init__(self, inputs, _outputs)
+        self.output_power = output_power
+        self.tick_duration = tick_duration
+
+    def RenderInit(self, panel):
+        # type: (UBaseCtrl) -> None
+        MachineRecipeBase.RenderInit(self, panel)
+        self.rf_output_renderer = RFOutputDisplayer(
+            panel["output_power"], self.output_power
+        )
+
+    def __repr__(self):
+        return "GeneratorRecipe(%s, %s, %d, %d)" % (
+            self.inputs,
+            self.outputs,
+            self.output_power,
+            self.tick_duration,
+        )
+
+    def __hash__(self):
+        return hash((tuple(self.inputs), tuple(self.outputs), self.tick_duration))

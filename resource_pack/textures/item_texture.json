@@ -118,6 +118,9 @@
         "skybluetech:heavy_lava_bucket": {
             "textures": "textures/items/buckets/heavy_lava_bucket"
         },
+        "skybluetech:hydrogen_bucket": {
+            "textures": "textures/items/buckets/hydrogen_bucket"
+        },
         "skybluetech:invar_dust": {
             "textures": "textures/items/dusts/invar_dust"
         },

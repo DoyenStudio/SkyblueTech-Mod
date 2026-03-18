@@ -292,6 +292,9 @@
         "skybluetech:rough_rubber": {
             "textures": "textures/items/rough_rubber"
         },
+        "skybluetech:searcher": {
+            "textures": "textures/items/searcher"
+        },
         "skybluetech:seven": {
             "textures": "textures/items/7"
         },
@@ -397,6 +400,9 @@
         "skybluetech:upgrader_basic_speed": {
             "textures": "textures/items/upgraders/upgrader_basic_speed"
         },
+        "skybluetech:upgrader_generic_autostop": {
+            "textures": "textures/items/upgraders/upgrader_generic_autostop"
+        },
         "skybluetech:upgrader_generic_expansion": {
             "textures": "textures/items/upgraders/upgrader_generic_expansion"
         },
@@ -414,9 +420,6 @@
         },
         "skybluetech:wrench_iron": {
             "textures": "textures/items/wrench_iron"
-        },
-        "skybluetech:hydrogen_bucket": {
-            "textures": "textures/items/buckets/hydrogen_bucket"
         }
     },
     "texture_name": "atlas.items"

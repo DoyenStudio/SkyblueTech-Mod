@@ -273,3 +273,4 @@ tile.skybluetech:gas_burning_generator.name=小型燃气发电机
 tile.skybluetech:hydrogen.name=氢气
 tile.skybluetech:flowing_hydrogen.name=流动氢气
 item.skybluetech:hydrogen_bucket.name=氢气桶
+item.skybluetech:searcher.name=搜索

@@ -43,6 +43,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         self.size_x = 15
         self.size_y = 64
         self.size_z = 15
+        self._next_pos = (0, 319, 0)
         self._cached_mining_finished = None
         self._fast_skiped = False
         self.init_mining_area()
@@ -50,6 +51,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             self.init_mine_pos_iterator()
         else:
             self.mine_pos_iterator = None
+            self.sync.work_mode = MiniMinerUISync.WorkMode.FINISHED
         self.init_flags()
 
     @SuperExecutorMeta.execute_super
@@ -59,19 +61,20 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
     def OnFluidSlotUpdate(self):
         if self.fluid_id != USE_FLUID or self.fluid_volume < VOLUME_COST_ONCE:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-            # code: UnsetDeactiveFlag first use HasDeactiveFlag
-        elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT):
+        else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
         if not self.mining_finished:
-            if not self.fast_skip():
-                return
-            if self.IsActive():
-                if self.ProcessOnce():
-                    self.run_once()
-                    self.OnSync()
+            can_work = self.go_next()
+            if can_work:
+                if not self.fast_skip():
+                    return
+                if self.IsActive():
+                    if self.ProcessOnce():
+                        self.run_once()
+                        self.OnSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf
@@ -79,6 +82,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         self.sync.fluid_id = self.fluid_id
         self.sync.fluid_volume = self.fluid_volume
         self.sync.max_volume = self.max_fluid_volume
+        self.sync.digging_pos = self._next_pos
         self.sync.MarkedAsChanged()
 
     @SuperExecutorMeta.execute_super
@@ -91,7 +95,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
     @SuperExecutorMeta.execute_super
     def OnDeactiveFlagsChanged(self):
         self.update_gui_states()
-    
+
     def init_flags(self):
         if self.fluid_id != USE_FLUID or self.fluid_volume < VOLUME_COST_ONCE:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
@@ -112,27 +116,14 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
 
     def fast_skip(self):
         if self._fast_skiped:
-            print "fast skip 1"
+            # print "fast skip 1"
             return True
-        elif self.mine_pos_iterator is None:
-            print "fast skip 2"
-            self._fast_skiped = True
-            return True
-        try:
-            x, y, z = next(self.mine_pos_iterator)
-        except StopIteration:
-            self.last_scanned_y = self.y
-            self._fast_skiped = True
-            self.mining_finished = True
-            return True
-        if self.last_scanned_y is None:
-            self.last_scanned_y = y
-        self.last_scanned_y = max(self.last_scanned_y, y)
+        x, y, z = self._next_pos
         block_id = GetBlockName(self.dim, (x, y, z))
         if block_id is None or not self.can_mine_block(block_id):
             return False
         else:
-            print "fast skip 3", block_id
+            # print "fast skip 3", block_id
             self._fast_skiped = True
             return True
 
@@ -145,7 +136,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         elif myflags & flags.DEACTIVE_FLAG_POWER_LACK:
             self.sync.work_mode = MiniMinerUISync.WorkMode.POWER_LACK
         elif myflags != 0:
-            print "fast skip 4", myflags
+            # print "myflags != 0", myflags
             self.sync.work_mode = MiniMinerUISync.WorkMode.OTHER
         else:
             self.sync.work_mode = MiniMinerUISync.WorkMode.WORKING
@@ -164,18 +155,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         )
 
     def run_once(self):
-        if self.mine_pos_iterator is None:
-            return
-        try:
-            x, y, z = next(self.mine_pos_iterator)
-            self.sync.digging_pos = (x, y, z)
-            self.last_scanned_y = y
-        except StopIteration:
-            self.mine_pos_iterator = None
-            self.mining_finished = True
-            self.sync.work_mode = self.sync.WorkMode.FINISHED
-            self.sync.digging_pos = (0, 0, 0)
-            return
+        x, y, z = self._next_pos
         self.fluid_volume -= VOLUME_COST_ONCE
         if self.fluid_volume <= 0:
             self.fluid_id = None
@@ -192,6 +172,19 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
                 SpawnDroppedItem(self.dim, (self.x, self.y + 1, self.z), rest)
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
         self.SelfRequireFluid()
+
+    def go_next(self):
+        if self.mine_pos_iterator is None:
+            return False
+        try:
+            self._next_pos = next(self.mine_pos_iterator)
+            self.last_scanned_y = self._next_pos[1]
+            return True
+        except StopIteration:
+            self.mine_pos_iterator = None
+            self.mining_finished = True
+            self.sync.work_mode = self.sync.WorkMode.FINISHED
+            return False
 
     def mine_and_collect(self, mx, my, mz):
         # type: (int, int, int) -> list[Item]

@@ -1,12 +1,12 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from ....common.define.id_enum import machinery, minijei_concepts
-from .recipe_cls import CategoryType, Recipe, Input, Output
+from ....common.define.id_enum import machinery
+from ..core import CategoryType, Input, Output
+from .recipe_cls import GeneratorRecipe
 
 
-class GasBurningRecipe(Recipe):
+class GasBurningGeneratorRecipe(GeneratorRecipe):
     recipe_icon_id = machinery.GAS_BURNING_GENERATOR
-    render_ui_def_name = "RecipeCheckerUI.gas_burning_generator_recipes"
+    render_ui_def_name = "RecipeCheckerLib.gas_burning_generator_recipes"
 
     def __init__(
         self,
@@ -16,12 +16,16 @@ class GasBurningRecipe(Recipe):
         output_gas_id=None,  # type: str | None
         output_gas_volume=0,  # type: float
     ):
-        outputs = {CategoryType.ENERGY: {0: Output(minijei_concepts.RF, output_power)}}
-        if output_gas_id is not None:
-            outputs[CategoryType.FLUID] = {0: Output(output_gas_id, output_gas_volume)}
-        Recipe.__init__(
+        outputs = (
+            {CategoryType.FLUID: {1: Output(output_gas_id, output_gas_volume)}}
+            if output_gas_id is not None
+            else None
+        )
+        GeneratorRecipe.__init__(
             self,
             {CategoryType.FLUID: {0: Input(gas_id, once_burning_volume)}},
+            output_power,
+            1,
             outputs,
         )
         self.gas_id = gas_id

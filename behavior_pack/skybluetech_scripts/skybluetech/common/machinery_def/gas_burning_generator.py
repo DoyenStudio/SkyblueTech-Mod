@@ -1,7 +1,7 @@
 # coding=utf-8
 from ..define.id_enum.fluids import METHANE
-from ..mini_jei.machinery.gas_burning_generator import GasBurningRecipe
+from ..mini_jei.machinery.gas_burning_generator import GasBurningGeneratorRecipe
 
 recipes = {
-    METHANE: GasBurningRecipe(METHANE, 8, 160),
+    METHANE: GasBurningGeneratorRecipe(METHANE, 8, 160),
 }

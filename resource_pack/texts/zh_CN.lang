@@ -102,6 +102,7 @@ item.skybluetech:transmitter_visual_checker.name=传输网络可视化查看器
 item.skybluetech:transmitter_wrench.name=管道扳手
 item.skybluetech:upgrader_basic_energy.name=控制电路： 高频电容约束
 item.skybluetech:upgrader_basic_speed.name=控制电路： 辅助过载线圈
+item.skybluetech:upgrader_generic_autostop.name=控制电路： 满能载控
 item.skybluetech:upgrader_generic_expansion.name=控制电路： 范围扩增
 item.skybluetech:upgrader_generic_split.name=特化升级： 泛用分拣过滤
 item.skybluetech:upgrader_spec_magma_factory.name=特化控制电路： 高热熔岩工厂

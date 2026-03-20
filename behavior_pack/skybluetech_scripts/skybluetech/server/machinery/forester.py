@@ -1,7 +1,5 @@
 # coding=utf-8
-#
 from collections import deque
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockName, SetBlock
 from skybluetech_scripts.tooldelta.api.server.entity import (
@@ -46,7 +44,6 @@ class Forester(GUIControl, ItemContainer, SPControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = ForesterUISync.NewServer(self).Activate()
         self.CallSync()
 

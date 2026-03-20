@@ -1,6 +1,4 @@
 # coding=utf-8
-
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import DISTILLATION_CHAMBER as MACHINE_ID
 from ...common.machinery_def.distillation_chamber import (
@@ -33,7 +31,6 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = DistillationChamberUISync.NewServer(self).Activate()
         self.locked_recipe_idx = None
         self.output_rate = 0

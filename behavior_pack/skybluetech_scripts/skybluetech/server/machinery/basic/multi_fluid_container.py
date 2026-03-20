@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.item import ItemExists
 from skybluetech_scripts.tooldelta.api.server.player import (
@@ -32,8 +30,12 @@ requireLibraryFunc._imported = False
 
 
 class FluidSlot(object):
-    def __init__(self, block_entity_data, index, max_volume):
-        # type: (BlockEntityData, int, float) -> None
+    def __init__(
+        self,
+        block_entity_data,
+        index,  # type: int
+        max_volume,  # type: float
+    ):
         self.bdata = block_entity_data
         self.index = index
         self.max_volume = max_volume
@@ -107,7 +109,6 @@ class MultiFluidContainer(object):
     allow_player_use_bucket_pull = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.dim = dim
         self.xyz = (x, y, z)
         self.bdata = block_entity_data

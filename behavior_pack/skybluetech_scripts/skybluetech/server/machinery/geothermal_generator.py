@@ -1,6 +1,5 @@
 # coding=utf-8
 import random
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.define import Item
 from ...common.define import flags
@@ -44,7 +43,6 @@ class GeoThermalGenerator(
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
         self.CallSync()
         self.power = 0

@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
     GetPos,
@@ -43,7 +41,6 @@ class Charger(GUIControl, UpgradeControl):
     store_rf_max = 10000
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ChargerUISync.NewServer(self).Activate()
         self.stored_item = None

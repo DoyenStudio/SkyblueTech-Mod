@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
@@ -58,7 +57,6 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
@@ -188,7 +186,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         if rf_out <= 0:
             return
         output_io = self.get_energy_out_io()
-        ok, overflow = output_io.GeneratePowerWithOverflow(rf_out)
+        ok, overflow = output_io.GeneratePower(rf_out)
         core.add_energy(overflow, from_overflow=True)
         self._last_output += rf_out - overflow
         if not ok and overflow > 0:

@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from ...common.define.id_enum.machinery import MAGMA_CENTRIFUGE as MACHINE_ID
 from ...common.machinery_def.magma_centrifuge import recipes as Recipes
 from ...common.ui_sync.machinery.magma_centrifuge import (
@@ -22,7 +20,6 @@ class MagmaCentrifuge(MixedProcessor):
     upgrade_slots = 4
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = MagmaCentrifugeUISync.NewServer(self).Activate()
         self.CallSync()

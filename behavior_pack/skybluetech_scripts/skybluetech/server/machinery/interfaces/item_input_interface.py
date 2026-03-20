@@ -1,7 +1,6 @@
 # coding=utf-8
 #
 from weakref import ref
-from mod.server.blockEntityData import BlockEntityData
 from ..basic import ItemContainer, RegisterMachine
 from .base_interface import BaseInterface
 
@@ -16,7 +15,6 @@ class ItemInputInterface(BaseInterface, ItemContainer):
     output_slots = ()
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         BaseInterface.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.on_slot_update_cb_ref = None

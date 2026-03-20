@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
 )
@@ -52,7 +50,6 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.dx, self.dy, self.dz = GetOppositeDirFromFacing(
             GetBlockFacingDir(self.dim, (x, y, z))
         )

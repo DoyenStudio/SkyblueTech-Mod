@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
@@ -39,7 +38,6 @@ class ElectricCrafter(GUIControl, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = ElectricCrafterUISync.NewServer(self).Activate()
         self.try_update_template()
         self.CallSync()

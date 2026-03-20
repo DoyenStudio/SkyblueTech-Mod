@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import ItemExists
 from ..basic import RegisterMachine
@@ -16,7 +14,6 @@ class CreativeTank(BasicTank):
     max_fluid_volume = INFINITY
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         BasicTank.__init__(self, dim, x, y, z, block_entity_data)
 
     def AddFluid(self, fluid_id, fluid_volume, depth=0):

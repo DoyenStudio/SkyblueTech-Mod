@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData  # noqa: F401
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define.flags import DEACTIVE_FLAG_POWER_LACK
 from .base_machine import BaseMachine
@@ -22,7 +20,6 @@ class BaseSpeedControl(BaseMachine):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.reduce_ticks = 1
         self._cached_ticks_left = self.bdata[K_TICKS_LEFT] or self.origin_process_ticks
 

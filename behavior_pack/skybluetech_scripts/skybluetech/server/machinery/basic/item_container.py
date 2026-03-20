@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events import (
     PlayerTryPutCustomContainerItemClientEvent,
@@ -43,7 +41,6 @@ class ItemContainer(object):
     output_slots = ()  # type: tuple[int, ...]
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.dim = dim
         self.xyz = (x, y, z)
 

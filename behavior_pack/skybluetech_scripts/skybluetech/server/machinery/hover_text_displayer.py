@@ -1,6 +1,4 @@
 # coding=utf-8
-
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import HOVER_TEXT_DISPLAYER as MACHINE_ID

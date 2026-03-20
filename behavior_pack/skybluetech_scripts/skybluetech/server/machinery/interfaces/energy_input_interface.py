@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from ..basic import BaseMachine, RegisterMachine
 from .base_interface import BaseInterface
 

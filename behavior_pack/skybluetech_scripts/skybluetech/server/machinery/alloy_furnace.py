@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import ALLOY_FURNACE as MACHINE_ID
 from ...common.machinery_def.alloy_furnace import recipes as Recipes
@@ -19,7 +17,6 @@ class AlloyFurnace(BaseProcessor):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = AlloyFurnaceUISync.NewServer(self).Activate()
         self.OnSync()
 

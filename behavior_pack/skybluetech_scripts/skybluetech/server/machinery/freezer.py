@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from ...common.events.machinery.freezer import FreezerModeChangedEvent
 from ...common.define.id_enum.machinery import FREEZER as MACHINE_ID
 from ...common.machinery_def.freezer import recipes as Recipes
@@ -24,7 +22,6 @@ class Freezer(MixedProcessor):
     upgrade_slots = 4
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FreezerUISync.NewServer(self).Activate()
         self.CallSync()

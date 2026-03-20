@@ -1,7 +1,6 @@
 # coding=utf-8
 #
 from weakref import ref
-from mod.server.blockEntityData import BlockEntityData
 from ....common.ui_sync.machinery.fluid_interface import FluidInterfaceUISync
 from ..basic import FluidContainer, GUIControl, RegisterMachine
 from .base_interface import BaseInterface
@@ -17,7 +16,6 @@ class FluidOutputInterface(BaseInterface, FluidContainer, GUIControl):
     max_fluid_volume = 8000
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         BaseInterface.__init__(self, dim, x, y, z, block_entity_data)
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidInterfaceUISync.NewServer(self).Activate()

@@ -1,6 +1,4 @@
 # coding=utf-8
-# lang: py2
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetLiquidBlock,
     GetBlockNameAndAux,
@@ -44,7 +42,6 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = PumpUISync.NewServer(self).Activate()
         self.CallSync()
         self.last_over_one_bucket = False

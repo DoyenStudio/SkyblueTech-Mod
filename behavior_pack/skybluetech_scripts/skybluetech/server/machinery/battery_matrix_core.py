@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockEntityDataDict,
@@ -30,8 +28,7 @@ class BatteryMatrixCore(BaseMachine):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
-        self.slots = []  # type: list[ BatterySlotAbstract]
+        self.slots = []  # type: list[BatterySlotAbstract]
         self.update_core_data()
         self._is_cleaning_slot = False
 

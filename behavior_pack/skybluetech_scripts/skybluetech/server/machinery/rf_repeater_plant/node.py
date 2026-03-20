@@ -1,6 +1,5 @@
 # coding=utf-8
 import uuid
-from mod.server.blockEntityData import BlockEntityData
 from mod.server.extraServerApi import GetLevelId
 from mod_log import logger
 from skybluetech_scripts.tooldelta.events.server import (

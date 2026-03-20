@@ -1,6 +1,5 @@
 # coding=utf-8
 import random
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import SetCommand, GetNameById

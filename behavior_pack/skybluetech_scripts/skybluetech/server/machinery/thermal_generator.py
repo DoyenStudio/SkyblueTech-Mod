@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
@@ -11,6 +9,7 @@ from .basic import (
     BaseGenerator,
     ItemContainer,
     GUIControl,
+    UpgradeControl,
     WorkRenderer,
     RegisterMachine,
 )
@@ -30,10 +29,9 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = ThermalGeneratorUISync.NewServer(self).Activate()
-        self.CallSync()
         self.is_burning = self.burn_seconds_left > 0
+        self.CallSync()
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -68,26 +66,18 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
-        if self.store_rf < self.store_rf_max and self.HasDeactiveFlag(
-            flags.DEACTIVE_FLAG_NO_INPUT
-        ):
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-            self.next_burn()
-
-    def OnTryActivate(self):
-        self.GeneratePower(0)
-        if (
-            self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
-            and self.store_rf < self.store_rf_max
-        ):
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
+        self.next_burn()
 
     @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
         pass
 
+    @SuperExecutorMeta.execute_super
+    def UnsetDeactiveFlag(self, flag, flush=True):
+        pass
+
     def next_burn(self):
-        if self.store_rf >= self.store_rf_max:
+        if self.PowerFull():
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
             return False
         mainSlotItem = self.GetSlotItem(0)

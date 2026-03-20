@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from ...common.define.id_enum.machinery import MAGMA_FURNACE as MACHINE_ID
 from ...common.machinery_def.magma_furnace import recipes as Recipes
 from ...common.ui_sync.machinery.magma_furnace import MagmaFurnaceUISync
@@ -20,7 +18,6 @@ class MagmaFurnace(MixedProcessor):
     upgrade_slots = 4
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = MagmaFurnaceUISync.NewServer(self).Activate()
         self.CallSync()

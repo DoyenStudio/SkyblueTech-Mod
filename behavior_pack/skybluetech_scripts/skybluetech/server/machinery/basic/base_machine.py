@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.server.block import (
     ServerPlaceBlockEntityEvent,
     BlockNeighborChangedServerEvent,
@@ -32,7 +30,6 @@ class BaseMachine(object):
     __metaclass__ = SuperExecutorMeta
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         "超类主要用于获取方块实体数据, 设置 bdata(BlockEntityData) 和获取能量属性; 执行 OnLoad()。"
         self.bdata = block_entity_data
         self.dim = dim

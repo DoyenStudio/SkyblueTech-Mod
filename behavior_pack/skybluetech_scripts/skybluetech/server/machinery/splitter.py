@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
@@ -35,7 +33,6 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = SplitterUISync.NewServer(self).Activate()
         self.OnSync()
         self.TryStartNext()

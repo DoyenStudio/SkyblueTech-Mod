@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from ...common.define.id_enum.machinery import OIL_EXTRACTOR as MACHINE_ID
 from ...common.machinery_def.oil_extractor import recipes as Recipes
 from ...common.ui_sync.machinery.oil_extractor import OilExtractorUISync
@@ -19,7 +17,6 @@ class OilExtractor(MixedProcessor):
     upgrade_slot_start = 1
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = OilExtractorUISync.NewServer(self).Activate()
         self.OnSync()

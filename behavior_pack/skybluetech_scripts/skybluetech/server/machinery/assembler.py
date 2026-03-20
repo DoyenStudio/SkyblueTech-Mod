@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockName
 from skybluetech_scripts.tooldelta.events.server import (
@@ -38,7 +36,6 @@ class Assembler(GUIControl, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = AssemblerUISync.NewServer(self).Activate()
         self.power = 0
         self.delay = 20

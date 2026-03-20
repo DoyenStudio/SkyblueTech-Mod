@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData  # noqa: F401
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.item import ItemExists
 from skybluetech_scripts.tooldelta.api.server.player import (
@@ -57,7 +55,6 @@ class FluidContainer(object):
     allow_player_use_bucket_pull = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.dim = dim
         self.xyz = (x, y, z)
         if self.fluid_io_fix_mode == 1:

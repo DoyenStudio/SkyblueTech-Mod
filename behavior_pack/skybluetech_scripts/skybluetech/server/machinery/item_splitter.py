@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
@@ -34,7 +33,6 @@ class ItemSplitter(GUIControl, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = ItemSplitterUISync.NewServer(self).Activate()
         self._cached_recorded_settings = None
 

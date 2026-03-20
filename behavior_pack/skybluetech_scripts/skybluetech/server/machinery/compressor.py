@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import COMPRESSOR as MACHINE_ID
 from ...common.machinery_def.compressor import recipes as Recipes
@@ -20,7 +18,6 @@ class Compressor(BaseProcessor):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = CompressorUISync.NewServer(self).Activate()
         self.OnSync()
 

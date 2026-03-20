@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import PlayerUseItemToPos, MayPlace
 from skybluetech_scripts.tooldelta.events.server import (
@@ -45,7 +44,6 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = WindGeneratorUISync.NewServer(self).Activate()
         self.t = 0
         states = GetBlockStates(self.dim, (self.x, self.y, self.z))

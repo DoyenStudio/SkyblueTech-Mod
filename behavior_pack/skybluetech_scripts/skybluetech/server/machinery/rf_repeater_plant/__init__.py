@@ -1,7 +1,4 @@
 # coding=utf-8
-
-# coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.server import (
     ServerEntityTryPlaceBlockEvent,
     ServerBlockUseEvent,
@@ -54,7 +51,6 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
     energy_io_mode = (1, 1, 0, 0, 0, 0)
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = RFRepeaterPlantUISync.NewServer(self).Activate()

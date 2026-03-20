@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
     UpdateBlockStates,
@@ -28,7 +26,6 @@ class BasicTank(BaseMachine, FluidContainer, ItemContainer, GUIControl):
     output_slots = (1,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = GeneralTankUISync.NewServer(self).Activate()

@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from ...common.events.machinery.fluid_splitter import (
     FluidSplitterSettingsListUpdate,
@@ -39,7 +38,6 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = FluidSplitterUISync.NewServer(self).Activate()
         self.CallSync()
         self._cached_recorded_settings = None

@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.general import ServerInitCallback
 from skybluetech_scripts.tooldelta.api.common import AsTimerFunc
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
@@ -22,7 +20,6 @@ class CreativePowerAcceptor(BaseMachine):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         lastUpdatePool[(self.dim, self.x, self.y, self.z)] = -2
         updatePool[(self.dim, self.x, self.y, self.z)] = 0

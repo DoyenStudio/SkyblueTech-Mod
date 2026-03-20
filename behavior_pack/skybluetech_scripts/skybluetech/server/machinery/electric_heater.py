@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import ELECTRIC_HEATER as MACHINE_ID
@@ -21,7 +19,6 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        # type: (int, int, int, int, BlockEntityData) -> None
         self.sync = ElectricHeaterUISync.NewServer(self).Activate()
         self.inited = False
         self._cached_running_power = self.bdata[K_SET_POWER] or 0

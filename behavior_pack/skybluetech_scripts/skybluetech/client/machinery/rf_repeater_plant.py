@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.api.client import (
     CreateShapeFactory,
@@ -18,11 +17,6 @@ from .utils.mod_block_event import (
     asModBlockRemovedListener,
 )
 from ...common.machinery.utils.block_sync import BlockSync
-
-# TYPE CHECKING
-if 0:
-    from mod.client.component.drawingShapeCompClient import DrawingShapeCompClient
-# TYPE CHECKING END
 
 block_sync = BlockSync(MACHINE_ID)
 lasers = {}  # type: dict[tuple[int, int, int], dict[tuple[int, int, int], WireLaser]]

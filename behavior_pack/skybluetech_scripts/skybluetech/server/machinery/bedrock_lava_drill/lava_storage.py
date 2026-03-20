@@ -1,6 +1,6 @@
 # coding=utf-8
 import random
-from skybluetech_scripts.tooldelta.internal import ServerLevelId
+from mod.server.extraServerApi import GetLevelId
 from skybluetech_scripts.tooldelta.api.server import GetExtraData, SetExtraData, GetSeed
 
 # 和 MC 的区块概念不同,
@@ -54,11 +54,11 @@ def get_nearby_lava_storage(chunk_x, chunk_y):
 
 
 def save_lava_storages():
-    SetExtraData(ServerLevelId, K_LAVA_SOURCES, cached_lava_sources)
+    SetExtraData(GetLevelId(), K_LAVA_SOURCES, cached_lava_sources)
 
 
 def load_lava_storages():
-    s = GetExtraData(ServerLevelId, K_LAVA_SOURCES, {})
+    s = GetExtraData(GetLevelId(), K_LAVA_SOURCES, {})
     cached_lava_sources.update(s)
 
 
@@ -72,7 +72,7 @@ def reduce_chunk_lava_storage(chunk_x, chunk_y, reduce_volume):
     cached_lava_sources[(chunk_x, chunk_y)] -= reduce_volume
 
 
-def pump_lava(chunk_x, chunk_y, max_pump_volume):
+def pump_deepslate_lava(chunk_x, chunk_y, max_pump_volume):
     # type: (int, int, int) -> int
     rest_volume = max_pump_volume
     seed = GetSeed()
@@ -82,6 +82,8 @@ def pump_lava(chunk_x, chunk_y, max_pump_volume):
             if storage_vol >= rest_volume:
                 reduce_chunk_lava_storage(_x, _y, max_pump_volume)
                 return max_pump_volume
+            elif storage_vol <= 0:
+                continue
             else:
                 set_chunk_lava_storage(_x, _y, 0)
                 rest_volume -= storage_vol

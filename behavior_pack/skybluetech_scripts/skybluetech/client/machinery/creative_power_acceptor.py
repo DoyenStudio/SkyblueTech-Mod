@@ -1,6 +1,4 @@
 # coding=utf-8
-#
-from mod.server.blockEntityData import BlockEntityData
 from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.events.client.block import (
@@ -14,16 +12,14 @@ from ...common.events.machinery.creative_power_acceptor import (
 from ...common.define.id_enum.machinery import CREATIVE_POWER_ACCEPTOR as MACHINE_ID
 from .utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 
-# TYPE_CHECKING
 if 0:
-    from mod.client.component.drawingShapeCompClient import DrawingShapeCompClient
-# TYPE_CHECKING END
+    from typing import Any
 
 CF = GetEngineCompFactory()
 INFINITY = float("inf")
 
 
-texts = {}  # type: dict[tuple[int, tuple[float, float, float]], DrawingShapeCompClient]
+texts = {}  # type: dict[tuple[int, tuple[float, float, float]], Any]
 
 
 def addText(dim, pos, default_text=""):

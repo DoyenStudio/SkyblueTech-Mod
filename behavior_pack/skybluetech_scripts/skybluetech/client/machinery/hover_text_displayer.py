@@ -1,6 +1,4 @@
 # coding=utf-8
-
-from mod.server.blockEntityData import BlockEntityData
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
@@ -14,13 +12,11 @@ from ...common.events.machinery.hover_text_displayer import (
 from ...common.machinery.utils.block_sync import BlockSync
 from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
-# TYPE_CHECKING
 if 0:
-    from mod.client.component.drawingShapeCompClient import DrawingShapeCompClient
-# TYPE_CHECKING END
+    from typing import Any
 
 block_sync = BlockSync(MACHINE_ID)
-shapes = {}  # type: dict[tuple[int, int, int], DrawingShapeCompClient]
+shapes = {}  # type: dict[tuple[int, int, int], Any]
 
 
 def add_text(pos, default_text=""):

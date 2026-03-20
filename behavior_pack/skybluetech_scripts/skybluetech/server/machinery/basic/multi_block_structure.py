@@ -35,8 +35,7 @@ from .base_machine import BaseMachine, GUIControl
 
 
 if 0:
-    from typing import TypeVar
-    from mod.common.component.blockPaletteComp import BlockPaletteComponent
+    from typing import TypeVar, Any
     from .base_machine import BaseMachine
 
     MT = TypeVar("MT", bound=BaseMachine)
@@ -267,7 +266,7 @@ class DetectArea(object):
         return DEACTIVE_FLAG_STRUCTURE_BROKEN
 
     def updateFunctionalBlocks(self, palette, co_x, co_y, co_z):
-        # type: (BlockPaletteComponent, int, int, int) -> None
+        # type: (Any, int, int, int) -> None
         self.functional_block_poses = {
             block_id: [
                 (
@@ -330,7 +329,7 @@ class StructureBlockPalette(object):
                     block_removed_listen_pool.update(block_id)
 
     def Compare(self, block_palette, dim, co_x, co_y, co_z, cx, cy, cz):
-        # type: (BlockPaletteComponent, int, int, int, int, int, int, int) -> bool
+        # type: (Any, int, int, int, int, int, int, int) -> bool
         """
         比较方块调色板内容是否与此调色板匹配。
 
@@ -356,7 +355,7 @@ class StructureBlockPalette(object):
         return True
 
     def GetLackedBlocks(self, block_palette):
-        # type: (BlockPaletteComponent) -> dict[str, int] | None
+        # type: (Any) -> dict[str, int] | None
         for block_id, count in self.require_blocks_count.items():
             if block_palette.GetBlockCountInBlockPalette(block_id) < count:
                 return {

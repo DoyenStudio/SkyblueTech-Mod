@@ -2,7 +2,7 @@
 from mod.client.extraClientApi import GetBookManager
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 
-
+BOOK_IDENTIFIER = "skybluetech_guidance"
 BookMgr = GetBookManager()
 BaseComp = BookMgr.GetBaseCompCls()
 BasePage = BookMgr.GetBasePageCls()

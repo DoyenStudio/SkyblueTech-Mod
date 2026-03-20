@@ -12,7 +12,7 @@ from .room import _regist_content
 if 0:
     from typing import TypeVar
 
-    ToolDeltaScreenT = TypeVar("ToolDeltaScreenT", bound=type[ToolDeltaScreen])
+    ToolDeltaScreenT = TypeVar("ToolDeltaScreenT", bound="type[ToolDeltaScreen]")
 # TYPE_CHECKING END
 
 
@@ -54,25 +54,26 @@ def GetScreen(key):
 
 @UiInitFinishedEvent.Listen(10)
 def onUiInit(_):
-    for key, (
+    # (UiInitFinishedEvent) -> None
+    for ui_key, (
         screen_cls,
         cls_path,
         bound_ui_name,
         is_proxy,
     ) in registeredToolDeltaScreenClasses.items():
         if is_proxy:
-            ui_base_cls = screen_cls._register_as_proxy(key, bound_ui_name)
+            ui_base_cls = screen_cls._register_as_proxy(ui_key, bound_ui_name)
             path = _regist_content(ui_base_cls)
             NSManagerIns.RegisterScreenProxy(bound_ui_name, path)
         else:
-            ui_base_cls = screen_cls._register_as_screen(key)
+            ui_base_cls = screen_cls._register_as_screen(ui_key)
             path = _regist_content(ui_base_cls)
-            res = RegisterUI(GetModName(), key, path, bound_ui_name)
+            res = RegisterUI(GetModName(), ui_key, path, bound_ui_name)
             if not res:
                 logger.error(
                     "RegisterUI failed: {}, {}".format(cls_path, bound_ui_name)
                 )
-        registeredScreens[key] = screen_cls
+        registeredScreens[ui_key] = screen_cls
 
 
 __all__ = ["RegistToolDeltaScreen", "GetScreen"]

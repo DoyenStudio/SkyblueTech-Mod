@@ -6,8 +6,8 @@ from .elem_comp import UBaseCtrl
 from .utils import UIPath, Binder
 
 if 0:
-    from mod.client.ui.screenNode import ScreenNode as _ScreenNode
-    from mod.client.ui.CustomUIScreenProxy import (
+    from ._ui_typing import ScreenNode as _ScreenNode
+    from ._ui_typing import (
         CustomUIScreenProxy as _CustomUIControlProxy,
     )
 

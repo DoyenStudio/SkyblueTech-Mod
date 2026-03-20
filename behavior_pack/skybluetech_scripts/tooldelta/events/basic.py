@@ -23,8 +23,9 @@ class ServerEvent(BaseEvent):
         Args:
             priority (int, optional): 优先级, 默认为 0
         """
-        _requireServerListenerModule()
-        return ServerListenEvent(cls, priority, static=True)
+        from .server_event_listener import ListenEvent
+
+        return ListenEvent(cls, priority, static=True)
 
 
 class ClientEvent(BaseEvent):
@@ -38,8 +39,9 @@ class ClientEvent(BaseEvent):
         Args:
             priority (int, optional): 优先级, 默认为 0
         """
-        _requireClientListenerModule()
-        return ClientListenEvent(cls, priority, inner_priority, static=True)
+        from .client_event_listener import ListenEvent
+
+        return ListenEvent(cls, priority, inner_priority, static=True)
 
 
 class CustomC2SEvent(ServerEvent):
@@ -93,23 +95,3 @@ def NewClientEventData():
 
 def NewServerEventData():
     return GetServer().CreateEventData()
-
-
-_serverListenerModLoaded = False
-_clientListenerModLoaded = False
-
-
-def _requireServerListenerModule():
-    global ServerListenEvent, _serverListenerModLoaded
-    if not _serverListenerModLoaded:
-        from .server_event_listener import ListenEvent as ServerListenEvent
-
-        _serverListenerModLoaded = True
-
-
-def _requireClientListenerModule():
-    global ClientListenEvent, _clientListenerModLoaded
-    if not _clientListenerModLoaded:
-        from .client_event_listener import ListenEvent as ClientListenEvent
-
-        _clientListenerModLoaded = True

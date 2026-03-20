@@ -1,9 +1,10 @@
 # TYPE_CHECKING
 if 0:
-    from typing import Callable, TypeVar, ParamSpec
+    import typing
+    from typing import Callable, TypeVar
 
     T = TypeVar("T")
-    PT = ParamSpec("PT")
+    PT = typing.ParamSpec("PT")
 # TYPE_CHECKING END
 
 

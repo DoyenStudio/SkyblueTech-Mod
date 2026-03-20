@@ -6,14 +6,14 @@ from ...general import ClientUninitCallback, ServerUninitCallback
 
 # TYPE_CHECKING
 if 0:
-    from typing import Callable, Any, ParamSpec
-    from mod.common.utils.timer import CallLater
+    import typing
+    from typing import Callable, Any
 
-    PT = ParamSpec("PT")
+    PT = typing.ParamSpec("PT")
 # TYPE_CHECKING END
 
-cTimerPool = set()  # type: set[CallLater]
-sTimerPool = set()  # type: set[CallLater]
+cTimerPool = set()  # type: set
+sTimerPool = set()  # type: set
 
 
 def ExecLater(t, func, *args, **kwargs):

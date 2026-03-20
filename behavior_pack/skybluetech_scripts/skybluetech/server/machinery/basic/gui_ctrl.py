@@ -42,13 +42,14 @@ class GUIControl(object):
         "超类方法用于通知玩家打开 GUI。"
         if not rate_limiter.record(event.playerId):
             return
+        self.CallSync()
         AddSyncPending(event.playerId, self.sync)
-        params = {
-            "st:dmpos": (event.dimensionId, event.x, event.y, event.z),
-        }
-        if extra_datas is not None:
-            params.update(extra_datas)
         if self.bound_ui is not None:
+            params = {
+                "st:dmpos": (event.dimensionId, event.x, event.y, event.z),
+            }
+            if extra_datas is not None:
+                params.update(extra_datas)
             NotifyToClient(
                 event.playerId,
                 PushUIRequest(

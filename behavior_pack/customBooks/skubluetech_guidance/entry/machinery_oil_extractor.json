@@ -1,0 +1,16 @@
+{
+    "parent": "machinery_production_toc",
+    "icon": "textures/machines/oil_extractor_front",
+    "title": "榨油机",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "可将部分植物种子榨油以得到植物油。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:oil_extractor"
+        }
+    ]
+}

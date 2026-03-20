@@ -1,0 +1,20 @@
+{
+    "parent": "machinery_production_toc",
+    "icon": "textures/icon/distillation_chamber_icon",
+    "title": "小型蒸馏仓",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "可以使用§c热能§r对其中的流体进行§9蒸馏§r， 如生产蒸馏水和部分油类液体等。\n需要一个§4热源§r为其供热， 如电力加热仓。"
+        },
+        {
+            "type": "textPage",
+            "content": "对比蒸馏塔， 无法使用过高或过低的温度， 也无法生产副产物， 但是可以进行需要精细控温的蒸馏， 相比之下产率也更高。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:distillation_chamber"
+        }
+    ]
+}

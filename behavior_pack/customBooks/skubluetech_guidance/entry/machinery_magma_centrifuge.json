@@ -1,0 +1,16 @@
+{
+    "parent": "machinery_production_toc",
+    "icon": "textures/machines/magma_centrifuge_front",
+    "title": "高热流体离心机",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "高热流体离心机主要用于对熔岩类混合物流体进行离心， 例如对深层熔岩进行离心， 再对产物进行进一步离心得到熔融矿物质。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:magma_centrifuge"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "parent": "machinery_production_toc",
+    "icon": "textures/machines/fluid_condenser_front",
+    "title": "流体冷却机",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "可将§c高温流体§r进行冷却获得物品产物。 如将熔融金属冷却为锭。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:fluid_condenser"
+        }
+    ]
+}

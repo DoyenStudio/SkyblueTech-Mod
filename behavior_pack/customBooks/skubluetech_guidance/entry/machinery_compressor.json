@@ -1,0 +1,16 @@
+{
+    "parent": "machinery_production_toc",
+    "icon": "textures/machines/compressor_front",
+    "title": "压缩机",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "压缩机可将金属锭压制为板材， 除此以外还能对一些材料进行进一步压缩。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:compressor"
+        }
+    ]
+}

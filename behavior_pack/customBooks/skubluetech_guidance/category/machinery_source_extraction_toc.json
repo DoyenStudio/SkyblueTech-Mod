@@ -1,0 +1,6 @@
+{
+    "title": "机器-资源开采",
+    "icon": "textures/icon/pump_icon",
+    "content": "本章展示适合进行资源开采的机器， 这些机器可以从环境中开采流水线生产所需的资源。",
+    "isLocked": false
+}

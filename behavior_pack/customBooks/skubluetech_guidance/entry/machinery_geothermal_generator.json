@@ -1,0 +1,16 @@
+{
+    "parent": "generator_toc",
+    "icon": "textures/icon/geothermal_generator_icon",
+    "title": "地热发电机",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "地热发电机消耗§4§l熔岩§r进行发电， 输入§9水§r将§2大大提升地热发电机的产能效率§r。\n\n如果输入水， 则地热发电机工作过程中会不定产出石粉或黑曜石粉。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:geothermal_generator"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "parent": "machinery_source_extraction_toc",
+    "icon": "textures/icon/pump_icon",
+    "title": "电动泵",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "电动泵消耗能量§9抽取§r其下方的流体方块的流体源， 可以使用流体管道导出。\n\n泵会寻找 16 格以内的的§3流体源§r； 如果安装了§5强化： 范围扩增§r， 搜寻范围会变为原来的 4 倍！"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:pump"
+        }
+    ]
+}

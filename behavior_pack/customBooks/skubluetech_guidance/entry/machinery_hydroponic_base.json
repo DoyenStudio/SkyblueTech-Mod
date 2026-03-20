@@ -1,0 +1,16 @@
+{
+    "parent": "machinery_production_toc",
+    "icon": "textures/machines/hydroponic_base_upside",
+    "title": "水培基座",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "为其上方的§2水培床§r提供作物生长所需水源， 同时水培床的作物产出也会存放到水培基座供抽取。\n\n水培床所需水分或营养液需要输入到其下方的水培基座才能被水培床利用。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:hydroponic_base"
+        }
+    ]
+}

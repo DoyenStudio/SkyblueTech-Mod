@@ -1,0 +1,11 @@
+{
+    "parent": "introduction_toc",
+    "icon": "textures/items/iron_ingot",
+    "title": "引言",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "蔚蓝科技是一款§9科技模组§r， 加入了多种多样的机器、 发电机、 工具和护甲。 你可以使用机器和物流系统搭建全自动物品生产的工业流水线， 也可以制造使用红石能的装备来提升你的采集和挖掘能力！"
+        }
+    ]
+}

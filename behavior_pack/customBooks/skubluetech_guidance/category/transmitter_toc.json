@@ -1,0 +1,6 @@
+{
+    "title": "物流传输",
+    "icon": "textures/items/redstone_torch",
+    "content": "本章将详细展示所有有关物流的概念、 传输设备和专用机器。",
+    "isLocked": false
+}

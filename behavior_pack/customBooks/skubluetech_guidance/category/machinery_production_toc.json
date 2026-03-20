@@ -1,0 +1,6 @@
+{
+    "title": "机器-工业生产",
+    "icon": "textures/machines/magma_furnace_front",
+    "content": "本章展示适合进行工业生产的机器， 这些机器适用于产出材料或对材料进行进一步加工。",
+    "isLocked": false
+}

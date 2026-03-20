@@ -1,0 +1,19 @@
+{
+    "parent": "introduction_toc",
+    "icon": "textures/items/diamond",
+    "title": "更新日志",
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "v0.1.0\n\n发布蔚蓝科技模组的公测版本。"
+        },
+        {
+            "type": "textPage",
+            "content": "§2更新预告§r\n\n将加入蔚蓝科技系列护甲， 更多的流体管道和物品管道。"
+        },
+        {
+            "type": "textPage",
+            "content": "§c烙饼§r\n\n发布空岛、原油、化工附属模组。"
+        }
+    ]
+}

@@ -63,6 +63,9 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self.sync = BatteryMatrixUISync.NewServer(self).Activate()
         self._last_input = 0
         self._last_output = 0
+        self._sum_input = 0
+        self._sum_output = 0
+        self._sum_power_t = 0
 
     def OnTicking(self):
         if self.IsActive():
@@ -70,8 +73,13 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
                 self.provide_energy()
             self.get_core().core_tick()
             self.OnSync()
-        self._last_input = 0
-        self._last_output = 0
+        self._sum_power_t += 1
+        if self._sum_power_t >= 20:
+            self._sum_input = self._last_input
+            self._last_output = self._sum_output
+            self._last_input = 0
+            self._last_output = 0
+            self._sum_power_t = 0
 
     def OnTryActivate(self):
         # type: () -> None
@@ -86,8 +94,8 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self.sync.enable_output = self.output_mode
         self.sync.structure_flag = self.GetStructureDestroyFlag()
         self.sync.structure_lacked_blocks = self.GetStructureLackedBlocks()
-        self.sync.input_power = self._last_input
-        self.sync.output_power = self._last_output
+        self.sync.input_power = self._sum_input / 20
+        self.sync.output_power = self._sum_output / 20
         if self.GetStructureDestroyFlag() == 0:
             self.sync.storage_rf = self.get_core().calculate_core_store_rf()
             self.sync.rf_max = self.get_core().calculate_core_store_rf_max()
@@ -106,6 +114,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         if ok:
             self.get_energy_in_io().SetMachineRef(self)
             self.get_energy_out_io().SetMachineRef(self)
+            self.get_energy_in_io().SetActive()
         self.OnSync()
 
     def IsValidInput(self, slot, item):

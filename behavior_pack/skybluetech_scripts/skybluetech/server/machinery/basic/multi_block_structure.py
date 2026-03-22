@@ -402,6 +402,10 @@ class MultiBlockStructure(BaseMachine):
     覆写:
         `OnLoad`
         `OnUnload`
+
+    Class Attributes:
+        structure_palette (StructureBlockPalette | None): 检测多方块结构完整性的结构调色板
+        functional_block_ids (set[str]): 多方块结构中功能性方块的列表。GetMachine() 获取的机器方块 id 都需要被包含在其中。
     """
 
     structure_palette = None  # type: StructureBlockPalette | None
@@ -476,13 +480,27 @@ class MultiBlockStructure(BaseMachine):
     def GetExpectedStructure(self):
         return self.area.GetExpectedStructure()
 
+    def GetAllMachines(self, cls, block_id=None):
+        # type: (type[MT], str | None) -> list[MT]
+        from ..pool import GetMachineStrict
+
+        block_id = block_id or cls.block_name
+        poses = self.GetFunctionalBlockPoses().get(block_id, [])
+        machines = []
+        for pos in poses:
+            m = GetMachineStrict(self.dim, *pos)
+            if isinstance(m, cls):
+                machines.append(m)
+        return machines
+
     def GetMachine(self, cls, block_id=None, index=0):
         # type: (type[MT], str | None, int) -> MT
         """
-        获取多方块结构中某一类型的机器。
+        获取多方块结构中某一类型的机器(多用于多方块结构接口的获取)。
+        其 ID 需要被包含在类属性 `functional_block_ids` 中。
 
         Args:
-            cls (BaseMachine): 机器类
+            cls (type[BaseMachine]): 机器类
             block_id (str, optional): 机器方块 ID
             index (int, optional): 索引值, 如果有多个匹配的机器则使用索引值。
 

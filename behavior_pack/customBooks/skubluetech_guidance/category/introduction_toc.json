@@ -1,6 +1,6 @@
 {
     "title": "引言",
-    "icon": "textures/items/book",
+    "icon": "textures/icon/introduce_icon",
     "content": "游玩《蔚蓝科技》前可以可选地浏览这些章节。",
     "isLocked": false
 }

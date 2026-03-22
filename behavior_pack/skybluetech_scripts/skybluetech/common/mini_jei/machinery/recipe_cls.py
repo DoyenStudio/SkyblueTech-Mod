@@ -101,10 +101,13 @@ class GeneratorRecipe(MachineRecipeBase):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
+        from ....client.ui.machinery.utils import FormatRF
+
         MachineRecipeBase.RenderInit(self, panel)
         self.rf_output_renderer = RFOutputDisplayer(
             panel["output_power"], self.output_power
         )
+        panel["tick_power"].asLabel().SetText(FormatRF(self.output_power) + "/t")
 
     def __repr__(self):
         return "GeneratorRecipe(%s, %s, %d, %d)" % (

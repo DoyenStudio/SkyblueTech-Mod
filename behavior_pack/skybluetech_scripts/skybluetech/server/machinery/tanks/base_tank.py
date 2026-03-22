@@ -6,6 +6,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     ItemExists,
 )
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define.global_config import BUCKET_VOLUME
 from ....common.define.facing import DXYZ_FACING, FACING_EN
 from ....common.ui_sync.machinery.general_tank import GeneralTankUISync
@@ -43,8 +44,7 @@ class BasicTank(BaseMachine, FluidContainer, ItemContainer, GUIControl):
     def OnTryActivate(self):
         FluidContainer.OnTryActivate(self)
 
-    # RENDER
-
+    @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
         for dx, dy, dz in DXYZ_FACING.keys():
             facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]

@@ -1,8 +1,8 @@
 # coding=utf-8
 
-IO_ENERGY = "skybluetech:drill_io_energy"
-IO_FLUID1 = "skybluetech:drill_io_fluid"
-IO_ITEM = "skybluetech:fermenter_io_item"
+IO_ENERGY = "skybluetech:bldrill_io_energy"
+IO_FLUID1 = "skybluetech:bldrill_io_fluid"
+IO_ITEM = "skybluetech:bldrill_io_item"
 HEAVY_FRAME = "skybluetech:heavy_frame"
 STRUCTURE_PATTERN_MAPPING = {
     "H": HEAVY_FRAME,
@@ -10,19 +10,19 @@ STRUCTURE_PATTERN_MAPPING = {
 STRUCTURE_PATTERN = {
     0: [
         "   H   ",
+        "   H   ",
         "       ",
+        "HH # HH",
         "       ",
-        "H  #  H",
-        "       ",
-        "       ",
+        "   H   ",
         "   H   ",
     ],
     1: [
         "       ",
         "   H   ",
-        "       ",
-        " H   H ",
-        "       ",
+        "   H   ",
+        " HH HH ",
+        "   H   ",
         "   H   ",
         "       ",
     ],
@@ -30,7 +30,7 @@ STRUCTURE_PATTERN = {
         "       ",
         "       ",
         "   H   ",
-        "  H H  ",
+        "  HHH  ",
         "   H   ",
         "       ",
         "       ",

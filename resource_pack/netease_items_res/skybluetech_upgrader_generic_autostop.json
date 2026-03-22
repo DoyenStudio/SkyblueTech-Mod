@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:upgrader_generic_autostop"
+        },
+        "description": {
+            "identifier": "skybluetech:upgrader_generic_autostop"
+        }
+    }
+}

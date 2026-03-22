@@ -5,6 +5,9 @@ from ....common.ui_sync.machinery.gas_burning_generator import GasBurningGenerat
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateFlame, InitFluidsDisplay
 
+from ..recipe_checker import AsRecipeCheckerBtn
+from ....common.machinery_def.gas_burning_generator import recipes
+
 POWER_NODE = MAIN_PATH / "power_bar"
 GAS_INPUT_NODE = MAIN_PATH / "gas_input"
 GAS_OUTPUT_NODE = MAIN_PATH / "gas_output"
@@ -23,6 +26,10 @@ class GasBurningGeneratorUI(MachinePanelUIProxy):
         self.sync.SetUpdateCallback(self.WhenUpdated)
         self.fluid_updater1 = InitFluidsDisplay(self.gas_input, self.sync.fluids, 0)
         self.fluid_updater2 = InitFluidsDisplay(self.gas_output, self.sync.fluids, 1)
+        AsRecipeCheckerBtn(
+            self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
+            list(recipes.values()),  # pyright: ignore[reportArgumentType]
+        )
 
     def WhenUpdated(self):
         if not self.inited:

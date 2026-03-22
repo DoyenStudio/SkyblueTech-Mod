@@ -17,6 +17,7 @@ from .fermenter import Fermenter
 from .forester import Forester
 from .freezer import Freezer
 from .fluid_splitter import FluidSplitter
+from .gas_burning_generator import GasBurningGenerator
 from .geothermal_generator import GeoThermalGenerator
 from .heavy_compressor import HeavyCompressor
 from .hover_text_displayer import HoverTextDisplayer

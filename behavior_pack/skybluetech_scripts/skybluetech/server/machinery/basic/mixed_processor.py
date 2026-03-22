@@ -26,6 +26,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
+    @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
         self.afterRequireAll()
 

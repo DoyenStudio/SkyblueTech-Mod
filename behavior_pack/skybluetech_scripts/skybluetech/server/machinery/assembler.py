@@ -49,6 +49,7 @@ class Assembler(GUIControl, UpgradeControl):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         return res
 
+    @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
         for dx, dy, dz in DXYZ_FACING.keys():
             facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]

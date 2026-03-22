@@ -50,10 +50,23 @@ class BaseMachine(object):
         "事件方法, 机器被放置前调用, 可 cancel()"
         pass
 
+    @SuperExecutorMeta.execute_super
     def OnPlaced(self, event):
         # type: (ServerPlaceBlockEntityEvent) -> None
-        "事件方法, 机器被放置时调用。"
-        pass
+        "事件方法, 机器被放置时调用。此方法会激活附近的机器。"
+        from ..pool import GetMachineStrict
+
+        for dx, dy, dz in (
+            (1, 0, 0),
+            (-1, 0, 0),
+            (0, 1, 0),
+            (0, -1, 0),
+            (0, 0, 1),
+            (0, 0, -1),
+        ):
+            m = GetMachineStrict(self.dim, self.x + dx, self.y + dy, self.z + dz)
+            if isinstance(m, BaseMachine):
+                m.OnTryActivate()
 
     def OnTicking(self):
         # type: () -> None

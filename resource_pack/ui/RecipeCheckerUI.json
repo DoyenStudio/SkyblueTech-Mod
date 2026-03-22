@@ -54,7 +54,7 @@
                     "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
                     "$scroll_track_texture": "textures/ui/ScrollRail",
                     "$scrolling_content": "RecipeCheckerUI.recipe_fgrid",
-                    "$show_background": true,
+                    "$show_background": false,
                     "$track_nine_slice_buttom": 0,
                     "$track_nine_slice_left": 0,
                     "$track_nine_slice_right": 0,

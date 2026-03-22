@@ -900,6 +900,58 @@
         "type": "screen"
     },
     "namespace": "SkybluePanelLib",
+    "output_power_displayer": {
+        "type": "panel",
+        "anchor_from": "right_middle",
+        "anchor_to": "right_middle",
+        "offset": [
+            -4.0,
+            0.0
+        ],
+        "size": [
+            94.0,
+            16.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "energy_img": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        16.0,
+                        "100%+0px"
+                    ],
+                    "layer": 1,
+                    "texture": "textures/icon/energy_icon"
+                }
+            },
+            {
+                "rf_label": {
+                    "type": "label",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        16.0,
+                        0.0
+                    ],
+                    "size": [
+                        "100%+-16px",
+                        12.0
+                    ],
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_scale_factor": 1.2,
+                    "font_type": "unicode",
+                    "text": "999, 99 MRF"
+                }
+            }
+        ]
+    },
     "player_backpack": {
         "type": "panel",
         "size": [
@@ -980,7 +1032,8 @@
                     ],
                     "layer": 4,
                     "property_bag": {
-                        "#item_id_aux": 3801088
+                        "#item_id_aux": 22872064,
+                        "#item_name": "skybluetech:searcher"
                     }
                 }
             },

@@ -741,7 +741,7 @@
                     "anchor_to": "left_middle",
                     "layer": 5,
                     "offset": [
-                        57,
+                        38,
                         0
                     ]
                 }
@@ -756,13 +756,58 @@
                         0
                     ],
                     "size": [
-                        44,
+                        28,
                         32
                     ]
                 }
             },
             {
-                "output_power@SkybluePanelLib.output_power_displayer": {}
+                "fluid1@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        62,
+                        0
+                    ],
+                    "size": [
+                        28,
+                        32
+                    ]
+                }
+            },
+            {
+                "output_power@SkybluePanelLib.output_power_displayer": {
+                    "offset": [
+                        -6,
+                        -6
+                    ],
+                    "size": [
+                        70,
+                        16
+                    ]
+                }
+            },
+            {
+                "tick_power": {
+                    "type": "label",
+                    "offset": [
+                        58.0,
+                        6.0
+                    ],
+                    "size": [
+                        56.0,
+                        10.0
+                    ],
+                    "layer": 5,
+                    "color": [
+                        0,
+                        0.4,
+                        0
+                    ],
+                    "font_type": "unicode",
+                    "text": "999, 99 MRF/t"
+                }
             }
         ]
     },

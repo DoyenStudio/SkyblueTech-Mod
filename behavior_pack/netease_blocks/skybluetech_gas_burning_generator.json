@@ -33,6 +33,9 @@
             "netease:custom_tips": {
                 "value": "\n§7可燃烧可燃气体产出能量。"
             },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
             "netease:listen_block_remove": {
                 "value": true
             },
@@ -45,7 +48,7 @@
             "netease:block_container": {
                 "container_size": 1,
                 "custom_description": "小型燃气发电机",
-                "screen_name": "GasBurningGenerator.main"
+                "screen_name": "GasBurningGeneratorUI.main"
             },
             "tag:piston_denier": {},
             "tag:redstoneflux_provider": {},

@@ -2,6 +2,7 @@ from .base_clicker import BaseClicker
 from .base_generator import BaseGenerator
 from .base_machine import BaseMachine
 from .base_processor import BaseProcessor
+from .base_power_provider import BasePowerProvider
 from .base_speed_control import BaseSpeedControl
 from .fluid_container import FluidContainer
 from .gui_ctrl import GUIControl

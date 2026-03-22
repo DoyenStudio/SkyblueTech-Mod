@@ -2,6 +2,8 @@
 from weakref import ref
 from ..basic import BaseMachine
 
+# TODO: 需要保证在每次结构成型后激活一遍接口
+
 
 class BaseInterface(BaseMachine):
     def __init__(self, dim, x, y, z, block_entity_data):

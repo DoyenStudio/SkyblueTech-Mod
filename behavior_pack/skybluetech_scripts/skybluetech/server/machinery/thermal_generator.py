@@ -31,7 +31,7 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = ThermalGeneratorUISync.NewServer(self).Activate()
         self.is_burning = self.burn_seconds_left > 0
-        self.CallSync()
+        self.SetOutputPower(TICK_POWER)
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -44,7 +44,6 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
                 self.is_burning = self.next_burn()
                 return
             self.burn_seconds_left -= SecondsPerTick
-            self.GeneratePower(TICK_POWER)
             self.OnSync()
 
     def IsValidInput(self, slot, item):
@@ -66,6 +65,7 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
+        self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT, flush=False)
         self.next_burn()
 
     @SuperExecutorMeta.execute_super
@@ -76,10 +76,13 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
     def UnsetDeactiveFlag(self, flag, flush=True):
         pass
 
+    @SuperExecutorMeta.execute_super
+    def OnTryActivate(self):
+        pass
+
     def next_burn(self):
-        if self.PowerFull():
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
-            return False
+        if self.is_burning:
+            return
         mainSlotItem = self.GetSlotItem(0)
         if mainSlotItem is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
@@ -91,6 +94,7 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
         mainSlotItem.count -= 1
         self.SetSlotItem(0, mainSlotItem)
         self.is_burning = True
+        self.ResetDeactiveFlags()
         return True
 
     @property

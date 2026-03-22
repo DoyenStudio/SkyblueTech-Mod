@@ -39,6 +39,7 @@ class GasBurningGenerator(
         self.sync = GasBurningGeneratorUISync.NewServer(self).Activate()
         self.CallSync()
 
+    @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
         for dx, dy, dz in DXYZ_FACING.keys():
             facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]

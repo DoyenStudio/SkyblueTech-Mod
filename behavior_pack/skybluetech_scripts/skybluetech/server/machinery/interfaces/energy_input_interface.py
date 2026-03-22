@@ -18,3 +18,12 @@ class EnergyInputInterface(BaseInterface):
 
             # print("Still add", weakref.getweakrefcount(m), m.x, m.y, m.z)
             return m.AddPower(rf, max_limit, passed)
+
+    def SetActive(self):
+        from ...transmitters.wire.logic import logic_module
+
+        cnode = logic_module.GetContainerNode(self.dim, self.x, self.y, self.z)
+        for network in set(cnode.inputs.values()):
+            if network is None:
+                continue
+            logic_module.ActivateNetwork(network)

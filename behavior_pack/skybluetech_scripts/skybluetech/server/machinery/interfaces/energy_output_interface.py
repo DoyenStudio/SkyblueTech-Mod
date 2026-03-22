@@ -1,14 +1,14 @@
 # coding=utf-8
-from ..basic import BaseGenerator, RegisterMachine
+from ..basic import BasePowerProvider, RegisterMachine
 from .base_interface import BaseInterface
 
 
 @RegisterMachine
-class EnergyOutputInterface(BaseInterface, BaseGenerator):
+class EnergyOutputInterface(BaseInterface, BasePowerProvider):
     store_rf_max = 160000
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        BaseGenerator.__init__(self, dim, x, y, z, block_entity_data)
+        BasePowerProvider.__init__(self, dim, x, y, z, block_entity_data)
         BaseInterface.__init__(self, dim, x, y, z, block_entity_data)
 
     def OutputPower(self, rf):

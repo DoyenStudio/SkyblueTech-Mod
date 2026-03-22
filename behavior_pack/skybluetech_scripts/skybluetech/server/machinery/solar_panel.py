@@ -39,6 +39,7 @@ class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
             self.GeneratePower(self.power_output * 5)
             self.OnSync()
 
+    @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
         for dx, dy, dz in DXYZ_FACING.keys():
             facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]

@@ -32,17 +32,15 @@ class BasicTank(BaseMachine, FluidContainer, ItemContainer, GUIControl):
         self.sync = GeneralTankUISync.NewServer(self).Activate()
         self.CallSync()
 
-    def OnTicking(self):
-        FluidContainer.OnTicking(self)
-
     def OnSync(self):
         self.sync.fluid_id = self.fluid_id
         self.sync.fluid_volume = self.fluid_volume
         self.sync.max_volume = self.max_fluid_volume
         self.sync.MarkedAsChanged()
 
+    @SuperExecutorMeta.execute_super
     def OnTryActivate(self):
-        FluidContainer.OnTryActivate(self)
+        pass
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):

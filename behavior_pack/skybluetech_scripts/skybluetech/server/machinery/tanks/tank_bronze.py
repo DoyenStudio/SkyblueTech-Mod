@@ -2,8 +2,6 @@
 from ..basic import RegisterMachine
 from .base_tank import BasicTank, RegisterTank
 
-INFINITY = float("inf")
-
 
 @RegisterMachine
 @RegisterTank

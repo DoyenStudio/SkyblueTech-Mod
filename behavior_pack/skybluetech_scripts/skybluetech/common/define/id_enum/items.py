@@ -68,6 +68,7 @@ class Upgraders:
     BASIC_SPEED_UPGRADER = "skybluetech:upgrader_basic_speed"
     BASIC_ENERGY_UPGRADER = "skybluetech:upgrader_basic_energy"
     GENERIC_EXPANSION_UPGRADER = "skybluetech:upgrader_generic_expansion"
+    GENERIC_AUTOSTOP = "skybluetech:upgrader_generic_autostop"
 
 
 class ObjectUpgraders:

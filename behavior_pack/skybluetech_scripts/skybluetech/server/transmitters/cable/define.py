@@ -12,7 +12,7 @@ class CableNetwork(BaseNetwork["CableAccessPoint"]):
     @classmethod
     def calc_transfer_speed(cls, block_name):
         # type: (str) -> int
-        return TRANSFER_SPEED_MAPPING.get(block_name, 1)
+        return TRANSFER_SPEED_MAPPING.get(block_name, 1) * 5
 
     def __repr__(self):
         return "CableNetwork({}, {}, {})".format(

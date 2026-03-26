@@ -1,12 +1,11 @@
 # coding=utf-8
-
+from collections import deque
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockName,
     BlockHasTag,
     GetBlockTags,
 )
-from ...machinery.basic import BaseMachine
-from ...machinery.pool import GetMachineStrict, GetMachineCls, GetMachineWithoutCls
+from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
 
 from ..base import LogicModule
 from .define import WireNetwork, WireAccessPoint
@@ -15,6 +14,10 @@ from .define import WireNetwork, WireAccessPoint
 if 0:
     PosData = tuple[int, int, int]  # x y z
 # TYPE_CHECKING END
+
+
+def isNaN(x):
+    return x != x
 
 
 def isWire(blockName):
@@ -51,10 +54,11 @@ def isPowerProvider(block_name, dim, posdata):
     # type: (str, int, tuple[int, int, int, int]) -> bool
     block_tags = GetBlockTags(block_name)
     if isSkyblueMachine(block_tags):
-        _block_name = GetBlockName(dim, posdata[:3])
-        if _block_name is None:
-            return False
-        return GetMachineCls(_block_name).energy_io_mode[posdata[3]] == 1
+        m = GetMachineWithoutCls(dim, *posdata[:3])
+        if m is None:
+            print("[ERROR] isPowerProvider get machine failed @ {}".format(posdata[:3]))
+        else:
+            return m.energy_io_mode[posdata[3]] == 1
     return "redstoneflux_provider" in block_tags
 
 
@@ -62,47 +66,12 @@ def isPowerAccepter(block_name, dim, posdata):
     # type: (str, int, tuple[int, int, int, int]) -> bool
     block_tags = GetBlockTags(block_name)
     if isSkyblueMachine(block_tags):
-        _block_name = GetBlockName(dim, posdata[:3])
-        if _block_name is None:
-            return False
-        return GetMachineCls(_block_name).energy_io_mode[posdata[3]] == 0
+        m = GetMachineWithoutCls(dim, *posdata[:3])
+        if m is None:
+            print("[ERROR] isPowerAccepter get machine failed @ {}".format(posdata[:3]))
+        else:
+            return m.energy_io_mode[posdata[3]] == 0
     return "redstoneflux_accepter" in block_tags
-
-
-def RequireEnergyFromNetwork(machine):
-    # type: (BaseMachine) -> bool
-    ok = False
-    networks = [
-        i
-        for i in logic_module.GetContainerNode(
-            machine.dim, machine.x, machine.y, machine.z
-        ).inputs.values()
-        if i is not None
-    ]
-    for network in networks:
-        if network is None:
-            continue
-        generator_nodes = network.get_output_access_points()
-        for ap in generator_nodes:
-            m2 = GetMachineStrict(machine.dim, *ap.target_pos)
-            if m2 is None:
-                continue
-            m2.OnTryActivate()  # 这样尝试输出能源
-            ok = True
-    return ok
-
-
-def PushEnergyIntoNetwork(network, rf, passed):
-    # type: (WireNetwork, int, set[BaseMachine]) -> tuple[bool, int]
-    updated = False
-    for ap in network.get_input_access_points():
-        machine = GetMachineStrict(network.dim, *ap.target_pos)
-        if machine is not None and not machine.is_non_energy_machine:
-            _updated, rf = machine.AddPower(rf, network.transfer_speed, passed)
-            updated = updated or _updated
-            if rf == 0:
-                break
-    return updated, rf
 
 
 def onMachineryPlacedLater(dim, x, y, z):
@@ -130,6 +99,35 @@ def onActivateNetwork(network):
             m.OnTryActivate()
 
 
+def onNetworkTick(network):
+    # type: (WireNetwork) -> None
+    tick_capacity = network.transfer_speed
+    inputs = deque(network.get_input_access_points())
+    outputs = network.get_output_access_points()
+    for output in outputs:
+        om = GetMachineStrict(network.dim, *output.target_pos)
+        if om is None:
+            continue
+        rf_output = om.TakeoutPower(tick_capacity)
+        if rf_output <= 0:
+            continue
+        while inputs:
+            input = inputs[0]
+            im = GetMachineStrict(network.dim, *input.target_pos)
+            if im is None:
+                inputs.popleft()
+                continue
+            ok, rf_output = im.AddPower(rf_output)
+            if not ok:
+                inputs.popleft()
+            elif rf_output == 0:
+                break
+        om.GivebackPower(rf_output)
+        tick_capacity -= rf_output
+        if tick_capacity <= 0:
+            break
+
+
 logic_module = LogicModule(
     WireNetwork,
     WireAccessPoint,
@@ -137,6 +135,7 @@ logic_module = LogicModule(
     isRFMachine,
     onMachineryPlacedLater,
     onActivateNetwork,
+    on_network_tick=onNetworkTick,
     provider_check_func=isPowerProvider,
     accepter_check_func=isPowerAccepter,
 )

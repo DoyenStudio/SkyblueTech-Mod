@@ -160,6 +160,15 @@ class Item(object):
         )
         return res
 
+    def MergeFrom(self, other):
+        # type: (Item) -> None
+        """NOTE: 需要先使用 CanMerge() 来判断是否可以合并"""
+        count_overflow = max(
+            0, self.count + other.count - self.GetBasicInfo().maxStackSize
+        )
+        self.count += other.count - count_overflow
+        other.count = count_overflow
+
     def StackFull(self):
         return self.count >= self.GetBasicInfo().maxStackSize
 

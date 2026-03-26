@@ -5,7 +5,7 @@ from ..base.define import BaseNetwork, BaseAccessPoint
 
 
 TRANSFER_SPEED_MAPPING = {
-    Wire.CREATIVE: None,
+    Wire.CREATIVE: 2147483647,
     Wire.TIN: 384,
     Wire.COPPER: 512,
     Wire.SILVER: 4096,
@@ -14,9 +14,14 @@ TRANSFER_SPEED_MAPPING = {
 
 
 class WireNetwork(BaseNetwork["WireAccessPoint"]):
+    def __init__(self, dim, group_inputs, group_outputs, nodes, transfer_speed=0):
+        super(WireNetwork, self).__init__(
+            dim, group_inputs, group_outputs, nodes, transfer_speed
+        )
+
     @classmethod
     def calc_transfer_speed(cls, block_name):
-        return TRANSFER_SPEED_MAPPING.get(block_name, 1)
+        return TRANSFER_SPEED_MAPPING.get(block_name, 1) * 5
 
     def __repr__(self):
         return "WireNetwork({}, {}, {})".format(

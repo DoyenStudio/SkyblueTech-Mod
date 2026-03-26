@@ -1,4 +1,5 @@
 # coding=utf-8
+import time
 from collections import deque
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
@@ -10,6 +11,9 @@ from skybluetech_scripts.tooldelta.events.server import (
     EntityPlaceBlockAfterServerEvent,
     BlockNeighborChangedServerEvent,
     BlockRemoveServerEvent,
+    ChunkLoadedServerEvent,
+    ChunkAcquireDiscardedServerEvent,
+    OnSimTickServerEvent,
 )
 from skybluetech_scripts.tooldelta.events.service import ServerListenerService
 from skybluetech_scripts.tooldelta.extensions.typing import TypeVar, Generic
@@ -37,6 +41,8 @@ _APT = TypeVar("_APT", bound=BaseAccessPoint)
 
 
 class LogicModule(Generic[_NT, _APT], ServerListenerService):
+    _instances = {}  # type: dict[str, LogicModule]
+
     def __init__(
         self,
         network_cls,  # type: type[_NT]
@@ -45,6 +51,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         transmittable_block_check_func,  # type: Callable[[str], bool]
         on_transmittable_block_placed_later,  # type: Callable[[int, int, int, int], None]
         on_network_active,  # type: Callable[[_NT], None]
+        on_network_tick,  # type: Callable[[_NT], None]
         provider_check_func=None,  # type: Callable[[str, int, tuple[int, int, int, int]], bool] | None
         accepter_check_func=None,  # type: Callable[[str, int, tuple[int, int, int, int]], bool] | None
     ):
@@ -59,12 +66,17 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         "目标方块是否为传输源检测函数, 传入(方块ID, 维度, 方块坐标+朝向)"
         self.accepter_check_func = accepter_check_func
         "目标方块是否为传输终点检测函数, 传入(方块ID, 维度, 方块坐标+朝向)"
+        self.on_network_tick = on_network_tick
+        "网络 tick, 5t 触发一次网络 tick"
         self.on_transmittable_block_placed_later = on_transmittable_block_placed_later
         self.on_network_active = on_network_active
-        self.networks_pool = {}  # type: dict[tuple[int, tuple[int, int, int]], ContainerNode[_NT]]
+        self.networks_pool = set()  # type: set[_NT]
+        self.container_nodes_pool = {}  # type: dict[tuple[int, tuple[int, int, int]], ContainerNode[_NT]]
         self.access_points_pool = {}  # type: dict[tuple[int, int, int, int, int], _APT] # (dim, x, y, z, access_facing)
         self.nodes_pool = {}  # type: dict[int, dict[tuple[int, int, int], _NT]]
         self.enable_listeners()
+        self._instances[self.__module__] = self
+        self._tick_counter = 0
 
     def GetContainerNode(self, dim, x, y, z, exists=None, enable_cache=True):
         # type: (int, int, int, int, set[PosData] | None, bool) -> ContainerNode[_NT]
@@ -83,7 +95,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             tuple[set[TransmitterNetwork], set[TransmitterNetwork]]: 分别表示输入和提取模式的传输网络
         """
         if enable_cache:
-            cached_cnode = self.networks_pool.get((dim, (x, y, z)), None)
+            cached_cnode = self.container_nodes_pool.get((dim, (x, y, z)), None)
             if cached_cnode is not None:
                 if cached_cnode.inited:
                     return cached_cnode
@@ -128,7 +140,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 output_networks[facing] = network
                 if p not in network.group_inputs:
                     input_networks[facing] = None
-        nnode = self.networks_pool[(dim, (x, y, z))] = ContainerNode(
+        nnode = self.container_nodes_pool[(dim, (x, y, z))] = ContainerNode(
             input_networks, output_networks
         )
         return nnode
@@ -154,6 +166,53 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             if m is not None:
                 m.OnTryActivate()
         self.on_network_active(network)
+
+    def SetAccessPointIOMode(self, access_point, io_mode):
+        # type: (_APT, int) -> bool
+        """
+        设置接入点的传输模式。
+
+        Args:
+            access_point (_APT): 接入点
+            io_mode (int): 传输模式
+
+        Returns:
+            bool: 是否设置成功
+        """
+        network = access_point.get_bounded_network()
+        if not isinstance(network, self.network_cls):
+            return False
+        cnode = self.GetContainerNode(network.dim, *access_point.target_pos)
+        if io_mode == AP_MODE_INPUT:
+            cnode.set_face(
+                OPPOSITE_FACING[access_point.access_facing], AP_MODE_OUTPUT, None
+            )
+            network.group_outputs.remove(access_point)
+            network.group_inputs.add(access_point)
+            cnode.set_face(
+                OPPOSITE_FACING[access_point.access_facing], AP_MODE_INPUT, network
+            )
+        elif io_mode == AP_MODE_OUTPUT:
+            cnode.set_face(
+                OPPOSITE_FACING[access_point.access_facing], AP_MODE_INPUT, None
+            )
+            network.group_inputs.remove(access_point)
+            network.group_outputs.add(access_point)
+            cnode.set_face(
+                OPPOSITE_FACING[access_point.access_facing], AP_MODE_OUTPUT, network
+            )
+        else:
+            return False
+        self.access_points_pool[
+            (
+                network.dim,
+                access_point.x,
+                access_point.y,
+                access_point.z,
+                access_point.access_facing,
+            )
+        ] = access_point
+        return True
 
     def transmitter_can_connect(self, block_name, other_block_name):
         # type: (str, str) -> bool
@@ -185,7 +244,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             )
         )
 
-    def bfsFindConnections(
+    def bfs_find_connections(
         self,
         dim,  # type: int
         start,  # type: PosData
@@ -297,10 +356,11 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         Returns:
             TransmitterNetwork (optional): 传输网络
         """
-        network = self.bfsFindConnections(dim, start, exists)
+        network = self.bfs_find_connections(dim, start, exists)
         if network is None:
             return None
         dim_datas = self.nodes_pool.setdefault(dim, {})
+        self.networks_pool.add(network)
         for node in network.nodes:
             dim_datas[node] = network
         all_aps = network.group_inputs | network.group_outputs  # type: set[_APT]
@@ -322,7 +382,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             y (int): y
             z (int): z
         """
-        self.networks_pool.pop((dim, (x, y, z)), None)
+        self.container_nodes_pool.pop((dim, (x, y, z)), None)
         for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
             opposite_facing = OPPOSITE_FACING[facing]
             ax, ay, az = x + dx, y + dy, z + dz
@@ -359,16 +419,17 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 None,
             )
             if res is None:
-                print("[Error] delete network at ap@{} failed: emoty".format(ap))
-            cnode = self.networks_pool.get((network.dim, ap.target_pos))
+                print("[Error] delete network at ap@{} failed: empty".format(ap))
+            cnode = self.container_nodes_pool.get((network.dim, ap.target_pos))
             if cnode is None:
                 continue
             cnode.set_face(OPPOSITE_FACING[ap.access_facing], AP_MODE_INPUT, None)
             cnode.set_face(OPPOSITE_FACING[ap.access_facing], AP_MODE_OUTPUT, None)
             if cnode.all_empty():
-                del self.networks_pool[(network.dim, ap.target_pos)]
+                del self.container_nodes_pool[(network.dim, ap.target_pos)]
         for node in network.nodes.copy():
             self.nodes_pool.get(network.dim, {}).pop(node, None)
+        self.networks_pool.remove(network)
 
     def clean_node(self, dim, x, y, z):
         """
@@ -409,7 +470,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             if network is not None:
                 self.delete_network(network)
         tmp_set = set()
-        # self.GetNetworkByTransmitter(dim, x, y, z, tmp_set)  # TODO: remove later
         cnode = self.GetContainerNode(dim, x, y, z, tmp_set, enable_cache=False)
         for network in set(cnode.inputs.values()) | set(cnode.outputs.values()):
             if network is not None:
@@ -420,11 +480,11 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         input_aps = network.group_inputs  # type: set[_APT]
         output_aps = network.group_outputs  # type: set[_APT]
         for ap in input_aps:
-            self.networks_pool.setdefault(
+            self.container_nodes_pool.setdefault(
                 (network.dim, ap.target_pos), ContainerNode()
             ).set_face(OPPOSITE_FACING[ap.access_facing], ap.io_mode, network)
         for ap in output_aps:
-            self.networks_pool.setdefault(
+            self.container_nodes_pool.setdefault(
                 (network.dim, ap.target_pos), ContainerNode()
             ).set_face(OPPOSITE_FACING[ap.access_facing], ap.io_mode, network)
 
@@ -434,6 +494,15 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         if self.transmitter_check_func(event.fullName):
             states = {}  # type: dict[str, bool]
             for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
+                old_network = self.GetNetworkByTransmitter(
+                    event.dimensionId,
+                    event.x + dx,
+                    event.y + dy,
+                    event.z + dz,
+                    force_use_cached=True,
+                )
+                if old_network is not None:
+                    self.delete_network(old_network)
                 facing_key = (
                     "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
                 )
@@ -511,3 +580,46 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         if self.transmitter_check_func(event.fullName):
             # 是管道
             self.clean_node(event.dimension, event.x, event.y, event.z)
+
+    @ServerListenerService.Listen(ChunkLoadedServerEvent)
+    def onChunkLoaded(self, event):
+        # type: (ChunkLoadedServerEvent) -> None
+        for block_entity_posdata in event.blockEntities:
+            x = block_entity_posdata["posX"]
+            y = block_entity_posdata["posY"]
+            z = block_entity_posdata["posZ"]
+            blockName = block_entity_posdata["blockName"]
+            if self.transmitter_check_func(blockName):
+                # 初始化管线网络
+                network = self.GetNetworkByTransmitter(
+                    event.dimension, x, y, z, disable_cache=False
+                )
+                if network is not None:
+                    self.apply_network_to_pool(network)
+                    self.ActivateNetwork(network)
+
+    @ServerListenerService.Listen(ChunkAcquireDiscardedServerEvent)
+    def onChunkUnloaded(self, event):
+        # type: (ChunkAcquireDiscardedServerEvent) -> None
+        for block_entity_posdata in event.blockEntities:
+            x = block_entity_posdata["posX"]
+            y = block_entity_posdata["posY"]
+            z = block_entity_posdata["posZ"]
+            blockName = block_entity_posdata["blockName"]
+            if self.transmitter_check_func(blockName):
+                network = self.GetNetworkByTransmitter(
+                    event.dimension, x, y, z, force_use_cached=True
+                )
+                if network is not None:
+                    # 只需要直接 discard 即可, 不需要考虑区块重新加载时再加回来
+                    # 因为区块重新加载时会重新载入整个网络, 替换掉原来的
+                    network._nodes_to_discard.discard((x, y, z))
+                    if not network._nodes_to_discard:
+                        self.delete_network(network)
+
+    @ServerListenerService.Listen(OnSimTickServerEvent)
+    def onWorldTick(self, _):
+        self._tick_counter += 1
+        if self._tick_counter % 5 == 0:
+            for network in self.networks_pool:
+                self.on_network_tick(network)

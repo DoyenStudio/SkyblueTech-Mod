@@ -5,22 +5,25 @@ from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     ContainerItemChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.api.server import BlockHasTag
-from skybluetech_scripts.tooldelta.api.server.container import (
+from skybluetech_scripts.tooldelta.api.server import (
+    BlockHasTag,
+    GetBlockName,
     GetContainerItem,
     SetContainerItem,
     GetContainerSize,
 )
 from skybluetech_scripts.tooldelta.api.common import Delay
+from skybluetech_scripts.tooldelta.utils.py_comp import py2_xrange
 from ...machinery.basic.item_container import ItemContainer
 from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
-from ....common.define.facing import NEIGHBOR_BLOCKS_ENUM
 from ..base.logic import LogicModule
 from ..constants import COMMON_CONTAINERS
 from .define import CableNetwork, CableAccessPoint
 
 # TYPE_CHECKING
 if 0:
+    from typing import Iterable
+
     PosData = tuple[int, int, int]  # x y z
     PosDataWithFacing = tuple[int, int, int, int]  # x y z facing
 # TYPE_CHECKING END
@@ -36,8 +39,6 @@ ITEM_POST_DELAY = 0.2
 # todo: 后续优化:
 #       1. 添加物品过滤功能
 #       2. 如果找到了可投递的容器, 下次优先向此容器进行投递, 提高命中率
-
-# TODO: 在快速取走物品时物品管道有可能不会继续传输物品
 
 
 def isCable(blockName):
@@ -136,120 +137,188 @@ def PushItemToOrigContainer(dim, xyz, item, container_size):
     return item
 
 
-require_item_queue = set()  # type: set[tuple[int, tuple[int, int, int]]]
+def GetContainerSlotsCanInput(dim, pos, cacher):
+    # type: (int, tuple[int, int, int], dict[tuple[int, int, int], Iterable[int]]) -> Iterable[int]
+    cached = cacher.get(pos)
+    if cached is not None:
+        return cached
+    m = GetMachineStrict(dim, *pos)
+    if isinstance(m, ItemContainer):
+        return m.input_slots
+    block_name = GetBlockName(dim, pos)
+    if block_name is None:
+        return []
+    elif block_name in COMMON_CONTAINERS:
+        return py2_xrange(GetContainerSize(pos, dim))
+    else:
+        return []
 
 
-def RequireItems(dim, xyz):
-    # type: (int, tuple[int, int, int]) -> None
-    "在某一个坐标的容器向周围的网络请求物品。"
-    k = (dim, xyz)
-    if k in require_item_queue:
-        return
-    require_item_queue.add((dim, xyz))
-    _require_items(dim, xyz)
-
-
-def _require_items(dim, xyz):
-    # type: (int, tuple[int, int, int]) -> None
-    require_item_queue.discard((dim, xyz))
-    x, y, z = xyz
-    cnode = logic_module.GetContainerNode(dim, x, y, z, enable_cache=True)
-    networks = [i for i in cnode.inputs.values() if i is not None]
-    for ap in sorted(
-        (i for network in networks for i in network.group_outputs),
-        key=lambda ap: ap.get_priority(),
-    ):
-        cxyz = ap.target_pos
-        if xyz == cxyz:
-            # 别自己给自己提取 !
-            continue
-        ContainerPostItem(dim, cxyz)
+def GetContainerSlotsCanOutput(dim, pos, cacher):
+    # type: (int, tuple[int, int, int], dict[tuple[int, int, int], Iterable[int]]) -> Iterable[int]
+    cached = cacher.get(pos)
+    if cached is not None:
+        return cached
+    m = GetMachineStrict(dim, *pos)
+    if isinstance(m, ItemContainer):
+        return m.output_slots
+    block_name = GetBlockName(dim, pos)
+    if block_name is None:
+        return []
+    elif block_name in COMMON_CONTAINERS:
+        return py2_xrange(GetContainerSize(pos, dim))
+    else:
+        return []
 
 
 def onActivateNetwork(network):
     # type: (CableNetwork) -> None
-    for ap in network.get_input_access_points():
-        target_pos = ap.target_pos
-        RequireItems(network.dim, target_pos)
+    pass
 
 
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
-    # 在容器被放置后延迟执行,
-    # 用于使新容器尝试接收一次物品
-    RequireItems(dim, (x, y, z))
+    pass
 
 
-event_queue = set()  # type: set[tuple[int, tuple[int, int, int]]]
+MISSING = type("_MISSING", (), {})()
 
 
-@ContainerItemChangedServerEvent.Listen()
-@Delay(0)
-def onContainerItemChanged(event):
-    # type: (ContainerItemChangedServerEvent) -> None
-    # 当容器内的物品变化时, 尝试将物品放入网络
-    if event.pos is None:
-        return
-    dim = event.dimensionId
-    xyz = event.pos
-    if event.newItem.count == 0:
+def _get_container_item(
+    dim,  # type: int
+    xyz,  # type: tuple[int, int, int]
+    slot,  # type: int
+    slotitem_cacher,  # type: dict[tuple[int, int, int], dict[int, Item | None]]
+):
+    # type: (...) -> Item | None
+    cache = slotitem_cacher.get(xyz, {}).get(slot, MISSING)
+    if cache is None or isinstance(cache, Item):
+        return cache
+    slotitem_cacher.setdefault((xyz), {})[slot] = res = GetContainerItem(
+        dim, xyz, slot, getUserData=True
+    )
+    if res is None or res.count <= 0:
+        return None
+    return res
+
+
+def onNetworkTick(network):
+    # type: (CableNetwork) -> None
+    tick_capacity = network.transfer_speed
+    cached_input_slot_poses = {}  # type: dict[tuple[int, int, int], Iterable[int]]
+    cached_input_slotitems = {}  # type: dict[tuple[int, int, int], dict[int, Item | None]]
+    input_slotitem_changed = {}  # type: dict[tuple[int, int, int], set[int]]
+    cached_output_slot_poses = {}  # type: dict[tuple[int, int, int], Iterable[int]]
+    cached_output_slotitems = {}  # type: dict[tuple[int, int, int], dict[int, Item | None]]
+    output_slotitem_changed = {}  # type: dict[tuple[int, int, int], set[int]]
+    inputs = network.get_input_access_points()
+    outputs = network.get_output_access_points()
+
+    def _get_container_input_slots(
+        dim,  # type: int
+        xyz,  # type: tuple[int, int, int]
+    ):
+        # type: (...) -> Iterable[int]
+        cache = cached_input_slot_poses.get(xyz)
+        if cache is not None:
+            return cache
         m = GetMachineStrict(dim, *xyz)
         if isinstance(m, ItemContainer):
-            if event.slot in m.input_slots:
-                RequireItems(dim, xyz)
+            cached_input_slot_poses[xyz] = res = m.input_slots
         else:
-            RequireItems(dim, xyz)
-    ContainerPostItem(dim, xyz)
+            cached_input_slot_poses[xyz] = res = py2_xrange(GetContainerSize(xyz, dim))
+        return res
 
-
-def ContainerPostItem(dim, xyz):
-    # type: (int, tuple[int, int, int]) -> None
-    m = GetMachineStrict(dim, *xyz)  # 可能是一个机器
-    if m is not None:
-        if not isinstance(m, ItemContainer):
-            raise ValueError("Machine %s is not a ItemContainer" % type(m).__name__)
+    def _get_container_output_slots(
+        dim,  # type: int
+        xyz,  # type: tuple[int, int, int]
+    ):
+        # type: (...) -> Iterable[int]
+        cache = cached_output_slot_poses.get(xyz)
+        if cache is not None:
+            return cache
+        m = GetMachineStrict(dim, *xyz)
+        if isinstance(m, ItemContainer):
+            cached_output_slot_poses[xyz] = res = m.output_slots
         else:
-            slots = m.output_slots
-    else:
-        slots = range(GetContainerSize(xyz, dim))
-    k = (dim, xyz)
-    if k in event_queue:
-        return
-    event_queue.add((dim, xyz))
-    _cotainerPostItems(dim, xyz, slots)  # pyright: ignore[reportArgumentType]
+            cached_output_slot_poses[xyz] = res = py2_xrange(GetContainerSize(xyz, dim))
+        return res
 
+    break_flag1 = False
+    for output_ap in outputs:
+        output_pos = output_ap.target_pos
+        output_slotposes = _get_container_output_slots(network.dim, output_pos)
+        for output_slot in output_slotposes:
+            output_item = _get_container_item(
+                network.dim, output_pos, output_slot, cached_output_slotitems
+            )
+            if output_item is None:
+                continue
 
-@Delay(ITEM_POST_DELAY)
-def _cotainerPostItems(dim, xyz, slots):
-    # type: (int, tuple[int, int, int], tuple[int, ...]) -> None
-    event_queue.discard((dim, xyz))
-    x, y, z = xyz
-    output_networks = set(
-        i
-        for i in logic_module.GetContainerNode(
-            dim, x, y, z, enable_cache=True
-        ).outputs.values()
-        if i is not None
-    )
-    for slot_not_empty in slots:
-        item = GetContainerItem(dim, xyz, slot_not_empty, getUserData=True)
-        if item is None:
-            continue
-        rest_item = PostItemIntoNetworks(dim, xyz, item, output_networks)
-        if rest_item is not None:
-            if rest_item.count > 0:
-                if rest_item.count == item.count:
-                    continue
-                else:
-                    res = SetContainerItem(dim, xyz, slot_not_empty, rest_item)
-                    if not res:
-                        print("[Warning] SetItem to container %d %d %d failed" % xyz)
-                    if not POST_ALL_ITEMS_IN_ONE_TIME:
+            count_to_send = min(tick_capacity, output_item.count)
+            count_cant_send = output_item.count - count_to_send
+            output_item.count = count_to_send
+
+            for input_ap in inputs:
+                break_flag2 = False
+                input_pos = input_ap.target_pos
+                input_slotposes = _get_container_input_slots(network.dim, input_pos)
+                for input_slot in input_slotposes:
+                    input_item = _get_container_item(
+                        network.dim, input_pos, input_slot, cached_input_slotitems
+                    )
+                    if input_item is None:
+                        cached_input_slotitems[input_pos][input_slot] = (
+                            output_item.copy()
+                        )
+                        output_item.count = 0
+                    elif (
+                        input_item.CanMerge(output_item) and not input_item.StackFull()
+                    ):
+                        input_item.MergeFrom(output_item)
+                        cached_input_slotitems[input_pos][input_slot] = input_item
+                    else:
+                        continue
+
+                    input_slotitem_changed.setdefault(input_pos, set()).add(input_slot)
+                    output_slotitem_changed.setdefault(output_pos, set()).add(
+                        output_slot
+                    )
+
+                    tick_capacity -= count_to_send - output_item.count
+                    output_item.count += count_cant_send
+
+                    if output_item.count <= 0:
+                        # 输出槽物品已全部投递
+                        cached_output_slotitems[output_pos][output_slot] = None
+                        break_flag2 = True
                         break
-        else:
-            SetContainerItem(dim, xyz, slot_not_empty, Item("minecraft:air", 0, 0))
-            # if not POST_ALL_ITEMS_IN_ONE_TIME:
-            #     break
+                    else:
+                        cached_output_slotitems[output_pos][output_slot] = output_item
+                    if tick_capacity <= 0:
+                        break_flag1 = break_flag2 = True
+                        break
+
+                if break_flag2:
+                    break
+        if break_flag1:
+            break
+
+    for pos, changed_slots in input_slotitem_changed.items():
+        for slot in changed_slots:
+            item = cached_input_slotitems[pos][slot]
+            if item is None:
+                SetContainerItem(network.dim, pos, slot, Item("minecraft:air"))
+            else:
+                SetContainerItem(network.dim, pos, slot, item)
+
+    for pos, changed_slots in output_slotitem_changed.items():
+        for slot in changed_slots:
+            item = cached_output_slotitems[pos][slot]
+            if item is None:
+                SetContainerItem(network.dim, pos, slot, Item("minecraft:air"))
+            else:
+                SetContainerItem(network.dim, pos, slot, item)
 
 
 logic_module = LogicModule(
@@ -259,6 +328,7 @@ logic_module = LogicModule(
     isContainer,
     onMachineryPlacedLater,
     onActivateNetwork,
+    on_network_tick=onNetworkTick,
 )
 
 

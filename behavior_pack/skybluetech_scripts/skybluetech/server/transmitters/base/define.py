@@ -17,22 +17,28 @@ AP_MODE_OUTPUT = 0b10
 
 
 class BaseNetwork(Generic[_APT]):
-    TRANSMITTER_SPEED_MAPPING = (None,)
-
+    # 网络表示一条管网, 所有可以直接连通的管道方块共属于一个网络。
     def __init__(self, dim, group_inputs, group_outputs, nodes, transfer_speed=0):
-        # type: (int, set[_APT], set[_APT], set[tuple[int, int, int]], int | None) -> None
+        # type: (int, set[_APT], set[_APT], set[tuple[int, int, int]], int) -> None
         self.dim = dim
         self.group_inputs = group_inputs
         self.group_outputs = group_outputs
         self.transfer_speed = transfer_speed
         self.nodes = nodes
+        self._nodes_to_discard = set(nodes)
         for _i in group_inputs | group_outputs:
             _i.bound_network(self)
 
     @classmethod
     def calc_transfer_speed(cls, block_name):
-        # type: (str) -> int | None
+        # type: (str) -> int
         "覆写方法, 根据传入的管线方块 ID 返回传输速率"
+        return 0
+
+    @classmethod
+    def calc_capacity(cls, block_name):
+        # type: (str) -> int
+        "覆写方法, 根据传入的管线方块 ID 返回容量"
         return 0
 
     def get_input_access_points(self):
@@ -74,6 +80,9 @@ class BaseNetwork(Generic[_APT]):
 
 
 class BaseAccessPoint(Generic[_NT]):
+    # 接入点表示网络与容器连接的管网方块。
+    # 接入点存储了管网接入容器的坐标, 接入口处方块接入到容器的朝向
+    # 和接入点的接口模式 (0=存入, 1=抽取)。
     def __init__(self, dim, x, y, z, access_facing, io_mode):
         # type: (int, int, int, int, int, int) -> None
         """
@@ -171,6 +180,10 @@ class BaseAccessPoint(Generic[_NT]):
 
 
 class ContainerNode(Generic[_NT]):
+    # 容器节点表示与一个或多个管网连接的一个容器。
+    # 容器节点存储了六个面的管道连接信息, 如果这个面还没有初始化
+    # 则它不存在于 inputs/outputs 中。 如果已经初始化完成
+    # 则它在 inputs/outputs 中将以 连接面:Opt[网络] 的方式表示。
     def __init__(self, inputs=None, outputs=None):
         # type: (dict[int, _NT | None] | None, dict[int, _NT | None] | None) -> None
         self.inited = False

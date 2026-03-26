@@ -4,13 +4,11 @@ from skybluetech_scripts.tooldelta.api.server.block import BlockHasTag
 from ...machinery.basic.fluid_container import FluidContainer
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.pool import GetMachineStrict
-from ....common.define.facing import NEIGHBOR_BLOCKS_ENUM
 from ..base import LogicModule
 from .define import PipeNetwork, PipeAccessPoint
 
 
 PIPE_NAME = "skybluetech:bronze_pipe"
-INFINITY = float("inf")
 
 
 def isPipe(blockName):
@@ -50,7 +48,7 @@ def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
             if i is not None
         ]
     for network in networks:
-        once_transfer_vol_max = network.transfer_speed or INFINITY
+        once_transfer_vol_max = network.transfer_speed
         for ap in sorted(
             network.group_inputs,
             key=lambda ap: ap.get_priority(),
@@ -82,51 +80,88 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
     return ok, rest_fluid_volume
 
 
-def RequirePostFluid(dim, xyz):
-    # type: (int, tuple[int, int, int]) -> None
-    "网络内某个节点向网络请求流体。"
-    x, y, z = xyz
-    for ap in sorted(
-        [
-            i
-            for network in logic_module.GetContainerNode(
-                dim, x, y, z, enable_cache=True
-            ).inputs.values()
-            if network is not None
-            for i in network.group_outputs
-        ],
-        key=lambda ap: ap.get_priority(),
-        reverse=True,
-    ):
-        dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[ap.access_facing]
-        cxyz = (ap.x + dx, ap.y + dy, ap.z + dz)
-        if xyz == cxyz:
-            # 别自己给自己提取 !
-            continue
-        m = GetMachineStrict(dim, ap.x + dx, ap.y + dy, ap.z + dz)
-        if isinstance(m, (FluidContainer, MultiFluidContainer)):
-            m.OnTryActivate()
-
-
 def onActivateNetwork(network):
     # type: (PipeNetwork) -> None
-    for ap in network.get_input_access_points():
-        target_pos = ap.target_pos
-        RequirePostFluid(network.dim, target_pos)
+    pass
 
 
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
     # 在流体容器被放置后延迟执行,
     # 用于使新设备尝试索取流体
-    RequirePostFluid(dim, (x, y, z))
+    pass
+
+
+def onNetworkTick(network):
+    # type: (PipeNetwork) -> None
+    transfer_speed = network.transfer_speed
+    pipe_fluid_id = network.fluid_id
+    pipe_fluid_volume = network.fluid_volume
+    capacity = network.capacity
+    if pipe_fluid_id is not None and pipe_fluid_volume > 0:
+        volume_output = min(transfer_speed, pipe_fluid_volume)
+        pipe_fluid_volume -= volume_output
+        for input in network.get_input_access_points():
+            ok, volume_output = PushFluidToFluidContainer(
+                input, pipe_fluid_id, volume_output
+            )
+            if volume_output <= 0:
+                break
+        pipe_fluid_volume += volume_output
+    out_capacity = min(transfer_speed, capacity - pipe_fluid_volume)
+    for output in network.get_output_access_points():
+        om = GetMachineStrict(output.dim, *output.target_pos)
+        if isinstance(om, FluidContainer):
+            om_fluid_id = om.fluid_id
+            om_fluid_vol = om.fluid_volume
+            if om_fluid_id is None or (
+                pipe_fluid_id is not None and om_fluid_id != pipe_fluid_id
+            ):
+                continue
+            vol_takeout = min(out_capacity, om_fluid_vol)
+            om_fluid_vol -= vol_takeout
+            om.fluid_volume = om_fluid_vol
+            if om_fluid_vol <= 0:
+                om.fluid_id = None
+            om.onReducedFluid(om_fluid_id, vol_takeout)
+            pipe_fluid_volume += vol_takeout
+            out_capacity -= vol_takeout
+            if pipe_fluid_id is None:
+                pipe_fluid_id = om_fluid_id
+            if out_capacity <= 0:
+                break
+        elif isinstance(om, MultiFluidContainer):
+            do_break = False
+            for fluid in om.fluids:
+                if fluid.fluid_id is None or (
+                    pipe_fluid_id is not None and fluid.fluid_id != pipe_fluid_id
+                ):
+                    continue
+                vol_takeout = min(out_capacity, om_fluid_vol)
+                fluid.volume -= vol_takeout
+                pipe_fluid_volume += vol_takeout
+                out_capacity -= vol_takeout
+                if pipe_fluid_id is None:
+                    pipe_fluid_id = om_fluid_id
+                if out_capacity <= 0:
+                    do_break = True
+                    break
+            if do_break:
+                break
+    network.fluid_volume = pipe_fluid_volume
+    if pipe_fluid_volume <= 0:
+        network.fluid_id = None
+    else:
+        network.fluid_id = pipe_fluid_id
+    network.save_network_data()
 
 
 logic_module = LogicModule(
     PipeNetwork,
     PipeAccessPoint,
-    isPipe,
-    isFluidContainer,
-    onMachineryPlacedLater,
-    onActivateNetwork,
+    transmitter_check_func=isPipe,
+    on_transmittable_block_placed_later=onMachineryPlacedLater,
+    on_network_active=onActivateNetwork,
+    transmittable_block_check_func=isFluidContainer,
+    on_network_tick=onNetworkTick,
 )

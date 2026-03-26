@@ -113,46 +113,29 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
                     event.dimensionId, blockX, blockY, blockZ, facing, AP_MODE_OUTPUT
                 )
                 ap.bound_network(current_network)
-                cnode = self.logic_module.GetContainerNode(
-                    event.dimensionId, *ap.target_pos
-                )
-                # del i[OPPOSITE_FACING[ap.access_facing]]
-                cnode.set_face(OPPOSITE_FACING[ap.access_facing], AP_MODE_INPUT, None)
-                current_network.group_inputs.remove(ap)
-                current_network.group_outputs.add(ap)
-                # o[OPPOSITE_FACING[ap.access_facing]] = current_network
-                cnode.set_face(
-                    OPPOSITE_FACING[ap.access_facing], AP_MODE_OUTPUT, current_network
-                )
-                self.logic_module.access_points_pool[
-                    (ap.dim, ap.x, ap.y, ap.z, ap.access_facing)
-                ] = ap
+                ok = self.logic_module.SetAccessPointIOMode(ap, AP_MODE_OUTPUT)
             else:
                 ap = self.logic_module.access_point_cls(
                     event.dimensionId, blockX, blockY, blockZ, facing, AP_MODE_INPUT
                 )
                 ap.bound_network(current_network)
-                cnode = self.logic_module.GetContainerNode(
-                    event.dimensionId, *ap.target_pos
+                ok = self.logic_module.SetAccessPointIOMode(ap, AP_MODE_INPUT)
+            if ok:
+                SetOnePopupNotice(
+                    event.playerId,
+                    "§f已将管道的§6"
+                    + FACING_ZHCN[facing]
+                    + "§f面设置为"
+                    + ("§a输入", "§c抽出")[newState],
                 )
-                # del o[OPPOSITE_FACING[ap.access_facing]]
-                cnode.set_face(OPPOSITE_FACING[ap.access_facing], AP_MODE_OUTPUT, None)
-                current_network.group_inputs.add(ap)
-                current_network.group_outputs.remove(ap)
-                # i[OPPOSITE_FACING[ap.access_facing]] = current_network
-                cnode.set_face(
-                    OPPOSITE_FACING[ap.access_facing], AP_MODE_INPUT, current_network
+            else:
+                SetOnePopupNotice(
+                    event.playerId,
+                    "§6无法将管道的§6"
+                    + FACING_ZHCN[facing]
+                    + "§6面设置为"
+                    + ("§a输入", "§c抽出")[newState],
                 )
-                self.logic_module.access_points_pool[
-                    (ap.dim, ap.x, ap.y, ap.z, ap.access_facing)
-                ] = ap
-            SetOnePopupNotice(
-                event.playerId,
-                "§f已将管道的§6"
-                + FACING_ZHCN[facing]
-                + "§f面设置为"
-                + ("§a输入", "§c抽出")[newState],
-            )
             ExecLater(0, self.logic_module.ActivateNetwork, current_network)
             UpdateBlockStates(
                 event.dimensionId, (blockX, blockY, blockZ), block_orig_status

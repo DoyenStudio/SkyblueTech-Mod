@@ -8,17 +8,21 @@
             "A": {
                 "data": 0,
                 "item": "minecraft:oak_slab"
+            },
+            "B": {
+                "data": 0,
+                "item": "minecraft:stick"
             }
         },
         "pattern": [
             "A A",
             " A ",
-            " A "
+            "BAB"
         ],
         "result": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:resin_spoon"
+            "item": "skybluetech:resin_collector"
         },
         "tags": [
             "crafting_table"

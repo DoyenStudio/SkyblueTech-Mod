@@ -7,7 +7,10 @@ from skybluetech_scripts.tooldelta.api.client import (
     GetControlModeEnum,
     SetPopupNotice,
 )
-from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
+from skybluetech_scripts.tooldelta.events.client import (
+    OnCustomGamepadPressInGame,
+    OnCustomKeyPressInGame,
+)
 from skybluetech_scripts.tooldelta.ui import (
     RegistToolDeltaScreen,
     UBaseCtrl,
@@ -18,16 +21,14 @@ from ....common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantBuildResponse,
 )
 from ....common.define.id_enum.machinery import RF_REPEATER_PLANT
-from ....user_config.key_mapping import (
-    RF_TRANSPORTER_PLANT_BUILD_FINISH,
-    RF_TRANSPORTER_PLANT_BUILD_CANCEL,
-)
+from ....user_config import key_mapping
 from ...machinery.utils.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
+
 
 BG_NODE = "/bg"
 METER_LABEL_NODE = BG_NODE + "/meter_label"
@@ -54,22 +55,16 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
             .asButton()
             .SetCallback(self.on_finish_build)
         )
-        self.is_support_key = GetControlMode() != GetControlModeEnum().Touch
         self.nearest_machine_pos = None
         self.active = True
         self.disable_finish_btn()
-        if self.is_support_key:
-            self.esc_btn["key_tip"].SetVisible(True)
-            self.finish_btn["key_tip"].SetVisible(True)
-        else:
-            self.esc_btn["key_tip"].SetVisible(False)
-            self.finish_btn["key_tip"].SetVisible(False)
+        self.init_buttonmapping_tips()
 
     def OnTicking(self):
         if not self.active:
             return
         self.t += 1
-        if self.t % 5 != 0:
+        if self.t % 3 != 0:
             return
         x, y, z = GetFootPos(GetLocalPlayerId())
         distance = hypot(x - self.original_x, y - self.original_y, z - self.original_z)
@@ -89,6 +84,18 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
     def OnDestroy(self):
         self.active = False
 
+    def on_cancel_build(self, _):
+        SetPopupNotice("已退出布线模式")
+        self.RemoveUI()
+
+    def on_finish_build(self, _):
+        if self.nearest_machine_pos is None:
+            return
+        nx, ny, nz = self.nearest_machine_pos
+        RFRepeaterPlantBuildRequest(
+            self.original_x, self.original_y, self.original_z, nx, ny, nz
+        ).send()
+
     def enable_finish_btn(self):
         self.finish_btn.SetVisible(True)
 
@@ -106,26 +113,31 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
                 self.enable_finish_btn()
             self.nearest_machine_pos = nearest
 
-    def on_cancel_build(self, _):
-        SetPopupNotice("已退出布线模式")
-        self.RemoveUI()
+    def init_buttonmapping_tips(self):
+        CTRL = GetControlModeEnum()
+        ctrl_mode = GetControlMode()
+        if ctrl_mode == CTRL.Touch or ctrl_mode == CTRL.Undefined:
+            self.esc_btn["key_tip"].SetVisible(False)
+            self.finish_btn["key_tip"].SetVisible(False)
+        else:
+            self.esc_btn["key_tip"].SetVisible(True)
+            self.esc_btn["key_tip/text"].asLabel().SetText(
+                key_mapping.RF_REPEATER_BUILD_CANCEL.get_general_str(with_prefix=True)
+            )
+            self.finish_btn["key_tip"].SetVisible(True)
+            self.finish_btn["key_tip/text"].asLabel().SetText(
+                key_mapping.RF_REPEATER_BUILD_CONFIRM.get_general_str(with_prefix=True)
+            )
 
-    def on_finish_build(self, _):
-        if self.nearest_machine_pos is None:
-            return
-        nx, ny, nz = self.nearest_machine_pos
-        RFRepeaterPlantBuildRequest(
-            self.original_x, self.original_y, self.original_z, nx, ny, nz
-        ).send()
-
-    @ToolDeltaScreen.Listen(OnKeyPressInGame)
+    @ToolDeltaScreen.Listen(OnCustomGamepadPressInGame)
+    @ToolDeltaScreen.Listen(OnCustomKeyPressInGame)
     def onKeyPress(self, event):
-        # type: (OnKeyPressInGame) -> None
+        # type: (OnCustomGamepadPressInGame | OnCustomKeyPressInGame) -> None
         if not event.isDown:
             return
-        if event.key == RF_TRANSPORTER_PLANT_BUILD_CANCEL:
+        if key_mapping.RF_REPEATER_BUILD_CANCEL.is_this(event):
             self.on_cancel_build(None)
-        elif event.key == RF_TRANSPORTER_PLANT_BUILD_FINISH:
+        elif key_mapping.RF_REPEATER_BUILD_CONFIRM.is_this(event):
             self.on_finish_build(None)
 
     @ToolDeltaScreen.Listen(RFRepeaterPlantBuildResponse)

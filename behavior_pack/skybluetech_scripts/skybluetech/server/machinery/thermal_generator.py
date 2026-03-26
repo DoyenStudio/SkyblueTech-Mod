@@ -44,7 +44,7 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
                 self.is_burning = self.next_burn()
                 return
             self.burn_seconds_left -= SecondsPerTick
-            self.OnSync()
+            self.CallSync()
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool

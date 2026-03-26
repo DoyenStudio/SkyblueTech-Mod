@@ -34,17 +34,17 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = SplitterUISync.NewServer(self).Activate()
-        self.OnSync()
         self.TryStartNext()
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
         while self.IsActive():
-            self.OnSync()
             if self.ProcessOnce():
                 self.run_once()
                 self.TryStartNext()
+                self.CallSync()
             else:
+                self.CallSync()
                 break
 
     def TryStartNext(self):

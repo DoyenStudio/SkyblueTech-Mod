@@ -78,7 +78,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
             self.reduce_dura()
             self.update_power()
         if self.t % 5 == 0 and self.IsActive():
-            self.OnSync()
+            self.CallSync()
 
     @classmethod
     def OnPrePlaced(cls, event):
@@ -209,7 +209,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
             self.rot_speed = float(self.actual_mcw) / 5120 + 0.01
         else:
             self.rot_speed = 0
-        self.OnSync()
+        self.CallSync()
         self.SetOutputPower(self.output_power)
 
     def get_actual_output_pc(self):

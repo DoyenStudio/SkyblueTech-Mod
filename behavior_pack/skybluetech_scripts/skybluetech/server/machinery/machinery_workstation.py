@@ -49,7 +49,7 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         self.load_recipe()
-        self.OnSync()
+        self.CallSync()
 
     def load_recipe(self, init=False):
         if not init:
@@ -146,7 +146,7 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
             'execute as "%s" at @s positioned %d %d %d run playsound %s'
             % (GetNameById(event.player_id), self.x, self.y, self.z, sound)
         )
-        self.OnSync()
+        self.CallSync()
 
     @property
     def craft_times(self):

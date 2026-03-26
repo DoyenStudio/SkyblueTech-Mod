@@ -50,7 +50,7 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
     def OnTicking(self):
         if self.ProcessOnce():
             self.work_once()
-            self.OnSync()
+            self.CallSync()
 
     def OnSync(self):
         self.sync.fluid_id = self.fluid_id

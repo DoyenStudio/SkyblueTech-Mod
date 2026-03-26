@@ -19,7 +19,6 @@ class FluidInputInterface(BaseInterface, FluidContainer, GUIControl):
         BaseInterface.__init__(self, dim, x, y, z, block_entity_data)
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidInterfaceUISync.NewServer(self).Activate()
-        self.OnSync()
         self.on_fluid_slot_update_cb_ref = None
 
     def OnSync(self):

@@ -429,7 +429,7 @@ class MultiBlockStructure(BaseMachine):
         self.SetDeactiveFlag(flag)
         self.OnStructureChanged(False)
         if isinstance(self, GUIControl):
-            self.OnSync()
+            self.CallSync()
 
     def UnsetStructureDestroyed(self):
         if self._last_destroy_flag != FLAG_OK:
@@ -438,7 +438,7 @@ class MultiBlockStructure(BaseMachine):
             self._lacked_blocks = {}
             self.OnStructureChanged(True)
             if isinstance(self, GUIControl):
-                self.OnSync()
+                self.CallSync()
 
     def GetStructureDestroyFlag(self):
         return self._last_destroy_flag

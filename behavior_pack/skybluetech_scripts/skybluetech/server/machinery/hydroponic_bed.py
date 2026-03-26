@@ -90,7 +90,7 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
         elif self.crop_id in Recipes:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-        self.OnSync()
+        self.CallSync()
         self.notifyUpdate()
 
     @SuperExecutorMeta.execute_super

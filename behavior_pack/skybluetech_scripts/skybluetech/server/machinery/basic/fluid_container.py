@@ -59,7 +59,7 @@ class FluidContainer(object):
     def AddFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
         if isinstance(self, GUIControl):
-            self.OnSync()
+            self.CallSync()
         my_fluid_id = self.fluid_id
         if my_fluid_id is None:
             self.fluid_id = fluid_id
@@ -153,14 +153,14 @@ class FluidContainer(object):
         self.OnAddedFluid(fluid_id, fluid_volume)
         self.onFluidSlotUpdate()
         if isinstance(self, GUIControl):
-            self.OnSync()
+            self.CallSync()
 
     def onReducedFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> None
         self.OnReducedFluid(fluid_id, fluid_volume)
         self.onFluidSlotUpdate()
         if isinstance(self, GUIControl):
-            self.OnSync()
+            self.CallSync()
 
     def onFluidSlotUpdate(self):
         # type: () -> None
@@ -213,7 +213,7 @@ class FluidContainer(object):
                         )
                         self.onAddedFluid(fluid_id, BUCKET_VOLUME)
             if isinstance(self, GUIControl):
-                self.OnSync()
+                self.CallSync()
             return True
         else:
             return False

@@ -37,7 +37,7 @@ class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
             self.update()
         if self.t % 5 == 0 and self.IsActive():
             self.GeneratePower(self.power_output * 5)
-            self.OnSync()
+            self.CallSync()
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
@@ -79,7 +79,7 @@ class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
             self.power_output = round(self.light_level)
         else:
             self.power_output = 0
-        self.OnSync()
+        self.CallSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

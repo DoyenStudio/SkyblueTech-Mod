@@ -120,7 +120,7 @@ class BaseMachine(object):
         else:
             self.store_rf += rf
         if isinstance(self, GUIControl):
-            self.OnSync()
+            self.CallSync()
         return True, overflow
 
     def ReducePower(self, rf):

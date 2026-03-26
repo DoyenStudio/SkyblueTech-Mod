@@ -19,7 +19,6 @@ class FluidCondenser(MixedProcessor):
     def __init__(self, dim, x, y, z, block_entity_data):
         MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidCondenserUISync.NewServer(self).Activate()
-        self.OnSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

@@ -41,7 +41,7 @@ class HeavyCompressor(GUIControl, ItemContainer, SPControl, WorkRenderer):
 
     def OnTicking(self):
         while self.IsActive():
-            self.OnSync()
+            self.CallSync()
             if self.ProcessOnce():
                 self.run_once()
                 self.TryStartNext()

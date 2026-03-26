@@ -43,7 +43,7 @@ class Freezer(MixedProcessor):
             new_mode %= len(Recipes)
         self.recipes = [Recipes[new_mode]]
         self.recipe_mode = new_mode
-        self.OnSync()
+        self.CallSync()
         self.start_next()
 
     @property

@@ -28,7 +28,7 @@ class CreativeTank(BasicTank):
         res = FluidContainer.ifPlayerInteractWithBucket(self, player_id, test)
         if self.fluid_id is not None:
             self.fluid_volume = INFINITY
-        self.OnSync()
+        self.CallSync()
         return res
 
     def OnSlotUpdate(self, slot_pos):

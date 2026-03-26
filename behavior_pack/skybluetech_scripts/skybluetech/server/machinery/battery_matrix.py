@@ -108,7 +108,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         if ok:
             self.get_energy_in_io().SetMachineRef(self)
             self.get_energy_out_io().SetMachineRef(self)
-        self.OnSync()
+        self.CallSync()
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
@@ -155,7 +155,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
             else:
                 break
         core.update_core_data()
-        self.OnSync()
+        self.CallSync()
         core.gen_update_event().sendMulti(self.sync.GetPlayersInSync())
 
     def pop_battery_from_core(self, index):
@@ -177,7 +177,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
             # cannot happen
             SpawnDroppedItem(self.dim, (self.x, self.y, self.z), res)
         core.update_core_data()
-        self.OnSync()
+        self.CallSync()
         core.gen_update_event().sendMulti(self.sync.GetPlayersInSync())
 
     def provide_energy(self):
@@ -249,7 +249,7 @@ def onRequest(event):
         m.set_input_mode(event.value)
     elif event.op == event.OPERATION_OUTPUT:
         m.set_output_mode(event.value)
-    m.OnSync()
+    m.CallSync()
 
 
 @BatteryMatrixCheckCoreBatterysRequest.Listen()

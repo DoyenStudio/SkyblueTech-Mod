@@ -73,7 +73,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
                 if self.IsActive():
                     if self.ProcessOnce():
                         self.run_once()
-                        self.OnSync()
+                        self.CallSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf
@@ -140,7 +140,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             self.sync.work_mode = MiniMinerUISync.WorkMode.OTHER
         else:
             self.sync.work_mode = MiniMinerUISync.WorkMode.WORKING
-        self.OnSync()
+        self.CallSync()
 
     def init_mine_pos_iterator(self):
         if self.last_scanned_y is not None:

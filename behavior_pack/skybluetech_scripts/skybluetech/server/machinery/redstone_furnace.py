@@ -33,13 +33,12 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = RedstoneFurnaceUISync.NewServer(self).Activate()
-        self.OnSync()
         self.try_start_next()
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
         while self.IsActive():
-            self.OnSync()
+            self.CallSync()
             if self.ProcessOnce():
                 self.run_once()
                 self.try_start_next()

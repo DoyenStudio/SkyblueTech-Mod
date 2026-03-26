@@ -37,7 +37,6 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = FarmingStationUISync.NewServer(self).Activate()
-        self.OnSync()
 
     def OnTicking(self):
         # 1t 内如果处理多次任务会导致卡顿

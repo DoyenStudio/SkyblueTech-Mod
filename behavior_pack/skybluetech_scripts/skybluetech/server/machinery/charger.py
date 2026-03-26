@@ -47,7 +47,6 @@ class Charger(GUIControl, UpgradeControl):
         self.charge_rf = 0
         self.charge_rf_max = 1
         self.t = 0
-        self.OnSync()
 
     def OnClick(self, evt):
         GUIControl.OnClick(self, evt)
@@ -63,7 +62,7 @@ class Charger(GUIControl, UpgradeControl):
             if self.t >= 5:
                 self.t = 0
                 self.charge_once()
-            self.OnSync()
+            self.CallSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

@@ -49,7 +49,7 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
     def OnTicking(self):
         if self.PowerEnough():
             self.ReducePower()
-            self.OnSync()
+            self.CallSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

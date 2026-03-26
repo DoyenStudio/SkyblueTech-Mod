@@ -57,7 +57,7 @@ class HydroponicBase(BaseMachine, ItemContainer, MultiFluidContainer, GUIControl
         self.fluids[0].volume -= volume
         if self.fluids[0].volume <= 0:
             self.fluids[0].fluid_id = None
-        self.OnSync()
+        self.CallSync()
 
     def GetWaterVolume(self):
         # type: () -> float

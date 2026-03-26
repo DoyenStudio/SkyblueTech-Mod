@@ -87,21 +87,21 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
             if self.IsActive():
                 if self.ProcessOnce():
                     self.workOnce()
-                    self.OnSync()
+                    self.CallSync()
             if self.IsActiveIgnoreCondition(flags.DEACTIVE_FLAG_POWER_LACK):
                 self.tryInoculate()
                 recipe = spec_recipes.get(self.recipe_id)
                 if recipe is None:
                     return
                 self.lifeCycle(recipe)
-                self.OnSync()
+                self.CallSync()
 
     def OnStructureChanged(self, ok):
         # type: (bool) -> None
         if ok:
             self.getEnergyInIO().SetMachineRef(self)
             self.getItemInIO().SetOnSlotUpdateCallback(self.OnOtherSlotUpdate)
-        self.OnSync()
+        self.CallSync()
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -216,14 +216,14 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
             self.SetPower(3 + int(self.expected_mud_temperature - 30))
         else:
             self.SetPower(3)
-        self.OnSync()
+        self.CallSync()
 
     def setExpectedWaterMaxVolume(self, volume):
         # type: (float) -> None
         if volume < 0 or volume > POOL_MAX_VOLUME:
             return
         self.expected_water_max_volume = volume
-        self.OnSync()
+        self.CallSync()
 
     def workOnce(self):
         self.tryAddWater()

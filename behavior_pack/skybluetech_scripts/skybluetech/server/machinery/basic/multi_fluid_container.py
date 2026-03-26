@@ -244,7 +244,7 @@ class MultiFluidContainer(object):
                         )
                         self.onAddedFluid(slot, fluid_id, BUCKET_VOLUME, i == last_idx)
             if isinstance(self, GUIControl):
-                self.OnSync()
+                self.CallSync()
             return True
         else:
             return False
@@ -266,14 +266,14 @@ class MultiFluidContainer(object):
         self.OnAddedFluid(slot, fluid_id, fluid_volume, is_final)
         self.onFluidSlotUpdate(slot, is_final)
         if isinstance(self, GUIControl):
-            self.OnSync()
+            self.CallSync()
 
     def onReducedFluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         self.OnReducedFluid(slot, fluid_id, fluid_volume, is_final)
         self.onFluidSlotUpdate(slot, is_final)
         if isinstance(self, GUIControl):
-            self.OnSync()
+            self.CallSync()
 
     def onFluidSlotUpdate(self, slot_pos, is_final):
         # type: (int, bool) -> None

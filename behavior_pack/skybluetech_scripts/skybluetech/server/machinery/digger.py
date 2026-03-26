@@ -57,7 +57,6 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
             self.dim, (x + self.dx, y + self.dy, z + self.dz)
         )  # block is None?
         self.sync = DiggerUISync.NewServer(self).Activate()
-        self.OnSync()
         self.prev_crack_stage = 0
         # NOTE: 我们假设方块之后的朝向直到方块被销毁前都不会变化
 

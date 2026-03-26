@@ -41,7 +41,6 @@ class Assembler(GUIControl, UpgradeControl):
         self.delay = 20
         self.lis = []  # type: list[tuple[str, str, int]]
         self.update_list()
-        self.OnSync()
 
     def AddPower(self, rf):
         res = UpgradeControl.AddPower(self, rf)
@@ -150,7 +149,7 @@ class Assembler(GUIControl, UpgradeControl):
         self.SetSlotItem(1, None)
         self.SetSlotItem(0, slot0_item)
         self.update_list()
-        self.OnSync()
+        self.CallSync()
 
     def on_pull_upgrader(self, index):
         # type: (int) -> None
@@ -172,7 +171,7 @@ class Assembler(GUIControl, UpgradeControl):
         setUpgraders(slot0_item, upgraders)
         self.SetSlotItem(0, slot0_item)
         self.update_list()
-        self.OnSync()
+        self.CallSync()
 
     def can_add_new_upgrader(self, item, exist_upgraders, upgrader):
         # type: (Item, dict[str, Item], Item) -> bool

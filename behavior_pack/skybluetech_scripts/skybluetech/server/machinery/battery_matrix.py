@@ -55,9 +55,6 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
-        ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
-        MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = BatteryMatrixUISync.NewServer(self).Activate()
         self._last_rf_provided = 0
         self._last_input = 0
@@ -73,7 +70,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self._sum_power_t += 1
         if self._sum_power_t >= 20:
             self._sum_input = self._last_input
-            self._last_output = self._sum_output
+            self._sum_output = self._last_output
             self._last_input = 0
             self._last_output = 0
             self._sum_power_t = 0

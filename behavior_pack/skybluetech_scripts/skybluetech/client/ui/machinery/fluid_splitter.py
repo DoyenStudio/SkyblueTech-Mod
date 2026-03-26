@@ -252,7 +252,7 @@ class FluidSplitterUI(MachinePanelUIProxy):
         ).send()
         self.closeFluidSelector()
 
-    @MachinePanelUIProxy.DelayedListen(FluidSplitterSettingsListUpdate)
+    @MachinePanelUIProxy.Listen(FluidSplitterSettingsListUpdate)
     def onListUpdated(self, event):
         # type: (FluidSplitterSettingsListUpdate) -> None
         cur = len(event.lis)

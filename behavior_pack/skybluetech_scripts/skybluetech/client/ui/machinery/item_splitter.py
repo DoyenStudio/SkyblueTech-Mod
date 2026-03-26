@@ -210,7 +210,7 @@ class ItemSplitterUI(MachinePanelUIProxy):
             idx,
         ).send()
 
-    @MachinePanelUIProxy.DelayedListen(ItemSplitterSettingsListUpdate)
+    @MachinePanelUIProxy.Listen(ItemSplitterSettingsListUpdate)
     def onListUpdated(self, event):
         # type: (ItemSplitterSettingsListUpdate) -> None
         cur = len(event.lis)

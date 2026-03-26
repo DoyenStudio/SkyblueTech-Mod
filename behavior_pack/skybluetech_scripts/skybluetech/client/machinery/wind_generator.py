@@ -26,7 +26,7 @@ from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesUpdate,
 )
 from ...common.define.id_enum.machinery import WIND_GENERATOR as MACHINE_ID
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
 PaddleEnum = WindGeneratorStatesUpdate

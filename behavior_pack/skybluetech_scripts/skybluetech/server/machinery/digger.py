@@ -21,7 +21,7 @@ from ...common.events.machinery.digger import (
     DiggerUpdateCrack,
 )
 from ...common.define.id_enum.machinery import DIGGER as MACHINE_ID
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from ...common.ui_sync.machinery.digger import DiggerUISync
 from .basic import (
     GUIControl,

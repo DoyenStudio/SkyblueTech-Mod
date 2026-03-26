@@ -16,7 +16,7 @@ from ...common.events.machinery.charger import (
     ChargerItemModelUpdate,
     ChargeItemModelRequest,
 )
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from .utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 
 block_sync = BlockSync(MACHINE_ID)

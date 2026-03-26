@@ -16,7 +16,7 @@ from .utils.mod_block_event import (
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 
 block_sync = BlockSync(MACHINE_ID)
 lasers = {}  # type: dict[tuple[int, int, int], dict[tuple[int, int, int], WireLaser]]

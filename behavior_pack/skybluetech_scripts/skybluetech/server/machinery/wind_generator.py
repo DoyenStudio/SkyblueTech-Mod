@@ -26,7 +26,7 @@ from ...common.events.machinery.wind_generator import (
 )
 from ...common.machinery_def.wind_generator import get_paddle_output, item2paddle
 from ...common.ui_sync.machinery.wind_generator import WindGeneratorUISync
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from ..transmitters.wire.logic import isWire
 from .basic import BaseGenerator, ItemContainer, GUIControl, RegisterMachine
 from .pool import GetMachineStrict

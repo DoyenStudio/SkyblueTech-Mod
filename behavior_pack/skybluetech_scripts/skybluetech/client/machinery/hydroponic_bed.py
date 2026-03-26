@@ -12,7 +12,7 @@ from ...common.events.machinery.hydroponic_bed import (
     HydroponicBedModelUpdatesEvent,
 )
 from ...common.define.id_enum.machinery import HYDROPONIC_BED as MACHINE_ID
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from .utils.mod_block_event import (
     asModBlockLoadedListener,
     asModBlockRemovedListener,

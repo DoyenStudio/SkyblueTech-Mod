@@ -9,7 +9,7 @@ from ...common.define.id_enum.machinery import HOVER_TEXT_DISPLAYER as MACHINE_I
 from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
 )
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
 if 0:

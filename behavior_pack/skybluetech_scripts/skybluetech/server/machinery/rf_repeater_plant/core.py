@@ -21,7 +21,7 @@ from ....common.define.facing import DXYZ_FACING, FACING_EN
 from ....common.define.ui_keys import RF_REPEATER_PLANT_UI
 from ....common.machinery_def.rf_repeater_plant import MODE_INPUT, MODE_OUTPUT
 from ....common.ui_sync.machinery.rf_repeater_plant import RFRepeaterPlantUISync
-from ....common.machinery.utils.block_sync import BlockSync
+from ....common.utils.block_sync import BlockSync
 from ...transmitters.wire.logic import isWire
 from ..basic import BaseMachine, GUIControl, ItemContainer, RegisterMachine
 from ..pool import GetMachineStrict

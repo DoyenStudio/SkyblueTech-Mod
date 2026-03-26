@@ -12,7 +12,7 @@ from ...common.machinery_def.hydroponic_bed import (
     recipes as Recipes,
 )
 from ...common.ui_sync.machinery.hydroponic_bed import HydroponicBedUISync
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from .basic import (
     BaseMachine,
     ItemContainer,

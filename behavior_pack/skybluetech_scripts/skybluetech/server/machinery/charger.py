@@ -24,7 +24,7 @@ from .utils.charge import (
     UpdateCharge,
     GetIOPower,
 )
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from .basic import GUIControl, UpgradeControl, RegisterMachine
 from .pool import GetMachineStrict
 

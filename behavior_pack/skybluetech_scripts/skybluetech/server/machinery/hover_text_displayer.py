@@ -8,7 +8,7 @@ from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpload,
 )
 from ...common.ui_sync.machinery.hover_text_displayer import HoverTextDisplayerUISync
-from ...common.machinery.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync
 from .utils.action_commit import SafeGetMachine
 from .basic import (
     BaseClicker,

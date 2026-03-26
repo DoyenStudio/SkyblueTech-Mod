@@ -20,4 +20,8 @@ class SkyblueTech(ToolDeltaMod):
     name = "SkyblueTech"
     version = (1, 0, 0)
 
-entry.entry()
+    def OnClientInited(self):
+        entry.init_client()
+
+    def OnServerInited(self):
+        entry.init_server()

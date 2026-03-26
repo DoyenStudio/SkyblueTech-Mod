@@ -113,99 +113,6 @@
                 }
             },
             {
-                "energy_io_modes_disp": {
-                    "type": "label",
-                    "anchor_from": "bottom_right",
-                    "anchor_to": "bottom_right",
-                    "offset": [
-                        -16.0,
-                        -16.0
-                    ],
-                    "size": [
-                        52.0,
-                        46.0
-                    ],
-                    "layer": 3,
-                    "font_type": "default",
-                    "text": "§5E (x+)： 输入\n§tW (x-)： 输入\n§9S (z+)： 输入\n§4N (z-)： 输入"
-                }
-            },
-            {
-                "energy_io_ctrls": {
-                    "type": "panel",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        11.0,
-                        60.0
-                    ],
-                    "size": [
-                        60.0,
-                        60.0
-                    ],
-                    "layer": 4,
-                    "controls": [
-                        {
-                            "north_ctrl@RFRepeaterPlantUI.energy_ctrl": {
-                                "$img_rotation": 180,
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0,
-                                    0
-                                ]
-                            }
-                        },
-                        {
-                            "south_ctrl@RFRepeaterPlantUI.energy_ctrl": {
-                                "anchor_from": "bottom_middle",
-                                "anchor_to": "bottom_middle",
-                                "layer": 21,
-                                "offset": [
-                                    0,
-                                    0
-                                ]
-                            }
-                        },
-                        {
-                            "west_ctrl@RFRepeaterPlantUI.energy_ctrl": {
-                                "$img_rotation": -90,
-                                "anchor_from": "left_middle",
-                                "anchor_to": "left_middle",
-                                "layer": 41,
-                                "offset": [
-                                    0,
-                                    0
-                                ]
-                            }
-                        },
-                        {
-                            "east_ctrl@RFRepeaterPlantUI.energy_ctrl": {
-                                "$img_rotation": 90,
-                                "anchor_from": "right_middle",
-                                "anchor_to": "right_middle",
-                                "layer": 61,
-                                "offset": [
-                                    0,
-                                    0
-                                ]
-                            }
-                        },
-                        {
-                            "image": {
-                                "type": "image",
-                                "size": [
-                                    20.0,
-                                    20.0
-                                ],
-                                "layer": 81,
-                                "texture": "textures/ui/energy_icon"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
                 "databoard": {
                     "type": "image",
                     "offset": [
@@ -216,7 +123,7 @@
                         160.0,
                         80.0
                     ],
-                    "layer": 86,
+                    "layer": 3,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -227,7 +134,7 @@
                         0.0,
                         0.0
                     ],
-                    "texture": "textures/ui/bg_frame_01",
+                    "texture": "textures/ui/bg_frame_slim",
                     "uv": [
                         0.0,
                         0.0
@@ -238,7 +145,7 @@
                     ],
                     "controls": [
                         {
-                            "label": {
+                            "tip_text": {
                                 "type": "label",
                                 "size": [
                                     "100%+-3px",
@@ -259,9 +166,9 @@
                     "anchor_to": "left_middle",
                     "offset": [
                         10.0,
-                        15.0
+                        36.0
                     ],
-                    "layer": 88,
+                    "layer": 5,
                     "color": [
                         0.2588235294117647,
                         0.2588235294117647,
@@ -269,8 +176,158 @@
                     ],
                     "font_scale_factor": 1.1,
                     "font_type": "default",
-                    "text": "输入输出控制",
+                    "text": "供能模式控制",
                     "text_alignment": "center"
+                }
+            },
+            {
+                "io_mode_ctrl": {
+                    "type": "panel",
+                    "offset": [
+                        0.0,
+                        60.0
+                    ],
+                    "size": [
+                        100,
+                        30.0
+                    ],
+                    "layer": 6,
+                    "controls": [
+                        {
+                            "machine_img": {
+                                "type": "image",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    80.0,
+                                    10.0
+                                ],
+                                "size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "layer": 4,
+                                "texture": "textures/machines/frame",
+                                "controls": [
+                                    {
+                                        "energy_icon": {
+                                            "type": "image",
+                                            "size": [
+                                                "100%+-4px",
+                                                "100%+-4px"
+                                            ],
+                                            "layer": 1,
+                                            "texture": "textures/icon/energy_icon"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "plant_bg": {
+                                "type": "image",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0.0,
+                                    10.0
+                                ],
+                                "size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "layer": 4,
+                                "nineslice_size": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "texture": "textures/ui/rect_panel_bg",
+                                "controls": [
+                                    {
+                                        "rf_repeater_icon": {
+                                            "type": "image",
+                                            "size": [
+                                                "100%+-4px",
+                                                "100%+-4px"
+                                            ],
+                                            "layer": 1,
+                                            "texture": "textures/machines/rf_repeater_plant"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "wire_img1": {
+                                "type": "image",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    20.0,
+                                    10.0
+                                ],
+                                "size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "layer": 2,
+                                "texture": "textures/transmitters/silver_wire_item"
+                            }
+                        },
+                        {
+                            "io_ctrl_btn@RFRepeaterPlantUI.energy_ctrl": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 3,
+                                "offset": [
+                                    40,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "wire_img2": {
+                                "type": "image",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    60.0,
+                                    10.0
+                                ],
+                                "size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "layer": 2,
+                                "texture": "textures/transmitters/silver_wire_item"
+                            }
+                        },
+                        {
+                            "io_mode_label": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    1.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    "100%+0px",
+                                    10.0
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "§2电网向中继器供能",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
                 }
             },
             {
@@ -313,10 +370,10 @@
                         -77.0
                     ],
                     "size": [
-                        36.0,
+                        160.0,
                         16.0
                     ],
-                    "layer": 89,
+                    "layer": 11,
                     "button_mappings": [],
                     "default_control": "default",
                     "hover_control": "hover",
@@ -388,7 +445,7 @@
                         18.0,
                         18.0
                     ],
-                    "layer": 99,
+                    "layer": 21,
                     "button_mappings": [],
                     "default_control": "default",
                     "hover_control": "hover",

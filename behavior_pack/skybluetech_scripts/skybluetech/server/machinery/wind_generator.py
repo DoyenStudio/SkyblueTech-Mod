@@ -31,7 +31,7 @@ from ..transmitters.wire.logic import isWire
 from .basic import BaseGenerator, ItemContainer, GUIControl, RegisterMachine
 from .pool import GetMachineStrict
 
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine

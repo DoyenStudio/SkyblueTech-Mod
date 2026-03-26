@@ -28,7 +28,7 @@ from ...common.utils.block_sync import BlockSync
 from .basic import GUIControl, UpgradeControl, RegisterMachine
 from .pool import GetMachineStrict
 
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine

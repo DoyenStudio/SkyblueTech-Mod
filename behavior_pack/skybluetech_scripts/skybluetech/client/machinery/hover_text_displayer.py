@@ -15,7 +15,7 @@ from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedLi
 if 0:
     from typing import Any
 
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 shapes = {}  # type: dict[tuple[int, int, int], Any]
 
 

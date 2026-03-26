@@ -18,7 +18,7 @@ from .utils.mod_block_event import (
     asModBlockRemovedListener,
 )
 
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 
 

@@ -31,7 +31,7 @@ from .basic import (
 )
 
 TICKS_PER_SECOND = 20
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine

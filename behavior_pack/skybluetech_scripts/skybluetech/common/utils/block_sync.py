@@ -6,6 +6,7 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
+from skybluetech_scripts.tooldelta.general import ClientInitCallback, ServerInitCallback
 
 
 class BlockSyncC2S(CustomC2SEvent):
@@ -46,11 +47,17 @@ class BlockSyncC2S(CustomC2SEvent):
 
 
 class BlockSync:
-    def __init__(self, block_id):
-        # type: (str) -> None
+    SIDE_CLIENT = 1
+    SIDE_SERVER = 2
+
+    def __init__(self, block_id, side):
+        # type: (str, int) -> None
         self.block_id = block_id
-        syncs[block_id] = self
-        self.sync_pool = {}  # type: dict[str, set[tuple[int, int, int, int]]]
+        if side == self.SIDE_CLIENT:
+            client_syncs[block_id] = self
+        elif side == self.SIDE_SERVER:
+            server_syncs[block_id] = self
+            self.sync_pool = {}  # type: dict[str, set[tuple[int, int, int, int]]]
 
     def get_players(
         self,
@@ -94,49 +101,64 @@ class BlockSync:
 
     def onClientSideRecvBlockLoadedEvent(self, event):
         # type: (ModBlockEntityLoadedClientEvent) -> None
-        BlockSyncC2S(event.posX, event.posY, event.posZ, self.block_id).send()
+        BlockSyncC2S(
+            event.posX,
+            event.posY,
+            event.posZ,
+            self.block_id,
+            mode=BlockSyncC2S.MODE_BLOCK_LOADED,
+        ).send()
 
     def onClientSideRecvBlockRemovedEvent(self, event):
         # type: (ModBlockEntityRemoveClientEvent) -> None
-        BlockSyncC2S(event.posX, event.posY, event.posZ, self.block_id, mode=1).send()
+        BlockSyncC2S(
+            event.posX,
+            event.posY,
+            event.posZ,
+            self.block_id,
+            mode=BlockSyncC2S.MODE_BLOCK_REMOVED,
+        ).send()
 
 
-syncs = {}  # type: dict[str, BlockSync]
+server_syncs = {}  # type: dict[str, BlockSync]
+client_syncs = {}  # type: dict[str, BlockSync]
 player2syncs = {}  # type: dict[str, dict[str, int]]
 
 
-@BlockSyncC2S.Listen()
-def onServerSideRecvSyncEvent(event):
-    # type: (BlockSyncC2S) -> None
-    sync = syncs.get(event.block_id)
-    if sync is None:
-        return
-    sync.onServerSideRecvSyncEvent(event)
-
-
-@DelServerPlayerEvent.Listen()
-def onPlayerLeave(event):
-    # type: (DelServerPlayerEvent) -> None
-    for block_id in player2syncs.pop(event.id, []):
-        sync = syncs.get(block_id)
+@ServerInitCallback()
+def onServerInit():
+    @BlockSyncC2S.Listen()
+    def onServerSideRecvSyncEvent(event):
+        # type: (BlockSyncC2S) -> None
+        sync = server_syncs.get(event.block_id)
         if sync is None:
             return
-        sync.onPlayerLeave(event)
+        sync.onServerSideRecvSyncEvent(event)
+
+    @DelServerPlayerEvent.Listen()
+    def onPlayerLeave(event):
+        # type: (DelServerPlayerEvent) -> None
+        for block_id in player2syncs.pop(event.id, []):
+            sync = server_syncs.get(block_id)
+            if sync is None:
+                return
+            sync.onPlayerLeave(event)
 
 
-@ModBlockEntityLoadedClientEvent.Listen()
-def onModBlockLoaded(event):
-    # type: (ModBlockEntityLoadedClientEvent) -> None
-    sync = syncs.get(event.blockName)
-    if sync is None:
-        return
-    sync.onClientSideRecvBlockLoadedEvent(event)
+@ClientInitCallback()
+def onClientInit():
+    @ModBlockEntityLoadedClientEvent.Listen()
+    def onModBlockLoaded(event):
+        # type: (ModBlockEntityLoadedClientEvent) -> None
+        sync = client_syncs.get(event.blockName)
+        if sync is None:
+            return
+        sync.onClientSideRecvBlockLoadedEvent(event)
 
-
-@ModBlockEntityRemoveClientEvent.Listen()
-def onModBlockRemoved(event):
-    # type: (ModBlockEntityRemoveClientEvent) -> None
-    sync = syncs.get(event.blockName)
-    if sync is None:
-        return
-    sync.onClientSideRecvBlockRemovedEvent(event)
+    @ModBlockEntityRemoveClientEvent.Listen()
+    def onModBlockRemoved(event):
+        # type: (ModBlockEntityRemoveClientEvent) -> None
+        sync = client_syncs.get(event.blockName)
+        if sync is None:
+            return
+        sync.onClientSideRecvBlockRemovedEvent(event)

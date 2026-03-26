@@ -18,7 +18,7 @@ from .basic import (
 )
 
 K_TEXT = "st:text"
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine

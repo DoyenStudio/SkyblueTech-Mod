@@ -18,7 +18,7 @@ from .utils.mod_block_event import (
 )
 from ...common.utils.block_sync import BlockSync
 
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 lasers = {}  # type: dict[tuple[int, int, int], dict[tuple[int, int, int], WireLaser]]
 
 
@@ -117,4 +117,5 @@ def onPlantUnloaded(event):
 @RFRepeaterPlantBuildAddWire.Listen()
 def onAddWire(event):
     # type: (RFRepeaterPlantBuildAddWire) -> None
+    print("Rev AddWire event")
     add_wire((event.x, event.y, event.z), (event.to_x, event.to_y, event.to_z))

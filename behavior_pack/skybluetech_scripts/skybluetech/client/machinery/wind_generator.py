@@ -31,7 +31,7 @@ from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedLi
 
 PaddleEnum = WindGeneratorStatesUpdate
 
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 
 
 def get_layer(x, y, z):

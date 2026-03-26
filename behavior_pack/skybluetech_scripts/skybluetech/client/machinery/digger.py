@@ -18,7 +18,7 @@ from ...common.define.id_enum.machinery import DIGGER as MACHINE_ID
 from ...common.utils.block_sync import BlockSync
 
 TICKS_PER_SECOND = 20
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 
 
 @DiggerWorkModeUpdatedEvent.Listen()

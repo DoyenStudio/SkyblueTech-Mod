@@ -15,9 +15,6 @@ from skybluetech_scripts.tooldelta.extensions.ui_sync import (
     GetAllPlayersInSync,
 )
 
-if 0:
-    # TODO: 跨端导入!!! 必须更改!!!
-    from ....client.ui.machinery.define import MachinePanelUI
 
 rate_limiter = PlayerRateLimiter(0.4)
 

@@ -15,8 +15,6 @@ if 0:
 
 INFINITY = float("inf")
 
-INFINITY = float("inf")
-
 
 def FormatRF(rf):
     # type: (float) -> str

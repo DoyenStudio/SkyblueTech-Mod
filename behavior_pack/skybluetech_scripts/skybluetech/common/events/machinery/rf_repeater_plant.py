@@ -5,11 +5,6 @@ from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2S
 class RFRepeaterPlantSettingUpload(CustomC2SEvent):
     name = "st:RFRPSU"
 
-    IO_EAST = 3
-    IO_WEST = 2
-    IO_SOUTH = 1
-    IO_NORTH = 0
-
     MODE_INPUT = False
     MODE_OUTPUT = True
 
@@ -18,15 +13,13 @@ class RFRepeaterPlantSettingUpload(CustomC2SEvent):
         x,
         y,
         z,
-        io_dir,
         io_mode,
         player_id="",
     ):
-        # type: (int, int, int, int, bool, str) -> None
+        # type: (int, int, int, int, str) -> None
         self.x = x
         self.y = y
         self.z = z
-        self.io_dir = io_dir
         self.io_mode = io_mode
         self.player_id = player_id
 
@@ -36,7 +29,6 @@ class RFRepeaterPlantSettingUpload(CustomC2SEvent):
             "y": self.y,
             "z": self.z,
             "io_mode": self.io_mode,
-            "io_dir": self.io_dir,
         }
 
     @classmethod
@@ -45,7 +37,6 @@ class RFRepeaterPlantSettingUpload(CustomC2SEvent):
             data["x"],
             data["y"],
             data["z"],
-            data["io_dir"],
             data["io_mode"],
             data["__id__"],
         )
@@ -64,10 +55,7 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
         y,  # type: int
         z,  # type: int
         network_euid,  # type: str
-        east_io_mode,  # type: bool
-        west_io_mode,  # type: bool
-        south_io_mode,  # type: bool
-        north_io_mode,  # type: bool
+        io_mode,  # type: int
         network_plant_count,  # type: int
         network_plant_online_count,  # type: int
         total_output_count,  # type: int
@@ -80,10 +68,7 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
         self.x = x
         self.y = y
         self.z = z
-        self.east_io_mode = east_io_mode
-        self.west_io_mode = west_io_mode
-        self.north_io_mode = north_io_mode
-        self.south_io_mode = south_io_mode
+        self.io_mode = io_mode
         self.network_plant_count = network_plant_count
         self.network_plant_online_count = network_plant_online_count
         self.total_output_count = total_output_count
@@ -98,10 +83,7 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
             "y": self.y,
             "z": self.z,
             "network_euid": self.network_euid,
-            "east": self.east_io_mode,
-            "west": self.west_io_mode,
-            "north": self.north_io_mode,
-            "south": self.south_io_mode,
+            "io_mode": self.io_mode,
             "npc": self.network_plant_count,
             "npco": self.network_plant_online_count,
             "toc": self.total_output_active_count,
@@ -118,10 +100,7 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
             data["y"],
             data["z"],
             data["network_euid"],
-            data["east"],
-            data["west"],
-            data["south"],
-            data["north"],
+            data["io_mode"],
             data["npc"],
             data["npco"],
             data["toc"],

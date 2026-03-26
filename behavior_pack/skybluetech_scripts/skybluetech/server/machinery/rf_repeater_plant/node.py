@@ -2,34 +2,19 @@
 import uuid
 from mod.server.extraServerApi import GetLevelId
 from mod_log import logger
-from skybluetech_scripts.tooldelta.events.server import (
-    ServerEntityTryPlaceBlockEvent,
-    ServerBlockUseEvent,
-    BlockNeighborChangedServerEvent,
-)
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockEntityData,
-    GetPlayerDimensionId,
     GetExtraData,
     SetExtraData,
 )
-from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
-from ....common.events.machinery.rf_repeater_plant import (
-    RFRepeaterPlantBuildRequest,
-    RFRepeaterPlantBuildResponse,
-    RFRepeaterPlantBuildAddWire,
-    RFRepeaterPlantSettingsUpdate,
-    RFRepeaterPlantSettingUpload,
-)
+from ....common.define.facing import OPPOSITE_FACING, FACING_DXYZ
+from ....common.events.machinery.rf_repeater_plant import RFRepeaterPlantSettingsUpdate
+from ....common.machinery_def.rf_repeater_plant import MODE_INPUT, MODE_OUTPUT
 from ..pool import GetMachineStrict
-from .utils import hypot, unpack_modes
 
 
 K_GLOBAL_NETWORK_DATAS = "st:global_rf_repeater_network_datas"
 K_GLOBAL_NODES = "st:global_rf_repeater_nodes"
-
-
-build_speed_limiter = PlayerRateLimiter(1)
 
 
 class NetworkData(object):
@@ -55,9 +40,9 @@ class NetworkData(object):
             uuid.uuid4().hex,
         )
 
-    def add_node(self, node_pos, modes=0b0000):
+    def add_node(self, node_pos, mode=0):
         # type: (tuple[int, int, int], int) -> None
-        self.nodes[node_pos] = modes
+        self.nodes[node_pos] = mode
 
     def remove_node(self, node_pos):
         # type: (tuple[int, int, int]) -> None
@@ -71,7 +56,7 @@ class NetworkData(object):
 
 
 class NodeData(object):
-    K_MODES = "modes"
+    K_MODE = "mode"
     K_BOUND_NETWORK_UUID = "bound_nuuid"
     K_CONNECTED_NODES = "con_nodes"
 
@@ -80,8 +65,8 @@ class NodeData(object):
         self.dim = dim
         self.pos = pos
         self.bound_network_uuid = node_data[self.K_BOUND_NETWORK_UUID]  # type: str
-        self.connected_nodes = node_data[self.K_CONNECTED_NODES]  # type: list[tuple[int, int, int]]
-        self.modes = node_data[self.K_MODES]  # type: int
+        self.connected_nodes = node_data.get(self.K_CONNECTED_NODES, [])  # type: list[tuple[int, int, int]]
+        self.mode = node_data.get(self.K_MODE, MODE_INPUT)
 
     @classmethod
     def new(
@@ -95,7 +80,7 @@ class NodeData(object):
             pos,
             {
                 cls.K_BOUND_NETWORK_UUID: bound_network_uuid,
-                cls.K_MODES: 0b0000,
+                cls.K_MODE: 0,
                 cls.K_CONNECTED_NODES: [],
             },
         )
@@ -112,7 +97,7 @@ class NodeData(object):
         x, y, z = self.pos
         node_datas[(self.dim, x, y, z)] = {
             self.K_BOUND_NETWORK_UUID: self.bound_network_uuid,
-            self.K_MODES: self.modes,
+            self.K_MODE: self.mode,
             self.K_CONNECTED_NODES: self.connected_nodes,
         }
         # extra
@@ -122,7 +107,7 @@ class NodeData(object):
             return
         bdata[self.K_CONNECTED_NODES] = [[x, y, z] for x, y, z in self.connected_nodes]
         bdata[self.K_BOUND_NETWORK_UUID] = self.bound_network_uuid
-        bdata[self.K_MODES] = self.modes
+        bdata[self.K_MODE] = self.mode
 
 
 class SummariedNetworkData:
@@ -144,104 +129,12 @@ class SummariedNetworkData:
             return
         self.network_plant_count = len(network.nodes)
         for (x, y, z), io_mode in network.nodes.items():
-            east, west, south, north = unpack_modes(io_mode)
-            self.total_input_count += 4 - (east + west + south + north)
-            self.total_output_count += east + west + south + north
+            self.total_input_count += io_mode == MODE_INPUT
+            self.total_output_count += io_mode == MODE_OUTPUT
             if isinstance(GetMachineStrict(network.dim, x, y, z), RFRepeaterPlant):
                 self.network_plant_online_count += 1
-                self.total_input_active_count += 4 - (east + west + south + north)
-                self.total_output_active_count += east + west + south + north
-
-
-@RFRepeaterPlantBuildRequest.Listen()
-def onEstablishConn(event):
-    # type: (RFRepeaterPlantBuildRequest) -> None
-    from . import RFRepeaterPlant, block_sync
-
-    if not build_speed_limiter.record(event.player_id):
-        RFRepeaterPlantBuildResponse(RFRepeaterPlantBuildResponse.STATUS_TOO_FAST).send(
-            event.player_id
-        )
-        return
-    dim = GetPlayerDimensionId(event.player_id)
-    start_m = GetMachineStrict(dim, event.x, event.y, event.z)
-    if not isinstance(start_m, RFRepeaterPlant) or not start_m.is_base_block:
-        RFRepeaterPlantBuildResponse(
-            RFRepeaterPlantBuildResponse.STATUS_INVALID_START
-        ).send(event.player_id)
-        return
-    end_m = GetMachineStrict(dim, event.to_x, event.to_y, event.to_z)
-    if not isinstance(end_m, RFRepeaterPlant) or not end_m.is_base_block:
-        RFRepeaterPlantBuildResponse(
-            RFRepeaterPlantBuildResponse.STATUS_INVALID_END
-        ).send(event.player_id)
-        return
-    start_pos = (event.x, event.y, event.z)
-    end_pos = (event.to_x, event.to_y, event.to_z)
-    start_nearby_nodes = start_m.get_nearconn_plants()
-    end_nearby_nodes = end_m.get_nearconn_plants()
-    if start_nearby_nodes is None or end_nearby_nodes is None:
-        RFRepeaterPlantBuildResponse(
-            RFRepeaterPlantBuildResponse.STATUS_INTERNAL_ERROR
-        ).send(event.player_id)
-        return
-    elif start_pos in end_nearby_nodes or end_pos in start_nearby_nodes:
-        RFRepeaterPlantBuildResponse(
-            RFRepeaterPlantBuildResponse.STATUS_ALREADY_CONNECTED
-        ).send(event.player_id)
-        return
-    elif start_pos == end_pos:
-        RFRepeaterPlantBuildResponse(
-            RFRepeaterPlantBuildResponse.STATUS_CANT_CONNECT_SELF
-        ).send(event.player_id)
-        return
-    if (
-        hypot(
-            start_pos[0] - end_pos[0],
-            start_pos[1] - end_pos[1],
-            start_pos[2] - end_pos[2],
-        )
-        > 64
-    ):
-        RFRepeaterPlantBuildResponse(RFRepeaterPlantBuildResponse.STATUS_TOO_FAR).send(
-            event.player_id
-        )
-        return
-    res = build_connection(dim, start_pos, end_pos)
-    if not res:
-        RFRepeaterPlantBuildResponse(
-            RFRepeaterPlantBuildResponse.STATUS_INTERNAL_ERROR2
-        ).send(event.player_id)
-        return
-    RFRepeaterPlantBuildResponse(RFRepeaterPlantBuildResponse.STATUS_SUCC).send(
-        event.player_id
-    )
-    RFRepeaterPlantBuildAddWire(
-        event.x, event.y, event.z, event.to_x, event.to_y, event.to_z
-    ).sendMulti(block_sync.get_players((dim,) + start_pos))
-
-
-@RFRepeaterPlantSettingUpload.Listen()
-def onSettingUpload(event):
-    # type: (RFRepeaterPlantSettingUpload) -> None
-    from . import RFRepeaterPlant
-
-    dim = GetPlayerDimensionId(event.player_id)
-    m = GetMachineStrict(dim, event.x, event.y, event.z)
-    if not isinstance(m, RFRepeaterPlant):
-        return
-    if not m.is_base_block:
-        return
-    if event.io_dir < 0 or event.io_dir > 3:
-        return
-    change_node_mode(
-        dim,
-        event.x,
-        event.y,
-        event.z,
-        single_dir=event.io_dir,
-        single_mode=bool(event.io_mode),
-    )
+                self.total_input_active_count += io_mode == MODE_INPUT
+                self.total_output_active_count += io_mode == MODE_OUTPUT
 
 
 def sum_network_data(network_uuid):
@@ -317,23 +210,15 @@ def build_connection(
     return True
 
 
-def change_node_mode(dim, x, y, z, new_modes=None, single_dir=None, single_mode=None):
-    # type: (int, int, int, int, int | None, int | None, bool | None) -> None
+def change_node_mode(dim, x, y, z, new_mode):
+    # type: (int, int, int, int, int) -> None
+    from ...transmitters.base.define import AP_MODE_INPUT, AP_MODE_OUTPUT
+    from ...transmitters.wire.logic import logic_module
     from . import RFRepeaterPlant
 
     m = GetMachineStrict(dim, x, y, z)
     if not isinstance(m, RFRepeaterPlant):
         return
-    orig = m.bdata[NodeData.K_MODES] or 0b0000
-    if new_modes is not None:
-        m.bdata[NodeData.K_MODES] = new_modes
-        modes = new_modes
-    elif single_dir is not None and single_mode is not None:
-        m.bdata[NodeData.K_MODES] = modes = orig & ((1 << single_dir) ^ 0b1111) | (
-            (1 << single_dir) if single_mode else 0
-        )
-    else:
-        raise ValueError("new_modes or single_dir and single_mode must be specified")
     network_uuid = m.bdata[NodeData.K_BOUND_NETWORK_UUID]
     if network_uuid is None:
         logger.error(
@@ -350,24 +235,20 @@ def change_node_mode(dim, x, y, z, new_modes=None, single_dir=None, single_mode=
     if node is None:
         logger.error("RFRepeaterPlant: Node not found at {}".format((x, y, z)))
         return
-    network.nodes[(x, y, z)] = modes
-    node.modes = modes
+    network.nodes[(x, y, z)] = node.mode = bool(new_mode)
     network.save_to_global_dict(networks_data)
     node.save_to_global_dict(nodes_data)
     save_networks_data(networks_data)
     save_nodes_data(nodes_data)
     s = sum_network_data(network_uuid)
-    east, west, south, north = unpack_modes(m.bdata[NodeData.K_MODES])
+    io_mode = m.bdata[NodeData.K_MODE]
     RFRepeaterPlantSettingsUpdate(
         dim,
         x,
         y,
         z,
         node.bound_network_uuid[-6:],
-        east,
-        west,
-        south,
-        north,
+        io_mode,
         s.network_plant_count,
         s.network_plant_online_count,
         s.total_output_count,
@@ -375,6 +256,25 @@ def change_node_mode(dim, x, y, z, new_modes=None, single_dir=None, single_mode=
         s.total_input_count,
         s.total_input_active_count,
     ).sendMulti(m.sync.GetPlayersInSync())
+    for face in (2, 3, 4, 5):
+        dx, dy, dz = FACING_DXYZ[face]
+        ap = logic_module.access_points_pool.get((
+            dim,
+            x + dx,
+            y + dy,
+            z + dz,
+            OPPOSITE_FACING[face],
+        ))
+        if ap is None:
+            continue
+        res = logic_module.SetAccessPointIOMode(
+            ap, [AP_MODE_INPUT, AP_MODE_OUTPUT][new_mode]
+        )
+        if not res:
+            print("[Error] set node io mode failed")
+    plant = GetMachineStrict(dim, *node.pos)
+    if isinstance(plant, RFRepeaterPlant):
+        plant.flush_data(network)
 
 
 def remove_node_and_flush(dim, pos):
@@ -433,7 +333,7 @@ def _dfs_init_network(
     if node is None:
         return
     node.bound_network_uuid = network.uuid
-    network.nodes[pos] = node.modes
+    network.nodes[pos] = node.mode
     nodes_inited.add(pos)
     node.save_to_global_dict(nodes_data)
     for node_pos in node.connected_nodes:

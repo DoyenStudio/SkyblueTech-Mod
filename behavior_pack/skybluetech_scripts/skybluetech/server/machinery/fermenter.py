@@ -101,7 +101,6 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         if ok:
             self.getEnergyInIO().SetMachineRef(self)
             self.getItemInIO().SetOnSlotUpdateCallback(self.OnOtherSlotUpdate)
-            # self.getFluidOutIO().SelfRequireFluid()
         self.OnSync()
 
     @SuperExecutorMeta.execute_super
@@ -259,7 +258,6 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
             and self.getWaterInIO().fluid_volume > 50
         ):
             self.getWaterInIO().fluid_volume -= 200
-            # self.getWaterInIO().SelfRequireFluid()
             self.water_volume += 200
 
     def tryEat(self, recipe):

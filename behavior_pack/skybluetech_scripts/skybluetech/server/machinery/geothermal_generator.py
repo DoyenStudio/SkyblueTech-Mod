@@ -112,7 +112,6 @@ class GeoThermalGenerator(
     def next_burn(self):
         self.power = 0
         f0, f1 = self.fluids
-        self.RequireAnyFluidFromNetwork()
         if f0.fluid_id == LAVA_ID and f0.volume >= ONCE_LAVA_REDUCE_VOLUME:
             f0.volume -= ONCE_LAVA_REDUCE_VOLUME
             if f1.fluid_id == WATER_ID and f1.volume >= ONCE_WATER_REDUCE_VOLUME:

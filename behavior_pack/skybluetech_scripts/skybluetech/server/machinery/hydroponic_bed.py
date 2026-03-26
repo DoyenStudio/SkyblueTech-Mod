@@ -115,13 +115,10 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
             m = GetMachineStrict(self.dim, self.x, self.y - 1, self.z)
             if isinstance(m, HydroponicBase):
                 vol = m.GetWaterVolume()
-                if vol < MAX_WATER_STORE / 2:
-                    m.RequireFluidsFromNetwork()
                 req_water = min(vol, MAX_WATER_STORE - self.water_store)
                 if req_water > 0:
                     self.water_store += req_water
                     m.TakeWater(req_water)
-                m.RequireAnyFluidFromNetwork()
         if self.water_store >= ONCE_WATER_COST:
             self.water_store -= ONCE_WATER_COST
             return True

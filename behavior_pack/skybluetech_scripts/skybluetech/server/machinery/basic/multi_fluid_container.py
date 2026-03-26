@@ -17,18 +17,6 @@ K_FLUID_ID = "fluid_id"
 K_FLUID_VOLUME = "fluid_vol"
 
 
-def requireLibraryFunc():
-    global PostFluidIntoNetworks
-    if requireLibraryFunc._imported:
-        return
-    from ...transmitters.pipe.logic import PostFluidIntoNetworks
-
-    requireLibraryFunc._imported = True
-
-
-requireLibraryFunc._imported = False
-
-
 class FluidSlot(object):
     def __init__(
         self,
@@ -172,39 +160,29 @@ class MultiFluidContainer(object):
         # type: (str) -> bool
         return any(self.fluids[s].canMerge(fluid_id) for s in self.fluid_input_slots)
 
-    def RequireFluid(self, req_fluid_id, req_fluid_volume, strict_volume=False):
-        # type: (str | None, float | None, bool) -> tuple[bool, str, float]
-        "返回: 获取是否成功, 获取到的流体 ID, 获取到的流体容量"
-        fluids = [(i, self.fluids[i]) for i in self.fluid_output_slots]
-        last_slot = fluids[-1][0]
-        for slot, fluid in fluids:
-            if fluid.fluid_id is None:
-                continue
-            elif req_fluid_id is not None and fluid.fluid_id != req_fluid_id:
-                continue
-            fid = fluid.fluid_id
-            fvol = fluid.volume
-            if req_fluid_volume is None or req_fluid_volume >= fluid.volume:
-                # NOTE: 遇到第一个有效槽位就立即返回, 不考虑后续槽位
-                fluid.fluid_id = None
-                fluid.volume = 0.0
-                self.onReducedFluid(slot, fid, fvol, slot == last_slot)
-                return True, fid, fvol
-            else:
-                fluid.volume = fvol - req_fluid_volume
-                self.onReducedFluid(slot, fid, req_fluid_volume, slot == last_slot)
-                return True, fid, req_fluid_volume
-        return False, "", 0
-
-    def RequireFluidsFromNetwork(self):
-        "从流体管道网络请求一次流体。"
-        requireLibraryFunc()
-
-    def RequireAnyFluidFromNetwork(self):
-        """
-        向流体管道网络索求一次流体。
-        """
-        requireLibraryFunc()
+    # def RequireFluid(self, req_fluid_id, req_fluid_volume, strict_volume=False):
+    #     # type: (str | None, float | None, bool) -> tuple[bool, str, float]
+    #     "返回: 获取是否成功, 获取到的流体 ID, 获取到的流体容量"
+    #     fluids = [(i, self.fluids[i]) for i in self.fluid_output_slots]
+    #     last_slot = fluids[-1][0]
+    #     for slot, fluid in fluids:
+    #         if fluid.fluid_id is None:
+    #             continue
+    #         elif req_fluid_id is not None and fluid.fluid_id != req_fluid_id:
+    #             continue
+    #         fid = fluid.fluid_id
+    #         fvol = fluid.volume
+    #         if req_fluid_volume is None or req_fluid_volume >= fluid.volume:
+    #             # NOTE: 遇到第一个有效槽位就立即返回, 不考虑后续槽位
+    #             fluid.fluid_id = None
+    #             fluid.volume = 0.0
+    #             self.onReducedFluid(slot, fid, fvol, slot == last_slot)
+    #             return True, fid, fvol
+    #         else:
+    #             fluid.volume = fvol - req_fluid_volume
+    #             self.onReducedFluid(slot, fid, req_fluid_volume, slot == last_slot)
+    #             return True, fid, req_fluid_volume
+    #     return False, "", 0
 
     def ifPlayerInteractWithBucket(self, player_id, test=False):
         # type: (str, bool) -> bool

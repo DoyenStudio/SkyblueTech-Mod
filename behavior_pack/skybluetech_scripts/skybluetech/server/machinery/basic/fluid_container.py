@@ -103,36 +103,36 @@ class FluidContainer(object):
             fluid_id == self.fluid_id and self.fluid_volume < self.max_fluid_volume
         )
 
-    def RequireFluid(self, req_fluid_id, req_fluid_volume, strict_volume=False):
-        # type: (str | None, float | None, bool) -> tuple[bool, str, float]
-        # 返回: 获取是否成功, 获取到的流体 ID, 获取到的流体容量
-        fid = self.fluid_id
-        v = self.fluid_volume
-        if req_fluid_id is None or req_fluid_id == fid:
-            if fid is None:
-                return False, "", 0.0
-            if req_fluid_volume is None:
-                self.fluid_id = None
-                self.fluid_volume = 0.0
-                self.onReducedFluid(fid, v)
-                return True, fid, v
-            else:
-                if req_fluid_volume <= v:
-                    self.fluid_volume = v - req_fluid_volume
-                    if self.fluid_volume <= 0:
-                        self.fluid_id = None
-                    self.onReducedFluid(fid, v)
-                    return True, fid, v
-                elif not strict_volume:
-                    self.fluid_volume = v - req_fluid_volume
-                    if self.fluid_volume <= 0:
-                        self.fluid_id = None
-                    self.onReducedFluid(fid, req_fluid_volume)
-                    return True, fid, req_fluid_volume
-                else:
-                    return False, "", 0.0
-        else:
-            return False, "", 0.0
+    # def RequireFluid(self, req_fluid_id, req_fluid_volume, strict_volume=False):
+    #     # type: (str | None, float | None, bool) -> tuple[bool, str, float]
+    #     # 返回: 获取是否成功, 获取到的流体 ID, 获取到的流体容量
+    #     fid = self.fluid_id
+    #     v = self.fluid_volume
+    #     if req_fluid_id is None or req_fluid_id == fid:
+    #         if fid is None:
+    #             return False, "", 0.0
+    #         if req_fluid_volume is None:
+    #             self.fluid_id = None
+    #             self.fluid_volume = 0.0
+    #             self.onReducedFluid(fid, v)
+    #             return True, fid, v
+    #         else:
+    #             if req_fluid_volume <= v:
+    #                 self.fluid_volume = v - req_fluid_volume
+    #                 if self.fluid_volume <= 0:
+    #                     self.fluid_id = None
+    #                 self.onReducedFluid(fid, v)
+    #                 return True, fid, v
+    #             elif not strict_volume:
+    #                 self.fluid_volume = v - req_fluid_volume
+    #                 if self.fluid_volume <= 0:
+    #                     self.fluid_id = None
+    #                 self.onReducedFluid(fid, req_fluid_volume)
+    #                 return True, fid, req_fluid_volume
+    #             else:
+    #                 return False, "", 0.0
+    #     else:
+    #         return False, "", 0.0
 
     def OnFluidSlotUpdate(self):
         "流体内容更新时调用。"
@@ -157,7 +157,6 @@ class FluidContainer(object):
 
     def onReducedFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> None
-        # self.SelfRequireFluid()
         self.OnReducedFluid(fluid_id, fluid_volume)
         self.onFluidSlotUpdate()
         if isinstance(self, GUIControl):

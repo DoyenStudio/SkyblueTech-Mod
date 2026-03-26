@@ -28,7 +28,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
-        self.afterRequireAll()
+        pass
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
@@ -101,13 +101,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
                 print("[Warning] MixedProcessor: Recipe ERROR")
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
-    @Delay(1)
-    def afterRequireAll(self):
-        self.RequireFluidsFromNetwork()
-        self.OnSync()
-
     def start_next(self, dont_recursive=False):
-        self.RequireFluidsFromNetwork()
         input_slots = self.GetInputSlotItems()
         output_slots = self.GetOutputSlotItems()
         fluids = self.fluids
@@ -141,7 +135,6 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
             return
         input_items.update(output_items)
         self.finish_recipe(input_items, self.current_recipe)
-        self.RequireAnyFluidFromNetwork()
 
     def get_recipe(self, input_items, input_fluids):
         # type: (dict[int, Item], list[FluidSlot]) -> MachineRecipe | None

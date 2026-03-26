@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.api.server.player import (
     SetInventorySlotItemCount,
 )
 from ....common.define.global_config import BUCKET_VOLUME
-from ....common.machinery.basic.fluid_container import (
+from ....common.machinery_def.fluid_container import (
     K_FLUID_ID,
     K_FLUID_VOLUME,
     K_MAX_VOLUME,

@@ -8,7 +8,7 @@ from skybluetech_scripts.tooldelta.events.client import (
 )
 from skybluetech_scripts.tooldelta.utils.nbt import GetValue
 from ....common.define.id_enum import Tank
-from ....common.machinery.basic.fluid_container import (
+from ....common.machinery_def.fluid_container import (
     K_FLUID_ID,
     K_FLUID_VOLUME,
     K_MAX_VOLUME,

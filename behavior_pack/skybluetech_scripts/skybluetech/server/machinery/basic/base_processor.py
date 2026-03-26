@@ -95,7 +95,6 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
 
     def start_next(self):
         "开始运行配方"
-        self.RequireItems()
         input_slots = self.GetInputSlotItems()
         output_slots = self.GetOutputSlotItems()
         recipe = self.get_recipe(input_slots)

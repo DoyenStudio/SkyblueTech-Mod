@@ -48,7 +48,6 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
                 break
 
     def TryStartNext(self):
-        self.RequireItems()
         input_item = self.GetSlotItem(0)
         output_item = self.GetSlotItem(1)
         if input_item is None:

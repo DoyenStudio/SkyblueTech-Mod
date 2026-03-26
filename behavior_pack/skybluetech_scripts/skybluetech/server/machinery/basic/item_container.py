@@ -14,18 +14,6 @@ from skybluetech_scripts.tooldelta.api.server import (
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
 
-def requireLibraryFunc():
-    global RequireItems, PostItemIntoNetworks
-    if requireLibraryFunc._imported:
-        return
-    from ...transmitters.cable.logic import RequireItems, PostItemIntoNetworks
-
-    requireLibraryFunc._imported = True
-
-
-requireLibraryFunc._imported = False
-
-
 class ItemContainer(object):
     """
     可存储物品的机器基类。
@@ -181,16 +169,6 @@ class ItemContainer(object):
                     continue
                 return None
         return item
-
-    def RequireItems(self):
-        """
-        此机器向物品管线网络请求一次物品。
-
-        Returns:
-            bool: 是否请求成功
-        """
-        requireLibraryFunc()
-        RequireItems(self.dim, self.xyz)
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None

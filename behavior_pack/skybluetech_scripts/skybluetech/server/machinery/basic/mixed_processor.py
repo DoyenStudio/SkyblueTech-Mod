@@ -103,12 +103,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
 
     @Delay(1)
     def afterRequireAll(self):
-        self.RequireItems()
         self.RequireFluidsFromNetwork()
         self.OnSync()
 
     def start_next(self, dont_recursive=False):
-        self.RequireItems()
         self.RequireFluidsFromNetwork()
         input_slots = self.GetInputSlotItems()
         output_slots = self.GetOutputSlotItems()

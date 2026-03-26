@@ -11,6 +11,18 @@ class EnergyOutputInterface(BaseInterface, BasePowerProvider):
         BasePowerProvider.__init__(self, dim, x, y, z, block_entity_data)
         BaseInterface.__init__(self, dim, x, y, z, block_entity_data)
 
+    def TakeoutPower(self, rf):
+        m = self.getMachineRef()
+        if m is None:
+            return 0
+        else:
+            return m.TakeoutPower(rf)
+
+    def GivebackPower(self, rf):
+        m = self.getMachineRef()
+        if m is not None:
+            m.GivebackPower(rf)
+
     def OutputPower(self, rf):
         # type: (int) -> tuple[bool, int]
         return self.GeneratePower(rf)

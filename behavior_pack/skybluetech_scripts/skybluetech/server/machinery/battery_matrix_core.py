@@ -15,7 +15,6 @@ from .basic import (
 )
 from .utils.charge import GetCharge, UpdateCharge, GetIOPower, UpdateChargeNBT
 
-INFINITY = float("inf")
 K_ITEMS = "st:items"
 
 

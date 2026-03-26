@@ -36,8 +36,7 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
 
     @SuperExecutorMeta.execute_super
     def OnTryActivate(self):
-        BaseMachine.OnTryActivate(self)
-        MultiFluidContainer.OnTryActivate(self)
+        pass
 
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):

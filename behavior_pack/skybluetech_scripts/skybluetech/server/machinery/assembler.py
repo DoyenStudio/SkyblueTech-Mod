@@ -43,8 +43,8 @@ class Assembler(GUIControl, UpgradeControl):
         self.update_list()
         self.OnSync()
 
-    def AddPower(self, rf, max_limit=None, passed=None):
-        res = UpgradeControl.AddPower(self, rf, max_limit, passed)
+    def AddPower(self, rf):
+        res = UpgradeControl.AddPower(self, rf)
         if self.store_rf > 0 and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         return res

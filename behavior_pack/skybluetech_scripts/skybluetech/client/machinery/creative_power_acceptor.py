@@ -16,7 +16,6 @@ if 0:
     from typing import Any
 
 CF = GetEngineCompFactory()
-INFINITY = float("inf")
 
 
 texts = {}  # type: dict[tuple[int, tuple[float, float, float]], Any]
@@ -63,11 +62,7 @@ def onModBlockRemoved(event):
 def onPowerUpdate(event):
     # type: (CreativePowerAcceptorPowerUpdate) -> None
     for dim, x, y, z, power in event.datas:
-        if power == -1:
-            text = "输入功率： §a无限 RF/t"
-        else:
-            text = "输入功率： §a%d RF/t" % power
-        updateText(dim, (x, y, z), text)
+        updateText(dim, (x, y, z), "输入功率： §a%d RF/t" % power)
 
 
 @ClientInitCallback()

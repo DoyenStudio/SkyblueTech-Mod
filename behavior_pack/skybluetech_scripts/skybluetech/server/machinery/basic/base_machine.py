@@ -100,32 +100,28 @@ class BaseMachine(object):
 
     # ==== API ====
 
-    def AddPower(self, rf, max_limit=None, passed=None):
-        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
+    def AddPower(self, rf):
+        # type: (int) -> tuple[bool, int]
         """
         为自身增加能量。
 
         Args:
             rf (int): 能量
-            is_generator (bool): 自身是否为发电机(或供能器), 若是, 则优先向网络输出能量
 
         Returns:
             tuple[bool, int]: 数值是否变动, 溢出的能量
         """
-        if passed is None:
-            passed = set()
-        if max_limit is None:
-            power_overflow = 0
+        store_rf = self.store_rf
+        if store_rf >= self.store_rf_max:
+            return False, rf
+        overflow = max(0, self.store_rf + rf - self.store_rf_max)
+        if overflow > 0:
+            self.store_rf = self.store_rf_max
         else:
-            power_overflow = max(0, rf - max_limit)
-            rf = min(rf, max_limit)
-        power_old = self.store_rf
-        power_new = min(power_old + rf, self.store_rf_max)
-        self.store_rf = power_new
-        power_overflow += power_old + rf - power_new
+            self.store_rf += rf
         if isinstance(self, GUIControl):
             self.OnSync()
-        return power_new != power_old, power_overflow
+        return True, overflow
 
     def ReducePower(self, rf):
         # type: (int) -> bool
@@ -142,6 +138,35 @@ class BaseMachine(object):
         power_new = max(power_old - rf, 0)
         self.store_rf = power_new
         return power_new != power_old
+
+    def TakeoutPower(self, rf):
+        # type: (int) -> int
+        """
+        从自身中取出能量。
+
+        Args:
+            rf (int): 能量
+
+        Returns:
+            int: 实际取出的能量
+        """
+        store_rf = self.store_rf
+        if rf <= store_rf:
+            self.store_rf -= rf
+            return rf
+        else:
+            self.store_rf = 0
+            return store_rf
+
+    def GivebackPower(self, rf):
+        # type: (int) -> None
+        """
+        返还从 TakeoutPower 取出的能量。
+
+        Args:
+            rf (int): 返还的能量, 不应大于取走能量值
+        """
+        self.store_rf += rf
 
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None

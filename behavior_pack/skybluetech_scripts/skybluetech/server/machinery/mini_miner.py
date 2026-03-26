@@ -88,8 +88,9 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
     def OnUnload(self):
         pass
 
+    @SuperExecutorMeta.execute_super
     def OnTryActivate(self):
-        FluidContainer.OnTryActivate(self)
+        pass
 
     @SuperExecutorMeta.execute_super
     def OnDeactiveFlagsChanged(self):
@@ -170,7 +171,6 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             if rest is not None:
                 SpawnDroppedItem(self.dim, (self.x, self.y + 1, self.z), rest)
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
-        self.SelfRequireFluid()
 
     def go_next(self):
         if self.mine_pos_iterator is None:

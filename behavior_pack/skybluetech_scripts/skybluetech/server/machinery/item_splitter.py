@@ -35,6 +35,25 @@ class ItemSplitter(GUIControl, UpgradeControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = ItemSplitterUISync.NewServer(self).Activate()
         self._cached_recorded_settings = None
+        self._sending_items = False
+        self._ticking_t = 0
+
+    def OnTicking(self):
+        if self._sending_items and self._ticking_t % 5 == 0:
+            has_item = False
+            for slot in self.input_slots:
+                item = self.GetSlotItem(slot)
+                if item is not None:
+                    has_item = True
+                else:
+                    continue
+                it = self.try_post_item_by_label(item)
+                if it is not None and it.id == item.id and it.count == it.count:
+                    continue
+                self.SetSlotItem(slot, it)
+            if not has_item:
+                self._sending_items = False
+        self._ticking_t += 1
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
@@ -58,12 +77,8 @@ class ItemSplitter(GUIControl, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot):
-        if slot in self.input_slots:
-            item = self.GetSlotItem(slot)
-            if item is None:
-                return
-            res = self.try_post_item_by_label(item)
-            self.SetSlotItem(slot, res)
+        if not self.InUpgradeSlot(slot):
+            self._sending_items = True
 
     def try_post_item_by_label(self, item):
         # type: (Item) -> Item | None

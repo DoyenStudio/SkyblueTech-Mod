@@ -7,23 +7,17 @@ from .base_interface import BaseInterface
 class EnergyInputInterface(BaseInterface):
     store_rf_max = 1
 
-    def AddPower(self, rf, max_limit=None, passed=None):
-        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
+    def AddPower(self, rf):
+        # type: (int) -> tuple[bool, int]
+        print self.x, self.y, self.z, "GetPower", rf
         m = self.getMachineRef()
         if m is None:
-            # print("REF is None")
+            print "But no ref"
             return False, rf
         else:
             # import weakref
 
             # print("Still add", weakref.getweakrefcount(m), m.x, m.y, m.z)
-            return m.AddPower(rf, max_limit, passed)
-
-    def SetActive(self):
-        from ...transmitters.wire.logic import logic_module
-
-        cnode = logic_module.GetContainerNode(self.dim, self.x, self.y, self.z)
-        for network in set(cnode.inputs.values()):
-            if network is None:
-                continue
-            logic_module.ActivateNetwork(network)
+            ok, res = m.AddPower(rf)
+            print self.x, self.y, self.z, "And ret", res
+            return ok, res

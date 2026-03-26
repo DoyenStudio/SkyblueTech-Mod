@@ -10,9 +10,6 @@ from ...common.define.id_enum.machinery import CREATIVE_POWER_ACCEPTOR as MACHIN
 from .basic import BaseMachine, RegisterMachine
 
 
-INFINITY = float("inf")
-
-
 @RegisterMachine
 class CreativePowerAcceptor(BaseMachine):
     block_name = MACHINE_ID
@@ -26,15 +23,11 @@ class CreativePowerAcceptor(BaseMachine):
         self.power = 0
         self.delay = 20
 
-    def AddPower(self, rf, max_limit=None, depth=0):
-        if max_limit is not None:
-            rf = min(rf, max_limit)
+    def AddPower(self, rf):
         self.power += rf
         return True, 0
 
     def OnTicking(self):
-        if self.power == INFINITY:
-            self.power = -1
         self.delay -= 1
         if self.delay <= 0:
             # 我没招了, 方块 ticking 不均匀。。。取平均值吧呵呵呵呵呵呵

@@ -31,8 +31,6 @@ from .utils.action_commit import SafeGetMachine
 from .interfaces import EnergyInputInterface, EnergyOutputInterface
 from .battery_matrix_core import BatteryMatrixCore
 
-INFINITY = float("inf")
-
 K_STORE_RF = "store_rf"
 K_ENABLE_INPUT = "st:enable_input"
 K_ENABLE_OUTPUT = "st:enable_output"
@@ -61,6 +59,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         ItemContainer.__init__(self, dim, x, y, z, block_entity_data)
         MultiBlockStructure.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = BatteryMatrixUISync.NewServer(self).Activate()
+        self._last_rf_provided = 0
         self._last_input = 0
         self._last_output = 0
         self._sum_input = 0
@@ -69,10 +68,8 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
 
     def OnTicking(self):
         if self.IsActive():
-            if self.output_mode:
-                self.provide_energy()
             self.get_core().core_tick()
-            self.OnSync()
+            self.CallSync()
         self._sum_power_t += 1
         if self._sum_power_t >= 20:
             self._sum_input = self._last_input
@@ -114,36 +111,33 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         if ok:
             self.get_energy_in_io().SetMachineRef(self)
             self.get_energy_out_io().SetMachineRef(self)
-            self.get_energy_in_io().SetActive()
         self.OnSync()
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
         return BatteryTag.COMMON in item.GetBasicInfo().tags
 
-    def AddPower(
-        self,
-        rf,  # type: int
-        max_limit=None,  # type: int | None
-        passed=None,  # type: set[BaseMachine] | None
-    ):
-        # type: (...) -> tuple[bool, int]
-        if passed is not None:
-            passed.add(self)
+    def AddPower(self, rf):
+        # type: (int) -> tuple[bool, int]
         if self.GetStructureDestroyFlag() != 0:
             return False, rf
-        if max_limit is None:
-            wire_overflow = 0
-        else:
-            wire_overflow = max(0, rf - max_limit)
-            rf = min(rf, max_limit)
         if not self.input_mode:
             return False, rf
         power_overflow = self.get_core().add_energy(rf)
         self._last_input += rf - power_overflow
-        self.OnSync()
-        overflow = power_overflow + wire_overflow
-        return overflow != rf, overflow
+        self.CallSync()
+        return power_overflow != rf, power_overflow
+
+    def TakeoutPower(self, rf):
+        # type: (int) -> int
+        if self.IsActive():
+            return self.provide_energy()
+        else:
+            return 0
+
+    def GivebackPower(self, rf):
+        # type: (int) -> None
+        self.recv_energy_return(rf)
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -192,14 +186,15 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
     def provide_energy(self):
         core = self.get_core()
         rf_out = core.output_energy()
-        if rf_out <= 0:
+        self._last_rf_provided = rf_out
+        return rf_out
+
+    def recv_energy_return(self, rf):
+        # type: (int) -> None
+        if self.GetStructureDestroyFlag() != 0:
             return
-        output_io = self.get_energy_out_io()
-        ok, overflow = output_io.GeneratePower(rf_out)
-        core.add_energy(overflow, from_overflow=True)
-        self._last_output += rf_out - overflow
-        if not ok and overflow > 0:
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
+        self.get_core().add_energy(rf, from_overflow=True)
+        self._last_output += self._last_rf_provided - rf
 
     def get_core(self):
         return self.GetMachine(BatteryMatrixCore)

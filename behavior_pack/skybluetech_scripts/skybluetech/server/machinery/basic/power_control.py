@@ -1,7 +1,6 @@
 # coding=utf-8
 #
 from ....common.define import flags as rf_flags
-from ...transmitters.wire.logic import RequireEnergyFromNetwork
 from .base_machine import BaseMachine
 
 
@@ -19,12 +18,12 @@ class PowerControl(BaseMachine):
     power_pos_rate = 1.0
     power_neg_rate = 1.0
 
-    def AddPower(self, rf, max_limit=None, passed=None):
-        # type: (int, int | None, set[BaseMachine] | None) -> tuple[bool, int]
-        res = BaseMachine.AddPower(self, rf, max_limit, passed)
+    def AddPower(self, rf):
+        # type: (int) -> tuple[bool, int]
+        res = BaseMachine.AddPower(self, rf)
         if self.store_rf < self.running_power:
             self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
-        elif self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK):
+        else:
             self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         return res
 
@@ -48,16 +47,12 @@ class PowerControl(BaseMachine):
             rf = self.running_power
         BaseMachine.ReducePower(self, rf)
 
-    def PowerEnough(self, auto_require=True):
+    def PowerEnough(self):
         "如果能量不足时先尝试向电网索取能源, 后自动将 flag 设置为缺少能源"
-        # type: (bool) -> bool
+        # type: () -> bool
         res = self.store_rf >= self.running_power
         if res:
-            if self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK):
-                self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
-        elif auto_require:
-            RequireEnergyFromNetwork(self)
-            return self.PowerEnough(auto_require=False)
-        elif not self.HasDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK):
+            self.UnsetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
+        else:
             self.SetDeactiveFlag(rf_flags.DEACTIVE_FLAG_POWER_LACK)
         return res

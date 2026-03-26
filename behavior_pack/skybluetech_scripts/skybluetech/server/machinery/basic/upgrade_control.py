@@ -9,7 +9,6 @@ from ....common.machinery_def.upgraders import (
     POWER_NEGATIVE,
     POWER_POSITIVE,
 )
-from ...transmitters.wire.logic import RequireEnergyFromNetwork
 from .base_machine import BaseMachine
 from .item_container import ItemContainer
 from .sp_control import SPControl
@@ -73,8 +72,8 @@ class UpgradeControl(ItemContainer, SPControl):
             rf = round(rf * self._power_cost_relative)
         BaseMachine.ReducePower(self, rf)
 
-    def PowerEnough(self, auto_require=True):
-        # type: (bool) -> bool
+    def PowerEnough(self):
+        # type: () -> bool
         """
         PowerControl 方法, 由 UpgradeControl 覆写
 
@@ -82,11 +81,7 @@ class UpgradeControl(ItemContainer, SPControl):
         """
         res = self.store_rf >= round(self.running_power * self._power_cost_relative)
         if res:
-            if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK):
-                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
-        elif auto_require:
-            RequireEnergyFromNetwork(self)
-            return self.PowerEnough(auto_require=False)
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         else:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         return res

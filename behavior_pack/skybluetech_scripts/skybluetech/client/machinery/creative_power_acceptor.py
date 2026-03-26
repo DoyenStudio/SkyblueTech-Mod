@@ -60,7 +60,8 @@ def onModBlockRemoved(event):
     remove_text(event.dimensionId, (event.posX, event.posY, event.posZ))
 
 
+@ClientInitCallback()
 @Repeat(1)
-def onRepeat1s(event):
+def onRepeat1s():
     for (dim, pos), text_shape in texts.items():
         update_text(text_shape, "输入功率： §a%d RF/t" % get_power(*pos))

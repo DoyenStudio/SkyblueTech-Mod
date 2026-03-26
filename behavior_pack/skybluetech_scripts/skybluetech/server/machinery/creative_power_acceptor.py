@@ -12,7 +12,6 @@ class CreativePowerAcceptor(BaseMachine):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         self.power = 0
         self.delay = 20
         self.bdata[K_POWER] = 0
@@ -25,7 +24,8 @@ class CreativePowerAcceptor(BaseMachine):
         self.delay -= 1
         if self.delay <= 0:
             # 我没招了, 方块 ticking 不均匀。。。取平均值吧
-            self.bdata[K_POWER] = self.power // 20
+            # 不要去掉 int, 不然有神秘 bug 导致无法保存 nbt
+            self.bdata[K_POWER] = int(self.power // 20)
             self.power = 0
             self.delay = 20
 

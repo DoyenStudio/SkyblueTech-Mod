@@ -1,3 +1,3 @@
 # coding=utf-8
 
-K_POWER = "recv_power"
+K_POWER = "st:recv_power"

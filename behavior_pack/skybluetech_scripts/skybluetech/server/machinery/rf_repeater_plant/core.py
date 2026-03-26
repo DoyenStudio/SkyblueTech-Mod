@@ -40,7 +40,7 @@ K_GLOBAL_NETWORK_DATAS = "st:global_rf_repeater_network_datas"
 K_GLOBAL_NODES = "st:global_rf_repeater_nodes"
 
 
-block_sync = BlockSync(MACHINE_ID)
+block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine

@@ -56,7 +56,9 @@
                     ]
                 }
             },
-            "netease:block_entity": {},
+            "netease:block_entity": {
+                "tick": true
+            },
             "netease:custom_tips": {
                 "value": "\n§7用于分拣物品。"
             },

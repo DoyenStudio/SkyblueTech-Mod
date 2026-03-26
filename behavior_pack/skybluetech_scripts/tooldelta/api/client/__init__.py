@@ -8,6 +8,7 @@ from .model import *
 from .player import *
 from .ui import *
 from .render import *
+from .setting import *
 from .sound import *
 from .tips import *
 from .world import *

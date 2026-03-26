@@ -11,9 +11,6 @@ if 0:
     CallT = TypeVar("CallT", bound=Callable)
 
 _ATTR_EVENT_LISTENER = "_tdbind_event_listen"
-_ATTR_EVENT_LISTENER_PRIORITY = "_tdbind_event_listen_priority"
-_ATTR_DELAYED_EVENT_LISTENER = "_tdbind_delayed_event_listen"
-_ATTR_DELAYED_EVENT_LISTENER_PRIORITY = "_tdbind_delayed_event_listen_priority"
 
 
 class ClientListenerService:
@@ -34,29 +31,9 @@ class ClientListenerService:
 
         def wrapper(func):
             # type: (CallT) -> CallT
-            setattr(func, _ATTR_EVENT_LISTENER, event)
-            setattr(func, _ATTR_EVENT_LISTENER_PRIORITY, priority)
-            return func
-
-        return wrapper
-
-    @classmethod
-    def DelayedListen(
-        cls,
-        event,  # type: type[CEventT]
-        priority=0,
-    ):
-
-        # 其实做 DelayedListen 意义已经不大了
-        # 一开始用于给 ProxyScreen 使用, 因为
-        # 如果界面打开的比 S2CEvent 来的晚, 那么界面实例化的也晚, 导致
-        # ClientListenService 实例化的也晚, 事件监听的也晚
-        # 相当于没有使用 DelayedListen
-
-        def wrapper(func):
-            # type: (CallT) -> CallT
-            setattr(func, _ATTR_DELAYED_EVENT_LISTENER, event)
-            setattr(func, _ATTR_DELAYED_EVENT_LISTENER_PRIORITY, priority)
+            former = getattr(func, _ATTR_EVENT_LISTENER, [])
+            former.append((event, priority))
+            setattr(func, _ATTR_EVENT_LISTENER, former)
             return func
 
         return wrapper
@@ -109,13 +86,9 @@ class ClientListenerService:
         for key in dir(self):
             attr = getattr(self, key)
             if hasattr(attr, _ATTR_EVENT_LISTENER):
-                event = getattr(attr, _ATTR_EVENT_LISTENER)
-                priority = getattr(attr, _ATTR_EVENT_LISTENER_PRIORITY)
-                self._bind_listen_events.append((event, attr, priority))
-            elif hasattr(attr, _ATTR_DELAYED_EVENT_LISTENER):
-                event = getattr(attr, _ATTR_DELAYED_EVENT_LISTENER)
-                priority = getattr(attr, _ATTR_DELAYED_EVENT_LISTENER_PRIORITY)
-                self._bind_delayed_listen_events.setdefault(event, []).append(attr)
+                events = getattr(attr, _ATTR_EVENT_LISTENER)
+                for event, priority in events:
+                    self._bind_listen_events.append((event, attr, priority))
 
     def __del__(self):
         self._disable_delayed_listeners()
@@ -144,9 +117,9 @@ class ServerListenerService:
         for key in dir(self):
             attr = getattr(self, key)
             if hasattr(attr, _ATTR_EVENT_LISTENER):
-                event = getattr(attr, _ATTR_EVENT_LISTENER)
-                priority = getattr(attr, _ATTR_EVENT_LISTENER_PRIORITY)
-                self._bind_listen_events.append((event, attr, priority))
+                events = getattr(attr, _ATTR_EVENT_LISTENER)
+                for event, priority in events:
+                    self._bind_listen_events.append((event, attr, priority))
 
     @classmethod
     def Listen(
@@ -157,8 +130,9 @@ class ServerListenerService:
 
         def wrapper(func):
             # type: (CallT) -> CallT
-            setattr(func, _ATTR_EVENT_LISTENER, event)
-            setattr(func, _ATTR_EVENT_LISTENER_PRIORITY, priority)
+            former = getattr(func, _ATTR_EVENT_LISTENER, [])
+            former.append((event, priority))
+            setattr(func, _ATTR_EVENT_LISTENER, former)
             return func
 
         return wrapper

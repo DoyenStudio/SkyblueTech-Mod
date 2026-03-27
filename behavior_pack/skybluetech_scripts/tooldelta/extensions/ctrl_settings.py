@@ -26,7 +26,6 @@ class Control:
     def __init__(self, category, name, default_key, default_gamepad):
         # type: (str, str, int, int) -> None
         loaded_controls.setdefault(name, []).append(self)
-        _reg(category, name, default_key, default_gamepad)
         self.category = category
         self.name = name
         self.default_key = default_key

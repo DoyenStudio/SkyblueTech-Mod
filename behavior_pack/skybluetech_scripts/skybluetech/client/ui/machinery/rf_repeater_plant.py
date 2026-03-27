@@ -65,7 +65,7 @@ class RFRepeaterPlantUI(MachinePanelUI):
         if self.current_io_mode:
             self.io_mode_label.SetText("§4中继塔向电网供能")
         else:
-            self.io_mode_label.SetText("§2电网向中继器供能")
+            self.io_mode_label.SetText("§2电网向中继塔供能")
 
     def on_press_build_btn(self, _):
         self.RemoveUI()
@@ -102,7 +102,7 @@ def format_content(
     return (
         "§a[%s] 电网架设完毕。"
         "\n"
-        "\n§b电网中继器数： §f%d （在线 %d）"
+        "\n§b电网中继塔数： §f%d （在线 %d）"
         "\n§4总输出端数： §f%d （在线 %d）"
         "\n§a总输入端数： §f%d （在线 %d）"
     ) % (

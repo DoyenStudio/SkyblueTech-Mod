@@ -21,13 +21,13 @@ from ....common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantBuildResponse,
 )
 from ....common.define.id_enum.machinery import RF_REPEATER_PLANT
-from ....user_config import key_mapping
 from ...machinery.utils.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
+from ...user_config import key_mapping
 
 
 BG_NODE = "/bg"
@@ -145,7 +145,7 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
         # type: (RFRepeaterPlantBuildResponse) -> None
         if event.status_code == event.STATUS_SUCC:
             SetPopupNotice(
-                "已连接中继器 {} 到 {}".format(
+                "已连接中继塔 {} 到 {}".format(
                     (self.original_x, self.original_y, self.original_z),
                     self.nearest_machine_pos,
                 ),
@@ -155,7 +155,7 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
         else:
             display_conn_fail(
                 {
-                    event.STATUS_ALREADY_CONNECTED: "这两个中继器已连接过",
+                    event.STATUS_ALREADY_CONNECTED: "这两个中继塔已连接过",
                     event.STATUS_CANT_CONNECT_SELF: "无法连接自身",
                     event.STATUS_INTERNAL_ERROR: "内部错误1",
                     event.STATUS_INTERNAL_ERROR2: "内部错误2",

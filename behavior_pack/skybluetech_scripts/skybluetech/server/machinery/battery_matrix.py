@@ -194,7 +194,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self._last_output += self._last_rf_provided - rf
 
     def get_core(self):
-        return self.GetMachine(BatteryMatrixCore)
+        return self.GetMachine(BatteryMatrixCore, None)
 
     def get_energy_in_io(self):
         return self.GetMachine(EnergyInputInterface, IO_ENERGY_INPUT)

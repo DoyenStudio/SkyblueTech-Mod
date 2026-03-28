@@ -39,7 +39,6 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = FluidSplitterUISync.NewServer(self).Activate()
-        self.CallSync()
         self._cached_recorded_settings = None
         self._sending_fluid = True
         self._ticking_t = 0
@@ -47,6 +46,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
     def OnTicking(self):
         if self._sending_fluid and self._ticking_t % 5 == 0:
             self.ready_try_post_fluid()
+            self.CallSync()
             all_empty = all(i.volume <= 0 for i in self.fluids)
             if all_empty:
                 self._sending_fluid = False

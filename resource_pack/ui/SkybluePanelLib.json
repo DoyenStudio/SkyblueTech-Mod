@@ -119,7 +119,7 @@
                     "type": "image",
                     "size": [
                         "100%+2px",
-                        "100%+2px"
+                        "100%+1px"
                     ],
                     "layer": 5,
                     "nineslice_size": [

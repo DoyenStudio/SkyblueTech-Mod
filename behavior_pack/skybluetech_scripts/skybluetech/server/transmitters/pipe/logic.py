@@ -132,17 +132,20 @@ def onNetworkTick(network):
                 break
         elif isinstance(om, MultiFluidContainer):
             do_break = False
-            for fluid in om.fluids:
-                if fluid.fluid_id is None or (
-                    pipe_fluid_id is not None and fluid.fluid_id != pipe_fluid_id
+            for slot in om.fluid_output_slots:
+                fluid = om.fluids[slot]
+                if (
+                    fluid.fluid_id is None
+                    or (pipe_fluid_id is not None and fluid.fluid_id != pipe_fluid_id)
+                    or fluid.volume <= 0
                 ):
                     continue
-                vol_takeout = min(out_capacity, om_fluid_vol)
+                vol_takeout = min(out_capacity, fluid.volume)
                 fluid.volume -= vol_takeout
                 pipe_fluid_volume += vol_takeout
                 out_capacity -= vol_takeout
                 if pipe_fluid_id is None:
-                    pipe_fluid_id = om_fluid_id
+                    pipe_fluid_id = fluid.fluid_id
                 if out_capacity <= 0:
                     do_break = True
                     break

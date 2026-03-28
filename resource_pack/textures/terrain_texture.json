@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "bedrock_lava_drill_controller_side": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_side"
+        },
         "skybluetech:alloy_furnace_front": {
             "textures": "textures/machines/alloy_furnace_front"
         },
@@ -26,6 +29,15 @@
         "skybluetech:battery_matrix_controller_side": {
             "textures": "textures/machines/battery_matrix_controller_side"
         },
+        "skybluetech:bedrock_lava_drill_controller_front": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_front"
+        },
+        "skybluetech:bedrock_lava_drill_controller_front_active": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_front_active"
+        },
+        "skybluetech:bedrock_lava_drill_controller_side": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_side"
+        },
         "skybluetech:battery_matrix_core": {
             "textures": "textures/machines/battery_matrix_core"
         },
@@ -37,6 +49,21 @@
         },
         "skybluetech:battery_matrix_frame": {
             "textures": "textures/blocks/battery_matrix_frame"
+        },
+        "skybluetech:bedrock_lava_drill_controller": {
+            "textures": "textures/machines/bedrock_lava_drill_controller"
+        },
+        "skybluetech:bedrock_lava_drill_controller_active": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_active"
+        },
+        "skybluetech:bedrock_lava_drill_energy_interface": {
+            "textures": "textures/machines/bedrock_lava_drill_energy_interface"
+        },
+        "skybluetech:bedrock_lava_drill_frame": {
+            "textures": "textures/blocks/bedrock_lava_drill_frame"
+        },
+        "skybluetech:bedrock_lava_drill_io_fluid": {
+            "textures": "textures/machines/bedrock_lava_drill_io_fluid"
         },
         "skybluetech:bronze_pipe": {
             "textures": "textures/transmitters/bronze_pipe_model"

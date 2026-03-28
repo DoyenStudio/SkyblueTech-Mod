@@ -39,6 +39,18 @@
     "skybluetech:battery_matrix_io_energy2": {
         "textures": "skybluetech:battery_matrix_energy_output_interface"
     },
+    "skybluetech:bedrock_lava_drill_controller": {
+        "sound": "iron"
+    },
+    "skybluetech:bedrock_lava_drill_frame": {
+        "textures": "skybluetech:bedrock_lava_drill_frame"
+    },
+    "skybluetech:bedrock_lava_drill_io_energy": {
+        "textures": "skybluetech:bedrock_lava_drill_energy_interface"
+    },
+    "skybluetech:bedrock_lava_drill_io_fluid": {
+        "textures": "skybluetech:bedrock_lava_drill_io_fluid"
+    },
     "skybluetech:bronze_pipe": {
         "sound": "copper"
     },

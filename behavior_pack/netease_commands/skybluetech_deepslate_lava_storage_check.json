@@ -1,0 +1,19 @@
+{
+    "description": "commands.skybluetech.query_deepslate_storage.description",
+    "format_version": "0.0.1",
+    "name": "skybluetech:query_deepslate_lava_storage",
+    "permission_level": "game_directors",
+    "requires_cheats": true,
+    "args": [
+        {
+            "name": "x",
+            "type": "int",
+            "default": null
+        },
+        {
+            "name": "z",
+            "type": "int",
+            "default": null
+        }
+    ]
+}

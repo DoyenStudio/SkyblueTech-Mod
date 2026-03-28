@@ -1,0 +1,559 @@
+{
+    "bedrock_lava_drill_ui": {
+        "type": "panel",
+        "offset": [
+            1.0,
+            -1.0
+        ],
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg_lower": {
+                                "type": "image",
+                                "offset": [
+                                    0.0,
+                                    60.0
+                                ],
+                                "size": [
+                                    "default",
+                                    93
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "nineslice_size": [
+                                    4.0,
+                                    4.0,
+                                    4.0,
+                                    4.0
+                                ],
+                                "texture": "textures/ui/dialog_background_opaque",
+                                "controls": [
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                -7
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "machine_label": {
+                                            "type": "label",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0.0,
+                                                4.0
+                                            ],
+                                            "font_scale_factor": 1.4,
+                                            "font_type": "default",
+                                            "shadow": true,
+                                            "text": "基岩熔岩钻",
+                                            "text_alignment": "center"
+                                        }
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {
+                                            "button_mappings": [
+                                                {
+                                                    "from_button_id": "button.menu_select",
+                                                    "mapping_type": "pressed",
+                                                    "to_button_id": "button.menu_exit"
+                                                }
+                                            ],
+                                            "layer": 5
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "structure_not_finished_tip@SkybluePanelLib.StructureNotFinishedTip": {
+                                                        "anchor_from": "bottom_middle",
+                                                        "anchor_to": "bottom_middle",
+                                                        "offset": [
+                                                            0,
+                                                            -9
+                                                        ],
+                                                        "visible": false
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            6,
+                                                            0
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "multi_block_structure_check_btn@common.button": {
+                                                        "type": "button",
+                                                        "$control_alpha": 1.0,
+                                                        "$default_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$hover_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$is_new_nine_slice": false,
+                                                        "$label_color": [
+                                                            1,
+                                                            1,
+                                                            1
+                                                        ],
+                                                        "$label_font_scale_factor": 1.0,
+                                                        "$label_font_size": "large",
+                                                        "$label_layer": 3,
+                                                        "$label_offset": [
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                        "$pressed_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$texture_layer": 2,
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            -40.0,
+                                                            2.0
+                                                        ],
+                                                        "size": [
+                                                            14.0,
+                                                            16.0
+                                                        ],
+                                                        "layer": 5,
+                                                        "button_mappings": [],
+                                                        "default_control": "default",
+                                                        "hover_control": "hover",
+                                                        "is_handle_button_move_event": true,
+                                                        "pressed_control": "pressed",
+                                                        "bindings": [
+                                                            {
+                                                                "binding_type": "collection_details",
+                                                                "binding_collection_name": "",
+                                                                "binding_condition": "always_when_visible"
+                                                            }
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "default@netease_editor_template_namespace.default": {}
+                                                            },
+                                                            {
+                                                                "hover@netease_editor_template_namespace.hover": {}
+                                                            },
+                                                            {
+                                                                "pressed@netease_editor_template_namespace.pressed": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "layer": 5,
+                                                        "offset": [
+                                                            -28,
+                                                            6
+                                                        ],
+                                                        "size": [
+                                                            60,
+                                                            65
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "storage_tip": {
+                                                        "type": "label",
+                                                        "offset": [
+                                                            -32.0,
+                                                            -34.0
+                                                        ],
+                                                        "size": [
+                                                            60,
+                                                            "default"
+                                                        ],
+                                                        "layer": 4,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "熔岩缓存量"
+                                                    }
+                                                },
+                                                {
+                                                    "drill_progress": {
+                                                        "type": "panel",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -12.0,
+                                                            -28.0
+                                                        ],
+                                                        "size": [
+                                                            70.0,
+                                                            "100%c+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "drill_progress_tip": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "size": [
+                                                                        60,
+                                                                        "default"
+                                                                    ],
+                                                                    "layer": 4,
+                                                                    "color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "钻探进度"
+                                                                }
+                                                            },
+                                                            {
+                                                                "progress_bar": {
+                                                                    "type": "panel",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        11.0
+                                                                    ],
+                                                                    "size": [
+                                                                        70.0,
+                                                                        10.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "controls": [
+                                                                        {
+                                                                            "bg": {
+                                                                                "type": "custom",
+                                                                                "renderer": "gradient_renderer",
+                                                                                "size": [
+                                                                                    "default",
+                                                                                    "100%+-1px"
+                                                                                ],
+                                                                                "color1": [
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    0.4980392156862745,
+                                                                                    1.0
+                                                                                ],
+                                                                                "color2": [
+                                                                                    0.0,
+                                                                                    0.3254901960784314,
+                                                                                    0.4901960784313725,
+                                                                                    1.0
+                                                                                ],
+                                                                                "gradient_direction": "horizontal"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "bar_mask": {
+                                                                                "type": "panel",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "size": [
+                                                                                    "50%+0px",
+                                                                                    "100%+-1px"
+                                                                                ],
+                                                                                "layer": 2,
+                                                                                "clips_children": true,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "gradient_renderer": {
+                                                                                            "type": "custom",
+                                                                                            "renderer": "gradient_renderer",
+                                                                                            "anchor_from": "left_middle",
+                                                                                            "anchor_to": "left_middle",
+                                                                                            "size": [
+                                                                                                70.0,
+                                                                                                "default"
+                                                                                            ],
+                                                                                            "color1": [
+                                                                                                0.0,
+                                                                                                0.0,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "color2": [
+                                                                                                0.0,
+                                                                                                0.6666666666666666,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "gradient_direction": "horizontal"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "frame": {
+                                                                                "type": "image",
+                                                                                "layer": 3,
+                                                                                "nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "texture": "textures/ui/frame_empty_slim"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "storage_left": {
+                                                        "type": "panel",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -12.0,
+                                                            -2.0
+                                                        ],
+                                                        "size": [
+                                                            70.0,
+                                                            "100%c+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "storage_left_tip": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "size": [
+                                                                        60,
+                                                                        "default"
+                                                                    ],
+                                                                    "layer": 4,
+                                                                    "color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "熔岩剩余量"
+                                                                }
+                                                            },
+                                                            {
+                                                                "progress_bar": {
+                                                                    "type": "panel",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        11.0
+                                                                    ],
+                                                                    "size": [
+                                                                        70.0,
+                                                                        10.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "controls": [
+                                                                        {
+                                                                            "bg": {
+                                                                                "type": "image",
+                                                                                "size": [
+                                                                                    "default",
+                                                                                    "100%+-1px"
+                                                                                ],
+                                                                                "layer": 1,
+                                                                                "color": [
+                                                                                    0.4588235294117647,
+                                                                                    0.4588235294117647,
+                                                                                    0.4588235294117647
+                                                                                ],
+                                                                                "nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "rotate_angle": 180.0,
+                                                                                "texture": "textures/ui/rgb_bar_20"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "bar_mask": {
+                                                                                "type": "panel",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "size": [
+                                                                                    "50%+0px",
+                                                                                    "100%+-1px"
+                                                                                ],
+                                                                                "layer": 2,
+                                                                                "clips_children": true,
+                                                                                "controls": [
+                                                                                    {
+                                                                                        "bar": {
+                                                                                            "type": "image",
+                                                                                            "anchor_from": "left_middle",
+                                                                                            "anchor_to": "left_middle",
+                                                                                            "size": [
+                                                                                                70.0,
+                                                                                                "default"
+                                                                                            ],
+                                                                                            "nineslice_size": [
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                1.0,
+                                                                                                1.0
+                                                                                            ],
+                                                                                            "rotate_angle": 180.0,
+                                                                                            "texture": "textures/ui/rgb_bar_20"
+                                                                                        }
+                                                                                    }
+                                                                                ]
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "frame": {
+                                                                                "type": "image",
+                                                                                "layer": 3,
+                                                                                "nineslice_size": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "texture": "textures/ui/frame_empty_slim"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "drill_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            18.0,
+                                                            30.0
+                                                        ],
+                                                        "size": [
+                                                            18.0,
+                                                            18.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "$cell_overlay_ref|default": "BedrockLavaDrillUI.drill_top_img",
+                                                                    "$item_renderer_size|default": [
+                                                                        18,
+                                                                        18
+                                                                    ],
+                                                                    "collection_index": 0
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "offset": [
+                                    0,
+                                    -45
+                                ],
+                                "size": [
+                                    "default",
+                                    120
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "drill_top_img": {
+        "type": "image",
+        "size": [
+            20.0,
+            20.0
+        ],
+        "layer": 1,
+        "texture": "textures/ui/slot_drill_top_bg"
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "BedrockLavaDrillUI.bedrock_lava_drill_ui"
+    },
+    "namespace": "BedrockLavaDrillUI"
+}

@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:ultraheatinum_plate"
+        },
+        "description": {
+            "identifier": "skybluetech:ultraheatinum_plate"
+        }
+    }
+}

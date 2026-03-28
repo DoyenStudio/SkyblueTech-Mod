@@ -106,6 +106,7 @@ class Paddle:
 AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
 DRILL_TOP = "skybluetech:drill_top"
+DRILL_TOP_ULTRAHEATINUM = "skybluetech:drill_top_ultraheatinum"
 ELECTRIC_MOTOR = "skybluetech:electric_motor"
 HEAT_EXCHANGER = "skybluetech:heat_exchanger"
 HEAT_PLATE = "skybluetech:heat_plate"

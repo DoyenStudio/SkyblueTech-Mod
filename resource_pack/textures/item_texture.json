@@ -88,6 +88,9 @@
         "skybluetech:drill_top": {
             "textures": "textures/items/drill_top_steel"
         },
+        "skybluetech:drill_top_ultraheatinum": {
+            "textures": "textures/items/drill_top_ultraheatinum"
+        },
         "skybluetech:electric_motor": {
             "textures": "textures/items/electric_motor"
         },
@@ -393,6 +396,9 @@
         },
         "skybluetech:ultraheatinum_ingot": {
             "textures": "textures/items/ingots/ultraheatinum_ingot"
+        },
+        "skybluetech:ultraheatinum_plate": {
+            "textures": "textures/items/plates/ultraheatinum_plate"
         },
         "skybluetech:upgrader_basic_energy": {
             "textures": "textures/items/upgraders/upgrader_basic_energy"

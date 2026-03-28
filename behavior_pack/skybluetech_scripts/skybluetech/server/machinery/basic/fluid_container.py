@@ -58,8 +58,6 @@ class FluidContainer(object):
 
     def AddFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
-        if isinstance(self, GUIControl):
-            self.CallSync()
         my_fluid_id = self.fluid_id
         if my_fluid_id is None:
             self.fluid_id = fluid_id

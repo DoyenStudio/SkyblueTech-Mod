@@ -95,9 +95,13 @@
                     "type": "image",
                     "anchor_from": "bottom_middle",
                     "anchor_to": "bottom_middle",
+                    "offset": [
+                        0.0,
+                        -1.0
+                    ],
                     "size": [
                         "default",
-                        "0%+0px"
+                        "0%+-2px"
                     ],
                     "layer": 3,
                     "clip_ratio": 0.0,

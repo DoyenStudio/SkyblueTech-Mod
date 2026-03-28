@@ -1,5 +1,5 @@
 # coding=utf-8
-from weakref import ref
+from skybluetech_scripts.tooldelta.extensions.method_weakref import ref_method
 from ..basic import ItemContainer, RegisterMachine
 from .base_interface import BaseInterface
 
@@ -19,7 +19,7 @@ class ItemOutputInterface(BaseInterface, ItemContainer):
 
     def SetOnSlotUpdateCallback(self, callback):
         # type: (Callable[[int], None]) -> None
-        self.on_slot_update_cb_ref = ref(callback)
+        self.on_slot_update_cb_ref = ref_method(callback)
 
     def OnSlotUpdate(self, slot_pos):
         if self.on_slot_update_cb_ref is not None:

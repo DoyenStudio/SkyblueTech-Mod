@@ -1,7 +1,7 @@
 # coding=utf-8
-from weakref import ref
+from skybluetech_scripts.tooldelta.extensions.method_weakref import ref_method
 from ....common.ui_sync.machinery.fluid_interface import FluidInterfaceUISync
-from ..basic import BaseMachine, FluidContainer, GUIControl, RegisterMachine
+from ..basic import FluidContainer, GUIControl, RegisterMachine
 from .base_interface import BaseInterface
 
 if 0:
@@ -29,7 +29,7 @@ class FluidInputInterface(BaseInterface, FluidContainer, GUIControl):
 
     def SetOnFluidSlotUpdateCallback(self, callback):
         # type: (Callable[[], None]) -> None
-        self.on_fluid_slot_update_cb_ref = ref(callback)
+        self.on_fluid_slot_update_cb_ref = ref_method(callback)
 
     def OnFluidSlotUpdate(self):
         if self.on_fluid_slot_update_cb_ref is not None:

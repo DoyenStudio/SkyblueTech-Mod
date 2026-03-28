@@ -1,6 +1,5 @@
 # coding=utf-8
-#
-from weakref import ref
+from skybluetech_scripts.tooldelta.extensions.method_weakref import ref_method
 from ....common.ui_sync.machinery.fluid_interface import FluidInterfaceUISync
 from ..basic import FluidContainer, GUIControl, RegisterMachine
 from .base_interface import BaseInterface
@@ -20,6 +19,8 @@ class FluidOutputInterface(BaseInterface, FluidContainer, GUIControl):
         FluidContainer.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FluidInterfaceUISync.NewServer(self).Activate()
         self.on_fluid_slot_update_cb_ref = None
+        self.on_added_fluid_cb_ref = None
+        self.on_reduced_fluid_cb_ref = None
 
     def OnSync(self):
         self.sync.fluid_id = self.fluid_id
@@ -29,10 +30,30 @@ class FluidOutputInterface(BaseInterface, FluidContainer, GUIControl):
 
     def SetOnFluidSlotUpdateCallback(self, callback):
         # type: (Callable[[], None]) -> None
-        self.on_fluid_slot_update_cb_ref = ref(callback)
+        self.on_fluid_slot_update_cb_ref = ref_method(callback)
+
+    def SetOnAddedFluidCallback(self, callback):
+        # type: (Callable[[str, float], None]) -> None
+        self.on_added_fluid_cb_ref = ref_method(callback)
+
+    def SetOnReducedFluidCallback(self, callback):
+        # type: (Callable[[str, float], None]) -> None
+        self.on_reduced_fluid_cb_ref = ref_method(callback)
 
     def OnFluidSlotUpdate(self):
         if self.on_fluid_slot_update_cb_ref is not None:
             on_fluid_slot_update_cb = self.on_fluid_slot_update_cb_ref()
             if on_fluid_slot_update_cb is not None:
                 on_fluid_slot_update_cb()
+
+    def OnAddedFluid(self, fluid_id, added_fluid_volume):
+        if self.on_added_fluid_cb_ref is not None:
+            on_added_fluid_cb = self.on_added_fluid_cb_ref()
+            if on_added_fluid_cb is not None:
+                on_added_fluid_cb(fluid_id, added_fluid_volume)
+
+    def OnReducedFluid(self, fluid_id, reduced_fluid_volume):
+        if self.on_reduced_fluid_cb_ref is not None:
+            on_reduced_fluid_cb = self.on_reduced_fluid_cb_ref()
+            if on_reduced_fluid_cb is not None:
+                on_reduced_fluid_cb(fluid_id, reduced_fluid_volume)

@@ -333,6 +333,120 @@
             }
         ]
     },
+    "StructureNotFinishedTip": {
+        "type": "input_panel",
+        "size": [
+            166.0,
+            95.0
+        ],
+        "priority": 5,
+        "layer": 50,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "priority": 5,
+                    "layer": 1,
+                    "alpha": 0.6,
+                    "color": [
+                        0.0,
+                        0.0,
+                        0.0
+                    ],
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/white_with_smooth_edge"
+                }
+            },
+            {
+                "warning_img": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        4.0,
+                        4.0
+                    ],
+                    "size": [
+                        12.0,
+                        12.0
+                    ],
+                    "layer": 1,
+                    "texture": "textures/ui/warning_icon"
+                }
+            },
+            {
+                "top_tip": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        20.0,
+                        4.0
+                    ],
+                    "layer": 4,
+                    "color": [
+                        1.0,
+                        0.6666666666666666,
+                        0.0
+                    ],
+                    "font_scale_factor": 1.2,
+                    "font_type": "default",
+                    "text": "多方块结构未成型",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "desc_tip": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        20.0,
+                        20.0
+                    ],
+                    "layer": 4,
+                    "color": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "font_scale_factor": 1.1,
+                    "font_type": "default",
+                    "text": "详情：",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "desc_label": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        20.0,
+                        34.0
+                    ],
+                    "size": [
+                        120.0,
+                        58.0
+                    ],
+                    "layer": 4,
+                    "color": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "font_scale_factor": 1.1,
+                    "font_type": "default",
+                    "text": "未知情况"
+                }
+            }
+        ]
+    },
     "TextWithBlackBg": {
         "type": "image",
         "$alpha": 0.4,

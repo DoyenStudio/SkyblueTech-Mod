@@ -335,9 +335,10 @@ class StructureBlockPalette(object):
             )
             expected_pos_set = self.posblock_data[index]
             if len(actua_pos_set & expected_pos_set) < len(expected_pos_set):
-                debug_show_diff(
-                    dim, cx, cy, cz, expected_pos_set, actua_pos_set, block_ids
-                )
+                if DEBUG:
+                    debug_show_diff(
+                        dim, cx, cy, cz, expected_pos_set, actua_pos_set, block_ids
+                    )
                 return False
         return True
 
@@ -471,7 +472,7 @@ class MultiBlockStructure(BaseMachine):
                 machines.append(m)
         return machines
 
-    def GetMachine(self, cls, block_id=None, index=0):
+    def GetMachine(self, cls, block_id, index=0):
         # type: (type[MT], str | None, int) -> MT
         """
         获取多方块结构中某一类型的机器(多用于多方块结构接口的获取)。
@@ -724,12 +725,12 @@ def onRecvResponse(event):
         return
     posblock_data = event.pos_block_data
     palette = event.palette
-    min_x = 999
-    max_x = -999
-    min_y = 999
-    max_y = -999
-    min_z = 999
-    max_z = -999
+    min_x = 1 << 31
+    max_x = -1 << 31
+    min_y = 1 << 31
+    max_y = -1 << 31
+    min_z = 1 << 31
+    max_z = -1 << 31
     for x, y, z in ((_x, _y, _z) for v in posblock_data.values() for _x, _y, _z in v):
         if x < min_x:
             min_x = x
@@ -793,7 +794,6 @@ def debug_show_diff(
     actual,  # type: set[tuple[int, int, int]]
     expected_block_ids,
 ):
-    return
     print("====== Structure not equal ======")
     print("Expected blocks: {}".format(expected_block_ids))
     print("No equal poses ({} < {}) :".format(len(actual & expected), len(expected)))

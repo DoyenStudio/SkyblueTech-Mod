@@ -1,0 +1,82 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.ingots",
+            "icon": "skybluetech:tin_ingot",
+            "list": [
+                "skybluetech:tin_ingot",
+                "skybluetech:lead_ingot",
+                "skybluetech:silver_ingot",
+                "skybluetech:nickel_ingot",
+                "skybluetech:platinum_ingot",
+                "skybluetech:bronze_ingot",
+                "skybluetech:invar_ingot",
+                "skybluetech:steel_ingot",
+                "skybluetech:refined_iron_ingot",
+                "skybluetech:cupronickel_ingot",
+                "skybluetech:ultraheatinum_ingot"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.dusts",
+            "icon": "skybluetech:copper_dust",
+            "list": [
+                "skybluetech:copper_dust",
+                "skybluetech:iron_dust",
+                "skybluetech:gold_dust",
+                "skybluetech:tin_dust",
+                "skybluetech:lead_dust",
+                "skybluetech:silver_dust",
+                "skybluetech:nickel_dust",
+                "skybluetech:platinum_dust",
+                "skybluetech:bronze_dust",
+                "skybluetech:invar_dust",
+                "skybluetech:steel_dust",
+                "skybluetech:cupronickel_dust"
+            ]
+        },
+        {
+            "group_name": "itemGroup.name.metal_sticks",
+            "icon": "skybluetech:copper_stick",
+            "list": [
+                "skybluetech:copper_stick",
+                "skybluetech:tin_stick",
+                "skybluetech:silver_stick",
+                "skybluetech:platinum_stick",
+                "skybluetech:bronze_stick",
+                "skybluetech:steel_stick",
+                "skybluetech:iron_stick"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.ingot_blocks",
+            "icon": "skybluetech:tin_block",
+            "list": [
+                "skybluetech:tin_block",
+                "skybluetech:lead_block",
+                "skybluetech:silver_block",
+                "skybluetech:nickel_block",
+                "skybluetech:platinum_block"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.plates",
+            "icon": "skybluetech:copper_plate",
+            "list": [
+                "skybluetech:copper_plate",
+                "skybluetech:iron_plate",
+                "skybluetech:gold_plate",
+                "skybluetech:tin_plate",
+                "skybluetech:lead_plate",
+                "skybluetech:silver_plate",
+                "skybluetech:nickel_plate",
+                "skybluetech:platinum_plate",
+                "skybluetech:bronze_plate",
+                "skybluetech:invar_plate",
+                "skybluetech:steel_plate",
+                "skybluetech:cupronickel_plate",
+                "skybluetech:ultraheatinum_plate"
+            ]
+        }
+    ]
+}

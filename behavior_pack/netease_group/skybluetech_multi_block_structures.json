@@ -1,0 +1,36 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.fermenter",
+            "icon": "skybluetech:fermenter_controller",
+            "list": [
+                "skybluetech:fermenter_controller",
+                "skybluetech:fermenter_io_energy",
+                "skybluetech:fermenter_io_fluid1",
+                "skybluetech:fermenter_io_fluid2",
+                "skybluetech:fermenter_io_gas"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.battery_matrix",
+            "icon": "skybluetech:battery_matrix_controller",
+            "list": [
+                "skybluetech:battery_matrix_controller",
+                "skybluetech:battery_matrix_frame",
+                "skybluetech:battery_matrix_core",
+                "skybluetech:battery_matrix_io_energy1",
+                "skybluetech:battery_matrix_io_energy2"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.bedrock_lava_drill",
+            "icon": "skybluetech:bedrock_lava_drill_controller",
+            "list": [
+                "skybluetech:bedrock_lava_drill_controller",
+                "skybluetech:bedrock_lava_drill_frame",
+                "skybluetech:bedrock_lava_drill_io_energy",
+                "skybluetech:bedrock_lava_drill_io_fluid"
+            ]
+        }
+    ]
+}

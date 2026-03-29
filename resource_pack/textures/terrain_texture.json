@@ -29,15 +29,6 @@
         "skybluetech:battery_matrix_controller_side": {
             "textures": "textures/machines/battery_matrix_controller_side"
         },
-        "skybluetech:bedrock_lava_drill_controller_front": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_front"
-        },
-        "skybluetech:bedrock_lava_drill_controller_front_active": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_front_active"
-        },
-        "skybluetech:bedrock_lava_drill_controller_side": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_side"
-        },
         "skybluetech:battery_matrix_core": {
             "textures": "textures/machines/battery_matrix_core"
         },
@@ -55,6 +46,15 @@
         },
         "skybluetech:bedrock_lava_drill_controller_active": {
             "textures": "textures/machines/bedrock_lava_drill_controller_active"
+        },
+        "skybluetech:bedrock_lava_drill_controller_front": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_front"
+        },
+        "skybluetech:bedrock_lava_drill_controller_front_active": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_front_active"
+        },
+        "skybluetech:bedrock_lava_drill_controller_side": {
+            "textures": "textures/machines/bedrock_lava_drill_controller_side"
         },
         "skybluetech:bedrock_lava_drill_energy_interface": {
             "textures": "textures/machines/bedrock_lava_drill_energy_interface"
@@ -185,6 +185,15 @@
         },
         "skybluetech:fluid_condenser_front_active": {
             "textures": "textures/machines/flipbook_textures/fluid_condenser_front_active"
+        },
+        "skybluetech:fluid_splitter_bottom": {
+            "textures": "textures/machines/fluid_splitter_bottom"
+        },
+        "skybluetech:fluid_splitter_side": {
+            "textures": "textures/machines/fluid_splitter_side"
+        },
+        "skybluetech:fluid_splitter_top": {
+            "textures": "textures/machines/fluid_splitter_top"
         },
         "skybluetech:forester_side": {
             "textures": "textures/machines/forester_side"
@@ -385,9 +394,6 @@
         },
         "skybluetech:steel_item_transport_cable": {
             "textures": "textures/transmitters/steel_item_transport_cable_model"
-        },
-        "skybluetech:sun": {
-            "textures": "textures/ui/sun"
         },
         "skybluetech:superconduct_wire": {
             "textures": "textures/transmitters/superconduct_wire_texture"

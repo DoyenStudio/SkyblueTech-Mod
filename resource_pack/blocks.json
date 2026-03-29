@@ -193,6 +193,10 @@
             "up": "skybluetech:gray_lava_still"
         }
     },
+    "skybluetech:flowing_hydrogen": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
     "skybluetech:flowing_light_lava": {
         "blockshape": "water",
         "textures": {
@@ -210,10 +214,6 @@
         }
     },
     "skybluetech:flowing_methane": {
-        "blockshape": "water",
-        "textures": "skybluetech:gas"
-    },
-    "skybluetech:flowing_hydrogen": {
         "blockshape": "water",
         "textures": "skybluetech:gas"
     },
@@ -329,7 +329,14 @@
         "sound": "iron"
     },
     "skybluetech:fluid_splitter": {
-        "textures": "skybluetech:sun"
+        "textures": {
+            "down": "skybluetech:fluid_splitter_bottom",
+            "east": "skybluetech:fluid_splitter_side",
+            "north": "skybluetech:fluid_splitter_side",
+            "south": "skybluetech:fluid_splitter_side",
+            "up": "skybluetech:fluid_splitter_top",
+            "west": "skybluetech:fluid_splitter_side"
+        }
     },
     "skybluetech:forester": {
         "textures": {
@@ -373,6 +380,10 @@
             "identifier": "skybluetech:hover_text_displayer"
         },
         "sound": "iron"
+    },
+    "skybluetech:hydrogen": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
     },
     "skybluetech:hydroponic_base": {
         "textures": {
@@ -438,10 +449,6 @@
         "sound": "iron"
     },
     "skybluetech:methane": {
-        "blockshape": "water",
-        "textures": "skybluetech:gas"
-    },
-    "skybluetech:hydrogen": {
         "blockshape": "water",
         "textures": "skybluetech:gas"
     },

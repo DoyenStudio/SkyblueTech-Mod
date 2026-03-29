@@ -105,9 +105,6 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
         self.sync.progress_relative = self.GetProcessProgress()
         self.sync.MarkedAsChanged()
 
-    def OnTryActivate(self):
-        self.ResetDeactiveFlags()
-
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
         pass

@@ -82,9 +82,6 @@ class MultiFluidContainer(object):
         allow_player_use_bucket_pull (bool): 是否允许玩家直接使用桶取出流体
 
     需要调用 `__init__`
-
-    覆写:
-        `Dump`, `OnTryActivate`
     """
 
     fluid_io_mode = (2, 2, 2, 2, 2, 2)  # type: tuple[int, int, int, int, int, int]

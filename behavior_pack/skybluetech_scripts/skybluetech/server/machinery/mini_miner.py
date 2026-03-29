@@ -89,10 +89,6 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         pass
 
     @SuperExecutorMeta.execute_super
-    def OnTryActivate(self):
-        pass
-
-    @SuperExecutorMeta.execute_super
     def OnDeactiveFlagsChanged(self):
         self.update_gui_states()
 

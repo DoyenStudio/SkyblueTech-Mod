@@ -171,11 +171,6 @@ def GetContainerSlotsCanOutput(dim, pos, cacher):
         return []
 
 
-def onActivateNetwork(network):
-    # type: (CableNetwork) -> None
-    pass
-
-
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
     pass
@@ -324,10 +319,9 @@ def onNetworkTick(network):
 logic_module = LogicModule(
     CableNetwork,
     CableAccessPoint,
-    isCable,
-    isContainer,
-    onMachineryPlacedLater,
-    onActivateNetwork,
+    transmitter_check_func=isCable,
+    transmittable_block_check_func=isContainer,
+    on_transmittable_block_placed_later=onMachineryPlacedLater,
     on_network_tick=onNetworkTick,
 )
 

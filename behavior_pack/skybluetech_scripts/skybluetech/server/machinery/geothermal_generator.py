@@ -78,14 +78,6 @@ class GeoThermalGenerator(
     def OnUnload(self):
         pass
 
-    def OnTryActivate(self):
-        self.GeneratePower(0)
-        if (
-            self.HasDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
-            and self.store_rf < self.store_rf_max
-        ):
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
-
     def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if slot != 0:

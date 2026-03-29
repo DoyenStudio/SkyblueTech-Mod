@@ -12,14 +12,4 @@ class CreativeGenerator(BaseGenerator):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        self.active = True
-        self.update_counter = 0
         self.SetOutputPower(2147483647)
-
-    def OnTryActivate(self):
-        # type: () -> None
-        self.active = True
-        self.update_counter = 0
-
-    def OnUnload(self):
-        self.active = False

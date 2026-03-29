@@ -76,27 +76,7 @@ def isPowerAccepter(block_name, dim, posdata):
 
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
-    # 在机器被放置后延迟执行,
-    # 用于尝试激活网络中的其他设备, 使其向新设备尝试进行一次输出
-    for network in (
-        i
-        for i in logic_module.GetContainerNode(dim, x, y, z).inputs.values()
-        if i is not None
-    ):
-        for ap in network.group_outputs:
-            mx, my, mz = ap.target_pos
-            m = GetMachineWithoutCls(dim, mx, my, mz)
-            if m is not None:
-                m.OnTryActivate()
-
-
-def onActivateNetwork(network):
-    # type: (WireNetwork) -> None
-    for ap in network.get_output_access_points():
-        mx, my, mz = ap.target_pos
-        m = GetMachineWithoutCls(network.dim, mx, my, mz)
-        if m is not None:
-            m.OnTryActivate()
+    pass
 
 
 def onNetworkTick(network):
@@ -131,10 +111,9 @@ def onNetworkTick(network):
 logic_module = LogicModule(
     WireNetwork,
     WireAccessPoint,
-    isWire,
-    isRFMachine,
-    onMachineryPlacedLater,
-    onActivateNetwork,
+    transmitter_check_func=isWire,
+    transmittable_block_check_func=isRFMachine,
+    on_transmittable_block_placed_later=onMachineryPlacedLater,
     on_network_tick=onNetworkTick,
     provider_check_func=isPowerProvider,
     accepter_check_func=isPowerAccepter,

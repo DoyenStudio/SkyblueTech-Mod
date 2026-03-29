@@ -1,5 +1,4 @@
 # coding=utf-8
-import time
 from collections import deque
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
@@ -18,7 +17,6 @@ from skybluetech_scripts.tooldelta.events.server import (
 from skybluetech_scripts.tooldelta.events.service import ServerListenerService
 from skybluetech_scripts.tooldelta.extensions.typing import TypeVar, Generic
 from ....common.define.facing import NEIGHBOR_BLOCKS_ENUM, OPPOSITE_FACING
-from ...machinery.pool import GetMachineStrict
 from ..constants import FACING_EN, DXYZ_FACING
 from ..base.define import (
     AP_MODE_INPUT,
@@ -30,7 +28,7 @@ from ..base.define import (
 
 # TYPE_CHECKING
 if 0:
-    from typing import Callable
+    import typing
 
     PosData = tuple[int, int, int]  # x y z
     PosDataWithFacing = tuple[int, int, int, int]  # x y z facing
@@ -47,13 +45,12 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         self,
         network_cls,  # type: type[_NT]
         access_point_cls,  # type: type[_APT]
-        transmitter_check_func,  # type: Callable[[str], bool]
-        transmittable_block_check_func,  # type: Callable[[str], bool]
-        on_transmittable_block_placed_later,  # type: Callable[[int, int, int, int], None]
-        on_network_active,  # type: Callable[[_NT], None]
-        on_network_tick,  # type: Callable[[_NT], None]
-        provider_check_func=None,  # type: Callable[[str, int, tuple[int, int, int, int]], bool] | None
-        accepter_check_func=None,  # type: Callable[[str, int, tuple[int, int, int, int]], bool] | None
+        transmitter_check_func,  # type: typing.Callable[[str], bool]
+        transmittable_block_check_func,  # type: typing.Callable[[str], bool]
+        on_transmittable_block_placed_later,  # type: typing.Callable[[int, int, int, int], None]
+        on_network_tick,  # type: typing.Callable[[_NT], None]
+        provider_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
+        accepter_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
     ):
         ServerListenerService.__init__(self)
         self.network_cls = network_cls
@@ -69,7 +66,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         self.on_network_tick = on_network_tick
         "网络 tick, 5t 触发一次网络 tick"
         self.on_transmittable_block_placed_later = on_transmittable_block_placed_later
-        self.on_network_active = on_network_active
         self.networks_pool = set()  # type: set[_NT]
         self.container_nodes_pool = {}  # type: dict[tuple[int, tuple[int, int, int]], ContainerNode[_NT]]
         self.access_points_pool = {}  # type: dict[tuple[int, int, int, int, int], _APT] # (dim, x, y, z, access_facing)
@@ -156,16 +152,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         elif force_use_cached:
             return None
         return self.get_and_init_network(dim, (x, y, z), cacher)
-
-    def ActivateNetwork(self, network):
-        # type: (_NT) -> None
-        aps = network.get_input_access_points() + network.get_output_access_points()  # type: list[_APT]
-        for ap in aps:
-            target_pos = ap.target_pos
-            m = GetMachineStrict(network.dim, *target_pos)
-            if m is not None:
-                m.OnTryActivate()
-        self.on_network_active(network)
 
     def SetAccessPointIOMode(self, access_point, io_mode):
         # type: (_APT, int) -> bool
@@ -470,10 +456,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             if network is not None:
                 self.delete_network(network)
         tmp_set = set()
-        cnode = self.GetContainerNode(dim, x, y, z, tmp_set, enable_cache=False)
-        for network in set(cnode.inputs.values()) | set(cnode.outputs.values()):
-            if network is not None:
-                self.ActivateNetwork(network)
+        self.GetContainerNode(dim, x, y, z, tmp_set, enable_cache=False)
 
     def apply_network_to_pool(self, network):
         # type: (_NT) -> None
@@ -523,8 +506,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             )
             if network is not None:
                 self.apply_network_to_pool(network)
-            if network is not None:
-                self.ActivateNetwork(network)
         elif self.transmittable_block_check_func(event.fullName):
             # 图方便
             self.clean_container_networks(event.dimensionId, event.x, event.y, event.z)
@@ -596,7 +577,6 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 )
                 if network is not None:
                     self.apply_network_to_pool(network)
-                    self.ActivateNetwork(network)
 
     @ServerListenerService.Listen(ChunkAcquireDiscardedServerEvent)
     def onChunkUnloaded(self, event):

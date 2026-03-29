@@ -88,10 +88,6 @@ class GasBurningGenerator(
     def OnUnload(self):
         pass
 
-    @SuperExecutorMeta.execute_super
-    def OnTryActivate(self):
-        self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
-
     def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if slot != 0:

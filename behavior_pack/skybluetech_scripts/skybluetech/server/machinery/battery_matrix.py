@@ -75,10 +75,6 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
             self._last_output = 0
             self._sum_power_t = 0
 
-    def OnTryActivate(self):
-        # type: () -> None
-        self.ResetDeactiveFlags()
-
     @SuperExecutorMeta.execute_super
     def OnClick(self, event, extra_datas=None):
         pass

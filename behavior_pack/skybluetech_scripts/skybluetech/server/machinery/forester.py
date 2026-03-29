@@ -68,9 +68,6 @@ class Forester(GUIControl, ItemContainer, SPControl):
     def OnUnload(self):
         pass
 
-    def OnTryActivate(self):
-        self.ResetDeactiveFlags()
-
     def run_once(self):
         ok = self.collect_tree()
         if not ok:

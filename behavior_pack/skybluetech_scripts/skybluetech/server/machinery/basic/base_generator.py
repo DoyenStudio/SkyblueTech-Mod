@@ -32,11 +32,6 @@ class BaseGenerator(BasePowerProvider):
                 ):
                     self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
 
-    @SuperExecutorMeta.execute_super
-    def OnTryActivate(self):
-        if self.store_rf_max > self.store_rf:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
-
     def SetOutputPower(self, power):
         # type: (int) -> None
         self.output_power = power

@@ -54,7 +54,6 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
 
     def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
-        self.OnTryActivate()
         self._sending_fluid = True
 
     def ready_try_post_fluid(self):

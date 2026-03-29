@@ -77,10 +77,6 @@ class Assembler(GUIControl, UpgradeControl):
             {"skybluetech:connection_" + facing_en: connectToWire},
         )
 
-    def OnTryActivate(self):
-        # type: () -> None
-        self.ResetDeactiveFlags()
-
     @SuperExecutorMeta.execute_super
     def OnClick(self, event):
         # type: (ServerBlockUseEvent) -> None

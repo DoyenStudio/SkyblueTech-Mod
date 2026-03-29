@@ -61,10 +61,6 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
         self.sync.MarkedAsChanged()
 
     @SuperExecutorMeta.execute_super
-    def OnTryActivate(self):
-        pass
-
-    @SuperExecutorMeta.execute_super
     def OnUnload(self):
         pass
 

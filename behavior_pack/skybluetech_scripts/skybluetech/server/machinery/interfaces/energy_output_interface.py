@@ -26,8 +26,3 @@ class EnergyOutputInterface(BaseInterface, BasePowerProvider):
     def OutputPower(self, rf):
         # type: (int) -> tuple[bool, int]
         return self.GeneratePower(rf)
-
-    def OnTryActivate(self):
-        m = self.getMachineRef()
-        if m is not None:
-            m.OnTryActivate()

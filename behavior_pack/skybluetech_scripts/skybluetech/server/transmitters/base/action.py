@@ -136,7 +136,6 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
                     + "§6面设置为"
                     + ("§a输入", "§c抽出")[newState],
                 )
-            ExecLater(0, self.logic_module.ActivateNetwork, current_network)
             UpdateBlockStates(
                 event.dimensionId, (blockX, blockY, blockZ), block_orig_status
             )

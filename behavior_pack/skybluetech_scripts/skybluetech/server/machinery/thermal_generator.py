@@ -76,10 +76,6 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
     def UnsetDeactiveFlag(self, flag, flush=True):
         pass
 
-    @SuperExecutorMeta.execute_super
-    def OnTryActivate(self):
-        pass
-
     def next_burn(self):
         if self.is_burning:
             return

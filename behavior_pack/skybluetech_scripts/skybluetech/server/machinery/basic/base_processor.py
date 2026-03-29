@@ -71,10 +71,6 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
                 self.start_next()
 
     @SuperExecutorMeta.execute_super
-    def OnTryActivate(self):
-        self.ResetDeactiveFlags()  # TODO: 安全问题?
-
-    @SuperExecutorMeta.execute_super
     def OnUnload(self):
         pass
 

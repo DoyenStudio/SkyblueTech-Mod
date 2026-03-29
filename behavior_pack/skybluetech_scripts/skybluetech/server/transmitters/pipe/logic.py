@@ -80,11 +80,6 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
     return ok, rest_fluid_volume
 
 
-def onActivateNetwork(network):
-    # type: (PipeNetwork) -> None
-    pass
-
-
 def onMachineryPlacedLater(dim, x, y, z):
     # type: (int, int, int, int) -> None
     # 在流体容器被放置后延迟执行,
@@ -168,7 +163,6 @@ logic_module = LogicModule(
     PipeAccessPoint,
     transmitter_check_func=isPipe,
     on_transmittable_block_placed_later=onMachineryPlacedLater,
-    on_network_active=onActivateNetwork,
     transmittable_block_check_func=isFluidContainer,
     on_network_tick=onNetworkTick,
 )

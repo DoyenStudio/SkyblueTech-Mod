@@ -80,10 +80,6 @@
             0.0,
             2.0
         ],
-        "offset": [
-            -0.5,
-            -26.0
-        ],
         "size": [
             167.0,
             53.0
@@ -92,36 +88,42 @@
         "controls": [
             {
                 "fluid": {
-                    "type": "image",
-                    "anchor_from": "bottom_middle",
-                    "anchor_to": "bottom_middle",
-                    "offset": [
-                        0.0,
-                        -1.0
-                    ],
+                    "type": "panel",
                     "size": [
-                        "default",
-                        "0%+-2px"
+                        "100%+-2px",
+                        "100%+-4px"
                     ],
-                    "layer": 3,
-                    "clip_ratio": 0.0,
-                    "color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "texture": "textures/fluid/basic_fluid",
-                    "tiled": true
+                    "controls": [
+                        {
+                            "img": {
+                                "type": "image",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "size": [
+                                    "default",
+                                    "0%+0px"
+                                ],
+                                "clip_ratio": 0.0,
+                                "color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "texture": "textures/fluid/basic_fluid",
+                                "tiled": true
+                            }
+                        }
+                    ]
                 }
             },
             {
                 "frame": {
                     "type": "image",
                     "size": [
-                        "100%+2px",
-                        "100%+1px"
+                        "100%+0px",
+                        "100%+0px"
                     ],
-                    "layer": 5,
+                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -147,7 +149,7 @@
                         "default",
                         "0%+0px"
                     ],
-                    "layer": 5,
+                    "layer": 2,
                     "visible": "$text_visible",
                     "color": [
                         0.0,
@@ -195,7 +197,7 @@
                     "$pressed_texture": "",
                     "$texture_layer": 2,
                     "priority": 10,
-                    "layer": 10,
+                    "layer": 3,
                     "button_mappings": [],
                     "default_control": "default",
                     "hover_control": "hover",

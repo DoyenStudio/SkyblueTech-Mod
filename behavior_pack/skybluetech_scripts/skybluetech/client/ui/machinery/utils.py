@@ -84,7 +84,7 @@ def UpdateGenericProgressB2T(ui, percent):
 
 def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
     # type: (UBaseCtrl, str | None, float, float) -> None
-    fluid_img = ui["fluid"].asImage()
+    fluid_img = ui["fluid/img"].asImage()
     volume_disp = ui["text"].asLabel()
     if fluid_id is None:
         fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=0))

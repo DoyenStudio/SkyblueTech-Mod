@@ -143,7 +143,7 @@ def onNetworkTick(network):
                 if pipe_fluid_id is None:
                     pipe_fluid_id = fluid.fluid_id
                 om.onReducedFluid(
-                    slot, fluid_id, vol_takeout, is_final=False
+                    slot, fluid_id, vol_takeout, is_final=True
                 )  # TODO: fix is_final
                 if out_capacity <= 0:
                     do_break = True

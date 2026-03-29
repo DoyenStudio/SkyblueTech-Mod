@@ -440,8 +440,8 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 dim, x + dx, y + dy, z + dz, cacher=tmp_set, disable_cache=True
             )
 
-    def clean_container_networks(self, dim, x, y, z):
-        # type: (int, int, int, int) -> None
+    def clean_container_networks(self, dim, x, y, z, on_block_placed=False):
+        # type: (int, int, int, int, bool) -> None
         """
         清理一个容器周围的网络数据。
 
@@ -451,8 +451,10 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             y (int): y
             z (int): z
         """
-        cnode = self.GetContainerNode(dim, x, y, z)
-        for network in set(cnode.inputs.values()) | set(cnode.outputs.values()):
+        for dx, dy, dz in DXYZ_FACING:
+            network = self.GetNetworkByTransmitter(
+                dim, x + dx, y + dy, z + dz, force_use_cached=True
+            )
             if network is not None:
                 self.delete_network(network)
         tmp_set = set()
@@ -508,7 +510,9 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 self.apply_network_to_pool(network)
         elif self.transmittable_block_check_func(event.fullName):
             # 图方便
-            self.clean_container_networks(event.dimensionId, event.x, event.y, event.z)
+            self.clean_container_networks(
+                event.dimensionId, event.x, event.y, event.z, on_block_placed=True
+            )
 
     @ServerListenerService.Listen(BlockNeighborChangedServerEvent)
     def onNeighbourBlockChanged(self, event):

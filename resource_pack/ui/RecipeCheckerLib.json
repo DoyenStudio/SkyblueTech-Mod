@@ -808,6 +808,24 @@
                     "font_type": "unicode",
                     "text": "999, 99 MRF/t"
                 }
+            },
+            {
+                "garbage_gas_tip": {
+                    "type": "label",
+                    "offset": [
+                        -14.0,
+                        0.0
+                    ],
+                    "layer": 4,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_type": "default",
+                    "text": "无废气",
+                    "text_alignment": "center"
+                }
             }
         ]
     },

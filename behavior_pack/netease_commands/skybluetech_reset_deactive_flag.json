@@ -1,0 +1,14 @@
+{
+    "description": "Remove all deactive flags for a machine",
+    "format_version": "0.0.1",
+    "name": "skybluetech:reset_deactive_flags",
+    "permission_level": "game_directors",
+    "requires_cheats": true,
+    "args": [
+        {
+            "name": "position",
+            "type": "pos",
+            "default": null
+        }
+    ]
+}

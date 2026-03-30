@@ -61,6 +61,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self._last_rf_provided = 0
         self._last_input = 0
         self._last_output = 0
+        self._last_overflow = 0
         self._sum_input = 0
         self._sum_output = 0
         self._sum_power_t = 0
@@ -134,14 +135,18 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
 
     def TakeoutPower(self, rf):
         # type: (int) -> int
-        if self.IsActive():
-            return self.provide_energy()
+        if self.IsActive() and self.enable_output:
+            res = self.provide_energy()
+            self._last_overflow = max(
+                0, res - rf
+            )  # TODO: 改为 provide_energy() 传入最大提取能量值
+            return min(res, rf)
         else:
             return 0
 
     def GivebackPower(self, rf):
         # type: (int) -> None
-        self.recv_energy_return(rf)
+        self.recv_energy_return(rf + self._last_overflow)
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):

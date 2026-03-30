@@ -135,7 +135,9 @@ class BatterySlotAbstract(object):
         self.item_id = item_id
         self.store_rf_max = store_rf_max
         self.input_power = input_power
-        self.output_power = output_power
+        self.output_power = (
+            output_power * 5
+        )  # TODO: 规范化代码, 因为机器的输出 tick 是 5t 所以单次最大输出要乘以 5
 
     @classmethod
     def load_from_item_userdata(

@@ -61,8 +61,8 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
         if not self.is_base_block:
             self.energy_io_mode = (2, 2, 2, 2, 2, 2)
 
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
+    def OnClick(self, event, extra_datas=None):
+        # type: (ServerBlockUseEvent, dict | None) -> None
         if self.is_base_block:
             GUIControl.OnClick(self, event)
         else:

@@ -75,8 +75,8 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         self.sync.MarkedAsChanged()
 
     @SuperExecutorMeta.execute_super
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
+    def OnClick(self, event, extra_datas=None):
+        # type: (ServerBlockUseEvent, dict | None) -> None
         ExecLater(
             0.1,
             lambda: FluidSplitterSettingsListUpdate(self.record_settings).send(

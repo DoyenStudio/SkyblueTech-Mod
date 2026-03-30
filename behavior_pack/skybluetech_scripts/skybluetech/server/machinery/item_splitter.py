@@ -62,8 +62,8 @@ class ItemSplitter(GUIControl, UpgradeControl):
         return True
 
     @SuperExecutorMeta.execute_super
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
+    def OnClick(self, event, extra_datas=None):
+        # type: (ServerBlockUseEvent, dict | None) -> None
         ExecLater(
             0.1,
             lambda: ItemSplitterSettingsListUpdate(self.record_settings).send(

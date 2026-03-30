@@ -78,8 +78,8 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
         ):
             event.cancel()
 
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
+    def OnClick(self, event, extra_datas=None):
+        # type: (ServerBlockUseEvent, dict | None) -> None
         if not self.is_base_block:
             event.cancel()
             PlayerUseItemToPos(event.playerId, (self.x, self.y - self.layer, self.z), 2)

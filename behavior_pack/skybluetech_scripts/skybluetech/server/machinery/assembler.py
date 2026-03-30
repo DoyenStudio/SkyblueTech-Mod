@@ -78,8 +78,8 @@ class Assembler(GUIControl, UpgradeControl):
         )
 
     @SuperExecutorMeta.execute_super
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
+    def OnClick(self, event, extra_datas=None):
+        # type: (ServerBlockUseEvent, dict | None) -> None
         AssemblerUpgradersUpdate(self.lis).send(event.playerId)
 
     def OnSync(self):

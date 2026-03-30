@@ -35,7 +35,7 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
         self.sync = HoverTextDisplayerUISync.NewServer(self).Activate()
         self.CallSync()
 
-    def OnClick(self, event):
+    def OnClick(self, event, extra_datas=None):
         GUIControl.OnClick(
             self,
             event,

@@ -40,20 +40,20 @@ class Charger(GUIControl, UpgradeControl):
     upgrade_slot_start = 2
     store_rf_max = 10000
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        UpgradeControl.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = ChargerUISync.NewServer(self).Activate()
         self.stored_item = None
         self.charge_rf = 0
         self.charge_rf_max = 1
         self.t = 0
 
-    def OnClick(self, evt):
-        GUIControl.OnClick(self, evt)
+    @SuperExecutorMeta.execute_super
+    def OnClick(self, event, extra_datas=None):
+        pass
 
+    @SuperExecutorMeta.execute_super
     def OnUnload(self):
-        GUIControl.OnUnload(self)
-        UpgradeControl.OnUnload(self)
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def OnTicking(self):

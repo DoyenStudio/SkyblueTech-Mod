@@ -23,6 +23,6 @@ class BaseClicker(object):
             return
         self.OnClick(event)
 
-    def OnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
+    def OnClick(self, event, extra_datas=None):
+        # type: (ServerBlockUseEvent, dict | None) -> None
         pass

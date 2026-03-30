@@ -52,7 +52,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
                 break
 
     @SuperExecutorMeta.execute_super
-    def OnClick(self, event):
+    def OnClick(self, event, extra_datas=None):
         ExecLater(0.1, self.notify_crafting_update)
 
     def OnSync(self):

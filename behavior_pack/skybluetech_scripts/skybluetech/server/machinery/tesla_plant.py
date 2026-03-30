@@ -33,7 +33,7 @@ class TeslaPlant(GUIControl, ItemContainer, SPControl, WorkRenderer):
         self._cached_work_range = None
 
     @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas):
+    def OnClick(self, event, extra_datas=None):
         pass
 
     def OnSync(self):

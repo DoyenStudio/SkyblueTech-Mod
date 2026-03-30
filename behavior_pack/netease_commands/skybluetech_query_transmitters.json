@@ -1,0 +1,8 @@
+{
+    "description": "Test online transmitter networks count",
+    "format_version": "0.0.1",
+    "name": "skybluetech:query_transmitter_networks",
+    "permission_level": "game_directors",
+    "requires_cheats": true,
+    "args": []
+}

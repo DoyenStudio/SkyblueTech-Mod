@@ -1,1 +1,1 @@
-from . import deepslate_lava_storage, reset_deactive_flags
+from . import deepslate_lava_storage, reset_deactive_flags, transmitter_test

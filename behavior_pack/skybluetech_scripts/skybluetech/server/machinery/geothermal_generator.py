@@ -45,19 +45,15 @@ class GeoThermalGenerator(
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = GeoThermalGeneratorUISync.NewServer(self).Activate()
         self.CallSync()
-        self.power = 0
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
         if self.IsActive():
             self.burn_ticks -= 1
             if self.burn_ticks <= 0:
-                if self.store_rf == self.store_rf_max:
-                    self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
-                    return
                 res = self.next_burn()
                 if not res:
                     self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-            self.GeneratePower(self.power)
             self.CallSync()
 
     def IsValidFluidInput(self, slot, fluid_id):
@@ -102,15 +98,15 @@ class GeoThermalGenerator(
         pass
 
     def next_burn(self):
-        self.power = 0
+        self.SetOutputPower(0)
         f0, f1 = self.fluids
         if f0.fluid_id == LAVA_ID and f0.volume >= ONCE_LAVA_REDUCE_VOLUME:
             f0.volume -= ONCE_LAVA_REDUCE_VOLUME
             if f1.fluid_id == WATER_ID and f1.volume >= ONCE_WATER_REDUCE_VOLUME:
                 f1.volume -= ONCE_WATER_REDUCE_VOLUME
-                self.power = GENERATED_POWER_WITH_WATER
+                self.SetOutputPower(GENERATED_POWER_WITH_WATER)
             else:
-                self.power = ORIGIN_GENERATED_POWER
+                self.SetOutputPower(ORIGIN_GENERATED_POWER)
             self.burn_ticks = ONCE_BURNING_TICKS
             if random.random() > 0.9:
                 rest = self.OutputItem(Item(Dusts.OBSIDIAN))

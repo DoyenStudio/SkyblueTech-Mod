@@ -1,8 +1,9 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define import flags
 from ...common.define.id_enum import BATTERY_MATRIX_CONTROLLER as MACHINE_ID
 from ...common.define.tag_enum import BatteryTag
 from ...common.events.machinery.battery_matrix import (
@@ -10,6 +11,7 @@ from ...common.events.machinery.battery_matrix import (
     BatteryMatrixCheckCoreBatterysRequest,
     BatteryMatrixPopBatteryRequest,
     BatteryMatrixStoreBatteryRequest,
+    BatteryMatrixStatesUpdate,
 )
 from ...common.machinery_def.battery_matrix import (
     STRUCTURE_PATTERN,
@@ -82,11 +84,15 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
 
     @SuperExecutorMeta.execute_super
     def OnClick(self, event, extra_datas=None):
-        pass
+        # type: (ServerBlockUseEvent, dict | None) -> None
+        ExecLater(
+            0.1,
+            lambda: BatteryMatrixStatesUpdate(
+                self.enable_input, self.enable_output
+            ).send(event.playerId),
+        )
 
     def OnSync(self):
-        self.sync.enable_input = self.input_mode
-        self.sync.enable_output = self.output_mode
         self.sync.structure_flag = self.GetStructureDestroyFlag()
         self.sync.structure_lacked_blocks = self.GetStructureLackedBlocks()
         self.sync.input_power = self._sum_input / 20
@@ -119,7 +125,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         # type: (int) -> tuple[bool, int]
         if self.GetStructureDestroyFlag() != 0:
             return False, rf
-        if not self.input_mode:
+        if not self.enable_input:
             return False, rf
         power_overflow = self.get_core().add_energy(rf)
         self._last_input += rf - power_overflow
@@ -203,39 +209,39 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
     def get_energy_out_io(self):
         return self.GetMachine(EnergyOutputInterface, IO_ENERGY_OUTPUT)
 
-    def set_input_mode(self, value):
+    def set_enable_input(self, value):
         if not isinstance(value, bool):
             return
-        self.input_mode = value
+        self.enable_input = value
 
-    def set_output_mode(self, value):
+    def set_enable_output(self, value):
         if not isinstance(value, bool):
             return
-        self.output_mode = value
+        self.enable_output = value
 
     @property
-    def input_mode(self):
+    def enable_input(self):
         # type: () -> bool
         res = self.bdata[K_ENABLE_INPUT]
         if res is None:
             self.bdata[K_ENABLE_INPUT] = res = True
         return res
 
-    @input_mode.setter
-    def input_mode(self, value):
+    @enable_input.setter
+    def enable_input(self, value):
         # type: (bool) -> None
         self.bdata[K_ENABLE_INPUT] = value
 
     @property
-    def output_mode(self):
+    def enable_output(self):
         # type: () -> bool
         res = self.bdata[K_ENABLE_OUTPUT]
         if res is None:
             self.bdata[K_ENABLE_OUTPUT] = res = True
         return res
 
-    @output_mode.setter
-    def output_mode(self, value):
+    @enable_output.setter
+    def enable_output(self, value):
         # type: (bool) -> None
         self.bdata[K_ENABLE_OUTPUT] = value
 
@@ -247,9 +253,9 @@ def onRequest(event):
     if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
         return
     if event.op == event.OPERATION_INPUT:
-        m.set_input_mode(event.value)
+        m.set_enable_input(event.value)
     elif event.op == event.OPERATION_OUTPUT:
-        m.set_output_mode(event.value)
+        m.set_enable_output(event.value)
     m.CallSync()
 
 

@@ -16,6 +16,7 @@ from ....common.events.machinery.battery_matrix import (
     BatteryMatrixPopBatteryRequest,
     BatteryMatrixStoreBatteryRequest,
     BatteryMatrixCoreStatusUpdate,
+    BatteryMatrixStatesUpdate,
 )
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdateGenericProgressL2R, FormatRF
@@ -85,8 +86,6 @@ class BatteryMatrixUI(MachinePanelUIProxy):
     def WhenUpdated(self):
         if not self.inited:
             return
-        self.input_switch.SetState(self.sync.enable_input)
-        self.output_switch.SetState(self.sync.enable_output)
         self.input_power_label.SetText("输入 %s/t" % FormatRF(self.sync.input_power))
         self.output_power_label.SetText("输出 %s/t" % FormatRF(self.sync.output_power))
         self.energy_label.SetText(
@@ -129,6 +128,12 @@ class BatteryMatrixUI(MachinePanelUIProxy):
     def onCheckMultiBlockStructure(self, _):
         _, x, y, z = self.pos
         MultiBlockStructureCheckRequest(x, y, z).send()
+
+    @MachinePanelUIProxy.Listen(BatteryMatrixStatesUpdate)
+    def onStateUpdate(self, event):
+        # type: (BatteryMatrixStatesUpdate) -> None
+        self.input_switch.SetState(event.enable_input)
+        self.output_switch.SetState(event.enable_output)
 
     @MachinePanelUIProxy.Listen(BatteryMatrixCoreStatusUpdate)
     def onRecvUpdate(self, event):

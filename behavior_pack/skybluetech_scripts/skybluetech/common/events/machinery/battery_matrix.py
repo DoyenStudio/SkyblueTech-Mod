@@ -101,3 +101,19 @@ class BatteryMatrixCoreStatusUpdate(CustomS2CEvent):
     @classmethod
     def unmarshal(cls, data):
         return cls(data["d"], data["f"])
+
+
+class BatteryMatrixStatesUpdate(CustomS2CEvent):
+    name = "st:BMSU"
+
+    def __init__(self, enable_input, enable_output):
+        # type: (bool, bool) -> None
+        self.enable_input = enable_input
+        self.enable_output = enable_output
+
+    def marshal(self):
+        return {"ei": self.enable_input, "eo": self.enable_output}
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(data["ei"], data["eo"])

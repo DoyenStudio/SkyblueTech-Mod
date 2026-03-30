@@ -10,9 +10,10 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
     GetContainerItem,
     SetContainerItem,
+    GetBlockEntityDataDict,
     GetContainerSize,
 )
-from skybluetech_scripts.tooldelta.api.common import Delay
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_xrange
 from ...machinery.basic.item_container import ItemContainer
 from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
@@ -200,6 +201,8 @@ def _get_container_item(
 def onNetworkTick(network):
     # type: (CableNetwork) -> None
     tick_capacity = network.transfer_speed
+    cached_block_entity_datas = {}  # type: dict[tuple[int, int, int], dict]
+    cached_block_names = {}  # type: dict[tuple[int, int, int], str]
     cached_input_slot_poses = {}  # type: dict[tuple[int, int, int], Iterable[int]]
     cached_input_slotitems = {}  # type: dict[tuple[int, int, int], dict[int, Item | None]]
     input_slotitem_changed = {}  # type: dict[tuple[int, int, int], set[int]]
@@ -239,10 +242,39 @@ def onNetworkTick(network):
             cached_output_slot_poses[xyz] = res = py2_xrange(GetContainerSize(xyz, dim))
         return res
 
+    def _get_block_entity_data(dim, xyz):
+        # type: (int, tuple[int, int, int]) -> dict
+        res = cached_block_entity_datas.get(xyz)
+        if res is None:
+            res = cached_block_entity_datas[xyz] = (
+                GetBlockEntityDataDict(dim, xyz) or {}
+            )
+        return res
+
+    def _get_block_name(dim, xyz):
+        # type: (int, tuple[int, int, int]) -> str | None
+        res = cached_block_names.get(xyz)
+        if res is None:
+            res = cached_block_names[xyz] = GetBlockName(dim, xyz) or ""
+        return res
+
+    # TODO: 性能优化
+
     break_flag1 = False
     for output_ap in outputs:
         output_pos = output_ap.target_pos
         output_slotposes = _get_container_output_slots(network.dim, output_pos)
+
+        if _get_block_name(network.dim, output_pos) == "minecraft:chest":
+            pair_x = GetValueWithDefault(
+                _get_block_entity_data(network.dim, output_pos), "pairx", None
+            )
+            pair_z = GetValueWithDefault(
+                _get_block_entity_data(network.dim, output_pos), "pairz", None
+            )
+        else:
+            pair_x = pair_z = None
+
         for output_slot in output_slotposes:
             output_item = _get_container_item(
                 network.dim, output_pos, output_slot, cached_output_slotitems
@@ -255,8 +287,16 @@ def onNetworkTick(network):
             output_item.count = count_to_send
 
             for input_ap in inputs:
-                break_flag2 = False
                 input_pos = input_ap.target_pos
+
+                if _get_block_name(network.dim, input_pos) == "minecraft:chest":
+                    x, _, z = input_pos
+                    if pair_x == x and pair_z == z:
+                        continue
+                if input_pos == output_pos:
+                    continue
+
+                break_flag2 = False
                 input_slotposes = _get_container_input_slots(network.dim, input_pos)
                 for input_slot in input_slotposes:
                     input_item = _get_container_item(
@@ -270,6 +310,7 @@ def onNetworkTick(network):
                     elif (
                         input_item.CanMerge(output_item) and not input_item.StackFull()
                     ):
+                        # print "Slot", input_slot, input_item.marshal()
                         input_item.MergeFrom(output_item)
                         cached_input_slotitems[input_pos][input_slot] = input_item
                     else:
@@ -299,6 +340,14 @@ def onNetworkTick(network):
         if break_flag1:
             break
 
+    for pos, changed_slots in output_slotitem_changed.items():
+        for slot in changed_slots:
+            item = cached_output_slotitems[pos][slot]
+            if item is None:
+                SetContainerItem(network.dim, pos, slot, Item("minecraft:air"))
+            else:
+                SetContainerItem(network.dim, pos, slot, item)
+
     for pos, changed_slots in input_slotitem_changed.items():
         for slot in changed_slots:
             item = cached_input_slotitems[pos][slot]
@@ -307,13 +356,7 @@ def onNetworkTick(network):
             else:
                 SetContainerItem(network.dim, pos, slot, item)
 
-    for pos, changed_slots in output_slotitem_changed.items():
-        for slot in changed_slots:
-            item = cached_output_slotitems[pos][slot]
-            if item is None:
-                SetContainerItem(network.dim, pos, slot, Item("minecraft:air"))
-            else:
-                SetContainerItem(network.dim, pos, slot, item)
+    # print input_slotitem_changed, output_slotitem_changed
 
 
 logic_module = LogicModule(

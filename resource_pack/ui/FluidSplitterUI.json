@@ -627,11 +627,11 @@
                                                         "$text_visible": false,
                                                         "offset": [
                                                             -72,
-                                                            -21
+                                                            -23
                                                         ],
                                                         "size": [
                                                             20,
-                                                            61
+                                                            65
                                                         ]
                                                     }
                                                 }

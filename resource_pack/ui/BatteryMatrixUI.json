@@ -919,7 +919,6 @@
                     ],
                     "layer": 1,
                     "clip_direction": "left",
-                    "clip_ratio": "#BatteryMatrixUI.energy_bar_mask_clip",
                     "texture": "textures/ui/azure_bar",
                     "bindings": [
                         {
@@ -928,9 +927,10 @@
                             "binding_condition": "always_when_visible"
                         },
                         {
-                            "binding_type": "collection",
+                            "binding_name_override": "#clip_ratio",
                             "binding_collection_name": "$collection_name",
                             "binding_condition": "always_when_visible",
+                            "binding_type": "collection",
                             "binding_name": "#BatteryMatrixUI.energy_bar_mask_clip"
                         }
                     ]

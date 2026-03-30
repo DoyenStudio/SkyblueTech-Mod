@@ -176,7 +176,6 @@ class BatteryMatrixUI(MachinePanelUIProxy):
             return 0.5
         else:
             _, store_rf, store_rf_max = self.battery_slots_data[index]
-            return 0.5
             return 1 - (float(store_rf) / store_rf_max)
 
     @Binder.binding_collection(

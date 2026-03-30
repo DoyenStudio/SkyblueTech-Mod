@@ -64,7 +64,8 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self._sum_power_t = 0
 
     def OnTicking(self):
-        if self.IsActive():
+        active = self.IsActive()
+        if active:
             self.get_core().core_tick()
             self.CallSync()
         self._sum_power_t += 1
@@ -74,6 +75,10 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
             self._last_input = 0
             self._last_output = 0
             self._sum_power_t = 0
+            if active:
+                self.get_core().gen_update_event().sendMulti(
+                    self.sync.GetPlayersInSync()
+                )
 
     @SuperExecutorMeta.execute_super
     def OnClick(self, event, extra_datas=None):

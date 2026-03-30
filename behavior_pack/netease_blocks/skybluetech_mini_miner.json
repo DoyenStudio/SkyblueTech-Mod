@@ -18,7 +18,7 @@
             },
             "netease:block_container": {
                 "container_size": 8,
-                "custom_description": "小型采矿机",
+                "custom_description": "迷你采矿机",
                 "screen_name": "MiniMinerUI.main"
             },
             "netease:block_entity": {
@@ -35,30 +35,14 @@
                 "digger": "pickaxe",
                 "level": 2
             },
-            "tag:piston_denier": {
-
-            },
-            "tag:redstoneflux_accepter": {
-
-            },
-            "tag:redstoneflux_appliance": {
-
-            },
-            "tag:redstoneflux_connectable": {
-
-            },
-            "tag:skybluetech_appliance": {
-
-            },
-            "tag:skybluetech_container": {
-
-            },
-            "tag:skybluetech_fluid_container": {
-
-            },
-            "tag:skybluetech_machine": {
-
-            }
+            "tag:piston_denier": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_appliance": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_fluid_container": {},
+            "tag:skybluetech_machine": {}
         },
         "description": {
             "base_block": "netease_container",

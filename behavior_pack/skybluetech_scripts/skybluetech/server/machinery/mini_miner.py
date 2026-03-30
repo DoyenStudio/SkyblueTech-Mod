@@ -18,7 +18,13 @@ from ...common.machinery_def.mini_miner import (
     BLOCK_CAN_MINE,
 )
 from ...common.ui_sync.machinery.mini_miner import MiniMinerUISync
-from .basic import FluidContainer, GUIControl, UpgradeControl, RegisterMachine
+from .basic import (
+    BaseSpeedControl,
+    FluidContainer,
+    GUIControl,
+    UpgradeControl,
+    RegisterMachine,
+)
 
 # TODO: 会使领地模组失效
 K_MINING_FINISHED = "mining_finished"
@@ -45,6 +51,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         self._next_pos = (0, 319, 0)
         self._cached_mining_finished = None
         self._fast_skiped = False
+        self._need_go_next = False
         self.init_mining_area()
         if not self.mining_finished:
             self.init_mine_pos_iterator()
@@ -55,7 +62,9 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot):
-        pass
+        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+            if self.OutputItem(Item("minecraft:air")) is None:
+                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
     def OnFluidSlotUpdate(self):
         if self.fluid_id != USE_FLUID or self.fluid_volume < VOLUME_COST_ONCE:
@@ -64,16 +73,28 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
 
     @SuperExecutorMeta.execute_super
+    def OnClick(self, event, extra_datas=None):
+        self.update_gui_states()
+
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
-        if not self.mining_finished:
-            can_work = self.go_next()
-            if can_work:
-                if not self.fast_skip():
+        # 获取下一个需要挖掘的方块位置
+        # 无法获取: return
+        # 如果本位置需要 fast skip: fast skip 并 return
+        if self.IsActive() and not self.mining_finished and self.PowerEnough():
+            if self._need_go_next:
+                can_continue = self.go_next()
+                self._need_go_next = False
+                if not can_continue:
                     return
-                if self.IsActive():
-                    if self.ProcessOnce():
-                        self.run_once()
-                        self.CallSync()
+            if not self.fast_skip():
+                self._need_go_next = True
+                return
+            self.ReducePower()
+            if BaseSpeedControl.ProcessOnce(self):
+                self.run_once()
+                self.CallSync()
+                self._need_go_next = True
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf
@@ -119,7 +140,6 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         if block_id is None or not self.can_mine_block(block_id):
             return False
         else:
-            # print "fast skip 3", block_id
             self._fast_skiped = True
             return True
 
@@ -160,13 +180,14 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         block_id = GetBlockName(self.dim, (x, y, z))
         if block_id is None or not self.can_mine_block(block_id):
             self._fast_skiped = False
-            return
+            return False
         items = self.mine_and_collect(x, y, z)
         for item in items:
             rest = self.OutputItem(item)
             if rest is not None:
                 SpawnDroppedItem(self.dim, (self.x, self.y + 1, self.z), rest)
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+        return True
 
     def go_next(self):
         if self.mine_pos_iterator is None:

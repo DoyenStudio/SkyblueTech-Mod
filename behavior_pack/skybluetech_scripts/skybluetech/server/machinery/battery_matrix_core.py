@@ -124,8 +124,18 @@ class BatteryMatrixCore(BaseMachine):
             rf = bs.add_rf(rf)
         return rf
 
-    def output_energy(self):
-        return sum(bs.output_rf() for bs in self.slots)
+    def output_energy(self, max_rf):
+        # type: (int | None) -> int
+        if max_rf is None:
+            return sum(bs.output_rf() for bs in self.slots)
+        else:
+            output_rf = 0
+            for bs in self.slots:
+                rf = bs.output_rf(max_rf - output_rf)
+                output_rf += rf
+                if output_rf >= max_rf:
+                    break
+            return output_rf
 
 
 class BatterySlotAbstract(object):
@@ -171,8 +181,12 @@ class BatterySlotAbstract(object):
         self.store_rf += charge_in
         return power_in_overflow + charge_in_overflow
 
-    def output_rf(self):
-        rf = min(self.store_rf, self.output_power)
+    def output_rf(self, max_rf=None):
+        # type: (int | None) -> int
+        if max_rf is None:
+            rf = min(self.store_rf, self.output_power)
+        else:
+            rf = min(self.store_rf, self.output_power, max_rf)
         self.store_rf -= rf
         return rf
 

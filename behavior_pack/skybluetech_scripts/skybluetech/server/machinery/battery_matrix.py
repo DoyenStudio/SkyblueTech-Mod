@@ -26,6 +26,7 @@ from .basic import (
     GUIControl,
     ItemContainer,
     MultiBlockStructure,
+    WorkRenderer,
     RegisterMachine,
 )
 from .basic.multi_block_structure import GenerateSimpleStructureTemplate
@@ -43,7 +44,7 @@ EnergyOutputInterface.AddExtraMachineId(IO_ENERGY_OUTPUT)
 
 
 @RegisterMachine
-class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
+class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure, WorkRenderer):
     block_name = MACHINE_ID
     store_rf_max = 100000
     input_slots = (0, 1, 2, 3, 4, 5, 6)
@@ -61,7 +62,6 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self._last_rf_provided = 0
         self._last_input = 0
         self._last_output = 0
-        self._last_overflow = 0
         self._sum_input = 0
         self._sum_output = 0
         self._sum_power_t = 0
@@ -136,17 +136,13 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
     def TakeoutPower(self, rf):
         # type: (int) -> int
         if self.IsActive() and self.enable_output:
-            res = self.provide_energy()
-            self._last_overflow = max(
-                0, res - rf
-            )  # TODO: 改为 provide_energy() 传入最大提取能量值
-            return min(res, rf)
+            return self.provide_energy(rf)
         else:
             return 0
 
     def GivebackPower(self, rf):
         # type: (int) -> None
-        self.recv_energy_return(rf + self._last_overflow)
+        self.recv_energy_return(rf)
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -192,9 +188,10 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure):
         self.CallSync()
         core.gen_update_event().sendMulti(self.sync.GetPlayersInSync())
 
-    def provide_energy(self):
+    def provide_energy(self, max_rf=None):
+        # type: (int | None) -> int
         core = self.get_core()
-        rf_out = core.output_energy()
+        rf_out = core.output_energy(max_rf)
         self._last_rf_provided = rf_out
         return rf_out
 

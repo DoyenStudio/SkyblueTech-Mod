@@ -29,7 +29,7 @@ class MiniMinerUISync(MachineUISync):
                 cls.WORKING: "§a工作中",
                 cls.FLUID_LACK: "§6润滑油不足",
                 cls.POWER_LACK: "§c能量不足",
-                cls.FINISHED: "§2已完成",
+                cls.FINISHED: "§a已完成",
                 cls.OUTPUT_FULL: "§c输出槽已满",
                 cls.FAST_SKIP: "§e快进中",
                 cls.OTHER: "§7已停机",

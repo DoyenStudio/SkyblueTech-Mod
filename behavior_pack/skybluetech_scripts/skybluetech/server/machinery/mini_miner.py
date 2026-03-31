@@ -49,7 +49,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         self.size_x = 15
         self.size_y = 64
         self.size_z = 15
-        self._next_pos = (0, 319, 0)
+        self._next_pos = (0, 0, 0)
         self._cached_mining_finished = None
         self._sum_fast_skip_times = 0
         self._fast_skiped = False
@@ -182,7 +182,9 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
 
     def update_gui_states(self):
         myflags = self.deactive_flags
-        if myflags & flags.DEACTIVE_FLAG_OUTPUT_FULL:
+        if self.mining_finished:
+            self.sync.work_mode = MiniMinerUISync.WorkMode.FINISHED
+        elif myflags & flags.DEACTIVE_FLAG_OUTPUT_FULL:
             self.sync.work_mode = MiniMinerUISync.WorkMode.OUTPUT_FULL
         elif myflags & flags.DEACTIVE_FLAG_NO_INPUT:
             self.sync.work_mode = MiniMinerUISync.WorkMode.FLUID_LACK
@@ -237,7 +239,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         except StopIteration:
             self.mine_pos_iterator = None
             self.mining_finished = True
-            self.sync.work_mode = self.sync.WorkMode.FINISHED
+            self.update_gui_states()
             return False
 
     def mine_and_collect(self, mx, my, mz):

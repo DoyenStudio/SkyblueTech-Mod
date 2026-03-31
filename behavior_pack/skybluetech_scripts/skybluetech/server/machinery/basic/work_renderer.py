@@ -19,7 +19,9 @@ class WorkRenderer(BaseMachine):
         `FlushDeactiveFlags (super)`
     """
 
-    _last_work_status = False
+    @SuperExecutorMeta.execute_super
+    def __init__(self, dim, x, y, z, block_entity_data):
+        self._last_work_status = False
 
     @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag, flush=True):

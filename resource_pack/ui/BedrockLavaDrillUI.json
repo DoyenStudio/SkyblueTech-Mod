@@ -113,17 +113,6 @@
                                             "type": "panel",
                                             "controls": [
                                                 {
-                                                    "structure_not_finished_tip@SkybluePanelLib.StructureNotFinishedTip": {
-                                                        "anchor_from": "bottom_middle",
-                                                        "anchor_to": "bottom_middle",
-                                                        "offset": [
-                                                            0,
-                                                            -9
-                                                        ],
-                                                        "visible": false
-                                                    }
-                                                },
-                                                {
                                                     "power_bar@SkybluePanelLib.PowerBar": {
                                                         "anchor_from": "left_middle",
                                                         "anchor_to": "left_middle",
@@ -516,6 +505,16 @@
                                                                     "collection_index": 0
                                                                 }
                                                             }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "structure_not_finished_tip@SkybluePanelLib.StructureNotFinishedTip": {
+                                                        "anchor_from": "bottom_middle",
+                                                        "anchor_to": "bottom_middle",
+                                                        "offset": [
+                                                            0,
+                                                            -8
                                                         ]
                                                     }
                                                 }

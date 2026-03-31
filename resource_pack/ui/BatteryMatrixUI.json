@@ -807,7 +807,11 @@
                                                 {
                                                     "structure_not_finished_tip@SkybluePanelLib.StructureNotFinishedTip": {
                                                         "anchor_from": "bottom_middle",
-                                                        "anchor_to": "bottom_middle"
+                                                        "anchor_to": "bottom_middle",
+                                                        "offset": [
+                                                            0,
+                                                            -8
+                                                        ]
                                                     }
                                                 }
                                             ]

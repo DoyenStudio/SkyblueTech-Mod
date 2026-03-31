@@ -1,9 +1,8 @@
 # coding=utf-8
-#
-from ...common.define.id_enum.items import Plates
-from ...common.define.tag_enum.items import IngotTag
+from ..define.id_enum import COMPRESSOR, Plates
+from ..define.tag_enum.items import IngotTag
+from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.compressor import (
-    MachineRecipe,
     gen_preset_recipe,
     gen_preset_tagged_recipe,
 )
@@ -16,7 +15,8 @@ DEFAULT_POWER = 80
 preset = gen_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 preset_tagged = gen_preset_tagged_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 
-recipes = [
+recipes = RecipesCollection(
+    COMPRESSOR,
     # Minecraft
     # Ingot 2 Plate
     preset("minecraft:copper_ingot", Plates.COPPER),
@@ -27,4 +27,4 @@ recipes = [
     preset_tagged(IngotTag.SILVER, Plates.SILVER),
     preset_tagged(IngotTag.PLATINUM, Plates.PLATINUM),
     preset_tagged(IngotTag.NICKEL, Plates.NICKEL),
-]  # type: list[MachineRecipe]
+)

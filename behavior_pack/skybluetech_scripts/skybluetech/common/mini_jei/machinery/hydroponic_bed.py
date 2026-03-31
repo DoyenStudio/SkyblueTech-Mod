@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.client.block import (
 )
 from ....common.define.id_enum import machinery
 from ..core import ItemDisplayer
-from .recipe_cls import CategoryType, MachineRecipe, Input, Output, UBaseCtrl
+from .define import CategoryType, MachineRecipe, Input, Output, UBaseCtrl
 
 gUid = 0
 

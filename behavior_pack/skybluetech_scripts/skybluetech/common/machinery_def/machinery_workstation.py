@@ -1,13 +1,15 @@
 # codng=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from ...common.define import id_enum, tag_enum
-from ...common.define.tag_enum import Wrench, Pincer
+from ..define import id_enum, tag_enum
+from ..define.tag_enum import Wrench, Pincer
+from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.machinery_workstation import (
     MachineryWorkstationRecipe as MRecipe,
     Input,
 )
 
-recipes = [
+recipes = RecipesCollection(
+    id_enum.MACHINERY_WORKSTATION,
     # alloy furnace
     MRecipe(
         {
@@ -439,7 +441,7 @@ recipes = [
         MRecipe.LEVEL_IRON,
         8,
     ),
-]  # type: list[MRecipe]
+)
 
 
 def get_wrench_level(wrench_item):

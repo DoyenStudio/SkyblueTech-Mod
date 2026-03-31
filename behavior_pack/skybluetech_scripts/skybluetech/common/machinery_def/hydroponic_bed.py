@@ -1,9 +1,19 @@
 # coding=utf-8
-
+from ..define.id_enum import HYDROPONIC_BED
+from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.hydroponic_bed import HydroponicBedRecipe, Output
 
 
-recipes = {
+class HydroponicBedRecipesCollection(RecipesCollection):
+    def __init__(self, recipes):
+        # type: (dict[str, HydroponicBedRecipe]) -> None
+        super(HydroponicBedRecipesCollection, self).__init__(
+            HYDROPONIC_BED, *recipes.values()
+        )
+        self.recipes_mapping = recipes
+
+
+recipes = HydroponicBedRecipesCollection({
     "minecraft:wheat_seeds": HydroponicBedRecipe(
         "minecraft:wheat",
         "minecraft:wheat_seeds",
@@ -36,4 +46,4 @@ recipes = {
         [0.1016, 0.3484, 0.3982, 0.1517],
         [Output("minecraft:beetroot")],
     ),
-}
+})

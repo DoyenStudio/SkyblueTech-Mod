@@ -1,7 +1,7 @@
 # coding=utf-8
 from ...common.events.machinery.freezer import FreezerModeChangedEvent
 from ...common.define.id_enum.machinery import FREEZER as MACHINE_ID
-from ...common.machinery_def.freezer import recipes as Recipes
+from ...common.machinery_def.freezer import RecipesCollection, recipes as Recipes
 from ...common.ui_sync.machinery.freezer import FreezerUISync
 from .utils.action_commit import SafeGetMachine
 from .basic import MixedProcessor, RegisterMachine
@@ -13,7 +13,7 @@ K_MODE = "mode"
 class Freezer(MixedProcessor):
     block_name = MACHINE_ID
     store_rf_max = 8800
-    recipes = []
+    recipes = RecipesCollection(MACHINE_ID)
     output_slots = (0,)
     fluid_input_slots = {0}
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
@@ -41,7 +41,7 @@ class Freezer(MixedProcessor):
         # type: (int) -> None
         if new_mode >= len(Recipes):
             new_mode %= len(Recipes)
-        self.recipes = [Recipes[new_mode]]
+        self.recipes = RecipesCollection(MACHINE_ID, Recipes.recipes_mapping[new_mode])
         self.recipe_mode = new_mode
         self.CallSync()
         self.start_next()

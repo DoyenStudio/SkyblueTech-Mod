@@ -1,7 +1,7 @@
 # coding=utf-8
 from ....common.define.id_enum import machinery
 from ..core import CategoryType, Input, Output
-from .recipe_cls import GeneratorRecipe
+from .define import GeneratorRecipe
 
 if 0:
     from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl

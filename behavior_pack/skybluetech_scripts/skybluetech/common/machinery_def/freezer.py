@@ -1,9 +1,17 @@
 # coding=utf-8
-#
+from ..define.id_enum import FREEZER
+from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.freezer import FreezerRecipe
 
 
-recipes = {
+class FreezerRecipesCollection(RecipesCollection):
+    def __init__(self, recipes):
+        # type: (dict[int, FreezerRecipe]) -> None
+        super(FreezerRecipesCollection, self).__init__(FREEZER, *recipes.values())
+        self.recipes_mapping = recipes
+
+
+recipes = FreezerRecipesCollection({
     0: FreezerRecipe(
         0,
         "minecraft:water",
@@ -14,10 +22,22 @@ recipes = {
         power_cost=50,
     ),
     1: FreezerRecipe(
-        1, "minecraft:water", 1000, "minecraft:snow", 1, tick_duration=80, power_cost=40
+        1,
+        "minecraft:water",
+        1000,
+        "minecraft:snow",
+        1,
+        tick_duration=80,
+        power_cost=40,
     ),
     2: FreezerRecipe(
-        2, "minecraft:water", 1000, "minecraft:ice", 1, tick_duration=80, power_cost=50
+        2,
+        "minecraft:water",
+        1000,
+        "minecraft:ice",
+        1,
+        tick_duration=80,
+        power_cost=50,
     ),
     3: FreezerRecipe(
         3,
@@ -37,4 +57,4 @@ recipes = {
         tick_duration=400,
         power_cost=50,
     ),
-}
+})

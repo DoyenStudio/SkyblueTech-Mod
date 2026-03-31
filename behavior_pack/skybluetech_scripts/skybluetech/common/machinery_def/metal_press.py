@@ -1,11 +1,12 @@
 # coding=utf-8
-#
-from ...common.define.id_enum.items import Ingots, Sticks
-from ...common.define.id_enum.fluids import LUBRICANT
+from ..define.id_enum import METAL_PRESS, Ingots, Sticks
+from ..define.id_enum.fluids import LUBRICANT
+from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.metal_press import MetalPressRecipe, MachineRecipe
 
 
-recipes = [
+recipes = RecipesCollection(
+    METAL_PRESS,
     MetalPressRecipe(
         LUBRICANT,
         10,
@@ -66,4 +67,4 @@ recipes = [
         tick_duration=60,
         power_cost=50,
     ),
-]  # type: list[MachineRecipe]
+)

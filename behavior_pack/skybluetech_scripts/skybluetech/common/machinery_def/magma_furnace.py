@@ -1,12 +1,13 @@
 # coding=utf-8
-
 from ..define.global_config import RAW2MOTTEN_VOLUME, INGOT2MOTTEN_VOLUME
-from ...common.define.id_enum.fluids import Molten
-from ...common.define.tag_enum.items import RawTag, IngotTag
-from ..mini_jei.machinery.magma_furnace import MagmaFurnaceRecipe, MachineRecipe, sec
+from ..define.id_enum import MAGMA_CENTRIFUGE, Molten
+from ..define.tag_enum.items import RawTag, IngotTag
+from ..mini_jei.core import RecipesCollection
+from ..mini_jei.machinery.magma_furnace import MagmaFurnaceRecipe, sec
 
 
-recipes = [
+recipes = RecipesCollection(
+    MAGMA_CENTRIFUGE,
     # lava
     MagmaFurnaceRecipe(
         "minecraft:magma",
@@ -170,4 +171,4 @@ recipes = [
         power_cost=45,
         tick_duration=sec(4.5),
     ),
-]  # type: list[MachineRecipe]
+)

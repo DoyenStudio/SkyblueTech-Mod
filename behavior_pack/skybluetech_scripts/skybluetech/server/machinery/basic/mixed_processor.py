@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define import flags
 from ....common.mini_jei.core.define import CategoryType
-from ....common.mini_jei.machinery.recipe_cls import MachineRecipe
+from ....common.mini_jei.machinery.define import MachineRecipe
 from .base_machine import BaseMachine
 from .base_processor import BaseProcessor
 from .upgrade_control import UpgradeControl

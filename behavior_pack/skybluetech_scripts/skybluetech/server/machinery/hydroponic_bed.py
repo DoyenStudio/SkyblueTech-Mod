@@ -14,7 +14,6 @@ from ...common.machinery_def.hydroponic_bed import (
 from ...common.ui_sync.machinery.hydroponic_bed import HydroponicBedUISync
 from ...common.utils.block_sync import BlockSync
 from .basic import (
-    BaseMachine,
     ItemContainer,
     GUIControl,
     PowerControl,
@@ -72,7 +71,7 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
         self.sync.rf_max = self.store_rf_max
         self.sync.grow_stage = self.grow_stage
         if self.crop_id is not None:
-            self.sync.crop_id = Recipes[self.crop_id].crop_block_id
+            self.sync.crop_id = Recipes.recipes_mapping[self.crop_id].crop_block_id
         else:
             self.sync.crop_id = None
         self.sync.MarkedAsChanged()
@@ -100,11 +99,14 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
     def work_once(self):
         if self.crop_id is not None:
             self.stage_grow_ticks += WORK_TICK_DELAY
-            if self.stage_grow_ticks >= Recipes[self.crop_id].grow_stage_ticks:
+            if (
+                self.stage_grow_ticks
+                >= Recipes.recipes_mapping[self.crop_id].grow_stage_ticks
+            ):
                 self.grow_stage += 1
                 self.stage_grow_ticks = 0
-                if self.grow_stage + 1 >= Recipes[self.crop_id].stages:
-                    self.finish_once(Recipes[self.crop_id])
+                if self.grow_stage + 1 >= Recipes.recipes_mapping[self.crop_id].stages:
+                    self.finish_once(Recipes.recipes_mapping[self.crop_id])
                     self.grow_stage = 0
                 self.notifyUpdate()
 
@@ -140,7 +142,7 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
         if self.crop_id is None:
             crop_block_id = None
         else:
-            crop_block_id = Recipes[self.crop_id].crop_block_id
+            crop_block_id = Recipes.recipes_mapping[self.crop_id].crop_block_id
         HydroponicBedModelUpdateEvent(
             self.x, self.y, self.z, crop_block_id, self.grow_stage
         ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))

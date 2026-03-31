@@ -1,18 +1,20 @@
-from ...common.define.id_enum.fluids import (
+from ..define.id_enum import (
+    MAGMA_CENTRIFUGE,
     Molten,
     DEEPSLATE_LAVA,
     LIGHT_LAVA,
     MID_LAVA,
     HEAVY_LAVA,
 )
+from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.magma_centrifuge import (
     MagmaCentrifugeRecipe,
-    MachineRecipe,
     Output,
 )
 
 
-recipes = [
+recipes = RecipesCollection(
+    MAGMA_CENTRIFUGE,
     MagmaCentrifugeRecipe(
         DEEPSLATE_LAVA,
         100,
@@ -60,4 +62,4 @@ recipes = [
         power_cost=80,
         tick_duration=20 * 5,
     ),
-]  # type: list[MachineRecipe]
+)

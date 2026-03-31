@@ -1,10 +1,11 @@
 # coding=utf-8
-#
-from ..define.id_enum.blocks import DUST_BLOCK
-from ..mini_jei.machinery.mixer import MixerRecipe, MachineRecipe
+from ..define.id_enum import MIXER, DUST_BLOCK
+from ..mini_jei.core import RecipesCollection
+from ..mini_jei.machinery.mixer import MixerRecipe
 
 
-recipes = [
+recipes = RecipesCollection(
+    MIXER,
     MixerRecipe(
         "minecraft:lava",
         500,
@@ -25,4 +26,4 @@ recipes = [
         tick_duration=40,
         power_cost=30,
     ),
-]  # type: list[MachineRecipe]
+)

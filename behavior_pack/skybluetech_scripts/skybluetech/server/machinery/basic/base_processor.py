@@ -1,8 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ....common.mini_jei.core.define import CategoryType
-from ....common.mini_jei.machinery.recipe_cls import MachineRecipe
+from ....common.mini_jei.core import CategoryType, RecipesCollection
+from ....common.mini_jei.machinery import MachineRecipe
 from ....common.define import flags as flags
 from .gui_ctrl import GUIControl
 from .upgrade_control import UpgradeControl
@@ -18,7 +18,7 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
     只运行简单物品配方的机器均可继承此类。
     """
 
-    recipes = []  # type: list[MachineRecipe]
+    recipes = RecipesCollection("???")  # type: RecipesCollection[MachineRecipe]
     "机器配方, 改变配方表时记得重置工作进度"
     # output_slot_index = 0
     # "允许漏斗漏出的槽位"

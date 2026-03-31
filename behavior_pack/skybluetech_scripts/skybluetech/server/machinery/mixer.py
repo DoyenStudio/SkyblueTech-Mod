@@ -1,6 +1,6 @@
 # coding=utf-8
 from ...common.define.id_enum.machinery import MIXER as MACHINE_ID
-from ...common.machinery_def.mixer import recipes as Recipes, MachineRecipe
+from ...common.machinery_def.mixer import recipes as Recipes
 from ...common.ui_sync.machinery.mixer import MixerUISync
 from .basic import MixedProcessor, RegisterMachine
 

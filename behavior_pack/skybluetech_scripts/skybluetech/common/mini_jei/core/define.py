@@ -51,6 +51,10 @@ class RecipeBase:
         """
         pass
 
+    @property
+    def collection_key(self):
+        raise NotImplementedError
+
     def __hash__(self):
         raise NotImplementedError
 
@@ -106,12 +110,16 @@ class Output(Element):
 
 
 class Recipe(RecipeBase):
+    shaped = False
+    "shaped 目前仅决定 collection_key 的生成方式。"
+
     def __init__(self, inputs, outputs):
         # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]]) -> None
         self.inputs = inputs
         "配方输入: [配方类型: [槽位: 输入元素]]"
         self.outputs = outputs
         "配方输出: [配方类型: [槽位: 输出元素]]"
+        self._collection_key = None
 
         from .register import RegisterRecipe
 
@@ -137,6 +145,37 @@ class Recipe(RecipeBase):
             category: [output.id for output in slot2output.values()]
             for category, slot2output in self.outputs.items()
         }
+
+    @property
+    def collection_key(self):
+        if self._collection_key is None:
+            if self.shaped:
+                self._collection_key = tuple(
+                    sorted(
+                        (
+                            (
+                                category,
+                                tuple(sorted(inputs.items(), key=lambda x: x[0])),
+                            )
+                            for category, inputs in self.inputs.items()
+                        ),
+                        key=lambda x: x[0],
+                    )
+                )
+            else:
+                self._collection_key = tuple(
+                    sorted(
+                        (
+                            (
+                                category,
+                                tuple(sorted(inputs.values(), key=lambda x: x.id)),
+                            )
+                            for category, inputs in self.inputs.items()
+                        ),
+                        key=lambda x: x[0],
+                    )
+                )
+        return self._collection_key
 
 
 class Description(RecipeBase):

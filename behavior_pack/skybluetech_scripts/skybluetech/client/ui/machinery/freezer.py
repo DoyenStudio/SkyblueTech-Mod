@@ -38,7 +38,7 @@ class FreezerUI(MachinePanelUIProxy):
         )
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            list(recipes.values()),
+            recipes,
         )
 
     def WhenUpdated(self):
@@ -47,7 +47,9 @@ class FreezerUI(MachinePanelUIProxy):
         self.fluid_updater()
         UpdatePowerBar(self.power_bar, self.sync.storage_rf, self.sync.rf_max)
         UpdateGenericProgressL2R(self.progress, self.sync.progress_relative)
-        output_item = recipes[self.sync.freezer_mode].outputs["item"][0].id
+        output_item = (
+            recipes.recipes_mapping[self.sync.freezer_mode].outputs["item"][0].id
+        )
         self.mode_change_btn_img.SetUiItem(Item(output_item))
 
     def changeMode(self, params):

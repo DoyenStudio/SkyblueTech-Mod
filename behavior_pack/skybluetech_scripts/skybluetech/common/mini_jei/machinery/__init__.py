@@ -1,1 +1,1 @@
-from .recipe_cls import MachineRecipe
+from .define import MachineRecipe

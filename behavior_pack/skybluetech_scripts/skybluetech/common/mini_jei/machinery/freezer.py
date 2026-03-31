@@ -2,8 +2,8 @@
 #
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from ....common.define.id_enum import machinery
-from .recipe_cls import CategoryType, MachineRecipe, Input, Output
+from ...define.id_enum import machinery
+from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class FreezerRecipe(MachineRecipe):

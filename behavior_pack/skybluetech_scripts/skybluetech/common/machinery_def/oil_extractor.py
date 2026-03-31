@@ -1,10 +1,11 @@
 # coding=utf-8
-#
-from ...common.define.id_enum import items, fluids
-from ..mini_jei.machinery.oil_extractor import MachineRecipe, OilExtractorRecipe
+from ..define.id_enum import OIL_EXTRACTOR, items, fluids
+from ..mini_jei.core import RecipesCollection
+from ..mini_jei.machinery.oil_extractor import OilExtractorRecipe
 
 
-recipes = [
+recipes = RecipesCollection(
+    OIL_EXTRACTOR,
     OilExtractorRecipe(
         items.SUNFLOWER_SEEDS,
         fluids.VEGETABLE_OIL,
@@ -19,4 +20,4 @@ recipes = [
         tick_duration=50,
         power_cost=40,
     ),
-]  # type: list[MachineRecipe]
+)

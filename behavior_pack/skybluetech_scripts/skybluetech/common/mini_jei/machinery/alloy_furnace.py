@@ -1,7 +1,7 @@
 # coding=utf-8
-#
+from skybluetech_scripts.tooldelta.define import Item
 from ....common.define.id_enum import machinery
-from .recipe_cls import CategoryType, MachineRecipe, Input, Output
+from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class AlloyFurnaceRecipe(MachineRecipe):

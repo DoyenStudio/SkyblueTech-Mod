@@ -78,7 +78,7 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        return item.id in Recipes
+        return item.id in Recipes.recipes_mapping
 
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
@@ -170,7 +170,7 @@ class HydroponicBed(ItemContainer, GUIControl, PowerControl, WorkRenderer):
     @property
     def water_store(self):
         # type: () -> float
-        return self.bdata[K_WATER_STORE]
+        return self.bdata[K_WATER_STORE] or 0.0
 
     @water_store.setter
     def water_store(self, value):

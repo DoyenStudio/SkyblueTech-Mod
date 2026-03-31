@@ -19,6 +19,7 @@ class MiniMinerUISync(MachineUISync):
         POWER_LACK = 2
         FINISHED = 3
         OUTPUT_FULL = 4
+        FAST_SKIP = 5
         OTHER = 127
 
         @classmethod
@@ -30,6 +31,7 @@ class MiniMinerUISync(MachineUISync):
                 cls.POWER_LACK: "§c能量不足",
                 cls.FINISHED: "§2已完成",
                 cls.OUTPUT_FULL: "§c输出槽已满",
+                cls.FAST_SKIP: "§e快进中",
                 cls.OTHER: "§7已停机",
             }.get(mode, "未知状态")
 

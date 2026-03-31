@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
+    GetBlockPaletteBetweenPos,
     GetBlockName,
     GetDroppedItem,
     GetEntitiesInSquareArea,
@@ -50,6 +51,7 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         self.size_z = 15
         self._next_pos = (0, 319, 0)
         self._cached_mining_finished = None
+        self._sum_fast_skip_times = 0
         self._fast_skiped = False
         self._need_go_next = False
         self.init_mining_area()
@@ -87,7 +89,22 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
                 self._need_go_next = False
                 if not can_continue:
                     return
-            if not self.fast_skip():
+            if self._sum_fast_skip_times > 20:
+                if self.last_scanned_y is None:
+                    self._sum_fast_skip_times = 0
+                    return
+                if self.layer_can_skip(self.last_scanned_y):
+                    self.last_scanned_y += 1
+                    self.init_mine_pos_iterator()
+                    self.go_next()
+                    self._need_go_next = False
+                    self.CallSync()
+                    return
+                else:
+                    self._sum_fast_skip_times = 0
+            elif not self.fast_skip():
+                self.CallSync()
+                self._sum_fast_skip_times += 1
                 self._need_go_next = True
                 return
             self.ReducePower()
@@ -143,6 +160,26 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             self._fast_skiped = True
             return True
 
+    def layer_can_skip(self, layer):
+        # type: (int) -> bool
+        area = GetBlockPaletteBetweenPos(
+            self.dim,
+            (
+                self.mining_min_x,
+                layer,
+                self.mining_min_z,
+            ),
+            (
+                self.mining_max_x,
+                layer,
+                self.mining_max_z,
+            ),
+        )
+        if area is None:
+            return True
+        ids_and_auxs = area.SerializeBlockPalette()["common"].keys()  # pyright: ignore[reportAttributeAccessIssue]
+        return not any(self.can_mine_block(id_aux[0]) for id_aux in ids_and_auxs)
+
     def update_gui_states(self):
         myflags = self.deactive_flags
         if myflags & flags.DEACTIVE_FLAG_OUTPUT_FULL:
@@ -152,8 +189,9 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
         elif myflags & flags.DEACTIVE_FLAG_POWER_LACK:
             self.sync.work_mode = MiniMinerUISync.WorkMode.POWER_LACK
         elif myflags != 0:
-            # print "myflags != 0", myflags
             self.sync.work_mode = MiniMinerUISync.WorkMode.OTHER
+        elif not self._fast_skiped:
+            self.sync.work_mode = MiniMinerUISync.WorkMode.FAST_SKIP
         else:
             self.sync.work_mode = MiniMinerUISync.WorkMode.WORKING
         self.CallSync()

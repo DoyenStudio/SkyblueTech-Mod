@@ -1,14 +1,6 @@
 # coding=utf-8
-#
 from weakref import ref
 from mod_log import logger
-from skybluetech_scripts.tooldelta.events.server import (
-    BlockRemoveServerEvent,
-    EntityPlaceBlockAfterServerEvent,
-    ChunkAcquireDiscardedServerEvent,
-    ChunkLoadedServerEvent,
-)
-from skybluetech_scripts.tooldelta.general import ServerInitCallback
 from skybluetech_scripts.tooldelta.api.server import (
     AddBlocksToBlockRemoveListener,
     GetBlockPaletteBetweenPos,
@@ -18,11 +10,19 @@ from skybluetech_scripts.tooldelta.api.server import (
 from skybluetech_scripts.tooldelta.api.client import (
     GetBlankBlockPalette,
 )
+from skybluetech_scripts.tooldelta.events.server import (
+    BlockRemoveServerEvent,
+    EntityPlaceBlockAfterServerEvent,
+    ChunkAcquireDiscardedServerEvent,
+    ChunkLoadedServerEvent,
+)
 from skybluetech_scripts.tooldelta.api.common import Delay, ExecLater
+from skybluetech_scripts.tooldelta.general import ServerInitCallback
 from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
     GeometryModel,
     CreateBlankModel,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.events.misc.multi_block_structure_check import (
     MultiBlockStructureCheckRequest,
     MultiBlockStructureCheckResponse,
@@ -401,8 +401,8 @@ class MultiBlockStructure(BaseMachine):
     functional_block_ids = set()  # type: set[str]
     "多方块结构中功能性方块的列表。"
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
         if self.structure_palette is None:
             raise ValueError("StructureBlockPalette: structure_palette is None")
         self._last_destroy_flag = DEACTIVE_FLAG_STRUCTURE_BROKEN

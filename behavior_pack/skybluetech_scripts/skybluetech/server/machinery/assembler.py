@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockName
 from skybluetech_scripts.tooldelta.events.server import (
     ServerBlockUseEvent,
     BlockNeighborChangedServerEvent,
@@ -13,19 +12,21 @@ from ...common.events.machinery.assembler import (
     ACTION_PULL_UPGRADER,
     ACTION_PUSH_UPGRADER,
 )
-from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.define.id_enum.machinery import ASSEMBLER as MACHINE_ID
 from ...common.machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
 from .utils.action_commit import SafeGetMachine
 from .utils.lore import GetLorePos, SetLoreAtPos
 from ...common.ui_sync.machinery.assembler import AssemblerUISync
-from ..transmitters.wire.logic import isWire
 from .basic import GUIControl, UpgradeControl, RegisterMachine
+from .utils.transmitter_conn import TransmitterConn
 
 
 def g(dic, key):
     return dic[key]["__value__"]
+
+
+TCON = TransmitterConn(wire=True)
 
 
 @RegisterMachine
@@ -50,32 +51,11 @@ class Assembler(GUIControl, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
-        for dx, dy, dz in DXYZ_FACING.keys():
-            facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-            bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
-            if not bname:
-                continue
-            connectToWire = isWire(bname)
-            UpdateBlockStates(
-                self.dim,
-                (self.x, self.y, self.z),
-                {"skybluetech:connection_" + facing_en: connectToWire},
-            )
+        TCON.block_placed(self)
 
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
-        dx = event.neighborPosX - self.x
-        dy = event.neighborPosY - self.y
-        dz = event.neighborPosZ - self.z
-        facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-        if facing_en not in {"south", "north", "east", "west"}:
-            return
-        connectToWire = isWire(event.toBlockName)
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"skybluetech:connection_" + facing_en: connectToWire},
-        )
+        TCON.neighbor_block_changed(self, event)
 
     @SuperExecutorMeta.execute_super
     def OnClick(self, event, extra_datas=None):

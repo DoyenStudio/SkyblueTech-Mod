@@ -1,17 +1,14 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates, GetBlockName
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum import GAS_BURNING_GENERATOR as MACHINE_ID
-from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.machinery_def.gas_burning_generator import recipes as Recipes
 from ...common.ui_sync.machinery.gas_burning_generator import (
     GasBurningGeneratorUISync,
     FluidSlotSync,
 )
-from ..transmitters.pipe.logic import isPipe
 from .basic import (
     BaseGenerator,
     GUIControl,
@@ -20,6 +17,9 @@ from .basic import (
     WorkRenderer,
     RegisterMachine,
 )
+from .utils.transmitter_conn import TransmitterConn
+
+TCON = TransmitterConn(pipe=True)
 
 
 @RegisterMachine
@@ -41,32 +41,11 @@ class GasBurningGenerator(
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
-        for dx, dy, dz in DXYZ_FACING.keys():
-            facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-            bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
-            if not bname:
-                continue
-            connectToWire = isPipe(bname)
-            UpdateBlockStates(
-                self.dim,
-                (self.x, self.y, self.z),
-                {"skybluetech:%s_pipe_connection" % facing_en: connectToWire},
-            )
+        TCON.block_placed(self)
 
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
-        dx = event.neighborPosX - self.x
-        dy = event.neighborPosY - self.y
-        dz = event.neighborPosZ - self.z
-        facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-        if facing_en not in {"south", "north", "east", "west"}:
-            return
-        connectToWire = isPipe(event.toBlockName)
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"skybluetech:%s_pipe_connection" % facing_en: connectToWire},
-        )
+        TCON.neighbor_block_changed(self, event)
 
     def OnTicking(self):
         if self.IsActive():

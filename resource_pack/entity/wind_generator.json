@@ -1,8 +1,0 @@
-{
-    "format_version": "1.10.0",
-    "minecraft:client_entity": {
-        "description": {
-            "identifier": "skybluetech:wind_generator"
-        }
-    }
-}

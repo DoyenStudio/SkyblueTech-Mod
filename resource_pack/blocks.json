@@ -51,13 +51,8 @@
     "skybluetech:bedrock_lava_drill_io_fluid": {
         "textures": "skybluetech:bedrock_lava_drill_io_fluid"
     },
-    "skybluetech:pipe_bronze": {
-        "sound": "copper"
-    },
     "skybluetech:charger": {
-        "client_entity": {
-            "identifier": "skybluetech:charger"
-        },
+        "client_entity": {},
         "sound": "iron"
     },
     "skybluetech:compressor": {
@@ -70,34 +65,24 @@
             "west": "skybluetech:frame"
         }
     },
-    "skybluetech:wire_copper": {
-        "sound": "cloth"
-    },
     "skybluetech:creative_generator": {
         "textures": "skybluetech:creative_generator"
     },
     "skybluetech:creative_power_acceptor": {
-        "client_entity": {
-            "identifier": "skybluetech:creative_power_acceptor"
-        },
+        "client_entity": {},
         "textures": {
             "down": "skybluetech:creative_power_acceptor_side",
             "side": "skybluetech:creative_power_acceptor_side",
             "up": "skybluetech:creative_power_acceptor_top"
         }
     },
-    "skybluetech:wire_creative": {
-        "sound": "cloth"
-    },
     "skybluetech:deepslate_lava": {
         "blockshape": "water",
         "textures": "skybluetech:deepslate_lava_still"
     },
     "skybluetech:deepslate_lava_vibrator": {
-        "sound": "iron",
-        "client_entity": {
-            "identifier": "skybluetech:deepslate_lava_vibrator"
-        }
+        "client_entity": {},
+        "sound": "iron"
     },
     "skybluetech:deepslate_lead_ore": {
         "textures": "skybluetech:deepslate_lead_ore"
@@ -402,9 +387,7 @@
         }
     },
     "skybluetech:hydroponic_bed": {
-        "client_entity": {
-            "identifier": "skybluetech:hydrioponic_bed"
-        },
+        "client_entity": {},
         "sound": "iron"
     },
     "skybluetech:item_splitter": {
@@ -413,6 +396,9 @@
             "side": "skybluetech:item_splitter_side",
             "up": "skybluetech:item_splitter_top"
         }
+    },
+    "skybluetech:item_transport_cable_steel": {
+        "sound": "stone"
     },
     "skybluetech:lead_block": {
         "textures": "skybluetech:lead_block"
@@ -577,8 +563,7 @@
     "skybluetech:rf_repeater_plant": {
         "client_entity": {
             "block_icon": "skybluetech:rf_repeater_plant_icon",
-            "hand_model_use_client_entity": true,
-            "identifier": "skybluetech:rf_repeater_plant"
+            "hand_model_use_client_entity": true
         },
         "sound": "iron"
     },
@@ -610,27 +595,19 @@
         "sound": "glass"
     },
     "skybluetech:tank_creative": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
+        "client_entity": {},
         "sound": "glass"
     },
     "skybluetech:tank_invar": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
+        "client_entity": {},
         "sound": "glass"
     },
     "skybluetech:tank_platinum": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
+        "client_entity": {},
         "sound": "glass"
     },
     "skybluetech:tank_steel": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
+        "client_entity": {},
         "sound": "glass"
     },
     "skybluetech:thermal_generator": {

@@ -57,7 +57,6 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
         states = GetBlockStates(self.dim, (self.x, self.y, self.z))
         if states is None:
             raise ValueError("RFRepeaterPlant BlockState None")
-        self.facing = states["minecraft:cardinal_direction"]  # type: str
         self.layer = states["skybluetech:layer"]  # type: int
         self.is_base_block = self.layer == 0
         if not self.is_base_block:
@@ -72,9 +71,8 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
         x = event.x
         y = event.y
         z = event.z
-        facing = event.face
-        if not MayPlace(block_id, (x, y + 1, z), facing, dim) or not MayPlace(
-            block_id, (x, y + 2, z), facing, dim
+        if not MayPlace(block_id, (x, y + 1, z), 0, dim) or not MayPlace(
+            block_id, (x, y + 2, z), 0, dim
         ):
             event.cancel()
 

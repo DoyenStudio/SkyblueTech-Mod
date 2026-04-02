@@ -1,24 +1,23 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.api.common import Repeat
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
+from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
     GeometryModel,
     CreateBlankModel,
 )
-from ...common.events.machinery.hydroponic_bed import (
-    HydroponicBedModelUpdateEvent,
-    HydroponicBedModelUpdatesEvent,
-)
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from ...common.define.id_enum.machinery import HYDROPONIC_BED as MACHINE_ID
-from ...common.utils.block_sync import BlockSync
+from ...common.machinery_def.hydroponic_bed import K_CROP_ID, K_GROW_STAGE
 from .utils.mod_block_event import (
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 
 
@@ -40,15 +39,24 @@ def onModBlockRemoved(event):
         model.Destroy()
 
 
-@HydroponicBedModelUpdateEvent.Listen()
-def onS2CUpdate(event):
-    # type: (HydroponicBedModelUpdateEvent) -> None
-    key = (event.x, event.y, event.z)
-    if event.crop_id is None:
-        model = loaded_models.get(key, None)
-        if model is not None:
-            model.SetBlockModel("minecraft:air", 0)
-    elif event.crop_id is not None:
-        model = loaded_models.get(key)
-        if model is not None:
-            model.SetBlockModel(event.crop_id, event.aux, (0.8, 0.8, 0.8))
+def update_single_hydroponic_bed(x, y, z, model):
+    # type: (int, int, int, GeometryModel) -> None
+    block_nbt = GetBlockEntityData(x, y, z) or {}
+    ex_data = block_nbt.get("exData")
+    if ex_data is None:
+        return
+    crop_id = GetValueWithDefault(ex_data, K_CROP_ID, None)
+    grow_stage = GetValueWithDefault(ex_data, K_GROW_STAGE, 0)
+    if crop_id == 2:
+        crop_id = None
+    if not crop_id:
+        model.SetBlockModel("minecraft:air", 0)
+    else:
+        model.SetBlockModel(crop_id, grow_stage, (0.8, 0.8, 0.8))
+
+
+@ClientInitCallback()
+@Repeat(1)
+def onClientInit():
+    for (x, y, z), model in loaded_models.items():
+        update_single_hydroponic_bed(x, y, z, model)

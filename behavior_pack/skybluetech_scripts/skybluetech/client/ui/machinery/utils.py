@@ -16,6 +16,18 @@ if 0:
 INFINITY = float("inf")
 
 
+def FormatNum(n, fmt="%.2f %s"):
+    # type: (float, str) -> str
+    suffixes = ("", "k", "M", "G", "T", "P", "E", "Z", "Y")
+    d = 0
+    if n == INFINITY:
+        return "无限"
+    while d < len(suffixes) and n >= 1000:
+        d += 1
+        n /= 1000.0
+    return fmt % (n, suffixes[d])
+
+
 def FormatRF(rf):
     # type: (float) -> str
     suffixes = ("", "k", "M", "G", "T", "P", "E", "Z", "Y")

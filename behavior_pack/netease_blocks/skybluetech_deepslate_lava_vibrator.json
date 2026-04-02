@@ -1,0 +1,64 @@
+{
+    "format_version": "1.21.0",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.deepslate_lava_vibrator",
+                "bone_visibility": {
+                    "block_1": "q.block_state('skybluetech:layer') == 0",
+                    "block_2": "q.block_state('skybluetech:layer') == 1",
+                    "vibrator": "q.block_state('skybluetech:layer') == 1",
+                    "side_columns_1": "q.block_state('skybluetech:layer') == 0",
+                    "side_columns_2": "q.block_state('skybluetech:layer') == 1"
+                }
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:deepslate_lava_vibrator"
+                }
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 4.0
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:solid": {
+                "value": false
+            },
+            "netease:custom_tips": {
+                "value": "\n§7可用于勘探地底深层熔岩储量。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:skybluetech_machine": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:deepslate_lava_vibrator",
+            "states": {
+                "skybluetech:layer": [
+                    0,
+                    1,
+                    2
+                ]
+            }
+        }
+    }
+}

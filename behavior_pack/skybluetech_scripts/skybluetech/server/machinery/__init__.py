@@ -9,6 +9,7 @@ from .compressor import Compressor
 from .creative_generator import CreativeGenerator
 from .creative_power_acceptor import CreativePowerAcceptor
 from .fluid_condenser import FluidCondenser
+from .deepslate_lava_vibrator import DeepslateLavaVibrator
 from .digger import Digger
 from .distillation_chamber import DistillatorChamber
 from .electric_heater import ElectricHeater

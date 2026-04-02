@@ -1,0 +1,20 @@
+{
+    "parent": "machinery_source_extraction_toc",
+    "icon": "textures/machines/digger",
+    "title": "深层熔岩谐振探测器",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "深层熔岩谐振探测器用于在建造§d基岩熔岩钻§r开采§4深层熔岩§r之前先行探明此地的深层熔岩储量。"
+        },
+        {
+            "type": "textPage",
+            "content": "将深层熔岩谐振探测器放置到地面， 为其输入能量就可以启动探测。 勘探进度越多， 勘探到的深层熔岩储量也越准确。 勘探进度到达百分百后探测到的深层熔岩储量就几乎是百分百准确了。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:digger"
+        }
+    ]
+}

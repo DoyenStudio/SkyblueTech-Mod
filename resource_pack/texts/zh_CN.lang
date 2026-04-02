@@ -286,3 +286,4 @@ item.skybluetech:drill_top_ultraheatinum.name=耐热钻尖
 tile.skybluetech:bedrock_lava_drill_io_energy.name=基岩熔岩钻能量输入口
 commands.skybluetech.query_deepslate_storage.description=查询某个位置可开采的深层熔岩的量和储藏总量
 commands.skybluetech.query_deepslate_storage.success=查询成功， 此处深层熔岩剩余 %1$smB， 总储量 %2$smB
+tile.skybluetech:deepslate_lava_vibrator.name=深层熔岩谐振探测器

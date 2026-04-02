@@ -66,7 +66,8 @@
             "textures": "textures/machines/bedrock_lava_drill_io_fluid"
         },
         "skybluetech:pipe_bronze": {
-            "textures": "textures/transmitters/pipe_bronze_model"
+            "textures": "textures/transmitters/pipe_bronze_texture"
+        },
         },
         "skybluetech:cartidge_1_model": {
             "textures": "textures/models/cartidges/cartidge_yellow"
@@ -396,7 +397,7 @@
             "textures": "textures/machines/splitter_front"
         },
         "skybluetech:steel_item_transport_cable": {
-            "textures": "textures/transmitters/steel_item_transport_cable_model"
+            "textures": "textures/transmitters/steel_item_transport_cable_texture"
         },
         "skybluetech:superconduct_wire": {
             "textures": "textures/transmitters/superconduct_wire_texture"

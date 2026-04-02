@@ -42,10 +42,10 @@
             "textures": "textures/blocks/battery_matrix_frame"
         },
         "skybluetech:bedrock_lava_drill_controller": {
-            "textures": "textures/machines/bedrock_lava_drill_controller"
+            "textures": "textures/machines/bedrock_lava_drill_controller_front"
         },
         "skybluetech:bedrock_lava_drill_controller_active": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_active"
+            "textures": "textures/machines/bedrock_lava_drill_controller_front_active"
         },
         "skybluetech:bedrock_lava_drill_controller_front": {
             "textures": "textures/machines/bedrock_lava_drill_controller_front"
@@ -113,6 +113,9 @@
         },
         "skybluetech:deepslate_lava_still": {
             "textures": "textures/fluid/deepslate_lava_still"
+        },
+        "skybluetech:deepslate_lava_vibrator": {
+            "textures": "textures/models/deepslate_lava_vibrator_texture"
         },
         "skybluetech:deepslate_lead_ore": {
             "textures": "textures/blocks/ore/deepslate_lead_ore"

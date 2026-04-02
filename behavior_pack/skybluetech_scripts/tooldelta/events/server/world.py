@@ -101,3 +101,36 @@ class OnSimTickServerEvent(ServerEvent):
 
     def marshal(self):
         return {}
+
+
+class NewOnEntityAreaEvent(ServerEvent):
+    name = "NewOnEntityAreaEvent"
+
+    def __init__(
+        self,
+        name, # type: str
+        enteredEntities, # type: list[str]
+        leftEntities, # type: list[str]
+    ):
+        self.name = name
+        """ 注册感应区域名称 """
+        self.enteredEntities = enteredEntities
+        """ 进入该感应区域的实体id列表 """
+        self.leftEntities = leftEntities
+        """ 离开该感应区域的实体id列表 """
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            name=data["name"],
+            enteredEntities=data["enteredEntities"],
+            leftEntities=data["leftEntities"],
+        )
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "name": self.name,
+            "enteredEntities": self.enteredEntities,
+            "leftEntities": self.leftEntities,
+        }

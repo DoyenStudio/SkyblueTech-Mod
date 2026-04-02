@@ -22,12 +22,18 @@ def GetRecipesByResult(item_id, recipe_tag, aux_value=0, maxResultNum=-1):
     return _getRecipesByResult(item_id, recipe_tag, aux_value, maxResultNum)
 
 
-GetLocalTime = CF.CreateDimension(GetLevelId()).GetLocalTime
-IsRaining = CF.CreateWeather(GetLevelId()).IsRaining
+GetLocalTime = MethodCacher(lambda: CF.CreateDimension(GetLevelId()).GetLocalTime)
+IsRaining = MethodCacher(lambda: CF.CreateWeather(GetLevelId()).IsRaining)
 GetRecipeByRecipeId = MethodCacher(
     lambda: CF.CreateRecipe(GetLevelId()).GetRecipeByRecipeId
 )
 GetSeed = MethodCacher(lambda: CF.CreateGame(GetLevelId()).GetSeed)
+RegisterEntityAOIEvent = MethodCacher(
+    lambda: CF.CreateDimension(GetLevelId()).RegisterEntityAOIEvent
+)
+UnRegisterEntityAOIEvent = MethodCacher(
+    lambda: CF.CreateDimension(GetLevelId()).UnRegisterEntityAOIEvent
+)
 
 
 __all__ = [
@@ -37,4 +43,6 @@ __all__ = [
     "GetLocalTime",
     "GetSeed",
     "IsRaining",
+    "RegisterEntityAOIEvent",
+    "UnRegisterEntityAOIEvent",
 ]

@@ -28,7 +28,7 @@
                 "*": {
                     "isotropic": true,
                     "render_method": "blend",
-                    "texture": "skybluetech:bronze_pipe"
+                    "texture": "skybluetech:pipe_bronze"
                 }
             },
             "netease:block_entity": {},
@@ -52,7 +52,7 @@
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:bronze_pipe",
+            "identifier": "skybluetech:pipe_bronze",
             "states": {
                 "skybluetech:cable_io_down": [
                     false,

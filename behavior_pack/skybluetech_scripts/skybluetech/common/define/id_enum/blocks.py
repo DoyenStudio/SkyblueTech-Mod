@@ -6,7 +6,7 @@ class Cable:
 
 
 class Pipe:
-    BRONZE = "skybluetech:bronze_pipe"
+    BRONZE = "skybluetech:pipe_bronze"
 
 
 class Wire:

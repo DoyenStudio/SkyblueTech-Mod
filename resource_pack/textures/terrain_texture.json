@@ -65,8 +65,8 @@
         "skybluetech:bedrock_lava_drill_io_fluid": {
             "textures": "textures/machines/bedrock_lava_drill_io_fluid"
         },
-        "skybluetech:bronze_pipe": {
-            "textures": "textures/transmitters/bronze_pipe_model"
+        "skybluetech:pipe_bronze": {
+            "textures": "textures/transmitters/pipe_bronze_model"
         },
         "skybluetech:cartidge_1_model": {
             "textures": "textures/models/cartidges/cartidge_yellow"

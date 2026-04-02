@@ -51,7 +51,7 @@
     "skybluetech:bedrock_lava_drill_io_fluid": {
         "textures": "skybluetech:bedrock_lava_drill_io_fluid"
     },
-    "skybluetech:bronze_pipe": {
+    "skybluetech:pipe_bronze": {
         "sound": "copper"
     },
     "skybluetech:charger": {

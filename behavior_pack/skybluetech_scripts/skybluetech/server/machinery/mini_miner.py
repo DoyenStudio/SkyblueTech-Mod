@@ -10,6 +10,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetBlock,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.define.id_enum.machinery import MINI_MINER as MACHINE_ID
@@ -26,10 +27,13 @@ from .basic import (
     UpgradeControl,
     RegisterMachine,
 )
+from .utils.transmitter_conn import TransmitterConn
 
 # TODO: 会使领地模组失效
 K_MINING_FINISHED = "mining_finished"
 K_LAST_SCANNED_Y = "last_scanned_y"
+
+TCON = TransmitterConn(cable=True, pipe=True)
 
 
 @RegisterMachine
@@ -61,6 +65,15 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             self.mine_pos_iterator = None
             self.sync.work_mode = MiniMinerUISync.WorkMode.FINISHED
         self.init_flags()
+
+    @SuperExecutorMeta.execute_super
+    def OnPlaced(self, _):
+        TCON.block_placed(self)
+
+    @SuperExecutorMeta.execute_super
+    def OnNeighborChanged(self, event):
+        # type: (BlockNeighborChangedServerEvent) -> None
+        TCON.neighbor_block_changed(self, event)
 
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot):

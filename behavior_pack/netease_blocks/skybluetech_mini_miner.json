@@ -6,7 +6,17 @@
                 "seconds_to_destroy": 3.0
             },
             "minecraft:geometry": {
-                "identifier": "geometry.skybluetech.mini_miner"
+                "identifier": "geometry.skybluetech.mini_miner",
+                "bone_visibility": {
+                    "south_pipe_conn": "q.block_state('skybluetech:south_pipe_connection')",
+                    "north_pipe_conn": "q.block_state('skybluetech:north_pipe_connection')",
+                    "east_pipe_conn": "q.block_state('skybluetech:east_pipe_connection')",
+                    "west_pipe_conn": "q.block_state('skybluetech:west_pipe_connection')",
+                    "south_cable_conn": "q.block_state('skybluetech:south_cable_connection')",
+                    "north_cable_conn": "q.block_state('skybluetech:north_cable_connection')",
+                    "east_cable_conn": "q.block_state('skybluetech:east_cable_connection')",
+                    "west_cable_conn": "q.block_state('skybluetech:west_cable_connection')"
+                }
             },
             "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
@@ -26,6 +36,9 @@
             },
             "netease:custom_tips": {
                 "value": "\n§7单方块采矿机， 可使用润滑油对其下 8x8x64 的范围进行采矿。"
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
             },
             "netease:listen_block_remove": {
                 "value": true
@@ -50,6 +63,38 @@
             "identifier": "skybluetech:mini_miner",
             "states": {
                 "skybluetech:active": [
+                    false,
+                    true
+                ],
+                "skybluetech:south_pipe_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:north_pipe_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:east_pipe_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:west_pipe_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:south_cable_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:north_cable_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:east_cable_connection": [
+                    false,
+                    true
+                ],
+                "skybluetech:west_cable_connection": [
                     false,
                     true
                 ]

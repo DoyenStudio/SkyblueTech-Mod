@@ -162,7 +162,9 @@ class RFRepeaterPlant(BaseMachine, GUIControl, ItemContainer):
         base_y = self.y - self.layer
         for i in range(3):
             if i != self.layer:
-                SetBlock(self.dim, (self.x, base_y + i, self.z), "minecraft:air")
+                pos = (self.x, base_y + i, self.z)
+                if GetBlockName(self.dim, pos) == self.block_name:
+                    SetBlock(self.dim, (self.x, base_y + i, self.z), "minecraft:air")
 
     def OnUnload(self):
         BaseMachine.OnUnload(self)

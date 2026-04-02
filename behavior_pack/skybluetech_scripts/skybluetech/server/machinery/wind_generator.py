@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import PlayerUseItemToPos, MayPlace
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
     ServerBlockUseEvent,
@@ -8,17 +7,19 @@ from skybluetech_scripts.tooldelta.events.server import (
 )
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import (
-    UpdateBlockStates,
-    GetBlockStates,
     GetBlockName,
-    SetBlock,
+    GetBlockStates,
     GetPlayerDimensionId,
+    SetBlock,
+    UpdateBlockStates,
+    PlayerUseItemToPos,
+    MayPlace,
     GetBlockAuxValueFromStates,
     GetBlockPaletteBetweenPos,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum import WIND_GENERATOR as MACHINE_ID, Paddle
+from ...common.define.id_enum import WIND_GENERATOR as MACHINE_ID
 from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,
@@ -51,7 +52,6 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
             raise ValueError("WindGenerator BlockState None")
         self.facing = states["minecraft:cardinal_direction"]  # type: str
         self.layer = states["skybluetech:layer"]  # type: int
-        # 如果不是基座方块则无功能
         self.is_base_block = self.layer == 0
         self.max_mcw = 0.0
         self.actual_mcw = 0.0
@@ -160,7 +160,9 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
                 if isinstance(m, ItemContainer):
                     m.DropAllItems()
             if i != self.layer:
-                SetBlock(self.dim, (self.x, base_y + i, self.z), "minecraft:air")
+                pos = (self.x, base_y + i, self.z)
+                if GetBlockName(self.dim, pos) == self.block_name:
+                    SetBlock(self.dim, pos, "minecraft:air")
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):

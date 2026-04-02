@@ -93,6 +93,12 @@
         "blockshape": "water",
         "textures": "skybluetech:deepslate_lava_still"
     },
+    "skybluetech:deepslate_lava_vibrator": {
+        "sound": "iron",
+        "client_entity": {
+            "identifier": "skybluetech:deepslate_lava_vibrator"
+        }
+    },
     "skybluetech:deepslate_lead_ore": {
         "textures": "skybluetech:deepslate_lead_ore"
     },

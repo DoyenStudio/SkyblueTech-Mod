@@ -5,7 +5,7 @@ from .register import RegisterCommand
 from .utils import generate_simple_arg_mapping
 
 
-@RegisterCommand("skybluetech:query_deepslate_storage")
+@RegisterCommand("skybluetech:query_deepslate_lava_storage")
 def onCommand(event):
     # type: (CustomCommandTriggerServerEvent) -> None
     from ..machinery.bedrock_lava_drill.lava_storage import (

@@ -35,6 +35,7 @@ class HeatCtrl(BaseMachine):
     # auto_share_heat = True
     # "是否自动传递热量"
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.heat_c = self.original_heat_c
 

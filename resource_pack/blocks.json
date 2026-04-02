@@ -367,9 +367,7 @@
         }
     },
     "skybluetech:hover_text_displayer": {
-        "client_entity": {
-            "identifier": "skybluetech:hover_text_displayer"
-        },
+        "client_entity": {},
         "sound": "iron"
     },
     "skybluetech:hydrogen": {
@@ -515,6 +513,9 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:pipe_bronze": {
+        "sound": "copper"
+    },
     "skybluetech:platinum_block": {
         "textures": "skybluetech:platinum_block"
     },
@@ -573,25 +574,14 @@
     "skybluetech:silver_ore": {
         "textures": "skybluetech:silver_ore"
     },
-    "skybluetech:wire_silver": {
-        "sound": "cloth"
-    },
     "skybluetech:solar_panel": {
         "sound": "iron"
     },
     "skybluetech:splitter": {
         "sound": "iron"
     },
-    "skybluetech:item_transport_cable_steel": {
-        "sound": "stone"
-    },
-    "skybluetech:wire_superconduct": {
-        "sound": "cloth"
-    },
     "skybluetech:tank_bronze": {
-        "client_entity": {
-            "identifier": "skybluetech:tank"
-        },
+        "client_entity": {},
         "sound": "glass"
     },
     "skybluetech:tank_creative": {
@@ -627,9 +617,6 @@
     "skybluetech:tin_ore": {
         "textures": "skybluetech:tin_ore"
     },
-    "skybluetech:wire_tin": {
-        "sound": "cloth"
-    },
     "skybluetech:vegetable_oil": {
         "blockshape": "water",
         "textures": {
@@ -641,9 +628,43 @@
     "skybluetech:wind_generator": {
         "client_entity": {
             "block_icon": "skybluetech:wind_generator_icon",
-            "hand_model_use_client_entity": true,
-            "identifier": "skybluetech:wind_generator"
+            "hand_model_use_client_entity": true
         },
         "sound": "iron"
+    },
+    "skybluetech:wire_copper": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_copper_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_creative": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_creative_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_silver": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_silver_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_superconduct": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_superconduct_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_tin": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_tin_item",
+            "hand_model_use_client_entity": true
+        }
     }
 }

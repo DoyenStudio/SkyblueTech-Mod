@@ -6,7 +6,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7可提供§e无限§7的能量输出功率。"
+                "value": "\n§7可提供 §e2147483648 RF/t §7的能量输出功率。"
             },
             "netease:listen_block_remove": {
                 "value": true

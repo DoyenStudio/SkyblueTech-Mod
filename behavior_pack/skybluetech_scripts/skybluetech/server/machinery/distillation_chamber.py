@@ -61,8 +61,8 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
         # type: (int, str) -> bool
         return fluid_id in recipes_collection
 
-    def OnAddedFluid(self, slot, fluid_id, add_fluid_volume):
-        # type: (int, str, float) -> None
+    def OnAddedFluid(self, slot, fluid_id, add_fluid_volume, is_final):
+        # type: (int, str, float, bool) -> None
         if slot == 0:
             cur_volume = self.fluids[0].volume
             prev_volume = cur_volume - add_fluid_volume

@@ -50,7 +50,6 @@ class BaseProcessor(GUIControl, UpgradeControl, WorkRenderer):
             if do_break:
                 break
 
-    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):

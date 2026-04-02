@@ -34,10 +34,10 @@ class MixedProcessor(BaseProcessor, MultiFluidContainer):
     def OnTicking(self):
         pass
 
-    @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):
+            UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if slot_pos in self.output_slots and self.HasDeactiveFlag(
             flags.DEACTIVE_FLAG_OUTPUT_FULL

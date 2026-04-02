@@ -1,0 +1,20 @@
+{
+    "parent": "machinery_mini_miner",
+    "icon": "textures/icon/mini_mine_icon",
+    "title": "迷你采矿机",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "迷你采矿机是最简单的§3采矿机§r， 不需要搭建多方块结构，只需要输入能量和润滑油即可开始采矿。\n\n它可以对下方 §915x64x16§r 的范围进行采矿。 对应地， 它无法进行更高级的采矿设置， 如接受时运或精准采集设置。"
+        },
+        {
+            "type": "textPage",
+            "content": "迷你采矿机只会采掘§8矿物和石头§r， 不会采掘泥土、 砂砾和其它方块。\n\n如果迷你采掘机被放置到了之前被采掘的区域， 会进行§6快进§r以快进到之前的采掘进度。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:mini_miner"
+        }
+    ]
+}

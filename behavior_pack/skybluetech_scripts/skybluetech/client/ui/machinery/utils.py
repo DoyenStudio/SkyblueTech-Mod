@@ -106,11 +106,10 @@ def UpdateFluidDisplay(ui, fluid_id, fluid_volume, max_volume):
         fluid_img.SetSprite(texture_path)
         if color is not None:
             r, g, b = color
-            if r == 255 and g == 255 and b == 255:
-                pass
-            else:
-                color = (float(r) / 255, float(g) / 255, float(b) / 255)
-                fluid_img.SetSpriteColor(color)
+            color = (float(r) / 255, float(g) / 255, float(b) / 255)
+            fluid_img.SetSpriteColor(color)
+        else:
+            fluid_img.SetSpriteColor((1, 1, 1))
     if fluid_volume == INFINITY:
         prgs = 1
     elif max_volume == INFINITY:

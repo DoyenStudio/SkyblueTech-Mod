@@ -70,7 +70,7 @@
             "west": "skybluetech:frame"
         }
     },
-    "skybluetech:copper_wire": {
+    "skybluetech:wire_copper": {
         "sound": "cloth"
     },
     "skybluetech:creative_generator": {
@@ -86,7 +86,7 @@
             "up": "skybluetech:creative_power_acceptor_top"
         }
     },
-    "skybluetech:creative_wire": {
+    "skybluetech:wire_creative": {
         "sound": "cloth"
     },
     "skybluetech:deepslate_lava": {
@@ -588,7 +588,7 @@
     "skybluetech:silver_ore": {
         "textures": "skybluetech:silver_ore"
     },
-    "skybluetech:silver_wire": {
+    "skybluetech:wire_silver": {
         "sound": "cloth"
     },
     "skybluetech:solar_panel": {
@@ -597,10 +597,10 @@
     "skybluetech:splitter": {
         "sound": "iron"
     },
-    "skybluetech:steel_item_transport_cable": {
+    "skybluetech:item_transport_cable_steel": {
         "sound": "stone"
     },
-    "skybluetech:superconduct_wire": {
+    "skybluetech:wire_superconduct": {
         "sound": "cloth"
     },
     "skybluetech:tank_bronze": {
@@ -650,7 +650,7 @@
     "skybluetech:tin_ore": {
         "textures": "skybluetech:tin_ore"
     },
-    "skybluetech:tin_wire": {
+    "skybluetech:wire_tin": {
         "sound": "cloth"
     },
     "skybluetech:vegetable_oil": {

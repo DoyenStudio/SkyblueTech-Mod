@@ -21,14 +21,14 @@
                     "r_south2north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
                     "r_common": "!(q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')) && !(q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')) && !(q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west'))"
                 },
-                "identifier": "geometry.skybluetech.steel_item_transport_cable"
+                "identifier": "geometry.skybluetech.item_transport_cable"
             },
             "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
                 "*": {
                     "isotropic": true,
                     "render_method": "blend",
-                    "texture": "skybluetech:steel_item_transport_cable"
+                    "texture": "skybluetech:item_transport_cable_steel"
                 }
             },
             "netease:block_entity": {},
@@ -52,7 +52,7 @@
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:steel_item_transport_cable",
+            "identifier": "skybluetech:item_transport_cable_steel",
             "states": {
                 "skybluetech:cable_io_down": [
                     false,

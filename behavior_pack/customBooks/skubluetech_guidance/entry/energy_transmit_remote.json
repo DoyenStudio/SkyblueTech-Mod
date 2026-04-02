@@ -1,6 +1,6 @@
 {
     "parent": "energy_toc",
-    "icon": "textures/transmitters/copper_wire_item",
+    "icon": "textures/transmitters/wire_copper_item",
     "title": "能源长距传输",
     "pages": [
         {

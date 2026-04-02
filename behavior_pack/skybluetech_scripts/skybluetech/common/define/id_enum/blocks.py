@@ -2,7 +2,7 @@
 
 
 class Cable:
-    STEEL = "skybluetech:steel_item_transport_cable"
+    STEEL = "skybluetech:item_transport_cable_steel"
 
 
 class Pipe:
@@ -10,11 +10,11 @@ class Pipe:
 
 
 class Wire:
-    TIN = "skybluetech:tin_wire"
-    COPPER = "skybluetech:copper_wire"
-    SILVER = "skybluetech:silver_wire"
-    SUPER_CONDUCT = "skybluetech:superconduct_wire"
-    CREATIVE = "skybluetech:creative_wire"
+    TIN = "skybluetech:wire_tin"
+    COPPER = "skybluetech:wire_copper"
+    SILVER = "skybluetech:wire_silver"
+    SUPER_CONDUCT = "skybluetech:wire_superconduct"
+    CREATIVE = "skybluetech:wire_creative"
 
 
 class Tank:

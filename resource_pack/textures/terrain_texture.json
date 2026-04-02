@@ -87,11 +87,11 @@
         "skybluetech:compressor_front_active": {
             "textures": "textures/machines/flipbook_textures/compressor_front_active"
         },
-        "skybluetech:copper_wire": {
-            "textures": "textures/transmitters/copper_wire_texture"
+        "skybluetech:wire_copper": {
+            "textures": "textures/transmitters/wire_copper_texture"
         },
-        "skybluetech:copper_wire_item": {
-            "textures": "textures/transmitters/copper_wire_item"
+        "skybluetech:wire_copper_item": {
+            "textures": "textures/transmitters/wire_copper_item"
         },
         "skybluetech:creative_generator": {
             "textures": "textures/machines/creative_generator"
@@ -102,11 +102,11 @@
         "skybluetech:creative_power_acceptor_top": {
             "textures": "textures/machines/creative_power_acceptor_top"
         },
-        "skybluetech:creative_wire": {
-            "textures": "textures/transmitters/creative_wire_texture"
+        "skybluetech:wire_creative": {
+            "textures": "textures/transmitters/wire_creative_texture"
         },
-        "skybluetech:creative_wire_item": {
-            "textures": "textures/transmitters/creative_wire_item"
+        "skybluetech:wire_creative_item": {
+            "textures": "textures/transmitters/wire_creative_item"
         },
         "skybluetech:deepslate_lava_flow": {
             "quad": 2,
@@ -381,11 +381,11 @@
         "skybluetech:silver_ore": {
             "textures": "textures/blocks/ore/silver_ore"
         },
-        "skybluetech:silver_wire": {
-            "textures": "textures/transmitters/silver_wire_texture"
+        "skybluetech:wire_silver": {
+            "textures": "textures/transmitters/wire_silver_texture"
         },
-        "skybluetech:silver_wire_item": {
-            "textures": "textures/transmitters/silver_wire_item"
+        "skybluetech:wire_silver_item": {
+            "textures": "textures/transmitters/wire_silver_item"
         },
         "skybluetech:solar_panel": {
             "textures": "textures/models/solar_panel_texture"
@@ -396,14 +396,14 @@
         "skybluetech:splitter_front": {
             "textures": "textures/machines/splitter_front"
         },
-        "skybluetech:steel_item_transport_cable": {
-            "textures": "textures/transmitters/steel_item_transport_cable_texture"
+        "skybluetech:item_transport_cable_steel": {
+            "textures": "textures/transmitters/item_transport_cable_steel_texture"
         },
-        "skybluetech:superconduct_wire": {
-            "textures": "textures/transmitters/superconduct_wire_texture"
+        "skybluetech:wire_superconduct": {
+            "textures": "textures/transmitters/wire_superconduct_texture"
         },
-        "skybluetech:superconduct_wire_item": {
-            "textures": "textures/transmitters/superconduct_wire_item"
+        "skybluetech:wire_superconduct_item": {
+            "textures": "textures/transmitters/wire_superconduct_item"
         },
         "skybluetech:tank_bronze": {
             "textures": "textures/models/tanks/tank_bronze_texture"
@@ -438,11 +438,11 @@
         "skybluetech:tin_ore": {
             "textures": "textures/blocks/ore/tin_ore"
         },
-        "skybluetech:tin_wire": {
-            "textures": "textures/transmitters/tin_wire_texture"
+        "skybluetech:wire_tin": {
+            "textures": "textures/transmitters/wire_tin_texture"
         },
-        "skybluetech:tin_wire_item": {
-            "textures": "textures/transmitters/tin_wire_item"
+        "skybluetech:wire_tin_item": {
+            "textures": "textures/transmitters/wire_tin_item"
         },
         "skybluetech:wind_generator": {
             "textures": "textures/models/wind_generator_empty_texture"

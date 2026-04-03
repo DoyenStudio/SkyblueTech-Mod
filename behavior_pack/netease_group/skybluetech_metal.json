@@ -56,7 +56,9 @@
                 "skybluetech:lead_block",
                 "skybluetech:silver_block",
                 "skybluetech:nickel_block",
-                "skybluetech:platinum_block"
+                "skybluetech:platinum_block",
+                "skybluetech:bronze_block",
+                "skybluetech:invar_block"
             ]
         },
         {

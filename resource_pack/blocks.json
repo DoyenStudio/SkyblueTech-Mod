@@ -51,6 +51,10 @@
     "skybluetech:bedrock_lava_drill_io_fluid": {
         "textures": "skybluetech:bedrock_lava_drill_io_fluid"
     },
+    "skybluetech:bronze_block": {
+        "sound": "copper",
+        "textures": "skybluetech:bronze_block"
+    },
     "skybluetech:charger": {
         "client_entity": {},
         "sound": "iron"
@@ -388,6 +392,9 @@
         "client_entity": {},
         "sound": "iron"
     },
+    "skybluetech:invar_block": {
+        "textures": "skybluetech:invar_block"
+    },
     "skybluetech:item_splitter": {
         "textures": {
             "down": "skybluetech:item_splitter_bottom",
@@ -633,73 +640,73 @@
         "sound": "iron"
     },
     "skybluetech:wire_copper": {
-        "sound": "cloth",
         "client_entity": {
             "block_icon": "skybluetech:wire_copper_item",
             "hand_model_use_client_entity": true
-        }
+        },
+        "sound": "cloth"
     },
     "skybluetech:wire_creative": {
-        "sound": "cloth",
         "client_entity": {
             "block_icon": "skybluetech:wire_creative_item",
             "hand_model_use_client_entity": true
-        }
-    },
-    "skybluetech:wire_silver": {
-        "sound": "cloth",
-        "client_entity": {
-            "block_icon": "skybluetech:wire_silver_item",
-            "hand_model_use_client_entity": true
-        }
-    },
-    "skybluetech:wire_superconduct": {
-        "sound": "cloth",
-        "client_entity": {
-            "block_icon": "skybluetech:wire_superconduct_item",
-            "hand_model_use_client_entity": true
-        }
-    },
-    "skybluetech:wire_tin": {
-        "sound": "cloth",
-        "client_entity": {
-            "block_icon": "skybluetech:wire_tin_item",
-            "hand_model_use_client_entity": true
-        }
+        },
+        "sound": "cloth"
     },
     "skybluetech:wire_insulated_copper": {
-        "sound": "cloth",
         "client_entity": {
             "block_icon": "skybluetech:wire_insulated_copper_item",
             "hand_model_use_client_entity": true
-        }
+        },
+        "sound": "cloth"
     },
     "skybluetech:wire_insulated_creative": {
-        "sound": "cloth",
         "client_entity": {
             "block_icon": "skybluetech:wire_insulated_creative_item",
             "hand_model_use_client_entity": true
-        }
+        },
+        "sound": "cloth"
     },
     "skybluetech:wire_insulated_silver": {
-        "sound": "cloth",
         "client_entity": {
             "block_icon": "skybluetech:wire_insulated_silver_item",
             "hand_model_use_client_entity": true
-        }
+        },
+        "sound": "cloth"
     },
     "skybluetech:wire_insulated_superconduct": {
-        "sound": "cloth",
         "client_entity": {
             "block_icon": "skybluetech:wire_insulated_superconduct_item",
             "hand_model_use_client_entity": true
-        }
+        },
+        "sound": "cloth"
     },
     "skybluetech:wire_insulated_tin": {
-        "sound": "cloth",
         "client_entity": {
             "block_icon": "skybluetech:wire_insulated_tin_item",
             "hand_model_use_client_entity": true
-        }
+        },
+        "sound": "cloth"
+    },
+    "skybluetech:wire_silver": {
+        "client_entity": {
+            "block_icon": "skybluetech:wire_silver_item",
+            "hand_model_use_client_entity": true
+        },
+        "sound": "cloth"
+    },
+    "skybluetech:wire_superconduct": {
+        "client_entity": {
+            "block_icon": "skybluetech:wire_superconduct_item",
+            "hand_model_use_client_entity": true
+        },
+        "sound": "cloth"
+    },
+    "skybluetech:wire_tin": {
+        "client_entity": {
+            "block_icon": "skybluetech:wire_tin_item",
+            "hand_model_use_client_entity": true
+        },
+        "sound": "cloth"
     }
 }

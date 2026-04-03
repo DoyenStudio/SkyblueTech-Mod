@@ -97,6 +97,9 @@
         "skybluetech:famicom_cartidge_3": {
             "textures": "textures/items/cartidges/famicom_cartidge_3"
         },
+        "skybluetech:fan_blade": {
+            "textures": "textures/items/fan_blade"
+        },
         "skybluetech:gold_dust": {
             "textures": "textures/items/dusts/gold_dust"
         },
@@ -126,6 +129,9 @@
         },
         "skybluetech:invar_plate": {
             "textures": "textures/items/plates/invar_plate"
+        },
+        "skybluetech:invar_stick": {
+            "textures": "textures/items/sticks/invar_stick"
         },
         "skybluetech:iron_dust": {
             "textures": "textures/items/dusts/iron_dust"

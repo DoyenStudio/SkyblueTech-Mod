@@ -1,0 +1,38 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:heat_exchanger_craft"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:silver_plate"
+            },
+            "B": {
+                "data": 0,
+                "item": "skybluetech:invar_stick"
+            },
+            "C": {
+                "data": 0,
+                "item": "skybluetech:copper_stick"
+            }
+        },
+        "pattern": [
+            " C ",
+            "BAB",
+            " C "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:heat_exchanger"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

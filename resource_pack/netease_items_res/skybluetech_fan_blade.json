@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:fan_blade"
+        },
+        "description": {
+            "identifier": "skybluetech:fan_blade"
+        }
+    }
+}

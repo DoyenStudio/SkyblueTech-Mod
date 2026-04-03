@@ -2,6 +2,45 @@
     "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "north": "q.block_state('skybluetech:connection_north')",
+                    "south": "q.block_state('skybluetech:connection_south')",
+                    "up": "q.block_state('skybluetech:connection_up')",
+                    "west": "q.block_state('skybluetech:connection_west')",
+                    "down": "q.block_state('skybluetech:connection_down')",
+                    "east": "q.block_state('skybluetech:connection_east')",
+                    "root_up2down": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')",
+                    "root_west2east": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')",
+                    "root_south2north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                    "root_default": "!(q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')) && !(q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')) && !(q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west'))"
+                },
+                "identifier": "geometry.skybluetech.wire"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:wire_creative"
+                }
+            },
+            "netease:on_entity_inside": {
+                "send_python_event": true
+            },
+            "netease:aabb": {
+                "collision": {
+                    "min": [
+                        0.125,
+                        0.125,
+                        0.125
+                    ],
+                    "max": [
+                        0.875,
+                        0.875,
+                        0.875
+                    ]
+                }
+            },
             "netease:block_entity": {},
             "netease:custom_tips": {
                 "value": "\n§7可在发电机与机器间传输能量。\n§b功率： §a无限 RF/t"
@@ -20,31 +59,7 @@
             },
             "tag:piston_denier": {},
             "tag:redstoneflux_connectable": {},
-            "tag:skybluetech_wire": {},
-            "minecraft:geometry": {
-                "bone_visibility": {
-                    "down": "q.block_state('skybluetech:connection_down')",
-                    "east": "q.block_state('skybluetech:connection_east')",
-                    "north": "q.block_state('skybluetech:connection_north')",
-                    "root_down": "!q.block_state('skybluetech:connection_down')",
-                    "root_east": "!q.block_state('skybluetech:connection_east')",
-                    "root_north": "!q.block_state('skybluetech:connection_north')",
-                    "root_south": "!q.block_state('skybluetech:connection_south')",
-                    "root_up": "!q.block_state('skybluetech:connection_up')",
-                    "root_west": "!q.block_state('skybluetech:connection_west')",
-                    "south": "q.block_state('skybluetech:connection_south')",
-                    "up": "q.block_state('skybluetech:connection_up')",
-                    "west": "q.block_state('skybluetech:connection_west')"
-                },
-                "identifier": "geometry.skybluetech.wire"
-            },
-            "minecraft:material_instances": {
-                "*": {
-                    "isotropic": true,
-                    "render_method": "blend",
-                    "texture": "skybluetech:wire_creative"
-                }
-            }
+            "tag:skybluetech_wire": {}
         },
         "description": {
             "category": "skybluetech",

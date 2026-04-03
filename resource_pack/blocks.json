@@ -666,5 +666,40 @@
             "block_icon": "skybluetech:wire_tin_item",
             "hand_model_use_client_entity": true
         }
+    },
+    "skybluetech:wire_insulated_copper": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_insulated_copper_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_insulated_creative": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_insulated_creative_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_insulated_silver": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_insulated_silver_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_insulated_superconduct": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_insulated_superconduct_item",
+            "hand_model_use_client_entity": true
+        }
+    },
+    "skybluetech:wire_insulated_tin": {
+        "sound": "cloth",
+        "client_entity": {
+            "block_icon": "skybluetech:wire_insulated_tin_item",
+            "hand_model_use_client_entity": true
+        }
     }
 }

@@ -5,10 +5,15 @@
             "icon": "skybluetech:wire_tin",
             "list": [
                 "skybluetech:wire_tin",
+                "skybluetech:wire_insulated_tin",
                 "skybluetech:wire_copper",
+                "skybluetech:wire_insulated_copper",
                 "skybluetech:wire_silver",
+                "skybluetech:wire_insulated_silver",
                 "skybluetech:wire_superconduct",
-                "skybluetech:wire_creative"
+                "skybluetech:wire_insulated_superconduct",
+                "skybluetech:wire_creative",
+                "skybluetech:wire_insulated_creative"
             ]
         }
     ]

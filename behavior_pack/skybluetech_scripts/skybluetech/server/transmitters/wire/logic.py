@@ -1,14 +1,17 @@
 # coding=utf-8
 from collections import deque
-from skybluetech_scripts.tooldelta.api.server.block import (
-    GetBlockName,
+from skybluetech_scripts.tooldelta.api.server import (
     BlockHasTag,
     GetBlockTags,
+    GetEntityDimension,
+)
+from skybluetech_scripts.tooldelta.events.server import (
+    OnEntityInsideBlockServerEvent,
 )
 from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
 
 from ..base import LogicModule
-from .define import WireNetwork, WireAccessPoint
+from .define import WireNetwork, WireAccessPoint, TRANSFER_SPEED_MAPPING
 
 # TYPE_CHECKING
 if 0:
@@ -84,6 +87,7 @@ def onNetworkTick(network):
     tick_capacity = network.transfer_speed
     inputs = deque(network.get_input_access_points())
     outputs = network.get_output_access_points()
+    transfered_rf = 0
     for output in outputs:
         om = GetMachineStrict(network.dim, *output.target_pos)
         if om is None:
@@ -97,7 +101,9 @@ def onNetworkTick(network):
             if im is None:
                 inputs.popleft()
                 continue
-            ok, rf_output = im.AddPower(rf_output)
+            ok, rf_rest = im.AddPower(rf_output)
+            transfered_rf += rf_output - rf_rest
+            rf_output = rf_rest
             if not ok:
                 inputs.popleft()
             elif rf_output == 0:
@@ -106,6 +112,7 @@ def onNetworkTick(network):
         tick_capacity -= rf_output
         if tick_capacity <= 0:
             break
+    network.trigger_shock(transfered_rf)
 
 
 logic_module = LogicModule(
@@ -118,3 +125,20 @@ logic_module = LogicModule(
     provider_check_func=isPowerProvider,
     accepter_check_func=isPowerAccepter,
 )
+
+
+@OnEntityInsideBlockServerEvent.Listen()
+def onEntityInsideBlock(event):
+    # type: (OnEntityInsideBlockServerEvent) -> None
+    if event.blockName not in TRANSFER_SPEED_MAPPING:
+        return
+    dim = GetEntityDimension(event.entityId)
+    network = logic_module.GetNetworkByTransmitter(
+        dim, event.blockX, event.blockY, event.blockZ, force_use_cached=True
+    )
+    if network is not None:
+        network.entities_hit_wire[event.entityId] = (
+            event.blockX,
+            event.blockY,
+            event.blockZ,
+        )

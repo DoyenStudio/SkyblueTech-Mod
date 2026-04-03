@@ -1,0 +1,84 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:light_dampening": 0,
+            "netease:block_entity": {},
+            "netease:custom_tips": {
+                "value": "\n§7可在发电机与机器间传输能量。\n§b功率： §a512 RF/t"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:pathable": {
+                "value": true
+            },
+            "netease:solid": {
+                "value": false
+            },
+            "netease:tier": {
+                "digger": "pickaxe"
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_wire": {},
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "down": "q.block_state('skybluetech:connection_down')",
+                    "east": "q.block_state('skybluetech:connection_east')",
+                    "north": "q.block_state('skybluetech:connection_north')",
+                    "root_down": "!q.block_state('skybluetech:connection_down')",
+                    "root_east": "!q.block_state('skybluetech:connection_east')",
+                    "root_north": "!q.block_state('skybluetech:connection_north')",
+                    "root_south": "!q.block_state('skybluetech:connection_south')",
+                    "root_up": "!q.block_state('skybluetech:connection_up')",
+                    "root_west": "!q.block_state('skybluetech:connection_west')",
+                    "south": "q.block_state('skybluetech:connection_south')",
+                    "up": "q.block_state('skybluetech:connection_up')",
+                    "west": "q.block_state('skybluetech:connection_west')"
+                },
+                "identifier": "geometry.skybluetech.wire_insulated"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "isotropic": true,
+                    "render_method": "blend",
+                    "texture": "skybluetech:wire_insulated_copper"
+                }
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:wire_insulated_copper",
+            "states": {
+                "skybluetech:connection_down": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_north": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_south": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_up": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_west": [
+                    false,
+                    true
+                ]
+            }
+        }
+    }
+}

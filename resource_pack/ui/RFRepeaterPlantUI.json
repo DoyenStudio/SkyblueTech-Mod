@@ -273,7 +273,7 @@
                                     20.0
                                 ],
                                 "layer": 2,
-                                "texture": "textures/transmitters/silver_wire_item"
+                                "texture": "textures/transmitters/wire_silver_item"
                             }
                         },
                         {
@@ -301,7 +301,7 @@
                                     20.0
                                 ],
                                 "layer": 2,
-                                "texture": "textures/transmitters/silver_wire_item"
+                                "texture": "textures/transmitters/wire_silver_item"
                             }
                         },
                         {

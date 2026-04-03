@@ -11,10 +11,15 @@ class Pipe:
 
 class Wire:
     TIN = "skybluetech:wire_tin"
+    TIN_INSULATED = "skybluetech:wire_insulated_tin"
     COPPER = "skybluetech:wire_copper"
+    COPPER_INSULATED = "skybluetech:wire_insulated_copper"
     SILVER = "skybluetech:wire_silver"
+    SILVER_INSULATED = "skybluetech:wire_insulated_silver"
     SUPER_CONDUCT = "skybluetech:wire_superconduct"
+    SUPER_CONDUCT_INSULATED = "skybluetech:wire_insulated_superconduct"
     CREATIVE = "skybluetech:wire_creative"
+    CREATIVE_INSULATED = "skybluetech:wire_insulated_creative"
 
 
 class Tank:

@@ -58,14 +58,8 @@
         "skybluetech:copper_stick": {
             "textures": "textures/items/sticks/copper_stick"
         },
-        "skybluetech:wire_copper": {
-            "textures": "textures/transmitters/wire_copper_item"
-        },
         "skybluetech:crafting_template": {
             "textures": "textures/items/crafting_template"
-        },
-        "skybluetech:wire_creative": {
-            "textures": "textures/transmitters/wire_creative_item"
         },
         "skybluetech:cupronickel_dust": {
             "textures": "textures/items/dusts/cupronickel_dust"
@@ -313,9 +307,6 @@
         "skybluetech:silver_stick": {
             "textures": "textures/items/sticks/silver_stick"
         },
-        "skybluetech:wire_silver": {
-            "textures": "textures/transmitters/wire_silver_item"
-        },
         "skybluetech:simple_block_debugger": {
             "textures": "textures/items/simple_block_debugger"
         },
@@ -367,9 +358,6 @@
         "skybluetech:sunflower_seeds": {
             "textures": "textures/items/sunflower_seeds"
         },
-        "skybluetech:wire_superconduct": {
-            "textures": "textures/transmitters/wire_superconduct_item"
-        },
         "skybluetech:tin_dust": {
             "textures": "textures/items/dusts/tin_dust"
         },
@@ -381,9 +369,6 @@
         },
         "skybluetech:tin_stick": {
             "textures": "textures/items/sticks/tin_stick"
-        },
-        "skybluetech:wire_tin": {
-            "textures": "textures/transmitters/wire_tin_item"
         },
         "skybluetech:transmitter_settings_wrench": {
             "textures": "textures/items/transmitter_settings_wrench"
@@ -420,6 +405,21 @@
         },
         "skybluetech:vegetable_oil_bucket": {
             "textures": "textures/items/buckets/vegetable_oil_bucket"
+        },
+        "skybluetech:wire_copper": {
+            "textures": "textures/transmitters/wire_copper_item"
+        },
+        "skybluetech:wire_creative": {
+            "textures": "textures/transmitters/wire_creative_item"
+        },
+        "skybluetech:wire_silver": {
+            "textures": "textures/transmitters/wire_silver_item"
+        },
+        "skybluetech:wire_superconduct": {
+            "textures": "textures/transmitters/wire_superconduct_item"
+        },
+        "skybluetech:wire_tin": {
+            "textures": "textures/transmitters/wire_tin_item"
         },
         "skybluetech:wrench_invar": {
             "textures": "textures/items/wrench_invar"

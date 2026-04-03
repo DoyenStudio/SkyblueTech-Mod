@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:air_compress_unit_craft"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:electric_motor"
+            },
+            "B": {
+                "data": 0,
+                "item": "skybluetech:pipe_bronze"
+            },
+            "C": {
+                "data": 0,
+                "item": "skybluetech:fan_blade"
+            },
+            "D": {
+                "data": 0,
+                "item": "skybluetech:tin_plate"
+            }
+        },
+        "pattern": [
+            " C ",
+            "BAB",
+            "DDD"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:air_compress_unit"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

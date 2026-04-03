@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:air_compress_unit_craft"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:control_circuit_basic"
+            },
+            "B": {
+                "data": 0,
+                "item": "skybluetech:tin_plate"
+            }
+        },
+        "pattern": [
+            "BA"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:crafting_template"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

@@ -22,10 +22,11 @@ loaded_controls = {}  # type: dict[str, list[Control]]
 # 都没有提供 category 参数, 所以请避免 name 重复
 
 
-class Control:
+class Control(object):
     def __init__(self, category, name, default_key, default_gamepad):
         # type: (str, str, int, int) -> None
         loaded_controls.setdefault(name, []).append(self)
+        _reg(category, name, default_key, default_gamepad)
         self.category = category
         self.name = name
         self.default_key = default_key

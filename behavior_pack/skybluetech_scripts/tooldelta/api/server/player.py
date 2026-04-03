@@ -85,8 +85,14 @@ def GetPlayerItem(player_id, pos_type, slot, get_userdata=False):
     return Item.from_dict(res) if res is not None else None
 
 
+def GetEntityDimension(entity_id):
+    # type: (str) -> int
+    return CF.CreateDimension(entity_id).GetEntityDimensionId()
+
+
 __all__ = [
     "GetAllPlayers",
+    "GetEntityDimension",
     "GetNameById",
     "GetPlayerDimensionId",
     "GetPlayerMainhandItem",

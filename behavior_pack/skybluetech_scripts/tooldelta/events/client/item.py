@@ -58,7 +58,6 @@ class PlayerTryPutCustomContainerItemClientEvent(ClientEvent):
             "x": self.x,
             "y": self.y,
             "z": self.z,
-            "": self._orig,
         }
 
     def cancel(self):
@@ -121,7 +120,6 @@ class PlayerTryRemoveCustomContainerItemClientEvent(ClientEvent):
             "x": self.x,
             "y": self.y,
             "z": self.z,
-            "": self._orig,
         }
 
     def cancel(self):
@@ -159,7 +157,6 @@ class ClientItemTryUseEvent(ClientEvent):
         return {
             "playerId": self.playerId,
             "itemDict": self.item.marshal(),
-            "": self._orig,
         }
 
     def cancel(self):
@@ -242,7 +239,6 @@ class ClientItemUseOnEvent(ClientEvent):
             "clickX": self.clickX,
             "clickY": self.clickY,
             "clickZ": self.clickZ,
-            "": self._orig,
         }
 
     def cancel(self):

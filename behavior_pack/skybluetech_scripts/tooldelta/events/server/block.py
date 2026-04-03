@@ -835,3 +835,175 @@ class StartDestroyBlockServerEvent(ServerEvent):
         # type: () -> None
         "修改为True时，可阻止玩家进入挖方块的状态。需要与StartDestroyBlockClientEvent一起修改。"
         self._orig["cancel"] = True
+
+
+class StepOnBlockServerEvent(ServerEvent):
+    name = "StepOnBlockServerEvent"
+
+    def __init__(
+        self,
+        blockX,  # type: int
+        blockY,  # type: int
+        blockZ,  # type: int
+        entityId,  # type: str
+        blockName,  # type: str
+        dimensionId,  # type: int
+        _orig,  # type: dict
+    ):
+        self.blockX = blockX
+        """ 方块x坐标 """
+        self.blockY = blockY
+        """ 方块y坐标 """
+        self.blockZ = blockZ
+        """ 方块z坐标 """
+        self.entityId = entityId
+        """ 触发的entity的唯一ID """
+        self.blockName = blockName
+        """ 方块的identifier，包含命名空间及名称 """
+        self.dimensionId = dimensionId
+        """ 维度id """
+        self._orig = _orig
+        """ 原始事件数据 """
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            blockX=data["blockX"],
+            blockY=data["blockY"],
+            blockZ=data["blockZ"],
+            entityId=data["entityId"],
+            blockName=data["blockName"],
+            dimensionId=data["dimensionId"],
+            _orig=data,
+        )
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "blockX": self.blockX,
+            "blockY": self.blockY,
+            "blockZ": self.blockZ,
+            "entityId": self.entityId,
+            "blockName": self.blockName,
+            "dimensionId": self.dimensionId,
+        }
+
+    def cancel(self):
+        # type: () -> None
+        "禁止触发, 可阻止触发后续物理交互事件"
+        self._orig["cancel"] = True
+
+
+class StepOffBlockServerEvent(ServerEvent):
+    name = "StepOffBlockServerEvent"
+
+    def __init__(
+        self,
+        blockX,  # type: int
+        blockY,  # type: int
+        blockZ,  # type: int
+        entityId,  # type: str
+        blockName,  # type: str
+        dimensionId,  # type: int
+    ):
+        self.blockX = blockX
+        """ 方块x坐标 """
+        self.blockY = blockY
+        """ 方块y坐标 """
+        self.blockZ = blockZ
+        """ 方块z坐标 """
+        self.entityId = entityId
+        """ 触发的entity的唯一ID """
+        self.blockName = blockName
+        """ 方块的identifier，包含命名空间及名称 """
+        self.dimensionId = dimensionId
+        """ 维度id """
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            blockX=data["blockX"],
+            blockY=data["blockY"],
+            blockZ=data["blockZ"],
+            entityId=data["entityId"],
+            blockName=data["blockName"],
+            dimensionId=data["dimensionId"],
+        )
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "blockX": self.blockX,
+            "blockY": self.blockY,
+            "blockZ": self.blockZ,
+            "entityId": self.entityId,
+            "blockName": self.blockName,
+            "dimensionId": self.dimensionId,
+        }
+
+
+class OnEntityInsideBlockServerEvent(ServerEvent):
+    name = "OnEntityInsideBlockServerEvent"
+
+    def __init__(
+        self,
+        entityId,  # type: str
+        slowdownMultiX,  # type: float
+        slowdownMultiY,  # type: float
+        slowdownMultiZ,  # type: float
+        blockX,  # type: int
+        blockY,  # type: int
+        blockZ,  # type: int
+        blockName,  # type: str
+        _orig,  # type: dict
+    ):
+        self.entityId = entityId
+        """ 实体id """
+        self.slowdownMultiX = slowdownMultiX
+        """ 实体移速X方向的减速比例，可在脚本层被修改 """
+        self.slowdownMultiY = slowdownMultiY
+        """ 实体移速Y方向的减速比例，可在脚本层被修改 """
+        self.slowdownMultiZ = slowdownMultiZ
+        """ 实体移速Z方向的减速比例，可在脚本层被修改 """
+        self.blockX = blockX
+        """ 方块位置x """
+        self.blockY = blockY
+        """ 方块位置y """
+        self.blockZ = blockZ
+        """ 方块位置z """
+        self.blockName = blockName
+        """ 方块的identifier，包含命名空间及名称 """
+        self._orig = _orig
+        """ 原始事件数据 """
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            entityId=data["entityId"],
+            slowdownMultiX=data["slowdownMultiX"],
+            slowdownMultiY=data["slowdownMultiY"],
+            slowdownMultiZ=data["slowdownMultiZ"],
+            blockX=data["blockX"],
+            blockY=data["blockY"],
+            blockZ=data["blockZ"],
+            blockName=data["blockName"],
+            _orig=data,
+        )
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "entityId": self.entityId,
+            "slowdownMultiX": self.slowdownMultiX,
+            "slowdownMultiY": self.slowdownMultiY,
+            "slowdownMultiZ": self.slowdownMultiZ,
+            "blockX": self.blockX,
+            "blockY": self.blockY,
+            "blockZ": self.blockZ,
+            "blockName": self.blockName,
+        }
+
+    def cancel(self):
+        # type: () -> None
+        "可由脚本层回传True给引擎，阻止触发后续原版逻辑"
+        self._orig["cancel"] = True

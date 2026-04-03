@@ -8,6 +8,7 @@ from ..api.client import (
     SetActorBlockGeometryScale,
     AddActorBlockGeometry,
     DeleteActorBlockGeometry,
+    SetEntityShadowShow,
 )
 from ..api.common import ExecLater
 
@@ -17,6 +18,8 @@ class GeometryModel(object):
         # type: (str) -> None
         self.entity_id = entity_id
         self.geo_id = None
+        self._last_block_id = None
+        self._last_block_aux = None
 
     def SetBlockPaletteModel(self, block_palette, geo_id, scale=None):
         # type: (BlockPaletteComponent, str, tuple[float, float, float] | None) -> bool
@@ -36,6 +39,8 @@ class GeometryModel(object):
 
     def SetBlockModel(self, block_name, aux, scale=None):
         # type: (str, int, tuple[float, float, float] | None) -> bool
+        if block_name == self._last_block_id and aux == self._last_block_aux:
+            return True
         if self.geo_id is not None:
             res = self.RemoveGeometry()
             if not res:
@@ -50,6 +55,9 @@ class GeometryModel(object):
             res = SetActorBlockGeometryScale(self.entity_id, self.geo_id, scale)
             if not res:
                 print("[Warning] set geometry scale failed")
+        if final_res:
+            self._last_block_id = block_name
+            self._last_block_aux = aux
         return final_res
 
     def RemoveGeometry(self):
@@ -72,6 +80,7 @@ def CreateSingleBlockModelEntity(
     entity_id = CreateClientEntity(entity_name, pos, (0, 0))
     if entity_id is None:
         raise Exception("Failed to create entity: " + entity_name)
+    SetEntityShadowShow(entity_id, False)
     model = GeometryModel(entity_id)
     return model, model.SetBlockModel(block_name, aux)
 
@@ -82,6 +91,7 @@ def CreateBlankModel(pos, entity_name="skybluetech:model_entity"):
     entity_id = CreateClientEntity(entity_name, (x + 0.5, y, z + 0.5), (0, 180))
     if entity_id is None:
         raise Exception("Failed to create entity: " + entity_name)
+    SetEntityShadowShow(entity_id, False)
     model = GeometryModel(entity_id)
     return model
 

@@ -16,6 +16,11 @@ def GetEntitiesBySelector(selector, from_entity=""):
     return CF.CreateEntityComponent(from_entity).GetEntitiesBySelector(selector)
 
 
+def GetEntityTypeFamily(entity_id):
+    # type: (str) -> list[str]
+    return CF.CreateAttr(entity_id).GetTypeFamily()
+
+
 def GetDroppedItem(entity_id, get_user_data=False):
     # type: (str, bool) -> Item | None
     itemdict = CF.CreateItem(GetLevelId()).GetDroppedItem(entity_id, get_user_data)
@@ -44,11 +49,28 @@ def SetMotion(entity_id, motion):
     return CF.CreateActorMotion(entity_id).SetMotion(motion)
 
 
+def Hurt(
+    entity_id,
+    damage,
+    cause,
+    attackerId=None,
+    childAttackerId=None,
+    knocked=True,
+    customTag=None,
+):
+    # type: (str, float, str, str | None, str | None, bool, str | None) -> bool
+    return CF.CreateHurt(entity_id).Hurt(
+        damage, cause, attackerId, childAttackerId, knocked, customTag
+    )
+
+
 __all__ = [
     "GetEntitiesInSquareArea",
     "GetEntitiesBySelector",
     "GetDroppedItem",
+    "GetEntityTypeFamily",
     "GetPos",
+    "Hurt",
     "SpawnDroppedItem",
     "SetMotion",
     "DestroyEntity",

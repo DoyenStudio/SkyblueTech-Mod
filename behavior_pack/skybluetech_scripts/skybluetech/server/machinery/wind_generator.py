@@ -212,7 +212,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
         else:
             self.rot_speed = 0
         self.CallSync()
-        self.SetOutputPower(self.output_power)
+        self.SetOutputPower(self.power_output)
 
     def get_actual_output_pc(self):
         if self.facing == "north" or self.facing == "south":

@@ -646,9 +646,9 @@
                         "default"
                     ],
                     "layer": 5,
-                    "font_scale_factor": 1.6,
-                    "font_size": "small",
-                    "font_type": "default",
+                    "font_scale_factor": 0.9999999999999997,
+                    "font_type": "unicode",
+                    "shadow": true,
                     "text_alignment": "right"
                 }
             },
@@ -1143,21 +1143,6 @@
         ],
         "controls": [
             {
-                "item_renderer": {
-                    "type": "custom",
-                    "renderer": "inventory_item_renderer",
-                    "size": [
-                        "100%+-4px",
-                        "100%+-4px"
-                    ],
-                    "layer": 4,
-                    "property_bag": {
-                        "#item_id_aux": 22872064,
-                        "#item_name": "skybluetech:searcher"
-                    }
-                }
-            },
-            {
                 "default@netease_editor_template_namespace.default": {}
             },
             {
@@ -1168,6 +1153,17 @@
             },
             {
                 "button_label@netease_editor_template_namespace.button_label": {}
+            },
+            {
+                "image": {
+                    "type": "image",
+                    "size": [
+                        "100%+-4px",
+                        "100%+-4px"
+                    ],
+                    "layer": 3,
+                    "texture": "textures/ui/searcher"
+                }
             }
         ]
     },

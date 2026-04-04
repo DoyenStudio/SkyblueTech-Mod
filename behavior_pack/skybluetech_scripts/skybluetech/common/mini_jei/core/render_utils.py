@@ -49,7 +49,7 @@ class ItemDisplayer:
 
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):
-                root.renderRecipesOfInput(self.item.id, CategoryType.ITEM)
+                root.render_recipes_of_input(self.item.id, CategoryType.ITEM)
             return
         if NeedRemoveDisplayBoard(self.ctrl):
             RemoveDisplayBoard(self.ctrl._root)

@@ -41,7 +41,7 @@ class FluidDisplayer:
 
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):
-                root.renderRecipesOfInput(self.fluid_id, CategoryType.FLUID)
+                root.render_recipes_of_input(self.fluid_id, CategoryType.FLUID)
             return
         if NeedRemoveDisplayBoard(self.ctrl):
             RemoveDisplayBoard(self.ctrl._root)
@@ -103,7 +103,7 @@ class InputDisplayer:
 
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):
-                root.renderRecipesOfInput(current_disp_item_id, CategoryType.ITEM)
+                root.render_recipes_of_input(current_disp_item_id, CategoryType.ITEM)
             return
         if NeedRemoveDisplayBoard(self.ctrl):
             RemoveDisplayBoard(self.ctrl._root)
@@ -153,7 +153,7 @@ class MultiItemsDisplayer:
 
             root = self.ctrl._root
             if isinstance(root, RecipeCheckerUI):
-                root.renderRecipesOfInput(current_disp_item.id, CategoryType.ITEM)
+                root.render_recipes_of_input(current_disp_item.id, CategoryType.ITEM)
             return
         if NeedRemoveDisplayBoard(self.ctrl):
             RemoveDisplayBoard(self.ctrl._root)

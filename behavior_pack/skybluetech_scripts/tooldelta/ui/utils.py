@@ -14,6 +14,11 @@ class UIPath(object):
         # type: (str) -> None
         self.base = base
 
+    @property
+    def parent(self):
+        # type: () -> UIPath
+        return UIPath(self.base.rsplit("/", 1)[0])
+
     def __truediv__(self, path):
         # type: (str) -> UIPath
         return UIPath(self.base + "/" + path)

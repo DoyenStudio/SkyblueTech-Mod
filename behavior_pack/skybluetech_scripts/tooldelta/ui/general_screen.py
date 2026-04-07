@@ -36,8 +36,10 @@ class ToolDeltaScreen(ClientListenerService):
             else getattr(screen_instance, "screenNode")
         )
         self._activated = False
-        self._element_cacher = {}  # type: dict[str, UBaseCtrl]
         self._vars = {}
+        self._load_ctrls = []  # type: list[UBaseCtrl]
+        self._on_ticking_cbs = []
+        self._on_destroy_cbs = []
 
     @classmethod
     def convertFrom(
@@ -45,7 +47,24 @@ class ToolDeltaScreen(ClientListenerService):
         screen_node,  # type: _ScreenNode
     ):
         "将原版 ScreenNode 转换为 ToolDeltaScreen"
-        return cls(screen_node.name, screen_node)
+        instance = cls(screen_node.name, screen_node)
+
+        # not safe
+        instance._do_active()
+
+        # wrap Destroy
+        _orig_on_destroy = getattr(screen_node.Destroy, "_origin_on_destroy", None)
+        if _orig_on_destroy is None:
+            _orig_on_destroy = screen_node.Destroy
+
+        def _wrap_on_destroy():
+            instance._on_destroy()
+            _orig_on_destroy()
+
+        screen_node.Destroy = _wrap_on_destroy
+        _wrap_on_destroy._origin_on_destroy = screen_node.Destroy
+
+        return instance
 
     def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
@@ -54,11 +73,23 @@ class ToolDeltaScreen(ClientListenerService):
             self.base.CreateChildControl(ctrl_def_name, ctrl_name, None, force_update),  # type: ignore
         )
 
+    def GetBaseUIControl(
+        self,
+        path,  # type: str | UIPath
+    ):
+        if isinstance(path, UIPath):
+            path = path.base
+        return self.base.GetBaseUIControl(path)
+
     def GetElement(self, path):
         # type: (str | UIPath) -> UBaseCtrl
         if isinstance(path, UIPath):
             path = path.base
-        return self._get_element_cache(path)
+        return UBaseCtrl(self, self.GetBaseUIControl(path))
+
+    def AddOnTickingCallback(self, cb):
+        self._on_ticking_cbs.append(cb)
+        return self
 
     @classmethod
     def CreateUI(cls, params={}):
@@ -228,6 +259,12 @@ class ToolDeltaScreen(ClientListenerService):
         self._activated = False
         self.disable_listeners()
         self._disable_delayed_listeners()
+        for ctrl in self._load_ctrls:
+            ctrl._call_destroy()
+
+    def _hang_ctrl(self, ctrl):
+        # type: (UBaseCtrl) -> None
+        self._load_ctrls.append(ctrl)
 
     def _on_create(self):
         self._do_active()
@@ -235,6 +272,7 @@ class ToolDeltaScreen(ClientListenerService):
 
     def _on_destroy(self):
         self._do_deactive()
+        self._on_ticking_cbs = []
         self.OnDestroy()
 
     def _on_active(self):
@@ -245,17 +283,10 @@ class ToolDeltaScreen(ClientListenerService):
 
     def _on_ticking(self):
         self.OnTicking()
+        for cb in self._on_ticking_cbs:
+            cb()
 
     __getitem__ = GetElement
-
-    def _get_element_cache(self, path):
-        # type: (str) -> UBaseCtrl
-        if path in self._element_cacher:
-            return self._element_cacher[path]
-        else:
-            ui = UBaseCtrl(self, self.base.GetBaseUIControl(path))
-            self._element_cacher[path] = ui
-            return ui
 
     def OnCreate(self):
         "子类覆写该方法"

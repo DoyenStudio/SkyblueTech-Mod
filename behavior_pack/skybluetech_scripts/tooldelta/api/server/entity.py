@@ -21,6 +21,11 @@ def GetEntityTypeFamily(entity_id):
     return CF.CreateAttr(entity_id).GetTypeFamily()
 
 
+def GetEntityDimension(entity_id):
+    # type: (str) -> int
+    return CF.CreateDimension(entity_id).GetEntityDimensionId()
+
+
 def GetDroppedItem(entity_id, get_user_data=False):
     # type: (str, bool) -> Item | None
     itemdict = CF.CreateItem(GetLevelId()).GetDroppedItem(entity_id, get_user_data)
@@ -65,6 +70,7 @@ def Hurt(
 
 
 __all__ = [
+    "GetEntityDimension",
     "GetEntitiesInSquareArea",
     "GetEntitiesBySelector",
     "GetDroppedItem",

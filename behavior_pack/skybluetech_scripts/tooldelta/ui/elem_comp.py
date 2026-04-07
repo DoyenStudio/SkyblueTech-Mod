@@ -22,10 +22,10 @@ class UBaseCtrl(object):
         self._root = root
         self.base = base
         self._cache_t = None  # type: Any | None
-        self._child_cacher = {}
         self._vars = {}
         self._removed = False
         self._removed_listeners = []  # type: list[Callable[[], None]]
+        root._hang_ctrl(self)
 
     def asLabel(self):
         # type: () -> ULabel
@@ -75,6 +75,22 @@ class UBaseCtrl(object):
         # type: () -> USwitch
         return self._cache_t or self._save_t(
             USwitch(self._root, self.base.asSwitchToggle())
+        )
+
+    def clone(
+        self,
+        new_name,  # type: str
+    ):
+        this_path = self.getFullPath()
+        parent_path = UIPath(this_path).parent
+        ok = self._root.base.Clone(this_path, str(parent_path), new_name)
+        if not ok:
+            raise RuntimeError("Can't clone UI element to %s" % new_name)
+        new_control_converter = CONVERT_MAP.get(self.__class__)
+        if new_control_converter is None:
+            raise RuntimeError("Can't clone %s due to convert map lack" % self.__class__.__name__)
+        return self.__class__(
+            self._root, new_control_converter(self._root.GetBaseUIControl(parent_path / new_name))
         )
 
     def getFullPath(self):
@@ -155,8 +171,9 @@ class UBaseCtrl(object):
     def SetSize(
         self,
         xy,  # type: tuple[float, float]
+        resize_children=False,
     ):
-        self.base.SetSize(xy)
+        self.base.SetSize(xy, resize_children)
         return self
 
     def SetFullSize(
@@ -194,22 +211,24 @@ class UBaseCtrl(object):
             print("[Warning] control already removed")
             return False
         self._removed = True
-        self.callDestroy()
+        self._call_destroy()
         return self._root.base.RemoveChildControl(self.base)
 
     def GetElement(self, path):
         # type: (str | UIPath) -> UBaseCtrl
-        return self._get_path_cache(path)
+        if isinstance(path, UIPath):
+            path = path.base
+        return UBaseCtrl(self._root, self.base.GetChildByPath("/" + path))
 
     # ====
 
     def __truediv__(self, path):
         # type: (str) -> UBaseCtrl
-        return self._get_path_cache(path)
+        return self.GetElement(path)
 
     __getitem__ = __div__ = __truediv__
 
-    def callDestroy(self):
+    def _call_destroy(self):
         for func in self._removed_listeners:
             func()
         self.OnDestroyed()
@@ -217,15 +236,6 @@ class UBaseCtrl(object):
     def _save_t(self, obj):
         self._cache_t = obj
         return obj
-
-    def _get_path_cache(self, path):
-        if isinstance(path, UIPath):
-            path = path.base
-        if path not in self._child_cacher:
-            self._child_cacher[path] = UBaseCtrl(
-                self._root, self.base.GetChildByPath("/" + path)
-            )
-        return self._child_cacher[path]
 
 
 class UItemRenderer(UBaseCtrl):
@@ -348,7 +358,6 @@ class UGrid(UBaseCtrl):
         if base is None:
             raise TypeError("expected GridUIControl, got " + str(type(base)))
         self.path = self.base.GetPath()
-        grid_comp_size_changed_cbs[self.path] = self.onGridSizeChanged
         self.later_exec_cbs = []  # type: list[Callable[[], None]]
         self.base = base
 
@@ -378,6 +387,7 @@ class UGrid(UBaseCtrl):
     def ExecuteAfterUpdate(self, cb):
         # type: (Callable[[], None]) -> None
         self.later_exec_cbs.append(cb)
+        grid_comp_size_changed_cbs[self.path] = self.onGridSizeChanged
 
     def onGridSizeChanged(self):
         try:
@@ -385,9 +395,6 @@ class UGrid(UBaseCtrl):
                 cb()
         finally:
             self.later_exec_cbs = []
-
-    def OnDestroyed(self):
-        UBaseCtrl.OnDestroyed(self)
         grid_comp_size_changed_cbs.pop(self.base.GetPath(), None)
 
 
@@ -531,12 +538,25 @@ def onGridComponentSizeChanged(event):
     path = event.path
     if path.startswith("/main"):
         path = path[5:]
-    cb = grid_comp_size_changed_cbs.get(path)
+    cb = grid_comp_size_changed_cbs.pop(path, None)
     if cb:
+        # cb()
         ExecLater(
             0, cb
         )  # TODO: 不知道为什么 如果直接 cb() grid 会获取不到新 position。。
 
+
+CONVERT_MAP = {
+    UBaseCtrl: lambda x: x,
+    UItemRenderer: lambda x: x.asItemRenderer(),
+    ULabel: lambda x: x.asLabel(),
+    UImage: lambda x: x.asImage(),
+    UButton: lambda x: x.asButton(),
+    UScrollView: lambda x: x.asScrollView(),
+    UGrid: lambda x: x.asGrid(),
+    UNeteasePaperDoll: lambda x: x.asNeteasePaperDoll(),
+    USlider: lambda x: x.asSlider(),
+}  # type: dict[type[UBaseCtrl], Callable[[BaseUIControl], BaseUIControl | None]]
 
 __all__ = [
     "UBaseCtrl",

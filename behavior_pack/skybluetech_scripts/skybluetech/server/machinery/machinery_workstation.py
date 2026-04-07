@@ -106,6 +106,10 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
                 pincer_item.durability = max(0, orig_durability - 1)
                 if pincer_item.durability <= 0:
                     pincer_item = None
+                    SetCommand(
+                        'execute as "%s" at @s positioned %d %d %d run playsound random.break'
+                        % (GetNameById(event.player_id), self.x, self.y, self.z)
+                    )
             self.SetSlotItem(10, pincer_item)
         if recipe.wrench_level > 0:
             if wrench_item is None:
@@ -117,6 +121,10 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
                 wrench_item.durability = max(0, orig_durability - 1)
                 if wrench_item.durability <= 0:
                     wrench_item = None
+                    SetCommand(
+                        'execute as "%s" at @s positioned %d %d %d run playsound random.break'
+                        % (GetNameById(event.player_id), self.x, self.y, self.z)
+                    )
             self.SetSlotItem(9, wrench_item)
         self.craft_times += 1
         if self.craft_times >= recipe.craft_times:

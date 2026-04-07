@@ -99,7 +99,12 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
             self.sync.drill_progress = float(self.current_drill_times) / (
                 self.total_drill_times or 1
             )
-            self.sync.lava_storage_left = float(self.rest_volume) / self.total_volume
+            if self.drill_finished():
+                self.sync.lava_storage_left = (
+                    float(self.rest_volume) / self.total_volume
+                )
+            else:
+                self.sync.lava_storage_left = 0
             self.sync.fluid_id = self.get_fluid_output_io().fluid_id
             self.sync.fluid_volume = self.get_fluid_output_io().fluid_volume
             self.sync.max_volume = self.get_fluid_output_io().max_fluid_volume

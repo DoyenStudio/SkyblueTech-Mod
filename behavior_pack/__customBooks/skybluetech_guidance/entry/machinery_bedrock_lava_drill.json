@@ -1,0 +1,24 @@
+{
+    "parent": "machinery_source_extraction_toc",
+    "icon": "textures/machines/bedrock_lava_drill_controller_front",
+    "title": "基岩熔岩钻",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "基岩熔岩钻是一种§b多方块结构机器§r， 可以在基岩层处开采§4深层熔岩§r。 深层熔岩可以进一步被离心成几种熔岩， 进而被离心为熔融金属和其它成分。 它的钻头必须对准一块基岩。"
+        },
+        {
+            "type": "textPage",
+            "content": "基岩熔岩钻需要先钻破顶层基岩才能把泵送管道送至深层熔岩层， 这意味着它在开始工作前至少需要安装一个§c耐热钻头§r到钻头槽位。\n\n钻头钻开顶层基岩层需要一定时间， §n消耗一定量耐久§r。 一旦其钻开了基岩层， 钻头的耐久就会被§2停止消耗§r， 基岩熔岩钻即开始泵出深层熔岩。"
+        },
+        {
+            "type": "textPage",
+            "content": "每个区域的深层熔岩量是§n有限的§r， 你可以通过控制器界面查看该区域剩余熔岩储量。\n\n在安放机器前， 强烈推荐您先使用§d深层熔岩谐振探测器§r探明此地的大致熔岩储量再搭建好熔岩钻！"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:bedrock_lava_drill_controller"
+        }
+    ]
+}

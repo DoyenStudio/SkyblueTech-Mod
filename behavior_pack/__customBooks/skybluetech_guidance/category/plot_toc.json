@@ -1,6 +1,6 @@
 {
     "title": "故事",
-    "icon": "textures/items/paper",
+    "icon": "textures/items/book_writable",
     "content": "番外内容！ 关于《蔚蓝科技》的前情提要",
     "isLocked": false
 }

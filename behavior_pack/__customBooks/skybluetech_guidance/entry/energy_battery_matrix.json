@@ -1,0 +1,20 @@
+{
+    "parent": "energy_toc",
+    "icon": "textures/machines/battery_matrix_controller_front",
+    "title": "电池仓",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "电池仓是一种§b多方块结构机器§r， 可以存入电池以用作§c存储能源§r。\n\n电池仓本身并没有储能容量， 它的储能能力完全由放置在其中的§5电池§r决定。"
+        },
+        {
+            "type": "textPage",
+            "content": "在电池仓控制器处可以存入或取出电池、 启用或禁用能量输入或输出功能。 \n\n电池仓所存放的电池§9最大输入输出功率总合§r决定电池仓的最大输入输出功率。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:battery_matrix_controller"
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "parent": "energy_toc",
+    "icon": "textures/machines/thermal_generator_front",
+    "title": "能源中继器",
+    "isLocked": false,
+    "pages": [
+        {
+            "type": "textPage",
+            "content": "要进行远距离传输能源， 能源中继塔是个不错的选择。\n\n能源中继塔可自动连接摆放在其基座旁边的能量线缆。"
+        },
+        {
+            "type": "textPage",
+            "content": "要将两个能源中继塔进行连接， 只需要放置并打开能源中继塔的界面， 点击 [ §d拉线§r ] 按钮，走到另一台中继塔的旁边， 点击屏幕上的 [ §d完成 §r] 按钮即可。 两台相互连接的中继器的最大直线距离为 64 格。"
+        },
+        {
+            "type": "textPage",
+            "content": "在中继塔界面内可以配置中继塔的能源输入输出模式， 即中继塔应该向基座的电缆供应还是接收能量。 \n\n即使能源中继网的一部分不在区块加载范围内， 只要网络的供能端和用电端都被加载， 电网就能正常工作。"
+        },
+        {
+            "type": "skybluetech:machinery_workstation_recipe_page",
+            "recipe": "skybluetech:thermal_generator"
+        }
+    ]
+}

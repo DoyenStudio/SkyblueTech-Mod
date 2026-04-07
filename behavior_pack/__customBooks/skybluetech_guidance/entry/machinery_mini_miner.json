@@ -1,6 +1,6 @@
 {
-    "parent": "machinery_mini_miner",
-    "icon": "textures/icon/mini_mine_icon",
+    "parent": "machinery_source_extraction_toc",
+    "icon": "textures/icon/mini_miner_icon",
     "title": "迷你采矿机",
     "isLocked": false,
     "pages": [

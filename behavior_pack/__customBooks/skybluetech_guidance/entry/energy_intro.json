@@ -1,5 +1,6 @@
 {
     "parent": "energy_toc",
+    "sortnum": 100,
     "icon": "textures/icon/energy_icon",
     "title": "能源",
     "pages": [

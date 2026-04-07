@@ -64,6 +64,11 @@ class RawOres:
     PLATINUM = "skybluetech:raw_platinum"
 
 
+class Batteries:
+    JUNIOR = "skybluetech:battery_junior"
+    LEADACID = "skybluetech:battery_leadacid"
+
+
 class Upgraders:
     BASIC_SPEED_UPGRADER = "skybluetech:upgrader_basic_speed"
     BASIC_ENERGY_UPGRADER = "skybluetech:upgrader_basic_energy"
@@ -103,6 +108,10 @@ class Paddle:
     STEEL = "skybluetech:paddle_steel"
 
 
+class Icons:
+    SHEET = "skybluetech:sheet_item"
+
+
 AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
 DRILL_TOP = "skybluetech:drill_top"
@@ -123,3 +132,5 @@ SKYBLUE_HELMET = "skybluetech:skyblue_helmet"
 SKYBLUE_CHESTPLATE = "skybluetech:skyblue_chestplate"
 SKYBLUE_LEGGINGS = "skybluetech:skyblue_leggings"
 SKYBLUE_BOOTS = "skybluetech:skyblue_boots"
+
+GUIDANCE = "skybluetech:guidance"

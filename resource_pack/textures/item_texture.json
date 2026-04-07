@@ -301,6 +301,9 @@
         "skybluetech:seven": {
             "textures": "textures/items/7"
         },
+        "skybluetech:sheet_item": {
+            "textures": "textures/icon/introduce_icon"
+        },
         "skybluetech:silver_dust": {
             "textures": "textures/items/dusts/silver_dust"
         },

@@ -1,0 +1,386 @@
+# coding=utf-8
+from . import (
+    machinery_crafting,
+    machinery_energy,
+    machinery_generator,
+    machinery_logistics,
+    machinery_misc,
+    machinery_production,
+)
+from skybluetech_scripts.skybluetech.common.define import id_enum
+from skybluetech_scripts.skybluetech.client.guidance.book_custom.define import (
+    TextPage,
+    MainTOCPage,
+    MainTOCPageSection,
+    TOCPage,
+    TOCPageSection,
+    PageGroup,
+)
+
+from . import (
+    machinery_source_extraction,
+)
+
+
+machinery_production_toc = PageGroup([
+    TextPage(
+        "machinery_produce_toc_1",
+        "机器-工业生产",
+        "本章展示适合进行§9工业生产§r的机器， 这些机器适用于产出材料或对材料进行进一步加工。",
+    ),
+    TOCPage(
+        "machinery_produce_toc_2",
+        [
+            TOCPageSection(
+                id_enum.ALLOY_FURNACE, 0, "合金炉", machinery_production.alloy_furnace
+            ),
+            TOCPageSection(
+                id_enum.COMPRESSOR, 0, "压缩机", machinery_production.compressor
+            ),
+            TOCPageSection(
+                id_enum.DISTILLATION_CHAMBER,
+                0,
+                "小型蒸馏仓",
+                machinery_production.distillation_chamber,
+            ),
+            TOCPageSection(
+                id_enum.ELECTRIC_CRAFTER,
+                0,
+                "电动合成台",
+                machinery_production.electric_crafter,
+            ),
+            TOCPageSection(
+                id_enum.ELECTRIC_HEATER,
+                0,
+                "电力加热仓",
+                machinery_production.electric_heater,
+            ),
+            TOCPageSection(
+                id_enum.FLUID_CONDENSER,
+                0,
+                "流体冷却机",
+                machinery_production.fluid_condenser,
+            ),
+            TOCPageSection(
+                id_enum.FREEZER,
+                0,
+                "冷冻机",
+                machinery_production.freezer,
+            ),
+            TOCPageSection(
+                id_enum.HYDROPONIC_BASE,
+                0,
+                "水培基座",
+                machinery_production.hydroponic_base,
+            ),
+        ],
+    ),
+    TOCPage(
+        "machinery_produce_toc_3",
+        [
+            TOCPageSection(
+                id_enum.HYDROPONIC_BED,
+                0,
+                "水培床",
+                machinery_production.hydroponic_bed,
+            ),
+            TOCPageSection(
+                id_enum.MACERATOR,
+                0,
+                "磨粉机",
+                machinery_production.macerator,
+            ),
+            TOCPageSection(
+                id_enum.MAGMA_CENTRIFUGE,
+                0,
+                "高热流体离心机",
+                machinery_production.magma_centrifuge,
+            ),
+            TOCPageSection(
+                id_enum.MAGMA_FURNACE,
+                0,
+                "熔岩炉",
+                machinery_production.magma_furnace,
+            ),
+            TOCPageSection(
+                id_enum.METAL_PRESS,
+                0,
+                "金属冲压机",
+                machinery_production.metal_press,
+            ),
+            TOCPageSection(
+                id_enum.MIXER,
+                0,
+                "固液搅拌机",
+                machinery_production.mixer,
+            ),
+            TOCPageSection(
+                id_enum.OIL_EXTRACTOR,
+                0,
+                "榨油机",
+                machinery_production.oil_extractor,
+            ),
+            TOCPageSection(
+                id_enum.REDSTONE_FURNACE,
+                0,
+                "红石炉",
+                machinery_production.redstone_furnace,
+            ),
+        ],
+    ),
+])
+
+machinery_source_extraction_toc = PageGroup([
+    TextPage(
+        "machinery_source_extraction_toc_1",
+        "机器-资源开采",
+        "本章展示适合进行§2资源开采§r的机器， 这些机器可以从环境中开采流水线生产所需的资源。",
+    ),
+    TOCPage(
+        "machinery_source_extraction_toc_2",
+        [
+            TOCPageSection(
+                id_enum.BEDROCK_LAVA_DRILL_CONTROLLER,
+                0,
+                "基岩熔岩钻",
+                machinery_source_extraction.bedrock_lava_drill,
+            ),
+            TOCPageSection(
+                id_enum.DIGGER,
+                0,
+                "电力挖掘钻",
+                machinery_source_extraction.digger,
+            ),
+            TOCPageSection(
+                id_enum.FARMING_STATION,
+                0,
+                "种植站",
+                machinery_source_extraction.farming_station,
+            ),
+            TOCPageSection(
+                id_enum.FORESTER,
+                0,
+                "伐木机",
+                machinery_source_extraction.forester,
+            ),
+            TOCPageSection(
+                id_enum.MINI_MINER,
+                0,
+                "迷你采矿机",
+                machinery_source_extraction.mini_miner,
+            ),
+            TOCPageSection(
+                id_enum.PUMP,
+                0,
+                "电动泵",
+                machinery_source_extraction.pump,
+            ),
+        ],
+    ),
+])
+
+machinery_generator_toc = PageGroup([
+    TextPage(
+        "machinery_generator_toc_1",
+        "机器-发电设备",
+        "本章展示所有可以产出能量的机器设备， 它们是蔚蓝科技工业运行所需能量§c“红石能”§r的核心来源。",
+    ),
+    TOCPage(
+        "machinery_generator_toc_2",
+        [
+            TOCPageSection(
+                id_enum.CREATIVE_GENERATOR,
+                0,
+                "创造模式发电机",
+                machinery_generator.creative_generator,
+            ),
+            TOCPageSection(
+                id_enum.GEO_THERMAL_GENERATOR,
+                0,
+                "地热发电机",
+                machinery_generator.geothermal_generator,
+            ),
+            TOCPageSection(
+                id_enum.THERMAL_GENERATOR,
+                0,
+                "火力发电机",
+                machinery_generator.thermal_generator,
+            ),
+            TOCPageSection(
+                id_enum.SOLAR_PANEL,
+                0,
+                "太阳能电池板",
+                machinery_generator.solar_panel,
+            ),
+            TOCPageSection(
+                id_enum.WIND_GENERATOR,
+                0,
+                "风力发电机",
+                machinery_generator.wind_generator,
+            ),
+        ],
+    ),
+])
+
+machinery_energy_toc = PageGroup([
+    TextPage(
+        "machinery_energy_1",
+        "机器-能源利用",
+        "本章展示可存储、 传输红石能或以其它方式处理能源的机器。",
+    ),
+    TOCPage(
+        "machinery_energy_2",
+        [
+            TOCPageSection(
+                id_enum.BATTERY_MATRIX_CONTROLLER,
+                0,
+                "电池仓",
+                machinery_energy.battery_matrix,
+            ),
+            TOCPageSection(
+                id_enum.CHARGER,
+                0,
+                "充能台",
+                machinery_energy.charger,
+            ),
+            TOCPageSection(
+                id_enum.CREATIVE_POWER_ACCEPTOR,
+                0,
+                "虚空放电器",
+                machinery_energy.creative_power_acceptor,
+            ),
+            TOCPageSection(
+                id_enum.RF_REPEATER_PLANT,
+                0,
+                "能源中继塔",
+                machinery_energy.rf_repeater_plant,
+            ),
+        ],
+    ),
+])
+
+machinery_misc_toc = PageGroup([
+    TextPage(
+        "machinery_misc_1",
+        "机器-杂项",
+        "本章展示一些不能被简单被归类到分组里的机器， 它们的功能花样繁多。",
+    ),
+    TOCPage(
+        "machinery_misc_2",
+        [
+            TOCPageSection(
+                id_enum.DEEPSLATE_LAVA_VIBRATOR,
+                0,
+                "深层熔岩谐振探测器",
+                machinery_misc.deepslate_lava_vibrator,
+            ),
+            TOCPageSection(
+                id_enum.HOVER_TEXT_DISPLAYER,
+                0,
+                "悬浮文本投影器",
+                machinery_misc.hover_text_displayer,
+            ),
+        ],
+    ),
+])
+
+machinery_crafting_toc = PageGroup([
+    TextPage(
+        "machinery_crafting_1",
+        "机器-制造加工",
+        "本章展示所有可以进行机械加工的机器。",
+    ),
+    TOCPage(
+        "machinery_crafting_2",
+        [
+            TOCPageSection(
+                id_enum.ASSEMBLER,
+                0,
+                "装配站",
+                machinery_crafting.assembler,
+            ),
+            TOCPageSection(
+                id_enum.MACHINERY_WORKSTATION,
+                0,
+                "机件加工台",
+                machinery_crafting.machinery_workstation,
+            ),
+        ],
+    ),
+])
+
+machinery_logistics_toc = PageGroup([
+    TextPage(
+        "machinery_logistics_1",
+        "机器-物流",
+        "本章展示物流相关的机器。",
+    ),
+    TOCPage(
+        "machinery_logistics_2",
+        [
+            TOCPageSection(
+                id_enum.ITEM_SPLITTER,
+                0,
+                "物品分拣器",
+                machinery_logistics.item_splitter,
+            )
+        ],
+    ),
+])
+# fluid_splitter
+# deepslate_lava_vibrator
+
+machinery_toc = PageGroup([
+    TextPage(
+        "machinery_toc_1",
+        "机器",
+        "蔚蓝科技内的功能性方块统称为§9设备§r， 它们是蔚蓝科技工业系统中不可或缺的成分。\n\n在目录中选择一个你愿意了解的设备类型。",
+    ),
+    MainTOCPage(
+        "machinery_toc_2",
+        [
+            MainTOCPageSection(
+                id_enum.MACHINERY_WORKSTATION,
+                0,
+                "制造加工",
+                machinery_crafting_toc,
+            ),
+            MainTOCPageSection(
+                id_enum.MACERATOR,
+                0,
+                "工业生产",
+                machinery_production_toc,
+            ),
+            MainTOCPageSection(
+                id_enum.RF_REPEATER_PLANT,
+                0,
+                "能源利用",
+                machinery_energy_toc,
+            ),
+            MainTOCPageSection(
+                id_enum.ITEM_SPLITTER,
+                0,
+                "物流",
+                machinery_logistics_toc,
+            ),
+            MainTOCPageSection(
+                id_enum.PUMP,
+                0,
+                "资源开采",
+                machinery_source_extraction_toc,
+            ),
+            MainTOCPageSection(
+                id_enum.THERMAL_GENERATOR,
+                0,
+                "发电设备",
+                machinery_generator_toc,
+            ),
+            MainTOCPageSection(
+                id_enum.HOVER_TEXT_DISPLAYER,
+                0,
+                "杂项",
+                machinery_misc_toc,
+            ),
+        ],
+    ),
+])

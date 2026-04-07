@@ -24,6 +24,7 @@ class MachineryWorkstationRecipePage(BasePage):
         return self
 
     def Show(self):
+        print "Shown"
         self.tip_comp.SetDataBeforeShow("此机械在§3机件加工台§r的制造配方", 12)
         if self.data is not None:
             recipe_conf = self.data["recipe"]
@@ -35,6 +36,10 @@ class MachineryWorkstationRecipePage(BasePage):
         self.tip_comp.AlignTopToY(self.Top())
         self.recipe_comp.AlignCenterToPosition(self.Center())
         return self
+    
+    def Destory(self):
+        getattr(BasePage, "Destory")(self)
+        print "HIDED"
 
 
 class MachineryWorkstationRecipeComp(BaseComp):

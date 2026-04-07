@@ -1,0 +1,175 @@
+{
+    "RicherTextPanel": {
+        "type": "panel",
+        "$font_scale_factor": 1.0,
+        "$font_size": "normal",
+        "$font_type": "smooth",
+        "$shadow": false,
+        "$text_color": [
+            1,
+            1,
+            1
+        ],
+        "size": [
+            100,
+            100
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "simulate_item_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        800.0,
+                        0.0
+                    ],
+                    "size": [
+                        20.0,
+                        20.0
+                    ],
+                    "layer": 1,
+                    "property_bag": {
+                        "#item_id_aux": 131072
+                    }
+                }
+            },
+            {
+                "simulate_text": {
+                    "type": "label",
+                    "$font_size|default": "normal",
+                    "$font_type|default": "smooth",
+                    "$shadow|default": false,
+                    "$text_color|default": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        800.0,
+                        0.0
+                    ],
+                    "layer": 2,
+                    "color": "$text_color",
+                    "font_scale_factor": "$font_scale_factor",
+                    "font_size": "$font_size",
+                    "font_type": "$font_type",
+                    "shadow": "$shadow",
+                    "text": "Hello World!"
+                }
+            },
+            {
+                "simulate_image": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        800.0,
+                        0.0
+                    ],
+                    "size": [
+                        20.0,
+                        20.0
+                    ],
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "texture": "textures/netease/common/image/default"
+                }
+            },
+            {
+                "simulate_hyperlink_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "",
+                    "$hover_texture": "",
+                    "$is_new_nine_slice": false,
+                    "$label_layer": 3,
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "",
+                    "$texture_layer": 2,
+                    "offset": [
+                        800.0,
+                        0.0
+                    ],
+                    "size": [
+                        100,
+                        50
+                    ],
+                    "layer": 4,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "subscript_bar": {
+                                "type": "image",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "top_middle",
+                                "size": [
+                                    "default",
+                                    1.0
+                                ],
+                                "layer": 10,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    0.2117647058823529
+                                ],
+                                "nineslice_size": [
+                                    1.0,
+                                    1.0,
+                                    1.0,
+                                    1.0
+                                ],
+                                "texture": "textures/ui/white"
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "main": {
+        "type": "screen",
+        "controls": [
+            {
+                "panel@richer_text.RicherTextPanel": {}
+            }
+        ]
+    },
+    "namespace": "richer_text"
+}

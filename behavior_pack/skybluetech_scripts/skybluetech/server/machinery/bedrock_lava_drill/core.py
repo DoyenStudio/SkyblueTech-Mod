@@ -77,7 +77,7 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
-        if not self.pos_ok:
+        if not self.pos_ok or not self.StructureFinished():
             return
         if self._power_changed:
             if self.drill_finished():

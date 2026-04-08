@@ -130,6 +130,8 @@ class DetectArea(object):
             chunks_to_detect.setdefault(self.dim, {}).setdefault(chunk_xz, []).append(
                 self
             )
+        if not self.chunks_not_loaded:
+            ExecLater(0, self.flush_status)
 
     def is_inside(self, x, y, z):
         return (
@@ -420,7 +422,6 @@ class MultiBlockStructure(BaseMachine):
         "覆写方法用于结构变更的回调。"
 
     def OnUnload(self):
-
         remove_detect_area(self.dim, self.area)
 
     def SetStructureDestroyed(self, flag):

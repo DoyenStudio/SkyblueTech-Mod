@@ -67,7 +67,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure, WorkRenderer
         self._sum_power_t = 0
 
     def OnTicking(self):
-        active = self.IsActive()
+        active = self.IsActive() and self.StructureFinished()
         if active:
             self.get_core().core_tick()
             self.CallSync()

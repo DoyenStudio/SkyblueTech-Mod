@@ -87,7 +87,7 @@ class RicherTextCtrl(object):
             elif isinstance(e, ItemRender):
                 self._put_item_renderer(e)
             elif isinstance(e, HyperLink):
-                self._process_dirty_text(e.text, e)
+                self._process_dirty_text(e.text, hyperlink=e)
             elif isinstance(e, Style):
                 self._process_style(e)
             else:
@@ -117,7 +117,7 @@ class RicherTextCtrl(object):
             elif isinstance(e, ItemRender):
                 self._put_item_renderer(e)
             elif isinstance(e, HyperLink):
-                self._process_dirty_text(e.text, e)
+                self._process_dirty_text(e.text, hyperlink=e)
             elif isinstance(e, Style):
                 self._process_style(e)
             else:
@@ -177,7 +177,7 @@ class RicherTextCtrl(object):
         # type: (Style) -> None
         if style.color == (-1, -1, -1):
             self._simulate_text.SetColor(self._initial_text_color)
-        if style.color is not None:
+        elif style.color is not None:
             self._simulate_text.SetColor(style.color)
         if style.scale is not None:
             self._current_text_scale = style.scale
@@ -244,7 +244,7 @@ class RicherTextCtrl(object):
         btn = self._simulate_hyperlink_btn.clone(self._gen_name())
         btn.SetCallback(cb)
         btn.SetPos(ctrl.GetPos())
-        btn.SetSize(ctrl.GetSize(), resize_children=True)
+        btn.SetSize(self._simulate_text.GetSize(), resize_children=True) # 实在没招了, 此时 ctrl 的 size 是 0
         btn.SetLayer(90)
         self._hang_ctrls.append(btn)
 

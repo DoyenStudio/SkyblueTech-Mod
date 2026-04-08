@@ -49,17 +49,27 @@ def parse_tags(
             res.append(Text(content))
             continue
         tag_name, params = parse_tag(content)
-        if tag_name == "opt":
+        if tag_name == Text.name:
+            # scale = params.get("scale")
+            # if scale is not None:
+            #     scale = float(scale)
+            color = params.get("color")
+            if color is not None:
+                res.append(Style(color=color))
+            res.append(Text(params["t"]))
+            if color is not None:
+                res.append(Style(color="R"))
+        elif tag_name == Option.name:
             res.append(Option(params))
-        elif tag_name == "style":
+        elif tag_name == Style.name:
             scale = params.get("scale")
             if scale is not None:
                 scale = float(scale)
             res.append(Style(params.get("color"), scale))
             continue
-        elif tag_name == "br":
+        elif tag_name == NewLine.name:
             res.append(NewLine())
-        elif tag_name == "img":
+        elif tag_name == Image.name:
             x_scale = params.get("x_scale")
             y_scale = params.get("y_scale")
             if x_scale is not None:
@@ -67,15 +77,15 @@ def parse_tags(
             if y_scale is not None:
                 y_scale = float(y_scale)
             res.append(Image(params["path"], x_scale, y_scale))
-        elif tag_name == "item":
+        elif tag_name == ItemRender.name:
             scale = params.get("scale")
             if scale is not None:
                 scale = float(scale)
             res.append(ItemRender(params["id"], int(params.get("aux", "0")), scale))
-        elif tag_name == "link":
+        elif tag_name == HyperLink.name:
             res.append(HyperLink(params["text"], params["id"]))
         else:
-            raise Exception("Unknown tag: " + tag_name)
+            print("[ERROR] Unknown tag: " + tag_name)
     return res
 
 

@@ -4,12 +4,13 @@ from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from .base_page import BasePage
 
 if 0:
+    import typing
     from .page_group import PageGroup
 
 
 class TOCPageSection(object):
     def __init__(self, icon_item_id, icon_item_aux, title, link_to):
-        # type: (str, int, str, PageGroup) -> None
+        # type: (str, int, str, PageGroup | typing.Callable[[], PageGroup]) -> None
         self.icon_item_id = icon_item_id
         self.icon_item_aux = icon_item_aux
         self.title = title
@@ -19,9 +20,9 @@ class TOCPageSection(object):
 class TOCPage(BasePage):
     ctrl_def_name = "GuidanceLib.toc_page"
 
-    def __init__(self, page_id, sections):
-        # type: (str, list[TOCPageSection]) -> None
-        BasePage.__init__(self, page_id)
+    def __init__(self, sections):
+        # type: (list[TOCPageSection]) -> None
+        BasePage.__init__(self)
         self.sections = sections
 
     def RenderInit(self, ctrl):
@@ -56,8 +57,7 @@ class TOCPage(BasePage):
 
     def on_select_section(self, index):
         # type: (int) -> None
-        from ....ui.guidance.guidance_ui import GuidanceUI
-
-        ui = GuidanceUI.get_instance()
-        if ui is not None:
-            ui.load_new_pages(self.sections[index].link_to)
+        link_to = self.sections[index].link_to
+        if callable(link_to):
+            link_to = link_to()
+        link_to.FastJump(0)

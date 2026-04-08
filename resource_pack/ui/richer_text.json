@@ -136,7 +136,7 @@
                             "subscript_bar": {
                                 "type": "image",
                                 "anchor_from": "bottom_middle",
-                                "anchor_to": "top_middle",
+                                "anchor_to": "bottom_middle",
                                 "size": [
                                     "default",
                                     1.0
@@ -145,9 +145,9 @@
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
                                 "color": [
-                                    0.0,
-                                    0.0,
-                                    0.2117647058823529
+                                    0.4,
+                                    0.4,
+                                    0.4
                                 ],
                                 "nineslice_size": [
                                     1.0,

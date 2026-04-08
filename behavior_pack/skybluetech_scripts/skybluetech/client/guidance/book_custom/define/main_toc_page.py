@@ -1,18 +1,17 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.client.guidance.book_custom.define.page_group import (
-    PageGroup,
-)
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
+from ..define.page_group import PageGroup
 from .base_page import BasePage
 
 if 0:
+    import typing
     from .page_group import PageGroup
 
 
 class MainTOCPageSection(object):
     def __init__(self, icon_item_id, icon_item_aux, title, link_to):
-        # type: (str, int, str, PageGroup) -> None
+        # type: (str, int, str, PageGroup | typing.Callable[[], PageGroup]) -> None
         self.icon_item_id = icon_item_id
         self.icon_item_aux = icon_item_aux
         self.title = title
@@ -22,9 +21,9 @@ class MainTOCPageSection(object):
 class MainTOCPage(BasePage):
     ctrl_def_name = "GuidanceLib.main_toc_page"
 
-    def __init__(self, page_id, sections):
-        # type: (str, list[MainTOCPageSection]) -> None
-        BasePage.__init__(self, page_id)
+    def __init__(self, sections):
+        # type: (list[MainTOCPageSection]) -> None
+        BasePage.__init__(self)
         self.sections = sections
 
     def RenderInit(self, ctrl):
@@ -53,11 +52,10 @@ class MainTOCPage(BasePage):
 
     def on_select_section(self, index):
         # type: (int) -> None
-        from ....ui.guidance.guidance_ui import GuidanceUI
-
-        ui = GuidanceUI.get_instance()
-        if ui is not None:
-            ui.load_new_pages(self.sections[index].link_to)
+        link_to = self.sections[index].link_to
+        if callable(link_to):
+            link_to = link_to()
+        link_to.FastJump(0)
 
     def SetGroup(self, group):
         # type: (PageGroup) -> None

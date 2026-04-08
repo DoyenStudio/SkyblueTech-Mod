@@ -60,6 +60,8 @@ class GuidanceUI(ToolDeltaScreen):
         GuidanceUI.current_instance = None
 
     def render_page(self):
+        from ...guidance.book_custom.define import BookMarkMgr
+
         if self._left_page_content is not None:
             self._left_page_content.Remove()
             self._left_page_content = None
@@ -105,11 +107,12 @@ class GuidanceUI(ToolDeltaScreen):
     def on_click_close(self, _):
         self.RemoveUI()
 
-    def load_new_pages(self, pages):
-        # type: (PageGroup) -> None
+    def load_new_pages(self, pages, index=0):
+        # type: (PageGroup, int) -> None
         if pages is self.current_page_group:
             return
         self.current_page_group = pages
+        self.page_index = int(index / 2)
         self.render_page()
 
     @classmethod

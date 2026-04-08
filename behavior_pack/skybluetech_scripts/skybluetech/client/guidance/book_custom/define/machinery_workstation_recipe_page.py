@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.skybluetech.common.mini_jei import (
     GetRecipesByOutput,
@@ -11,9 +10,9 @@ from .base_page import BasePage
 class MachineryWorkstationRecipePage(BasePage):
     ctrl_def_name = "GuidanceLib.machinery_workstation_render_page"
 
-    def __init__(self, page_id, recipe_result):
-        # type: (str, str) -> None
-        BasePage.__init__(self, page_id)
+    def __init__(self, recipe_result):
+        # type: (str) -> None
+        BasePage.__init__(self)
         self.recipe_result = recipe_result
 
     def RenderInit(self, ctrl):

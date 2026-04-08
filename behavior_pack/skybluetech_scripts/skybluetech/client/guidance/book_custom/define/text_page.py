@@ -13,9 +13,9 @@ if 0:
 class TextPage(BasePage):
     ctrl_def_name = "GuidanceLib.text_page"
 
-    def __init__(self, page_id, title, content, hyperlink_cbs=None):
-        # type: (str, str, str, dict[str, typing.Callable[[dict], None]] | None) -> None
-        BasePage.__init__(self, page_id)
+    def __init__(self, title, content, hyperlink_cbs=None):
+        # type: (str, str, dict[str, typing.Callable[[dict], typing.Any]] | None) -> None
+        BasePage.__init__(self)
         self.title = title
         self.content = content
         self.hyperlink_cbs = hyperlink_cbs or {}
@@ -24,17 +24,23 @@ class TextPage(BasePage):
         # type: (UBaseCtrl) -> None
         BasePage.RenderInit(self, ctrl)
         ctrl["title_label"].asLabel().SetText(self.title)
-        async_executor = RicherTextCtrl(
-            ctrl["content"], opts=RicherTextOpt(hyperlink_cbs=self.hyperlink_cbs)
-        ).SetTextAsync(self.content)
+        async_load = False
+        if not async_load:
+            RicherTextCtrl(
+                ctrl["content"], opts=RicherTextOpt(hyperlink_cbs=self.hyperlink_cbs)
+            ).SetText(self.content)
+        else:
+            async_executor = RicherTextCtrl(
+                ctrl["content"], opts=RicherTextOpt(hyperlink_cbs=self.hyperlink_cbs)
+            ).SetTextAsync(self.content)
 
-        def run_async():
-            if run_async.finished:
-                return
-            try:
-                next(async_executor)
-            except StopIteration:
-                run_async.finished = True
+            def run_async():
+                if run_async.finished:
+                    return
+                try:
+                    next(async_executor)
+                except StopIteration:
+                    run_async.finished = True
 
-        run_async.finished = False
-        ctrl._root.AddOnTickingCallback(run_async)
+            run_async.finished = False
+            ctrl._root.AddOnTickingCallback(run_async)

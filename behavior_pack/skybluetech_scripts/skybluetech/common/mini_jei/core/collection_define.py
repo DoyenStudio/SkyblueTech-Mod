@@ -1,9 +1,9 @@
 # # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.typing import Generic, TypeVar
-from .define import Recipe, Input
+from .define import RecipeBase, Input
 
 T = TypeVar("T", bound=tuple)
-RT = TypeVar("RT", bound=Recipe)
+RT = TypeVar("RT", bound=RecipeBase)
 
 
 # class RecipeCollection(Generic[T, RT]):

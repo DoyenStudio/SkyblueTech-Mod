@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:machinery_base_light"
+        },
+        "description": {
+            "identifier": "skybluetech:machinery_base_light"
+        }
+    }
+}

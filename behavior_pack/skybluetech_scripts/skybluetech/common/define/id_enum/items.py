@@ -10,6 +10,7 @@ class Ingots:
     STEEL = "skybluetech:steel_ingot"
     REFINED_IRON = "skybluetech:refined_iron_ingot"
     ULTRAHEATINUM = "skybluetech:ultraheatinum_ingot"
+    SUPERCONDUCT = "skybluetech:superconduct_ingot"
 
 
 class Plates:
@@ -26,6 +27,8 @@ class Plates:
     BRONZE = "skybluetech:bronze_plate"
     INVAR = "skybluetech:invar_plate"
     STEEL = "skybluetech:steel_plate"
+    ULTRAHEATINUM = "skybluetech:ultraheatinum_plate"
+    SUPERCONDUCT = "skybluetech:superconduct_plate"
 
 
 class Dusts:
@@ -45,6 +48,7 @@ class Dusts:
 
     ANCIENT_DEBRIS = "skybluetech:ancient_debris_dust"
     OBSIDIAN = "skybluetech:obsidian_dust"
+    CARBON = "skybluetech:carbon_dust"
 
 
 class Sticks:
@@ -54,6 +58,8 @@ class Sticks:
     PLATINUM = "skybluetech:platinum_stick"
     STEEL = "skybluetech:steel_stick"
     BRONZE = "skybluetech:bronze_stick"
+    INVAR = "skybluetech:invar_stick"
+    SUPERCONDUCT = "skybluetech:superconduct_stick"
 
 
 class RawOres:
@@ -74,6 +80,7 @@ class Upgraders:
     BASIC_ENERGY_UPGRADER = "skybluetech:upgrader_basic_energy"
     GENERIC_EXPANSION_UPGRADER = "skybluetech:upgrader_generic_expansion"
     GENERIC_AUTOSTOP = "skybluetech:upgrader_generic_autostop"
+    SPEC_MAGMA_FACTORY = "skybluetech:upgrader_spec_magma_factory"
 
 
 class ObjectUpgraders:

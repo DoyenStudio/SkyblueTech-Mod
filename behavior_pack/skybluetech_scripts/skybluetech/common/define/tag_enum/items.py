@@ -13,6 +13,7 @@ class IngotTag:
     REFINED_IRON = "ingots/refined_iron"
     CUPRONICKEL = "ingots/cupronickel"
     ULTRAHEATINUM = "ingots/ultraheatinum"
+    SUPERCONDUCT = "ingots/superconduct"
 
 
 class DustTag:
@@ -57,6 +58,7 @@ class PlateTag:
     STEEL = "plates/steel"
     INVAR = "plates/invar"
     CUPRONICKEL = "plates/cupronickel"
+    SUPERCONDUCT = "plates/superconduct"
 
 
 class StickTag:
@@ -69,6 +71,7 @@ class StickTag:
     NICKEL = "sticks/nickel"
     SILVER = "sticks/silver"
     PLATINUM = "sticks/platinum"
+    SUPERCONDUCT = "sticks/superconduct"
 
 
 class Wrench:

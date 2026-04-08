@@ -163,6 +163,9 @@
         "skybluetech:lubricant_bucket": {
             "textures": "textures/items/buckets/lubricant_bucket"
         },
+        "skybluetech:machinery_base_light": {
+            "textures": "textures/items/machinery_base_light"
+        },
         "skybluetech:metal_hammer": {
             "textures": "textures/items/metal_hammer"
         },
@@ -366,6 +369,15 @@
         },
         "skybluetech:sunflower_seeds": {
             "textures": "textures/items/sunflower_seeds"
+        },
+        "skybluetech:superconduct_ingot": {
+            "textures": "textures/items/ingots/superconduct_ingot"
+        },
+        "skybluetech:superconduct_plate": {
+            "textures": "textures/items/plates/superconduct_plate"
+        },
+        "skybluetech:superconduct_stick": {
+            "textures": "textures/items/sticks/superconduct_stick"
         },
         "skybluetech:tin_dust": {
             "textures": "textures/items/dusts/tin_dust"

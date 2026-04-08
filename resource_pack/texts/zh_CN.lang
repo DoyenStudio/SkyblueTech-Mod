@@ -298,3 +298,7 @@ item.skybluetech:invar_stick.name=殷钢棒
 tile.skybluetech:bronze_block.name=黄铜块
 tile.skybluetech:invar_block.name=殷钢块
 item.skybluetech:sheet_item.name=sheet
+item.skybluetech:superconduct_plate.name=超导板
+item.skybluetech:superconduct_stick.name=超导棒
+item.skybluetech:superconduct_ingot.name=超导锭
+item.skybluetech:machinery_base_light.name=轻量机械基座

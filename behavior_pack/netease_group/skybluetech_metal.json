@@ -14,7 +14,8 @@
                 "skybluetech:steel_ingot",
                 "skybluetech:refined_iron_ingot",
                 "skybluetech:cupronickel_ingot",
-                "skybluetech:ultraheatinum_ingot"
+                "skybluetech:ultraheatinum_ingot",
+                "skybluetech:superconduct_ingot"
             ]
         },
         {
@@ -45,7 +46,8 @@
                 "skybluetech:platinum_stick",
                 "skybluetech:bronze_stick",
                 "skybluetech:steel_stick",
-                "skybluetech:iron_stick"
+                "skybluetech:iron_stick",
+                "skybluetech:superconduct_stick"
             ]
         },
         {
@@ -77,7 +79,8 @@
                 "skybluetech:invar_plate",
                 "skybluetech:steel_plate",
                 "skybluetech:cupronickel_plate",
-                "skybluetech:ultraheatinum_plate"
+                "skybluetech:ultraheatinum_plate",
+                "skybluetech:superconduct_plate"
             ]
         }
     ]

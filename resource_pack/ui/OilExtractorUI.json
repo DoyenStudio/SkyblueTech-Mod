@@ -5,15 +5,6 @@
     "namespace": "OilExtractorUI",
     "oil_extractor_ui": {
         "type": "panel",
-        "offset": [
-            1.0,
-            -1.0
-        ],
-        "size": [
-            180.0,
-            200.0
-        ],
-        "layer": 1,
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
@@ -156,14 +147,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

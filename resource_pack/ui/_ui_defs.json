@@ -2,7 +2,6 @@
     "ui_defs": [
         "ui/AlloyFurnaceUI.json",
         "ui/AssemblerUI.json",
-        "ui/BatteryMatrixCoreUI.json",
         "ui/BatteryMatrixUI.json",
         "ui/BatteryUI.json",
         "ui/BedrockLavaDrillUI.json",

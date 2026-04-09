@@ -1,11 +1,6 @@
 {
     "hydroponic_bed_ui": {
         "type": "panel",
-        "size": [
-            180.0,
-            200.0
-        ],
-        "layer": 1,
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
@@ -76,7 +71,6 @@
                                                             40.0,
                                                             40.0
                                                         ],
-                                                        "layer": 1,
                                                         "enable_scissor_test": false,
                                                         "rotation": "gesture_x",
                                                         "screen_scale": 1.0
@@ -84,7 +78,7 @@
                                                 },
                                                 {
                                                     "gen_slot@netease_container.custom_grid_item": {
-                                                        "layer": 5,
+                                                        "layer": 0,
                                                         "offset": [
                                                             40,
                                                             -43
@@ -102,7 +96,6 @@
                                                             60.0,
                                                             60.0
                                                         ],
-                                                        "layer": 5,
                                                         "clip_direction": "left",
                                                         "clip_ratio": 0.0,
                                                         "texture": "textures/models/hydroponic_bed_texture",
@@ -114,7 +107,7 @@
                                                 },
                                                 {
                                                     "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 13,
+                                                        "layer": 0,
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
@@ -123,6 +116,7 @@
                                                 },
                                                 {
                                                     "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "layer": 0,
                                                         "offset": [
                                                             71,
                                                             0
@@ -140,14 +134,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

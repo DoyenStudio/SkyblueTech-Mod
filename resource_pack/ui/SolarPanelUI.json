@@ -5,11 +5,6 @@
     "namespace": "SolarPanelUI",
     "solar_panel_ui": {
         "type": "panel",
-        "size": [
-            180.0,
-            200.0
-        ],
-        "layer": 1,
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
@@ -77,7 +72,7 @@
                                                 },
                                                 {
                                                     "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 13,
+                                                        "layer": 0,
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
@@ -122,14 +117,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

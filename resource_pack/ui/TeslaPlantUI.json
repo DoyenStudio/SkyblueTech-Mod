@@ -5,15 +5,10 @@
     "namespace": "TeslaPlantUI",
     "tesla_plant_ui": {
         "type": "panel",
-        "size": [
-            180.0,
-            200.0
-        ],
-        "layer": 1,
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100,
+                    "layer": 11,
                     "size": [
                         0,
                         0
@@ -92,7 +87,7 @@
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
                                                                         0.0,
-                                                                        2.0
+                                                                        1.0
                                                                     ],
                                                                     "size": [
                                                                         52.0,
@@ -105,18 +100,20 @@
                                                                     ],
                                                                     "font_scale_factor": 1.2,
                                                                     "font_type": "default",
-                                                                    "text": "启用电涌塔"
+                                                                    "text": "对生物放电"
                                                                 }
                                                             },
                                                             {
                                                                 "switch1@common_toggles.switch_toggle_collection": {
                                                                     "type": "panel",
-                                                                    "$default_texture": "textures/ui/toggle_off",
-                                                                    "$hover_texture": "textures/ui/toggle_on",
-                                                                    "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
-                                                                    "$pressed_texture": "textures/ui/toggle_off_hover",
+                                                                    "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                                                    "$default_texture": "textures/ui/simple_switch_off",
+                                                                    "$hover_texture": "textures/ui/simple_switch_on",
+                                                                    "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
+                                                                    "$pressed_texture": "textures/ui/simple_switch_off",
                                                                     "$toggle_name": "#TeslaPlantUI.switch_1",
                                                                     "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                                    "$unchecked_locked_texture": "textures/ui/simple_switch_off",
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
@@ -144,7 +141,7 @@
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
                                                                         0.0,
-                                                                        16.0
+                                                                        15.0
                                                                     ],
                                                                     "size": [
                                                                         52.0,
@@ -163,12 +160,14 @@
                                                             {
                                                                 "switch2@common_toggles.switch_toggle_collection": {
                                                                     "type": "panel",
-                                                                    "$default_texture": "textures/ui/toggle_off",
-                                                                    "$hover_texture": "textures/ui/toggle_on",
-                                                                    "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
-                                                                    "$pressed_texture": "textures/ui/toggle_off_hover",
+                                                                    "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                                                    "$default_texture": "textures/ui/simple_switch_off",
+                                                                    "$hover_texture": "textures/ui/simple_switch_on",
+                                                                    "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
+                                                                    "$pressed_texture": "textures/ui/simple_switch_off",
                                                                     "$toggle_name": "#TeslaPlantUI.switch_2",
                                                                     "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                                    "$unchecked_locked_texture": "textures/ui/simple_switch_off",
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
@@ -196,7 +195,7 @@
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
                                                                         0.0,
-                                                                        30.0
+                                                                        29.0
                                                                     ],
                                                                     "size": [
                                                                         52.0,
@@ -215,12 +214,14 @@
                                                             {
                                                                 "switch3@common_toggles.switch_toggle_collection": {
                                                                     "type": "panel",
-                                                                    "$default_texture": "textures/ui/toggle_off",
-                                                                    "$hover_texture": "textures/ui/toggle_on",
-                                                                    "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
-                                                                    "$pressed_texture": "textures/ui/toggle_off_hover",
+                                                                    "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                                                    "$default_texture": "textures/ui/simple_switch_off",
+                                                                    "$hover_texture": "textures/ui/simple_switch_on",
+                                                                    "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
+                                                                    "$pressed_texture": "textures/ui/simple_switch_off",
                                                                     "$toggle_name": "#TeslaPlantUI.switch_3",
                                                                     "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                                                    "$unchecked_locked_texture": "textures/ui/simple_switch_off",
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
@@ -558,7 +559,7 @@
                                                 },
                                                 {
                                                     "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 13,
+                                                        "layer": 0,
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
@@ -576,14 +577,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

@@ -108,7 +108,7 @@
                                                 },
                                                 {
                                                     "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 13,
+                                                        "layer": 0,
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"

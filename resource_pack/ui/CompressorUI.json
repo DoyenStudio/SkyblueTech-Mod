@@ -9,10 +9,6 @@
     },
     "compressor_ui": {
         "type": "panel",
-        "size": [
-            180.0,
-            200.0
-        ],
         "layer": 1,
         "controls": [
             {
@@ -26,10 +22,20 @@
                 }
             },
             {
-                "selected_item_details_factory@common.selected_item_details_factory": {}
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+                "item_lock_notification_factory@common.item_lock_notification_factory": {
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
             },
             {
                 "root_panel@common.root_panel": {
@@ -112,7 +118,7 @@
                                                 },
                                                 {
                                                     "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 13,
+                                                        "layer": 0,
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
@@ -149,14 +155,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

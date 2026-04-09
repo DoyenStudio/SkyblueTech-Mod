@@ -266,15 +266,10 @@
     },
     "item_splitter_ui": {
         "type": "panel",
-        "size": [
-            180.0,
-            200.0
-        ],
-        "layer": 1,
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 20,
+                    "layer": 11,
                     "size": [
                         0,
                         0
@@ -288,7 +283,11 @@
             },
             {
                 "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4
+                    "layer": 4,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {
@@ -337,6 +336,7 @@
                                                         "$slot1": 4,
                                                         "$slot2": 5,
                                                         "$slot3": 6,
+                                                        "layer": 0,
                                                         "offset": [
                                                             106,
                                                             -57
@@ -444,7 +444,7 @@
                                                             20.0,
                                                             20.0
                                                         ],
-                                                        "layer": 2,
+                                                        "layer": 0,
                                                         "button_mappings": [],
                                                         "default_control": "default",
                                                         "hover_control": "hover",
@@ -479,7 +479,6 @@
                                                             1,
                                                             3
                                                         ],
-                                                        "layer": 1,
                                                         "offset": [
                                                             "0%c+9px",
                                                             55.5
@@ -501,14 +500,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

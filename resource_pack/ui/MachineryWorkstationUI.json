@@ -16,15 +16,10 @@
     },
     "machinery_workstation_ui": {
         "type": "panel",
-        "size": [
-            180.0,
-            200.0
-        ],
-        "layer": 1,
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100,
+                    "layer": 11,
                     "size": [
                         0,
                         0
@@ -87,6 +82,7 @@
                                                             3,
                                                             3
                                                         ],
+                                                        "layer": 0,
                                                         "offset": [
                                                             19,
                                                             38
@@ -140,7 +136,8 @@
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
                                                                     "$cell_overlay_ref|default": "MachineryWorkstationUI.wrench_slot_img",
-                                                                    "collection_index": 9
+                                                                    "collection_index": 9,
+                                                                    "layer": 0
                                                                 }
                                                             }
                                                         ]
@@ -157,13 +154,13 @@
                                                             18.0,
                                                             18.0
                                                         ],
-                                                        "layer": 1,
                                                         "collection_name": "netease_container",
                                                         "controls": [
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
                                                                     "$cell_overlay_ref|default": "MachineryWorkstationUI.pincer_slot_img",
-                                                                    "collection_index": 10
+                                                                    "collection_index": 10,
+                                                                    "layer": 0
                                                                 }
                                                             }
                                                         ]
@@ -180,13 +177,13 @@
                                                             18.0,
                                                             18.0
                                                         ],
-                                                        "layer": 1,
                                                         "collection_name": "netease_container",
                                                         "controls": [
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
                                                                     "$cell_overlay_ref|default": "MachineryWorkstationUI.void_item",
-                                                                    "collection_index": 11
+                                                                    "collection_index": 11,
+                                                                    "layer": 0
                                                                 }
                                                             }
                                                         ]
@@ -194,6 +191,7 @@
                                                 },
                                                 {
                                                     "progress@SkybluePanelLib.ProgressBar": {
+                                                        "layer": 0,
                                                         "offset": [
                                                             8,
                                                             -16
@@ -428,14 +426,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

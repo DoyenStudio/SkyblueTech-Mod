@@ -1,14 +1,14 @@
 {
     "item_output_interface_ui": {
         "type": "panel",
-        "size": [
-            180.0,
-            200.0
-        ],
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 100
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {
@@ -18,7 +18,11 @@
             },
             {
                 "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4
+                    "layer": 4,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {
@@ -69,6 +73,7 @@
                                                             5,
                                                             1
                                                         ],
+                                                        "layer": 0,
                                                         "offset": [
                                                             0,
                                                             -44
@@ -86,14 +91,15 @@
                                             ]
                                         }
                                     }
-                                ]
+                                ],
+                                "layer": 0
                             }
                         }
                     ],
-                    "layer": 2,
+                    "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

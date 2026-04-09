@@ -27,4 +27,9 @@ recipes = RecipesCollection(
     preset_tagged(IngotTag.SILVER, Plates.SILVER),
     preset_tagged(IngotTag.PLATINUM, Plates.PLATINUM),
     preset_tagged(IngotTag.NICKEL, Plates.NICKEL),
+    preset_tagged(IngotTag.BRONZE, Plates.BRONZE),
+    preset_tagged(IngotTag.STEEL, Plates.STEEL),
+    preset_tagged(IngotTag.INVAR, Plates.INVAR),
+    preset_tagged(IngotTag.ULTRAHEATINUM, Plates.ULTRAHEATINUM),
+    preset_tagged(IngotTag.SUPERCONDUCT, Plates.SUPERCONDUCT),
 )

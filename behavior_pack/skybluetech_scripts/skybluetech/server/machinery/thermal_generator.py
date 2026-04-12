@@ -14,8 +14,8 @@ from .basic import (
     RegisterMachine,
 )
 
-K_BURN_SEC_LEFT = "burn_sec_left"
-K_MAX_BURN_SEC = "max_burn_secs"
+K_BURN_SEC_LEFT = "st:burn_sec_left"
+K_MAX_BURN_SEC = "st:max_burn_secs"
 
 SecondsPerTick = 0.05
 
@@ -31,7 +31,7 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = ThermalGeneratorUISync.NewServer(self).Activate()
         self.is_burning = self.burn_seconds_left > 0
-        self.SetOutputPower(TICK_POWER)
+        self.SetOutputPower(0)
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -91,6 +91,7 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
         self.SetSlotItem(0, mainSlotItem)
         self.is_burning = True
         self.ResetDeactiveFlags()
+        self.SetOutputPower(TICK_POWER)
         return True
 
     @property

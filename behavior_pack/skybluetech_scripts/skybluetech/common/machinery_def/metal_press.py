@@ -2,7 +2,7 @@
 from ..define.id_enum import METAL_PRESS, Ingots, Sticks
 from ..define.id_enum.fluids import LUBRICANT
 from ..mini_jei.core import RecipesCollection
-from ..mini_jei.machinery.metal_press import MetalPressRecipe, MachineRecipe
+from ..mini_jei.machinery.metal_press import MachineRecipe, MetalPressRecipe
 
 
 recipes = RecipesCollection(
@@ -67,4 +67,4 @@ recipes = RecipesCollection(
         tick_duration=60,
         power_cost=50,
     ),
-)
+)  # type: RecipesCollection[MachineRecipe]

@@ -1,7 +1,7 @@
 # coding=utf-8
 from ..define.id_enum import MIXER, DUST_BLOCK
 from ..mini_jei.core import RecipesCollection
-from ..mini_jei.machinery.mixer import MixerRecipe
+from ..mini_jei.machinery.mixer import MachineRecipe, MixerRecipe
 
 
 recipes = RecipesCollection(
@@ -26,4 +26,4 @@ recipes = RecipesCollection(
         tick_duration=40,
         power_cost=30,
     ),
-)
+)  # type: RecipesCollection[MachineRecipe]

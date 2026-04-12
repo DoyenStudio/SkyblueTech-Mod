@@ -3,7 +3,7 @@ from ..define.global_config import RAW2MOTTEN_VOLUME, INGOT2MOTTEN_VOLUME
 from ..define.id_enum import MAGMA_CENTRIFUGE, Molten
 from ..define.tag_enum.items import RawTag, IngotTag
 from ..mini_jei.core import RecipesCollection
-from ..mini_jei.machinery.magma_furnace import MagmaFurnaceRecipe, sec
+from ..mini_jei.machinery.magma_furnace import MachineRecipe, MagmaFurnaceRecipe, sec
 
 
 recipes = RecipesCollection(
@@ -171,4 +171,4 @@ recipes = RecipesCollection(
         power_cost=45,
         tick_duration=sec(4.5),
     ),
-)
+)  # type: RecipesCollection[MachineRecipe]

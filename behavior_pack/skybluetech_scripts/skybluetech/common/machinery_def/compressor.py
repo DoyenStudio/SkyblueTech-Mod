@@ -3,6 +3,7 @@ from ..define.id_enum import COMPRESSOR, Plates
 from ..define.tag_enum.items import IngotTag
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.compressor import (
+    MachineRecipe,
     gen_preset_recipe,
     gen_preset_tagged_recipe,
 )
@@ -32,4 +33,4 @@ recipes = RecipesCollection(
     preset_tagged(IngotTag.INVAR, Plates.INVAR),
     preset_tagged(IngotTag.ULTRAHEATINUM, Plates.ULTRAHEATINUM),
     preset_tagged(IngotTag.SUPERCONDUCT, Plates.SUPERCONDUCT),
-)
+)  # type: RecipesCollection[MachineRecipe]

@@ -1,7 +1,7 @@
 # coding=utf-8
 from ..define.id_enum import OIL_EXTRACTOR, items, fluids
 from ..mini_jei.core import RecipesCollection
-from ..mini_jei.machinery.oil_extractor import OilExtractorRecipe
+from ..mini_jei.machinery.oil_extractor import MachineRecipe, OilExtractorRecipe
 
 
 recipes = RecipesCollection(
@@ -20,4 +20,4 @@ recipes = RecipesCollection(
         tick_duration=50,
         power_cost=40,
     ),
-)
+)  # type: RecipesCollection[MachineRecipe]

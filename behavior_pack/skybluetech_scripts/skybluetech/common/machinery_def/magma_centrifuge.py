@@ -8,6 +8,7 @@ from ..define.id_enum import (
 )
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.magma_centrifuge import (
+    MachineRecipe,
     MagmaCentrifugeRecipe,
     Output,
 )
@@ -62,4 +63,4 @@ recipes = RecipesCollection(
         power_cost=80,
         tick_duration=20 * 5,
     ),
-)
+)  # type: RecipesCollection[MachineRecipe]

@@ -4,6 +4,7 @@ from ..define.id_enum import ALLOY_FURNACE, Ingots
 from ..define.tag_enum.items import DustTag, IngotTag
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.alloy_furnace import (
+    MachineRecipe,
     Input,
     Output,
     gen_preset_recipe,
@@ -12,7 +13,7 @@ from ..mini_jei.machinery.alloy_furnace import (
 
 DEFAULT_TICK_DURATION = 160
 DEFAULT_POWER = 80
-L_TICK_DURATION = 200
+L_TICK_DURATION = 240
 L_POWER = 120
 
 preset1 = gen_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
@@ -53,4 +54,12 @@ recipes = RecipesCollection(
         },
         {4: Output("minecraft:netherite_ingot", 1)},
     ),
-)
+    preset2(
+        {
+            0: Input(DustTag.SILVER, is_tag=True),
+            1: Input(DustTag.PLATINUM, is_tag=True),
+            2: Input(DustTag.LAPIS, is_tag=True),
+        },
+        {4: Output(Ingots.SUPERCONDUCT, 2)},
+    ),
+)  # type: RecipesCollection[MachineRecipe]

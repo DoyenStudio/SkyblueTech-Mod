@@ -192,6 +192,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # gas burning generator
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.CUPRONICKEL, is_tag=True),
+            1: Input(id_enum.REDSTONEFLUX_CORE),
+            2: Input(tag_enum.PlateTag.CUPRONICKEL, is_tag=True),
+            3: Input(id_enum.Wire.COPPER),
+            4: Input(id_enum.HEAT_EXCHANGER),
+            5: Input(id_enum.Wire.COPPER),
+            6: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            7: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            8: Input(tag_enum.PlateTag.TIN, is_tag=True),
+        },
+        id_enum.GAS_BURNING_GENERATOR,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # geo thermal generator
     MRecipe(
         {
@@ -439,6 +457,36 @@ recipes = RecipesCollection(
         id_enum.WIND_GENERATOR,
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
+        8,
+    ),
+    # mini miner
+    MRecipe(
+        {
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            3: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            6: Input(tag_enum.StickTag.INVAR, is_tag=True),
+            7: Input(id_enum.DRILL_TOP),
+            8: Input(tag_enum.StickTag.INVAR, is_tag=True),
+        },
+        id_enum.MINI_MINER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
+    # rf repeater plant
+    MRecipe(
+        {
+            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            3: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            4: Input(tag_enum.StickTag.SUPERCONDUCT, is_tag=True),
+            5: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            7: Input(id_enum.MACHINERY_BASE_LIGHT),
+        },
+        id_enum.RF_REPEATER_PLANT,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
         8,
     ),
 )

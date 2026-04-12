@@ -2,6 +2,7 @@
 from ..define.id_enum import FLUID_CONDENSER, Molten
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.fluid_condenser import (
+    MachineRecipe,
     FluidCondenserRecipe,
     recipe_molten2ingot,
 )
@@ -33,4 +34,4 @@ recipes = RecipesCollection(
     recipe_molten2ingot("silver"),
     recipe_molten2ingot("platinum"),
     recipe_molten2ingot("nickel"),
-)
+)  # type: RecipesCollection[MachineRecipe]

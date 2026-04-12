@@ -167,12 +167,16 @@ class Processor(ProcessorBase, UpgradeControl):
                 slotitems[slot_pos] = orig_item
             self.SetSlotItems(slotitems)
         if self.process_fluid and isinstance(self, MultiFluidContainer):
-            for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
+            slot_pos_and_inputs = list(
+                recipe.inputs.get(CategoryType.FLUID, {}).items()
+            )
+            last_index = len(slot_pos_and_inputs) - 1
+            for idx, (slot_pos, input) in enumerate(slot_pos_and_inputs):
                 self.fluids[slot_pos].volume -= input.count
-            slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
-            if slots_and_outputs:
-                last_slot_pos = slots_and_outputs[-1][0]
-                for slot_pos, output in slots_and_outputs:
-                    self.OutputFluid(
-                        output.id, output.count, slot_pos, slot_pos == last_slot_pos
-                    )
+                self.onReducedFluid(slot_pos, input.id, input.count, idx == last_index)
+            slots_pos_and_outputs = list(
+                recipe.outputs.get(CategoryType.FLUID, {}).items()
+            )
+            last_index = len(slots_pos_and_outputs) - 1
+            for idx, (slot_pos, input) in enumerate(slots_pos_and_outputs):
+                self.OutputFluid(output.id, output.count, slot_pos, idx == last_index)

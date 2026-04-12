@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.mini_jei.core import CategoryType, RecipesCollection
 from ....common.mini_jei.machinery import MachineRecipeBase, GeneratorRecipe
-from ....common.define import flags as flags
+from ....common.define import flags
 from .base_generator import BaseGenerator
 from .base_speed_control import BaseSpeedControl
 from .multi_fluid_container import MultiFluidContainer
@@ -25,7 +25,7 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
 
     recipes = RecipesCollection("???")  # type: RecipesCollection[GeneratorRecipe]
     "机器配方, 改变配方表时记得重置工作进度"
-    energy_mode = (0, 0, 0, 0, 0, 0)
+    energy_io_mode = (1, 1, 1, 1, 1, 1)
     allow_upgrader_tags = set()
 
     @SuperExecutorMeta.execute_super
@@ -86,7 +86,7 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
         # type: (int, str, float, bool) -> None
         if not is_final or not isinstance(self, MultiFluidContainer):
             return
-        if slot in self.fluid_output_slots and self.HasDeactiveFlag(
+        if slot in self.fluid_input_slots and self.HasDeactiveFlag(
             flags.DEACTIVE_FLAG_NO_RECIPE
         ):
             self.recheck_recipe()
@@ -168,8 +168,13 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
                 slotitems[slot_pos].count -= int(input.count)
             self.SetSlotItems(slotitems)
         if self.process_fluid and isinstance(self, MultiFluidContainer):
-            for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
+            slot_pos_and_inputs = list(
+                recipe.inputs.get(CategoryType.FLUID, {}).items()
+            )
+            last_index = len(slot_pos_and_inputs) - 1
+            for idx, (slot_pos, input) in enumerate(slot_pos_and_inputs):
                 self.fluids[slot_pos].volume -= input.count
+                self.onReducedFluid(slot_pos, input.id, input.count, idx == last_index)
         self.recipe_index = recipe_index
 
     def finish_recipe(self, recipe):
@@ -186,12 +191,9 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
             self.SetSlotItems(slotitems)
         if self.process_fluid and isinstance(self, MultiFluidContainer):
             slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
-            if slots_and_outputs:
-                last_slot_pos = slots_and_outputs[-1][0]
-                for slot_pos, output in slots_and_outputs:
-                    self.OutputFluid(
-                        output.id, output.count, slot_pos, slot_pos == last_slot_pos
-                    )
+            last_index = len(slots_and_outputs) - 1
+            for idx, (slot_pos, output) in enumerate(slots_and_outputs):
+                self.OutputFluid(output.id, output.count, slot_pos, idx == last_index)
         self.recipe_index = None
 
     @property

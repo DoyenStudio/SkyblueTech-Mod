@@ -8,8 +8,8 @@ from skybluetech_scripts.tooldelta.api.server.player import (
     GetSelectedSlot,
     SetInventorySlotItemCount,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ....common.define.global_config import BUCKET_VOLUME
-from .base_machine import BaseMachine
 from .gui_ctrl import GUIControl
 from .utils import FixIOModeByCardinalFacing, FixIOModeByDirection
 
@@ -246,14 +246,17 @@ class MultiFluidContainer(object):
         else:
             return False
 
+    @SuperExecutorMeta.execute_super
     def OnAddedFluid(self, slot, fluid_id, added_fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         "容器内流体体积已经增加时调用。"
 
+    @SuperExecutorMeta.execute_super
     def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         "容器内流体体积已经减少时调用。"
 
+    @SuperExecutorMeta.execute_super
     def OnFluidSlotUpdate(self, slot_pos, is_final):
         # type: (int, bool) -> None
         "子类覆写在流体槽位发生更新时执行的回调。"

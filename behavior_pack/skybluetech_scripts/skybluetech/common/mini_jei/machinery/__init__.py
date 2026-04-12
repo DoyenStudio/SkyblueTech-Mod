@@ -1,1 +1,1 @@
-from .define import MachineRecipe
+from .define import MachineRecipeBase, MachineRecipe, GeneratorRecipe

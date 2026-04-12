@@ -47,6 +47,7 @@
     },
     "Flame": {
         "type": "panel",
+        "$mask_img": "textures/ui/flame_mask",
         "size": [
             20.0,
             20.0
@@ -65,9 +66,10 @@
             {
                 "mask": {
                     "type": "image",
+                    "$mask_img|default": "",
                     "layer": 2,
                     "clip_direction": "down",
-                    "texture": "textures/ui/flame_mask"
+                    "texture": "$mask_img"
                 }
             }
         ]

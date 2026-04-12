@@ -1,0 +1,206 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "minecraft:geometry": {
+                "identifier": "minecraft:geometry.full_block"
+            },
+            "netease:block_container": {
+                "container_size": 2,
+                "custom_description": "红石发电机",
+                "hopper": {
+                    "input": true,
+                    "output": false,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0
+                            ]
+                        }
+                    ],
+                    "output_slot": [
+                        {
+                            "face": 0,
+                            "slot": [
+                                1
+                            ]
+                        }
+                    ]
+                },
+                "screen_name": "RedstoneGeneratorUI.main"
+            },
+            "netease:block_entity": {
+                "client_tick": false,
+                "movable": false,
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7从红石中汲取能量进行发电。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:redstoneflux_generator": {},
+            "tag:redstoneflux_provider": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_generator": {},
+            "tag:skybluetech_machine": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:redstone_generator",
+            "base_block": "netease_container",
+            "states": {
+                "skybluetech:active": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "permutations": [
+            {
+                "components": {
+                    "minecraft:material_instances": {
+                        "down": {
+                            "texture": "skybluetech:generator_frame_down"
+                        },
+                        "east": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "north": {
+                            "texture": "skybluetech:redstone_generator_front_active"
+                        },
+                        "south": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "up": {
+                            "texture": "skybluetech:generator_frame_top"
+                        },
+                        "west": {
+                            "texture": "skybluetech:generator_frame_side"
+                        }
+                    },
+                    "minecraft:light_emission": 15
+                },
+                "condition": "q.block_state('skybluetech:active')"
+            },
+            {
+                "components": {
+                    "minecraft:material_instances": {
+                        "down": {
+                            "texture": "skybluetech:generator_frame_down"
+                        },
+                        "east": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "north": {
+                            "texture": "skybluetech:redstone_generator_front"
+                        },
+                        "south": {
+                            "texture": "skybluetech:generator_frame_side"
+                        },
+                        "up": {
+                            "texture": "skybluetech:generator_frame_top"
+                        },
+                        "west": {
+                            "texture": "skybluetech:generator_frame_side"
+                        }
+                    },
+                    "minecraft:light_emission": 0
+                },
+                "condition": "!q.block_state('skybluetech:active')"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'"
+            }
+        ]
+    }
+}

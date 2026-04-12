@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:deactivation_redstone"
+        },
+        "description": {
+            "identifier": "skybluetech:deactivation_redstone"
+        }
+    }
+}

@@ -5,6 +5,7 @@ from .processor import Processor
 from .base_power_provider import BasePowerProvider
 from .base_speed_control import BaseSpeedControl
 from .fluid_container import FluidContainer
+from .generator_processor import GeneratorProcessor
 from .gui_ctrl import GUIControl
 from .heat_ctrl import HeatCtrl
 from .item_container import ItemContainer

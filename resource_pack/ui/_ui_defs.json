@@ -48,6 +48,7 @@
         "ui/RecipeCheckerLib.json",
         "ui/RecipeCheckerUI.json",
         "ui/RedstoneFurnaceUI.json",
+        "ui/RedstoneGeneratorUI.json",
         "ui/RFRepeaterPlantBuildUI.json",
         "ui/RFRepeaterPlantUI.json",
         "ui/richer_text.json",

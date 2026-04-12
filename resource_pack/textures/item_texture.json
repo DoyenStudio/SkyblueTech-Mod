@@ -70,6 +70,9 @@
         "skybluetech:cupronickel_plate": {
             "textures": "textures/items/plates/cupronickel_plate"
         },
+        "skybluetech:deactivation_redstone": {
+            "textures": "textures/items/deactivation_redstone"
+        },
         "skybluetech:deepslate_lava_bucket": {
             "textures": "textures/items/buckets/deepslate_lava_bucket"
         },

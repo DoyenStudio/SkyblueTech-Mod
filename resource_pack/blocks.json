@@ -565,6 +565,9 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:redstone_generator": {
+        "sound": "iron"
+    },
     "skybluetech:resin_collector": {
         "sound": "wood"
     },

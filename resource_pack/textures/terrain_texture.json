@@ -213,11 +213,17 @@
         "skybluetech:gas_burning_generator": {
             "textures": "textures/models/gas_burning_generator_texture"
         },
+        "skybluetech:generator_frame": {
+            "textures": "textures/machines/generator_frame"
+        },
         "skybluetech:generator_frame_down": {
             "textures": "textures/machines/generator_frame_down"
         },
         "skybluetech:generator_frame_side": {
             "textures": "textures/machines/generator_frame_side"
+        },
+        "skybluetech:generator_frame_side_2": {
+            "textures": "textures/machines/generator_frame_side_2"
         },
         "skybluetech:generator_frame_top": {
             "textures": "textures/machines/generator_frame_top"
@@ -364,6 +370,12 @@
         },
         "skybluetech:redstone_furnace_front_active": {
             "textures": "textures/machines/redstone_furnace_front_active"
+        },
+        "skybluetech:redstone_generator_front": {
+            "textures": "textures/machines/redstone_generator_front"
+        },
+        "skybluetech:redstone_generator_front_active": {
+            "textures": "textures/machines/redstone_generator_front_active"
         },
         "skybluetech:resin_collector": {
             "textures": "textures/models/resin_collector_texture"

@@ -36,6 +36,7 @@ from .mixer import Mixer
 from .oil_extractor import OilExtractor
 from .pump import Pump
 from .redstone_furnace import RedstoneFurnace
+from .redstone_generator import RedstoneGenerator
 from .rf_repeater_plant import RFRepeaterPlant
 from .splitter import Splitter
 from .solar_panel import SolarPanel

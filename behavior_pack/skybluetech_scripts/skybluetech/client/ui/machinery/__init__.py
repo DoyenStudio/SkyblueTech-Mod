@@ -34,6 +34,7 @@ from .mixer import MixerUI
 from .oil_extractor import OilExtractorUI
 from .pump import PumpUI
 from .redstone_furnace import RedstoneFurnaceUI
+from .redstone_generator import RedstoneGeneratorUI
 from .rf_repeater_plant import RFRepeaterPlantUI
 from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI

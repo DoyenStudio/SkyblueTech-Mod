@@ -28,7 +28,7 @@ class GasBurningGeneratorUI(MachinePanelUIProxy):
         self.fluid_updater2 = InitFluidsDisplay(self.gas_output, self.sync.fluids, 1)
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
-            list(recipes.values()),  # pyright: ignore[reportArgumentType]
+            recipes,
         )
 
     def WhenUpdated(self):

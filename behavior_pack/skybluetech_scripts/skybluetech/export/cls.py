@@ -4,13 +4,13 @@ from ..server.machinery.basic import (
     BaseClicker,
     BaseGenerator,
     BaseMachine,
-    BaseProcessor,
+    Processor,
     BaseSpeedControl,
     FluidContainer,
     GUIControl,
     HeatCtrl,
     ItemContainer,
-    MixedProcessor,
+    Processor,
     MultiBlockStructure,
     MultiFluidContainer,
     PowerControl,
@@ -35,8 +35,8 @@ class MachineryDefine:
         return BaseMachine
 
     @staticmethod
-    def GetBaseProcessorCls():
-        return BaseProcessor
+    def GetProcessorCls():
+        return Processor
 
     @staticmethod
     def GetBaseSpeedControlCls():
@@ -57,10 +57,6 @@ class MachineryDefine:
     @staticmethod
     def GetItemContainerCls():
         return ItemContainer
-
-    @staticmethod
-    def GetMixedProcessorCls():
-        return MixedProcessor
 
     @staticmethod
     def GetMultiBlockStructureCls():

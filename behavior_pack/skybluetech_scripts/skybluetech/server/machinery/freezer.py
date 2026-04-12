@@ -1,18 +1,21 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.events.machinery.freezer import FreezerModeChangedEvent
 from ...common.define.id_enum.machinery import FREEZER as MACHINE_ID
 from ...common.machinery_def.freezer import RecipesCollection, recipes as Recipes
 from ...common.ui_sync.machinery.freezer import FreezerUISync
 from .utils.action_commit import SafeGetMachine
-from .basic import MixedProcessor, RegisterMachine
+from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 K_MODE = "mode"
 
 
 @RegisterMachine
-class Freezer(MixedProcessor):
+class Freezer(MultiFluidContainer, Processor):
     block_name = MACHINE_ID
     store_rf_max = 8800
+    process_item = True
+    process_fluid = True
     recipes = RecipesCollection(MACHINE_ID)
     output_slots = (0,)
     fluid_input_slots = {0}
@@ -21,11 +24,19 @@ class Freezer(MixedProcessor):
     upgrade_slot_start = 1
     upgrade_slots = 4
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = FreezerUISync.NewServer(self).Activate()
         self.CallSync()
         self.set_mode(self.recipe_mode)
+
+    @SuperExecutorMeta.execute_super
+    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+        pass
+
+    @SuperExecutorMeta.execute_super
+    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
+        pass
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

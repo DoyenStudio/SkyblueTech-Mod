@@ -1,13 +1,16 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import OIL_EXTRACTOR as MACHINE_ID
 from ...common.machinery_def.oil_extractor import recipes as Recipes
 from ...common.ui_sync.machinery.oil_extractor import OilExtractorUISync
-from .basic import MixedProcessor, RegisterMachine
+from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 
 @RegisterMachine
-class OilExtractor(MixedProcessor):
+class OilExtractor(MultiFluidContainer, Processor):
     block_name = MACHINE_ID
+    process_item = True
+    process_fluid = True
     recipes = Recipes
     input_slots = (0,)
     output_slots = ()
@@ -16,9 +19,18 @@ class OilExtractor(MixedProcessor):
     fluid_slot_max_volumes = (1000,)
     upgrade_slot_start = 1
 
+    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        MixedProcessor.__init__(self, dim, x, y, z, block_entity_data)
+        Processor.__init__(self, dim, x, y, z, block_entity_data)
         self.sync = OilExtractorUISync.NewServer(self).Activate()
+
+    @SuperExecutorMeta.execute_super
+    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+        pass
+
+    @SuperExecutorMeta.execute_super
+    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
+        pass
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

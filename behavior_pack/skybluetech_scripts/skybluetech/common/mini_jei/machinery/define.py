@@ -15,6 +15,11 @@ from ..core import (
 
 
 class MachineRecipeBase(Recipe):
+    def __init__(self, inputs, outputs, tick_duration):
+        # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]], int) -> None
+        Recipe.__init__(self, inputs, outputs)
+        self.tick_duration = tick_duration
+
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
         input_items = self.inputs.get("item", {})
@@ -65,7 +70,7 @@ class MachineRecipe(MachineRecipeBase):
 
     def __init__(self, inputs, outputs, power_cost, tick_duration):
         # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]], int, int) -> None
-        Recipe.__init__(self, inputs, outputs)
+        MachineRecipeBase.__init__(self, inputs, outputs, tick_duration)
         self.power_cost = power_cost
         self.tick_duration = tick_duration
 
@@ -95,9 +100,8 @@ class GeneratorRecipe(MachineRecipeBase):
         _outputs = {CategoryType.ENERGY: {0: Output(RF, output_power)}}
         if outputs is not None:
             _outputs.update(outputs)
-        MachineRecipeBase.__init__(self, inputs, _outputs)
+        MachineRecipeBase.__init__(self, inputs, _outputs, tick_duration)
         self.output_power = output_power
-        self.tick_duration = tick_duration
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None

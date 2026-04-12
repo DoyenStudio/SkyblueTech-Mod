@@ -3,13 +3,14 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from ...common.define.id_enum.machinery import ALLOY_FURNACE as MACHINE_ID
 from ...common.machinery_def.alloy_furnace import recipes as Recipes
 from ...common.ui_sync.machinery.alloy_furnace import AlloyFurnaceUISync
-from .basic import BaseProcessor, RegisterMachine
+from .basic import Processor, RegisterMachine
 
 
 @RegisterMachine
-class AlloyFurnace(BaseProcessor):
+class AlloyFurnace(Processor):
     block_name = MACHINE_ID
     store_rf_max = 8800
+    process_item = True
     recipes = Recipes
     input_slots = (0, 1, 2, 3)
     output_slots = (4, 5)

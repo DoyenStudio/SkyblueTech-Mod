@@ -3,13 +3,14 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from ...common.define.id_enum.machinery import COMPRESSOR as MACHINE_ID
 from ...common.machinery_def.compressor import recipes as Recipes
 from ...common.ui_sync.machinery.compressor import CompressorUISync
-from .basic import RegisterMachine, BaseProcessor
+from .basic import RegisterMachine, Processor
 
 
 @RegisterMachine
-class Compressor(BaseProcessor):
+class Compressor(Processor):
     block_name = MACHINE_ID
     store_rf_max = 8800
+    process_item = True
     recipes = Recipes
     input_slots = (0,)
     output_slots = (1,)

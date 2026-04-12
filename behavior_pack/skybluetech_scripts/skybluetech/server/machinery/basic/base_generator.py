@@ -23,6 +23,7 @@ class BaseGenerator(BasePowerProvider):
         )
         self.output_power = 0
 
+    @SuperExecutorMeta.execute_super
     def OnTicking(self):
         if self.IsActive():
             self.GeneratePower(self.output_power)
@@ -31,6 +32,8 @@ class BaseGenerator(BasePowerProvider):
                     Upgraders.GENERIC_AUTOSTOP
                 ):
                     self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_FULL)
+        elif self.store_rf > 0:
+            _, self.store_rf = self._output_nearby(self.store_rf)
 
     def SetOutputPower(self, power):
         # type: (int) -> None

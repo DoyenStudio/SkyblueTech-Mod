@@ -10,7 +10,8 @@ from .multi_fluid_container import MultiFluidContainer
 from .upgrade_control import UpgradeControl
 from .processor_base import ProcessorBase
 
-K_OUTPUT_POWER = "output_power"
+K_OUTPUT_POWER = "st:output_power"
+K_RECIPE_INDEX = "st:recipe_index"
 
 
 class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
@@ -51,7 +52,6 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
         pass
 
     # === item processor special ===
-
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):
@@ -104,34 +104,40 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
             self.recheck_recipe()
 
     # ======
+    def get_recipe(self):
+        if self.recipe_index:
+            return self.recipe_index, self.recipes[self.recipe_index]
+        else:
+            return ProcessorBase.get_recipe(self)
+
     def recheck_recipe(self):
-        recipe = self.get_recipe()
+        recipe_index, recipe = self.get_recipe()
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             self.current_recipe = None
             self.ResetProgress()
         elif not recipe.equals(self.current_recipe):
-            self.start_next(recipe)
+            self.start_next(recipe_index, recipe)
         elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
             self.start_next()
 
     def run_once(self):
         inputs = self.GetInputSlotItems()
         outputs = self.GetOutputSlotItems()
-        recipe = self.get_recipe()
+        _, recipe = self.get_recipe()
         if recipe is None:
             # cannot reach
             raise ValueError("Recipe ERROR")
         if not self.can_output(recipe):
             return
         inputs.update(outputs)
-        self.finish_recipe(inputs, recipe)
+        self.finish_recipe(recipe)
 
-    def start_next(self, _recipe=None):
-        # type: (MachineRecipeBase | None) -> None
+    def start_next(self, recipe_index=0, _recipe=None):
+        # type: (int, MachineRecipeBase | None) -> None
         "开始运行配方"
         if _recipe is None:
-            recipe = self.get_recipe()
+            recipe_index, recipe = self.get_recipe()
             if recipe is None:
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
                 self.current_recipe = None
@@ -148,10 +154,45 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
         if not self.can_output(recipe):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
+        self.start_recipe(recipe_index, recipe)
         self.ResetDeactiveFlags()
         self.generator_output_power = recipe.output_power
         self.SetOutputPower(self.generator_output_power)
         self.CallSync()
+
+    def start_recipe(self, recipe_index, recipe):
+        # type: (int, MachineRecipeBase) -> None
+        if self.process_item:
+            slotitems = self.GetInputSlotItems()
+            for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
+                slotitems[slot_pos].count -= int(input.count)
+            self.SetSlotItems(slotitems)
+        if self.process_fluid and isinstance(self, MultiFluidContainer):
+            for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
+                self.fluids[slot_pos].volume -= input.count
+        self.recipe_index = recipe_index
+
+    def finish_recipe(self, recipe):
+        # type: (MachineRecipeBase) -> None
+        if self.process_item:
+            slotitems = self.GetOutputSlotItems()
+            for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
+                orig_item = slotitems.get(slot_pos, None)
+                if orig_item is None:
+                    orig_item = Item(output.id, 0, int(output.count))
+                else:
+                    orig_item.count += int(output.count)
+                slotitems[slot_pos] = orig_item
+            self.SetSlotItems(slotitems)
+        if self.process_fluid and isinstance(self, MultiFluidContainer):
+            slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
+            if slots_and_outputs:
+                last_slot_pos = slots_and_outputs[-1][0]
+                for slot_pos, output in slots_and_outputs:
+                    self.OutputFluid(
+                        output.id, output.count, slot_pos, slot_pos == last_slot_pos
+                    )
+        self.recipe_index = None
 
     @property
     def generator_output_power(self):
@@ -162,3 +203,13 @@ class GeneratorProcessor(BaseGenerator, UpgradeControl, ProcessorBase):
     def generator_output_power(self, value):
         # type: (int) -> None
         self.bdata[K_OUTPUT_POWER] = value
+
+    @property
+    def recipe_index(self):
+        # type: () -> int
+        return self.bdata[K_RECIPE_INDEX] or 0
+
+    @recipe_index.setter
+    def recipe_index(self, value):
+        # type: (int | None) -> None
+        self.bdata[K_RECIPE_INDEX] = value

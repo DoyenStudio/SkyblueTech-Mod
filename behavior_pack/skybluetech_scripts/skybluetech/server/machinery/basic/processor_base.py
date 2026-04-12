@@ -25,7 +25,7 @@ class ProcessorBase(GUIControl, ItemContainer, WorkRenderer):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        self.current_recipe = self.get_recipe()
+        _, self.current_recipe = self.get_recipe()
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
@@ -57,8 +57,8 @@ class ProcessorBase(GUIControl, ItemContainer, WorkRenderer):
         return False
 
     def get_recipe(self):
-        # type: () -> MachineRecipeBase | None
-        for recipe in self.recipes:
+        # type: () -> tuple[int, MachineRecipeBase | None]
+        for recipe_idx, recipe in enumerate(self.recipes):
             cont = False
             if self.process_item:
                 inputs = self.GetInputSlotItems()
@@ -87,8 +87,8 @@ class ProcessorBase(GUIControl, ItemContainer, WorkRenderer):
             if cont:
                 continue
             else:
-                return recipe
-        return None
+                return recipe_idx, recipe
+        return (0, None)
 
     def can_output(self, recipe):
         # type: (MachineRecipeBase) -> bool
@@ -122,25 +122,3 @@ class ProcessorBase(GUIControl, ItemContainer, WorkRenderer):
                 if fluid_volume > fluid.max_volume:
                     return False
         return True
-
-    def finish_recipe(self, slotitems, recipe):
-        # type: (dict[int, Item], MachineRecipeBase) -> None
-        if self.process_item:
-            for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
-                slotitems[slot_pos].count -= int(input.count)
-            for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
-                orig_item = slotitems.get(slot_pos, None)
-                if orig_item is None:
-                    orig_item = Item(output.id, 0, int(output.count))
-                else:
-                    orig_item.count += int(output.count)
-                slotitems[slot_pos] = orig_item
-            self.SetSlotItems(slotitems)
-        if self.process_fluid and isinstance(self, MultiFluidContainer):
-            slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
-            if slots_and_outputs:
-                last_slot_pos = slots_and_outputs[-1][0]
-                for slot_pos, output in slots_and_outputs:
-                    self.OutputFluid(
-                        output.id, output.count, slot_pos, slot_pos == last_slot_pos
-                    )

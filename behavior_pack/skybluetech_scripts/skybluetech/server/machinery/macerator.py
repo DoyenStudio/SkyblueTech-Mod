@@ -3,13 +3,14 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from ...common.define.id_enum.machinery import MACERATOR as MACHINE_ID
 from ...common.machinery_def.macerator import recipes as Recipes
 from ...common.ui_sync.machinery.macerator import MaceratorUISync
-from .basic import RegisterMachine, BaseProcessor
+from .basic import RegisterMachine, Processor
 
 
 @RegisterMachine
-class Macerator(BaseProcessor):
+class Macerator(Processor):
     block_name = MACHINE_ID
     store_rf_max = 8800
+    process_item = True
     recipes = Recipes
     input_slots = (0,)
     output_slots = (1,)
@@ -19,7 +20,6 @@ class Macerator(BaseProcessor):
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = MaceratorUISync.NewServer(self).Activate()
-        self.CallSync()
 
     def OnSync(self):
         self.sync.storage_rf = self.store_rf

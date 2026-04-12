@@ -71,6 +71,10 @@ class RecipesCollection(Generic[RT]):
     def list(self):
         return self._recipes[:]
 
+    def __getitem__(self, index):
+        # type: (int) -> RT
+        return self._recipes[index]
+
     def __iter__(self):
         return iter(self._recipes)
 

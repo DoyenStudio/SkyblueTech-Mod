@@ -104,7 +104,7 @@ class Processor(ProcessorBase, UpgradeControl):
 
     # ======
     def recheck_recipe(self):
-        recipe = self.get_recipe()
+        _, recipe = self.get_recipe()
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             self.current_recipe = None
@@ -112,20 +112,17 @@ class Processor(ProcessorBase, UpgradeControl):
         elif not recipe.equals(self.current_recipe):
             self.start_next(recipe)
         elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-            self.start_next()
+            self.start_next(recipe)
 
     def run_once(self):
         "进行一次配方产出"
-        inputs = self.GetInputSlotItems()
-        outputs = self.GetOutputSlotItems()
-        recipe = self.get_recipe()
+        _, recipe = self.get_recipe()
         if recipe is None:
             # cannot reach
             raise ValueError("Recipe ERROR")
         if not self.can_output(recipe):
             return
-        inputs.update(outputs)
-        self.finish_recipe(inputs, recipe)
+        self.finish_recipe(recipe)
 
     def start_next(self, _recipe=None):
         # type: (MachineRecipeBase | None) -> None
@@ -153,3 +150,29 @@ class Processor(ProcessorBase, UpgradeControl):
             return
         self.ResetDeactiveFlags()
         self.CallSync()
+
+    def finish_recipe(self, recipe):
+        # type: (MachineRecipeBase) -> None
+        slotitems = self.GetInputSlotItems()
+        slotitems.update(self.GetOutputSlotItems())
+        if self.process_item:
+            for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
+                slotitems[slot_pos].count -= int(input.count)
+            for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
+                orig_item = slotitems.get(slot_pos, None)
+                if orig_item is None:
+                    orig_item = Item(output.id, 0, int(output.count))
+                else:
+                    orig_item.count += int(output.count)
+                slotitems[slot_pos] = orig_item
+            self.SetSlotItems(slotitems)
+        if self.process_fluid and isinstance(self, MultiFluidContainer):
+            for slot_pos, input in recipe.inputs.get(CategoryType.FLUID, {}).items():
+                self.fluids[slot_pos].volume -= input.count
+            slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
+            if slots_and_outputs:
+                last_slot_pos = slots_and_outputs[-1][0]
+                for slot_pos, output in slots_and_outputs:
+                    self.OutputFluid(
+                        output.id, output.count, slot_pos, slot_pos == last_slot_pos
+                    )

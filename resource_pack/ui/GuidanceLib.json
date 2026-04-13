@@ -330,6 +330,17 @@
                         24
                     ]
                 }
+            },
+            {
+                "check_btn@SkybluePanelLib.recipe_check_btn": {
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "layer": 0,
+                    "offset": [
+                        70,
+                        74
+                    ]
+                }
             }
         ]
     },

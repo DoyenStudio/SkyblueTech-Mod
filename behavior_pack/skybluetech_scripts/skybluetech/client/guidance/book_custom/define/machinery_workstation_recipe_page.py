@@ -17,11 +17,16 @@ class MachineryWorkstationRecipePage(BasePage):
 
     def RenderInit(self, ctrl):
         # type: (UBaseCtrl) -> None
+        from ....ui.recipe_checker import PushRecipeCheckerUI
+
         BasePage.RenderInit(self, ctrl)
         recipes = GetRecipesByOutput(CategoryType.ITEM, self.recipe_result)
         if len(recipes) > 0:
             recipe = recipes[0]
             recipe.RenderInit(ctrl["recipe_renderer"])
+            ctrl["check_btn"].asButton().SetCallback(
+                lambda _: PushRecipeCheckerUI(recipes) and None
+            )
         else:
             title = ctrl["title"].asLabel()
             title.SetText("§c错误： 未找到关于 %s 的配方。" % self.recipe_result)

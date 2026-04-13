@@ -478,7 +478,7 @@ recipes = RecipesCollection(
     # rf repeater plant
     MRecipe(
         {
-            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            1: Input(tag_enum.PlateTag.STEEL, is_tag=True),
             3: Input(tag_enum.PlateTag.TIN, is_tag=True),
             4: Input(tag_enum.StickTag.SUPERCONDUCT, is_tag=True),
             5: Input(tag_enum.PlateTag.TIN, is_tag=True),

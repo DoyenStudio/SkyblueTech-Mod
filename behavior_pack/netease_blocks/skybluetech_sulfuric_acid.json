@@ -1,0 +1,21 @@
+{
+    "format_version": "1.20.80",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "liquid_color": [
+                    255,
+                    216,
+                    216,
+                    128
+                ],
+                "spread_fire": false
+            }
+        },
+        "description": {
+            "base_block": "liquid",
+            "category": "none",
+            "identifier": "skybluetech:sulfuric_acid"
+        }
+    }
+}

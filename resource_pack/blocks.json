@@ -711,5 +711,21 @@
             "hand_model_use_client_entity": true
         },
         "sound": "cloth"
+    },
+    "skybluetech:sulfuric_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_static"
+        }
+    },
+    "skybluetech:flowing_sulfuric_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_flowing"
+        }
     }
 }

@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:sulfuric_acid_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:sulfuric_acid_bucket"
+        }
+    }
+}

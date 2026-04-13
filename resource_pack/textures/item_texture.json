@@ -450,6 +450,9 @@
         },
         "skybluetech:wrench_iron": {
             "textures": "textures/items/wrench_iron"
+        },
+        "skybluetech:sulfuric_acid_bucket": {
+            "textures": "textures/items/buckets/sulfuric_acid_bucket"
         }
     },
     "texture_name": "atlas.items"

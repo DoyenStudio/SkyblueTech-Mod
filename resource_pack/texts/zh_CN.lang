@@ -302,3 +302,5 @@ item.skybluetech:superconduct_plate.name=超导板
 item.skybluetech:superconduct_stick.name=超导棒
 item.skybluetech:superconduct_ingot.name=超导锭
 item.skybluetech:machinery_base_light.name=轻量机械基座
+item.skybluetech:deactivation_redstone.name=惰性红石
+tile.skybluetech:redstone_generator.name=红石发电机

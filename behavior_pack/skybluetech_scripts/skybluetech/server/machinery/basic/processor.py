@@ -128,7 +128,7 @@ class Processor(ProcessorBase, UpgradeControl):
         # type: (MachineRecipeBase | None) -> None
         "开始运行配方"
         if _recipe is None:
-            recipe = self.get_recipe()
+            _, recipe = self.get_recipe()
             if recipe is None:
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
                 self.current_recipe = None
@@ -137,7 +137,7 @@ class Processor(ProcessorBase, UpgradeControl):
             recipe = _recipe
         if not isinstance(recipe, MachineRecipe):
             raise ValueError(
-                "Processor %s run recipe not MachineRecipe" % self.__class__.__name__
+                "Processor %s run recipe %s not MachineRecipe" % (self.__class__.__name__, recipe.__class__.__name__)
             )
         self.current_recipe = recipe
         self.SetProcessTicks(recipe.tick_duration)

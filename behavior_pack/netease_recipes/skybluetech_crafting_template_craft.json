@@ -2,7 +2,7 @@
     "format_version": "1.20.10",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "skybluetech:air_compress_unit_craft"
+            "identifier": "skybluetech:crafting_template_craft"
         },
         "key": {
             "A": {

@@ -27,6 +27,18 @@ geothermal_generator = PageGroup(
     ],
 )
 
+redstone_generator = PageGroup(
+    "redstone_generator_description",
+    [
+        TextPage(
+            "红石发电机",
+            '红石发电机使用<item id="minecraft:redstone"><text color="§4" t="红石">或<item id="minecraft:redstone_block"><text color="§4" t="红石块">进行快速且大功率地产能。\n\n红石发电机提取红石或红石块中所含红石能， 被提取后的红石会转化为<item id="%s"><text color="§4" t="惰性红石">。'
+            % id_enum.DEACTIVATION_REDSTONE,
+        ),
+        MachineryWorkstationRecipePage(id_enum.REDSTONE_GENERATOR),
+    ],
+)
+
 
 solar_panel = PageGroup(
     "solar_panel_description",

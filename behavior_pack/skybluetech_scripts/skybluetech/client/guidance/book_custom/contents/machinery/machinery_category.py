@@ -205,16 +205,22 @@ machinery_generator_toc = PageGroup(
                     machinery_generator.geothermal_generator,
                 ),
                 TOCPageSection(
-                    id_enum.THERMAL_GENERATOR,
+                    id_enum.REDSTONE_GENERATOR,
                     0,
-                    "火力发电机",
-                    machinery_generator.thermal_generator,
+                    "红石发电机",
+                    machinery_generator.redstone_generator,
                 ),
                 TOCPageSection(
                     id_enum.SOLAR_PANEL,
                     0,
                     "太阳能电池板",
                     machinery_generator.solar_panel,
+                ),
+                TOCPageSection(
+                    id_enum.THERMAL_GENERATOR,
+                    0,
+                    "火力发电机",
+                    machinery_generator.thermal_generator,
                 ),
                 TOCPageSection(
                     id_enum.WIND_GENERATOR,
@@ -351,13 +357,13 @@ machinery_toc = PageGroup(
                 MainTOCPageSection(
                     id_enum.MACHINERY_WORKSTATION,
                     0,
-                    "制造加工",
+                    "合成制造",
                     machinery_crafting_toc,
                 ),
                 MainTOCPageSection(
                     id_enum.MACERATOR,
                     0,
-                    "工业生产",
+                    "生产加工",
                     machinery_production_toc,
                 ),
                 MainTOCPageSection(

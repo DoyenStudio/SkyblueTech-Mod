@@ -109,7 +109,7 @@ class GeneratorRecipe(MachineRecipeBase):
 
         MachineRecipeBase.RenderInit(self, panel)
         self.rf_output_renderer = RFOutputDisplayer(
-            panel["output_power"], self.output_power
+            panel["output_power"], self.output_power * self.tick_duration
         )
         panel["tick_power"].asLabel().SetText(FormatRF(self.output_power) + "/t")
 

@@ -3,6 +3,21 @@
         "$screen_content": "WindGeneratorUI.wind_generator_ui"
     },
     "namespace": "WindGeneratorUI",
+    "paddle_slot_img": {
+        "type": "image",
+        "offset": [
+            1.0,
+            0.0
+        ],
+        "size": [
+            18.0,
+            18.0
+        ],
+        "layer": 1,
+        "clip_direction": "left",
+        "clip_ratio": 0.0,
+        "texture": "textures/ui/slot_paddle_bg"
+    },
     "wind_generator_ui": {
         "type": "panel",
         "controls": [
@@ -22,7 +37,11 @@
             },
             {
                 "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4
+                    "layer": 4,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {
@@ -67,6 +86,7 @@
                                             "controls": [
                                                 {
                                                     "gen_slot@netease_container.custom_grid_item": {
+                                                        "$cell_overlay_ref|default": "WindGeneratorUI.paddle_slot_img",
                                                         "layer": 10,
                                                         "offset": [
                                                             0,

@@ -3,7 +3,7 @@
     "minecraft:block": {
         "components": {
             "minecraft:destructible_by_mining": {
-                "seconds_to_destroy": 2.0
+                "seconds_to_destroy": 3.0
             },
             "minecraft:geometry": {
                 "identifier": "minecraft:geometry.full_block"

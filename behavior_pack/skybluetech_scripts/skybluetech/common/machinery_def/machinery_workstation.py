@@ -44,6 +44,45 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         16,
     ),
+    # bedrock lava drill structure
+    MRecipe(
+        {
+            3: Input(id_enum.Wire.SILVER_INSULATED),
+            4: Input(id_enum.BedrockLavaDrill.FRAME),
+            5: Input(id_enum.Wire.SILVER_INSULATED),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+        },
+        id_enum.BedrockLavaDrill.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        32,
+    ),
+    MRecipe(
+        {
+            1: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            3: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            4: Input(id_enum.Wire.SILVER),
+            5: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            7: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+        },
+        id_enum.BedrockLavaDrill.IO_ENERGY,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            1: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            3: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            4: Input(id_enum.Pipe.ULTRAHEATINUM),
+            5: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            7: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+        },
+        id_enum.BedrockLavaDrill.IO_FLUID,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
     # charger
     MRecipe(
         {

@@ -7,6 +7,8 @@ class Cable:
 
 class Pipe:
     BRONZE = "skybluetech:pipe_bronze"
+    CUPRONICKEL = "skybluetech:pipe_cupronickel"
+    ULTRAHEATINUM = "skybluetech:pipe_ultraheatinum"
 
 
 class Wire:

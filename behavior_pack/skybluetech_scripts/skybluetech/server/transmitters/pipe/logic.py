@@ -5,10 +5,7 @@ from ...machinery.basic.fluid_container import FluidContainer
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.pool import GetMachineStrict
 from ..base import LogicModule
-from .define import PipeNetwork, PipeAccessPoint
-
-
-PIPE_NAME = "skybluetech:bronze_pipe"
+from .define import PipeNetwork, PipeAccessPoint, PIPE_CAN_TRANSMIT_FLUID_MAPPING
 
 
 def isPipe(blockName):
@@ -109,8 +106,10 @@ def onNetworkTick(network):
         if isinstance(om, FluidContainer):
             om_fluid_id = om.fluid_id
             om_fluid_vol = om.fluid_volume
-            if om_fluid_id is None or (
-                pipe_fluid_id is not None and om_fluid_id != pipe_fluid_id
+            if (
+                om_fluid_id is None
+                or (pipe_fluid_id is not None and om_fluid_id != pipe_fluid_id)
+                or not pipe_can_transfer_fluid(network.transmitter_id, om_fluid_id)
             ):
                 continue
             vol_takeout = min(out_capacity, om_fluid_vol)
@@ -156,6 +155,11 @@ def onNetworkTick(network):
     else:
         network.fluid_id = pipe_fluid_id
     network.save_network_data()
+
+
+def pipe_can_transfer_fluid(pipe_id, fluid_id):
+    # type: (str, str) -> bool
+    return PIPE_CAN_TRANSMIT_FLUID_MAPPING.get(pipe_id, lambda _: True)(fluid_id)
 
 
 logic_module = LogicModule(

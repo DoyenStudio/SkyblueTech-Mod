@@ -1,7 +1,36 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "north": "q.block_state('skybluetech:connection_north')",
+                    "south": "q.block_state('skybluetech:connection_south')",
+                    "up": "q.block_state('skybluetech:connection_up')",
+                    "west": "q.block_state('skybluetech:connection_west')",
+                    "down": "q.block_state('skybluetech:connection_down')",
+                    "east": "q.block_state('skybluetech:connection_east')",
+                    "root_up2down": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')",
+                    "root_west2east": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')",
+                    "root_south2north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                    "root_default": "!(q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')) && !(q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')) && !(q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west'))"
+                },
+                "identifier": "geometry.skybluetech.wire"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "blend",
+                    "texture": "skybluetech:wire_tin"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.general_wire_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:wire_tin"
+                    }
+                }
+            },
             "minecraft:light_dampening": 0,
             "netease:block_entity": {},
             "netease:custom_tips": {
@@ -25,28 +54,6 @@
             "tag:piston_denier": {},
             "tag:redstoneflux_connectable": {},
             "tag:skybluetech_wire": {},
-            "minecraft:geometry": {
-                "bone_visibility": {
-                    "north": "q.block_state('skybluetech:connection_north')",
-                    "south": "q.block_state('skybluetech:connection_south')",
-                    "up": "q.block_state('skybluetech:connection_up')",
-                    "west": "q.block_state('skybluetech:connection_west')",
-                    "down": "q.block_state('skybluetech:connection_down')",
-                    "east": "q.block_state('skybluetech:connection_east')",
-                    "root_up2down": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')",
-                    "root_west2east": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')",
-                    "root_south2north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
-                    "root_default": "!(q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')) && !(q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')) && !(q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west'))"
-                },
-                "identifier": "geometry.skybluetech.wire"
-            },
-            "minecraft:material_instances": {
-                "*": {
-                    "isotropic": true,
-                    "render_method": "blend",
-                    "texture": "skybluetech:wire_tin"
-                }
-            },
             "netease:on_entity_inside": {
                 "send_python_event": true
             },

@@ -26,20 +26,20 @@
             "minecraft:material_instances": {
                 "*": {
                     "render_method": "blend",
-                    "texture": "skybluetech:pipe_bronze"
+                    "texture": "skybluetech:pipe_cupronickel"
                 }
             },
             "minecraft:item_visual": {
                 "geometry": "geometry.skybluetech.general_pipe_item",
                 "material_instances": {
                     "*": {
-                        "texture": "skybluetech:pipe_bronze"
+                        "texture": "skybluetech:pipe_cupronickel"
                     }
                 }
             },
             "netease:block_entity": {},
             "netease:custom_tips": {
-                "value": "\n§7可在机器或储罐间传输流体。\n§b传输速率： §a100 mB/t\n§d使用扳手可以切换管道的输入 / 提取模式。"
+                "value": "\n§7可在机器或储罐间传输流体。\n§b传输速率： §a60 mB/t\n§6支持输送§c熔岩§6。\n§d使用扳手可以切换管道的输入 / 提取模式。"
             },
             "netease:listen_block_remove": {
                 "value": true
@@ -58,7 +58,7 @@
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:pipe_bronze",
+            "identifier": "skybluetech:pipe_cupronickel",
             "states": {
                 "skybluetech:cable_io_down": [
                     false,

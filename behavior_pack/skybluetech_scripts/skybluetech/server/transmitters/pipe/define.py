@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server import GetBlockEntityData
-from ....common.define.id_enum.blocks import Pipe
+from ....common.define.id_enum import Pipe, fluids
 from ..base.define import BaseNetwork, BaseAccessPoint
 
 INT32 = 1 << 32
@@ -8,16 +8,25 @@ INT32 = 1 << 32
 # TRANSFER_SPEED_MAPPING = (None, 100, 400, 1600, 6400, 14000)
 TRANSFER_SPEED_MAPPING = {
     Pipe.BRONZE: 100,
+    Pipe.CUPRONICKEL: 60,
+    Pipe.ULTRAHEATINUM: 100,
 }
 CAPACITY_MAPPING = {
     Pipe.BRONZE: 1000,
+    Pipe.CUPRONICKEL: 1000,
+    Pipe.ULTRAHEATINUM: 1000,
+}
+PIPE_CAN_TRANSMIT_FLUID_MAPPING = {
+    Pipe.BRONZE: lambda f: f not in fluids.HotFluid.all(),
+    Pipe.CUPRONICKEL: lambda f: f not in fluids.DeepLava.all(),
+    Pipe.ULTRAHEATINUM: lambda _: True,
 }
 
 
 class PipeNetwork(BaseNetwork["PipeAccessPoint"]):
-    def __init__(self, dim, group_inputs, group_outputs, nodes, transfer_speed=0):
+    def __init__(self, dim, group_inputs, group_outputs, nodes, transmitter_id):
         super(PipeNetwork, self).__init__(
-            dim, group_inputs, group_outputs, nodes, transfer_speed
+            dim, group_inputs, group_outputs, nodes, transmitter_id
         )
         self.capacity = 1000
         self.load_network_data()

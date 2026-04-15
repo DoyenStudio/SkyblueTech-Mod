@@ -5,6 +5,7 @@ from ..base import BaseNetwork, BaseAccessPoint
 
 TRANSFER_SPEED_MAPPING = {
     Cable.STEEL: 1,
+    Cable.INVAR: 2,
 }  # pre 0.2s
 
 

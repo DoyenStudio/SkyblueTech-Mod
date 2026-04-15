@@ -321,7 +321,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             input_nodes,
             output_nodes,
             nodes,
-            self.network_cls.calc_transfer_speed(first_transmitter_name),
+            first_transmitter_name,
         )
 
     def get_and_init_network(

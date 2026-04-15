@@ -128,6 +128,7 @@ itemGroup.skybluetech.bedrock_lava_drill=基岩熔岩钻
 tile.skybluetech:alloy_furnace.name=合金炉
 tile.skybluetech:assembler.name=装配站
 tile.skybluetech:pipe_bronze.name=黄铜流体管道
+tile.skybluetech:pipe_cupronickel.name=白铜流体管道
 tile.skybluetech:pipe_ultraheatinum.name=耐热流体管道
 tile.skybluetech:charger.name=充能台
 tile.skybluetech:compressor.name=压缩机

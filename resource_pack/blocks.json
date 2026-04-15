@@ -523,6 +523,12 @@
     "skybluetech:pipe_bronze": {
         "sound": "copper"
     },
+    "skybluetech:pipe_cupronickel": {
+        "sound": "copper"
+    },
+    "skybluetech:pipe_ultraheatinum": {
+        "sound": "copper"
+    },
     "skybluetech:platinum_block": {
         "textures": "skybluetech:platinum_block"
     },
@@ -643,73 +649,33 @@
         "sound": "iron"
     },
     "skybluetech:wire_copper": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_copper_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_creative": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_creative_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_insulated_copper": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_insulated_copper_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_insulated_creative": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_insulated_creative_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_insulated_silver": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_insulated_silver_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_insulated_superconduct": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_insulated_superconduct_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_insulated_tin": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_insulated_tin_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_silver": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_silver_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_superconduct": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_superconduct_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:wire_tin": {
-        "client_entity": {
-            "block_icon": "skybluetech:wire_tin_item",
-            "hand_model_use_client_entity": true
-        },
         "sound": "cloth"
     },
     "skybluetech:sulfuric_acid": {

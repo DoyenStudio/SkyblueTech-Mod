@@ -1,5 +1,5 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
             "minecraft:geometry": {
@@ -19,9 +19,16 @@
             },
             "minecraft:material_instances": {
                 "*": {
-                    "isotropic": true,
                     "render_method": "blend",
                     "texture": "skybluetech:wire_creative"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.general_wire_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:wire_creative"
+                    }
                 }
             },
             "netease:on_entity_inside": {

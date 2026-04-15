@@ -18,12 +18,13 @@ AP_MODE_OUTPUT = 0b10
 
 class BaseNetwork(Generic[_APT]):
     # 网络表示一条管网, 所有可以直接连通的管道方块共属于一个网络。
-    def __init__(self, dim, group_inputs, group_outputs, nodes, transfer_speed=0):
-        # type: (int, set[_APT], set[_APT], set[tuple[int, int, int]], int) -> None
+    def __init__(self, dim, group_inputs, group_outputs, nodes, transmitter_id):
+        # type: (int, set[_APT], set[_APT], set[tuple[int, int, int]], str) -> None
         self.dim = dim
         self.group_inputs = group_inputs
         self.group_outputs = group_outputs
-        self.transfer_speed = transfer_speed
+        self.transmitter_id = transmitter_id
+        self.transfer_speed = self.calc_transfer_speed(transmitter_id)
         self.nodes = nodes
         self._nodes_to_discard = set(nodes)
         for _i in group_inputs | group_outputs:

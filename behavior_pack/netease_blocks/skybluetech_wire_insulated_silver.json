@@ -1,8 +1,38 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
-            "minecraft:light_dampening": 0,
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "down": "q.block_state('skybluetech:connection_down')",
+                    "east": "q.block_state('skybluetech:connection_east')",
+                    "north": "q.block_state('skybluetech:connection_north')",
+                    "root_down": "!q.block_state('skybluetech:connection_down')",
+                    "root_east": "!q.block_state('skybluetech:connection_east')",
+                    "root_north": "!q.block_state('skybluetech:connection_north')",
+                    "root_south": "!q.block_state('skybluetech:connection_south')",
+                    "root_up": "!q.block_state('skybluetech:connection_up')",
+                    "root_west": "!q.block_state('skybluetech:connection_west')",
+                    "south": "q.block_state('skybluetech:connection_south')",
+                    "up": "q.block_state('skybluetech:connection_up')",
+                    "west": "q.block_state('skybluetech:connection_west')"
+                },
+                "identifier": "geometry.skybluetech.wire_insulated"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "blend",
+                    "texture": "skybluetech:wire_insulated_silver"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.general_wire_insulated_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:wire_insulated_silver"
+                    }
+                }
+            },
             "netease:block_entity": {},
             "netease:custom_tips": {
                 "value": "\n§7可在发电机与机器间传输能量。\n§b功率： §a4096 RF/t"
@@ -23,31 +53,7 @@
                 "value": true
             },
             "tag:redstoneflux_connectable": {},
-            "tag:skybluetech_wire": {},
-            "minecraft:geometry": {
-                "bone_visibility": {
-                    "down": "q.block_state('skybluetech:connection_down')",
-                    "east": "q.block_state('skybluetech:connection_east')",
-                    "north": "q.block_state('skybluetech:connection_north')",
-                    "root_down": "!q.block_state('skybluetech:connection_down')",
-                    "root_east": "!q.block_state('skybluetech:connection_east')",
-                    "root_north": "!q.block_state('skybluetech:connection_north')",
-                    "root_south": "!q.block_state('skybluetech:connection_south')",
-                    "root_up": "!q.block_state('skybluetech:connection_up')",
-                    "root_west": "!q.block_state('skybluetech:connection_west')",
-                    "south": "q.block_state('skybluetech:connection_south')",
-                    "up": "q.block_state('skybluetech:connection_up')",
-                    "west": "q.block_state('skybluetech:connection_west')"
-                },
-                "identifier": "geometry.skybluetech.wire_insulated"
-            },
-            "minecraft:material_instances": {
-                "*": {
-                    "isotropic": true,
-                    "render_method": "blend",
-                    "texture": "skybluetech:wire_insulated_silver"
-                }
-            }
+            "tag:skybluetech_wire": {}
         },
         "description": {
             "category": "skybluetech",

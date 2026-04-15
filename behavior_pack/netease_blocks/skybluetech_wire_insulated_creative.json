@@ -1,26 +1,7 @@
 {
-    "format_version": "1.20.80",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
-            "netease:block_entity": {},
-            "netease:custom_tips": {
-                "value": "\n§7可在发电机与机器间传输能量。\n§b功率： §a无限 RF/t"
-            },
-            "netease:listen_block_remove": {
-                "value": true
-            },
-            "netease:pathable": {
-                "value": true
-            },
-            "netease:solid": {
-                "value": false
-            },
-            "netease:neighborchanged_sendto_script": {
-                "value": true
-            },
-            "tag:piston_denier": {},
-            "tag:redstoneflux_connectable": {},
-            "tag:skybluetech_wire": {},
             "minecraft:geometry": {
                 "bone_visibility": {
                     "down": "q.block_state('skybluetech:connection_down')",
@@ -40,11 +21,37 @@
             },
             "minecraft:material_instances": {
                 "*": {
-                    "isotropic": true,
                     "render_method": "blend",
                     "texture": "skybluetech:wire_insulated_creative"
                 }
-            }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.general_wire_insulated_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:wire_insulated_creative"
+                    }
+                }
+            },
+            "netease:block_entity": {},
+            "netease:custom_tips": {
+                "value": "\n§7可在发电机与机器间传输能量。\n§b功率： §a无限 RF/t"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:pathable": {
+                "value": true
+            },
+            "netease:solid": {
+                "value": false
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_wire": {}
         },
         "description": {
             "category": "skybluetech",

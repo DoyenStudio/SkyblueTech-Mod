@@ -1,4 +1,6 @@
 # coding=utf-8
+from .utils import SimpleEnum
+
 DISTILLED_WATER = "skybluetech:distilled_water"
 
 DEEPSLATE_LAVA = "skybluetech:deepslate_lava"
@@ -16,7 +18,7 @@ HYDROGEN = "skybluetech:hydrogen"
 METHANE = "skybluetech:methane"
 
 
-class Molten:
+class Molten(SimpleEnum):
     EARTH = "skybluetech:molten_earth"
     IMPURITY = "skybluetech:molten_impurity"
     COPPER = "skybluetech:molten_copper"
@@ -27,6 +29,17 @@ class Molten:
     SILVER = "skybluetech:molten_silver"
     NICKEL = "skybluetech:molten_nickel"
     PLATINUM = "skybluetech:molten_platinum"
+
+
+class DeepLava(SimpleEnum):
+    DEEPSLATE = DEEPSLATE_LAVA
+    HEAVY = HEAVY_LAVA
+    MID = MID_LAVA
+    LIGHT = LIGHT_LAVA
+
+
+class HotFluid(DeepLava, Molten):
+    LAVA = "minecraft:lava"
 
 
 all_fluids = [

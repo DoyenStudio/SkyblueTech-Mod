@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.0",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
             "netease:liquid": {
@@ -11,12 +11,8 @@
                     28,
                     255
                 ],
-                "mob_effects": [
-
-                ],
-                "remove_effects": [
-
-                ],
+                "mob_effects": [],
+                "remove_effects": [],
                 "spread_fire": false
             }
         },

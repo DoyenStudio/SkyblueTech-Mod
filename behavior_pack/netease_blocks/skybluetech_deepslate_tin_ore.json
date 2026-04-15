@@ -1,5 +1,5 @@
 {
-    "format_version": "1.21.0",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
             "minecraft:loot": "loot_tables/skybluetech_tin_ore.json",

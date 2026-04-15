@@ -1,8 +1,8 @@
 {
-    "format_version": "1.21.0",
+    "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
-            "minecraft:loot": "loot_tables/skybluetech_deepslate_nickel_ore.json",
+            "minecraft:loot": "loot_tables/skybluetech_nickel_ore.json",
             "netease:tier": {
                 "destroy_special": true,
                 "digger": "pickaxe",

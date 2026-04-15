@@ -1,8 +1,12 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import id_enum
+from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill import (
+    STRUCTURE_PALETTE,
+)
 from ...define import (
     TextPage,
     MachineryWorkstationRecipePage,
+    MultiBlockStructureRenderPage,
     PageGroup,
 )
 
@@ -20,6 +24,9 @@ bedrock_lava_drill = PageGroup(
         TextPage(
             "",
             '每个区域的深层熔岩量是<text color="§n" t="有限的">， 你可以通过控制器界面查看该区域剩余熔岩储量。\n\n在安放机器前， 强烈推荐您先使用<text color="§d" t="深层熔岩谐振探测器">探明此地的大致熔岩储量再搭建好熔岩钻！',
+        ),
+        MultiBlockStructureRenderPage(
+            id_enum.BEDROCK_LAVA_DRILL_CONTROLLER, STRUCTURE_PALETTE
         ),
         MachineryWorkstationRecipePage(id_enum.BEDROCK_LAVA_DRILL_CONTROLLER),
     ],

@@ -12,6 +12,7 @@ from .render_utils import (
     RemoveDisplayBoard,
 )
 
+
 if 0:
     from . import Input
 
@@ -68,6 +69,8 @@ class InputDisplayer:
             self.enable_carousel = True
             self.tag = input.id
             self.carousel_items = list(GetItemsByTag(self.tag))
+            if not self.carousel_items:
+                raise ValueError("tag2item not found: " + self.tag)
             self.carousel_indices = len(self.carousel_items)
         else:
             self.enable_carousel = False

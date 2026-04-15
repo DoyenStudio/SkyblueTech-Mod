@@ -18,9 +18,6 @@ from .basic import (
     WorkRenderer,
     RegisterMachine,
 )
-from .basic.multi_block_structure import (
-    GenerateSimpleStructureTemplate,
-)
 from .interfaces import (
     EnergyInputInterface,
     FluidInputInterface,
@@ -28,12 +25,6 @@ from .interfaces import (
     ItemInputInterface,
 )
 
-
-pal = GenerateSimpleStructureTemplate(
-    STRUCTURE_PATTERN_MAPPING,
-    STRUCTURE_PATTERN,
-    require_blocks_count=STRUCTURE_REQUIRE_BLOCKS,
-)
 
 K_TEMPERATURE = "st:temp"
 K_EXPECTED_TEMPERTURE = "st:expected_temp"
@@ -58,7 +49,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
     block_name = MACHINE_ID
     origin_process_ticks = 1
     running_power = 5
-    structure_palette = pal
+    structure_palette = STRUCTURE_PALETTE
     input_slots = (0, 1)
     fluid_io_mode = (2, 2, 2, 2, 2, 2)
     fluid_input_slots = {0}

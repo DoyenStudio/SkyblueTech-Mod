@@ -8,8 +8,7 @@ from ....common.define.id_enum.machinery import (
 )
 from ....common.define.id_enum.fluids import DEEPSLATE_LAVA
 from ....common.machinery_def.bedrock_lava_drill import (
-    STRUCTURE_PATTERN,
-    STRUCTURE_PATTERN_MAPPING,
+    STRUCTURE_PALETTE,
     STRUCTURE_REQUIRE_BLOCKS,
     IO_FLUID1,
     IO_ENERGY,
@@ -23,7 +22,6 @@ from ..basic import (
     UpgradeControl,
     RegisterMachine,
 )
-from ..basic.multi_block_structure import GenerateSimpleStructureTemplate
 from ..interfaces import EnergyInputInterface, FluidOutputInterface
 from .lava_storage import (
     pump_deepslate_lava,
@@ -49,11 +47,7 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
     pump_speed = 400
     origin_process_ticks = 10
     running_power = DRILL_POWER
-    structure_palette = GenerateSimpleStructureTemplate(
-        STRUCTURE_PATTERN_MAPPING,
-        STRUCTURE_PATTERN,
-        require_blocks_count=STRUCTURE_REQUIRE_BLOCKS,
-    )
+    structure_palette = STRUCTURE_PALETTE
     functional_block_ids = set(STRUCTURE_REQUIRE_BLOCKS)
 
     @SuperExecutorMeta.execute_super

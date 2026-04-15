@@ -1,4 +1,5 @@
 # coding=utf-8
+from ..utils.structure_palette import GenerateSimpleStructureTemplate
 
 IO_ENERGY = "skybluetech:fermenter_io_energy"
 IO_FLUID1 = "skybluetech:fermenter_io_fluid1"
@@ -38,6 +39,12 @@ STRUCTURE_REQUIRE_BLOCKS = {
     IO_FLUID2: 1,
     IO_GAS: 1,
 }
+STRUCTURE_PALETTE = GenerateSimpleStructureTemplate(
+    STRUCTURE_PATTERN_MAPPING,
+    STRUCTURE_PATTERN,
+    "#",
+    require_blocks_count=STRUCTURE_REQUIRE_BLOCKS,
+)
 
 TEMPERATURE_MIN = 10
 TEMPERATURE_MAX = 50

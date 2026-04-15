@@ -1,7 +1,11 @@
 # coding=utf-8
-IO_ENERGY = "skybluetech:bedrock_lava_drill_io_energy"
-IO_FLUID1 = "skybluetech:bedrock_lava_drill_io_fluid"
-FRAME = "skybluetech:bedrock_lava_drill_frame"
+from ..define.id_enum import BedrockLavaDrill
+from ..utils.structure_palette import GenerateSimpleStructureTemplate
+
+IO_ENERGY = BedrockLavaDrill.IO_ENERGY
+IO_FLUID1 = BedrockLavaDrill.IO_FLUID
+FRAME = BedrockLavaDrill.FRAME
+
 STRUCTURE_PATTERN_MAPPING = {
     "F": FRAME,
     "i": [FRAME, IO_FLUID1, IO_ENERGY],
@@ -51,3 +55,9 @@ STRUCTURE_REQUIRE_BLOCKS = {
 }
 DRILL_POWER = 1200
 PUMP_POWER = 800
+STRUCTURE_PALETTE = GenerateSimpleStructureTemplate(
+    STRUCTURE_PATTERN_MAPPING,
+    STRUCTURE_PATTERN,
+    "#",
+    require_blocks_count=STRUCTURE_REQUIRE_BLOCKS,
+)

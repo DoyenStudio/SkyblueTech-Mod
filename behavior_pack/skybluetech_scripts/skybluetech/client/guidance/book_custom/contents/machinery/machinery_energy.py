@@ -1,8 +1,12 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import id_enum
+from skybluetech_scripts.skybluetech.common.machinery_def.battery_matrix import (
+    STRUCTURE_PALETTE,
+)
 from ...define import (
     TextPage,
     MachineryWorkstationRecipePage,
+    MultiBlockStructureRenderPage,
     PageGroup,
 )
 
@@ -16,6 +20,9 @@ battery_matrix = PageGroup(
         TextPage(
             "",
             '在电池仓控制器处可以存入或取出电池、 启用或禁用能量输入或输出功能。 \n\n电池仓所存放的电池<text color="§9" t="最大输入输出功率总合">决定电池仓的最大输入输出功率。',
+        ),
+        MultiBlockStructureRenderPage(
+            id_enum.BATTERY_MATRIX_CONTROLLER, STRUCTURE_PALETTE
         ),
         MachineryWorkstationRecipePage(id_enum.BATTERY_MATRIX_CONTROLLER),
     ],

@@ -14,8 +14,7 @@ from ...common.events.machinery.battery_matrix import (
     BatteryMatrixStatesUpdate,
 )
 from ...common.machinery_def.battery_matrix import (
-    STRUCTURE_PATTERN,
-    STRUCTURE_PATTERN_MAPPING,
+    STRUCTURE_PALETTE,
     STRUCTURE_REQUIRE_BLOCKS,
     IO_ENERGY_INPUT,
     IO_ENERGY_OUTPUT,
@@ -29,7 +28,6 @@ from .basic import (
     WorkRenderer,
     RegisterMachine,
 )
-from .basic.multi_block_structure import GenerateSimpleStructureTemplate
 from .utils.action_commit import SafeGetMachine
 from .interfaces import EnergyInputInterface, EnergyOutputInterface
 from .battery_matrix_core import BatteryMatrixCore
@@ -49,11 +47,7 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure, WorkRenderer
     store_rf_max = 100000
     input_slots = (0, 1, 2, 3, 4, 5, 6)
     output_slots = (0, 1, 2, 3, 4, 5, 6)
-    structure_palette = GenerateSimpleStructureTemplate(
-        STRUCTURE_PATTERN_MAPPING,
-        STRUCTURE_PATTERN,
-        require_blocks_count=STRUCTURE_REQUIRE_BLOCKS,
-    )
+    structure_palette = STRUCTURE_PALETTE
     functional_block_ids = set(STRUCTURE_REQUIRE_BLOCKS)
 
     @SuperExecutorMeta.execute_super

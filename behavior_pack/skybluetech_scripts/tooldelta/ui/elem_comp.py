@@ -20,6 +20,7 @@ class UBaseCtrl(object):
         if base is None:
             raise ValueError("Can't initialize UBaseCtrl: comp is None")
         self._root = root
+        self._parent_cached = None
         self.base = base
         self._cache_t = None  # type: Any | None
         self._vars = {}
@@ -88,9 +89,12 @@ class UBaseCtrl(object):
             raise RuntimeError("Can't clone UI element to %s" % new_name)
         new_control_converter = CONVERT_MAP.get(self.__class__)
         if new_control_converter is None:
-            raise RuntimeError("Can't clone %s due to convert map lack" % self.__class__.__name__)
+            raise RuntimeError(
+                "Can't clone %s due to convert map lack" % self.__class__.__name__
+            )
         return self.__class__(
-            self._root, new_control_converter(self._root.GetBaseUIControl(parent_path / new_name))
+            self._root,
+            new_control_converter(self._root.GetBaseUIControl(parent_path / new_name)),
         )
 
     def getFullPath(self):
@@ -222,6 +226,16 @@ class UBaseCtrl(object):
 
     # ====
 
+    @property
+    def _parent(self):
+        # type: () -> UBaseCtrl
+        if self._parent_cached is None:
+            parent_path = UIPath(self.getFullPath()).parent
+            if not parent_path.base:
+                raise ValueError("Parent is ScreenNode")
+            self._parent_cached = self._root.GetElement(parent_path)
+        return self._parent_cached
+
     def __truediv__(self, path):
         # type: (str) -> UBaseCtrl
         return self.GetElement(path)
@@ -247,8 +261,8 @@ class UItemRenderer(UBaseCtrl):
         self.base = base
 
     def SetUiItem(self, item):
-        # type: (Item) -> None
-        self.base.SetUiItem(
+        # type: (Item) -> bool
+        return self.base.SetUiItem(
             item.newItemName, item.newAuxValue, item.isEnchanted, item.userData or {}
         )
 
@@ -316,7 +330,7 @@ class UButton(UBaseCtrl):
 
     def SetCallback(
         self,
-        callback,  # type: Callable[[Any], None]
+        callback,  # type: Callable[[Any], Any]
     ):
         self.base.AddTouchEventParams({"isSwallow": True})
         self.base.SetButtonTouchUpCallback(callback)  # pyright: ignore[reportArgumentType]
@@ -363,9 +377,9 @@ class UGrid(UBaseCtrl):
 
     def GetGridDimension(self):
         # type: () -> tuple[int, int]
-        return getattr(ExecLater, "__globals__")["__builtins__"]["__import__"](
-            "gui"
-        ).get_grid_dimension(self._root.base.GetScreenName(), self.getFullPath())
+        return _get_gui().get_grid_dimension(
+            self._root.base.GetScreenName(), self.getFullPath()
+        )
 
     def GetGridItem(self, x, y):
         # type: (int, int) -> UBaseCtrl
@@ -379,7 +393,7 @@ class UGrid(UBaseCtrl):
         # type: (tuple[int, int], Callable[[], None]) -> None
         old_xy = self.GetGridDimension()
         if xy == old_xy:
-            cb()
+            ExecLater(0, cb)
         else:
             self.SetGridDimension(xy)
             self.ExecuteAfterUpdate(cb)
@@ -529,6 +543,21 @@ class USwitch(UBaseCtrl):
         self.base.SetToggleState(state, toggle_path)
 
 
+def _get_gui():
+    import traceback
+
+    try:
+        return getattr(traceback, "sys").modules["gui"]
+    except AttributeError:
+
+        class gui_missing:
+            @staticmethod
+            def get_grid_dimension(*_):
+                return (0, 0)
+
+        return gui_missing()
+
+
 grid_comp_size_changed_cbs = dict()  # type: dict[str, Callable[[], None]]
 
 
@@ -540,10 +569,13 @@ def onGridComponentSizeChanged(event):
         path = path[5:]
     cb = grid_comp_size_changed_cbs.pop(path, None)
     if cb:
-        # cb()
-        ExecLater(
-            0, cb
-        )  # TODO: 不知道为什么 如果直接 cb() grid 会获取不到新 position。。
+        immediately = False
+        if immediately:
+            cb()
+        else:
+            ExecLater(
+                0, cb
+            )  # TODO: 不知道为什么 如果直接 cb() grid 会获取不到新 position。。
 
 
 CONVERT_MAP = {

@@ -21,7 +21,11 @@
             },
             {
                 "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4
+                    "layer": 4,
+                    "size": [
+                        0,
+                        0
+                    ]
                 }
             },
             {

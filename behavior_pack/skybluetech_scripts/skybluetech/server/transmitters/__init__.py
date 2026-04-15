@@ -1,4 +1,6 @@
 from . import cable, pipe, wire
 
-# this module's implementation for transmitter is really a shit
-# plugged by SuperScript
+# # this module's implementation for transmitter is really a shit
+# # plugged by SuperScript
+# it was not a piece of shit now. pretty good
+

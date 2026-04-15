@@ -9,6 +9,7 @@ class Ingots:
     INVAR = "skybluetech:invar_ingot"
     STEEL = "skybluetech:steel_ingot"
     REFINED_IRON = "skybluetech:refined_iron_ingot"
+    CUPRONICKEL = "skybluetech:cupronickel_ingot"
     ULTRAHEATINUM = "skybluetech:ultraheatinum_ingot"
     SUPERCONDUCT = "skybluetech:superconduct_ingot"
 
@@ -27,6 +28,7 @@ class Plates:
     BRONZE = "skybluetech:bronze_plate"
     INVAR = "skybluetech:invar_plate"
     STEEL = "skybluetech:steel_plate"
+    CUPRONICKEL = "skybluetech:cupronickel_plate"
     ULTRAHEATINUM = "skybluetech:ultraheatinum_plate"
     SUPERCONDUCT = "skybluetech:superconduct_plate"
 
@@ -45,6 +47,7 @@ class Dusts:
     BRONZE = "skybluetech:bronze_dust"
     INVAR = "skybluetech:invar_dust"
     STEEL = "skybluetech:steel_dust"
+    CUPRONICKEL = "skybluetech:cupronickel_dust"
 
     ANCIENT_DEBRIS = "skybluetech:ancient_debris_dust"
     OBSIDIAN = "skybluetech:obsidian_dust"

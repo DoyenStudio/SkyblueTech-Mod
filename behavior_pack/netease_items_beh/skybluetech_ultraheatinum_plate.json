@@ -2,7 +2,11 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-
+            "minecraft:tags": {
+                "tags": [
+                    "plates/ultraheatinum"
+                ]
+            }
         },
         "description": {
             "category": "skybluetech",

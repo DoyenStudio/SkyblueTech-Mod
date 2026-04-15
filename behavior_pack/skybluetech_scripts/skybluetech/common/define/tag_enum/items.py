@@ -26,6 +26,10 @@ class DustTag:
     NICKEL = "dusts/nickel"
     SILVER = "dusts/silver"
     PLATINUM = "dusts/platinum"
+    BRONZE = "dusts/bronze"
+    INVAR = "dusts/invar"
+    STEEL = "dusts/steel"
+    CUPRONICKEL = "dusts/cupronickel"
 
     CARBON = "dusts/carbon"
     LAPIS = "dusts/lapis"
@@ -59,6 +63,7 @@ class PlateTag:
     INVAR = "plates/invar"
     CUPRONICKEL = "plates/cupronickel"
     SUPERCONDUCT = "plates/superconduct"
+    ULTRAHEATINUM = "plates/ultraheatinum"
 
 
 class StickTag:

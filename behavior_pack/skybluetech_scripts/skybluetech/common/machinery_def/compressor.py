@@ -31,6 +31,7 @@ recipes = RecipesCollection(
     preset_tagged(IngotTag.BRONZE, Plates.BRONZE),
     preset_tagged(IngotTag.STEEL, Plates.STEEL),
     preset_tagged(IngotTag.INVAR, Plates.INVAR),
+    preset_tagged(IngotTag.CUPRONICKEL, Plates.CUPRONICKEL),
     preset_tagged(IngotTag.ULTRAHEATINUM, Plates.ULTRAHEATINUM),
     preset_tagged(IngotTag.SUPERCONDUCT, Plates.SUPERCONDUCT),
 )  # type: RecipesCollection[MachineRecipe]

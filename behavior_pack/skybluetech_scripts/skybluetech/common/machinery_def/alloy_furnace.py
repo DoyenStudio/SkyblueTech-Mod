@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from ..define.id_enum import ALLOY_FURNACE, Ingots
+from ..define.id_enum import ALLOY_FURNACE, Ingots, DEACTIVATION_REDSTONE
 from ..define.tag_enum.items import DustTag, IngotTag
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.alloy_furnace import (
@@ -47,7 +47,7 @@ recipes = RecipesCollection(
         {0: Input("minecraft:iron_ingot", 1), 2: Input(DustTag.CARBON, 1, True)},
         {4: Output(Ingots.STEEL, 1)},
     ),
-    preset2(
+    preset1(
         {
             0: Input("minecraft:gold_ingot", 2),
             2: Input(DustTag.ANCIENT_DEBRIS, 3, True),
@@ -56,10 +56,59 @@ recipes = RecipesCollection(
     ),
     preset2(
         {
+            0: Input(DustTag.GOLD, 2, is_tag=True),
+            2: Input(DustTag.ANCIENT_DEBRIS, 3, True),
+        },
+        {4: Output("minecraft:netherite_ingot", 1)},
+    ),
+    preset1(
+        {
+            0: Input("minecraft:copper_ingot"),
+            1: Input(IngotTag.NICKEL, is_tag=True),
+        },
+        {4: Output(Ingots.CUPRONICKEL, 1)},
+    ),
+    preset2(
+        {
+            0: Input(DustTag.COPPER, is_tag=True),
+            1: Input(DustTag.NICKEL, is_tag=True),
+        },
+        {4: Output(Ingots.CUPRONICKEL, 1)},
+    ),
+    preset1(
+        {
+            0: Input(IngotTag.SILVER, is_tag=True),
+            1: Input(IngotTag.PLATINUM, is_tag=True),
+            2: Input("minecraft:lapis_lazuli"),
+            3: Input(DEACTIVATION_REDSTONE),
+        },
+        {4: Output(Ingots.SUPERCONDUCT, 2)},
+    ),
+    preset2(
+        {
             0: Input(DustTag.SILVER, is_tag=True),
             1: Input(DustTag.PLATINUM, is_tag=True),
             2: Input(DustTag.LAPIS, is_tag=True),
+            3: Input(DEACTIVATION_REDSTONE),
         },
         {4: Output(Ingots.SUPERCONDUCT, 2)},
+    ),
+    preset1(
+        {
+            0: Input(IngotTag.CUPRONICKEL, is_tag=True),
+            1: Input(IngotTag.INVAR, is_tag=True),
+            2: Input("minecraft:netherbrick"),
+            3: Input("minecraft:blaze_powder"),
+        },
+        {4: Output(Ingots.ULTRAHEATINUM, 1)},
+    ),
+    preset2(
+        {
+            0: Input(DustTag.CUPRONICKEL, is_tag=True),
+            1: Input(DustTag.INVAR, is_tag=True),
+            2: Input("minecraft:netherbrick"),
+            3: Input("minecraft:blaze_powder"),
+        },
+        {4: Output(Ingots.ULTRAHEATINUM, 1)},
     ),
 )  # type: RecipesCollection[MachineRecipe]

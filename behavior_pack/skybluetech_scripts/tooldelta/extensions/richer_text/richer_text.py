@@ -244,7 +244,9 @@ class RicherTextCtrl(object):
         btn = self._simulate_hyperlink_btn.clone(self._gen_name())
         btn.SetCallback(cb)
         btn.SetPos(ctrl.GetPos())
-        btn.SetSize(self._simulate_text.GetSize(), resize_children=True) # 实在没招了, 此时 ctrl 的 size 是 0
+        btn.SetSize(
+            self._simulate_text.GetSize(), resize_children=True
+        )  # 实在没招了, 此时 ctrl 的 size 是 0
         btn.SetLayer(90)
         self._hang_ctrls.append(btn)
 

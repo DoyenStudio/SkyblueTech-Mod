@@ -6,6 +6,7 @@ from .elem_comp import UBaseCtrl
 from .utils import UIPath, Binder
 
 if 0:
+    import typing
     from ._ui_typing import ScreenNode as _ScreenNode
     from ._ui_typing import (
         CustomUIScreenProxy as _CustomUIControlProxy,
@@ -88,6 +89,7 @@ class ToolDeltaScreen(ClientListenerService):
         return UBaseCtrl(self, self.GetBaseUIControl(path))
 
     def AddOnTickingCallback(self, cb):
+        # type: (typing.Callable[[], typing.Any]) -> typing.Self
         self._on_ticking_cbs.append(cb)
         return self
 

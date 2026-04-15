@@ -21,6 +21,11 @@ def GetEntityTypeFamily(entity_id):
     return CF.CreateAttr(entity_id).GetTypeFamily()
 
 
+def GetEntityType(entity_id):
+    # type: (str) -> int
+    return CF.CreateEngineType(entity_id).GetEngineType()
+
+
 def GetEntityDimension(entity_id):
     # type: (str) -> int
     return CF.CreateDimension(entity_id).GetEntityDimensionId()
@@ -74,6 +79,7 @@ __all__ = [
     "GetEntitiesInSquareArea",
     "GetEntitiesBySelector",
     "GetDroppedItem",
+    "GetEntityType",
     "GetEntityTypeFamily",
     "GetPos",
     "Hurt",

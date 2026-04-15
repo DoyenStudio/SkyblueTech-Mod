@@ -1632,5 +1632,101 @@
                 }
             }
         ]
+    },
+    "redstone_generator_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            60.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -68,
+                        -9
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 19,
+                    "offset": [
+                        -8,
+                        -9
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "layer": 87,
+                    "offset": [
+                        -38,
+                        -9
+                    ]
+                }
+            },
+            {
+                "flame@SkybluePanelLib.Flame": {
+                    "layer": 91,
+                    "offset": [
+                        -68,
+                        11
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "output_power@SkybluePanelLib.output_power_displayer": {
+                    "offset": [
+                        -6,
+                        -9
+                    ],
+                    "size": [
+                        70,
+                        16
+                    ]
+                }
+            },
+            {
+                "tick_power": {
+                    "type": "label",
+                    "offset": [
+                        58.0,
+                        2.0
+                    ],
+                    "size": [
+                        56.0,
+                        10.0
+                    ],
+                    "layer": 5,
+                    "color": [
+                        0,
+                        0.4,
+                        0
+                    ],
+                    "font_type": "unicode",
+                    "text": "999, 99 MRF/t"
+                }
+            }
+        ]
     }
 }

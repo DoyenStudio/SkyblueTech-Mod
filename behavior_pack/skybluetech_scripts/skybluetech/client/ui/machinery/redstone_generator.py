@@ -5,6 +5,9 @@ from ....common.ui_sync.machinery.redstone_generator import RedstoneGeneratorUIS
 from .define import MachinePanelUIProxy, MAIN_PATH
 from .utils import UpdatePowerBar, UpdateFlame, UpdateGenericProgressL2R
 
+from ..recipe_checker import AsRecipeCheckerBtn
+from ....common.machinery_def.redstone_generator import recipes
+
 POWER_NODE = MAIN_PATH / "power_bar"
 FLAME_NODE = MAIN_PATH / "flame"
 PROGRESS_NODE = MAIN_PATH / "progress"
@@ -19,6 +22,9 @@ class RedstoneGeneratorUI(MachinePanelUIProxy):
         self.flame = self.GetElement(FLAME_NODE)
         self.progress = self.GetElement(PROGRESS_NODE)
         self.sync.SetUpdateCallback(self.WhenUpdated)
+        AsRecipeCheckerBtn(
+            self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(), recipes
+        )
 
     def WhenUpdated(self):
         if not self.inited:

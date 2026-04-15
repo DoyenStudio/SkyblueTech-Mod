@@ -143,6 +143,14 @@
                                                             -40
                                                         ]
                                                     }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            71,
+                                                            0
+                                                        ]
+                                                    }
                                                 }
                                             ]
                                         }

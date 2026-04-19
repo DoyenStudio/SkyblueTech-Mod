@@ -24,6 +24,14 @@
                     "texture": "skybluetech:rf_repeater_plant"
                 }
             },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.rf_repeater_plant_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:rf_repeater_plant"
+                    }
+                }
+            },
             "netease:aabb": {
                 "clip": {
                     "max": [

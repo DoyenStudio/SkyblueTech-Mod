@@ -11,6 +11,14 @@
                     "texture": "skybluetech:wind_generator"
                 }
             },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.wind_generator_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:wind_generator"
+                    }
+                }
+            },
             "minecraft:light_dampening": 0,
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 2.0

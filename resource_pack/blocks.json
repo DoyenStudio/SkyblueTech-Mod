@@ -578,10 +578,7 @@
         "sound": "wood"
     },
     "skybluetech:rf_repeater_plant": {
-        "client_entity": {
-            "block_icon": "skybluetech:rf_repeater_plant_icon",
-            "hand_model_use_client_entity": true
-        },
+        "client_entity": {},
         "sound": "iron"
     },
     "skybluetech:silver_block": {
@@ -642,10 +639,7 @@
         }
     },
     "skybluetech:wind_generator": {
-        "client_entity": {
-            "block_icon": "skybluetech:wind_generator_icon",
-            "hand_model_use_client_entity": true
-        },
+        "client_entity": {},
         "sound": "iron"
     },
     "skybluetech:wire_copper": {

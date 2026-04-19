@@ -562,7 +562,7 @@
                     "controls": [
                         {
                             "slot@netease_container.custom_grid_item": {
-                                "$background_images|default": "SkybluePanelLib.upgrade_slot_img",
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
                                 "collection_index": "$slot1"
                             }
                         }
@@ -585,7 +585,7 @@
                     "controls": [
                         {
                             "slot@netease_container.custom_grid_item": {
-                                "$background_images|default": "SkybluePanelLib.upgrade_slot_img",
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
                                 "collection_index": "$slot2"
                             }
                         }
@@ -608,7 +608,7 @@
                     "controls": [
                         {
                             "slot@netease_container.custom_grid_item": {
-                                "$background_images|default": "SkybluePanelLib.upgrade_slot_img",
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
                                 "collection_index": "$slot3"
                             }
                         }
@@ -1449,6 +1449,6 @@
     "upgrade_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/slot_upgrade_bg"
+        "texture": "textures/ui/slot_upgrader_bg"
     }
 }

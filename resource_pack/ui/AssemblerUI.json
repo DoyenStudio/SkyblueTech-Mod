@@ -302,7 +302,7 @@
         "layer": 1,
         "clip_direction": "left",
         "clip_ratio": 0.0,
-        "texture": "textures/ui/slot_tool_upgrade_bg"
+        "texture": "textures/ui/slot_tool_upgrader_bg"
     },
     "upgrader_view_single": {
         "type": "panel",

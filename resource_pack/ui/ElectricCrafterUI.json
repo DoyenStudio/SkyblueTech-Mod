@@ -110,7 +110,7 @@
                                                         "controls": [
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
-                                                                    "$background_images|default": "ElectricCrafterUI.crafting_template_slot_img",
+                                                                    "$cell_overlay_ref|default": "ElectricCrafterUI.crafting_template_slot_img",
                                                                     "collection_index": 12
                                                                 }
                                                             }
@@ -217,7 +217,7 @@
         ]
     },
     "item_slot_with_void_item@netease_container.custom_grid_item": {
-        "$background_images|default": "ElectricCrafterUI.void_item"
+        "$cell_overlay_ref|default": "ElectricCrafterUI.void_item"
     },
     "main@common.inventory_screen_common": {
         "$screen_content": "ElectricCrafterUI.electric_crafter_ui"

@@ -531,7 +531,7 @@
                                                         "controls": [
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
-                                                                    "$background_images|default": "TeslaPlantUI.crafting_template_slot_img",
+                                                                    "$cell_overlay_ref|default": "TeslaPlantUI.crafting_template_slot_img",
                                                                     "collection_index": 12
                                                                 }
                                                             }

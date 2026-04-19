@@ -447,7 +447,7 @@
     "pincer_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/pincer_slot_img"
+        "texture": "textures/ui/slot_pincer_img"
     },
     "void_item": {
         "type": "panel",
@@ -492,6 +492,6 @@
     "wrench_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/wrench_slot_img"
+        "texture": "textures/ui/slot_wrench_img"
     }
 }

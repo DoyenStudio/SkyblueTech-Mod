@@ -5,10 +5,6 @@
     "namespace": "WindGeneratorUI",
     "paddle_slot_img": {
         "type": "image",
-        "offset": [
-            1.0,
-            0.0
-        ],
         "size": [
             18.0,
             18.0

@@ -1,0 +1,26 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:wire_superconduct_insulated_craft"
+        },
+        "ingredients": [
+            {
+                "data": 0,
+                "item": "skybluetech:wire_superconduct"
+            },
+            {
+                "data": 0,
+                "item": "skybluetech:rough_rubber"
+            }
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:wire_insulated_superconduct"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

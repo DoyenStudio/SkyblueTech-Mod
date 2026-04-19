@@ -1,0 +1,26 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:wire_tin_insulated_craft"
+        },
+        "ingredients": [
+            {
+                "data": 0,
+                "item": "skybluetech:wire_tin"
+            },
+            {
+                "data": 0,
+                "item": "skybluetech:rough_rubber"
+            }
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:wire_insulated_tin"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

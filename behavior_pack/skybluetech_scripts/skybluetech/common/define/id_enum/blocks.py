@@ -3,6 +3,7 @@
 
 class Cable:
     STEEL = "skybluetech:item_transport_cable_steel"
+    INVAR = "skybluetech:item_transport_cable_invar"
 
 
 class Pipe:

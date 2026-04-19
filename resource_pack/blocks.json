@@ -129,8 +129,11 @@
     "skybluetech:electric_crafter": {
         "textures": {
             "down": "skybluetech:frame_bottom",
-            "side": "skybluetech:frame",
-            "up": "skybluetech:electric_crafter_top"
+            "east": "skybluetech:electric_crafter_side",
+            "north": "skybluetech:electric_crafter_front",
+            "south": "skybluetech:electric_crafter_front",
+            "up": "skybluetech:electric_crafter_top",
+            "west": "skybluetech:electric_crafter_side"
         }
     },
     "skybluetech:famicom": {
@@ -305,6 +308,14 @@
         }
     },
     "skybluetech:flowing_raw_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_flowing"
+        }
+    },
+    "skybluetech:flowing_sulfuric_acid": {
         "blockshape": "water",
         "textures": {
             "down": "skybluetech:basic_water_static",
@@ -593,6 +604,14 @@
     "skybluetech:splitter": {
         "sound": "iron"
     },
+    "skybluetech:sulfuric_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_static"
+        }
+    },
     "skybluetech:tank_bronze": {
         "client_entity": {},
         "sound": "glass"
@@ -671,21 +690,5 @@
     },
     "skybluetech:wire_tin": {
         "sound": "cloth"
-    },
-    "skybluetech:sulfuric_acid": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:basic_water_static",
-            "side": "skybluetech:basic_water_flowing",
-            "up": "skybluetech:basic_water_static"
-        }
-    },
-    "skybluetech:flowing_sulfuric_acid": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:basic_water_static",
-            "side": "skybluetech:basic_water_flowing",
-            "up": "skybluetech:basic_water_flowing"
-        }
     }
 }

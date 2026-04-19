@@ -20,10 +20,24 @@ class TOCPageSection(object):
 class TOCPage(BasePage):
     ctrl_def_name = "GuidanceLib.toc_page"
 
-    def __init__(self, sections):
-        # type: (list[TOCPageSection]) -> None
+    _marked_tocpages = {}  # type: dict[str, TOCPage]
+
+    def __init__(self, sections, identifier=None):
+        # type: (list[TOCPageSection], str | None) -> None
         BasePage.__init__(self)
         self.sections = sections
+        self.identifier = identifier
+        if identifier is not None:
+            TOCPage._marked_tocpages[identifier] = self
+
+    def AddSection(self, section):
+        # type: (TOCPageSection) -> None
+        self.sections.append(section)
+
+    @classmethod
+    def GetByIdentifier(cls, identifier):
+        # type: (str) -> TOCPage | None
+        return cls._marked_tocpages.get(identifier)
 
     def RenderInit(self, ctrl):
         # type: (UBaseCtrl) -> None
@@ -35,7 +49,7 @@ class TOCPage(BasePage):
 
                 def get_handler(index):
                     def handler(_):
-                        self.on_select_section(index)
+                        self._on_select_section(index)
 
                     return handler
 
@@ -55,7 +69,7 @@ class TOCPage(BasePage):
                 s.link_to.SetParent(group)
         BasePage.SetGroup(self, group)
 
-    def on_select_section(self, index):
+    def _on_select_section(self, index):
         # type: (int) -> None
         link_to = self.sections[index].link_to
         if callable(link_to):

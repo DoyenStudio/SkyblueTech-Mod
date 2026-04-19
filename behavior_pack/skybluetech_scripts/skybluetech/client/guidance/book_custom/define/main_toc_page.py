@@ -21,10 +21,24 @@ class MainTOCPageSection(object):
 class MainTOCPage(BasePage):
     ctrl_def_name = "GuidanceLib.main_toc_page"
 
-    def __init__(self, sections):
-        # type: (list[MainTOCPageSection]) -> None
+    _marked_tocpages = {}  # type: dict[str, MainTOCPage]
+
+    def __init__(self, sections, identifier=None):
+        # type: (list[MainTOCPageSection], str | None) -> None
         BasePage.__init__(self)
         self.sections = sections
+        self.identifier = identifier
+        if identifier is not None:
+            self._marked_tocpages[identifier] = self
+
+    def AddSection(self, section):
+        # type: (MainTOCPageSection) -> None
+        self.sections.append(section)
+
+    @classmethod
+    def GetByIdentifier(cls, identifier):
+        # type: (str) -> MainTOCPage | None
+        return cls._marked_tocpages.get(identifier)
 
     def RenderInit(self, ctrl):
         # type: (UBaseCtrl) -> None

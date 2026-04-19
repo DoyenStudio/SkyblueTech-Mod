@@ -44,6 +44,67 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         16,
     ),
+    # battery matrix structure
+    MRecipe(
+        {
+            1: Input(id_enum.REDSTONEFLUX_CORE),
+            3: Input(id_enum.Wire.SILVER_INSULATED),
+            4: Input(id_enum.BatteryMatrix.FRAME),
+            5: Input(id_enum.Wire.SILVER_INSULATED),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+        },
+        id_enum.BatteryMatrix.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        32,
+    ),
+    MRecipe(
+        {
+            0: Input("minecraft:lapis_lazuli"),
+            1: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            3: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            4: Input(id_enum.Wire.SILVER_INSULATED),
+            5: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            7: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            8: Input("minecraft:lapis_lazuli"),
+        },
+        id_enum.BatteryMatrix.IO_ENERGY_INPUT,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            1: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            2: Input("minecraft:lapis_lazuli"),
+            3: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            4: Input(id_enum.Wire.SILVER_INSULATED),
+            5: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            6: Input("minecraft:lapis_lazuli"),
+            7: Input(tag_enum.PlateTag.TIN, is_tag=True),
+        },
+        id_enum.BatteryMatrix.IO_ENERGY_OUTPUT,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            0: Input("minecraft:lapis_lazuli"),
+            1: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            2: Input("minecraft:lapis_lazuli"),
+            3: Input(id_enum.Wire.SILVER_INSULATED),
+            4: Input(id_enum.REDSTONEFLUX_CORE),
+            5: Input(id_enum.Wire.SILVER_INSULATED),
+            6: Input("minecraft:lapis_lazuli"),
+            7: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            8: Input("minecraft:lapis_lazuli"),
+        },
+        id_enum.BatteryMatrix.CORE,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
     # bedrock lava drill structure
     MRecipe(
         {

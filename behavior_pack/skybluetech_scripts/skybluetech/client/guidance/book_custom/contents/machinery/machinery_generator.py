@@ -21,7 +21,8 @@ geothermal_generator = PageGroup(
     [
         TextPage(
             "地热发电机",
-            '地热发电机消耗<text color="§4" t="熔岩">进行发电， 输入<text color="§9" t="水">将<text color="§2" t="大大提升地热发电机的产能效率">。\n\n如果输入水， 则地热发电机工作过程中会不定产出石粉或黑曜石粉。',
+            '地热发电机消耗<text color="§4" t="熔岩">进行发电， 输入<text color="§9" t="水">将<text color="§2" t="大大提升地热发电机的产能效率">。\n\n如果输入水， 则地热发电机工作过程中会不定产出黑曜石粉<item id="%s">。'
+            % id_enum.Dusts.OBSIDIAN,
         ),
         MachineryWorkstationRecipePage(id_enum.GEO_THERMAL_GENERATOR),
     ],
@@ -71,7 +72,8 @@ wind_generator = PageGroup(
         ),
         TextPage(
             "风力发电机",
-            '风力发电机需要使用<text color="§9" t="扇叶">进行工作。 工作时会消耗扇叶<text color="§2" t="耐久度">。 不同的扇叶会提供不同的<text color="§3" t="输出功率">和耐久度。',
+            '风力发电机需要使用<text color="§9" t="扇叶">进行工作。 工作时会消耗扇叶<item id="%s"><text color="§2" t="耐久度">。 不同的扇叶会提供不同的<text color="§3" t="输出功率">和耐久度。'
+            % id_enum.Paddle.IRON,
         ),
         MachineryWorkstationRecipePage(id_enum.WIND_GENERATOR),
     ],

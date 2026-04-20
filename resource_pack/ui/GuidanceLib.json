@@ -508,6 +508,7 @@
                     "hover_control": "hover",
                     "is_handle_button_move_event": true,
                     "pressed_control": "pressed",
+                    "sound_name": "item.book.page_turn",
                     "bindings": [
                         {
                             "binding_type": "collection_details",
@@ -917,6 +918,7 @@
                     "hover_control": "hover",
                     "is_handle_button_move_event": true,
                     "pressed_control": "pressed",
+                    "sound_name": "item.book.page_turn",
                     "bindings": [
                         {
                             "binding_type": "collection_details",

@@ -1018,7 +1018,7 @@
                                     2.0,
                                     2.0
                                 ],
-                                "texture": "textures/ui/bg_frame_01_reversed"
+                                "texture": "textures/ui/bg_frame_01"
                             }
                         }
                     ]
@@ -1144,6 +1144,7 @@
         "hover_control": "hover",
         "is_handle_button_move_event": true,
         "pressed_control": "pressed",
+        "sound_name": "random.toast",
         "bindings": [
             {
                 "binding_type": "collection_details",

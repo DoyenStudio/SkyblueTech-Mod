@@ -12,8 +12,8 @@ PROGRESS_NODE = MAIN_PATH / "progress"
 POWER_NODE = MAIN_PATH / "power_bar"
 GRID_NODE = MAIN_PATH / "crafting_grid"
 
-MASK_REL_PATH = "item_cell/bg/mask"
-ITEM_RENDERED_REL_PATH = "item_cell/bg/item_renderer"
+MASK_REL_PATH = "item_cell_overlay_ref/mask"
+ITEM_RENDERED_REL_PATH = "item_cell_overlay_ref/item_renderer"
 
 
 @RegistToolDeltaScreen("ElectricCrafterUI.main", is_proxy=True)

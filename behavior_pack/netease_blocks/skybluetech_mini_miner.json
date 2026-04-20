@@ -34,7 +34,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7单方块采矿机， 可使用润滑油对其下 8x8x64 的范围进行采矿。"
+                "value": "\n§7单方块采矿机， 可使用润滑油对其下 §f16x64x16§7 的范围进行采矿。"
             },
             "netease:neighborchanged_sendto_script": {
                 "value": true

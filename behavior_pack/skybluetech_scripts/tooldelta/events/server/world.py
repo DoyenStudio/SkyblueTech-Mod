@@ -108,9 +108,9 @@ class NewOnEntityAreaEvent(ServerEvent):
 
     def __init__(
         self,
-        name, # type: str
-        enteredEntities, # type: list[str]
-        leftEntities, # type: list[str]
+        name,  # type: str
+        enteredEntities,  # type: list[str]
+        leftEntities,  # type: list[str]
     ):
         self.name = name
         """ 注册感应区域名称 """
@@ -134,3 +134,47 @@ class NewOnEntityAreaEvent(ServerEvent):
             "enteredEntities": self.enteredEntities,
             "leftEntities": self.leftEntities,
         }
+
+
+class OnContainerFillLoottableServerEvent(ServerEvent):
+    name = "OnContainerFillLoottableServerEvent"
+
+    def __init__(
+        self,
+        loottable,  # type: str
+        playerId,  # type: str
+        itemList,  # type: list
+        dirty,  # type: bool
+        _orig,  # type: dict
+    ):
+        self.loottable = loottable
+        """ 奖励箱子所读取的loottable的json路径 """
+        self.playerId = playerId
+        """ 打开奖励箱子的玩家的playerId """
+        self.itemList = itemList
+        """ 掉落物品列表，每个元素为一个itemDict，格式可参考物品信息字典 """
+        self.dirty = dirty
+        """ 默认为False，如果需要修改掉落列表需将该值设为True """
+        self._orig = _orig
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(
+            loottable=data["loottable"],
+            playerId=data["playerId"],
+            itemList=data["itemList"],
+            dirty=data["dirty"],
+            _orig=data,
+        )
+
+    def marshal(self):
+        # type: () -> dict
+        return {
+            "loottable": self.loottable,
+            "playerId": self.playerId,
+            "itemList": self.itemList,
+            "dirty": self.dirty,
+        }
+
+    def SetDirty(self):
+        self.dirty = self._orig["dirty"] = True

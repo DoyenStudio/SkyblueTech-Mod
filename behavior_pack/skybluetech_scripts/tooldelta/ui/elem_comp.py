@@ -26,6 +26,7 @@ class UBaseCtrl(object):
         self._vars = {}
         self._removed = False
         self._removed_listeners = []  # type: list[Callable[[], None]]
+        self._sub_ctrls = [] # type: list[UBaseCtrl]
         root._hang_ctrl(self)
 
     def asLabel(self):
@@ -214,6 +215,8 @@ class UBaseCtrl(object):
         if self._removed:
             print("[Warning] control already removed")
             return False
+        for sub_ctrl in self._sub_ctrls:
+            sub_ctrl.Remove()
         self._removed = True
         self._call_destroy()
         return self._root.base.RemoveChildControl(self.base)

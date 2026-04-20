@@ -31,5 +31,9 @@ def RegisterDescription(categories_with_ids, title, content):
         content (str): 正文内容
     """
     RegisterRecipe(
-        Description(categories_with_ids, title, content.replace(" ", "\u00a0"))
+        Description(
+            categories_with_ids,
+            title,
+            content,  # .replace(" ", py2_unicode("\u00a0"))
+        )
     )

@@ -111,7 +111,7 @@ class GenericFurnaceRecipe(RecipeBase):
 
     def GetInputs(self):
         # type: () -> dict[str, list[str]]
-        return {CategoryType.ITEM: [self.base.input_item_id]}
+        return {CategoryType.ITEM: self.base.input.item_ids}
 
     def GetOutputs(self):
         # type: () -> dict[str, list[str]]
@@ -120,7 +120,9 @@ class GenericFurnaceRecipe(RecipeBase):
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
         # type: (UBaseCtrl, GenericFurnaceRecipe) -> None
-        ItemDisplayer(panel["slot0"], Item(self.base.input_item_id))
+        ItemDisplayer(
+            panel["slot0"], Item(self.base.input.item_ids[0], self.base.input.aux_value)
+        )
         ItemDisplayer(
             panel["slot1"], Item(self.base.output.item_id, self.base.output.aux_value)
         )

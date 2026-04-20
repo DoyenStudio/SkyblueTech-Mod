@@ -69,7 +69,7 @@ def RegisterItemToRecipe(item_id):
             continue
         RegisterRecipe(rcp)
         reg_furnace_recipes.add(rcp)
-        RegisterItemToRecipe(rcp.base.input_item_id)
+        RegisterItemToRecipe(rcp.base.input.item_ids[0])
     # 高炉
     from_reses = GetRecipesByResult(item_id, "blast_furnace")
     for res in from_reses:
@@ -78,7 +78,7 @@ def RegisterItemToRecipe(item_id):
             continue
         RegisterRecipe(rcp)
         reg_blast_furnace_recipes.add(rcp)
-        RegisterItemToRecipe(rcp.base.input_item_id)
+        RegisterItemToRecipe(rcp.base.input.item_ids[0])
     from_reses = GetRecipesByResult(item_id, "smoker")
     for res in from_reses:
         rcp = GenericSmokerRecipe(GetFurnaceRecipe(res))
@@ -86,7 +86,7 @@ def RegisterItemToRecipe(item_id):
             continue
         RegisterRecipe(rcp)
         reg_smoker_recipes.add(rcp)
-        RegisterItemToRecipe(rcp.base.input_item_id)
+        RegisterItemToRecipe(rcp.base.input.item_ids[0])
 
 
 def onItemsLoaded(item_ids):

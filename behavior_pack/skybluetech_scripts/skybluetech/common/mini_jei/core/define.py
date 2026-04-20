@@ -180,7 +180,7 @@ class Recipe(RecipeBase):
 
 class Description(RecipeBase):
     recipe_icon_id = "skybluetech:description_icon"
-    render_ui_def_name = "RecipeCheckerUI.description_page"
+    render_ui_def_name = "RecipeCheckerLib.description_page"
 
     def __init__(self, categories_with_ids, title, content):
         # type: (dict[str, list[str]], str, str) -> None

@@ -132,6 +132,12 @@
         "skybluetech:dust_block": {
             "textures": "textures/blocks/dust_block"
         },
+        "skybluetech:electric_crafter_front": {
+            "textures": "textures/machines/electric_crafter_front"
+        },
+        "skybluetech:electric_crafter_side": {
+            "textures": "textures/machines/electric_crafter_side"
+        },
         "skybluetech:electric_crafter_top": {
             "textures": "textures/machines/electric_crafter_top"
         },

@@ -8,10 +8,8 @@
             "netease:block_container": {
                 "container_size": 17,
                 "custom_description": "电动合成台",
-                "screen_name": "ElectricCrafterUI.main",
                 "hopper": {
                     "input": true,
-                    "output": true,
                     "input_slot": [
                         {
                             "face": 1,
@@ -83,8 +81,10 @@
                                 8
                             ]
                         }
-                    ]
-                }
+                    ],
+                    "output": true
+                },
+                "screen_name": "ElectricCrafterUI.main"
             },
             "netease:block_entity": {
                 "tick": true

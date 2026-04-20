@@ -10,22 +10,14 @@ def RegisterRecipe(recipe):
     "注册配方。"
     if recipe in recipes_registered:
         return
+    # 使用 set, 避免重复配方 (从配方页进入子配方再退出会注册重复配方)
     for category, inputs in recipe.GetInputs().items():
         for input in inputs:
-            recipesTo.setdefault(category, {}).setdefault(input, []).append(recipe)
-            # if recipe in rcps:
-            #     print("1:add multiple recipe")
-            #     # continue
+            recipesTo.setdefault(category, {}).setdefault(input, set()).add(recipe)
     for category, outputs in recipe.GetOutputs().items():
         for output in outputs:
-            recipesFrom.setdefault(category, {}).setdefault(output, []).append(recipe)
-            # if recipe in rcps:
-            #     print("2:add multiple recipe")
-            #     # continue
-    recipesOf.setdefault(recipe.recipe_icon_id, []).append(recipe)
-    # if recipe in rcps:
-    #     print("3:add multiple recipe")
-    #     # return
+            recipesFrom.setdefault(category, {}).setdefault(output, set()).add(recipe)
+    recipesOf.setdefault(recipe.recipe_icon_id, set()).add(recipe)
 
 
 def RegisterDescription(categories_with_ids, title, content):

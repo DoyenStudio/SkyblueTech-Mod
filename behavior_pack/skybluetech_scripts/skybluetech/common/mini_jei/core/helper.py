@@ -8,8 +8,8 @@ from .vanilla import LoadItemRecipes
 def GetRecipesByOutput(category, id):
     # type: (str, str) -> list[RecipeBase]
     if category == CategoryType.ITEM:
-        LoadItemRecipes(id)
-    res = recipesFrom.get(category, {}).get(id, [])
+        LoadItemRecipes(id, get_output=True)
+    res = list(recipesFrom.get(category, {}).get(id, set()))
     if category is not CategoryType.ITEM or not id.startswith("tag:"):
         # 还需要根据 tag 找配方
         tags = GetItemTags(id)
@@ -24,8 +24,8 @@ def GetRecipesByOutput(category, id):
 def GetRecipesByInput(category, id):
     # type: (str, str) -> list[RecipeBase]
     if category == CategoryType.ITEM:
-        LoadItemRecipes(id)
-    res = recipesTo.get(category, {}).get(id, [])
+        LoadItemRecipes(id, get_input=True)
+    res = list(recipesTo.get(category, {}).get(id, []))
     if category is not CategoryType.ITEM or not id.startswith("tag:"):
         # 还需要根据 tag 找配方
         tags = GetItemTags(id)
@@ -40,4 +40,4 @@ def GetRecipesByInput(category, id):
 def GetRecipesByCategory(category):
     # type: (str) -> list[RecipeBase]
     "WARNING: 目前暂时无法对工作台、 熔炉等原版配方使用。"
-    return recipesOf.get(category, [])
+    return list(recipesOf.get(category, []))

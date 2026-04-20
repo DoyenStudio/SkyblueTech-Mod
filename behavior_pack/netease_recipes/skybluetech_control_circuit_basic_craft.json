@@ -1,0 +1,42 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:control_circuit_basic_craft"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:rough_rubber"
+            },
+            "B": {
+                "data": 0,
+                "item": "skybluetech:tin_plate"
+            },
+            "C": {
+                "data": 0,
+                "item": "minecraft:redstone"
+            },
+            "D": {
+                "data": 0,
+                "item": "skybluetech:circuit_base_plate"
+            }
+        },
+        "pattern": [
+            " A ",
+            "BCB",
+            " D"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:control_circuit_basic"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

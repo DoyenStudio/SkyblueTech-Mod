@@ -40,6 +40,9 @@
         "skybluetech:cartidge_3_model": {
             "textures": "textures/models/cartidges/cartidge_purple"
         },
+        "skybluetech:circuit_base_plate": {
+            "textures": "textures/items/circuit_base_plate"
+        },
         "skybluetech:control_circuit_advanced": {
             "textures": "textures/items/control_circuit_advanced"
         },
@@ -370,6 +373,9 @@
         "skybluetech:sulfur_dust": {
             "textures": "textures/items/dusts/sulfur_dust"
         },
+        "skybluetech:sulfuric_acid_bucket": {
+            "textures": "textures/items/buckets/sulfuric_acid_bucket"
+        },
         "skybluetech:sunflower_seeds": {
             "textures": "textures/items/sunflower_seeds"
         },
@@ -450,9 +456,6 @@
         },
         "skybluetech:wrench_iron": {
             "textures": "textures/items/wrench_iron"
-        },
-        "skybluetech:sulfuric_acid_bucket": {
-            "textures": "textures/items/buckets/sulfuric_acid_bucket"
         }
     },
     "texture_name": "atlas.items"

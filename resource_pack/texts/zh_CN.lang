@@ -308,3 +308,4 @@ tile.skybluetech:redstone_generator.name=红石发电机
 tile.skybluetech.sulfuric_acid.name=硫酸
 tile.skybluetech.flowing_sulfuric_acid.name=流动硫酸
 item.skybluetech:sulfuric_acid_bucket.name=硫酸桶
+tile.skybluetech:steel_block.name=钢块

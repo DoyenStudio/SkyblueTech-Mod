@@ -604,6 +604,9 @@
     "skybluetech:splitter": {
         "sound": "iron"
     },
+    "skybluetech:steel_block": {
+        "textures": "skybluetech:steel_block"
+    },
     "skybluetech:sulfuric_acid": {
         "blockshape": "water",
         "textures": {

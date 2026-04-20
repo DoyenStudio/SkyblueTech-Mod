@@ -410,6 +410,9 @@
         "skybluetech:splitter_front": {
             "textures": "textures/machines/splitter_front"
         },
+        "skybluetech:steel_block": {
+            "textures": "textures/blocks/ingot_block/steel_block"
+        },
         "skybluetech:tank_bronze": {
             "textures": "textures/models/tanks/tank_bronze_texture"
         },

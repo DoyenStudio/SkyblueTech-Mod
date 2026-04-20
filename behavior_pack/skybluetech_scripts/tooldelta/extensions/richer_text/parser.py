@@ -70,13 +70,13 @@ def parse_tags(
         elif tag_name == NewLine.name:
             res.append(NewLine())
         elif tag_name == Image.name:
-            x_scale = params.get("x_scale")
-            y_scale = params.get("y_scale")
-            if x_scale is not None:
-                x_scale = float(x_scale)
-            if y_scale is not None:
-                y_scale = float(y_scale)
-            res.append(Image(params["path"], x_scale, y_scale))
+            size_x = params.get("size_x")
+            size_y = params.get("size_y")
+            if size_x is not None:
+                size_x = float(size_x)
+            if size_y is not None:
+                size_y = float(size_y)
+            res.append(Image(params["path"], size_x, size_y))
         elif tag_name == ItemRender.name:
             scale = params.get("scale")
             if scale is not None:

@@ -38,11 +38,11 @@ class Style(object):
 class Image(object):
     name = "img"
 
-    def __init__(self, path, x_scale=None, y_scale=None):
+    def __init__(self, path, size_x=None, size_y=None):
         # type: (str, float | None, float | None) -> None
         self.path = path
-        self.x_scale = x_scale
-        self.y_scale = y_scale
+        self.size_x = size_x
+        self.size_y = size_y
 
 
 class ItemRender(object):

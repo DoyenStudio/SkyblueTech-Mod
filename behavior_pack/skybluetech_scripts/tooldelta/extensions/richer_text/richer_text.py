@@ -207,9 +207,9 @@ class RicherTextCtrl(object):
         # color=None,  # type: tuple[float, float, float] | None
     ):
         img = self._simulate_image.clone(self._gen_name())
-        y_scale = image.y_scale or self._current_row_max_y or 20
-        x_scale = image.x_scale or y_scale
-        img.SetSize((x_scale, y_scale))
+        size_y = image.size_y or self._current_row_max_y or 20
+        size_x = image.size_x or size_y  # square size
+        img.SetSize((size_x, size_y))
         img.SetSprite(image.path)
         self._put_control(img, img)
         return img

@@ -27,7 +27,7 @@ def GetRecipesByInput(category, id):
         res += [
             recipe
             for tag in tags
-            for recipe in GetRecipesByOutput(CategoryType.ITEM, "tag:" + tag)
+            for recipe in GetRecipesByInput(CategoryType.ITEM, "tag:" + tag)
         ]
     return res
 

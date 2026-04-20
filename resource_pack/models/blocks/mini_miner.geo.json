@@ -1,5 +1,5 @@
 {
-	"format_version": "1.21.0",
+	"format_version": "1.21.70",
 	"minecraft:geometry": [
 		{
 			"description": {
@@ -90,8 +90,8 @@
 							"origin": [5, 15, -5],
 							"size": [2, 1, 10],
 							"uv": {
-								"east": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
-								"west": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
+								"east": {"uv": [0, 7], "uv_size": [6, 0.5]},
+								"west": {"uv": [0, 7], "uv_size": [6, 0.5]},
 								"up": {"uv": [1, 6.5], "uv_size": [-1, -6]},
 								"down": {"uv": [1, 6.5], "uv_size": [-1, -6]}
 							}
@@ -100,8 +100,8 @@
 							"origin": [-7, 15, -5],
 							"size": [2, 1, 10],
 							"uv": {
-								"east": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
-								"west": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
+								"east": {"uv": [0, 7], "uv_size": [6, 0.5]},
+								"west": {"uv": [0, 7], "uv_size": [6, 0.5]},
 								"up": {"uv": [1, 6.5], "uv_size": [-1, -6]},
 								"down": {"uv": [1, 6.5], "uv_size": [-1, -6]}
 							}
@@ -112,8 +112,8 @@
 							"pivot": [-6, 0, 6],
 							"rotation": [0, -90, 0],
 							"uv": {
-								"east": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
-								"west": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
+								"east": {"uv": [0, 7], "uv_size": [6, 0.5]},
+								"west": {"uv": [0, 7], "uv_size": [6, 0.5]},
 								"up": {"uv": [1, 6.5], "uv_size": [-1, -6]},
 								"down": {"uv": [1, 6.5], "uv_size": [-1, -6]}
 							}
@@ -124,8 +124,8 @@
 							"pivot": [-6, 0, -6],
 							"rotation": [0, -90, 0],
 							"uv": {
-								"east": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
-								"west": {"uv": [0.5, 7], "uv_size": [6, 0.5]},
+								"east": {"uv": [0, 7], "uv_size": [6, 0.5]},
+								"west": {"uv": [0, 7], "uv_size": [6, 0.5]},
 								"up": {"uv": [1, 6.5], "uv_size": [-1, -6]},
 								"down": {"uv": [1, 6.5], "uv_size": [-1, -6]}
 							}

@@ -121,10 +121,6 @@ class Recipe(RecipeBase):
         "配方输出: [配方类型: [槽位: 输出元素]]"
         self._collection_key = None
 
-        from .register import RegisterRecipe
-
-        RegisterRecipe(self)
-
     def equals(self, other):
         # type: (Recipe | None) -> bool
         if other is None:
@@ -145,6 +141,9 @@ class Recipe(RecipeBase):
             category: [output.id for output in slot2output.values()]
             for category, slot2output in self.outputs.items()
         }
+
+    def __hash__(self):
+        return hash(self.collection_key)
 
     @property
     def collection_key(self):

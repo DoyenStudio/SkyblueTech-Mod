@@ -10,7 +10,6 @@ from .core.render_utils import (
 )
 from .core.register import RegisterRecipe, RegisterDescription
 from . import (
-    init_common_recipes,
     init_descriptions,
     tutorials,
 )

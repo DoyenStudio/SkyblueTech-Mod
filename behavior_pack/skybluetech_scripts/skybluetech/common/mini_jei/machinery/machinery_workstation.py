@@ -106,6 +106,9 @@ class MachineryWorkstationRecipe(Recipe):
                 data.get("craft_times", 1),
             )
 
+    def __hash__(self):
+        return hash(self.output_item_id)
+
 
 PINCER_LEVEL2ITEM = {
     MachineryWorkstationRecipe.LEVEL_IRON: items.Pincer.IRON,

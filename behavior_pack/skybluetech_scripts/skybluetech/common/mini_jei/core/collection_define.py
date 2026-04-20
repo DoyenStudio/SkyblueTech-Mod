@@ -60,6 +60,11 @@ class RecipesCollection(Generic[RT]):
         self.collection_name = collection_name
         self._recipes = list(recipes)
 
+        from .register import RegisterRecipe
+
+        for recipe in self._recipes:
+            RegisterRecipe(recipe)
+
     def add_recipe(self, recipe):
         # type: (RT) -> None
         self._recipes.append(recipe)

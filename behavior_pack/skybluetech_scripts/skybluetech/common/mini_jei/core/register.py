@@ -2,29 +2,31 @@
 from .define import RecipeBase, Description
 from .storage import recipesFrom, recipesTo, recipesOf
 
+recipes_registered = set()  # type: set[RecipeBase]
+
 
 def RegisterRecipe(recipe):
     # type: (RecipeBase) -> None
     "注册配方。"
+    if recipe in recipes_registered:
+        return
     for category, inputs in recipe.GetInputs().items():
         for input in inputs:
-            rcps = recipesTo.setdefault(category, {}).setdefault(input, [])
+            recipesTo.setdefault(category, {}).setdefault(input, []).append(recipe)
             # if recipe in rcps:
             #     print("1:add multiple recipe")
             #     # continue
-            rcps.append(recipe)
     for category, outputs in recipe.GetOutputs().items():
         for output in outputs:
-            rcps = recipesFrom.setdefault(category, {}).setdefault(output, [])
+            recipesFrom.setdefault(category, {}).setdefault(output, []).append(recipe)
             # if recipe in rcps:
             #     print("2:add multiple recipe")
             #     # continue
-            rcps.append(recipe)
-    rcps = recipesOf.setdefault(recipe.recipe_icon_id, [])
+    recipesOf.setdefault(recipe.recipe_icon_id, []).append(recipe)
     # if recipe in rcps:
     #     print("3:add multiple recipe")
     #     # return
-    rcps.append(recipe)
+
 
 def RegisterDescription(categories_with_ids, title, content):
     # type: (dict[str, list[str]], str, str) -> None
@@ -36,4 +38,6 @@ def RegisterDescription(categories_with_ids, title, content):
         title (str): 标题
         content (str): 正文内容
     """
-    RegisterRecipe(Description(categories_with_ids, title, content.replace(" ", u"\u00a0")))
+    RegisterRecipe(
+        Description(categories_with_ids, title, content.replace(" ", "\u00a0"))
+    )

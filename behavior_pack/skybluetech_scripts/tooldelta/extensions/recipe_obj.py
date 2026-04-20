@@ -47,18 +47,10 @@ class RecipeOutput:
 
     @classmethod
     def from_dict(cls, dic):
-        return cls(
-            dic["item"],
-            dic.get("count", 1),
-            dic.get("data", 0)
-        )
+        return cls(dic["item"], dic.get("count", 1), dic.get("data", 0))
 
     def to_dict(self):
-        return {
-            "item": self.item_id,
-            "count": self.count,
-            "data": self.aux_value
-        }
+        return {"item": self.item_id, "count": self.count, "data": self.aux_value}
 
     def copy(self):
         return RecipeOutput(self.item_id, self.count, self.aux_value)
@@ -83,7 +75,7 @@ class CraftingRecipeRes:
         self.data = data
         self.pattern = data["pattern"]  # type: list[str]
         self.pattern_key = {k: RecipeInput.from_dict(v) for k, v in data["key"].items()}  # type: dict[str, RecipeInput]
-        self.result = [RecipeOutput.from_dict(v) for v in data["result"]] # type: list[RecipeOutput]
+        self.result = [RecipeOutput.from_dict(v) for v in data["result"]]  # type: list[RecipeOutput]
 
     def get_items_count(self):
         # type: () -> list[RecipeInput]
@@ -94,7 +86,11 @@ class CraftingRecipeRes:
         return list(new_pk.values())
 
     def __hash__(self):
-        return hash((tuple(self.pattern), tuple(self.pattern_key.values()), tuple(self.result)))
+        return hash((
+            tuple(self.pattern),
+            tuple(self.pattern_key.values()),
+            tuple(self.result),
+        ))
 
     def __eq__(self, other):
         # type: (object) -> bool
@@ -121,16 +117,20 @@ class UnorderedCraftingRecipeRes:
         # type: (object) -> bool
         if not isinstance(other, UnorderedCraftingRecipeRes):
             return False
-        return (
-            self.inputs == other.inputs
-            and self.result == other.result
-        )
+        return self.inputs == other.inputs and self.result == other.result
 
 
 class FurnaceRecipe:
     def __init__(self, data):
-        self.input_item_id = data["input"] # type: str
+        input = data["input"]  # type: str
         output = data["output"]
+        if input.count(":") > 1:
+            datas = input.split(":")
+            iname = datas[:-1]
+            aux = datas[-1]
+            self.input = RecipeInput([":".join(iname)], 1, int(aux))
+        else:
+            self.input = RecipeInput([input], 1)
         if isinstance(output, str):
             if output.count(":") > 1:
                 datas = output.split(":")
@@ -143,20 +143,17 @@ class FurnaceRecipe:
             self.output = RecipeOutput.from_dict(output)
 
     def __hash__(self):
-        return hash((self.input_item_id, self.output))
+        return hash((self.input, self.output))
 
     def __eq__(self, other):
         # type: (object) -> bool
         if not isinstance(other, FurnaceRecipe):
             return False
-        return (
-            self.input_item_id == other.input_item_id
-            and self.output == other.output
-        )
+        return self.input == other.input and self.output == other.output
 
 
 def GetCraftingRecipe(
-    recipe_dict # type: dict
+    recipe_dict,  # type: dict
 ):
     return (
         CraftingRecipeRes(recipe_dict)
@@ -164,8 +161,6 @@ def GetCraftingRecipe(
         else UnorderedCraftingRecipeRes(recipe_dict)
     )
 
+
 def GetFurnaceRecipe(recipe_dict):
     return FurnaceRecipe(recipe_dict)
-
-
-

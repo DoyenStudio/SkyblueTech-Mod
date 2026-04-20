@@ -6,8 +6,8 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     UnorderedCraftingRecipeRes,
     FurnaceRecipe,
 )
-from ..core.define import CategoryType, RecipeBase
-from ..core.render_utils import ItemDisplayer
+from .define import CategoryType, RecipeBase
+from .render_utils import ItemDisplayer
 
 
 class GenericCraftingTableRecipe(RecipeBase):

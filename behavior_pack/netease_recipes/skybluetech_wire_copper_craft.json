@@ -11,10 +11,10 @@
             }
         },
         "pattern": [
-            "AA"
+            "AAA"
         ],
         "result": {
-            "count": 3,
+            "count": 2,
             "data": 0,
             "item": "skybluetech:wire_copper"
         },

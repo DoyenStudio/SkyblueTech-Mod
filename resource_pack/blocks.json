@@ -332,7 +332,15 @@
         }
     },
     "skybluetech:fluid_condenser": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:fluid_condenser_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:fluid_splitter": {
         "textures": {
@@ -355,7 +363,15 @@
         }
     },
     "skybluetech:freezer": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:freezer_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:gas_burning_generator": {
         "sound": "iron"
@@ -435,7 +451,15 @@
         }
     },
     "skybluetech:macerator": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:macerator_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:machinery_frame": {
         "textures": {
@@ -448,13 +472,37 @@
         "sound": "iron"
     },
     "skybluetech:magma_centrifuge": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:magma_furnace_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:magma_furnace": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:magma_furnace_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:metal_press": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:metal_press_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:methane": {
         "blockshape": "water",
@@ -472,7 +520,15 @@
         "sound": "iron"
     },
     "skybluetech:mixer": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:mixer_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:molten_copper": {
         "blockshape": "water",
@@ -583,7 +639,15 @@
         }
     },
     "skybluetech:redstone_generator": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:redstone_generator_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:resin_collector": {
         "sound": "wood"
@@ -602,7 +666,15 @@
         "sound": "iron"
     },
     "skybluetech:splitter": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:splitter_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:steel_block": {
         "textures": "skybluetech:steel_block"
@@ -636,14 +708,14 @@
         "sound": "glass"
     },
     "skybluetech:thermal_generator": {
-        "sound": "iron"
-    },
-    "skybluetech:thermoelectric_generator": {
-        "sound": "metal",
+        "sound": "iron",
         "textures": {
-            "down": "skybluetech:thermoelectric_generator_downside",
-            "side": "skybluetech:thermoelectric_generator_side",
-            "up": "skybluetech:thermoelectric_generator_upside"
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:thermal_generator_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
         }
     },
     "skybluetech:tin_block": {

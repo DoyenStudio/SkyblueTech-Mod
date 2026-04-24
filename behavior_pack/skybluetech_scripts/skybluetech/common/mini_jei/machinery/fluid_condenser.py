@@ -26,6 +26,31 @@ class FluidCondenserRecipe(MachineRecipe):
             power_cost,
             tick_duration,
         )
+        self.input_fluid = input_fluid
+        self.input_fluid_volume = input_fluid_volume
+        self.output_item = output_item
+        self.output_item_count = output_item_count
+
+    def Marshal(self):
+        return {
+            "input_fluid": self.input_fluid,
+            "input_fluid_volume": self.input_fluid_volume,
+            "output_item": self.output_item,
+            "output_item_count": self.output_item_count,
+            "power_cost": self.power_cost,
+            "tick_duration": self.tick_duration,
+        }
+        
+    @classmethod
+    def Unmarshal(cls, data):
+        return cls(
+            input_fluid=data["input_fluid"],
+            input_fluid_volume=data["input_fluid_volume"],
+            output_item=data["output_item"],
+            output_item_count=data["output_item_count"],
+            power_cost=data["power_cost"],
+            tick_duration=data["tick_duration"],   
+        )
 
 
 def recipe_molten2ingot(metal_id, power_cost=80, tick_duration=180):

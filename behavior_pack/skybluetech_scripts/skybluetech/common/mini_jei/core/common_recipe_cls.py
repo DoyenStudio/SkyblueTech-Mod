@@ -7,7 +7,15 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     FurnaceRecipe,
 )
 from .define import CategoryType, RecipeBase
-from .render_utils import ItemDisplayer
+
+if 0:
+    from ....client.ui.recipe_checker.render_utils import (
+        ItemDisplayer as _ItemDisplayer,
+    )
+    from ....client.ui.recipe_checker.render_utils_advanced import (
+        MultiItemsDisplayer as _MultiItemsDisplayer,
+        InputDisplayer as _InputDisplayer,
+    )
 
 
 class GenericCraftingTableRecipe(RecipeBase):
@@ -17,6 +25,7 @@ class GenericCraftingTableRecipe(RecipeBase):
     def __init__(self, base):
         # type: (CraftingRecipeRes | UnorderedCraftingRecipeRes) -> None
         self.base = base
+        self.input_displayers = []  # type: list[_MultiItemsDisplayer]
 
     def GetInputs(self):
         # type: () -> dict[str, list[str]]
@@ -37,21 +46,33 @@ class GenericCraftingTableRecipe(RecipeBase):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
+        from ....client.ui.recipe_checker.render_utils import ItemDisplayer
+        from ....client.ui.recipe_checker.render_utils_advanced import (
+            MultiItemsDisplayer,
+        )
+
+        RecipeBase.RenderInit(self, panel)
+        self.input_displayers = []
         if isinstance(self.base, CraftingRecipeRes):
             pat_mapping = self.base.pattern_key
             for row, rowln in enumerate(self.base.pattern):
                 for col, pat in enumerate(rowln):
                     if pat == " ":
                         continue
-                    item = pat_mapping[pat]
-                    ItemDisplayer(
-                        panel["slot%d" % (row * 3 + col)],
-                        Item(item.item_ids[0], item.aux_value),
+                    input = pat_mapping[pat]
+                    self.input_displayers.append(
+                        MultiItemsDisplayer(
+                            panel["slot%d" % (row * 3 + col)],
+                            [Item(i) for i in input.item_ids],
+                        )
                     )
         else:
             for i, input in enumerate(self.base.inputs):
-                ItemDisplayer(
-                    panel["slot%d" % i], Item(input.item_ids[0], input.aux_value)
+                self.input_displayers.append(
+                    MultiItemsDisplayer(
+                        panel["slot%d" % i],
+                        [Item(i) for i in input.item_ids],
+                    )
                 )
         ItemDisplayer(
             panel["slot9"],
@@ -66,29 +87,25 @@ class GenericCraftingTableRecipe(RecipeBase):
         # type: (UBaseCtrl, int) -> None
         if ticks % 30:
             return
-        if isinstance(self.base, CraftingRecipeRes):
-            pat_mapping = self.base.pattern_key
-            for row, rowln in enumerate(self.base.pattern):
-                for col, pat in enumerate(rowln):
-                    if pat == " ":
-                        continue
-                    input = pat_mapping[pat]
-                    item_ids = input.item_ids
-                    if len(item_ids) <= 1:
-                        continue
-                    ItemDisplayer(
-                        panel["slot%d" % (row * 3 + col)],
-                        Item(item_ids[ticks // 30 % len(item_ids)], input.aux_value),
-                    )
+        for item_displayer in self.input_displayers:
+            item_displayer.tick(ticks)
+
+    def Marshal(self):
+        # type: () -> dict
+        return {
+            "base_data": self.base.data,
+            "shaped": isinstance(self.base, CraftingRecipeRes),
+        }
+
+    @classmethod
+    def Unmarshal(cls, dct):
+        # type: (dict) -> GenericCraftingTableRecipe
+        if dct["shaped"]:
+            return GenericCraftingTableRecipe(CraftingRecipeRes(dct["base_data"]))
         else:
-            for i, input in enumerate(self.base.inputs):
-                item_ids = input.item_ids
-                if len(item_ids) <= 1:
-                    continue
-                ItemDisplayer(
-                    panel["slot%d" % i],
-                    Item(item_ids[ticks // 30 % len(item_ids)], input.aux_value),
-                )
+            return GenericCraftingTableRecipe(
+                UnorderedCraftingRecipeRes(dct["base_data"])
+            )
 
     def __eq__(self, other):
         # type: (object) -> bool
@@ -108,6 +125,7 @@ class GenericFurnaceRecipe(RecipeBase):
     def __init__(self, base):
         # type: (FurnaceRecipe) -> None
         self.base = base
+        self.input_displayer = None  # type: _MultiItemsDisplayer | None
 
     def GetInputs(self):
         # type: () -> dict[str, list[str]]
@@ -119,9 +137,15 @@ class GenericFurnaceRecipe(RecipeBase):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
-        # type: (UBaseCtrl, GenericFurnaceRecipe) -> None
-        ItemDisplayer(
-            panel["slot0"], Item(self.base.input.item_ids[0], self.base.input.aux_value)
+        from ....client.ui.recipe_checker.render_utils import ItemDisplayer
+        from ....client.ui.recipe_checker.render_utils_advanced import (
+            MultiItemsDisplayer,
+        )
+
+        RecipeBase.RenderInit(self, panel)
+        self.input_displayer = MultiItemsDisplayer(
+            panel["slot0"],
+            [Item(i) for i in self.base.input.item_ids],
         )
         ItemDisplayer(
             panel["slot1"], Item(self.base.output.item_id, self.base.output.aux_value)
@@ -131,6 +155,17 @@ class GenericFurnaceRecipe(RecipeBase):
         # type: (UBaseCtrl, int) -> None
         p = float(render_ticks % 300) / 300
         panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
+        if self.input_displayer:
+            self.input_displayer.tick(render_ticks)
+
+    def Marshal(self):
+        # type: () -> dict
+        return {"base_data": self.base.data}
+
+    @classmethod
+    def Unmarshal(cls, dct):
+        # type: (dict) -> GenericFurnaceRecipe
+        return GenericFurnaceRecipe(FurnaceRecipe(dct["base_data"]))
 
     def __eq__(self, other):
         # type: (object) -> bool

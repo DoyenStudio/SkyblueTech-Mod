@@ -2,6 +2,8 @@
     "DataTextScreen": {
         "type": "panel",
         "$text": "",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
         "size": [
             "0%c+0px",
             "0%c+0px"
@@ -624,6 +626,90 @@
             100.0
         ],
         "layer": 1
+    },
+    "collect_recipe_btn@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "textures/ui/button_default",
+        "$hover_texture": "textures/ui/button_hovered",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "large",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            2.0,
+            2.0,
+            2.0,
+            2.0
+        ],
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$pressed_texture": "textures/ui/button_pressed",
+        "$texture_layer": 2,
+        "size": [
+            10.0,
+            10.0
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "is_handle_button_move_event": true,
+        "pressed_control": "pressed",
+        "sound_name": "random.toast",
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "",
+                "binding_condition": "always_when_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {}
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {}
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {}
+            },
+            {
+                "collected_img": {
+                    "type": "image",
+                    "size": [
+                        "100%+-4px",
+                        "100%+-4px"
+                    ],
+                    "layer": 3,
+                    "texture": "textures/ui/collection_yellow_img"
+                }
+            },
+            {
+                "not_collected_img": {
+                    "type": "image",
+                    "size": [
+                        "100%+-4px",
+                        "100%+-4px"
+                    ],
+                    "layer": 3,
+                    "texture": "textures/ui/collection_gray_img"
+                }
+            }
+        ]
     },
     "item_displayer": {
         "type": "panel",

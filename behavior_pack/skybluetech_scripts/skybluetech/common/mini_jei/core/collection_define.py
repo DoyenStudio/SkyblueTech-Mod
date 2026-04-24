@@ -55,15 +55,20 @@ RT = TypeVar("RT", bound=RecipeBase)
 
 
 class RecipesCollection(Generic[RT]):
+    _registered_collections = {}  # type: dict[str, RecipesCollection]
+
     def __init__(self, collection_name, *recipes):
         # type: (str, RT) -> None
         self.collection_name = collection_name
         self._recipes = list(recipes)
+        self._recipes_mapping = {}  # type: dict[tuple, RT]
 
         from .register import RegisterRecipe
 
         for recipe in self._recipes:
             RegisterRecipe(recipe)
+
+        RecipesCollection._registered_collections[collection_name] = self
 
     def add_recipe(self, recipe):
         # type: (RT) -> None
@@ -72,6 +77,20 @@ class RecipesCollection(Generic[RT]):
     def remove_recipe(self, recipe):
         # type: (RT) -> None
         self._recipes.remove(recipe)
+
+    def check_recipe(self, collection_key):
+        # type: (tuple) -> RT | None
+        "WIP"
+        if not self._recipes_mapping:
+            self._recipes_mapping = {
+                recipe.collection_key: recipe for recipe in self._recipes
+            }
+        return self._recipes_mapping.get(collection_key)
+
+    @classmethod
+    def get_collection(cls, collection_name):
+        # type: (str) -> RecipesCollection[RecipeBase]
+        return cls._registered_collections[collection_name]
 
     def list(self):
         return self._recipes[:]

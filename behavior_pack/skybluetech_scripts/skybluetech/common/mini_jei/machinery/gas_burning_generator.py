@@ -41,3 +41,24 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
         # type: (UBaseCtrl) -> None
         GeneratorRecipe.RenderInit(self, panel)
         panel["garbage_gas_tip"].SetVisible(self.output_gas_id is None)
+
+    def Marshal(self):
+        # type: () -> dict
+        return {
+            "gas_id": self.gas_id,
+            "once_burning_volume": self.once_burning_volume,
+            "output_power": self.output_power,
+            "output_gas_id": self.output_gas_id,
+            "output_gas_volume": self.output_gas_volume,
+        }
+
+    @classmethod
+    def Unmarshal(cls, data):
+        # type: (dict) -> GasBurningGeneratorRecipe
+        return cls(
+            gas_id=data["gas_id"],
+            once_burning_volume=data["once_burning_volume"],
+            output_power=data["output_power"],
+            output_gas_id=data["output_gas_id"],
+            output_gas_volume=data["output_gas_volume"],
+        )

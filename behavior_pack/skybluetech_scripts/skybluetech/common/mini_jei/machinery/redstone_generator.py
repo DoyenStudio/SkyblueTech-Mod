@@ -13,7 +13,7 @@ class RedstoneGeneratorRecipe(GeneratorRecipe):
 
     def __init__(
         self,
-        item_id,  # type: str
+        input_item_id,  # type: str
         output_item_id,  # type: str
         output_item_count,  # type: int
         output_power,  # type: int
@@ -21,9 +21,30 @@ class RedstoneGeneratorRecipe(GeneratorRecipe):
     ):
         GeneratorRecipe.__init__(
             self,
-            {CategoryType.ITEM: {0: Input(item_id)}},
+            {CategoryType.ITEM: {0: Input(input_item_id)}},
             output_power,
             tick_duration,
             outputs={CategoryType.ITEM: {1: Output(output_item_id, output_item_count)}},
         )
-        self.input_item_id = item_id
+        self.input_item_id = input_item_id
+        self.output_item_id = output_item_id
+        self.output_item_count = output_item_count
+
+    def Marshal(self):
+        return {
+            "input_item_id": self.input_item_id,
+            "output_item_id": self.output_item_id,
+            "output_item_count": self.output_item_count,
+            "output_power": self.output_power,
+            "tick_duration": self.tick_duration,
+        }
+
+    @classmethod
+    def Unmarshal(cls, data):
+        return cls(
+            input_item_id=data["input_item_id"],
+            output_item_id=data["output_item_id"],
+            output_item_count=data["output_item_count"],
+            output_power=data["output_power"],
+            tick_duration=data["tick_duration"],
+        )

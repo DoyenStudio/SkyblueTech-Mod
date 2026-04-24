@@ -8,9 +8,10 @@ from ..core import (
     Recipe,
     Input,
     Output,
-    ItemDisplayer,
-    InputDisplayer,
-    MultiItemsDisplayer,
+    MarshalInputs,
+    MarshalOutputs,
+    UnmarshalInputs,
+    UnmarshalOutputs,
 )
 
 
@@ -46,6 +47,13 @@ class MachineryWorkstationRecipe(Recipe):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
+        from ....client.ui.recipe_checker.render_utils import ItemDisplayer
+        from ....client.ui.recipe_checker.render_utils_advanced import (
+            InputDisplayer,
+            MultiItemsDisplayer,
+        )
+
+        Recipe.RenderInit(self, panel)
         self.dyn_item_renders = []  # type: list[InputDisplayer | MultiItemsDisplayer]
         input_items = self.inputs.get("item", {})
         for slot, input in input_items.items():
@@ -77,6 +85,26 @@ class MachineryWorkstationRecipe(Recipe):
         # type: (UBaseCtrl, int) -> None
         for input_render in self.dyn_item_renders:
             input_render.tick(render_ticks)
+
+    def Marshal(self):
+        # type: () -> dict
+        return {
+            "input_items": MarshalInputs({CategoryType.ITEM: self.input_items}),
+            "output_item_id": self.output_item_id,
+            "wrench_level": self.wrench_level,
+            "pincer_level": self.pincer_level,
+            "craft_times": self.craft_times,
+        }
+
+    @classmethod
+    def Unmarshal(cls, data):
+        return cls(
+            input_items=UnmarshalInputs(data["input_items"])[CategoryType.ITEM],
+            output_item_id=data["output_item_id"],
+            wrench_level=data["wrench_level"],
+            pincer_level=data["pincer_level"],
+            craft_times=data["craft_times"],
+        )
 
     @classmethod
     def from_dict(

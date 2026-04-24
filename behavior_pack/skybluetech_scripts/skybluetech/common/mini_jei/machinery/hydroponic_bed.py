@@ -9,7 +9,6 @@ from skybluetech_scripts.tooldelta.api.client.block import (
     CombineBlockPaletteToGeometry,
 )
 from ....common.define.id_enum import machinery
-from ..core import ItemDisplayer
 from .define import CategoryType, MachineRecipe, Input, Output, UBaseCtrl
 
 gUid = 0
@@ -65,6 +64,9 @@ class HydroponicBedRecipe(MachineRecipe):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
+        from ....client.ui.recipe_checker.render_utils import ItemDisplayer
+
+        MachineRecipe.RenderInit(self, panel)
         self._last_stage = 0
         self.crop_render = panel["crop_disp"].asNeteasePaperDoll()
         ItemDisplayer(panel["seed_item"], Item(self.seed_item))

@@ -50,5 +50,30 @@ class DistillatorChamberRecipe(MachineRecipe):
             )
         )
 
+    def Marshal(self):
+        # type: () -> dict
+        return {
+            "input_fluid": self.collection_name,
+            "input_volume": self.consume,
+            "output_fluid": self.produce_matter,
+            "output_volume": self.produce,
+            "min_temperature": self.min_temperature,
+            "fit_temperature": self.fit_temperature,
+            "max_temperature": self.max_temperature,
+        }
+
+    @classmethod
+    def Unmarshal(cls, data):
+        # type: (dict) -> DistillatorChamberRecipe
+        return DistillatorChamberRecipe(
+            input_fluid=data["input_fluid"],
+            input_volume=data["input_volume"],
+            output_fluid=data["output_fluid"],
+            output_volume=data["output_volume"],
+            min_temperature=c2k(data["min_temperature"]),
+            fit_temperature=c2k(data["fit_temperature"]),
+            max_temperature=c2k(data["max_temperature"]),
+        )
+
 
 c2k = lambda c: c + 273

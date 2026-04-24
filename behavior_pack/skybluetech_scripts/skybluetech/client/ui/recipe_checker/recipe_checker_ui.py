@@ -13,15 +13,15 @@ from ....common.mini_jei import (
     CategoryType,
     RecipeBase,
     GetRecipesByOutput,
-    CreateDisplayBoard,
-    NeedRemoveDisplayBoard,
-    RemoveDisplayBoard,
-    GetDoubleClickDetecter,
 )
+from .favourite_items import GetFavourites, favourite_items_idauxs
+from .render_utils import CreateDescBoard
 
 MAIN_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
 )
+LEFT_CONTENT_PATH = MAIN_PATH / "left_content"
+MIDDLE_CONTENT_PATH = MAIN_PATH / "middle_content"
 
 
 @RegistToolDeltaScreen("RecipeCheckerUI.main")
@@ -36,34 +36,36 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.current_page = 0
         self.recipes_per_page = 0
         self.total_pages_num = 0
-        self.category_double_click_helpers = None
 
     def OnCreate(self):
         self.left_sections_grid = self.GetElement(
-            MAIN_PATH / "left_sections_grid"
+            MIDDLE_CONTENT_PATH / "left_sections_grid"
         ).asGrid()
-        self.title = self.GetElement(MAIN_PATH / "title").asLabel()
-        self.recipes_display = self.GetElement(MAIN_PATH / "recipes_display")
+        self.title = self.GetElement(MIDDLE_CONTENT_PATH / "title").asLabel()
+        self.recipes_display = self.GetElement(MIDDLE_CONTENT_PATH / "recipes_display")
         self.prev_page_btn = (
             self
-            .GetElement(MAIN_PATH / "title/prev_page_btn")
+            .GetElement(MIDDLE_CONTENT_PATH / "title/prev_page_btn")
             .asButton()
             .SetCallback(self.onPrevPage)
         )
         self.next_page_btn = (
             self
-            .GetElement(MAIN_PATH / "title/next_page_btn")
+            .GetElement(MIDDLE_CONTENT_PATH / "title/next_page_btn")
             .asButton()
             .SetCallback(self.onNextPage)
         )
         self.close_btn = (
             self
-            .GetElement(MAIN_PATH / "close_btn")
+            .GetElement(MIDDLE_CONTENT_PATH / "close_btn")
             .asButton()
             .SetCallback(self.onClose)
         )
         self.back_btn = (
-            self.GetElement(MAIN_PATH / "back_btn").asButton().SetCallback(self.onBack)
+            self
+            .GetElement(MIDDLE_CONTENT_PATH / "back_btn")
+            .asButton()
+            .SetCallback(self.onBack)
         )
         self.back_btn.SetVisible(False)
         self.update_all()
@@ -74,6 +76,19 @@ class RecipeCheckerUI(ToolDeltaScreen):
         if self.update_ticks % 6 == 0:
             for ctrl, rcp in self.recipe_ctrls.items():
                 rcp.RenderUpdate(ctrl, self.update_ticks)
+
+    def PushRecipes(self, recipes, update=True):
+        # type: (dict[tuple[str, str], list[RecipeBase]], bool) -> None
+        r = [
+            (recipe_icon_id, recipe_name, recipe)
+            for (recipe_icon_id, recipe_name), recipe in recipes.items()
+        ]
+        if len(self.recipes_chain) > 64:
+            self.recipes_chain.pop(4)
+        self.recipes_chain.append(r)
+        if update:
+            self.recipes_per_page = 0
+            self.update_all()
 
     def render_recipes_of_input(self, id, category):
         # type: (str, str) -> None
@@ -96,11 +111,9 @@ class RecipeCheckerUI(ToolDeltaScreen):
                 ),
                 [],
             ).append(rcp)
-        self.PushRecipes(recipe_dic)
-        self.update_all()
+        self.PushRecipes(recipe_dic, update=True)
 
     def update_all(self):
-        RemoveDisplayBoard(self)
         self.update_recipe_categories()
         self.update_current_recipe_page()
         if len(self.recipes_chain) > 1:
@@ -119,9 +132,6 @@ class RecipeCheckerUI(ToolDeltaScreen):
                     category_panel.SetLayer(3)
                 else:
                     category_panel.SetLayer(0)
-            self.category_double_click_helpers = [
-                GetDoubleClickDetecter() for _ in self.recipes_chain[-1]
-            ]
 
         if self.looking_category_index >= len(self.recipes_chain[-1]):
             self.looking_category_index = 0
@@ -182,16 +192,6 @@ class RecipeCheckerUI(ToolDeltaScreen):
         if event.isDown and event.key == event.KeyBoardType.KEY_ESCAPE:
             self.RemoveUI()
 
-    def PushRecipes(self, recipes):
-        # type: (dict[tuple[str, str], list[RecipeBase]]) -> None
-        r = [
-            (recipe_icon_id, recipe_name, recipes[(recipe_icon_id, recipe_name)])
-            for (recipe_icon_id, recipe_name) in recipes
-        ]
-        if len(self.recipes_chain) > 64:
-            self.recipes_chain.pop(4)
-        self.recipes_chain.append(r)
-
     @Binder.binding(Binder.BF_ButtonClick, "#recipe_checker.select_category")
     def onSelectCategory(self, params):
         griditem_path = UIPath("/".join(params["ButtonPath"].split("/")[1:-1]))
@@ -199,34 +199,62 @@ class RecipeCheckerUI(ToolDeltaScreen):
         if not self._activated or params["TouchEvent"] != 0:
             return
         click_index = params["#collection_index"]
-        if (
-            self.category_double_click_helpers
-            and self.category_double_click_helpers[click_index]()
-        ):
-            # BUG: 无法原地双击按钮
-            self.render_recipes_of_input(
-                self.left_sections_grid
-                .GetGridItem(0, click_index)["item_renderer"]
-                .asItemRenderer()
-                .GetUiItem()[0],
-                CategoryType.ITEM,
-            )
-            return
-        if self.looking_category_index == click_index:
-            if NeedRemoveDisplayBoard(griditem):
-                RemoveDisplayBoard(self)
-                return
+        if self.looking_category_index != click_index:
+            self.looking_category_index = click_index
+            self.update_all()
+        else:
             x, y = griditem.GetRootPos()
-            if y > 100:
-                offset = -40
+            if y > 400:
+                offset = -10
             else:
-                offset = 40
-            CreateDisplayBoard(
+                offset = 10
+            selected_item_id = griditem["item_renderer"].asItemRenderer().GetUiItem()[0]
+            CreateDescBoard(
                 griditem,
-                GetItemHoverName(
-                    griditem["item_renderer"].asItemRenderer().GetUiItem()[0]
-                ),
-            ).SetPos((x, y + offset)).SetLayer(20)
+                (x + 20, y + offset),
+                CategoryType.ITEM,
+                selected_item_id,
+                selected_item_id,
+                GetItemHoverName(selected_item_id),
+            )
+
+    @Binder.binding_collection(
+        Binder.BF_BindInt,
+        "recipe_check_ui_favourite_items",
+        "#RecipeCheckerUI.favourite_item_nums",
+    )
+    def onGetFavRecipeResultItem(self, args):
+        # type: (int) -> int
+        return len(GetFavourites())
+
+    @Binder.binding_collection(
+        Binder.BF_BindInt,
+        "recipe_check_ui_favourite_items",
+        "#RecipeCheckerUI.facourite_item_idaux",
+    )
+    def onGetFavRecipeSrcItem(self, idx):
+        if idx >= len(favourite_items_idauxs):
+            return 131072
+        return favourite_items_idauxs[idx]
+
+    @Binder.binding(
+        Binder.BF_ButtonClickUp,
+        "#RecipeCheckerUI.favourite_item_select",
+    )
+    def onSelectFavouriteItem(self, params):
+        # type: (dict) -> None
+        idx = params["#collection_index"]
+        if idx >= len(favourite_items_idauxs):
             return
-        self.looking_category_index = click_index
-        self.update_all()
+        button_path = params["ButtonPath"][len("main/") :]
+        button = self.GetElement(button_path)
+        x, y = button.GetRootPos()
+        category, item_id, display_item_id = GetFavourites()[idx]
+        CreateDescBoard(
+            button._parent,
+            (x + 20, y),
+            category,
+            item_id,
+            display_item_id,
+            GetItemHoverName(display_item_id),
+        )

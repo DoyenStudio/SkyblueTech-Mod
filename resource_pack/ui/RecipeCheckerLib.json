@@ -10,7 +10,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -22,7 +21,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -60,
                         -20
@@ -31,7 +29,7 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
+                    "layer": 1,
                     "offset": [
                         -40,
                         -20
@@ -40,7 +38,6 @@
             },
             {
                 "slot2@SkybluePanelLib.item_displayer": {
-                    "layer": 36,
                     "offset": [
                         -20,
                         -20
@@ -49,7 +46,6 @@
             },
             {
                 "slot3@SkybluePanelLib.item_displayer": {
-                    "layer": 53,
                     "offset": [
                         -40,
                         20
@@ -58,7 +54,6 @@
             },
             {
                 "slot4@SkybluePanelLib.item_displayer": {
-                    "layer": 70,
                     "offset": [
                         40,
                         -20
@@ -67,7 +62,6 @@
             },
             {
                 "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 87,
                     "offset": [
                         10,
                         -20
@@ -80,7 +74,6 @@
             },
             {
                 "flame@SkybluePanelLib.Flame": {
-                    "layer": 91,
                     "offset": [
                         -40,
                         0
@@ -104,7 +97,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -116,7 +108,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         0
@@ -125,7 +116,7 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
+                    "layer": 1,
                     "offset": [
                         30,
                         0
@@ -134,7 +125,6 @@
             },
             {
                 "progress@CompressorUI.compressor_progress": {
-                    "layer": 36,
                     "offset": [
                         0,
                         0
@@ -154,7 +144,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -166,7 +155,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -50,
                         -20
@@ -175,7 +163,7 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
+                    "layer": 1,
                     "offset": [
                         -30,
                         -20
@@ -184,7 +172,6 @@
             },
             {
                 "slot2@SkybluePanelLib.item_displayer": {
-                    "layer": 36,
                     "offset": [
                         -10,
                         -20
@@ -193,7 +180,6 @@
             },
             {
                 "slot3@SkybluePanelLib.item_displayer": {
-                    "layer": 53,
                     "offset": [
                         -50,
                         0
@@ -202,7 +188,6 @@
             },
             {
                 "slot4@SkybluePanelLib.item_displayer": {
-                    "layer": 70,
                     "offset": [
                         -30,
                         0
@@ -211,7 +196,6 @@
             },
             {
                 "slot5@SkybluePanelLib.item_displayer": {
-                    "layer": 87,
                     "offset": [
                         -10,
                         0
@@ -220,7 +204,6 @@
             },
             {
                 "slot6@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -50,
                         20
@@ -229,7 +212,6 @@
             },
             {
                 "slot7@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         20
@@ -238,7 +220,6 @@
             },
             {
                 "slot8@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -10,
                         20
@@ -247,7 +228,6 @@
             },
             {
                 "slot9@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         50,
                         0
@@ -265,7 +245,7 @@
                         30.0,
                         30.0
                     ],
-                    "layer": 2,
+                    "layer": 1,
                     "texture": "textures/ui/arrow_img"
                 }
             }
@@ -286,7 +266,6 @@
                         "default",
                         "100%cm+25px"
                     ],
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -378,7 +357,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -391,9 +369,8 @@
             {
                 "fluid0@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
-                    "layer": 19,
                     "offset": [
-                        -20,
+                        -30,
                         12
                     ],
                     "size": [
@@ -405,9 +382,8 @@
             {
                 "fluid1@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
-                    "layer": 19,
                     "offset": [
-                        -20,
+                        -30,
                         -15
                     ],
                     "size": [
@@ -420,7 +396,7 @@
                 "right_board": {
                     "type": "image",
                     "offset": [
-                        50.0,
+                        40.0,
                         0.0
                     ],
                     "size": [
@@ -496,7 +472,7 @@
                                 ],
                                 "color": [
                                     0.5882352941176471,
-                                    0.392156862745098,
+                                    0.39215686271098,
                                     0.0
                                 ],
                                 "font_scale_factor": 1.3,
@@ -521,7 +497,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -533,7 +508,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         30,
                         0
@@ -543,7 +517,6 @@
             {
                 "fluid0@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
-                    "layer": 19,
                     "offset": [
                         -35,
                         0
@@ -555,9 +528,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 45
-                }
+                "progress@SkybluePanelLib.ProgressBar": {}
             }
         ]
     },
@@ -572,7 +543,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -584,7 +554,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         30,
                         0
@@ -594,7 +563,7 @@
             {
                 "fluid0@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
-                    "layer": 19,
+                    "layer": 1,
                     "offset": [
                         -35,
                         0
@@ -607,7 +576,7 @@
             },
             {
                 "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 45
+                    "layer": 1
                 }
             },
             {
@@ -615,7 +584,7 @@
                     "type": "image",
                     "offset": [
                         30.0,
-                        19.0
+                        18.0
                     ],
                     "size": [
                         16.0,
@@ -662,7 +631,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -674,7 +642,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         -10
@@ -683,7 +650,7 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
+                    "layer": 1,
                     "offset": [
                         30,
                         -10
@@ -692,7 +659,6 @@
             },
             {
                 "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 87,
                     "offset": [
                         0,
                         -10
@@ -701,7 +667,6 @@
             },
             {
                 "flame@SkybluePanelLib.Flame": {
-                    "layer": 91,
                     "offset": [
                         -30,
                         10
@@ -725,7 +690,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -736,10 +700,19 @@
                 }
             },
             {
+                "collect_recipe_btn@SkybluePanelLib.collect_recipe_btn": {
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "offset": [
+                        -2,
+                        -2
+                    ]
+                }
+            },
+            {
                 "flame@SkybluePanelLib.Flame": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
-                    "layer": 5,
                     "offset": [
                         38,
                         0
@@ -779,7 +752,7 @@
             {
                 "output_power@SkybluePanelLib.output_power_displayer": {
                     "offset": [
-                        -6,
+                        -10,
                         -6
                     ],
                     "size": [
@@ -791,15 +764,17 @@
             {
                 "tick_power": {
                     "type": "label",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
                     "offset": [
-                        58.0,
+                        -8.0,
                         6.0
                     ],
                     "size": [
                         56.0,
                         10.0
                     ],
-                    "layer": 5,
+                    "layer": 1,
                     "color": [
                         0,
                         0.4,
@@ -816,7 +791,7 @@
                         -14.0,
                         0.0
                     ],
-                    "layer": 4,
+                    "layer": 1,
                     "color": [
                         0.2588235294117647,
                         0.2588235294117647,
@@ -841,7 +816,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -862,7 +836,7 @@
                         60.0,
                         60.0
                     ],
-                    "layer": 12,
+                    "layer": 1,
                     "clips_children": true,
                     "clip_direction": "left",
                     "clip_ratio": 0.0,
@@ -885,7 +859,7 @@
                         "100%y+0px",
                         44.0
                     ],
-                    "layer": 2,
+                    "layer": 1,
                     "enable_scissor_test": true,
                     "rotation": "gesture_x",
                     "screen_scale": 1.0
@@ -906,7 +880,7 @@
                         4.0,
                         -22.0
                     ],
-                    "layer": 5,
+                    "layer": 1,
                     "color": [
                         0.2588235294117647,
                         0.2588235294117647,
@@ -925,7 +899,7 @@
                         4.0,
                         4.0
                     ],
-                    "layer": 5,
+                    "layer": 1,
                     "color": [
                         0.2588235294117647,
                         0.2588235294117647,
@@ -965,7 +939,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -977,7 +950,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         0
@@ -986,7 +958,7 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
+                    "layer": 1,
                     "offset": [
                         30,
                         0
@@ -995,7 +967,6 @@
             },
             {
                 "progress@MaceratorUI.macerator_progress": {
-                    "layer": 36,
                     "offset": [
                         0,
                         0
@@ -1015,7 +986,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1027,7 +997,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -70,
                         -20
@@ -1036,7 +1005,7 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
+                    "layer": 1,
                     "offset": [
                         -50,
                         -20
@@ -1045,7 +1014,6 @@
             },
             {
                 "slot2@SkybluePanelLib.item_displayer": {
-                    "layer": 36,
                     "offset": [
                         -30,
                         -20
@@ -1054,7 +1022,6 @@
             },
             {
                 "slot3@SkybluePanelLib.item_displayer": {
-                    "layer": 53,
                     "offset": [
                         -70,
                         0
@@ -1063,7 +1030,6 @@
             },
             {
                 "slot4@SkybluePanelLib.item_displayer": {
-                    "layer": 70,
                     "offset": [
                         -50,
                         0
@@ -1072,7 +1038,6 @@
             },
             {
                 "slot5@SkybluePanelLib.item_displayer": {
-                    "layer": 87,
                     "offset": [
                         -30,
                         0
@@ -1081,7 +1046,6 @@
             },
             {
                 "slot6@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -70,
                         20
@@ -1090,7 +1054,6 @@
             },
             {
                 "slot7@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -50,
                         20
@@ -1099,7 +1062,6 @@
             },
             {
                 "slot8@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         20
@@ -1108,7 +1070,6 @@
             },
             {
                 "output_slot@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         28,
                         20
@@ -1126,13 +1087,12 @@
                         30.0,
                         30.0
                     ],
-                    "layer": 2,
+                    "layer": 1,
                     "texture": "textures/ui/arrow_img"
                 }
             },
             {
                 "pincer_slot@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         48,
                         -20
@@ -1141,7 +1101,6 @@
             },
             {
                 "wrench_slot@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         28,
                         -20
@@ -1159,7 +1118,7 @@
                         68,
                         20
                     ],
-                    "layer": 3,
+                    "layer": 1,
                     "color": [
                         0.2588235294117647,
                         0.2588235294117647,
@@ -1182,7 +1141,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1200,7 +1158,6 @@
                         0,
                         "2%+0px"
                     ],
-                    "layer": 6,
                     "offset": [
                         -47,
                         0
@@ -1316,7 +1273,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1328,7 +1284,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         0
@@ -1338,7 +1293,6 @@
             {
                 "fluid0@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
-                    "layer": 19,
                     "offset": [
                         35,
                         0
@@ -1350,9 +1304,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 45
-                }
+                "progress@SkybluePanelLib.ProgressBar": {}
             }
         ]
     },
@@ -1370,7 +1322,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1382,7 +1333,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         0
@@ -1391,7 +1341,6 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
                     "offset": [
                         30,
                         0
@@ -1405,7 +1354,7 @@
                         30.0,
                         30.0
                     ],
-                    "layer": 3,
+                    "layer": 1,
                     "texture": "textures/ui/arrow_img"
                 }
             },
@@ -1422,8 +1371,8 @@
                         20.0,
                         20.0
                     ],
-                    "layer": 3,
-                    "rotate_angle": -45.0,
+                    "layer": 1,
+                    "rotate_angle": -1.0,
                     "texture": "textures/items/metal_hammer"
                 }
             },
@@ -1440,7 +1389,7 @@
                         15.0,
                         15.0
                     ],
-                    "layer": 2,
+                    "layer": 1,
                     "rotate_angle": -15.0,
                     "texture": "textures/items/ingots/tin_ingot"
                 }
@@ -1458,7 +1407,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1470,7 +1418,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -40,
                         -18
@@ -1479,7 +1426,6 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 49,
                     "offset": [
                         40,
                         -18
@@ -1522,7 +1468,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1534,7 +1479,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -6,
                         -22
@@ -1544,7 +1488,6 @@
             {
                 "fluid0@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
-                    "layer": 19,
                     "offset": [
                         -40,
                         0
@@ -1559,10 +1502,9 @@
                 "progress@SkybluePanelLib.ProgressBar": {
                     "$bg_image": "textures/ui/mixer_arrow_img",
                     "$mask_image": "textures/ui/mixer_arrow_mask",
-                    "layer": 45,
                     "offset": [
                         0,
-                        0
+                        1
                     ],
                     "size": [
                         50,
@@ -1572,7 +1514,6 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 49,
                     "offset": [
                         36,
                         5
@@ -1593,7 +1534,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1605,7 +1545,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -30,
                         0
@@ -1615,7 +1554,6 @@
             {
                 "fluid0@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
-                    "layer": 19,
                     "offset": [
                         35,
                         0
@@ -1627,9 +1565,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 45
-                }
+                "progress@SkybluePanelLib.ProgressBar": {}
             }
         ]
     },
@@ -1637,14 +1573,13 @@
         "type": "panel",
         "size": [
             180.0,
-            60.0
+            50.0
         ],
         "layer": 1,
         "controls": [
             {
                 "bg": {
                     "type": "image",
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1656,7 +1591,6 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
                     "offset": [
                         -68,
                         -9
@@ -1665,7 +1599,6 @@
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 19,
                     "offset": [
                         -8,
                         -9
@@ -1674,7 +1607,6 @@
             },
             {
                 "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 87,
                     "offset": [
                         -38,
                         -9
@@ -1683,7 +1615,6 @@
             },
             {
                 "flame@SkybluePanelLib.Flame": {
-                    "layer": 91,
                     "offset": [
                         -68,
                         11
@@ -1698,7 +1629,7 @@
                 "output_power@SkybluePanelLib.output_power_displayer": {
                     "offset": [
                         -6,
-                        -9
+                        -12
                     ],
                     "size": [
                         70,
@@ -1709,15 +1640,17 @@
             {
                 "tick_power": {
                     "type": "label",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
                     "offset": [
-                        58.0,
-                        2.0
+                        -4.0,
+                        0.0
                     ],
                     "size": [
                         56.0,
                         10.0
                     ],
-                    "layer": 5,
+                    "layer": 1,
                     "color": [
                         0,
                         0.4,

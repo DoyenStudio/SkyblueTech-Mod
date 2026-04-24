@@ -7,6 +7,16 @@ from .vanilla import LoadItemRecipes
 
 def GetRecipesByOutput(category, id):
     # type: (str, str) -> list[RecipeBase]
+    """
+    通过输出获取配方列表。
+
+    Args:
+        category (str): Category 枚举
+        id (str): 配方物 ID, 如果以 "tag:" 开头则代表为标签物
+
+    Returns:
+        list[RecipeBase]: 配方列表
+    """
     if category == CategoryType.ITEM:
         LoadItemRecipes(id, get_output=True)
     res = list(recipesFrom.get(category, {}).get(id, set()))
@@ -23,7 +33,17 @@ def GetRecipesByOutput(category, id):
 
 def GetRecipesByInput(category, id):
     # type: (str, str) -> list[RecipeBase]
-    if category == CategoryType.ITEM:
+    """
+    通过输入获取配方列表。
+
+    Args:
+        category (str): Category 枚举
+        id (str): 配方物 ID, 如果以 "tag:" 开头则代表为标签物
+
+    Returns:
+        list[RecipeBase]: 配方列表
+    """
+    if category == CategoryType.ITEM and not id.startswith("tag:"):
         LoadItemRecipes(id, get_input=True)
     res = list(recipesTo.get(category, {}).get(id, []))
     if category is not CategoryType.ITEM or not id.startswith("tag:"):
@@ -39,5 +59,15 @@ def GetRecipesByInput(category, id):
 
 def GetRecipesByCategory(category):
     # type: (str) -> list[RecipeBase]
-    "WARNING: 目前暂时无法对工作台、 熔炉等原版配方使用。"
+    """
+    通过一个类别里的所有配方。
+
+    WARNING: 目前暂时无法对工作台、 熔炉等原版配方使用。
+
+    Args:
+        category (str): Category 枚举
+
+    Returns:
+        list[RecipeBase]: 配方列表
+    """
     return list(recipesOf.get(category, []))

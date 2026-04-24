@@ -2,6 +2,9 @@
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.api.common import GetItemTags
 
+if 0:
+    import typing  # noqa: F401
+
 
 class CategoryType:
     ITEM = "item"
@@ -9,7 +12,21 @@ class CategoryType:
     ENERGY = "energy"
 
 
-class RecipeBase:
+class _RecipeMeta(type):
+    recipe_classes = {}  # type: dict
+
+    def __init__(self, name, bases, attrs):
+        _RecipeMeta.recipe_classes[name] = self
+
+    @classmethod
+    def _get_recipe_cls(cls, cls_name):
+        # type: (str) -> type[RecipeBase] | None
+        return cls.recipe_classes.get(cls_name)
+
+
+class RecipeBase(object):
+    __metaclass__ = _RecipeMeta
+
     recipe_icon_id = "minecraft:barrier"
     render_ui_def_name = ""
     minijei_title = None  # type: str | None
@@ -42,18 +59,77 @@ class RecipeBase:
 
     def RenderInit(self, panel_ctrl):
         # type: (UBaseCtrl) -> None
-        raise NotImplementedError
+        """
+        在页面渲染初始化时执行一次, 用于渲染配方。 传入配方页控件。
+        """
+
+        pass
+        # from ....client.ui.recipe_checker._favourite_recipes import (
+        #     AddFavouriteRecipe,
+        #     RemoveFavouriteRecipe,
+        #     IsFavourite,
+        # )
+
+        # favourite_btn = panel_ctrl["collect_recipe_btn"].asButton()
+
+        # def update(is_favourite):
+        #     # type: (bool) -> None
+        #     favourite_btn["collected_img"].SetVisible(is_favourite)
+        #     favourite_btn["not_collected_img"].SetVisible(not is_favourite)
+
+        # def onclick(_):
+        #     is_favourite = IsFavourite(self)
+        #     if is_favourite:
+        #         RemoveFavouriteRecipe(self)
+        #     else:
+        #         AddFavouriteRecipe(self)
+        #     update(not is_favourite)
+
+        # favourite_btn.SetCallback(onclick)
 
     def RenderUpdate(self, panel_ctrl, render_ticks):
         # type: (UBaseCtrl, int) -> None
         """
         0.2 秒触发一次。render_ticks 每次比上一次触发多 5。
+        用于渲染页的持续更新, 如物品轮播, 进度条增加。
         """
         pass
 
+    def Marshal(self):
+        # type: () -> dict
+        """
+        将配方序列化。
+
+        Returns:
+            dict: 配方数据
+        """
+        raise NotImplementedError
+
+    @classmethod
+    def Unmarshal(cls, dct):
+        # type: (dict) -> typing.Self
+        """
+        从配方数据返序列化为配方。
+
+        Args:
+            dct (dict): 配方数据。
+        """
+        raise NotImplementedError
+
+    @staticmethod
+    def GetRecipeCls(cls_name):
+        # type: (str) -> type[RecipeBase] | None
+        return _RecipeMeta._get_recipe_cls(cls_name)
+
     @property
     def collection_key(self):
+        # type: () -> tuple
+        "建议通过继承 Recipe 类实现。 返回此配方的唯一 key"
         raise NotImplementedError
+
+    @property
+    def cls_name(self):
+        return self.__class__.__name__
 
     def __hash__(self):
         raise NotImplementedError
@@ -94,6 +170,12 @@ class Input(Element):
         else:
             return cls(dct["item"], dct.get("count", 1))
 
+    def to_dict(self):
+        if self.is_tag:
+            return {"tag": self.id, "count": self.count}
+        else:
+            return {"item": self.id, "count": self.count}
+
 
 class Output(Element):
     def __init__(self, id, count=1, prob=1):
@@ -108,6 +190,12 @@ class Output(Element):
     ):
         return cls(dct["id"], dct.get("count", 1), dct.get("prob", 1))
 
+    def to_dict(self):
+        res = {"id": self.id, "count": self.count}
+        if self.prob != 1:
+            res["prob"] = self.prob
+        return res
+
 
 class Recipe(RecipeBase):
     shaped = False
@@ -120,6 +208,7 @@ class Recipe(RecipeBase):
         self.outputs = outputs
         "配方输出: [配方类型: [槽位: 输出元素]]"
         self._collection_key = None
+        self._recipe_identifier = None
 
     def equals(self, other):
         # type: (Recipe | None) -> bool
@@ -141,6 +230,23 @@ class Recipe(RecipeBase):
             category: [output.id for output in slot2output.values()]
             for category, slot2output in self.outputs.items()
         }
+
+    def Marshal(self):
+        from .marshal_utils import MarshalInputs, MarshalOutputs
+
+        return {
+            "inputs": MarshalInputs(self.inputs),
+            "outputs": MarshalOutputs(self.outputs),
+        }
+
+    @classmethod
+    def Unmarshal(cls, dct):
+        from .marshal_utils import UnmarshalInputs, UnmarshalOutputs
+
+        return cls(
+            UnmarshalInputs(dct["inputs"].items()),
+            UnmarshalOutputs(dct["outputs"].items()),
+        )
 
     def __hash__(self):
         return hash(self.collection_key)
@@ -189,6 +295,7 @@ class Description(RecipeBase):
 
     def RenderInit(self, panel_ctrl):
         # type: (UBaseCtrl) -> None
+        RecipeBase.RenderInit(self, panel_ctrl)
         panel_ctrl["bg_img/title"].asLabel().SetText(self.title, sync_size=True)
         panel_ctrl["bg_img/content"].asLabel().SetText(self.content, sync_size=True)
 

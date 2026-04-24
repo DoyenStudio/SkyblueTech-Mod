@@ -31,11 +31,6 @@ def LoadItemRecipes(item_id, get_input=False, get_output=False):
 
     # TODO: get_input 和 get_output 同时使用会出现重复配方
 
-    if item_id.startswith("tag:"):
-        tag_items = GetItemsByTag(item_id[4:])
-        for tag_item in tag_items:
-            LoadItemRecipes(tag_item)
-        return
     # 工作台
     # BUG: 工作台配方会读取到多个相同配方
     # if "crafting_table" in str(from_reses):

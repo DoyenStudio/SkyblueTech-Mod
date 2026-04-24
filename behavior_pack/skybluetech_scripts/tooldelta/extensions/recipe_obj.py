@@ -122,6 +122,7 @@ class UnorderedCraftingRecipeRes:
 
 class FurnaceRecipe:
     def __init__(self, data):
+        self.data = data
         input = data["input"]  # type: str
         output = data["output"]
         if input.count(":") > 1:

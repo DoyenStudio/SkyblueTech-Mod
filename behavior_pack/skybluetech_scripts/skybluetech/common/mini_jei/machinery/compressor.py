@@ -8,14 +8,34 @@ class CompressorRecipe(MachineRecipe):
     recipe_icon_id = machinery.COMPRESSOR
     render_ui_def_name = "RecipeCheckerLib.compressor_recipes"
 
-    def __init__(self, inputs, outputs, power_cost, tick_duration):
-        # type: (dict[int, Input], dict[int, Output], int, int) -> None
+    def __init__(self, input_item, output_item, power_cost, tick_duration):
+        # type: (Input, Output, int, int) -> None
         MachineRecipe.__init__(
             self,
-            {CategoryType.ITEM: inputs},
-            {CategoryType.ITEM: outputs},
+            {CategoryType.ITEM: {0: input_item}},
+            {CategoryType.ITEM: {1: output_item}},
             power_cost,
             tick_duration,
+        )
+        self.input_item = input_item
+        self.output_item = output_item
+
+    def Marshal(self):
+        return {
+            "input_item": self.input_item.to_dict(),
+            "output_item": self.output_item.to_dict(),
+            "power_cost": self.power_cost,
+            "tick_duration": self.tick_duration,
+        }
+
+    @classmethod
+    def Unmarshal(cls, data):
+        # type: (dict) -> CompressorRecipe
+        return CompressorRecipe(
+            input_item=Input.from_dict(data["input_item"]),
+            output_item=Output.from_dict(data["output_item"]),
+            power_cost=data["power_cost"],
+            tick_duration=data["tick_duration"],
         )
 
 
@@ -27,9 +47,7 @@ def gen_preset_recipe(
         input,  # type: str
         output,  # type: str
     ):
-        return CompressorRecipe(
-            {0: Input(input)}, {1: Output(output)}, power_cost, tick_duration
-        )
+        return CompressorRecipe(Input(input), Output(output), power_cost, tick_duration)
 
     return generate_recipe
 
@@ -43,10 +61,7 @@ def gen_preset_tagged_recipe(
         output,  # type: str
     ):
         return CompressorRecipe(
-            {0: Input(input, is_tag=True)},
-            {1: Output(output)},
-            power_cost,
-            tick_duration,
+            Input(input, is_tag=True), Output(output), power_cost, tick_duration
         )
 
     return generate_recipe

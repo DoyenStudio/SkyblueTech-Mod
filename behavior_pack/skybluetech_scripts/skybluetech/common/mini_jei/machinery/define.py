@@ -8,9 +8,10 @@ from ..core import (
     Input,
     Output,
     CategoryType,
-    ItemDisplayer,
-    FluidDisplayer,
-    RFOutputDisplayer,
+    MarshalInputs,
+    MarshalOutputs,
+    UnmarshalInputs,
+    UnmarshalOutputs,
 )
 
 
@@ -22,6 +23,10 @@ class MachineRecipeBase(Recipe):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
+        from ....client.ui.recipe_checker.render_utils import ItemDisplayer
+        from ....client.ui.recipe_checker.render_utils_advanced import FluidDisplayer
+
+        Recipe.RenderInit(self, panel)
         input_items = self.inputs.get("item", {})
         for slot, input in input_items.items():
             item = input.id
@@ -74,6 +79,34 @@ class MachineRecipe(MachineRecipeBase):
         self.power_cost = power_cost
         self.tick_duration = tick_duration
 
+    def RenderUpdate(self, panel, render_ticks):
+        # type: (UBaseCtrl, int) -> None
+        if not self.render_progress:
+            return
+        td = self.tick_duration * 3
+        p = (render_ticks * 2.0) % td / td
+        panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
+
+    def Marshal(self):
+        return {
+            "inputs": MarshalInputs(self.inputs),
+            "outputs": MarshalOutputs(self.outputs),
+            "power_cost": self.power_cost,
+            "tick_duration": self.tick_duration,
+        }
+
+    @classmethod
+    def Unmarshal(
+        cls,
+        dct,  # type: dict
+    ):
+        return cls(
+            inputs=UnmarshalInputs(dct["inputs"]),
+            outputs=UnmarshalOutputs(dct["outputs"]),
+            power_cost=dct["power_cost"],
+            tick_duration=dct["tick_duration"],
+        )
+
     def __repr__(self):
         return "MachineRecipe(%s, %s, %d, %d)" % (
             self.inputs,
@@ -84,14 +117,6 @@ class MachineRecipe(MachineRecipeBase):
 
     def __hash__(self):
         return hash((tuple(self.inputs), tuple(self.outputs)))
-
-    def RenderUpdate(self, panel, render_ticks):
-        # type: (UBaseCtrl, int) -> None
-        if not self.render_progress:
-            return
-        td = self.tick_duration * 3
-        p = (render_ticks * 2.0) % td / td
-        panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
 
 
 class GeneratorRecipe(MachineRecipeBase):
@@ -106,12 +131,33 @@ class GeneratorRecipe(MachineRecipeBase):
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
         from ....client.ui.machinery.utils import FormatRF
+        from ....client.ui.recipe_checker.render_utils import RFOutputDisplayer
 
         MachineRecipeBase.RenderInit(self, panel)
         self.rf_output_renderer = RFOutputDisplayer(
             panel["output_power"], self.output_power * self.tick_duration
         )
         panel["tick_power"].asLabel().SetText(FormatRF(self.output_power) + "/t")
+
+    def Marshal(self):
+        return {
+            "inputs": MarshalInputs(self.inputs),
+            "outputs": MarshalOutputs(self.outputs),
+            "output_power": self.output_power,
+            "tick_duration": self.tick_duration,
+        }
+
+    @classmethod
+    def Unmarshal(
+        cls,
+        dct,  # type: dict
+    ):
+        return cls(
+            inputs=UnmarshalInputs(dct["inputs"]),
+            output_power=dct["output_power"],
+            tick_duration=dct["tick_duration"],
+            outputs=UnmarshalOutputs(dct["outputs"]),
+        )
 
     def __repr__(self):
         return "GeneratorRecipe(%s, %s, %d, %d)" % (

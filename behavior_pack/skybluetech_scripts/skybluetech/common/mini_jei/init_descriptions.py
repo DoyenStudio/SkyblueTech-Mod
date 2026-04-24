@@ -11,5 +11,5 @@ from .core import CategoryType, RegisterDescription
 RegisterDescription(
     {CategoryType.ITEM: ["skybluetech:description_icon"]},
     "关于介绍的介绍？！",
-    "这是一个介绍， 它并没有“获取途径”， 但是你却可以通过查看介绍的介绍来获取介绍的介绍。 是不是很有趣？",
+    "这是一个介绍， 它并没有“获取途径”， 但是你却可以通过查看介绍的介绍来获取介绍的介绍。 是不是很有趣？\n\n噢不， 为什么在座各位都被冻住了？",
 )

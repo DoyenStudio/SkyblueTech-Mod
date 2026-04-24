@@ -8,14 +8,38 @@ class MaceratorRecipe(MachineRecipe):
     recipe_icon_id = machinery.MACERATOR
     render_ui_def_name = "RecipeCheckerLib.macerator_recipes"
 
-    def __init__(self, input, output_id, output_count, power_cost, tick_duration):
+    def __init__(self, input_id, output_id, output_count, power_cost, tick_duration):
         # type: (Input, str, int, int, int) -> None
         MachineRecipe.__init__(
             self,
-            {CategoryType.ITEM: {0: input}},
+            {CategoryType.ITEM: {0: input_id}},
             {CategoryType.ITEM: {1: Output(output_id, output_count)}},
             power_cost,
             tick_duration,
+        )
+        self.input_id = input_id
+        self.output_id = output_id
+        self.output_count = output_count
+
+    def Marshal(self):
+        return {
+            "input_id": self.input_id.to_dict(),
+            "output": {
+                "id": self.output_id,
+                "count": self.output_count,
+            },
+            "power_cost": self.power_cost,
+            "tick_duration": self.tick_duration,
+        }
+
+    @classmethod
+    def Unmarshal(cls, data):
+        return cls(
+            input_id=Input.from_dict(data["input_id"]),
+            output_id=data["output"]["id"],
+            output_count=data["output"]["count"],
+            power_cost=data["power_cost"],
+            tick_duration=data["tick_duration"],
         )
 
 

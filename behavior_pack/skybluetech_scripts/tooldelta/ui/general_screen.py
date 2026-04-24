@@ -1,5 +1,6 @@
 # coding=utf-8
 import mod.client.extraClientApi as clientApi
+from weakref import WeakSet
 from ..events.service import ClientListenerService
 from ..internal import GetModName
 from .elem_comp import UBaseCtrl
@@ -38,9 +39,7 @@ class ToolDeltaScreen(ClientListenerService):
         )
         self._activated = False
         self._vars = {}
-        self._load_ctrls = []  # type: list[UBaseCtrl]
-        self._on_ticking_cbs = []
-        self._on_destroy_cbs = []
+        self._load_ctrls = set()  # type: set[UBaseCtrl]
 
     @classmethod
     def convertFrom(
@@ -67,11 +66,16 @@ class ToolDeltaScreen(ClientListenerService):
 
         return instance
 
-    def AddElement(self, ctrl_def_name, ctrl_name, force_update=True):
-        # type: (str, str, bool) -> UBaseCtrl
+    def AddElement(self, ctrl_def_name, ctrl_name, force_update=True, _parent=None):
+        # type: (str, str, bool, UBaseCtrl | None) -> UBaseCtrl
         return UBaseCtrl(
             self,
-            self.base.CreateChildControl(ctrl_def_name, ctrl_name, None, force_update),  # type: ignore
+            self.base.CreateChildControl(
+                ctrl_def_name,
+                ctrl_name,
+                _parent.base if _parent is not None else None,
+                force_update,
+            ),
         )
 
     def GetBaseUIControl(
@@ -86,12 +90,9 @@ class ToolDeltaScreen(ClientListenerService):
         # type: (str | UIPath) -> UBaseCtrl
         if isinstance(path, UIPath):
             path = path.base
-        return UBaseCtrl(self, self.GetBaseUIControl(path))
-
-    def AddOnTickingCallback(self, cb):
-        # type: (typing.Callable[[], typing.Any]) -> typing.Self
-        self._on_ticking_cbs.append(cb)
-        return self
+        c = UBaseCtrl(self, self.GetBaseUIControl(path))
+        self._add_sub_ctrl(c)
+        return c
 
     @classmethod
     def CreateUI(cls, params={}):
@@ -110,7 +111,9 @@ class ToolDeltaScreen(ClientListenerService):
     @classmethod
     def PushUI(cls, params={}):
         if cls._screen_cls is None:
-            raise Exception("CreateUI failed: screen %s not registered as ScreenNode")
+            raise Exception(
+                "CreateUI failed: screen %s not registered as ScreenNode" % cls.__name__
+            )
         screen = clientApi.PushScreen(GetModName(), cls._screen_key, params)
         if not isinstance(screen, cls._screen_cls):
             raise Exception("CreateUI failed: return {} is not {}".format(screen, cls))
@@ -261,12 +264,23 @@ class ToolDeltaScreen(ClientListenerService):
         self._activated = False
         self.disable_listeners()
         self._disable_delayed_listeners()
-        for ctrl in self._load_ctrls:
+        for ctrl in list(self._load_ctrls):
             ctrl._call_destroy()
+        self._load_ctrls.clear()
 
-    def _hang_ctrl(self, ctrl):
+    def _add_sub_ctrl(self, ctrl):
         # type: (UBaseCtrl) -> None
-        self._load_ctrls.append(ctrl)
+        self._load_ctrls.add(ctrl)
+
+    def _remove_sub_ctrl(self, ctrl, from_top_removal=False):
+        # type: (UBaseCtrl, bool) -> bool
+        if ctrl not in self._load_ctrls:
+            return False
+        self._load_ctrls.remove(ctrl)
+        if from_top_removal:
+            return self.base.RemoveChildControl(ctrl.base)
+        else:
+            return True
 
     def _on_create(self):
         self._do_active()
@@ -274,7 +288,6 @@ class ToolDeltaScreen(ClientListenerService):
 
     def _on_destroy(self):
         self._do_deactive()
-        self._on_ticking_cbs = []
         self.OnDestroy()
 
     def _on_active(self):
@@ -285,8 +298,6 @@ class ToolDeltaScreen(ClientListenerService):
 
     def _on_ticking(self):
         self.OnTicking()
-        for cb in self._on_ticking_cbs:
-            cb()
 
     __getitem__ = GetElement
 

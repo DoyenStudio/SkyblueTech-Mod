@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-# from weakref import WeakValueDictionary
+from weakref import WeakSet, ref
 from ..define import UICtrlPosData, Item
 from ..api.common import ExecLater
 from ..events.client.ui import GridComponentSizeChangedClientEvent
@@ -25,9 +25,10 @@ class UBaseCtrl(object):
         self._cache_t = None  # type: Any | None
         self._vars = {}
         self._removed = False
+        self._bind_objectref = None # type: ref | None
         self._removed_listeners = []  # type: list[Callable[[], None]]
-        self._sub_ctrls = [] # type: list[UBaseCtrl]
-        root._hang_ctrl(self)
+        self._sub_ctrls = WeakSet()  # type: WeakSet[UBaseCtrl]
+        root._add_sub_ctrl(self)
 
     def asLabel(self):
         # type: () -> ULabel
@@ -197,12 +198,23 @@ class UBaseCtrl(object):
 
     def AddElement(self, element_def_name, element_name, force_update=True):
         # type: (str, str, bool) -> UBaseCtrl
-        return UBaseCtrl(
-            self._root,
-            self._root.base.CreateChildControl(
-                element_def_name, element_name, self.base, force_update
-            ),
+        ctrl = self._root.AddElement(
+            element_def_name, element_name, force_update, _parent=self
         )
+        self._sub_ctrls.add(ctrl)
+        return ctrl
+
+    def Remove(self, warning=True):
+        # type: (bool) -> bool
+        if self._removed and warning:
+            print("[Warning] control already removed")
+            return False
+        self._call_destroy(top=True)
+        return self._root._remove_sub_ctrl(self, from_top_removal=True)
+    
+    def BindLifeToObject(self, obj):
+        # type: (object) -> None
+        self._bind_objectref = ref(obj, lambda _:self.Remove(warning=False))
 
     def addDestroyListener(self, func):
         # type: (Callable[[], None]) -> None
@@ -211,21 +223,13 @@ class UBaseCtrl(object):
     def OnDestroyed(self):
         pass
 
-    def Remove(self):
-        if self._removed:
-            print("[Warning] control already removed")
-            return False
-        for sub_ctrl in self._sub_ctrls:
-            sub_ctrl.Remove()
-        self._removed = True
-        self._call_destroy()
-        return self._root.base.RemoveChildControl(self.base)
-
     def GetElement(self, path):
         # type: (str | UIPath) -> UBaseCtrl
         if isinstance(path, UIPath):
             path = path.base
-        return UBaseCtrl(self._root, self.base.GetChildByPath("/" + path))
+        ctrl = UBaseCtrl(self._root, self.base.GetChildByPath("/" + path))
+        self._sub_ctrls.add(ctrl)
+        return ctrl
 
     # ====
 
@@ -243,11 +247,22 @@ class UBaseCtrl(object):
         # type: (str) -> UBaseCtrl
         return self.GetElement(path)
 
+    def __hash__(self):
+        return hash(self.base.GetPath())
+    
     __getitem__ = __div__ = __truediv__
 
-    def _call_destroy(self):
+    def _call_destroy(self, top=False):
         for func in self._removed_listeners:
             func()
+        # for sub_ctrl in self._sub_ctrls:
+        #     sub_ctrl._call_destroy(top=False)
+        if self._removed:
+            print("[Warning] element._call_destroy removed already!!!")
+        else:
+            if not top:
+                self._root._remove_sub_ctrl(self, from_top_removal=False)
+            self._removed = True
         self.OnDestroyed()
 
     def _save_t(self, obj):

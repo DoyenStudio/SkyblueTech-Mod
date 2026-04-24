@@ -28,7 +28,7 @@ class UIPath(object):
 
     __div__ = __truediv__
 
-    def __repr__(self):
+    def __str__(self):
         return self.base
 
     def __add__(self, path):

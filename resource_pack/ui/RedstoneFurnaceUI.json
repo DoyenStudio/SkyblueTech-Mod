@@ -161,8 +161,8 @@
                     ],
                     "layer": 0,
                     "size": [
-                        "default",
-                        "default"
+                        180,
+                        200
                     ]
                 }
             }

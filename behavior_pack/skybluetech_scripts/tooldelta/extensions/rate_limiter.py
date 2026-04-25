@@ -3,10 +3,10 @@ import time
 from ..api.common import ExecLater
 
 if 0:
-    from typing import Callable, ParamSpec, TypeVar
+    import typing
 
-    T = TypeVar("T")
-    PT = ParamSpec("PT")
+    T = typing.TypeVar("T")
+    PT = typing.ParamSpec("PT")
 
 
 class PlayerRateLimiter(object):
@@ -42,7 +42,7 @@ class PlayerRateLimiter(object):
 
 def LimitCallRate(delay):
     def decorator(func):
-        # type: (Callable[PT, T]) -> Callable[PT, T | None]
+        # type: (typing.Callable[PT, T]) -> typing.Callable[PT, T | None]
         def wrapper(*args, **kwargs):
             nowtime = time.time()
             if nowtime - decorator.last_launch_time < delay:

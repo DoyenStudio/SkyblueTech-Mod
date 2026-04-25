@@ -38,3 +38,13 @@ def GetUIProfile():
     0 表示经典模式, 1 表示携带版模式
     """
     return CF.CreatePlayerView(GetLevelId()).GetUIProfile()
+
+
+GetScreenSize = MethodCacher(lambda: CF.CreateGame(GetLevelId()).GetScreenSize)
+
+__all__ = [
+    "GetFocusPos",
+    "GetToggleMode",
+    "GetUIProfile",
+    "GetScreenSize",
+]

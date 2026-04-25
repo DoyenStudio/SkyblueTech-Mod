@@ -627,13 +627,19 @@
                         72.0,
                         16.0
                     ],
+                    "alpha": 0.5,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
                     "nineslice_size": [
                         1.0,
                         1.0,
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/bg_frame_slim"
+                    "texture": "textures/ui/white"
                 }
             },
             {

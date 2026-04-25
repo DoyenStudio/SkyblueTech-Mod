@@ -19,13 +19,19 @@ class MultiBlockStructureRenderPage(BasePage):
         # type: (str, StructureBlockPalette) -> None
         self.center_block_id = center_block_id
         self.palette = palette
+        self.current_ticker = None
 
     def RenderInit(self, ctrl):
         # type: (UBaseCtrl) -> None
 
         BasePage.RenderInit(self, ctrl)
         env = local_env()
+        layer_blocks_renderers = {}  # type: dict[int, list[UBaseCtrl]]
         content = ctrl["scroll_view"].asScrollView().GetContent()
+        add_layer_btn = ctrl["add_layer_btn"].asButton()
+        sub_layer_btn = ctrl["sub_layer_btn"].asButton()
+        layer_label = ctrl["layer_label"].asLabel()
+
         cacher = {}
 
         def render_block(palette_index, block_id, x, y, z):
@@ -46,35 +52,91 @@ class MultiBlockStructureRenderPage(BasePage):
             )
             return block_renderer
 
+        def change_layer(now=None):
+            # type: (int | None) -> None
+            prev = env.current_render_layer
+            env.current_render_layer = now
+            if prev is None and now is None:
+                # error
+                return
+            if prev is None:
+                for layer, renderers in layer_blocks_renderers.items():
+                    if layer != now:
+                        for renderer in renderers:
+                            renderer.SetVisible(False)
+                layer_label.SetText("第 %d 层" % now)
+            elif now is None:
+                for layer, renderers in layer_blocks_renderers.items():
+                    if layer != now:
+                        for renderer in renderers:
+                            renderer.SetVisible(True)
+                layer_label.SetText("预览全部")
+            else:
+                for renderer in layer_blocks_renderers.get(prev, []):
+                    renderer.SetVisible(False)
+                for renderer in layer_blocks_renderers.get(now, []):
+                    renderer.SetVisible(True)
+                layer_label.SetText("第 %d 层" % now)
+
         def async_render():
             for palette_index, block_id_or_ids in self.palette.palette_data.items():
                 poses = self.palette.posblock_data[palette_index]
                 for x, y, z in poses:
                     if isinstance(block_id_or_ids, str):
                         block_id = block_id_or_ids
-                        render_block(palette_index, block_id, x, y, z)
+                        block_renderer = render_block(palette_index, block_id, x, y, z)
                     else:
                         block_id = block_id_or_ids[0]
                         block_renderer = render_block(palette_index, block_id, x, y, z)
-                        env.carousels.append(
+                        env.carouselers.append(
                             block_carouseler(block_renderer, block_id_or_ids)
                         )
+                    layer_blocks_renderers.setdefault(y, []).append(block_renderer)
                     yield
 
-        render_block(-1, self.center_block_id, 0, 0, 0)
+        core_renderer = render_block(-1, self.center_block_id, 0, 0, 0)
+        layer_blocks_renderers.setdefault(0, []).append(core_renderer)
         render_iterator = async_render()
 
         def tick_render():
             env.tick_counter += 1
             if env.tick_counter % 30 == 0:
-                for carousel in env.carousels:
-                    carousel.update()
+                for carouseler in env.carouselers:
+                    carouseler.update()
             try:
                 next(render_iterator)
             except StopIteration:
                 pass
 
-        ctrl._root.AddOnTickingCallback(tick_render)
+        def on_add_layer(_):
+            layer = env.current_render_layer
+            if layer is None:
+                layer = min(layer_blocks_renderers.keys()) - 1
+            new_layer = layer + 1
+            if new_layer not in layer_blocks_renderers:
+                return
+            change_layer(new_layer)
+
+        def on_sub_layer(_):
+            layer = env.current_render_layer
+            if layer is None:
+                return
+            new_layer = layer - 1
+            if new_layer not in layer_blocks_renderers:
+                new_layer = None
+            change_layer(new_layer)
+
+        def on_removed():
+            self.current_ticker = None
+
+        ctrl.addDestroyListener(on_removed)
+        add_layer_btn.SetCallback(on_add_layer)
+        sub_layer_btn.SetCallback(on_sub_layer)
+        self.current_ticker = tick_render
+
+    def ScreenTicking(self):
+        if self.current_ticker is not None:
+            self.current_ticker()
 
 
 RAD = math.atan(0.5)
@@ -87,7 +149,8 @@ class local_env:
     def __init__(self):
         self.render_counter = 0
         self.tick_counter = 0
-        self.carousels = []  # type: list[block_carouseler]
+        self.carouselers = []  # type: list[block_carouseler]
+        self.current_render_layer = None  # type: int | None
 
 
 class block_carouseler:

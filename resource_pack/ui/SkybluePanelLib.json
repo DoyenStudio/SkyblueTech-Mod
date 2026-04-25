@@ -1276,7 +1276,6 @@
                         "100%cm+8px"
                     ],
                     "priority": 1,
-                    "layer": 1,
                     "nineslice_size": [
                         2.0,
                         2.0,
@@ -1288,6 +1287,12 @@
                         {
                             "grid": {
                                 "type": "grid",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4.0,
+                                    4.0
+                                ],
                                 "layer": 1,
                                 "collection_name": "test_grid",
                                 "grid_dimensions": [
@@ -1295,6 +1300,60 @@
                                     1
                                 ],
                                 "grid_item_template": "SkybluePanelLib.ui_block_stack_desc_section_btn"
+                            }
+                        },
+                        {
+                            "tip": {
+                                "type": "panel",
+                                "anchor_from": "top_left",
+                                "anchor_to": "bottom_left",
+                                "size": [
+                                    "100%cm+-8px",
+                                    10.0
+                                ],
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "tip_part": {
+                                            "type": "image",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "size": [
+                                                "100%cm+10px",
+                                                "100%cm+2px"
+                                            ],
+                                            "layer": 1,
+                                            "nineslice_size": [
+                                                2.0,
+                                                2.0,
+                                                2.0,
+                                                0.0
+                                            ],
+                                            "texture": "textures/ui/upper_section_slim",
+                                            "controls": [
+                                                {
+                                                    "tip_text": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_left",
+                                                        "anchor_to": "top_left",
+                                                        "offset": [
+                                                            5.0,
+                                                            3.0
+                                                        ],
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "本位置可用方块",
+                                                        "text_alignment": "center"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
                             }
                         }
                     ]

@@ -15,67 +15,66 @@ DEFAULT_TICK_DURATION = 160
 DEFAULT_POWER = 80
 L_TICK_DURATION = 240
 L_POWER = 120
-
-preset1 = gen_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
-preset2 = gen_preset_recipe(L_POWER, L_TICK_DURATION)
+dust_rcp = gen_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
+ingot_rcp = gen_preset_recipe(L_POWER, L_TICK_DURATION)
 
 
 recipes = RecipesCollection(
     ALLOY_FURNACE,
     # Alloy
-    preset1(
+    dust_rcp(
         {0: Input(DustTag.COPPER, 3, True), 1: Input(DustTag.TIN, 1, True)},
         {4: Output(Ingots.BRONZE, 4)},
     ),
-    preset2(
+    ingot_rcp(
         {0: Input("minecraft:copper_ingot", 3), 1: Input(IngotTag.TIN, 1, True)},
         {4: Output(Ingots.BRONZE, 4)},
     ),
-    preset1(
+    dust_rcp(
         {0: Input(DustTag.IRON, 2, True), 1: Input(DustTag.NICKEL, 1, True)},
         {4: Output(Ingots.INVAR, 3)},
     ),
-    preset2(
+    ingot_rcp(
         {0: Input("minecraft:iron_ingot", 2), 1: Input(IngotTag.NICKEL, 1, True)},
         {4: Output(Ingots.INVAR, 3)},
     ),
-    preset1(
+    dust_rcp(
         {0: Input(DustTag.IRON, 1, True), 2: Input(DustTag.CARBON, 1, True)},
         {4: Output(Ingots.STEEL, 1)},
     ),
-    preset2(
+    ingot_rcp(
         {0: Input("minecraft:iron_ingot", 1), 2: Input(DustTag.CARBON, 1, True)},
         {4: Output(Ingots.STEEL, 1)},
     ),
-    preset1(
+    dust_rcp(
         {
             0: Input("minecraft:gold_ingot", 2),
             2: Input(DustTag.ANCIENT_DEBRIS, 3, True),
         },
         {4: Output("minecraft:netherite_ingot", 1)},
     ),
-    preset2(
+    dust_rcp(
         {
             0: Input(DustTag.GOLD, 2, is_tag=True),
             2: Input(DustTag.ANCIENT_DEBRIS, 3, True),
         },
         {4: Output("minecraft:netherite_ingot", 1)},
     ),
-    preset1(
+    ingot_rcp(
         {
             0: Input("minecraft:copper_ingot"),
             1: Input(IngotTag.NICKEL, is_tag=True),
         },
         {4: Output(Ingots.CUPRONICKEL, 1)},
     ),
-    preset2(
+    dust_rcp(
         {
             0: Input(DustTag.COPPER, is_tag=True),
             1: Input(DustTag.NICKEL, is_tag=True),
         },
         {4: Output(Ingots.CUPRONICKEL, 1)},
     ),
-    preset1(
+    ingot_rcp(
         {
             0: Input(IngotTag.SILVER, is_tag=True),
             1: Input(IngotTag.PLATINUM, is_tag=True),
@@ -84,7 +83,7 @@ recipes = RecipesCollection(
         },
         {4: Output(Ingots.SUPERCONDUCT, 2)},
     ),
-    preset2(
+    dust_rcp(
         {
             0: Input(DustTag.SILVER, is_tag=True),
             1: Input(DustTag.PLATINUM, is_tag=True),
@@ -93,7 +92,7 @@ recipes = RecipesCollection(
         },
         {4: Output(Ingots.SUPERCONDUCT, 2)},
     ),
-    preset1(
+    ingot_rcp(
         {
             0: Input(IngotTag.CUPRONICKEL, is_tag=True),
             1: Input(IngotTag.INVAR, is_tag=True),
@@ -102,7 +101,7 @@ recipes = RecipesCollection(
         },
         {4: Output(Ingots.ULTRAHEATINUM, 1)},
     ),
-    preset2(
+    dust_rcp(
         {
             0: Input(DustTag.CUPRONICKEL, is_tag=True),
             1: Input(DustTag.INVAR, is_tag=True),

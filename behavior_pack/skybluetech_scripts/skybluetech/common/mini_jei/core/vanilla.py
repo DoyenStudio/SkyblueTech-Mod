@@ -20,6 +20,10 @@ from .common_recipe_cls import (
 items_to_recipe_input_loaded = set()  # type: set[str]
 items_to_recipe_output_loaded = set()  # type: set[str]
 
+SPECIAL_ITEM_AUXES = {
+    "minecraft:piston": 1,
+}
+
 # reg_crafting_table_recipes = set()  # type: set[GenericCraftingTableRecipe]
 # reg_furnace_recipes = set()  # type: set[GenericFurnaceRecipe]
 # reg_blast_furnace_recipes = set()  # type: set[GenericBlastFurnaceRecipe]
@@ -59,7 +63,8 @@ def LoadItemRecipes(item_id, get_input=False, get_output=False):
             RegisterRecipe(GenericSmokerRecipe(GetFurnaceRecipe(res)))
 
     if get_output and item_id not in items_to_recipe_output_loaded:
-        for res in GetRecipesByResult(item_id, "crafting_table"):
+        spec_aux = SPECIAL_ITEM_AUXES.get(item_id, 0)
+        for res in GetRecipesByResult(item_id, "crafting_table", aux_value=spec_aux):
             if "reagent" in res:
                 # TODO: BUG: 接口会获取到酿造台配方
                 print(

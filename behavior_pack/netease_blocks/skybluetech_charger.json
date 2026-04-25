@@ -17,7 +17,7 @@
             },
             "netease:block_container": {
                 "container_size": 6,
-                "custom_description": "充能器",
+                "custom_description": "充能台",
                 "screen_name": "ChargerUI.main",
                 "hopper": {
                     "input": true,

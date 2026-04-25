@@ -7,12 +7,15 @@ from skybluetech_scripts.tooldelta.ui import (
     UBaseCtrl,
 )
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.events.client.control import OnKeyPressInGame
-from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
+from skybluetech_scripts.tooldelta.events.client import (
+    OnKeyPressInGame,
+    ScreenSizeChangedClientEvent,
+)
+from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.api.client import GetItemHoverName, GetScreenSize
 from ....common.mini_jei import (
     CategoryType,
     RecipeBase,
-    GetRecipesByOutput,
 )
 from .favourite_items import GetFavourites, favourite_items_idauxs
 from .render_utils import CreateDescBoard
@@ -45,13 +48,13 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.recipes_display = self.GetElement(MIDDLE_CONTENT_PATH / "recipes_display")
         self.prev_page_btn = (
             self
-            .GetElement(MIDDLE_CONTENT_PATH / "title/prev_page_btn")
+            .GetElement(MIDDLE_CONTENT_PATH / "prev_page_btn")
             .asButton()
             .SetCallback(self.onPrevPage)
         )
         self.next_page_btn = (
             self
-            .GetElement(MIDDLE_CONTENT_PATH / "title/next_page_btn")
+            .GetElement(MIDDLE_CONTENT_PATH / "next_page_btn")
             .asButton()
             .SetCallback(self.onNextPage)
         )
@@ -68,6 +71,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
             .SetCallback(self.onBack)
         )
         self.back_btn.SetVisible(False)
+        self.update_left_content_size()
         self.update_all()
         self.inited = True
 
@@ -90,28 +94,19 @@ class RecipeCheckerUI(ToolDeltaScreen):
             self.recipes_per_page = 0
             self.update_all()
 
-    def render_recipes_of_input(self, id, category):
-        # type: (str, str) -> None
-        recipe_dic = {}  # type: dict[tuple[str, str], list[RecipeBase]]
-        rcps = GetRecipesByOutput(category, id)
-        if not rcps:
-            print(
-                "Failed to find recipes for %s %s"
-                % (
-                    category,
-                    id,
-                )
-            )
-            return
-        for rcp in rcps:
-            recipe_dic.setdefault(
-                (
-                    rcp.recipe_icon_id,
-                    rcp.minijei_title or GetItemHoverName(rcp.recipe_icon_id),
-                ),
-                [],
-            ).append(rcp)
-        self.PushRecipes(recipe_dic, update=True)
+    def update_left_content_size(self):
+        screen_size_x, screen_size_y = GetScreenSize()
+        middle_content_size_x = (
+            self.GetElement(MIDDLE_CONTENT_PATH).GetSize()[0] / 2
+            + self.GetElement(MIDDLE_CONTENT_PATH / "left_sections_grid").GetSize()[0]
+        )
+        self.GetElement(LEFT_CONTENT_PATH).SetSize(
+            (
+                screen_size_x / 2 - middle_content_size_x,
+                screen_size_y,
+            ),
+            resize_children=True,
+        )
 
     def update_all(self):
         self.update_recipe_categories()
@@ -154,6 +149,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
                 "recipe%d" % i,
             )
             rcp.RenderInit(elem)
+            rcp.RenderUpdate(elem, self.update_ticks)
             _, size_y = elem.GetSize()
             elem.SetPos((0, size_y * i))
             self.recipe_ctrls[elem] = rcp
@@ -191,6 +187,10 @@ class RecipeCheckerUI(ToolDeltaScreen):
         # type: (OnKeyPressInGame) -> None
         if event.isDown and event.key == event.KeyBoardType.KEY_ESCAPE:
             self.RemoveUI()
+
+    @ToolDeltaScreen.Listen(ScreenSizeChangedClientEvent)
+    def onScreenSizeChanged(self, _):
+        ExecLater(0, self.update_left_content_size)
 
     @Binder.binding(Binder.BF_ButtonClick, "#recipe_checker.select_category")
     def onSelectCategory(self, params):

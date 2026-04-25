@@ -19,6 +19,7 @@ class TextPage(BasePage):
         self.title = title
         self.content = content
         self.hyperlink_cbs = hyperlink_cbs or {}
+        self._ticker = None
 
     def RenderInit(self, ctrl):
         # type: (UBaseCtrl) -> None
@@ -43,4 +44,8 @@ class TextPage(BasePage):
                     run_async.finished = True
 
             run_async.finished = False
-            ctrl._root.AddOnTickingCallback(run_async)
+            self._ticker = run_async
+
+    def ScreenTicking(self):
+        if self._ticker is not None:
+            self._ticker()

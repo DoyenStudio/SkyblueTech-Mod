@@ -24,6 +24,8 @@ class GuidanceUI(ToolDeltaScreen):
         self.page_index = 0
         self._left_page_content = None
         self._right_page_content = None
+        self.left_page_instance = None
+        self.right_page_instance = None
         self.current_page_group = self.initial_page_group
         GuidanceUI.current_instance = self
 
@@ -59,6 +61,12 @@ class GuidanceUI(ToolDeltaScreen):
     def OnDestroy(self):
         GuidanceUI.current_instance = None
 
+    def OnTicking(self):
+        if self.left_page_instance:
+            self.left_page_instance.ScreenTicking()
+        if self.right_page_instance:
+            self.right_page_instance.ScreenTicking()
+
     def render_page(self):
         from ...guidance.book_custom.define import BookMarkMgr
 
@@ -69,15 +77,18 @@ class GuidanceUI(ToolDeltaScreen):
             self._right_page_content.Remove()
             self._right_page_content = None
         pages = self.current_page_group.GetPages()
+        self.left_page_instance = self.right_page_instance = None
         for i, page in enumerate(pages[self.page_index : self.page_index + 2]):
             if i == 0:
                 self._left_page_content = e = self.left_page.AddElement(
                     page.ctrl_def_name, "page"
                 )
+                self.left_page_instance = page
             elif i == 1:
                 self._right_page_content = e = self.right_page.AddElement(
                     page.ctrl_def_name, "page"
                 )
+                self.right_page_instance = page
             else:
                 break
             page.RenderInit(e)

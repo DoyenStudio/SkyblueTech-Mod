@@ -9,12 +9,13 @@ if 0:
 
 
 class TOCPageSection(object):
-    def __init__(self, icon_item_id, icon_item_aux, title, link_to):
-        # type: (str, int, str, PageGroup | typing.Callable[[], PageGroup]) -> None
+    def __init__(self, icon_item_id, icon_item_aux, title, link_to, link_page_index=0):
+        # type: (str, int, str, PageGroup | typing.Callable[[], PageGroup], int) -> None
         self.icon_item_id = icon_item_id
         self.icon_item_aux = icon_item_aux
         self.title = title
         self.link_to = link_to
+        self.link_page_index = link_page_index
 
 
 class TOCPage(BasePage):
@@ -72,6 +73,7 @@ class TOCPage(BasePage):
     def _on_select_section(self, index):
         # type: (int) -> None
         link_to = self.sections[index].link_to
+        link_page_index = self.sections[index].link_page_index
         if callable(link_to):
             link_to = link_to()
-        link_to.FastJump(0)
+        link_to.FastJump(link_page_index)

@@ -16,6 +16,9 @@ class BasePage(object):
         # type: (UBaseCtrl) -> None
         pass
 
+    def ScreenTicking(self):
+        pass
+
     def GetGroup(self):
         # type: () -> PageGroup | None
         return None

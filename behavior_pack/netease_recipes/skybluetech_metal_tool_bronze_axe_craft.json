@@ -1,0 +1,31 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:bronze_axe_craft"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:bronze_ingot"
+            },
+            "B": {
+                "data": 0,
+                "item": "minecraft:stick"
+            }
+        },
+        "pattern": [
+            "AA",
+            "AB",
+            " B"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:bronze_axe"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

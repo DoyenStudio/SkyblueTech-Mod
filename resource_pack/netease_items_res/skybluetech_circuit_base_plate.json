@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:circuit_base_plate"
+        },
+        "description": {
+            "identifier": "skybluetech:circuit_base_plate"
+        }
+    }
+}

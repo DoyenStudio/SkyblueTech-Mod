@@ -16,17 +16,32 @@
         "skybluetech:bio_dust": {
             "textures": "textures/items/dusts/bio_dust"
         },
+        "skybluetech:bronze_axe": {
+            "textures": "textures/items/metal_tools/bronze_axe"
+        },
         "skybluetech:bronze_dust": {
             "textures": "textures/items/dusts/bronze_dust"
+        },
+        "skybluetech:bronze_hoe": {
+            "textures": "textures/items/metal_tools/bronze_hoe"
         },
         "skybluetech:bronze_ingot": {
             "textures": "textures/items/ingots/bronze_ingot"
         },
+        "skybluetech:bronze_pickaxe": {
+            "textures": "textures/items/metal_tools/bronze_pickaxe"
+        },
         "skybluetech:bronze_plate": {
             "textures": "textures/items/plates/bronze_plate"
         },
+        "skybluetech:bronze_shovel": {
+            "textures": "textures/items/metal_tools/bronze_shovel"
+        },
         "skybluetech:bronze_stick": {
             "textures": "textures/items/sticks/bronze_stick"
+        },
+        "skybluetech:bronze_sword": {
+            "textures": "textures/items/metal_tools/bronze_sword"
         },
         "skybluetech:carbon_dust": {
             "textures": "textures/items/dusts/carbon_dust"
@@ -127,17 +142,32 @@
         "skybluetech:hydrogen_bucket": {
             "textures": "textures/items/buckets/hydrogen_bucket"
         },
+        "skybluetech:invar_axe": {
+            "textures": "textures/items/metal_tools/invar_axe"
+        },
         "skybluetech:invar_dust": {
             "textures": "textures/items/dusts/invar_dust"
+        },
+        "skybluetech:invar_hoe": {
+            "textures": "textures/items/metal_tools/invar_hoe"
         },
         "skybluetech:invar_ingot": {
             "textures": "textures/items/ingots/invar_ingot"
         },
+        "skybluetech:invar_pickaxe": {
+            "textures": "textures/items/metal_tools/invar_pickaxe"
+        },
         "skybluetech:invar_plate": {
             "textures": "textures/items/plates/invar_plate"
         },
+        "skybluetech:invar_shovel": {
+            "textures": "textures/items/metal_tools/invar_shovel"
+        },
         "skybluetech:invar_stick": {
             "textures": "textures/items/sticks/invar_stick"
+        },
+        "skybluetech:invar_sword": {
+            "textures": "textures/items/metal_tools/invar_sword"
         },
         "skybluetech:iron_dust": {
             "textures": "textures/items/dusts/iron_dust"

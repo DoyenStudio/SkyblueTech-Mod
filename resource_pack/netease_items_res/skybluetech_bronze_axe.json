@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:bronze_axe"
+        },
+        "description": {
+            "identifier": "skybluetech:bronze_axe"
+        }
+    }
+}

@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:invar_axe"
+        },
+        "description": {
+            "identifier": "skybluetech:invar_axe"
+        }
+    }
+}

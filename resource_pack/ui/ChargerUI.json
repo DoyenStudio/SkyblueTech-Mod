@@ -75,7 +75,7 @@
                                                     "input_slot": {
                                                         "type": "stack_panel",
                                                         "offset": [
-                                                            -22.0,
+                                                            -24.0,
                                                             -40.0
                                                         ],
                                                         "size": [
@@ -127,6 +127,34 @@
                                                         "offset": [
                                                             106,
                                                             -57
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "arrow_img": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            0.0,
+                                                            -40.0
+                                                        ],
+                                                        "size": [
+                                                            30.0,
+                                                            20.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "texture": "textures/ui/arrow_img",
+                                                        "controls": [
+                                                            {
+                                                                "energy_img": {
+                                                                    "type": "image",
+                                                                    "size": [
+                                                                        16.0,
+                                                                        16.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "texture": "textures/icon/energy_icon"
+                                                                }
+                                                            }
                                                         ]
                                                     }
                                                 }

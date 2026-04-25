@@ -1,0 +1,10 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {},
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:light_skyblue_ingot"
+        }
+    }
+}

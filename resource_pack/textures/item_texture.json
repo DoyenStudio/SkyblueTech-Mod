@@ -163,6 +163,9 @@
         "skybluetech:light_lava_bucket": {
             "textures": "textures/items/buckets/light_lava_bucket"
         },
+        "skybluetech:light_skyblue_ingot": {
+            "textures": "textures/items/ingots/light_skyblue_ingot"
+        },
         "skybluetech:low_purity_silicon_panel": {
             "textures": "textures/items/low_purity_silicon_panel"
         },

@@ -76,6 +76,20 @@ recipes = RecipesCollection(
     ),
     ingot_rcp(
         {
+            0: Input(IngotTag.TIN, 2, is_tag=True),
+            2: Input(DustTag.LAPIS, is_tag=True),
+        },
+        {4: Output(Ingots.LIGHT_SKYBLUE, 2)},
+    ),
+    dust_rcp(
+        {
+            0: Input(DustTag.TIN, 2, is_tag=True),
+            2: Input(DustTag.LAPIS, is_tag=True),
+        },
+        {4: Output(Ingots.LIGHT_SKYBLUE, 1)},
+    ),
+    ingot_rcp(
+        {
             0: Input(IngotTag.SILVER, is_tag=True),
             1: Input(IngotTag.PLATINUM, is_tag=True),
             2: Input("minecraft:lapis_lazuli"),

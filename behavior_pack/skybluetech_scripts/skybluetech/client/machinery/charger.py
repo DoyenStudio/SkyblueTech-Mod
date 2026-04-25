@@ -23,7 +23,7 @@ block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 
 
 cli_loading_machines = set()  # type: set[tuple[int, int, int]]
-cli_models = {}  # type: dict[tuple[int, int, int], str]
+cli_models = {}  # type: dict[tuple[int, int, int], tuple[str, str]]
 
 
 @ChargerItemModelUpdate.Listen()
@@ -32,12 +32,16 @@ def onModelUpdate(event):
     pos = (event.x, event.y, event.z)
     if pos not in cli_loading_machines:
         return
-    model_id = cli_models.get(pos)
-    if model_id is not None:
+    last_item_id, model_id = cli_models.get(pos, (None, None))
+    if model_id is not None and (
+        event.item_id is None or last_item_id != event.item_id
+    ):
         DeleteClientDropItemEntity(model_id)
-    if event.item_id is not None:
-        model_id = cli_models[pos] = CreateDropItemModelEntity(
-            CGetPlayerDim(), pos, Item(event.item_id)
+        del cli_models[pos]
+    if event.item_id is not None and last_item_id != event.item_id:
+        _, model_id = cli_models[pos] = (
+            event.item_id,
+            CreateDropItemModelEntity(CGetPlayerDim(), pos, Item(event.item_id)),
         )
         SetDropItemTransform(
             model_id, (event.x + 0.4, event.y + 0.5, event.z + 0.3), (90, 0, 0)
@@ -60,4 +64,4 @@ def onModBlockRemoved(event):
     cli_loading_machines.discard(pos)
     model_id = cli_models.get(pos)
     if model_id is not None:
-        DeleteClientDropItemEntity(cli_models.pop(pos))
+        DeleteClientDropItemEntity(cli_models.pop(pos)[1])

@@ -1,0 +1,20 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.common_tools",
+            "icon": "skybluetech:bronze_axe",
+            "list": [
+                "skybluetech:bronze_axe",
+                "skybluetech:bronze_hoe",
+                "skybluetech:bronze_pickaxe",
+                "skybluetech:bronze_shovel",
+                "skybluetech:bronze_sword",
+                "skybluetech:invar_axe",
+                "skybluetech:invar_hoe",
+                "skybluetech:invar_pickaxe",
+                "skybluetech:invar_shovel",
+                "skybluetech:invar_sword"
+            ]
+        }
+    ]
+}

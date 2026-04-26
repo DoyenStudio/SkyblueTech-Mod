@@ -1,14 +1,5 @@
 # coding=utf-8
-from ..define.id_enum import FREEZER
-from ..mini_jei.core import RecipesCollection
-from ..mini_jei.machinery.freezer import FreezerRecipe
-
-
-class FreezerRecipesCollection(RecipesCollection):
-    def __init__(self, recipes):
-        # type: (dict[int, FreezerRecipe]) -> None
-        super(FreezerRecipesCollection, self).__init__(FREEZER, *recipes.values())
-        self.recipes_mapping = recipes
+from ..mini_jei.machinery.freezer import FreezerRecipe, FreezerRecipesCollection
 
 
 recipes = FreezerRecipesCollection({

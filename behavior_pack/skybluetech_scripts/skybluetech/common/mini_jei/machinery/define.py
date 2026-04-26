@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from ...define.id_enum import RF
 from ..core import (
@@ -8,11 +7,15 @@ from ..core import (
     Input,
     Output,
     CategoryType,
+    RecipesCollection,
     MarshalInputs,
     MarshalOutputs,
     UnmarshalInputs,
     UnmarshalOutputs,
 )
+
+if 0:
+    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
 
 class MachineRecipeBase(Recipe):
@@ -169,3 +172,14 @@ class GeneratorRecipe(MachineRecipeBase):
 
     def __hash__(self):
         return hash((tuple(self.inputs), tuple(self.outputs), self.tick_duration))
+
+
+__all__ = [
+    "CategoryType",
+    "Input",
+    "Output",
+    "MachineRecipe",
+    "MachineRecipeBase",
+    "RecipesCollection",
+    "GeneratorRecipe",
+]

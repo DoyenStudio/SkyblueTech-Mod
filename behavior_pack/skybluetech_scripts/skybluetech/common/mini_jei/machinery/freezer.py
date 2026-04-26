@@ -1,9 +1,19 @@
 # coding=utf-8
-#
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from ...define.id_enum import machinery
-from .define import CategoryType, MachineRecipe, Input, Output
+from .define import CategoryType, RecipesCollection, MachineRecipe, Input, Output
+
+if 0:
+    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
+
+
+class FreezerRecipesCollection(RecipesCollection):
+    def __init__(self, recipes):
+        # type: (dict[int, FreezerRecipe]) -> None
+        super(FreezerRecipesCollection, self).__init__(
+            machinery.FREEZER, *recipes.values()
+        )
+        self.recipes_mapping = recipes
 
 
 class FreezerRecipe(MachineRecipe):

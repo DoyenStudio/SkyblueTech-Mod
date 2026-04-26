@@ -1,5 +1,4 @@
 # coding=utf-8
-#
 from ....common.define.id_enum import machinery
 from .define import CategoryType, MachineRecipe, Input, Output
 
@@ -40,7 +39,7 @@ class FluidCondenserRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
-        
+
     @classmethod
     def Unmarshal(cls, data):
         return cls(
@@ -49,7 +48,7 @@ class FluidCondenserRecipe(MachineRecipe):
             output_item=data["output_item"],
             output_item_count=data["output_item_count"],
             power_cost=data["power_cost"],
-            tick_duration=data["tick_duration"],   
+            tick_duration=data["tick_duration"],
         )
 
 

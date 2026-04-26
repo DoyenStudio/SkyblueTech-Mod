@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from ....common.define.id_enum import machinery, items
 from ....common.define.tag_enum import Wrench, Pincer
 from ..core import (
@@ -9,10 +8,11 @@ from ..core import (
     Input,
     Output,
     MarshalInputs,
-    MarshalOutputs,
     UnmarshalInputs,
-    UnmarshalOutputs,
 )
+
+if 0:
+    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
 
 class MachineryWorkstationRecipe(Recipe):

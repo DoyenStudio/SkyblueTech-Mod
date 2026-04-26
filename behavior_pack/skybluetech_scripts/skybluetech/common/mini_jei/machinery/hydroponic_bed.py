@@ -1,15 +1,21 @@
 # coding=utf-8
-#
 import random
-import uuid
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.api.client.block import (
     NewSingleBlockPalette,
     CombineBlockPaletteToGeometry,
 )
 from ....common.define.id_enum import machinery
-from .define import CategoryType, MachineRecipe, Input, Output, UBaseCtrl
+from .define import (
+    CategoryType,
+    RecipesCollection,
+    MachineRecipe,
+    Input,
+    Output,
+)
+
+if 0:
+    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
 gUid = 0
 
@@ -18,6 +24,15 @@ def uid():
     global gUid
     gUid += 1
     return gUid
+
+
+class HydroponicBedRecipesCollection(RecipesCollection):
+    def __init__(self, recipes):
+        # type: (dict[str, HydroponicBedRecipe]) -> None
+        super(HydroponicBedRecipesCollection, self).__init__(
+            machinery.HYDROPONIC_BED, *recipes.values()
+        )
+        self.recipes_mapping = recipes
 
 
 class HydroponicBedRecipe(MachineRecipe):

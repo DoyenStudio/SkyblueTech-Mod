@@ -1,7 +1,9 @@
 # coding=utf-8
-from ..define.id_enum import HYDROPONIC_BED
-from ..mini_jei.core import RecipesCollection
-from ..mini_jei.machinery.hydroponic_bed import HydroponicBedRecipe, Output
+from ..mini_jei.machinery.hydroponic_bed import (
+    HydroponicBedRecipe,
+    HydroponicBedRecipesCollection,
+    Output,
+)
 
 K_GROW_STAGE = "st:grow_stage"
 K_STAGE_GROW_TICKS = "st:stage_grow_ticks"
@@ -11,15 +13,6 @@ WORK_TICK_DELAY = 5
 POWER_COST = 4
 ONCE_WATER_COST = 5
 MAX_WATER_STORE = 1000
-
-
-class HydroponicBedRecipesCollection(RecipesCollection):
-    def __init__(self, recipes):
-        # type: (dict[str, HydroponicBedRecipe]) -> None
-        super(HydroponicBedRecipesCollection, self).__init__(
-            HYDROPONIC_BED, *recipes.values()
-        )
-        self.recipes_mapping = recipes
 
 
 recipes = HydroponicBedRecipesCollection({

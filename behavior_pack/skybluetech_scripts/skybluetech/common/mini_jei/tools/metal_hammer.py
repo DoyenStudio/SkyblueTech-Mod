@@ -1,8 +1,17 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
 from ...define.id_enum import METAL_HAMMER
-from ..core import CategoryType, Recipe, Input, Output
+from ..core import CategoryType, RecipesCollection, Recipe, Input, Output
+
+if 0:
+    from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
+
+
+class MetalHammerRecipesCollection(RecipesCollection):
+    def __init__(self, *recipes):
+        # type: (MetalHammerRecipe) -> None
+        RecipesCollection.__init__(self, METAL_HAMMER, *recipes)
+        self.recipes_mapping = {i.hammer_in.id: i for i in recipes}
 
 
 class MetalHammerRecipe(Recipe):

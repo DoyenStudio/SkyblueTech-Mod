@@ -1,7 +1,9 @@
 # coding=utf-8
-#
 from ....common.define.id_enum import machinery
-from .define import CategoryType, MachineRecipe, Input, Output, UBaseCtrl
+from .define import CategoryType, MachineRecipe, Input, Output
+
+if 0:
+    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
 
 class DistillatorChamberRecipe(MachineRecipe):

@@ -38,11 +38,9 @@ def onStartDestroyBlock(event):
         pos = GetPos(entity_id)
         item = GetDroppedItem(entity_id)
         if item is None:
-            print("item None")
             continue
-        rcp = recipes.get(item.id)
+        rcp = recipes.recipes_mapping.get(item.id)
         if rcp is None:
-            print("con", item.id, recipes.keys())
             continue
         item.count -= 1
         mhitem.durability -= 1

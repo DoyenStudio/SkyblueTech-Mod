@@ -724,6 +724,10 @@
     "skybluetech:tin_ore": {
         "textures": "skybluetech:tin_ore"
     },
+    "skybluetech:ultraheatinum_block": {
+        "textures": "skybluetech:ultraheatinum_block",
+        "sound": "copper"
+    },
     "skybluetech:vegetable_oil": {
         "blockshape": "water",
         "textures": {

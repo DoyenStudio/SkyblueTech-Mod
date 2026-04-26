@@ -1,12 +1,10 @@
 {
     "format_version": "1.10",
     "minecraft:item": {
-        "components": {
-
-        },
+        "components": {},
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:drill_top"
+            "identifier": "skybluetech:drill_top_steel"
         }
     }
 }

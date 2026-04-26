@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:drill_top_ultraheatinum_craft"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:ultraheatinum_plate"
+            },
+            "B": {
+                "data": 0,
+                "item": "skybluetech:ultraheatinum_block"
+            }
+        },
+        "pattern": [
+            " A ",
+            "ABA"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:drill_top_ultraheatinum"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

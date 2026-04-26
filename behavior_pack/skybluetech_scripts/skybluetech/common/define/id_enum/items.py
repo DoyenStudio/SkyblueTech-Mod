@@ -126,7 +126,7 @@ class Icons:
 AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
 DEACTIVATION_REDSTONE = "skybluetech:deactivation_redstone"
-DRILL_TOP = "skybluetech:drill_top"
+DRILL_TOP_STEEL = "skybluetech:drill_top_steel"
 DRILL_TOP_ULTRAHEATINUM = "skybluetech:drill_top_ultraheatinum"
 ELECTRIC_MOTOR = "skybluetech:electric_motor"
 HEAT_EXCHANGER = "skybluetech:heat_exchanger"

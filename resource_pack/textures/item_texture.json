@@ -100,7 +100,7 @@
         "skybluetech:distilled_water_bucket": {
             "textures": "textures/items/buckets/distilled_water_bucket"
         },
-        "skybluetech:drill_top": {
+        "skybluetech:drill_top_steel": {
             "textures": "textures/items/drill_top_steel"
         },
         "skybluetech:drill_top_ultraheatinum": {

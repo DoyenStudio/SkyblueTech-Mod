@@ -52,7 +52,7 @@
             ]
         },
         {
-            "group_name": "itemGroup.skybluetech.ingot_blocks",
+            "group_name": "itemGroup.skybluetech.metal_blocks",
             "icon": "skybluetech:tin_block",
             "list": [
                 "skybluetech:tin_block",
@@ -62,7 +62,8 @@
                 "skybluetech:platinum_block",
                 "skybluetech:bronze_block",
                 "skybluetech:invar_block",
-                "skybluetech:steel_block"
+                "skybluetech:steel_block",
+                "skybluetech:ultraheatinum_block"
             ]
         },
         {

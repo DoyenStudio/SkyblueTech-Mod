@@ -446,6 +446,9 @@
         "skybluetech:tin_ore": {
             "textures": "textures/blocks/ore/tin_ore"
         },
+        "skybluetech:ultraheatinum_block": {
+            "textures": "textures/blocks/ingot_block/ultraheatinum_block"
+        },
         "skybluetech:wind_generator": {
             "textures": "textures/models/wind_generator_empty_texture"
         },

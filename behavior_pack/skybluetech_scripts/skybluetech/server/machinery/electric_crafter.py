@@ -40,14 +40,13 @@ class ElectricCrafter(GUIControl, UpgradeControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         self.sync = ElectricCrafterUISync.NewServer(self).Activate()
         self.try_update_template()
-        self.CallSync()
 
     def OnTicking(self):
         while self.IsActive():
-            self.CallSync()
             if self.ProcessOnce():
                 self.run_once()
                 self.detect_next()
+                self.CallSync()
             else:
                 break
 
@@ -116,6 +115,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         self.template = GetCraftingRecipe(recipe_dict)
         self.rcp_items, self.res_items = get_slot_items_by_recipe(self.template)
         self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+        self.detect_next()
 
     def detect_next(self):
         if not self.run_once(check_only=True):

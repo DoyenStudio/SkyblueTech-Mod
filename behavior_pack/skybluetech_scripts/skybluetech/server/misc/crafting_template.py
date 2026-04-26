@@ -194,7 +194,9 @@ def crafting_slots_completely_matched(template_slots, recipe):
                     continue
                 rcp_input = recipe.pattern_key[pat]
                 item_id, aux = item_and_aux
-                if item_id not in rcp_input.item_ids or rcp_input.aux_value != aux:
+                if item_id not in rcp_input.item_ids or (
+                    rcp_input.aux_value != aux and rcp_input.aux_value != 0
+                ):
                     return False
         return True
     else:

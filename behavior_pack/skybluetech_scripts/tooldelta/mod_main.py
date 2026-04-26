@@ -3,7 +3,7 @@
 from mod.common.mod import Mod
 from mod_log import logger
 from .internal import (
-    setModName,
+    SetModName,
     GetModName,
     GetModServerEngineName,
     GetModClientEngineName,
@@ -15,7 +15,7 @@ def RegisterMod():
         # type: (type[ToolDeltaMod]) -> type[ToolDeltaMod]
         if cls.name is None:
             raise ValueError("mod name is None")
-        setModName(cls.name)
+        SetModName(cls.name)
         return Mod.Binding(name=cls.name, version=cls.version_str())(cls)  # pyright: ignore[reportOptionalCall]
 
     return wrapper

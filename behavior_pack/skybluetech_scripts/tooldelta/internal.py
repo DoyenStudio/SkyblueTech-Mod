@@ -1,7 +1,5 @@
 # coding=utf-8
 
-import mod.server.extraServerApi as serverApi
-import mod.client.extraClientApi as clientApi
 from threading import current_thread
 
 
@@ -27,7 +25,7 @@ def GetServer():
     return Runtime.server
 
 
-def setServer(server):
+def SetServer(server):
     # type: (Server) -> None
     Runtime.server = server
     Runtime.server_thread_ident = current_thread().ident
@@ -39,7 +37,7 @@ def GetClient():  # type: () -> Client
     return Runtime.client
 
 
-def setClient(client):
+def SetClient(client):
     # type: (Client) -> None
     Runtime.client = client
     Runtime.client_thread_ident = current_thread().ident
@@ -51,7 +49,7 @@ def GetModName():
     return Runtime.modName
 
 
-def setModName(mod_name):
+def SetModName(mod_name):
     # type: (str) -> None
     Runtime.modName = mod_name
 
@@ -82,7 +80,3 @@ def InServerEnv():
 
 
 InClientEnv = inClientEnv
-
-
-def GetCurrentClientLevelId():
-    return clientApi.GetLevelId()

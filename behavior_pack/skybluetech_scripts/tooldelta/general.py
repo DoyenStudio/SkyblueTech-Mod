@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from .internal import setClient, setServer
+from .internal import SetClient, SetServer
 
 
 # TYPE_CHECKING
@@ -18,7 +18,7 @@ extra_server_uninit_register_funcs = {}  # type: dict[int, set[Callable[[], None
 extra_client_uninit_register_funcs = {}  # type: dict[int, set[Callable[[], None]]]
 
 
-def runByPriority(funcs):
+def run_by_priority(funcs):
     # type: (dict[int, set[Callable[[], None]]]) -> None
     for _, fns in sorted(funcs.items(), key=lambda x: x[0], reverse=True):
         for func in fns:
@@ -28,27 +28,27 @@ def runByPriority(funcs):
 def InitClient(client):
     # type: (Client) -> None
     "在客户端类初始化时调用"
-    setClient(client)
-    runByPriority(extra_client_init_register_funcs)
+    SetClient(client)
+    run_by_priority(extra_client_init_register_funcs)
 
 
 def UninitClient(client):
     # type: (Client) -> None
     "在客户端类销毁时调用"
-    runByPriority(extra_client_uninit_register_funcs)
+    run_by_priority(extra_client_uninit_register_funcs)
 
 
 def InitServer(server):
     # type: (Server) -> None
     "在服务端类初始化时调用"
-    setServer(server)
-    runByPriority(extra_server_init_register_funcs)
+    SetServer(server)
+    run_by_priority(extra_server_init_register_funcs)
 
 
 def UninitServer(server):
     # type: (Server) -> None
     "在服务端类销毁时调用"
-    runByPriority(extra_server_uninit_register_funcs)
+    run_by_priority(extra_server_uninit_register_funcs)
 
 
 def ServerInitCallback(priority=0):

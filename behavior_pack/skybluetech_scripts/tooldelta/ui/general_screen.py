@@ -1,6 +1,5 @@
 # coding=utf-8
 import mod.client.extraClientApi as clientApi
-from weakref import WeakSet
 from ..events.service import ClientListenerService
 from ..internal import GetModName
 from .elem_comp import UBaseCtrl

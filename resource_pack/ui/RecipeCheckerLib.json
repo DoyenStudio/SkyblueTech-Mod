@@ -1629,7 +1629,7 @@
                 "output_power@SkybluePanelLib.output_power_displayer": {
                     "offset": [
                         -6,
-                        -12
+                        -9
                     ],
                     "size": [
                         70,
@@ -1644,7 +1644,7 @@
                     "anchor_to": "right_middle",
                     "offset": [
                         -4.0,
-                        0.0
+                        2.0
                     ],
                     "size": [
                         56.0,

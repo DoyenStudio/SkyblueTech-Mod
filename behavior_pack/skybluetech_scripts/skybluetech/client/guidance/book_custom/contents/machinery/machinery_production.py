@@ -53,7 +53,7 @@ electric_crafter = PageGroup(
     [
         TextPage(
             "电动合成台",
-            '电动合成台可按<text color="§2" t="给定模版">和输入物品消耗能量自动进行<text color="§9" t="物品合成">。\n需要先制作一个<item id="%s"><link id="crafting_template_recipe" text="合成模版">， 手持合成模版下蹲点击地面打开模版设置界面进行合成配方设置， 然后将其插入电动合成台中， 即可进行自动合成。'
+            '电动合成台可按<text color="§2" t="给定模版">和输入物品消耗能量自动进行<text color="§9" t="物品合成">。\n需要先制作一个<item id="%s"><link id="crafting_template_recipe" text="合成样板">， 手持合成样板下蹲点击地面打开模版设置界面进行合成配方设置， 然后将其插入电动合成台中， 即可进行自动合成。'
             % id_enum.CRAFTING_TEMPLATE,
             hyperlink_cbs={
                 "crafting_template_recipe": lambda _: CheckRecipe(

@@ -8,6 +8,8 @@
                 "skybluetech:fermenter_io_energy",
                 "skybluetech:fermenter_io_fluid1",
                 "skybluetech:fermenter_io_fluid2",
+                
+                "skybluetech:fermenter_io_item1",
                 "skybluetech:fermenter_io_gas"
             ]
         },

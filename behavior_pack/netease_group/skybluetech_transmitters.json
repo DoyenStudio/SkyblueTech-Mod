@@ -15,6 +15,15 @@
                 "skybluetech:wire_creative",
                 "skybluetech:wire_insulated_creative"
             ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.pipe",
+            "icon": "skybluetech:pipe_bronze",
+            "list": [
+                "skybluetech:pipe_bronze",
+                "skybluetech:pipe_cupronickel",
+                "skybluetech:pipe_ultraheatinum"
+            ]
         }
     ]
 }

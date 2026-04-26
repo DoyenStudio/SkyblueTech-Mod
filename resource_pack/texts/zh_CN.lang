@@ -120,6 +120,7 @@ itemGroup.skybluetech.raw_ore_blocks=粗矿块
 itemGroup.skybluetech.raw_ores=粗矿
 itemGroup.skybluetech.tanks=流体储罐
 itemGroup.skybluetech.wire=电线线缆
+itemGroup.skybluetech.pipe=流体管道
 itemGroup.skybluetech.upgraders=机器升级
 itemGroup.skybluetech.obj_upgraders=装备升级
 itemGroup.skybluetech.battery_matrix=电池仓

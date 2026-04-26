@@ -2,17 +2,17 @@
     "format_version": "1.20.10",
     "minecraft:recipe_furnace": {
         "description": {
-            "identifier": "skybluetech:raw_tin_burn"
+            "identifier": "skybluetech:deepslate_platinum_ore_burn"
         },
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:raw_tin"
+            "item": "skybluetech:deepslate_platinum_ore"
         },
         "output": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:tin_ingot"
+            "item": "skybluetech:platinum_ingot"
         },
         "tags": [
             "furnace"

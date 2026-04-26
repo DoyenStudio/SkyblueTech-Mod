@@ -2,17 +2,17 @@
     "format_version": "1.20.10",
     "minecraft:recipe_furnace": {
         "description": {
-            "identifier": "skybluetech:raw_tin_burn"
+            "identifier": "skybluetech:deepslate_nickel_ore_burn"
         },
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:raw_silver"
+            "item": "skybluetech:deepslate_nickel_ore"
         },
         "output": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:silver_ingot"
+            "item": "skybluetech:nickel_ingot"
         },
         "tags": [
             "furnace"

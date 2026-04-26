@@ -2,12 +2,12 @@
     "format_version": "1.20.10",
     "minecraft:recipe_furnace": {
         "description": {
-            "identifier": "skybluetech:silver_ore_burn"
+            "identifier": "skybluetech:deepslate_silver_ore_burn"
         },
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:silver_ore"
+            "item": "skybluetech:deepslate_silver_ore"
         },
         "output": {
             "count": 1,

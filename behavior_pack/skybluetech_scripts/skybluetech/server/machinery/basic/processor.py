@@ -137,7 +137,8 @@ class Processor(ProcessorBase, UpgradeControl):
             recipe = _recipe
         if not isinstance(recipe, MachineRecipe):
             raise ValueError(
-                "Processor %s run recipe %s not MachineRecipe" % (self.__class__.__name__, recipe.__class__.__name__)
+                "Processor %s run recipe %s not MachineRecipe"
+                % (self.__class__.__name__, recipe.__class__.__name__)
             )
         self.current_recipe = recipe
         self.SetProcessTicks(recipe.tick_duration)
@@ -178,5 +179,5 @@ class Processor(ProcessorBase, UpgradeControl):
                 recipe.outputs.get(CategoryType.FLUID, {}).items()
             )
             last_index = len(slots_pos_and_outputs) - 1
-            for idx, (slot_pos, input) in enumerate(slots_pos_and_outputs):
+            for idx, (slot_pos, output) in enumerate(slots_pos_and_outputs):
                 self.OutputFluid(output.id, output.count, slot_pos, idx == last_index)

@@ -5,7 +5,6 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 class MaceratorRecipe(MachineRecipe):
     recipe_icon_id = machinery.MACERATOR
-    render_ui_def_name = "RecipeCheckerLib.macerator_recipes"
 
     def __init__(self, input_id, output_id, output_count, power_cost, tick_duration):
         # type: (Input, str, int, int, int) -> None

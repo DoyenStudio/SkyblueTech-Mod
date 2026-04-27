@@ -1,1 +1,1 @@
-from . import guidance, machinery, tools, ui
+from . import guidance, machinery, mini_jei, tools, ui

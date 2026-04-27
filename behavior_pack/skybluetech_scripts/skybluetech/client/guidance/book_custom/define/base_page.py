@@ -19,6 +19,10 @@ class BasePage(object):
     def ScreenTicking(self):
         pass
 
+    def DeRender(self, ctrl):
+        # type: (UBaseCtrl) -> None
+        pass
+
     def GetGroup(self):
         # type: () -> PageGroup | None
         return None

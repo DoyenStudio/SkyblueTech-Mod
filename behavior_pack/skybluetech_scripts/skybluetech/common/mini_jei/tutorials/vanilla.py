@@ -1,4 +1,5 @@
-from ..core import CategoryType, RegisterDescription
+from ..core import CategoryType
+from ..common import RegisterDescription
 
 content = "使用§2剪刀§r对草丛进行挖掘可得到矮草丛或高草丛。"
 

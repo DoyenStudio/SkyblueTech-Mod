@@ -7,7 +7,6 @@ MC_METAL = {"copper", "iron", "gold"}
 
 class FluidCondenserRecipe(MachineRecipe):
     recipe_icon_id = machinery.FLUID_CONDENSER
-    render_ui_def_name = "RecipeCheckerLib.fluid_condenser_recipes"
 
     def __init__(
         self,

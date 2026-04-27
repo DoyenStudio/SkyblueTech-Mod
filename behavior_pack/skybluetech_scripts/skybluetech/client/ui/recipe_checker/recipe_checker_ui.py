@@ -13,10 +13,8 @@ from skybluetech_scripts.tooldelta.events.client import (
 )
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.client import GetItemHoverName, GetScreenSize
-from ....common.mini_jei import (
-    CategoryType,
-    RecipeBase,
-)
+from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType, RecipeBase
+from skybluetech_scripts.skybluetech.client.mini_jei import RecipeRenderer
 from .favourite_items import GetFavourites, favourite_items_idauxs
 from .render_utils import CreateDescBoard
 
@@ -33,7 +31,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
         ToolDeltaScreen.__init__(self, screen_name, screen_instance, params)
         self.looking_category_index = 0
         self.inited = False
-        self.recipe_ctrls = {}  # type: dict[UBaseCtrl, RecipeBase]
+        self.recipe_ctrls = {}  # type: dict[UBaseCtrl, RecipeRenderer]
         self.recipes_chain = [params["recipes"]] if params.get("recipes") else []  # type: list[list[tuple[str, str, list[RecipeBase]]]]
         self.update_ticks = 0
         self.current_page = 0
@@ -138,21 +136,26 @@ class RecipeCheckerUI(ToolDeltaScreen):
 
     def update_current_recipe_page(self):
         _, rcp_title, rcps = self.recipes_chain[-1][self.looking_category_index]
-        for ctrls in self.recipe_ctrls:
-            ctrls.Remove()
+        for ctrl, recipe_renderer in self.recipe_ctrls.items():
+            recipe_renderer.DeRender(ctrl)
+            ctrl.Remove()
         self.recipe_ctrls.clear()
         display_max_sizey = self.recipes_display.GetSize()[1]
         i = -1
         for i, rcp in enumerate(rcps[self.current_page * self.recipes_per_page :]):
+            rcp_renderer_cls = rcp.GetRenderer()
+            if rcp_renderer_cls is None:
+                continue
+            rcp_renderer = rcp_renderer_cls(rcp)
             elem = self.recipes_display.AddElement(
-                rcp.render_ui_def_name,
+                rcp_renderer.render_ui_def_name,
                 "recipe%d" % i,
             )
-            rcp.RenderInit(elem)
-            rcp.RenderUpdate(elem, self.update_ticks)
+            rcp_renderer.RenderInit(elem)
+            rcp_renderer.RenderUpdate(elem, self.update_ticks)
             _, size_y = elem.GetSize()
             elem.SetPos((0, size_y * i))
-            self.recipe_ctrls[elem] = rcp
+            self.recipe_ctrls[elem] = rcp_renderer
             if size_y * (i + 2) > display_max_sizey:
                 break
         if self.total_pages_num == 0:

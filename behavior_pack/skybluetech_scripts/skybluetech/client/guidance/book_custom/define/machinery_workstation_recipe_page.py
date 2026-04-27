@@ -14,6 +14,7 @@ class MachineryWorkstationRecipePage(BasePage):
         # type: (str) -> None
         BasePage.__init__(self)
         self.recipe_result = recipe_result
+        self.dyn_recipe_renderer = None
 
     def RenderInit(self, ctrl):
         # type: (UBaseCtrl) -> None
@@ -23,7 +24,8 @@ class MachineryWorkstationRecipePage(BasePage):
         recipes = GetRecipesByOutput(CategoryType.ITEM, self.recipe_result)
         if len(recipes) > 0:
             recipe = recipes[0]
-            recipe.RenderInit(ctrl["recipe_renderer"])
+            self.dyn_recipe_renderer = recipe.GetRendererForced()(recipe)
+            self.dyn_recipe_renderer.RenderInit(ctrl["recipe_renderer"])
             ctrl["check_btn"].asButton().SetCallback(
                 lambda _: PushRecipeCheckerUI(recipes) and None
             )
@@ -31,3 +33,9 @@ class MachineryWorkstationRecipePage(BasePage):
             title = ctrl["title"].asLabel()
             title.SetText("§c错误： 未找到关于 %s 的配方。" % self.recipe_result)
             title.base.SetTextFontSize(1)
+
+    def DeRender(self, ctrl):
+        # type: (UBaseCtrl) -> None
+        BasePage.DeRender(self, ctrl)
+        if self.dyn_recipe_renderer is not None:
+            self.dyn_recipe_renderer.DeRender(ctrl["recipe_renderer"])

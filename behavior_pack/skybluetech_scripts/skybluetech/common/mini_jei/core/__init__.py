@@ -7,4 +7,4 @@ from .marshal_utils import (
     UnmarshalInputs,
     UnmarshalOutputs,
 )
-from .register import RegisterRecipe, RegisterDescription
+from .register import RegisterRecipe

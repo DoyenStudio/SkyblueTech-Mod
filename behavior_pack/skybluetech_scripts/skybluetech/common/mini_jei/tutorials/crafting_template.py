@@ -1,6 +1,7 @@
 from ....common.define.id_enum.items import CRAFTING_TEMPLATE
 from ....common.define.id_enum.machinery import ELECTRIC_CRAFTER
-from ..core import CategoryType, RegisterDescription
+from ..core import CategoryType
+from ..common import RegisterDescription
 
 content = (
     "自动合成台需要使用合成样板以设置合成配方。 "

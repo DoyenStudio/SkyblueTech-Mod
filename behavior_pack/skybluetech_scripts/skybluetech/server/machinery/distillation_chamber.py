@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from ...common.define.id_enum.machinery import DISTILLATION_CHAMBER as MACHINE_ID
 from ...common.machinery_def.distillation_chamber import (
     recipes as Recipes,
-    DistillatorChamberRecipe,
+    DistillationChamberRecipe,
 )
 from ...common.ui_sync.machinery.distillation_chamber import DistillationChamberUISync
 from .basic import (
@@ -15,13 +15,13 @@ from .basic import (
 )
 from .basic.multi_fluid_container import FluidSlot
 
-recipes_collection = {}  # type: dict[str, list[DistillatorChamberRecipe]]
+recipes_collection = {}  # type: dict[str, list[DistillationChamberRecipe]]
 for recipe in Recipes:
     recipes_collection.setdefault(recipe.collection_name, []).append(recipe)
 
 
 @RegisterMachine
-class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
+class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
     block_name = MACHINE_ID
     is_non_energy_machine = True
     fluid_io_fix_mode = 0
@@ -92,7 +92,7 @@ class DistillatorChamber(HeatCtrl, MultiFluidContainer, GUIControl):
                 self.work_with_recipe(rcp, in_fluid, out_fluid)
 
     def work_with_recipe(self, rcp, in_fluid, out_fluid):
-        # type: (DistillatorChamberRecipe, FluidSlot, FluidSlot) -> None
+        # type: (DistillationChamberRecipe, FluidSlot, FluidSlot) -> None
         if self.kelvin < rcp.fit_temperature:
             consume_rate = produce_rate = float(rcp.fit_temperature - self.kelvin) / (
                 rcp.fit_temperature - rcp.min_temperature

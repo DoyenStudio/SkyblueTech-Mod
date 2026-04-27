@@ -1,6 +1,7 @@
 # coding=utf-8
 from ...common.define.tag_enum import *
-from .core import CategoryType, RegisterDescription
+from .core import CategoryType
+from .common import RegisterDescription
 
 # RegisterDescription(
 #     {CategoryType.FLUID: [RAW_OIL]},

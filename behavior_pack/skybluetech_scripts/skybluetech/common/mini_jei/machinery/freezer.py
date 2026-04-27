@@ -1,10 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
 from ...define.id_enum import machinery
 from .define import CategoryType, RecipesCollection, MachineRecipe, Input, Output
-
-if 0:
-    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
 
 class FreezerRecipesCollection(RecipesCollection):
@@ -18,7 +14,6 @@ class FreezerRecipesCollection(RecipesCollection):
 
 class FreezerRecipe(MachineRecipe):
     recipe_icon_id = machinery.FREEZER
-    render_ui_def_name = "RecipeCheckerLib.freezer_recipes"
 
     def __init__(
         self,
@@ -42,13 +37,6 @@ class FreezerRecipe(MachineRecipe):
         self.input_volume = input_volume
         self.output_item = output_item
         self.output_count = output_count
-
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        MachineRecipe.RenderInit(self, panel)
-        panel["fake_btn/item_renderer"].asItemRenderer().SetUiItem(
-            Item(self.output_item)
-        )
 
     def Marshal(self):
         return {

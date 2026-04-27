@@ -5,7 +5,6 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 class OilExtractorRecipe(MachineRecipe):
     recipe_icon_id = machinery.OIL_EXTRACTOR
-    render_ui_def_name = "RecipeCheckerLib.oil_extractor_recipes"
 
     def __init__(
         self,

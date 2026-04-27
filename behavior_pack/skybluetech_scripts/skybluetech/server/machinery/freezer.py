@@ -2,7 +2,8 @@
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.events.machinery.freezer import FreezerModeChangedEvent
 from ...common.define.id_enum.machinery import FREEZER as MACHINE_ID
-from ...common.machinery_def.freezer import RecipesCollection, recipes as Recipes
+from ...common.mini_jei.core import RecipesCollection
+from ...common.machinery_def.freezer import recipes as Recipes
 from ...common.ui_sync.machinery.freezer import FreezerUISync
 from .utils.action_commit import SafeGetMachine
 from .basic import MultiFluidContainer, Processor, RegisterMachine

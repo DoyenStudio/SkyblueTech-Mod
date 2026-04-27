@@ -8,7 +8,7 @@ from skybluetech_scripts.tooldelta.api.client.world import (
     GetRecipesByResult,
 )
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
-from .register import RegisterRecipe
+from ..core.register import RegisterRecipe
 from .common_recipe_cls import (
     GenericCraftingTableRecipe,
     GenericFurnaceRecipe,

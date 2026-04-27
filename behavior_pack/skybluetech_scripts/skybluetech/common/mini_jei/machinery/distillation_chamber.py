@@ -2,14 +2,9 @@
 from ....common.define.id_enum import machinery
 from .define import CategoryType, MachineRecipe, Input, Output
 
-if 0:
-    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
-
-class DistillatorChamberRecipe(MachineRecipe):
-    render_progress = False
+class DistillationChamberRecipe(MachineRecipe):
     recipe_icon_id = machinery.DISTILLATION_CHAMBER
-    render_ui_def_name = "RecipeCheckerLib.distillation_chamber_recipes"
 
     def __init__(
         self,
@@ -36,22 +31,6 @@ class DistillatorChamberRecipe(MachineRecipe):
         self.max_temperature = max_temperature
         self.fit_temperature = fit_temperature
 
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        from ....client.ui.machinery.utils import FormatKelvin
-
-        MachineRecipe.RenderInit(self, panel)
-        panel["right_board/tip_text"].asLabel().SetText(
-            FormatKelvin(self.fit_temperature)
-        )
-        panel["right_board/tip_text2"].asLabel().SetText(
-            "> %s\n< %s"
-            % (
-                FormatKelvin(self.min_temperature),
-                FormatKelvin(self.max_temperature),
-            )
-        )
-
     def Marshal(self):
         # type: () -> dict
         return {
@@ -66,8 +45,8 @@ class DistillatorChamberRecipe(MachineRecipe):
 
     @classmethod
     def Unmarshal(cls, data):
-        # type: (dict) -> DistillatorChamberRecipe
-        return DistillatorChamberRecipe(
+        # type: (dict) -> DistillationChamberRecipe
+        return DistillationChamberRecipe(
             input_fluid=data["input_fluid"],
             input_volume=data["input_volume"],
             output_fluid=data["output_fluid"],

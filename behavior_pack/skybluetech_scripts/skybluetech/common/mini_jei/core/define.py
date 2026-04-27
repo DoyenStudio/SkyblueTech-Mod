@@ -1,9 +1,9 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.api.common import GetItemTags
 
 if 0:
     import typing  # noqa: F401
+    from skybluetech_scripts.skybluetech.client.mini_jei.core import RecipeRenderer
 
 
 class CategoryType:
@@ -27,9 +27,8 @@ class _RecipeMeta(type):
 class RecipeBase(object):
     __metaclass__ = _RecipeMeta
 
-    recipe_icon_id = "minecraft:barrier"
-    render_ui_def_name = ""
-    minijei_title = None  # type: str | None
+    recipe_icon_id = "???"
+    renderer = None  # type: type[RecipeRenderer] | None
 
     def GetInputs(self):
         # type: () -> dict[str, list[str]]
@@ -57,44 +56,6 @@ class RecipeBase(object):
         """
         raise NotImplementedError
 
-    def RenderInit(self, panel_ctrl):
-        # type: (UBaseCtrl) -> None
-        """
-        在页面渲染初始化时执行一次, 用于渲染配方。 传入配方页控件。
-        """
-
-        pass
-        # from ....client.ui.recipe_checker._favourite_recipes import (
-        #     AddFavouriteRecipe,
-        #     RemoveFavouriteRecipe,
-        #     IsFavourite,
-        # )
-
-        # favourite_btn = panel_ctrl["collect_recipe_btn"].asButton()
-
-        # def update(is_favourite):
-        #     # type: (bool) -> None
-        #     favourite_btn["collected_img"].SetVisible(is_favourite)
-        #     favourite_btn["not_collected_img"].SetVisible(not is_favourite)
-
-        # def onclick(_):
-        #     is_favourite = IsFavourite(self)
-        #     if is_favourite:
-        #         RemoveFavouriteRecipe(self)
-        #     else:
-        #         AddFavouriteRecipe(self)
-        #     update(not is_favourite)
-
-        # favourite_btn.SetCallback(onclick)
-
-    def RenderUpdate(self, panel_ctrl, render_ticks):
-        # type: (UBaseCtrl, int) -> None
-        """
-        0.2 秒触发一次。render_ticks 每次比上一次触发多 5。
-        用于渲染页的持续更新, 如物品轮播, 进度条增加。
-        """
-        pass
-
     def Marshal(self):
         # type: () -> dict
         """
@@ -115,6 +76,23 @@ class RecipeBase(object):
             dct (dict): 配方数据。
         """
         raise NotImplementedError
+
+    @classmethod
+    def SetRenderer(cls, renderer):
+        # type: (type[RecipeRenderer]) -> None
+        cls.renderer = renderer
+
+    @classmethod
+    def GetRenderer(cls):
+        # type: () -> type[RecipeRenderer] | None
+        return cls.renderer
+
+    @classmethod
+    def GetRendererForced(cls):
+        # type: () -> type[RecipeRenderer]
+        if cls.renderer is None:
+            raise ValueError("No renderer for %s" % cls.__name__)
+        return cls.renderer
 
     @staticmethod
     def GetRecipeCls(cls_name):
@@ -281,29 +259,3 @@ class Recipe(RecipeBase):
                     )
                 )
         return self._collection_key
-
-
-class Description(RecipeBase):
-    recipe_icon_id = "skybluetech:description_icon"
-    render_ui_def_name = "RecipeCheckerLib.description_page"
-
-    def __init__(self, categories_with_ids, title, content):
-        # type: (dict[str, list[str]], str, str) -> None
-        self.categories_with_ids = categories_with_ids
-        self.title = title
-        self.content = content
-
-    def RenderInit(self, panel_ctrl):
-        # type: (UBaseCtrl) -> None
-        RecipeBase.RenderInit(self, panel_ctrl)
-        panel_ctrl["bg_img/title"].asLabel().SetText(self.title, sync_size=True)
-        panel_ctrl["bg_img/content"].asLabel().SetText(self.content, sync_size=True)
-
-    def GetInputs(self):
-        return {}
-
-    def GetOutputs(self):
-        return self.categories_with_ids
-
-    def __hash__(self):
-        return hash(self.title)

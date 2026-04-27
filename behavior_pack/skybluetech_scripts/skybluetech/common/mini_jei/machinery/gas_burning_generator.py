@@ -1,15 +1,11 @@
 # coding=utf-8
 from ....common.define.id_enum import machinery
 from ..core import CategoryType, Input, Output
-from .define import CategoryType, Input, Output, GeneratorRecipe
-
-if 0:
-    from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
+from .define import GeneratorRecipe
 
 
 class GasBurningGeneratorRecipe(GeneratorRecipe):
     recipe_icon_id = machinery.GAS_BURNING_GENERATOR
-    render_ui_def_name = "RecipeCheckerLib.gas_burning_generator_recipes"
 
     def __init__(
         self,
@@ -36,11 +32,6 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
         self.output_power = output_power
         self.output_gas_id = output_gas_id
         self.output_gas_volume = output_gas_volume
-
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        GeneratorRecipe.RenderInit(self, panel)
-        panel["garbage_gas_tip"].SetVisible(self.output_gas_id is None)
 
     def Marshal(self):
         # type: () -> dict

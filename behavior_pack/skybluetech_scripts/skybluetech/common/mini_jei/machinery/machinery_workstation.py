@@ -11,13 +11,9 @@ from ..core import (
     UnmarshalInputs,
 )
 
-if 0:
-    from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-
 
 class MachineryWorkstationRecipe(Recipe):
     recipe_icon_id = machinery.MACHINERY_WORKSTATION
-    render_ui_def_name = "RecipeCheckerLib.machinery_workstation_recipes"
 
     LEVEL_IRON = 1
     LEVEL_INVAR = 2
@@ -40,51 +36,11 @@ class MachineryWorkstationRecipe(Recipe):
         self.wrench_level = wrench_level
         self.pincer_level = pincer_level
         self.craft_times = craft_times
+        self.dyn_item_renderers = []
 
     def GetInputs(self):
         orig = Recipe.GetInputs(self)
         return orig
-
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        from ....client.ui.recipe_checker.render_utils import ItemDisplayer
-        from ....client.ui.recipe_checker.render_utils_advanced import (
-            InputDisplayer,
-            MultiItemsDisplayer,
-        )
-
-        Recipe.RenderInit(self, panel)
-        self.dyn_item_renders = []  # type: list[InputDisplayer | MultiItemsDisplayer]
-        input_items = self.inputs.get("item", {})
-        for slot, input in input_items.items():
-            self.dyn_item_renders.append(InputDisplayer(panel["slot%d" % slot], input))
-        if self.wrench_level > 0:
-            self.dyn_item_renders.append(
-                MultiItemsDisplayer(
-                    panel["wrench_slot"],
-                    get_spec_level_avail_wrenchs(self.wrench_level),
-                )
-            )
-        if self.pincer_level > 0:
-            self.dyn_item_renders.append(
-                MultiItemsDisplayer(
-                    panel["pincer_slot"],
-                    get_spec_level_avail_pincers(self.pincer_level),
-                )
-            )
-        ItemDisplayer(panel["output_slot"], Item(self.output_item_id))
-        panel["level_tip"].asLabel().SetText(
-            "扳手等级： %s\n钳等级： %s"
-            % (
-                self.LEVEL_MAPPING[self.wrench_level],
-                self.LEVEL_MAPPING[self.pincer_level],
-            )
-        )
-
-    def RenderUpdate(self, panel, render_ticks):
-        # type: (UBaseCtrl, int) -> None
-        for input_render in self.dyn_item_renders:
-            input_render.tick(render_ticks)
 
     def Marshal(self):
         # type: () -> dict

@@ -7,7 +7,6 @@ TAG_DUST_BLOCK = "dust_block"
 
 class MixerRecipe(MachineRecipe):
     recipe_icon_id = machinery.MIXER
-    render_ui_def_name = "RecipeCheckerLib.mixer_recipes"
 
     def __init__(
         self,

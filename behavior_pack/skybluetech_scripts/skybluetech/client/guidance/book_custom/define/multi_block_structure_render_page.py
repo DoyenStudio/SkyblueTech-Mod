@@ -126,10 +126,6 @@ class MultiBlockStructureRenderPage(BasePage):
                 new_layer = None
             change_layer(new_layer)
 
-        def on_removed():
-            self.current_ticker = None
-
-        ctrl.addDestroyListener(on_removed)
         add_layer_btn.SetCallback(on_add_layer)
         sub_layer_btn.SetCallback(on_sub_layer)
         self.current_ticker = tick_render
@@ -137,6 +133,12 @@ class MultiBlockStructureRenderPage(BasePage):
     def ScreenTicking(self):
         if self.current_ticker is not None:
             self.current_ticker()
+
+    def DeRender(self, ctrl):
+        self.current_ticker = None
+        block_stack_desc = ctrl._vars.get("block_stack_desc")
+        if block_stack_desc is not None:
+            block_stack_desc.Remove()
 
 
 RAD = math.atan(0.5)
@@ -221,9 +223,10 @@ def generate_blocks_btn_callback(
         e = ctrl._parent.AddElement(
             "SkybluePanelLib.ui_block_stack_desc", "ui_block_stack_desc"
         )
-        e.SetLayer(80)
+        e.SetLayer(80).BindLifeToObject(ctrl)
         e["exit_btn"].asButton().SetCallback(lambda _: e.Remove())
         grid = e["bg/grid"].asGrid()
+        ctrl._vars["block_stack_desc"] = e
 
         def after():
             for i in range(len(block_ids)):

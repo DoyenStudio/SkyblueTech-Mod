@@ -24,11 +24,17 @@ def PushRecipeCheckerUI(recipes):
         raise ValueError("Can't push an empty recipe list")
     recipe_list = recipes.list() if isinstance(recipes, RecipesCollection) else recipes
     recipe_ins = recipe_list[0]
+    recipe_renderer = recipe_ins.GetRenderer()
+    if recipe_renderer is None:
+        raise ValueError(
+            "Can't push a recipe without a renderer :: %s" % recipe_ins.cls_name
+        )
     uiNode = RecipeCheckerUI.PushUI({
         "recipes": [
             (
                 recipe_ins.recipe_icon_id,
-                recipe_ins.minijei_title or GetItemHoverName(recipe_ins.recipe_icon_id),
+                recipe_renderer.minijei_title
+                or GetItemHoverName(recipe_ins.recipe_icon_id),
                 recipe_list,
             )
         ]

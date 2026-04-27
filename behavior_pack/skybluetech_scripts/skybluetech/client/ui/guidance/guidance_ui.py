@@ -60,6 +60,8 @@ class GuidanceUI(ToolDeltaScreen):
 
     def OnDestroy(self):
         GuidanceUI.current_instance = None
+        self._left_page_content = None
+        self._right_page_content = None
 
     def OnTicking(self):
         if self.left_page_instance:
@@ -71,11 +73,16 @@ class GuidanceUI(ToolDeltaScreen):
         from ...guidance.book_custom.define import BookMarkMgr
 
         if self._left_page_content is not None:
+            if self.left_page_instance is not None:
+                self.left_page_instance.DeRender(self._left_page_content)
             self._left_page_content.Remove()
             self._left_page_content = None
         if self._right_page_content is not None:
+            if self.right_page_instance is not None:
+                self.right_page_instance.DeRender(self._right_page_content)
             self._right_page_content.Remove()
             self._right_page_content = None
+
         pages = self.current_page_group.GetPages()
         self.left_page_instance = self.right_page_instance = None
         for i, page in enumerate(pages[self.page_index : self.page_index + 2]):

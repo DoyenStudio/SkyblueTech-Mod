@@ -1,10 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
 from ...define.id_enum import METAL_HAMMER
 from ..core import CategoryType, RecipesCollection, Recipe, Input, Output
-
-if 0:
-    from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
 
 
 class MetalHammerRecipesCollection(RecipesCollection):
@@ -28,15 +24,6 @@ class MetalHammerRecipe(Recipe):
         )
         self.hammer_in = input
         self.hammer_out = output_id
-
-    def RenderInit(self, panel_ctrl):
-        # type: (UBaseCtrl) -> None
-        from ....client.ui.recipe_checker.render_utils import ItemDisplayer
-        from ....client.ui.recipe_checker.render_utils_advanced import InputDisplayer
-
-        Recipe.RenderInit(self, panel_ctrl)
-        self.input_renderer = InputDisplayer(panel_ctrl["slot0"], self.hammer_in)
-        self.output_renderer = ItemDisplayer(panel_ctrl["slot1"], Item(self.hammer_out))
 
     def __hash__(self):
         return hash(self.hammer_in) ^ hash(self.hammer_out)

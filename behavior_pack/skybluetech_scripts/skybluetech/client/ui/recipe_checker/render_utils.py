@@ -90,7 +90,6 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
 
     from ....common.mini_jei import GetRecipesByInput, GetRecipesByOutput
     from .favourite_items import (
-        GetFavourites,
         IsFavourite,
         AddFavourite,
         RemoveFavourite,
@@ -115,18 +114,22 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
     item_src_recipes = {}  # type: dict[tuple[str, str], list[RecipeBase]]
     item_usage_recipes = {}  # type: dict[tuple[str, str], list[RecipeBase]]
     for recipe in GetRecipesByOutput(category, item_id):
+        recipe_renderer = recipe.GetRendererForced()(recipe)
         item_src_recipes.setdefault(
             (
-                recipe.recipe_icon_id,
-                recipe.minijei_title or GetItemHoverName(recipe.recipe_icon_id),
+                recipe_renderer.recipe_icon_id,
+                recipe_renderer.minijei_title
+                or GetItemHoverName(recipe_renderer.recipe_icon_id),
             ),
             [],
         ).append(recipe)
     for recipe in GetRecipesByInput(category, item_id):
+        recipe_renderer = recipe.GetRendererForced()(recipe)
         item_usage_recipes.setdefault(
             (
-                recipe.recipe_icon_id,
-                recipe.minijei_title or GetItemHoverName(recipe.recipe_icon_id),
+                recipe_renderer.recipe_icon_id,
+                recipe_renderer.minijei_title
+                or GetItemHoverName(recipe_renderer.recipe_icon_id),
             ),
             [],
         ).append(recipe)
@@ -164,7 +167,6 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
     text_label.SetText(text)
     desc_board.SetPos(global_xy)
     desc_board.SetLayer(50)
-    desc_board.BindLifeToObject(hang_ctrl)
     fav_img.SetVisible(IsFavourite(category, item_id, display_item_id))
     ui_node._vars["desc_board"] = desc_board
 

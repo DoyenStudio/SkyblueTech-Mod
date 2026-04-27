@@ -3,13 +3,9 @@ from ....common.define.id_enum import machinery
 from ..core import CategoryType, Input, Output
 from .define import GeneratorRecipe
 
-if 0:
-    from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
-
 
 class RedstoneGeneratorRecipe(GeneratorRecipe):
     recipe_icon_id = machinery.REDSTONE_GENERATOR
-    render_ui_def_name = "RecipeCheckerLib.redstone_generator_recipes"
 
     def __init__(
         self,

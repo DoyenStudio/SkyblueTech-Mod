@@ -10,7 +10,6 @@ def sec(second):
 
 class MagmaFurnaceRecipe(MachineRecipe):
     recipe_icon_id = machinery.MAGMA_FURNACE
-    render_ui_def_name = "RecipeCheckerLib.magma_furnace_recipes"
 
     def __init__(
         self,

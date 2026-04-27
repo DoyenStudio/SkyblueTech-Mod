@@ -25,7 +25,13 @@ main_pages = PageGroup(
                     contents.basic_concepts.basic_concepts_toc,
                 ),
                 MainTOCPageSection(
-                    id_enum.MACHINERY_FRAME,
+                    "minecraft:crafting_table",
+                    0,
+                    "内置 JEI",
+                    contents.mini_jei.mini_jei_desc,
+                ),
+                MainTOCPageSection(
+                    id_enum.ALLOY_FURNACE,
                     0,
                     "机器设备",
                     contents.machinery.machinery_toc,

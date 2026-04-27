@@ -77,6 +77,7 @@ machinery_production_toc = PageGroup(
                     machinery_production.hydroponic_base,
                 ),
             ],
+            identifier="machinery_production_toc_1",
         ),
         TOCPage(
             [
@@ -129,6 +130,7 @@ machinery_production_toc = PageGroup(
                     machinery_production.redstone_furnace,
                 ),
             ],
+            identifier="machinery_production_toc_2",
         ),
     ],
 )
@@ -301,7 +303,7 @@ machinery_crafting_toc = PageGroup(
     "machinery_crafting_toc",
     [
         TextPage(
-            "机器-制造加工",
+            "机器-合成制造",
             "本章展示所有可以进行机械加工的机器。",
         ),
         TOCPage(
@@ -350,7 +352,7 @@ machinery_toc = PageGroup(
     [
         TextPage(
             "机器",
-            '蔚蓝科技内的功能性方块统称为<text color="§9" t="设备">， 它们是蔚蓝科技工业系统中不可或缺的成分。\n\n在目录中选择一个你愿意了解的设备类型。',
+            '蔚蓝科技内的功能性方块统称为<text color="§9" t="设备">， 它们是蔚蓝科技工业系统中不可或缺的成分。\n\n在目录中选择一个你感兴趣的设备类型以查看详细内容。',
         ),
         MainTOCPage(
             [

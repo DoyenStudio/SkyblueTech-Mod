@@ -20,6 +20,16 @@ recipes = RecipesCollection(
     MetalPressRecipe(
         LUBRICANT,
         10,
+        "minecraft:iron_ingot",
+        1,
+        Sticks.IRON,
+        2,
+        tick_duration=60,
+        power_cost=40,
+    ),
+    MetalPressRecipe(
+        LUBRICANT,
+        10,
         Ingots.TIN,
         1,
         Sticks.TIN,

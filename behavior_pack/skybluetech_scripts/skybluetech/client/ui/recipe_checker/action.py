@@ -5,6 +5,7 @@ from ....common.mini_jei import (
     RecipesCollection,
     RecipeBase,
     CategoryType,
+    GetRecipesByInput,
     GetRecipesByOutput,
 )
 from .recipe_checker_ui import RecipeCheckerUI
@@ -12,7 +13,15 @@ from .recipe_checker_ui import RecipeCheckerUI
 
 def CheckRecipe(item_id, category=CategoryType.ITEM):
     # type: (str, str) -> RecipeCheckerUI | None
-    recipes = GetRecipesByOutput(category, item_id)  # type: list[RecipeBase]
+    recipes = GetRecipesByOutput(category, item_id)
+    if not recipes:
+        return None
+    return PushRecipeCheckerUI(recipes)
+
+
+def CheckUsage(item_id, category=CategoryType.ITEM):
+    # type: (str, str) -> RecipeCheckerUI | None
+    recipes = GetRecipesByInput(category, item_id)
     if not recipes:
         return None
     return PushRecipeCheckerUI(recipes)

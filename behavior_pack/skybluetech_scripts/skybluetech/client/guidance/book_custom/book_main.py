@@ -19,6 +19,12 @@ main_pages = PageGroup(
                     "minecraft:paper", 0, "引言", contents.intros.general_intro_pages
                 ),
                 MainTOCPageSection(
+                    "minecraft:golden_pickaxe",
+                    0,
+                    "新手教程",
+                    contents.noob_tutorials.noob_tutorial_toc,
+                ),
+                MainTOCPageSection(
                     id_enum.Icons.SHEET,
                     0,
                     "基本概念",

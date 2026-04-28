@@ -25,7 +25,15 @@
         }
     },
     "skybluetech:battery_matrix_controller": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:battery_matrix_frame",
+            "east": "skybluetech:battery_matrix_frame",
+            "north": "skybluetech:battery_matrix_controller_front",
+            "south": "skybluetech:battery_matrix_frame",
+            "up": "skybluetech:battery_matrix_frame",
+            "west": "skybluetech:battery_matrix_frame"
+        }
     },
     "skybluetech:battery_matrix_core": {
         "textures": "skybluetech:battery_matrix_core"
@@ -40,7 +48,15 @@
         "textures": "skybluetech:battery_matrix_energy_output_interface"
     },
     "skybluetech:bedrock_lava_drill_controller": {
-        "sound": "iron"
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:bedrock_lava_drill_frame",
+            "east": "skybluetech:bedrock_lava_drill_frame",
+            "north": "skybluetech:bedrock_lava_drill_controller_front",
+            "south": "skybluetech:bedrock_lava_drill_frame",
+            "up": "skybluetech:bedrock_lava_drill_frame",
+            "west": "skybluetech:bedrock_lava_drill_frame"
+        }
     },
     "skybluetech:bedrock_lava_drill_frame": {
         "textures": "skybluetech:bedrock_lava_drill_frame"
@@ -150,7 +166,15 @@
         }
     },
     "skybluetech:fermenter_controller": {
-        "sound": "stone"
+        "sound": "stone",
+        "textures": {
+            "down": "skybluetech:fermenter_controller_side",
+            "east": "skybluetech:fermenter_controller_side",
+            "north": "skybluetech:fermenter_controller_front",
+            "south": "skybluetech:fermenter_controller_side",
+            "up": "skybluetech:fermenter_controller_side",
+            "west": "skybluetech:fermenter_controller_side"
+        }
     },
     "skybluetech:fermenter_io_energy": {
         "textures": "skybluetech:fermenter_energy_interface"

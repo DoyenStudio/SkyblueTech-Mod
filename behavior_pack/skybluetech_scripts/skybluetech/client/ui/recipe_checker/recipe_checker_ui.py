@@ -35,6 +35,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.recipes_chain = [params["recipes"]] if params.get("recipes") else []  # type: list[list[tuple[str, str, list[RecipeBase]]]]
         self.update_ticks = 0
         self.current_page = 0
+        self.category_index_start = 0
         self.recipes_per_page = 0
         self.total_pages_num = 0
 
@@ -67,6 +68,18 @@ class RecipeCheckerUI(ToolDeltaScreen):
             .GetElement(MIDDLE_CONTENT_PATH / "back_btn")
             .asButton()
             .SetCallback(self.onBack)
+        )
+        self.category_prev_btn = (
+            self
+            .GetElement(MIDDLE_CONTENT_PATH / "category_prev_btn")
+            .asButton()
+            .SetCallback(self.onCategoryPrev)
+        )
+        self.category_next_btn = (
+            self
+            .GetElement(MIDDLE_CONTENT_PATH / "category_next_btn")
+            .asButton()
+            .SetCallback(self.onCategoryNext)
         )
         self.back_btn.SetVisible(False)
         self.update_left_content_size()
@@ -116,23 +129,34 @@ class RecipeCheckerUI(ToolDeltaScreen):
 
     def update_recipe_categories(self):
         def after():
-            for i, (rcp_icon_id, _, _) in enumerate(self.recipes_chain[-1]):
+            for i, (rcp_icon_id, _, _) in enumerate(
+                self.recipes_chain[-1][
+                    self.category_index_start : self.category_index_start + 8
+                ]
+            ):
                 category_panel = self.left_sections_grid.GetGridItem(0, i)
                 category_panel["item_renderer"].asItemRenderer().SetUiItem(
                     Item(rcp_icon_id)
                 )
-                if i == self.looking_category_index:
+                if i + self.category_index_start == self.looking_category_index:
                     category_panel.SetLayer(3)
                 else:
                     category_panel.SetLayer(0)
 
         if self.looking_category_index >= len(self.recipes_chain[-1]):
             self.looking_category_index = 0
+        if self.category_index_start + 8 > len(self.recipes_chain[-1]):
+            self.category_index_start = 0
         self.left_sections_grid.SetDimensionAndCall(
-            (1, len(self.recipes_chain[-1])), after
+            (1, min(8, len(self.recipes_chain[-1]))), after
         )
         self.current_page = 0
         self.total_pages_num = 0
+        if len(self.recipes_chain) > 0:
+            self.category_prev_btn.SetVisible(self.category_index_start > 0)
+            self.category_next_btn.SetVisible(
+                self.category_index_start + 8 < len(self.recipes_chain[-1])
+            )
 
     def update_current_recipe_page(self):
         _, rcp_title, rcps = self.recipes_chain[-1][self.looking_category_index]
@@ -185,6 +209,20 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.current_page = (self.current_page + 1) % self.total_pages_num
         self.update_current_recipe_page()
 
+    def onCategoryPrev(self, params):
+        categories = len(self.recipes_chain[-1])
+        self.category_index_start = (self.category_index_start - 1) % categories
+        if self.category_index_start + 8 > categories:
+            self.category_index_start = max(0, categories - 8)
+        self.update_recipe_categories()
+
+    def onCategoryNext(self, params):
+        categories = len(self.recipes_chain[-1])
+        self.category_index_start = (self.category_index_start + 1) % categories
+        if self.category_index_start + 8 > categories:
+            self.category_index_start = max(0, categories - 8)
+        self.update_recipe_categories()
+
     @ToolDeltaScreen.Listen(OnKeyPressInGame)
     def onKeyPress(self, event):
         # type: (OnKeyPressInGame) -> None
@@ -201,7 +239,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
         griditem = self.GetElement(griditem_path)
         if not self._activated or params["TouchEvent"] != 0:
             return
-        click_index = params["#collection_index"]
+        click_index = params["#collection_index"] + self.category_index_start
         if self.looking_category_index != click_index:
             self.looking_category_index = click_index
             self.update_all()

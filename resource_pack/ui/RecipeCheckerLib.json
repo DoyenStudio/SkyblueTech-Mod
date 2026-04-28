@@ -1372,7 +1372,7 @@
                         20.0
                     ],
                     "layer": 1,
-                    "rotate_angle": -1.0,
+                    "rotate_angle": -30.0,
                     "texture": "textures/items/metal_hammer"
                 }
             },

@@ -57,6 +57,7 @@ class Dusts:
 
 class Sticks:
     COPPER = "skybluetech:copper_stick"
+    IRON = "skybluetech:iron_stick"
     TIN = "skybluetech:tin_stick"
     SILVER = "skybluetech:silver_stick"
     PLATINUM = "skybluetech:platinum_stick"
@@ -135,6 +136,7 @@ METAL_HAMMER = "skybluetech:metal_hammer"
 REDSTONEFLUX_CORE = "skybluetech:redstoneflux_core"
 RESIN = "skybluetech:resin"
 RESIN_SPOON = "skybluetech:resin_spoon"
+ROUGH_RUBBER = "skybluetech:rough_rubber"
 SKYBLUE_CORE = "skybluetech:skyblue_core"
 SUNFLOWER_SEEDS = "skybluetech:sunflower_seeds"
 TRANSMITTER_WRENCH = "skybluetech:transmitter_wrench"

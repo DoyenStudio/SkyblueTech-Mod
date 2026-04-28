@@ -25,6 +25,19 @@ class Wire:
     CREATIVE_INSULATED = "skybluetech:wire_insulated_creative"
 
 
+class Ore:
+    TIN = "skybluetech:tin_ore"
+    LEAD = "skybluetech:lead_ore"
+    NICKEL = "skybluetech:nickel_ore"
+    PLATINUM = "skybluetech:platinum_ore"
+    SILVER = "skybluetech:silver_ore"
+    TIN_DEEPSLATE = "skybluetech:deepslate_tin_ore"
+    LEAD_DEEPSLATE = "skybluetech:deepslate_lead_ore"
+    NICKEL_DEEPSLATE = "skybluetech:deepslate_nickel_ore"
+    PLATINUM_DEEPSLATE = "skybluetech:deepslate_platinum_ore"
+    SILVER_DEEPSLATE = "skybluetech:deepslate_silver_ore"
+
+
 class Tank:
     BRONZE = "skybluetech:tank_bronze"
     INVAR = "skybluetech:tank_invar"

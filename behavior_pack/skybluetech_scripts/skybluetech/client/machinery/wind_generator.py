@@ -12,7 +12,13 @@ from skybluetech_scripts.tooldelta.api.client import (
     RebuildRenderForOneActor,
     SetEntityShadowShow,
 )
-from ...common.define.client_molangs import (
+from ...common.events.machinery.wind_generator import (
+    WindGeneratorStatesRequest,
+    WindGeneratorStatesUpdate,
+)
+from ...common.define.id_enum.machinery import WIND_GENERATOR as MACHINE_ID
+from ...common.utils.block_sync import BlockSync
+from .utils.client_molangs import (
     FACE,
     ANIM_SPEED,
     IS_BASE_BLOCK,
@@ -21,12 +27,6 @@ from ...common.define.client_molangs import (
     WIRE_CONNECT_SOUTH,
     WIRE_CONNECT_WEST,
 )
-from ...common.events.machinery.wind_generator import (
-    WindGeneratorStatesRequest,
-    WindGeneratorStatesUpdate,
-)
-from ...common.define.id_enum.machinery import WIND_GENERATOR as MACHINE_ID
-from ...common.utils.block_sync import BlockSync
 from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
 PaddleEnum = WindGeneratorStatesUpdate

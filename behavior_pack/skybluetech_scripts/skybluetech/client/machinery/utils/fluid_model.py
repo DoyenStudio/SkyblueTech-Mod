@@ -6,8 +6,8 @@ from skybluetech_scripts.tooldelta.api.client import (
     SetEntityShadowShow,
     RebuildRenderForOneActor,
 )
-from ....common.define.client_molangs import Y_SCALE
 from ....common.define.fluids.gas_enum import IsGas
+from .client_molangs import Y_SCALE
 
 
 def GetFluidTexturePath(fluid_id):

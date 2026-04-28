@@ -341,6 +341,27 @@
                         74
                     ]
                 }
+            },
+            {
+                "text_content@richer_text.RicherTextPanel": {
+                    "$font_scale_factor": 1.4,
+                    "$text_color": [
+                        0.2588,
+                        0.2588,
+                        0.2588
+                    ],
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "layer": 5,
+                    "offset": [
+                        0,
+                        110
+                    ],
+                    "size": [
+                        "100%+-16px",
+                        "100%+-116px"
+                    ]
+                }
             }
         ]
     },

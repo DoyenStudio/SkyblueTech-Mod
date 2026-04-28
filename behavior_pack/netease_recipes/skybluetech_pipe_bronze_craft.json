@@ -1,0 +1,27 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:pipe_bronze_craft"
+        },
+        "key": {
+            "A": {
+                "data": 0,
+                "item": "skybluetech:bronze_plate"
+            }
+        },
+        "pattern": [
+            " A ",
+            "A A",
+            " A "
+        ],
+        "result": {
+            "count": 2,
+            "data": 0,
+            "item": "skybluetech:pipe_bronze"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

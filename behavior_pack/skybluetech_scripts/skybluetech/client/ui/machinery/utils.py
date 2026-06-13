@@ -1,3 +1,4 @@
+# coding=utf-8
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
 from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName

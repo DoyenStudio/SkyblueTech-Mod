@@ -13,6 +13,24 @@ K_OUTPUT_ITEM_ID = "st:output_item_id"
 
 recipes = RecipesCollection(
     id_enum.MACHINERY_WORKSTATION,
+    # air compressor
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            1: Input(id_enum.Pipe.BRONZE),
+            2: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            3: Input("minecraft:iron_bars"),
+            4: Input(id_enum.AIR_COMPRESS_UNIT),
+            5: Input("minecraft:iron_bars"),
+            6: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            7: Input(id_enum.Pipe.BRONZE),
+            8: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+        },
+        id_enum.AIR_COMPRESSOR,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
     # alloy furnace
     MRecipe(
         {

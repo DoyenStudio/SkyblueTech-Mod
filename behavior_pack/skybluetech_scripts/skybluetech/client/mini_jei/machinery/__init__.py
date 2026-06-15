@@ -1,5 +1,6 @@
 # coding=utf-8
 from . import (
+    air_compressor,
     default,
     distillation_chamber,
     freezer,

@@ -1,5 +1,5 @@
 {
-    "resource_pack_name": "vanilla",
+    "resource_pack_name": "skybluetech",
     "texture_data": {
         "bedrock_lava_drill_controller_side": {
             "textures": "textures/machines/bedrock_lava_drill_controller_side"
@@ -9,6 +9,9 @@
         },
         "skybluetech:alloy_furnace_front_active": {
             "textures": "textures/machines/alloy_furnace_front_active"
+        },
+        "skybluetech:air_compressor": {
+            "textures": "textures/models/air_compressor_texture"
         },
         "skybluetech:aluminum_ore": {
             "textures": "textures/blocks/ore/aluminum_ore"

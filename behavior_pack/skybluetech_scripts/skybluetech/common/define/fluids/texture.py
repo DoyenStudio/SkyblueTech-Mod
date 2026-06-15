@@ -2,6 +2,7 @@ from ..id_enum import fluids
 
 
 FLUID_COLORS_AND_TEXTURES = {
+    fluids.Common.COMPRESSED_AIR: ((240, 240, 240), 4),
     fluids.Common.DISTILLED_WATER: ((0, 229, 255), 3),
     fluids.DeepLava.HEAVY_LAVA: ((168, 36, 36), 0),
     fluids.Common.HYDROGEN: ((220, 240, 255), 4),

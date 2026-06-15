@@ -1,5 +1,6 @@
 {
     "ui_defs": [
+        "ui/AirCompressorUI.json",
         "ui/AlloyFurnaceUI.json",
         "ui/AssemblerUI.json",
         "ui/BatteryMatrixUI.json",

@@ -11,6 +11,7 @@ class Acid(SimpleEnum):
 class CommonGas(SimpleEnum):
     "对流体管道无特殊要求的气体"
 
+    COMPRESSED_AIR = "skybluetech:compressed_air"
     HYDROGEN = "skybluetech:hydrogen"
     METHANE = "skybluetech:methane"
 
@@ -88,6 +89,7 @@ all_fluids = [
     DeepLava.HEAVY_LAVA,
     DeepLava.MID_LAVA,
     DeepLava.LIGHT_LAVA,
+    Common.COMPRESSED_AIR,
     Common.RAW_OIL,
     Common.LUBRICANT,
     Common.METHANE,

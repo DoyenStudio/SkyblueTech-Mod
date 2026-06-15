@@ -1,4 +1,6 @@
+# coding=utf-8
 ALLOY_FURNACE = "skybluetech:alloy_furnace"
+AIR_COMPRESSOR = "skybluetech:air_compressor"
 ASSEMBLER = "skybluetech:assembler"
 BATTERY_MATRIX_CONTROLLER = "skybluetech:battery_matrix_controller"
 BATTERY_MATRIX_CORE = "skybluetech:battery_matrix_core"
@@ -54,6 +56,7 @@ WIRELESS_RF_TRANSPORTER = "skybluetech:wireless_rf_transporter"
 
 ALL_MACHINES = {
     ALLOY_FURNACE,
+    AIR_COMPRESSOR,
     ASSEMBLER,
     BATTERY_MATRIX_CONTROLLER,
     BATTERY_MATRIX_CORE,

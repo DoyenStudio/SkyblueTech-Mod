@@ -1,0 +1,127 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7可用于压缩空气并输出压缩空气流体。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:block_container": {
+                "container_size": 4,
+                "custom_description": "空气压缩机",
+                "screen_name": "AirCompressorUI.main"
+            },
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.air_compressor"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "skybluetech:air_compressor"
+                }
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_appliance": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_machine": {},
+            "tag:skybluetech_fluid_container": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "base_block": "netease_container",
+            "identifier": "skybluetech:air_compressor",
+            "states": {
+                "skybluetech:active": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('skybluetech:active')",
+                "components": {
+                    "minecraft:light_emission": 0
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:active')",
+                "components": {
+                    "minecraft:light_emission": 0
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

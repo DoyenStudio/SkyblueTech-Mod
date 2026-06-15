@@ -1,3 +1,5 @@
+# coding=utf-8
+from .air_compressor import AirCompressorUI
 from .alloy_furnace import AlloyFurnaceUI
 from .assembler import AssemblerUI
 from .battery_matrix import BatteryMatrixUI

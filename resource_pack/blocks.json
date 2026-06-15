@@ -14,6 +14,9 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:air_compressor": {
+        "sound": "iron"
+    },
     "skybluetech:aluminum_ore": {
         "textures": "skybluetech:aluminum_ore"
     },
@@ -106,6 +109,10 @@
     "skybluetech:deepslate_lava": {
         "blockshape": "water",
         "textures": "skybluetech:deepslate_lava_still"
+    },
+    "skybluetech:compressed_air": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
     },
     "skybluetech:deepslate_lava_vibrator": {
         "client_entity": {},
@@ -208,6 +215,10 @@
             "side": "skybluetech:deepslate_lava_flow",
             "up": "skybluetech:deepslate_lava_still"
         }
+    },
+    "skybluetech:flowing_compressed_air": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
     },
     "skybluetech:flowing_distilled_water": {
         "blockshape": "water",

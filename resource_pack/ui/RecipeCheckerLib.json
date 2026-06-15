@@ -1,4 +1,152 @@
 {
+    "air_compressor_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            60.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        32,
+                        0
+                    ],
+                    "size": [
+                        32,
+                        50
+                    ]
+                }
+            },
+            {
+                "databoard": {
+                    "type": "image",
+                    "offset": [
+                        -36.0,
+                        0.0
+                    ],
+                    "size": [
+                        40.0,
+                        50.0
+                    ],
+                    "layer": 1,
+                    "clip_direction": "left",
+                    "clip_ratio": 0.0,
+                    "nineslice_size": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg",
+                    "controls": [
+                        {
+                            "tip0": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    1.0,
+                                    1.0
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_scale_factor": 0.8,
+                                "font_type": "default",
+                                "text": "当前世界：",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "dim_type_label": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    1.0,
+                                    9.0
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_scale_factor": 0.8,
+                                "font_type": "default",
+                                "text": "主世界",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "tip1": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    1.0,
+                                    32.0
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_scale_factor": 0.8,
+                                "font_type": "default",
+                                "text": "正在抽取：",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "air_type_label": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    1.0,
+                                    40.0
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_scale_factor": 0.8,
+                                "font_type": "default",
+                                "text": "压缩空气",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "offset": [
+                        0,
+                        0
+                    ]
+                }
+            }
+        ]
+    },
     "alloy_furnace_recipes": {
         "type": "panel",
         "size": [

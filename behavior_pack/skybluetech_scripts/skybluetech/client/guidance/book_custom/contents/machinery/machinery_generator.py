@@ -44,7 +44,7 @@ reacting_thermal_generator = PageGroup(
     [
         TextPage(
             "热力反应发电机",
-            '热力反应发电机可以通过输入物品和流体和流体进行<text color="§c" t="燃烧反应">并产生能量， 可在发电的同时低效产出化学产物。',
+            '热力反应发电机可以通过输入物品和流体进行<text color="§c" t="燃烧反应">并产生能量， 可在发电的同时低效产出化学产物。',
         ),
         MachineryWorkstationRecipePage(id_enum.REACTING_THERMAL_GENERATOR),
     ],

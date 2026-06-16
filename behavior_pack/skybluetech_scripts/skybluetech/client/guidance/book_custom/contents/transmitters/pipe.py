@@ -26,6 +26,11 @@ pipes_description = PageGroup(
             '在白铜管道的基础上支持了<text color="§c" t="深层熔岩、 轻、 中、 重熔岩">的运送。\n\n<style color="§6"><link id="a" text="查看配方">',
             hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.Pipe.ULTRAHEATINUM)},
         ),
+        TextPage(
+            "耐酸流体管道",
+            '不易被酸腐蚀的管道， 可以运输液酸或其它酸性流体。\n\n<style color="§6"><link id="a" text="查看配方">',
+            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.Pipe.ACIDPROOF)},
+        ),
     ],
 )
 
@@ -45,6 +50,9 @@ pipe_entry = PageGroup(
             ),
             TOCPageSection(
                 id_enum.Pipe.ULTRAHEATINUM, 0, "耐热流体管道", pipes_description, 2
+            ),
+            TOCPageSection(
+                id_enum.Pipe.ACIDPROOF, 0, "耐酸流体管道", pipes_description, 3
             ),
         ]),
     ],

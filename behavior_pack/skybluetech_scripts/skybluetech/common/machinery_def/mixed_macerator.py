@@ -27,7 +27,7 @@ recipes = RecipesCollection(
             1: Input("minecraft:sand", 2),
             2: Input("minecraft:clay_ball"),
         },
-        Output(id_enum.Dusts.CONCRETE, 4),
+        Output(id_enum.Dusts.CONCRETE, 8),
         40,
         160,
     ),

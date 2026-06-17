@@ -48,4 +48,14 @@ recipes = RecipesCollection(
         tick_duration=50,
         power_cost=30,
     ),
+    MixerRecipe(
+        "minecraft:water",
+        1000,
+        id_enum.Dusts.CONCRETE,
+        4,
+        "minecraft:concrete",
+        1,
+        tick_duration=50,
+        power_cost=30,
+    ),
 )  # type: RecipesCollection[MachineRecipe]

@@ -20,7 +20,7 @@
                 "value": true
             },
             "netease:block_container": {
-                "container_size": 5,
+                "container_size": 4,
                 "custom_description": "高热流体离心机",
                 "screen_name": "MagmaCentrifugeUI.main"
             },

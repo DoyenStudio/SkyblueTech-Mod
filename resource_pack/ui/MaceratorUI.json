@@ -1,16 +1,4 @@
 {
-    "macerator_progress@SkybluePanelLib.ProgressBar": {
-        "$bg_image": "textures/ui/macerator_prgs_bg",
-        "$mask_image": "textures/ui/macerator_prgs_top",
-        "offset": [
-            0,
-            -42
-        ],
-        "size": [
-            44,
-            24
-        ]
-    },
     "macerator_ui": {
         "type": "panel",
         "controls": [
@@ -137,13 +125,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@MaceratorUI.macerator_progress": {}
-                                                },
-                                                {
                                                     "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
                                                         "offset": [
                                                             71,
                                                             0
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
+                                                        "$bg_image": "textures/ui/macerator_prgs_bg",
+                                                        "$mask_image": "textures/ui/macerator_prgs_top",
+                                                        "offset": [
+                                                            0,
+                                                            -42
+                                                        ],
+                                                        "size": [
+                                                            40,
+                                                            20
                                                         ]
                                                     }
                                                 }

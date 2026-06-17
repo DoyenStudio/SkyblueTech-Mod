@@ -36,6 +36,7 @@ MAGMA_CENTRIFUGE = "skybluetech:magma_centrifuge"
 MAGMA_FURNACE = "skybluetech:magma_furnace"
 METAL_PRESS = "skybluetech:metal_press"
 MINI_MINER = "skybluetech:mini_miner"
+MIXED_MACERATOR = "skybluetech:mixed_macerator"
 MIXER = "skybluetech:mixer"
 OIL_EXTRACTOR = "skybluetech:oil_extractor"
 PUMP = "skybluetech:pump"
@@ -92,6 +93,7 @@ ALL_MACHINES = {
     MAGMA_FURNACE,
     METAL_PRESS,
     MINI_MINER,
+    MIXED_MACERATOR,
     MIXER,
     OIL_EXTRACTOR,
     REACTING_THERMAL_GENERATOR,

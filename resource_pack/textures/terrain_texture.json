@@ -311,6 +311,12 @@
         "skybluetech:machinery_workstation": {
             "textures": "textures/models/machinery_workstation_texture"
         },
+        "skybluetech:mixed_macerator_front": {
+            "textures": "textures/machines/mixed_macerator_front"
+        },
+        "skybluetech:mixed_macerator_front_active": {
+            "textures": "textures/machines/flipbook_textures/mixed_macerator_front_active"
+        },
         "skybluetech:magma_furnace_front": {
             "textures": "textures/machines/magma_furnace_front"
         },

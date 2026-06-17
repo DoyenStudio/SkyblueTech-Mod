@@ -47,6 +47,7 @@
         "ui/MetalPressUI.json",
         "ui/MiniJEIItemListUI.json",
         "ui/MiniMinerUI.json",
+        "ui/MixedMaceratorUI.json",
         "ui/MixerUI.json",
         "ui/NeteaseContainerUI.json",
         "ui/ObjUpVeinMinerSettingsUI.json",

@@ -33,6 +33,7 @@ from .magma_furnace import MagmaFurnaceUI
 from .magma_centrifuge import MagmaCentrifugeUI
 from .metal_press import MetalPressUI
 from .mini_miner import MiniMinerUI
+from .mixed_macerator import MixedMaceratorUI
 from .mixer import MixerUI
 from .oil_extractor import OilExtractorUI
 from .pump import PumpUI

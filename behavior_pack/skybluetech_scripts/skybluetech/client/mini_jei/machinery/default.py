@@ -8,6 +8,7 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     magma_centrifuge,
     magma_furnace,
     metal_press,
+    mixed_macerator,
     mixer,
     oil_extractor,
     reacting_thermal_generator,
@@ -53,6 +54,16 @@ macerator.MaceratorRecipe.SetRenderer(
         {
             "render_ui_def_name": "RecipeCheckerLib.macerator_recipes",
             "recipe_icon_id": machinery.MACERATOR,
+        },
+    )
+)
+mixed_macerator.MixedMaceratorRecipe.SetRenderer(
+    type(
+        "MixedMaceratorRecipeRenderer",
+        (MachineRecipeRenderer,),
+        {
+            "render_ui_def_name": "RecipeCheckerLib.mixed_macerator_recipes",
+            "recipe_icon_id": machinery.MIXED_MACERATOR,
         },
     )
 )

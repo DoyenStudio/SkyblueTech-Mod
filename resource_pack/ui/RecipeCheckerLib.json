@@ -288,7 +288,9 @@
                 }
             },
             {
-                "progress@CompressorUI.compressor_progress": {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/compressor_bg",
+                    "$mask_image": "textures/ui/compressor_mask",
                     "offset": [
                         0,
                         0
@@ -1539,10 +1541,16 @@
                 }
             },
             {
-                "progress@MaceratorUI.macerator_progress": {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/macerator_prgs_bg",
+                    "$mask_image": "textures/ui/macerator_prgs_top",
                     "offset": [
                         0,
                         0
+                    ],
+                    "size": [
+                        40,
+                        20
                     ]
                 }
             }
@@ -2051,6 +2059,75 @@
                     "size": [
                         50,
                         30
+                    ]
+                }
+            }
+        ]
+    },
+    "mixed_macerator_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            80.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -30,
+                        -20
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -30,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.item_displayer": {
+                    "layer": 1,
+                    "offset": [
+                        30,
+                        0
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/macerator_prgs_bg",
+                    "$mask_image": "textures/ui/macerator_prgs_top",
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": [
+                        40,
+                        20
                     ]
                 }
             }

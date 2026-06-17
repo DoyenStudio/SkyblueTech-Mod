@@ -534,6 +534,17 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:mixed_macerator": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:mixed_macerator_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
+    },
     "skybluetech:machinery_frame": {
         "textures": {
             "down": "skybluetech:frame_bottom",

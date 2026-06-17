@@ -34,6 +34,7 @@ from .magma_furnace import MagmaFurnace
 from .magma_centrifuge import MagmaCentrifuge
 from .metal_press import MetalPress
 from .mini_miner import MiniMiner
+from .mixed_macerator import MixedMacerator
 from .mixer import Mixer
 from .oil_extractor import OilExtractor
 from .pump import Pump

@@ -177,6 +177,18 @@ metal_press = PageGroup(
     ],
 )
 
+mixed_macerator = PageGroup(
+    "mixed_macerator_description",
+    [
+        TextPage(
+            "混合研磨机",
+            "可以将多种固体进行混合研磨得到产物。\n\n输入物需要放在固定的槽位， 不能交换摆放。",
+        ),
+        MachineryWorkstationRecipePage(id_enum.MIXED_MACERATOR),
+    ],
+)
+
+
 mixer = PageGroup(
     "mixer_description",
     [

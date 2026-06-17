@@ -112,6 +112,12 @@ machinery_production_toc = PageGroup(
                     machinery_production.metal_press,
                 ),
                 TOCPageSection(
+                    id_enum.MIXED_MACERATOR,
+                    0,
+                    "混合研磨机",
+                    machinery_production.mixed_macerator,
+                ),
+                TOCPageSection(
                     id_enum.MIXER,
                     0,
                     "固液搅拌机",

@@ -1,5 +1,8 @@
 {
-    "compressor_ui": {
+    "main@common.inventory_screen_common": {
+        "$screen_content": "MixedMaceratorUI.mixed_macerator_ui"
+    },
+    "mixed_macerator_ui": {
         "type": "panel",
         "layer": 1,
         "controls": [
@@ -76,7 +79,7 @@
                                                         "font_scale_factor": 1.4,
                                                         "font_type": "default",
                                                         "shadow": true,
-                                                        "text": "压缩机",
+                                                        "text": "混合研磨机",
                                                         "text_alignment": "center"
                                                     }
                                                 },
@@ -84,7 +87,7 @@
                                                     "input_slot0": {
                                                         "type": "stack_panel",
                                                         "offset": [
-                                                            -35.0,
+                                                            -28.0,
                                                             -60.0
                                                         ],
                                                         "size": [
@@ -105,7 +108,7 @@
                                                     "input_slot1": {
                                                         "type": "stack_panel",
                                                         "offset": [
-                                                            -35.0,
+                                                            -28.0,
                                                             -42.0
                                                         ],
                                                         "size": [
@@ -126,7 +129,7 @@
                                                     "input_slot2": {
                                                         "type": "stack_panel",
                                                         "offset": [
-                                                            -35.0,
+                                                            -28.0,
                                                             -24.0
                                                         ],
                                                         "size": [
@@ -147,7 +150,7 @@
                                                     "output_slot": {
                                                         "type": "stack_panel",
                                                         "offset": [
-                                                            37.0,
+                                                            28.0,
                                                             -42.0
                                                         ],
                                                         "size": [
@@ -174,20 +177,24 @@
                                                     }
                                                 },
                                                 {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/ui/compressor_bg",
-                                                        "$mask_image": "textures/ui/compressor_mask",
-                                                        "offset": [
-                                                            0,
-                                                            -42
-                                                        ]
-                                                    }
-                                                },
-                                                {
                                                     "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
                                                         "offset": [
                                                             71,
                                                             0
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
+                                                        "$bg_image": "textures/ui/macerator_prgs_bg",
+                                                        "$mask_image": "textures/ui/macerator_prgs_top",
+                                                        "offset": [
+                                                            0,
+                                                            -42
+                                                        ],
+                                                        "size": [
+                                                            40,
+                                                            20
                                                         ]
                                                     }
                                                 }
@@ -239,8 +246,5 @@
             }
         ]
     },
-    "main@common.inventory_screen_common": {
-        "$screen_content": "CompressorUI.compressor_ui"
-    },
-    "namespace": "CompressorUI"
+    "namespace": "MixedMaceratorUI"
 }

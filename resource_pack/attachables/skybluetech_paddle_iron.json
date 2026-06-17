@@ -14,8 +14,8 @@
                 "controller.render.item_default"
             ],
             "textures": {
-                "default": "textures/models/paddle_iron_texture",
-                "enchanted": "textures/models/paddle_iron_texture"
+                "default": "textures/models/paddles/paddle_iron_texture",
+                "enchanted": "textures/models/paddles/paddle_iron_texture"
             }
         }
     }

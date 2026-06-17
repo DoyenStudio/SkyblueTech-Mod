@@ -593,22 +593,6 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
-    # redstone_furnace
-    MRecipe(
-        {
-            1: Input("minecraft:furnace"),
-            3: Input(id_enum.HEAT_PLATE),
-            4: Input(id_enum.MACHINERY_FRAME),
-            5: Input(tag_enum.PlateTag.COPPER, is_tag=True),
-            6: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            7: Input(id_enum.ControlCircuit.BASIC),
-            8: Input(tag_enum.PlateTag.TIN, is_tag=True),
-        },
-        id_enum.REDSTONE_FURNACE,
-        MRecipe.LEVEL_IRON,
-        MRecipe.LEVEL_IRON,
-        8,
-    ),
     # reacting thermal generator
     MRecipe(
         {
@@ -627,6 +611,22 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         12,
     ),
+    # redstone furnace
+    MRecipe(
+        {
+            1: Input("minecraft:furnace"),
+            3: Input(id_enum.HEAT_PLATE),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            6: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            7: Input(id_enum.ControlCircuit.BASIC),
+            8: Input(tag_enum.PlateTag.TIN, is_tag=True),
+        },
+        id_enum.REDSTONE_FURNACE,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # redstone generator
     MRecipe(
         {
@@ -639,6 +639,24 @@ recipes = RecipesCollection(
             8: Input(tag_enum.PlateTag.TIN, is_tag=True),
         },
         id_enum.REDSTONE_GENERATOR,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
+    # redstoneflux brake
+    MRecipe(
+        {
+            0: Input("minecraft:redstone"),
+            1: Input("minecraft:quartz"),
+            2: Input("minecraft:redstone"),
+            3: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            4: Input(id_enum.REDSTONEFLUX_CORE),
+            5: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            6: Input(id_enum.Wire.TIN_INSULATED),
+            7: Input("minecraft:target"),
+            8: Input(id_enum.Wire.TIN_INSULATED),
+        },
+        id_enum.REDSTONEFLUX_BRAKE,
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
         8,

@@ -6,6 +6,8 @@ class Acid(SimpleEnum):
     "酸性流体"
 
     SULFURIC_ACID = "skybluetech:sulfuric_acid"
+    CONCENTRATED_SULFURIC_ACID = "skybluetech:concentrated_sulfuric_acid"
+    SO3 = "skybluetech:so3"
 
 
 class CommonGas(SimpleEnum):

@@ -79,7 +79,7 @@ class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
         else:
             self.light_level = GetSkylightLevelClear(localtime)
         if can_generate:
-            self.power_output = round(self.light_level)
+            self.power_output = round(self.light_level / 2.0)
         else:
             self.power_output = 0
 

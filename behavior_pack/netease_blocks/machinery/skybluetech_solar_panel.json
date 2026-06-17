@@ -20,7 +20,7 @@
             },
             "netease:block_container": {
                 "container_size": 1,
-                "custom_description": "太阳能发电机",
+                "custom_description": "太阳能电池板",
                 "screen_name": "SolarPanelUI.main"
             },
             "netease:block_entity": {

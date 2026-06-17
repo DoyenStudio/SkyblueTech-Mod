@@ -27,7 +27,7 @@ class FluidModel:
 
     def _try_rebuild(self):
         last_is_gas = self._last_is_gas
-        now_is_gas = self.fluid_id in Gas.all()
+        now_is_gas = self.fluid_id in Gas.all_sub()
         if last_is_gas is None or last_is_gas != now_is_gas:
             if last_is_gas is not None:
                 self.Destroy()

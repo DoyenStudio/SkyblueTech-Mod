@@ -2,16 +2,16 @@ from ..id_enum import fluids
 
 
 FLUID_COLORS_AND_TEXTURES = {
-    fluids.Common.COMPRESSED_AIR: ((240, 240, 240), 4),
-    fluids.Common.DISTILLED_WATER: ((0, 229, 255), 3),
+    fluids.CommonGas.COMPRESSED_AIR: ((240, 240, 240), 4),
+    fluids.CommonLiquid.DISTILLED_WATER: ((0, 229, 255), 3),
     fluids.DeepLava.HEAVY_LAVA: ((168, 36, 36), 0),
-    fluids.Common.HYDROGEN: ((220, 240, 255), 4),
+    fluids.CommonGas.HYDROGEN: ((220, 240, 255), 4),
     fluids.DeepLava.LIGHT_LAVA: ((255, 60, 0), 0),
     fluids.DeepLava.MID_LAVA: ((255, 0, 0), 0),
-    fluids.Common.METHANE: ((255, 240, 200), 4),
-    fluids.Common.LUBRICANT: ((255, 207, 0), 3),
-    fluids.Common.RAW_OIL: ((44, 39, 28), 3),
-    fluids.Common.VEGETABLE_OIL: ((170, 255, 0), 3),
+    fluids.CommonGas.METHANE: ((255, 240, 200), 4),
+    fluids.CommonOil.LUBRICANT: ((255, 207, 0), 3),
+    fluids.CommonOil.RAW_OIL: ((44, 39, 28), 3),
+    fluids.CommonOil.VEGETABLE_OIL: ((170, 255, 0), 3),
     fluids.Acid.SULFURIC_ACID: ((255, 216, 216), 3),
     fluids.Acid.CONCENTRATED_SULFURIC_ACID: ((255, 216, 216), 3),
     fluids.Acid.SO3: ((255, 216, 216), 3),
@@ -44,7 +44,7 @@ NONCOLOR_TEXTURES = {
     "minecraft:flowing_lava": "textures/fluid/flowing_lava",
     #
     fluids.DeepLava.DEEPSLATE_LAVA: "textures/fluid/deepslate_lava_still",
-    fluids.Common.METHANE_MUD: "textures/fluid/methane_mud",
+    fluids.CommonLiquid.METHANE_MUD: "textures/fluid/methane_mud",
 }
 
 

@@ -3,7 +3,7 @@ from ..define.id_enum import fluids
 
 K_DIGGING_POS = "st:digging_pos"
 K_WORK_MODE = "st:work_mode"
-USE_FLUID = fluids.Common.LUBRICANT
+USE_FLUID = fluids.CommonOil.LUBRICANT
 VOLUME_COST_ONCE = 5
 STORE_RF_MAX = 10000
 MAX_FLUID_VOLUME = 2000

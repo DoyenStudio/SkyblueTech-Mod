@@ -20,11 +20,17 @@ CAPACITY_MAPPING = {
     Pipe.ULTRAHEATINUM: 1000,
 }
 PIPE_CAN_TRANSMIT_FLUID_MAPPING = {
-    Pipe.ACIDPROOF: lambda f: f in fluids.Common.all() or f in fluids.Acid.all(),
-    Pipe.BRONZE: lambda f: f in fluids.Common.all(),
-    Pipe.CUPRONICKEL: lambda f: f in fluids.Common.all() or f in fluids.HotFluid.all(),
+    Pipe.ACIDPROOF: lambda f: (
+        f in fluids.Common.all_sub() or f in fluids.Acid.all_sub()
+    ),
+    Pipe.BRONZE: lambda f: f in fluids.Common.all_sub(),
+    Pipe.CUPRONICKEL: lambda f: (
+        f in fluids.Common.all_sub() or f in fluids.HotFluid.all_sub()
+    ),
     Pipe.ULTRAHEATINUM: lambda f: (
-        f in fluids.Common.all() or f in fluids.ExtremeHotFluid.all()
+        f in fluids.Common.all_sub()
+        or f in fluids.HotFluid.all_sub()
+        or f in fluids.ExtremeHotFluid.all_sub()
     ),
 }
 

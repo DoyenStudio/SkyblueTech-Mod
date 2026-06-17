@@ -207,7 +207,7 @@ class FluidDisplayer(object):
                 FormatFluidVolume(max_volume),
             )
         )
-        if fluid_id is not None and fluid_id in Gas.all():
+        if fluid_id is not None and fluid_id in Gas.all_sub():
             fluid_img.SetAnchorFrom("top_middle")
             fluid_img.SetAnchorTo("top_middle")
             fluid_img.SetFullSize(

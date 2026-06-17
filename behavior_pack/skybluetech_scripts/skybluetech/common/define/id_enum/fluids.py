@@ -10,20 +10,16 @@ class Acid(SimpleEnum):
     SO3 = "skybluetech:so3"
 
 
-class CommonGas(SimpleEnum):
-    "对流体管道无特殊要求的气体"
+class Gas(SimpleEnum):
+    "气体"
 
-    COMPRESSED_AIR = "skybluetech:compressed_air"
-    HYDROGEN = "skybluetech:hydrogen"
-    METHANE = "skybluetech:methane"
+    pass
 
 
-class CommonOil(SimpleEnum):
-    "对流体管道无特殊要求的油类"
+class Oil(SimpleEnum):
+    "油类"
 
-    RAW_OIL = "skybluetech:raw_oil"
-    VEGETABLE_OIL = "skybluetech:vegetable_oil"
-    LUBRICANT = "skybluetech:lubricant"
+    pass
 
 
 class Vanilla(SimpleEnum):
@@ -33,29 +29,62 @@ class Vanilla(SimpleEnum):
     LAVA = "minecraft:lava"
 
 
-class Common(CommonGas, CommonOil):
+class Common(SimpleEnum):
     "对流体管道无特殊要求的流体"
-
-    WATER = Vanilla.WATER
-    DISTILLED_WATER = "skybluetech:distilled_water"
-
-    METHANE_MUD = "skybluetech:methane_mud"
-
-
-class Gas(CommonGas):
-    "气体"
 
     pass
 
 
-class DeepLava(SimpleEnum):
+class CommonGas(Common, Gas):
+    "对流体管道无特殊要求的气体"
+
+    COMPRESSED_AIR = "skybluetech:compressed_air"
+    HYDROGEN = "skybluetech:hydrogen"
+    METHANE = "skybluetech:methane"
+
+
+class CommonOil(Common, Oil):
+    "对流体管道无特殊要求的油类"
+
+    RAW_OIL = "skybluetech:raw_oil"
+    VEGETABLE_OIL = "skybluetech:vegetable_oil"
+    LUBRICANT = "skybluetech:lubricant"
+
+
+class CommonLiquid(Common):
+    "对流体管道无特殊要求的液体"
+
+    WATER = Vanilla.WATER
+    DISTILLED_WATER = "skybluetech:distilled_water"
+    METHANE_MUD = "skybluetech:methane_mud"
+
+
+class HotFluid(SimpleEnum):
+    "需要白铜流体管道运输的流体"
+
+    pass
+
+
+class ExtremeHotFluid(SimpleEnum):
+    "需要耐热流体管道运输的流体"
+
+    pass
+
+
+class HotLava(HotFluid):
+    "需要白铜流体管道运输的熔岩"
+
+    LAVA = Vanilla.LAVA
+
+
+class DeepLava(ExtremeHotFluid):
     DEEPSLATE_LAVA = "skybluetech:deepslate_lava"
     HEAVY_LAVA = "skybluetech:heavy_lava"
     MID_LAVA = "skybluetech:mid_lava"
     LIGHT_LAVA = "skybluetech:light_lava"
 
 
-class Molten(SimpleEnum):
+class Molten(HotFluid):
     "熔融流体"
 
     EARTH = "skybluetech:molten_earth"
@@ -72,32 +101,20 @@ class Molten(SimpleEnum):
     PLATINUM = "skybluetech:molten_platinum"
 
 
-class HotFluid(Molten):
-    "需要白铜流体管道运输的流体"
-
-    LAVA = Vanilla.LAVA
-
-
-class ExtremeHotFluid(HotFluid, DeepLava, Molten):
-    "需要耐热流体管道运输的流体"
-
-    pass
-
-
 all_fluids = [
-    Vanilla.WATER,
+    CommonLiquid.WATER,
     Vanilla.LAVA,
     DeepLava.DEEPSLATE_LAVA,
     DeepLava.HEAVY_LAVA,
     DeepLava.MID_LAVA,
     DeepLava.LIGHT_LAVA,
-    Common.COMPRESSED_AIR,
-    Common.RAW_OIL,
-    Common.LUBRICANT,
-    Common.METHANE,
-    Common.METHANE_MUD,
-    Common.DISTILLED_WATER,
-    Common.VEGETABLE_OIL,
+    CommonGas.COMPRESSED_AIR,
+    CommonOil.RAW_OIL,
+    CommonOil.LUBRICANT,
+    CommonGas.METHANE,
+    CommonLiquid.METHANE_MUD,
+    CommonLiquid.DISTILLED_WATER,
+    CommonOil.VEGETABLE_OIL,
     Molten.EARTH,
     Molten.IMPURITY,
     Molten.COPPER,

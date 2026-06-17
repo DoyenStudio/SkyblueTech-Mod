@@ -10,7 +10,7 @@ MAX_FLUID_VOLUME = 1000
 recipes = RecipesCollection(
     METAL_PRESS,
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         "minecraft:copper_ingot",
         1,
@@ -20,7 +20,7 @@ recipes = RecipesCollection(
         power_cost=40,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         "minecraft:iron_ingot",
         1,
@@ -30,7 +30,7 @@ recipes = RecipesCollection(
         power_cost=40,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.TIN,
         1,
@@ -40,7 +40,7 @@ recipes = RecipesCollection(
         power_cost=40,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.SILVER,
         1,
@@ -50,7 +50,7 @@ recipes = RecipesCollection(
         power_cost=40,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.PLATINUM,
         1,
@@ -60,7 +60,7 @@ recipes = RecipesCollection(
         power_cost=40,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.STEEL,
         1,
@@ -70,7 +70,7 @@ recipes = RecipesCollection(
         power_cost=50,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.BRONZE,
         1,
@@ -80,7 +80,7 @@ recipes = RecipesCollection(
         power_cost=50,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.INVAR,
         1,
@@ -90,7 +90,7 @@ recipes = RecipesCollection(
         power_cost=50,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.CUPRONICKEL,
         1,
@@ -100,7 +100,7 @@ recipes = RecipesCollection(
         power_cost=50,
     ),
     MetalPressRecipe(
-        fluids.Common.LUBRICANT,
+        fluids.CommonOil.LUBRICANT,
         10,
         Ingots.SUPERCONDUCT,
         1,

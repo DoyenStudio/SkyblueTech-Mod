@@ -350,6 +350,7 @@ class MultiBlockStructure(BaseMachine):
                 self.OnDeactiveFlagsChanged()
             self.last_destroy_flag = FLAG_OK
             self.lacked_blocks = {}
+            self.FlushDeactiveFlags()
             self.OnStructureChanged(True)
             if isinstance(self, GUIControl):
                 self.CallSync()

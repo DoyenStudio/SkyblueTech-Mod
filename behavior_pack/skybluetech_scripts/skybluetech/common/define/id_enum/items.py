@@ -40,6 +40,7 @@ class Dusts(SimpleEnum):
 
     ANCIENT_DEBRIS = "skybluetech:ancient_debris_dust"
     CARBON = "skybluetech:carbon_dust"
+    CONCRETE = "skybluetech:concrete_dust"
     OBSIDIAN = "skybluetech:obsidian_dust"
     SULFUR = "skybluetech:sulfur_dust"
 

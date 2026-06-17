@@ -41,6 +41,7 @@ class DustTag:
     CUPRONICKEL = "dusts/cupronickel"
 
     CARBON = "dusts/carbon"
+    CONCRETE = "dusts/concrete"
     LAPIS = "dusts/lapis"
     DIAMOND = "dusts/diamond"
     BIO = "dusts/bio"

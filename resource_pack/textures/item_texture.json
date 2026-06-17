@@ -64,6 +64,9 @@
         "skybluetech:carbon_dust": {
             "textures": "textures/items/dusts/carbon_dust"
         },
+        "skybluetech:concrete_dust": {
+            "textures": "textures/items/dusts/concrete_dust"
+        },
         "skybluetech:cartidge_1_model": {
             "textures": "textures/models/cartidges/cartidge_yellow"
         },

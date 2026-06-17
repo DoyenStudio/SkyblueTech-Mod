@@ -100,6 +100,7 @@ wind_generator = PageGroup(
             hyperlink_cbs={
                 "paddle": lambda _: CheckRecipes([
                     id_enum.Paddle.IRON,
+                    id_enum.Paddle.STEEL,
                 ])
             },
         ),

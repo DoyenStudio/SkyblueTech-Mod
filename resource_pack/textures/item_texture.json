@@ -331,6 +331,9 @@
         "skybluetech:paddle_iron": {
             "textures": "textures/items/paddle_iron"
         },
+        "skybluetech:paddle_steel": {
+            "textures": "textures/items/paddle_steel"
+        },
         "skybluetech:pincer_invar": {
             "textures": "textures/items/pincer_invar"
         },

@@ -1,0 +1,29 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:paddle_steel_craft"
+        },
+        "key": {
+            "A": {
+                "item": "skybluetech:steel_stick"
+            },
+            "B": {
+                "item": "skybluetech:steel_plate"
+            }
+        },
+        "pattern": [
+            " B ",
+            " A ",
+            "B B"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:paddle_steel"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

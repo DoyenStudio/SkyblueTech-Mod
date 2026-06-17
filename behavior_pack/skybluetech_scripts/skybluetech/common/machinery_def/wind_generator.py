@@ -25,5 +25,5 @@ def get_paddle_output(paddle_type):
     # type: (int) -> float
     return {
         PaddleEnum.PADDLE_IRON: 1,
-        PaddleEnum.PADDLE_STEEL: 1.4,
+        PaddleEnum.PADDLE_STEEL: 1.5,
     }.get(paddle_type, 0)

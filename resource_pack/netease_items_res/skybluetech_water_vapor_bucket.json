@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:water_vapor_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:water_vapor_bucket"
+        }
+    }
+}

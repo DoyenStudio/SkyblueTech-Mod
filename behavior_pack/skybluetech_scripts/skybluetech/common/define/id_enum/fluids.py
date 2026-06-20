@@ -41,6 +41,7 @@ class CommonGas(Common, Gas):
     COMPRESSED_AIR = "skybluetech:compressed_air"
     HYDROGEN = "skybluetech:hydrogen"
     METHANE = "skybluetech:methane"
+    WATER_VAPOR = "skybluetech:water_vapor"
 
 
 class CommonOil(Common, Oil):
@@ -112,6 +113,7 @@ all_fluids = [
     CommonOil.RAW_OIL,
     CommonOil.LUBRICANT,
     CommonGas.METHANE,
+    CommonGas.WATER_VAPOR,
     CommonLiquid.METHANE_MUD,
     CommonLiquid.DISTILLED_WATER,
     CommonOil.VEGETABLE_OIL,

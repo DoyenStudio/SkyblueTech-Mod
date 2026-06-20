@@ -253,6 +253,9 @@
         "skybluetech:methane_mud_bucket": {
             "textures": "textures/items/buckets/methane_mud_bucket"
         },
+        "skybluetech:water_vapor_bucket": {
+            "textures": "textures/items/buckets/water_vapor_bucket"
+        },
         "skybluetech:mid_lava_bucket": {
             "textures": "textures/items/buckets/mid_lava_bucket"
         },

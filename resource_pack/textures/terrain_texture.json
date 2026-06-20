@@ -332,6 +332,9 @@
         "skybluetech:methane_mud": {
             "textures": "textures/fluid/methane_mud"
         },
+        "skybluetech:water_vapor": {
+            "textures": "textures/fluid/water_vapor"
+        },
         "skybluetech:mini_miner": {
             "textures": "textures/models/mini_miner_texture"
         },

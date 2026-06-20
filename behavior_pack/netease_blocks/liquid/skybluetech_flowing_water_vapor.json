@@ -1,0 +1,22 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "liquid_color": [
+                    240,
+                    240,
+                    255,
+                    64
+                ],
+                "spread_delay": 5,
+                "spread_range": 8
+            }
+        },
+        "description": {
+            "base_block": "flowing_liquid",
+            "category": "none",
+            "identifier": "skybluetech:flowing_water_vapor"
+        }
+    }
+}

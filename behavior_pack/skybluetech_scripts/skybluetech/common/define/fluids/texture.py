@@ -9,6 +9,7 @@ FLUID_COLORS_AND_TEXTURES = {
     fluids.DeepLava.LIGHT_LAVA: ((255, 60, 0), 0),
     fluids.DeepLava.MID_LAVA: ((255, 0, 0), 0),
     fluids.CommonGas.METHANE: ((255, 240, 200), 4),
+    fluids.CommonGas.WATER_VAPOR: ((240, 240, 255), 5),
     fluids.CommonOil.LUBRICANT: ((255, 207, 0), 3),
     fluids.CommonOil.RAW_OIL: ((44, 39, 28), 3),
     fluids.CommonOil.VEGETABLE_OIL: ((170, 255, 0), 3),
@@ -33,6 +34,7 @@ TEXTURE_2_INDEX = {
     "textures/fluid/gray_lava_still": 2,
     "textures/fluid/basic_water_static": 3,
     "textures/fluid/gas": 4,
+    "textures/fluid/water_vapor": 5,
 }
 INDEX_2_TEXTUREURE = {v: k for k, v in TEXTURE_2_INDEX.items()}
 

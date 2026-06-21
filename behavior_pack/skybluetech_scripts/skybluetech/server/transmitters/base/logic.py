@@ -396,6 +396,9 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
     def delete_network(self, network):
         # type: (_NT) -> None
         "完全清除一个网络。"
+        save_network_data = getattr(network, "save_network_data", None)
+        if save_network_data is not None:
+            save_network_data()
         all_aps = network.group_inputs | network.group_outputs  # type: set[_APT]
         for ap in all_aps:
             res = self.access_points_pool.pop(
@@ -465,6 +468,88 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 self.delete_network(network)
         tmp_set = set()
         self.GetContainerNode(dim, x, y, z, tmp_set, enable_cache=False)
+
+    def refresh_transmitter_connections(self, dim, x, y, z, block_name=None):
+        # type: (int, int, int, int, str | None) -> None
+        """
+        按当前邻居方块刷新管线方块的连接状态。
+
+        区块边缘加载顺序不稳定时, 邻区块方块可能晚一点才可读取。
+        此方法只更新已能读取到的邻居, 避免把暂时未加载的邻居误写成断开。
+        """
+        if block_name is None:
+            block_name = GetBlockName(dim, (x, y, z))
+        if block_name is None or not self.transmitter_check_func(block_name):
+            return
+        states = {}  # type: dict[str, bool]
+        for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
+            neighbor_pos = (x + dx, y + dy, z + dz)
+            neighbor_name = GetBlockName(dim, neighbor_pos)
+            if neighbor_name is None:
+                continue
+            facing_key = (
+                "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
+            )
+            states[facing_key] = self.can_connect(block_name, neighbor_name)
+        if states:
+            UpdateBlockStates(dim, (x, y, z), states)
+
+    def refresh_nearby_transmitter_connections(self, dim, x, y, z):
+        # type: (int, int, int, int) -> None
+        for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
+            tx, ty, tz = x + dx, y + dy, z + dz
+            block_name = GetBlockName(dim, (tx, ty, tz))
+            if block_name is not None and self.transmitter_check_func(block_name):
+                self.refresh_transmitter_connections(dim, tx, ty, tz, block_name)
+
+    def refresh_loaded_block_entities(self, dim, block_entities):
+        # type: (int, list[dict]) -> None
+        rebuilt_nodes = set()  # type: set[PosData]
+        for block_entity_posdata in block_entities:
+            x = block_entity_posdata["posX"]
+            y = block_entity_posdata["posY"]
+            z = block_entity_posdata["posZ"]
+            blockName = block_entity_posdata["blockName"]
+            if not self.transmitter_check_func(blockName):
+                continue
+            self.refresh_transmitter_connections(dim, x, y, z, blockName)
+            self.refresh_nearby_transmitter_connections(dim, x, y, z)
+            if (x, y, z) in rebuilt_nodes:
+                continue
+            old_networks = set()
+            old_network = self.GetNetworkByTransmitter(
+                dim, x, y, z, force_use_cached=True
+            )
+            if old_network is not None:
+                old_networks.add(old_network)
+            for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
+                neighbor_pos = (x + dx, y + dy, z + dz)
+                neighbor_name = GetBlockName(dim, neighbor_pos)
+                if neighbor_name is None or not self.transmitter_can_connect(
+                    blockName, neighbor_name
+                ):
+                    continue
+                old_network = self.GetNetworkByTransmitter(
+                    dim, x + dx, y + dy, z + dz, force_use_cached=True
+                )
+                if old_network is not None:
+                    old_networks.add(old_network)
+            for old_network in old_networks:
+                self.delete_network(old_network)
+            network = self.GetNetworkByTransmitter(dim, x, y, z, disable_cache=True)
+            if network is not None:
+                self.apply_network_to_pool(network)
+                rebuilt_nodes.update(network.nodes)
+
+        for block_entity_posdata in block_entities:
+            x = block_entity_posdata["posX"]
+            y = block_entity_posdata["posY"]
+            z = block_entity_posdata["posZ"]
+            blockName = block_entity_posdata["blockName"]
+            if not self.transmittable_block_check_func(blockName):
+                continue
+            self.clean_container_networks(dim, x, y, z)
+            self.refresh_nearby_transmitter_connections(dim, x, y, z)
 
     def apply_network_to_pool(self, network):
         # type: (_NT) -> None
@@ -576,18 +661,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
     @Delay(1)  # 我也不知道为什么, 过早检测管道会导致区块边缘的一些容器方块检测为空气
     def onChunkLoaded(self, event):
         # type: (ChunkLoadedServerEvent) -> None
-        for block_entity_posdata in event.blockEntities:
-            x = block_entity_posdata["posX"]
-            y = block_entity_posdata["posY"]
-            z = block_entity_posdata["posZ"]
-            blockName = block_entity_posdata["blockName"]
-            if self.transmitter_check_func(blockName):
-                # 初始化管线网络
-                network = self.GetNetworkByTransmitter(
-                    event.dimension, x, y, z, disable_cache=False
-                )
-                if network is not None:
-                    self.apply_network_to_pool(network)
+        self.refresh_loaded_block_entities(event.dimension, event.blockEntities)
 
     @ServerListenerService.Listen(ChunkAcquireDiscardedServerEvent)
     def onChunkUnloaded(self, event):

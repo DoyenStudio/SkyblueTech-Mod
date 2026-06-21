@@ -2155,6 +2155,7 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
                     "offset": [
                         -6,
                         -22
@@ -2180,7 +2181,7 @@
                     "$mask_image": "textures/ui/mixer_arrow_mask",
                     "offset": [
                         0,
-                        1
+                        0
                     ],
                     "size": [
                         50,
@@ -2578,14 +2579,6 @@
                 }
             },
             {
-                "progress@CompressorUI.compressor_progress": {
-                    "offset": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
                 "template_tip": {
                     "type": "label",
                     "anchor_from": "right_middle",
@@ -2602,6 +2595,12 @@
                     "font_type": "default",
                     "text": "需要刻印对应内容",
                     "text_alignment": "center"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/compressor_bg",
+                    "$mask_image": "textures/ui/compressor_mask"
                 }
             }
         ]

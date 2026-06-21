@@ -72,7 +72,10 @@ class RecipesCollection(Generic[RT]):
 
     def add_recipe(self, recipe):
         # type: (RT) -> None
+        from .register import RegisterRecipe
+
         self._recipes.append(recipe)
+        RegisterRecipe(recipe)
 
     def remove_recipe(self, recipe):
         # type: (RT) -> None

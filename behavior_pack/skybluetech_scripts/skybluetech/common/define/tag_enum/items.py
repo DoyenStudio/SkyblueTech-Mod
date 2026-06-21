@@ -34,6 +34,7 @@ class DustTag:
     SILVER = "dusts/silver"
     PLATINUM = "dusts/platinum"
     TITANIUM = "dusts/titanium"
+    URANIUM = "dusts/uranium"
     BRONZE = "dusts/bronze"
     INVAR = "dusts/invar"
     STEEL = "dusts/steel"
@@ -57,6 +58,7 @@ class RawTag:
     SILVER = "raws/silver"
     PLATINUM = "raws/platinum"
     TITANIUM = "raws/titanium"
+    URANIUM = "raws/uranium"
 
 
 class PlateTag:

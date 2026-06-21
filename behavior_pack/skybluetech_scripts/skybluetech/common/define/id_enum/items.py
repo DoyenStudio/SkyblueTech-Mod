@@ -31,6 +31,7 @@ class Dusts(SimpleEnum):
     NICKEL = "skybluetech:nickel_dust"
     PLATINUM = "skybluetech:platinum_dust"
     TITANIUM = "skybluetech:titanium_dust"
+    URANIUM = "skybluetech:uranium_dust"
 
     BRONZE = "skybluetech:bronze_dust"
     INVAR = "skybluetech:invar_dust"

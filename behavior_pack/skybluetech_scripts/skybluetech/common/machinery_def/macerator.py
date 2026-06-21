@@ -51,6 +51,7 @@ recipes = RecipesCollection(
     preset_tagged(RawTag.PLATINUM, 1, Dusts.PLATINUM, 2),
     preset_tagged(RawTag.NICKEL, 1, Dusts.NICKEL, 2),
     preset_tagged(RawTag.TITANIUM, 1, Dusts.TITANIUM, 2),
+    preset_tagged(RawTag.URANIUM, 1, Dusts.URANIUM, 2),
     # Alloy
     preset_tagged(IngotTag.BRONZE, 1, Dusts.BRONZE, 1),
     preset_tagged(IngotTag.ALUMITE, 1, Dusts.ALUMITE, 1),

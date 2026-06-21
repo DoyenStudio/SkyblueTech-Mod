@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:uranium_dust"
+        },
+        "description": {
+            "identifier": "skybluetech:uranium_dust"
+        }
+    }
+}

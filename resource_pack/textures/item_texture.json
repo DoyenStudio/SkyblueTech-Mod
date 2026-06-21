@@ -505,6 +505,9 @@
         "skybluetech:titanium_dust": {
             "textures": "textures/items/dusts/titanium_dust"
         },
+        "skybluetech:uranium_dust": {
+            "textures": "textures/items/dusts/uranium_dust"
+        },
         "skybluetech:tin_ingot": {
             "textures": "textures/items/ingots/tin_ingot"
         },

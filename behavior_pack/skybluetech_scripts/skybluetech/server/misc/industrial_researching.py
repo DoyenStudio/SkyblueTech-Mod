@@ -2,6 +2,7 @@
 import time
 from mod.server.extraServerApi import GetMinecraftEnum
 from mod_log import logger
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
     GetAllInventoryItems,
@@ -38,6 +39,7 @@ if 0:
 ItemPosType = GetMinecraftEnum().ItemPosType
 RESEARCHING_BY_ITEM_ID = {recipe.result_item_id: recipe for recipe in all_researchings}
 VALID_RESEARCHING_ITEM_IDS = set(RESEARCHING_BY_ITEM_ID)
+SUBMIT_RESPONSE_DELAYS = (0.0, 0.2, 0.8)
 
 
 class IndustrialResearchingPlayerMgr(object):
@@ -134,6 +136,21 @@ class IndustrialResearchingQueryHandler(ServerListenerService):
         for _ in range(3):
             IndustrialResearchingQueryResponse(researched_items).send(event.player_id)
 
+    def _send_researching_response(self, player_id, researched_items):
+        # type: (str, dict[str, int]) -> None
+        IndustrialResearchingQueryResponse(researched_items).send(player_id)
+
+    def _schedule_submit_response(self, player_id, researched_items):
+        # type: (str, dict[str, int]) -> None
+        for delay in SUBMIT_RESPONSE_DELAYS:
+            payload = dict(researched_items or {})
+            ExecLater(
+                delay,
+                self._send_researching_response,
+                player_id,
+                payload,
+            )
+
     @ServerListenerService.Listen(IndustrialResearchingSubmitRequest)
     def on_submit_researching(self, event):
         # type: (IndustrialResearchingSubmitRequest) -> None
@@ -152,11 +169,11 @@ class IndustrialResearchingQueryHandler(ServerListenerService):
             SetOnePopupNotice(player_id, "§a研究成功")
         else:
             SetOnePopupNotice(player_id, "§c研究材料不足")
+            researched_items = mgr.get_player_researchings(player_id)
+            self._schedule_submit_response(player_id, researched_items)
             return
         researched_items = mgr.get_player_researchings(player_id)
-        # BUG: 多发以避免数据包丢失
-        for _ in range(3):
-            IndustrialResearchingQueryResponse(researched_items).send(player_id)
+        self._schedule_submit_response(player_id, researched_items)
 
     def consume_researching_items(self, player_id, recipe):
         # type: (str, IndustrialResearchingRecipe) -> bool

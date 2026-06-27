@@ -172,22 +172,26 @@ recipes = TemplateAssemblerRecipesCollection(
     ),
 )
 
-_cached_graphs = {}  # type: dict[tuple[int, ...], str]
+_cached_graphs = {}  # type: dict[int, dict[tuple[int, ...], str]]
 
 
 def _init_cached_graphs(world_seed):
     # type: (int) -> None
-    if _cached_graphs:
+    if world_seed in _cached_graphs:
         return
     from ..misc.inscribing_template import GetTemplateGraph
 
+    graphs = {}  # type: dict[tuple[int, ...], str]
+    # 反查表只收录成型机有配方的目标；GetTemplateGraph 自身会保证这些图案
+    # 已经和所有注册模板目标避让过碰撞。
     for template_item_id in recipes.recipes_mapping:
-        _cached_graphs[tuple(GetTemplateGraph(template_item_id, world_seed))] = (
+        graphs[tuple(GetTemplateGraph(template_item_id, world_seed))] = (
             template_item_id
         )
+    _cached_graphs[world_seed] = graphs
 
 
 def GetResultByTemplateGraph(graph, world_seed):
     # type: (list[int], int) -> str | None
     _init_cached_graphs(world_seed)
-    return _cached_graphs.get(tuple(graph))
+    return _cached_graphs[world_seed].get(tuple(graph))

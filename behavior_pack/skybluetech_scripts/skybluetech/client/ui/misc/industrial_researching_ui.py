@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
 from skybluetech_scripts.tooldelta.api.client import (
     GetItemHoverName,
@@ -41,6 +42,8 @@ LABEL_MISSING_COLOR = (0xAF / 255.0, 0, 0)
 LABEL_OK_COLOR = (0.0, 0.5, 0.0)
 EMPTY_ITEM_ID_AUX = 131072
 ITEM_NAME_CACHE = {}  # type: dict[str, str]
+SUBMIT_REFRESH_QUERY_DELAYS = (0.2, 0.8, 1.6)
+SUBMIT_UNLOCK_TIMEOUT = 4.0
 
 
 def _clean_item_name(item_id):
@@ -84,6 +87,9 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
         self.requirement_items = []  # type: list[dict]
         self.item_id_aux_cache = {}  # type: dict[str, int]
         self.can_submit_research = False
+        self.submitting_research = False
+        self.pending_research_item_id = None  # type: str | None
+        self.submit_query_seq = 0
 
     def OnCreate(self):
         self.ready = False
@@ -93,6 +99,9 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
         self.researching_items = []
         self.requirement_items = []
         self.can_submit_research = False
+        self.submitting_research = False
+        self.pending_research_item_id = None
+        self.submit_query_seq = 0
         self.recipes = list(all_researchings)
         self.update_researching_items()
         self.researchings_grid = (
@@ -108,10 +117,14 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
         self.GetElement(CLOSE_BTN_PATH).asButton().SetCallback(
             lambda _: self.RemoveUI()
         )
-        IndustrialResearchingQueryRequest().send()
+        self.send_query_request()
 
     def OnDestroy(self):
         self.close_requirements_window()
+
+    def send_query_request(self):
+        # type: () -> None
+        IndustrialResearchingQueryRequest().send()
 
     def render_researchings(self):
         # type: () -> None
@@ -141,6 +154,8 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
         # type: (IndustrialResearchingRecipe) -> None
         if not self.ready:
             return
+        if self.submitting_research:
+            return
         self.close_requirements_window()
         window = self.AddElement(
             "IndustrialResearchProgressUI.requirements_window",
@@ -150,6 +165,8 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
         self.requirements_window = window
         self.current_recipe = recipe
         self.can_submit_research = False
+        self.submitting_research = False
+        self.pending_research_item_id = None
         window["close_btn"].asButton().SetCallback(
             lambda _: self.close_requirements_window()
         )
@@ -180,45 +197,53 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
         for input_item in requirements:
             if input_item is None:
                 if researched:
-                    items.append(self.create_requirement_item_data(
-                        EXP_BOTTLE_ITEM_ID,
-                        "✔ 已完成",
-                        LABEL_OK_COLOR,
-                        1.0,
-                        False,
-                    ))
+                    items.append(
+                        self.create_requirement_item_data(
+                            EXP_BOTTLE_ITEM_ID,
+                            "✔ 已完成",
+                            LABEL_OK_COLOR,
+                            1.0,
+                            False,
+                        )
+                    )
                     continue
                 enough = player_level >= recipe.require_exp_level
                 can_submit = can_submit and enough
-                items.append(self.create_requirement_item_data(
-                    EXP_BOTTLE_ITEM_ID,
-                    "%d/%d" % (player_level, recipe.require_exp_level),
-                    LABEL_NORMAL_COLOR if enough else LABEL_MISSING_COLOR,
-                    _safe_percent(player_level, recipe.require_exp_level),
-                    False,
-                ))
+                items.append(
+                    self.create_requirement_item_data(
+                        EXP_BOTTLE_ITEM_ID,
+                        "%d/%d" % (player_level, recipe.require_exp_level),
+                        LABEL_NORMAL_COLOR if enough else LABEL_MISSING_COLOR,
+                        _safe_percent(player_level, recipe.require_exp_level),
+                        False,
+                    )
+                )
             else:
                 if researched:
-                    items.append(self.create_requirement_item_data(
-                        input_item.id,
-                        "✔ 已完成",
-                        LABEL_OK_COLOR,
-                        1.0,
-                        True,
-                    ))
+                    items.append(
+                        self.create_requirement_item_data(
+                            input_item.id,
+                            "✔ 已完成",
+                            LABEL_OK_COLOR,
+                            1.0,
+                            True,
+                        )
+                    )
                     continue
                 own_count = self.count_matched_items(input_item, item_counts)
                 enough = own_count >= input_item.count
                 can_submit = can_submit and enough
-                items.append(self.create_requirement_item_data(
-                    input_item.id,
-                    "%d/%d" % (own_count, input_item.count),
-                    LABEL_NORMAL_COLOR if enough else LABEL_MISSING_COLOR,
-                    _safe_percent(own_count, input_item.count),
-                    True,
-                ))
+                items.append(
+                    self.create_requirement_item_data(
+                        input_item.id,
+                        "%d/%d" % (own_count, input_item.count),
+                        LABEL_NORMAL_COLOR if enough else LABEL_MISSING_COLOR,
+                        _safe_percent(own_count, input_item.count),
+                        True,
+                    )
+                )
         self.requirement_items = items
-        self.can_submit_research = can_submit and not researched
+        self.can_submit_research = can_submit and not researched and not self.submitting_research
 
     def create_requirement_item_data(
         self, item_id, label, label_color, progress_percent, check_recipe
@@ -287,7 +312,46 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
             return
         if self.current_recipe is None:
             return
+        self.submitting_research = True
+        self.pending_research_item_id = self.current_recipe.result_item_id
+        self.can_submit_research = False
+        self.update_submit_button()
         IndustrialResearchingSubmitRequest(self.current_recipe.result_item_id).send()
+
+        self.schedule_submit_refresh_queries(self.current_recipe.result_item_id)
+
+    def schedule_submit_refresh_queries(self, item_id):
+        # type: (str) -> None
+        self.submit_query_seq += 1
+        seq = self.submit_query_seq
+        for delay in SUBMIT_REFRESH_QUERY_DELAYS:
+            ExecLater(
+                delay,
+                self.send_submit_refresh_query,
+                item_id,
+                seq,
+            )
+        ExecLater(SUBMIT_UNLOCK_TIMEOUT, self.unlock_submit_if_pending, item_id, seq)
+
+    def send_submit_refresh_query(self, item_id, seq):
+        # type: (str, int) -> None
+        if not self.submitting_research:
+            return
+        if seq != self.submit_query_seq or item_id != self.pending_research_item_id:
+            return
+        self.send_query_request()
+
+    def unlock_submit_if_pending(self, item_id, seq):
+        # type: (str, int) -> None
+        if not self.submitting_research:
+            return
+        if seq != self.submit_query_seq or item_id != self.pending_research_item_id:
+            return
+        self.submitting_research = False
+        self.pending_research_item_id = None
+        if self.requirements_window is not None:
+            self.update_requirement_items()
+            self.update_submit_button()
 
     def get_local_item_counts(self):
         # type: () -> dict[str, int]
@@ -321,8 +385,18 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
     @ToolDeltaScreen.Listen(IndustrialResearchingQueryResponse)
     def on_recv_query_response(self, event):
         # type: (IndustrialResearchingQueryResponse) -> None
-        self.researched_items = event.researched_items or {}
+        researched_items = event.researched_items or {}
+        was_submitting = self.submitting_research
+        pending_item_id = self.pending_research_item_id
+        finish_submitting = (
+            was_submitting
+            and pending_item_id in researched_items
+        )
+        self.researched_items = researched_items
         self.ready = True
+        if finish_submitting:
+            self.submitting_research = False
+            self.pending_research_item_id = None
         self.render_researchings()
         if self.requirements_window is not None:
             self.update_requirement_items()

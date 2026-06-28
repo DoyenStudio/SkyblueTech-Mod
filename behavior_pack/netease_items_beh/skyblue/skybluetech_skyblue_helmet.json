@@ -1,0 +1,74 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_damage": 1000,
+            "minecraft:max_stack_size": 1,
+            "minecraft:tags": {
+                "tags": [
+                    "skybluetech:assembler_available",
+                    "skybluetech:objects",
+                    "skybluetech:objects/armor",
+                    "skybluetech:objects/armor/helmet"
+                ]
+            },
+            "netease:initial_user_data": {
+                "display": {
+                    "Lore": [
+                        {
+                            "__type__": 8,
+                            "__value__": "§r§e⚡ §b已储能 §a0 / 200000 RF"
+                        },
+                        {
+                            "__type__": 8,
+                            "__value__": "§r§6◆ 未安装任何升级§f"
+                        }
+                    ]
+                },
+                "lore_pos": {
+                    "charge": {
+                        "__type__": 3,
+                        "__value__": 0
+                    },
+                    "object_upgraders": {
+                        "__type__": 3,
+                        "__value__": 1
+                    }
+                },
+                "st:max_upgraders_count": {
+                    "__type__": 3,
+                    "__value__": 4
+                },
+                "st:upgraders": {},
+                "st:cost_rf": {
+                    "__type__": 3,
+                    "__value__": 800
+                },
+                "max_input_power": {
+                    "__type__": 4,
+                    "__value__": 1000
+                },
+                "store_rf": {
+                    "__type__": 4,
+                    "__value__": 0
+                },
+                "store_rf_max": {
+                    "__type__": 4,
+                    "__value__": 200000
+                }
+            },
+            "netease:armor": {
+                "armor_slot": 0,
+                "defense": 6,
+                "enchantment": 18,
+                "knockback_resistance": 0.2,
+                "toughness": 5
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "custom_item_type": "armor",
+            "identifier": "skybluetech:skyblue_helmet"
+        }
+    }
+}

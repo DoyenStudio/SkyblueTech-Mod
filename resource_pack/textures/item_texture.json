@@ -331,6 +331,30 @@
         "skybluetech:obsidian_dust": {
             "textures": "textures/items/dusts/obsidian_dust"
         },
+        "skybluetech:skyblue_boots": {
+            "textures": "textures/items/armor/skyblue_boots"
+        },
+        "skybluetech:skyblue_boots_useless": {
+            "textures": "textures/items/armor/skyblue_boots"
+        },
+        "skybluetech:skyblue_chestplate": {
+            "textures": "textures/items/armor/skyblue_chestplate"
+        },
+        "skybluetech:skyblue_chestplate_useless": {
+            "textures": "textures/items/armor/skyblue_chestplate"
+        },
+        "skybluetech:skyblue_helmet": {
+            "textures": "textures/items/armor/skyblue_helmet"
+        },
+        "skybluetech:skyblue_helmet_useless": {
+            "textures": "textures/items/armor/skyblue_helmet"
+        },
+        "skybluetech:skyblue_leggings": {
+            "textures": "textures/items/armor/skyblue_leggings"
+        },
+        "skybluetech:skyblue_leggings_useless": {
+            "textures": "textures/items/armor/skyblue_leggings"
+        },
         "skybluetech:paddle_iron": {
             "textures": "textures/items/paddle_iron"
         },

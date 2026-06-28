@@ -11,23 +11,28 @@ from skybluetech_scripts.tooldelta.events.server import (
 )
 from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.api.server import (
+    GetArmorSlotItems,
     GetPlayerMainhandItem,
+    SetPlayerAllItems,
     SpawnItemToPlayerCarried,
     SetOneTipMessage,
     SetPlayerUIItem,
 )
 from ...machinery.utils.charge import (
+    ChargeEnough,
     GetCharge,
     GetPowerCost,
     UpdateCharge,
 )
 from .register import (
+    armor_slots,
     item_pre_use_cbs,
     item_pre_use_on_block_cbs,
     tool_items,
+    useless_armor_items,
     useless_tool_items,
 )
-from .utils import MakeToolUseless
+from .utils import MakeItemUseless, MakeToolUseless
 
 # TYPE_CHECKING
 if 0:
@@ -36,7 +41,9 @@ if 0:
 
 ContainerType = serverApi.GetMinecraftEnum().ContainerType
 PlayerUISlot = serverApi.GetMinecraftEnum().PlayerUISlot
+ItemPosType = serverApi.GetMinecraftEnum().ItemPosType
 SKYBLUE_OBJECTS_TAG = "skybluetech:objects"
+RF_PER_DURABILITY = 800
 INVALID_INPUT_SLOTS = {
     PlayerUISlot.EnchantingInput,
     PlayerUISlot.AnvilInput,
@@ -120,6 +127,49 @@ def onItemDurabilityChangedAfter(event):
         MakeToolUseless(mainhand_item)
         SetOneTipMessage(mPlayerId, "工具能量已耗尽")
     SpawnItemToPlayerCarried(mPlayerId, mainhand_item)
+
+
+@ItemDurabilityChangedServerEvent.ListenWithUserData()
+def onArmorDurabilityChanged(event):
+    # type: (ItemDurabilityChangedServerEvent) -> None
+    item_id = event.item.id
+    if item_id in useless_armor_items:
+        # _useless 护甲无耐久概念: 取消其耐久变化, 避免被引擎损耗或破坏。
+        if event.canChange:
+            event.ModifyDurability(event.durabilityBefore)
+        return
+    if item_id not in armor_slots:
+        return
+    durability_cost = event.durabilityBefore - event.durability
+    if durability_cost <= 0:
+        return
+    if event.canChange:
+        event.ModifyDurability(event.item.durability or event.durabilityBefore or 1)
+    onArmorDurabilityChangedAfter(
+        event.entityId, item_id, armor_slots[item_id], durability_cost
+    )
+
+
+@Delay(0)
+def onArmorDurabilityChangedAfter(player_id, item_id, slot, durability_cost):
+    # type: (str, str, int, int) -> None
+    slot_item = GetArmorSlotItems(player_id, get_userdata=True).get(slot)
+    if slot_item is None or slot_item.id != item_id:
+        return
+    ud = slot_item.userData
+    if ud is None:
+        return
+    charge, _ = GetCharge(ud)
+    cost_rf = (GetPowerCost(ud) or RF_PER_DURABILITY) * durability_cost
+    next_charge = max(0, charge - cost_rf)
+    UpdateCharge(slot_item, next_charge)
+    # 与恢复阈值 ChargeEnough 对称: 余量不足一次消耗(st:cost_rf)即转为 _useless,
+    # 与蔚蓝工具"无法支撑下一次使用即耗尽"的判定保持一致(而非耗尽到 0 才触发)。
+    if not ChargeEnough(ud):
+        MakeItemUseless(slot_item)
+        if charge > 0:
+            SetOneTipMessage(player_id, "护甲能量已耗尽")
+    SetPlayerAllItems(player_id, {(ItemPosType.ARMOR, slot): slot_item})
 
 
 @CraftItemOutputChangeServerEvent.Listen()

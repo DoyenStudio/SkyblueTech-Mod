@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:skyblue_helmet_useless"
+        },
+        "description": {
+            "identifier": "skybluetech:skyblue_helmet_useless"
+        }
+    }
+}

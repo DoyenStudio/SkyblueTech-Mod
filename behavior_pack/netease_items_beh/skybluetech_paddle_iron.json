@@ -2,7 +2,7 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:max_damage": 600,
+            "minecraft:max_damage": 2400,
             "minecraft:max_stack_size": 1,
             "minecraft:tags": {
                 "tags": [
@@ -11,7 +11,7 @@
                 ]
             },
             "netease:customtips": {
-                "value": "\n§7放入§f风力发电机§7以为其安装发电所需扇叶。\n§b◆ 最大使用时长： §f40 分钟\n§e◆ 相对转换效率： 1.0"
+                "value": "\n§7放入§f风力发电机§7以为其安装发电所需扇叶。\n§b◆ 最大使用时长： §f160 分钟\n§e◆ 相对转换效率： 1.0"
             }
         },
         "description": {

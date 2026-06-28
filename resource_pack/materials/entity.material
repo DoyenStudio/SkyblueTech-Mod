@@ -5,6 +5,9 @@
             "+states": [
                 // "Blending", "DisableDepthTest"
             ]
+        },
+        "armor_with_alpha:armor": {
+            "+states": ["Blending"]
         }
     }
 }

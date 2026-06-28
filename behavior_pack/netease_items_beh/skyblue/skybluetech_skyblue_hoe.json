@@ -2,7 +2,7 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-            "minecraft:max_damage": 100,
+            "minecraft:max_damage": 16384,
             "minecraft:tags": {
                 "tags": [
                     "skybluetech:assembler_available",

@@ -603,6 +603,54 @@
         },
         "skybluetech:wrench_iron": {
             "textures": "textures/items/wrench_iron"
+        },
+        "skybluetech:heavy_water_bucket": {
+            "textures": "textures/items/buckets/heavy_water_bucket"
+        },
+        "skybluetech:energy_bar_0": {
+            "textures": "textures/misc/energy_bar/energy_bar_0"
+        },
+        "skybluetech:energy_bar_1": {
+            "textures": "textures/misc/energy_bar/energy_bar_1"
+        },
+        "skybluetech:energy_bar_2": {
+            "textures": "textures/misc/energy_bar/energy_bar_2"
+        },
+        "skybluetech:energy_bar_3": {
+            "textures": "textures/misc/energy_bar/energy_bar_3"
+        },
+        "skybluetech:energy_bar_4": {
+            "textures": "textures/misc/energy_bar/energy_bar_4"
+        },
+        "skybluetech:energy_bar_5": {
+            "textures": "textures/misc/energy_bar/energy_bar_5"
+        },
+        "skybluetech:energy_bar_6": {
+            "textures": "textures/misc/energy_bar/energy_bar_6"
+        },
+        "skybluetech:energy_bar_7": {
+            "textures": "textures/misc/energy_bar/energy_bar_7"
+        },
+        "skybluetech:energy_bar_8": {
+            "textures": "textures/misc/energy_bar/energy_bar_8"
+        },
+        "skybluetech:energy_bar_9": {
+            "textures": "textures/misc/energy_bar/energy_bar_9"
+        },
+        "skybluetech:energy_bar_10": {
+            "textures": "textures/misc/energy_bar/energy_bar_10"
+        },
+        "skybluetech:energy_bar_11": {
+            "textures": "textures/misc/energy_bar/energy_bar_11"
+        },
+        "skybluetech:energy_bar_12": {
+            "textures": "textures/misc/energy_bar/energy_bar_12"
+        },
+        "skybluetech:energy_bar_13": {
+            "textures": "textures/misc/energy_bar/energy_bar_13"
+        },
+        "skybluetech:energy_bar_14": {
+            "textures": "textures/misc/energy_bar/energy_bar_14"
         }
     },
     "texture_name": "atlas.items"

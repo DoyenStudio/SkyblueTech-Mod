@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import GetItemBasicInfo
+from skybluetech_scripts.tooldelta.api.server import GetItemBasicInfo, SetItemLayer
 from skybluetech_scripts.tooldelta.utils import nbt
 from .lore import GetLorePos, SetLoreAtPos, SetLoreAuto
 
@@ -13,6 +13,9 @@ K_STORE_RF_MAX = "store_rf_max"
 K_MAX_INPUT_POWER = "max_input_power"
 K_MAX_OUTPUT_POWER = "max_output_power"
 K_CHARGE_COST = "st:cost_rf"
+
+ENERGY_BAR_LAYER = 1
+ENERGY_BAR_LEVELS = 15
 
 
 update_charge_callbacks = {}  # type: dict[str, typing.Callable[[Item, int], None]]
@@ -26,7 +29,7 @@ def UpdateCharge(item, store_rf, preserve_durability=False):
     Args:
         item (Item): 物品
         store_rf (int): 物品的充能值
-        preserve_durability (bool, optional): 是否不改变现有耐久值, 耐久值用于标识物品充能比例. Defaults to False.
+        preserve_durability (bool, optional): 是否不更新剩余能量的叠加贴图显示. Defaults to False.
     """
     ud = item.userData
     if ud is None:
@@ -40,18 +43,18 @@ def UpdateCharge(item, store_rf, preserve_durability=False):
     cb = update_charge_callbacks.get(item.id)
     if cb is not None:
         cb(item, store_rf)
-    max_durability = item.GetBasicInfo().maxDurability
-    if max_durability > 0 and not preserve_durability:
-        if ud is None:
-            ud = item.userData = {}
+    if not preserve_durability:
         store_rf_max = nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1)
-        item.durability = max(
-            2,
-            int(float(store_rf) / store_rf_max * max_durability),
-        )
-        ud.setdefault("Damage", nbt.Int(0))["__value__"] = (
-            max_durability - item.durability
-        )
+        level = int(float(store_rf) / store_rf_max * (ENERGY_BAR_LEVELS - 1))
+        level = max(0, min(ENERGY_BAR_LEVELS - 1, level))
+        SetItemLayer(item, ENERGY_BAR_LAYER, "skybluetech:energy_bar_%d" % level)
+        # 能量改用叠加贴图显示, 清除残留的耐久损耗, 避免耐久条与叠加贴图同时表示能量。
+        max_durability = item.GetBasicInfo().maxDurability
+        if max_durability > 0:
+            item.durability = max_durability
+            damage = ud.get("Damage")
+            if damage is not None:
+                damage["__value__"] = 0
 
 
 def UpdateChargeNBT(item_id, ud, store_rf):
@@ -70,15 +73,10 @@ def UpdateChargeNBT(item_id, ud, store_rf):
         nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1),
     )
     SetLoreAtPos(ud, GetLorePos(ud, "charge"), lore)
-    max_durability = GetItemBasicInfo(item_id).maxDurability
-    store_rf_max = nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1)
-    if max_durability > 0:
-        ud["Damage"] = nbt.Int(
-            max(
-                2,
-                int(1 - float(store_rf) / store_rf_max) * max_durability,
-            )
-        )
+    # 能量改用叠加贴图显示, 此处无 Item 对象无法设置叠加贴图,
+    # 但仍需清除残留的耐久损耗, 避免耐久条继续表示能量。
+    if GetItemBasicInfo(item_id).maxDurability > 0:
+        ud["Damage"] = nbt.Int(0)
 
 
 def CanChargeInventory(item):

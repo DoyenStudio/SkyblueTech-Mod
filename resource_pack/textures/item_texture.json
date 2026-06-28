@@ -529,6 +529,9 @@
         "skybluetech:titanium_dust": {
             "textures": "textures/items/dusts/titanium_dust"
         },
+        "skybluetech:glass_tube": {
+            "textures": "textures/items/glass_tube"
+        },
         "skybluetech:uranium_dust": {
             "textures": "textures/items/dusts/uranium_dust"
         },

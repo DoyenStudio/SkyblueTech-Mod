@@ -1,0 +1,38 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 1,
+            "minecraft:tags": {
+                "tags": [
+                    "skybluetech:glass_tube"
+                ]
+            },
+            "netease:customtips": {
+                "value": "\n§7可从流体容器取出或存入一定量的流体。"
+            },
+            "netease:initial_user_data": {
+                "display": {
+                    "Lore": [
+                        {
+                            "__type__": 8,
+                            "__value__": "§r§7空 §80 / 500 mB"
+                        }
+                    ]
+                },
+                "gt_fluid_id": {
+                    "__type__": 8,
+                    "__value__": ""
+                },
+                "gt_volume": {
+                    "__type__": 5,
+                    "__value__": 0.0
+                }
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:glass_tube"
+        }
+    }
+}

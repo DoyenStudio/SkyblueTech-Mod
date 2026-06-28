@@ -104,11 +104,15 @@ class MultiFluidContainer(object):
 
     def on_player_interact_with_bucket(self, player_id, test=False):
         # type: (str, bool) -> bool
+        from ...tools.glass_tube import IsGlassTube
+
         if not self.allow_player_use_bucket_interact:
             return False
         item = GetPlayerMainhandItem(player_id)
         if item is None:
             return False
+        elif IsGlassTube(item):
+            return self.on_player_interact_with_glass_tube(player_id, item, test)
         elif (
             item.GetBasicInfo().itemType == "bucket"
             or "skybluetech:liquid_bucket" in item.GetBasicInfo().tags
@@ -168,6 +172,60 @@ class MultiFluidContainer(object):
             return True
         else:
             return False
+
+    def on_player_interact_with_glass_tube(self, player_id, item, test=False):
+        # type: (str, object, bool) -> bool
+        from ...tools.glass_tube import (
+            GetTubeContent,
+            ApplyTubeContent,
+            GLASS_TUBE_MAX_VOLUME,
+        )
+
+        if test:
+            return True
+        tube_fluid_id, tube_volume = GetTubeContent(item)
+        changed = False
+        # 优先倒入容器
+        if (
+            self.allow_player_use_bucket_push
+            and tube_fluid_id is not None
+            and tube_volume > 0
+            and self.CanAddFluid(tube_fluid_id)
+        ):
+            ok, remaining = self.AddFluid(tube_fluid_id, tube_volume)
+            if ok:
+                tube_volume = remaining
+                if tube_volume <= 0:
+                    tube_fluid_id = None
+                    tube_volume = 0.0
+                changed = True
+        # 否则从容器舀出填充试管, 优先舀出输出槽的流体
+        if not changed and self.allow_player_use_bucket_pull:
+            output_slots = self.fluid_output_slots
+            ordered_slots = list(output_slots) + [
+                i for i in range(len(self.fluids)) if i not in output_slots
+            ]
+            last_slot = ordered_slots[-1] if ordered_slots else -1
+            for slot in ordered_slots:
+                if GLASS_TUBE_MAX_VOLUME - tube_volume <= 0:
+                    break
+                fluid = self.fluids[slot]
+                if fluid.fluid_id is None or fluid.volume <= 0:
+                    continue
+                if tube_fluid_id is not None and tube_fluid_id != fluid.fluid_id:
+                    continue
+                pulled = min(GLASS_TUBE_MAX_VOLUME - tube_volume, fluid.volume)
+                if pulled <= 0:
+                    continue
+                pulled_fluid_id = fluid.fluid_id
+                fluid.volume -= pulled
+                tube_fluid_id = pulled_fluid_id
+                tube_volume += pulled
+                self._on_reduced_fluid(slot, pulled_fluid_id, pulled, slot == last_slot)
+                changed = True
+        if changed:
+            ApplyTubeContent(player_id, item, tube_fluid_id, tube_volume)
+        return True
 
     @SuperExecutorMeta.execute_super
     def OnAddedFluid(self, slot, fluid_id, added_fluid_volume, is_final):

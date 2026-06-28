@@ -1,5 +1,6 @@
 from . import (
     actions,
+    glass_tube,
     metal_hammer,
     mining_hammer,
     simple_block_debugger,
@@ -13,6 +14,7 @@ from . import (
 
 __all__ = [
     "actions",
+    "glass_tube",
     "metal_hammer",
     "mining_hammer",
     "simple_block_debugger",

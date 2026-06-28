@@ -146,11 +146,15 @@ class FluidContainer(object):
 
     def on_player_interact_with_bucket(self, player_id, test=False):
         # type: (str, bool) -> bool
+        from ...tools.glass_tube import IsGlassTube
+
         if not self.allow_player_use_bucket_interact:
             return False
         item = GetPlayerMainhandItem(player_id)
         if item is None:
             return False
+        elif IsGlassTube(item):
+            return self.on_player_interact_with_glass_tube(player_id, item, test)
         elif (
             item.GetBasicInfo().itemType == "bucket"
             or "skybluetech:liquid_bucket" in item.GetBasicInfo().tags
@@ -194,6 +198,52 @@ class FluidContainer(object):
             return True
         else:
             return False
+
+    def on_player_interact_with_glass_tube(self, player_id, item, test=False):
+        # type: (str, object, bool) -> bool
+        from ...tools.glass_tube import (
+            GetTubeContent,
+            ApplyTubeContent,
+            GLASS_TUBE_MAX_VOLUME,
+        )
+
+        if test:
+            return True
+        tube_fluid_id, tube_volume = GetTubeContent(item)
+        changed = False
+        # 优先倒入容器
+        if (
+            self.allow_player_use_bucket_push
+            and tube_fluid_id is not None
+            and tube_volume > 0
+            and self.CanAddFluid(tube_fluid_id)
+        ):
+            ok, remaining = self.AddFluid(tube_fluid_id, tube_volume)
+            if ok:
+                tube_volume = remaining
+                if tube_volume <= 0:
+                    tube_fluid_id = None
+                    tube_volume = 0.0
+                changed = True
+        # 否则从容器舀出填充试管
+        if (
+            not changed
+            and self.allow_player_use_bucket_pull
+            and self.fluid_id is not None
+            and self.fluid_volume > 0
+            and (tube_fluid_id is None or tube_fluid_id == self.fluid_id)
+        ):
+            pulled = min(GLASS_TUBE_MAX_VOLUME - tube_volume, self.fluid_volume)
+            if pulled > 0:
+                container_fluid_id = self.fluid_id
+                self.fluid_volume -= pulled
+                tube_fluid_id = container_fluid_id
+                tube_volume += pulled
+                self._on_reduced_fluid(container_fluid_id, pulled)
+                changed = True
+        if changed:
+            ApplyTubeContent(player_id, item, tube_fluid_id, tube_volume)
+        return True
 
     def _on_added_fluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> None

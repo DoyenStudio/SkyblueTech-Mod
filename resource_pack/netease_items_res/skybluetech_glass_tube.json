@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:glass_tube"
+        },
+        "description": {
+            "identifier": "skybluetech:glass_tube"
+        }
+    }
+}

@@ -17,8 +17,6 @@ item_pre_use_cbs = {}  # type: dict[str, typing.Callable[[ServerItemTryUseEvent]
 item_pre_use_on_block_cbs = {}  # type: dict[str, typing.Callable[[ServerItemUseOnEvent]]]
 tool_items = set()  # type: set[str]
 useless_tool_items = {}  # type: dict[str, str]
-orig_tier_speed = {}  # type: dict[str, float]
-orig_attack_damage = {}  # type: dict[str, int]
 armor_slots = {}  # type: dict[str, int]
 useless_armor_items = {}  # type: dict[str, str]
 

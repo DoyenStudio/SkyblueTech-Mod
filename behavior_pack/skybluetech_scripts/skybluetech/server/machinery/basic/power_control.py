@@ -43,12 +43,12 @@ class PowerControl(BaseMachine):
     def SetPowerPositiveRate(self, rate):
         # type: (float) -> None
         "设置耗能正倍率; 仅提供给升级类用"
-        self.power_rate = rate
+        self.power_pos_rate = rate
 
     def SetPowerNegativeRate(self, rate):
         # type: (float) -> None
         "设置耗能负倍率; 仅提供给升级类用"
-        self.power_rate = rate
+        self.power_neg_rate = rate
 
     def ReducePower(self, rf=None):
         # type: (int | None) -> None

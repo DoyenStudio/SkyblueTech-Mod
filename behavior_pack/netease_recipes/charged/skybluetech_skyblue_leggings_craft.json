@@ -1,0 +1,29 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:skyblue_leggings_craft"
+        },
+        "key": {
+            "A": {
+                "item": "skybluetech:skyblue_core"
+            },
+            "B": {
+                "item": "skybluetech:light_skyblue_ingot"
+            }
+        },
+        "pattern": [
+            "BBB",
+            "BAB",
+            "B B"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:skyblue_leggings"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

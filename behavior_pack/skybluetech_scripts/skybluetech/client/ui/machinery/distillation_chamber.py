@@ -56,5 +56,5 @@ class DistillationChamberUI(MachinePanelUIProxyEx):
         self.fluid_displayer2.update(
             output_fluid.fluid_id, output_fluid.volume, OUTPUT_MAX_VOLUME
         )
-        self.rate_label.SetText(FormatFluidVolume(output_rate) + "/t")
+        self.rate_label.SetText(FormatFluidVolume(output_rate) + "/s")
         self.temperature_label.SetText(FormatKelvin(current_temperature))

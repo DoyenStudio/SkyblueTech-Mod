@@ -19,6 +19,8 @@ from ...common.machinery_def.distillation_chamber import (
 )
 from .basic.multi_fluid_container import FluidSlotServer
 
+TICKS_PER_SECOND = 20
+
 recipes_collection = {}  # type: dict[str, list[DistillationChamberRecipe]]
 for recipe in Recipes:
     recipes_collection.setdefault(recipe.collection_name, []).append(recipe)
@@ -37,6 +39,8 @@ class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         self.locked_recipe_idx = None
         self.output_rate = 0
+        self._produce_accum = 0.0
+        self._tick_counter = 0
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -44,9 +48,13 @@ class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
-        self.output_rate = 0
         self.work_once()
-        self.CallSync()
+        self._tick_counter += 1
+        if self._tick_counter >= TICKS_PER_SECOND:
+            self.output_rate = self._produce_accum
+            self._produce_accum = 0.0
+            self._tick_counter = 0
+            self.CallSync()
 
     def OnSync(self):
         # type: () -> None
@@ -100,6 +108,8 @@ class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
         if in_fluid.volume >= consume:
             if out_fluid.max_volume - out_fluid.volume >= produce:
                 in_fluid.volume -= consume
-                self.output_rate = produce_rate
+                self._produce_accum += produce
                 self.OutputFluid(rcp.produce_matter, produce, 1, True)
                 self.heat_value -= produce
+                if in_fluid.volume <= 0:
+                    in_fluid.fluid_id = None

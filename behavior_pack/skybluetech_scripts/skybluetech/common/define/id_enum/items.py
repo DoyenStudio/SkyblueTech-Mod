@@ -104,6 +104,7 @@ class ObjectUpgraders(SimpleEnum):
     VEINMINER = "skybluetech:obj_upgrader_veinminer"
     SPEC_FARMING = "skybluetech:obj_upgrader_spec_farming"
     SPEC_NOFARM = "skybluetech:obj_upgrader_spec_nofarm"
+    SPEC_NVISION = "skybluetech:obj_upgrader_spec_nvision"
 
 
 class Paddle(SimpleEnum):
@@ -192,6 +193,7 @@ DEACTIVATION_REDSTONE = "skybluetech:deactivation_redstone"
 DRILL_TOP_STEEL = "skybluetech:drill_top_steel"
 DRILL_TOP_ULTRAHEATINUM = "skybluetech:drill_top_ultraheatinum"
 ELECTRIC_MOTOR = "skybluetech:electric_motor"
+GLASS_TUBE = "skybluetech:glass_tube"
 HEAT_EXCHANGER = "skybluetech:heat_exchanger"
 HEAT_PLATE = "skybluetech:heat_plate"
 INSCRIBING_TEMPLATE = "skybluetech:inscribing_template"

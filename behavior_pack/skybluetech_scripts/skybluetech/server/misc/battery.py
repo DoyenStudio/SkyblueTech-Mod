@@ -27,4 +27,4 @@ def onUseItem(event):
         player = GetPlayer(event.playerId)
         if player is None:
             return
-        player.enable_charge()
+        player.charge.enable_charge()

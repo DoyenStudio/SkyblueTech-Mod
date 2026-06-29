@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     OnSimTickServerEvent,
     ClientLoadAddonsFinishServerEvent,
 )
-from .define import PlayerKit
+from .playerkit import PlayerKit
 
 pool = {}  # type: dict[str, PlayerKit]
 ticks = 0
@@ -21,9 +21,8 @@ def onServerTick(event):
     # type: (OnSimTickServerEvent) -> None
     global ticks
     ticks += 1
-    if ticks % 40 == 0:
-        for player in pool.values():
-            player.run_charge_once()
+    for player in pool.values():
+        player.on_tick(ticks)
 
 
 @ClientLoadAddonsFinishServerEvent.Listen()

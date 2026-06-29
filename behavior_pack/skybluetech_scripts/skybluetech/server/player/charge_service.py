@@ -7,7 +7,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetPlayerAllItems,
 )
 from skybluetech_scripts.tooldelta.events.server import InventoryItemChangedServerEvent
-from skybluetech_scripts.tooldelta.events.service import ServerListenerService
+from .base import PlayerService
 from ..machinery.utils.charge import (
     ChargeItem,
     IsEnableCharge,
@@ -20,19 +20,16 @@ from ..machinery.utils.charge import (
 ItemPosType = GetMinecraftEnum().ItemPosType
 
 
-class PlayerKit(ServerListenerService):
+class ChargeService(PlayerService):
+    tick_interval = 40  # 每 40t 为玩家物品充能一次
+
     def __init__(self, player_id):
         # type: (str) -> None
-        ServerListenerService.__init__(self)
-        self.player_id = player_id
         self._charging = True
-        self.enable_listeners()
+        PlayerService.__init__(self, player_id)
 
     def enable_charge(self):
         self._charging = True
-
-    def destroy(self):
-        self.disable_listeners()
 
     def charge(self, rf, charge_inv=True, charge_armor=True, charge_charger=True):
         # type: (int, bool, bool, bool) -> int
@@ -95,7 +92,7 @@ class PlayerKit(ServerListenerService):
         SetPlayerAllItems(self.player_id, new_items)
         return rf
 
-    def run_charge_once(self):
+    def on_tick(self):
         if not self._charging:
             return
         chargers = {}  # type: dict[int, Item]
@@ -162,7 +159,7 @@ class PlayerKit(ServerListenerService):
                 allitems[(ItemPosType.INVENTORY, charger_slot)] = charger_item
         SetPlayerAllItems(self.player_id, allitems)
 
-    @ServerListenerService.Listen(InventoryItemChangedServerEvent.WithUserData())
+    @PlayerService.Listen(InventoryItemChangedServerEvent.WithUserData())
     def on_get_item(self, event):
         # type: (InventoryItemChangedServerEvent) -> None
         if event.playerId != self.player_id:

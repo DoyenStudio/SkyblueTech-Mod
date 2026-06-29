@@ -32,6 +32,7 @@ class BatteryMatrixCore(BaseMachine):
         self._is_cleaning_slot = False
 
     def OnDestroy(self):
+        self.save_core_data()
         blocknbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
         if blocknbt is None:
             return None
@@ -69,6 +70,10 @@ class BatteryMatrixCore(BaseMachine):
         if index >= len(items) or index < 0:
             return
         item = item_nbt.INBT2Item(items.pop(index))
+        if item.userData is not None:
+            UpdateCharge(
+                item, GetCharge(item.userData)[0]
+            )  # 刷新取出电池的能量叠加贴图
         exData[K_ITEMS] = items
         SetBlockEntityData(self.dim, (self.x, self.y, self.z), blocknbt)
         self.update_core_data()

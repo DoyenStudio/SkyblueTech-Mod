@@ -17,6 +17,10 @@ class CreativeTank(BasicTank):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         BasicTank.__init__(self, dim, x, y, z, block_entity_data)
+        # 无限体积无法可靠地持久化到方块实体数据, 重载时按存有流体的事实重置为
+        # INFINITY, 即使存档中的数值被损坏也能自愈。
+        if self.fluid_id is not None:
+            self.fluid_volume = INFINITY
 
     def AddFluid(self, fluid_id, fluid_volume, depth=0):
         # type: (str, float, int) -> tuple[bool, float]

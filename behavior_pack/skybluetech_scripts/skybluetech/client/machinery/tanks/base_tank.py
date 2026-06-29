@@ -34,7 +34,7 @@ def onModBlockEntityLoadedClientEvent(event):
     z = event.posZ
     blockEntityData = GetBlockEntityData(x, y, z)
     if blockEntityData is None:
-        raise Exception("BlockEntityData is None")
+        return
     fluid_id, _, max_volume = getFluidDataFromBlock(blockEntityData)
     client_tank_datas[(x, y, z)] = (None, -1, max_volume)
     if fluid_id is not None:
@@ -96,11 +96,14 @@ def getFluidDataFromBlock(block_entity_data):
 
 def getModelScaleRel(fluid_volume, max_volume):
     # type: (float, float) -> float
+    if fluid_volume is None:
+        return 0
     if fluid_volume == INFINITY:
         return 1
     elif max_volume == INFINITY:
         return 0
-    elif max_volume == 0:
+    elif not max_volume:
+        # max_volume 为 0 或 None, 避免除零
         return 2
     else:
         return fluid_volume / max_volume
@@ -118,19 +121,15 @@ def updateClientTanksOnce():
             # print("[ERROR] Tank: BlockEntityData is None")
             continue
         fluid_id, fluid_volume, max_volume = getFluidDataFromBlock(blockdata)
-        if fluid_volume == INFINITY:
-            vol_pc = 1
-        elif max_volume == INFINITY:
-            vol_pc = 0
-        else:
-            vol_pc = float(fluid_volume) / max_volume
-        sync_modify = False
+        vol_pc = getModelScaleRel(fluid_volume, max_volume)
+        # sync_modify 表示"本次涉及的模型操作均未失败", 初值为 True;
+        # 仅当某次贴图/液面设置失败(模型尚未就绪)时置 False, 不更新缓存以便下次重试。
+        sync_modify = True
         if fluid_id != old_fluid_id:
             if old_fluid_id is None and fluid_id is not None:
                 sync_modify = loadModel(x, y, z).SetTexture(fluid_id)
             elif old_fluid_id is not None and fluid_id is None:
                 client_models.pop((x, y, z)).Destroy()
-                sync_modify = True
             elif old_fluid_id is not None and fluid_id is not None:
                 client_models.pop((x, y, z)).Destroy()
                 sync_modify = loadModel(x, y, z).SetTexture(fluid_id)

@@ -16,6 +16,10 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic.fluid_container 
 )
 from .gui_ctrl import GUIControl
 
+# 浮点传输（管道/机器分量产出）可能留下极小残留体积, 低于该阈值视为空,
+# 避免出现"显示 0mB 却仍占用流体类型, 导致其它流体倒不进来"的情况。
+FLUID_VOLUME_EPSILON = 1e-6
+
 
 class FluidContainer(object):
     """
@@ -180,7 +184,9 @@ class FluidContainer(object):
             else:
                 if not self.allow_player_use_bucket_push:
                     return False
-                fluid_id = item.newItemName.replace("_bucket", "")
+                fluid_id = item.newItemName
+                if fluid_id.endswith("_bucket"):
+                    fluid_id = fluid_id[: -len("_bucket")]
                 if self.CanAddFluid(fluid_id) and ItemExists(fluid_id):
                     if self.max_fluid_volume - self.fluid_volume >= BUCKET_VOLUME:
                         if self.fluid_id is None:
@@ -200,7 +206,7 @@ class FluidContainer(object):
             return False
 
     def on_player_interact_with_glass_tube(self, player_id, item, test=False):
-        # type: (str, object, bool) -> bool
+        # type: (str, Item, bool) -> bool
         from ...tools.glass_tube import (
             GetTubeContent,
             ApplyTubeContent,
@@ -284,7 +290,7 @@ class FluidContainer(object):
     @fluid_volume.setter
     def fluid_volume(self, value):
         # type: (float) -> None
-        if value is None or value <= 0:
+        if value is None or value <= FLUID_VOLUME_EPSILON:
             value = 0.0
             if self._cached_fluid_id is not None:
                 self.fluid_id = None

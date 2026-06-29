@@ -43,7 +43,7 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
 
     def set_power(self, power):
         # type: (int) -> None
-        self.running_power = min(MAX_POWER, power)
+        self.running_power = min(MAX_POWER, power) * 5  # 5 tick 运行一次
         self._update_heat_power()
 
     def set_kelvin_limit(self, limit):

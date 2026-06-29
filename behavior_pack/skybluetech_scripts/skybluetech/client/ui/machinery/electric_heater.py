@@ -42,7 +42,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         if block_nbt is not None:
             ex_data = block_nbt.get("exData")
             if ex_data is not None:
-                current_power = GetValue(ex_data, K_SET_POWER, 0)
+                current_power = GetValue(ex_data, K_SET_POWER, 0) / 5  # 5 tick 运行一次
                 if current_power != 0:
                     self.power_input.SetText(str(current_power))
                 else:
@@ -59,7 +59,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
             return
         data = data["exData"]
         storage_rf = GetValue(data, K_STORE_RF, 0)
-        power = GetValue(data, K_SET_POWER, 0)
+        power = GetValue(data, K_SET_POWER, 0) / 5  # 5 tick 运行一次
         current_temperature = GetValue(data, K_HEAT_VALUE, 0) + ENV_TEMPERATURE
         UpdatePowerBar(self.power_bar, storage_rf, STORE_RF_MAX)
         self.databar_text.SetText(

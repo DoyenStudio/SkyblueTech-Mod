@@ -45,6 +45,7 @@ class HeatCtrl(BaseMachine):
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
+        self.t += 1
         if self.t % 5 == 0:
             self.t = 0
             self._heat_ctrl_work_once()

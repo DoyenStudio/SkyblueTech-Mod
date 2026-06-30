@@ -165,7 +165,8 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
         if not self.can_output(recipe):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-        self.start_recipe(recipe_index, recipe)
+        if self.recipe_index is None:
+            self.start_recipe(recipe_index, recipe)
         self.ResetDeactiveFlags()
         self.generator_output_power = recipe.output_power
         self.SetOutputPower(self.generator_output_power)

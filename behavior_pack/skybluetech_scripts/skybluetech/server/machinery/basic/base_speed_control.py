@@ -1,6 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_POWER_LACK
+from skybluetech_scripts.skybluetech.common.define.flags import (
+    PROGRESS_PRESERVING_FLAGS,
+)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_TICKS_LEFT,
     K_PROGRESS,
@@ -77,7 +79,9 @@ class BaseSpeedControl(BaseMachine):
     @SuperExecutorMeta.execute_super
     def SetDeactiveFlag(self, flag):
         # type: (int) -> None
-        if flag != DEACTIVE_FLAG_POWER_LACK:
+        # 仅在"非短暂阻塞"原因停机时重置进度; 能量缓冲/输出受阻等
+        # 短暂原因解除后应从原进度继续 (见 PROGRESS_PRESERVING_FLAGS)。
+        if not (flag & PROGRESS_PRESERVING_FLAGS):
             self.ResetProgress()
 
     @property

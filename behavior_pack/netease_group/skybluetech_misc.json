@@ -1,0 +1,30 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.cartidges",
+            "icon": "skybluetech:famicom_cartidge_1",
+            "list": [
+                "skybluetech:famicom_cartidge_1",
+                "skybluetech:famicom_cartidge_2",
+                "skybluetech:famicom_cartidge_3"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.control_circuits",
+            "icon": "skybluetech:control_circuit_basic",
+            "list": [
+                "skybluetech:control_circuit_basic",
+                "skybluetech:control_circuit_advanced",
+                "skybluetech:control_circuit_professional"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.paddles",
+            "icon": "skybluetech:paddle_iron",
+            "list": [
+                "skybluetech:paddle_iron",
+                "skybluetech:paddle_steel"
+            ]
+        }
+    ]
+}

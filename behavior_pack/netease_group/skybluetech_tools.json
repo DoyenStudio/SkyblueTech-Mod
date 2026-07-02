@@ -17,6 +17,16 @@
                 "skybluetech:invar_sword",
                 "skybluetech:invar_mining_hammer"
             ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.workstation_tools",
+            "icon": "skybluetech:wrench_iron",
+            "list": [
+                "skybluetech:wrench_iron",
+                "skybluetech:wrench_invar",
+                "skybluetech:pincer_iron",
+                "skybluetech:pincer_invar"
+            ]
         }
     ]
 }

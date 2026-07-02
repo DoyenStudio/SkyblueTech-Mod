@@ -1,0 +1,90 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.machinery_crafting",
+            "icon": "skybluetech:machinery_workstation",
+            "list": [
+                "skybluetech:assembler",
+                "skybluetech:machinery_workstation"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.machinery_production",
+            "icon": "skybluetech:macerator",
+            "list": [
+                "skybluetech:alloy_furnace",
+                "skybluetech:compressor",
+                "skybluetech:distillation_chamber",
+                "skybluetech:electric_crafter",
+                "skybluetech:electric_heater",
+                "skybluetech:fluid_condenser",
+                "skybluetech:freezer",
+                "skybluetech:heavy_compressor",
+                "skybluetech:hydroponic_base",
+                "skybluetech:hydroponic_bed",
+                "skybluetech:hydroponic_bed_sand",
+                "skybluetech:macerator",
+                "skybluetech:magma_centrifuge",
+                "skybluetech:magma_furnace",
+                "skybluetech:metal_press",
+                "skybluetech:mixed_macerator",
+                "skybluetech:mixer",
+                "skybluetech:oil_extractor",
+                "skybluetech:redstone_furnace",
+                "skybluetech:splitter",
+                "skybluetech:template_assembler"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.machinery_energy",
+            "icon": "skybluetech:rf_repeater_plant",
+            "list": [
+                "skybluetech:charger",
+                "skybluetech:creative_power_acceptor",
+                "skybluetech:redstoneflux_brake",
+                "skybluetech:rf_repeater_plant"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.machinery_logistics",
+            "icon": "skybluetech:item_splitter",
+            "list": [
+                "skybluetech:item_splitter",
+                "skybluetech:fluid_splitter"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.machinery_source_extraction",
+            "icon": "skybluetech:pump",
+            "list": [
+                "skybluetech:digger",
+                "skybluetech:farming_station",
+                "skybluetech:forester",
+                "skybluetech:mini_miner",
+                "skybluetech:pump"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.machinery_generator",
+            "icon": "skybluetech:thermal_generator",
+            "list": [
+                "skybluetech:creative_generator",
+                "skybluetech:gas_burning_generator",
+                "skybluetech:geothermal_generator",
+                "skybluetech:reacting_thermal_generator",
+                "skybluetech:redstone_generator",
+                "skybluetech:solar_panel",
+                "skybluetech:thermal_generator",
+                "skybluetech:wind_generator"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.machinery_misc",
+            "icon": "skybluetech:hover_text_displayer",
+            "list": [
+                "skybluetech:deepslate_lava_vibrator",
+                "skybluetech:hover_text_displayer"
+            ]
+        }
+    ]
+}

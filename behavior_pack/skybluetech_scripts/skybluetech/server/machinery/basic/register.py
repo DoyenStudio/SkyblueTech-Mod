@@ -61,8 +61,13 @@ def onSlotUpdate(event):
 @PlayerTryPutCustomContainerItemServerEvent.ListenWithUserData()
 def onCustomCotainerPutItem(event):
     # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
+    from ..interfaces import FluidInputInterface, FluidOutputInterface
+
     dimensionId = GetPlayerDimensionId(event.playerId)
     m = pool.GetMachineStrict(dimensionId, event.x, event.y, event.z)
+    if isinstance(m, (FluidInputInterface, FluidOutputInterface)):
+        event.cancel()
+        return
     if isinstance(m, ItemContainer):
         m.OnCustomCotainerPutItem(event)
 
@@ -154,8 +159,13 @@ def OnUnload(event):
 @ItemPushInCustomContainerServerEvent.Listen()
 def onItemPushIn(event):
     # type: (ItemPushInCustomContainerServerEvent) -> None
+    from ..interfaces import FluidInputInterface, FluidOutputInterface
+
     m = pool.GetMachineStrict(event.dimension, event.x, event.y, event.z)
     if not isinstance(m, ItemContainer):
+        return
+    if isinstance(m, (FluidInputInterface, FluidOutputInterface)):
+        event.cancel()
         return
     if (
         not m.IsValidInput(event.collectionIndex, event.item)

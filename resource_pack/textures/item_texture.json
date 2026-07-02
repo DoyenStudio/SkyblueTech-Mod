@@ -325,6 +325,9 @@
         "skybluetech:obj_upgrader_spec_nofarm": {
             "textures": "textures/items/object_upgraders/obj_upgrader_spec_nofarm"
         },
+        "skybluetech:obj_upgrader_spec_nvision": {
+            "textures": "textures/items/object_upgraders/obj_upgrader_spec_nvision"
+        },
         "skybluetech:obj_upgrader_veinminer": {
             "textures": "textures/items/object_upgraders/obj_upgrader_veinminer"
         },

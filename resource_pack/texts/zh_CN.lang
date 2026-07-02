@@ -72,6 +72,7 @@ item.skybluetech:obj_upgrader_plate_spec.name=专用强化基板
 item.skybluetech:obj_upgrader_spec_farming.name=特化： 自动播种
 item.skybluetech:obj_upgrader_veinminer.name=强化： 连锁采掘
 item.skybluetech:obj_upgrader_spec_nofarm.name=特化： 耕地保护
+item.skybluetech:obj_upgrader_spec_nvision.name=特化： 前景夜视
 item.skybluetech:platinum_dust.name=铂粉
 item.skybluetech:platinum_ingot.name=铂锭
 item.skybluetech:platinum_plate.name=铂板

@@ -4,14 +4,14 @@
         "bedrock_lava_drill_controller_side": {
             "textures": "textures/machines/bedrock_lava_drill_controller_side"
         },
+        "skybluetech:air_compressor": {
+            "textures": "textures/models/air_compressor_texture"
+        },
         "skybluetech:alloy_furnace_front": {
             "textures": "textures/machines/alloy_furnace_front"
         },
         "skybluetech:alloy_furnace_front_active": {
             "textures": "textures/machines/alloy_furnace_front_active"
-        },
-        "skybluetech:air_compressor": {
-            "textures": "textures/models/air_compressor_texture"
         },
         "skybluetech:aluminum_ore": {
             "textures": "textures/blocks/ore/aluminum_ore"
@@ -311,12 +311,6 @@
         "skybluetech:machinery_workstation": {
             "textures": "textures/models/machinery_workstation_texture"
         },
-        "skybluetech:mixed_macerator_front": {
-            "textures": "textures/machines/mixed_macerator_front"
-        },
-        "skybluetech:mixed_macerator_front_active": {
-            "textures": "textures/machines/flipbook_textures/mixed_macerator_front_active"
-        },
         "skybluetech:magma_furnace_front": {
             "textures": "textures/machines/magma_furnace_front"
         },
@@ -332,11 +326,14 @@
         "skybluetech:methane_mud": {
             "textures": "textures/fluid/methane_mud"
         },
-        "skybluetech:water_vapor": {
-            "textures": "textures/fluid/water_vapor"
-        },
         "skybluetech:mini_miner": {
             "textures": "textures/models/mini_miner_texture"
+        },
+        "skybluetech:mixed_macerator_front": {
+            "textures": "textures/machines/mixed_macerator_front"
+        },
+        "skybluetech:mixed_macerator_front_active": {
+            "textures": "textures/machines/flipbook_textures/mixed_macerator_front_active"
         },
         "skybluetech:mixer_front": {
             "textures": "textures/machines/mixer_front"
@@ -344,14 +341,14 @@
         "skybluetech:mixer_front_active": {
             "textures": "textures/machines/flipbook_textures/mixer_front_active"
         },
+        "skybluetech:nether_sulfur_ore": {
+            "textures": "textures/blocks/ore/nether_sulfur_ore"
+        },
         "skybluetech:nickel_block": {
             "textures": "textures/blocks/ingot_block/nickel_block"
         },
         "skybluetech:nickel_ore": {
             "textures": "textures/blocks/ore/nickel_ore"
-        },
-        "skybluetech:nether_sulfur_ore": {
-            "textures": "textures/blocks/ore/nether_sulfur_ore"
         },
         "skybluetech:oil_extractor_front": {
             "textures": "textures/machines/oil_extractor_front"
@@ -404,12 +401,6 @@
         "skybluetech:rect_panel_bg": {
             "textures": "textures/ui/rect_panel_bg"
         },
-        "skybluetech:redstoneflux_brake_top": {
-            "textures": "textures/machines/redstoneflux_brake_top"
-        },
-        "skybluetech:redstoneflux_brake_otherside": {
-            "textures": "textures/machines/redstoneflux_brake_otherside"
-        },
         "skybluetech:redstone_furnace_front": {
             "textures": "textures/machines/redstone_furnace_front"
         },
@@ -421,6 +412,12 @@
         },
         "skybluetech:redstone_generator_front_active": {
             "textures": "textures/machines/redstone_generator_front_active"
+        },
+        "skybluetech:redstoneflux_brake_otherside": {
+            "textures": "textures/machines/redstoneflux_brake_otherside"
+        },
+        "skybluetech:redstoneflux_brake_top": {
+            "textures": "textures/machines/redstoneflux_brake_top"
         },
         "skybluetech:resin_collector": {
             "textures": "textures/models/resin_collector_texture"
@@ -488,11 +485,14 @@
         "skybluetech:titanium_ore": {
             "textures": "textures/blocks/ore/titanium_ore"
         },
+        "skybluetech:ultraheatinum_block": {
+            "textures": "textures/blocks/ingot_block/ultraheatinum_block"
+        },
         "skybluetech:uranium_ore": {
             "textures": "textures/blocks/ore/uranium_ore"
         },
-        "skybluetech:ultraheatinum_block": {
-            "textures": "textures/blocks/ingot_block/ultraheatinum_block"
+        "skybluetech:water_vapor": {
+            "textures": "textures/fluid/water_vapor"
         },
         "skybluetech:wind_generator": {
             "textures": "textures/models/wind_generator_empty_texture"

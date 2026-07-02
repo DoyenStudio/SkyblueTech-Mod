@@ -1,1 +1,1 @@
-from . import attack, auto_burning, digspeed, fortune, spec_farming, vein_miner
+from . import attack, auto_burning, digspeed, fortune, spec_farming, spec_nvision, vein_miner

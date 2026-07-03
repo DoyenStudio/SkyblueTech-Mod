@@ -54,6 +54,50 @@
                     },
                     {
                         "__type__": 8,
+                        "__value__": "minecraft:deepslate_coal_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:deepslate_iron_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:deepslate_gold_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:deepslate_diamond_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:deepslate_emerald_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:deepslate_lapis_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:deepslate_redstone_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:deepslate_copper_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:nether_gold_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:quartz_ore"
+                    },
+                    {
+                        "__type__": 8,
+                        "__value__": "minecraft:ancient_debris"
+                    },
+                    {
+                        "__type__": 8,
                         "__value__": "minecraft:oak_log"
                     },
                     {

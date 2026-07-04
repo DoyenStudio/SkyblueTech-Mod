@@ -650,12 +650,20 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
     @Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
     def onBlockRemoved(self, event):
         # type: (BlockRemoveServerEvent) -> None
+        # NOTE: BlockRemove 的同步回调期间该位置仍读到原方块 (便于最后一刻读取
+        # 方块数据), 因此清理必须延迟到下一 tick; 但玩家可能在这 1t 内原地重放
+        # 同类方块 (快速拆+放), 此时放置事件已经完成了正确的清理与重建, 若不加
+        # 校验直接清理, 会把刚建好的接入点从活网络中永久误删 (2026-07 实证)。
+        # 所以延迟处理时必须先确认该处现状: 仍是同类方块则跳过, 交给放置事件。
+        current = GetBlockName(event.dimension, (event.x, event.y, event.z))
         if self.transmittable_block_check_func(event.fullName):
             # 是容器
-            self.clean_nearby_network(event.dimension, event.x, event.y, event.z)
+            if current is None or not self.transmittable_block_check_func(current):
+                self.clean_nearby_network(event.dimension, event.x, event.y, event.z)
         if self.transmitter_check_func(event.fullName):
             # 是管道
-            self.clean_node(event.dimension, event.x, event.y, event.z)
+            if current is None or not self.transmitter_check_func(current):
+                self.clean_node(event.dimension, event.x, event.y, event.z)
 
     @ServerListenerService.Listen(ChunkLoadedServerEvent)
     @Delay(1)  # 我也不知道为什么, 过早检测管道会导致区块边缘的一些容器方块检测为空气

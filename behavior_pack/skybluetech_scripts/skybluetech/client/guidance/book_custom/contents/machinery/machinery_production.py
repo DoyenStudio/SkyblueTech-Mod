@@ -15,7 +15,7 @@ alloy_furnace = PageGroup(
             '合金炉可以将多种金属<item id="%s">或非金属<item id="%s">混合烧制为<style color="§5" t="合金"><item id="%s">。\n钢锭、 青铜锭、 殷钢锭等都需要合金炉进行烧制。'
             % ("minecraft:iron_ingot", id_enum.Dusts.CARBON, id_enum.Ingots.STEEL),
         ),
-        MachineryWorkstationRecipePage(id_enum.ALLOY_FURNACE),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ALLOY_FURNACE),
     ],
 )
 
@@ -28,7 +28,7 @@ compressor = PageGroup(
             '压缩机可将金属锭<item id="%s">压制为板材<item id="%s">， 除此以外还能对一些材料进行进一步压缩。'
             % (id_enum.Ingots.TIN, id_enum.Plates.TIN),
         ),
-        MachineryWorkstationRecipePage(id_enum.COMPRESSOR),
+        MachineryWorkstationRecipePage(id_enum.Machinery.COMPRESSOR),
     ],
 )
 
@@ -44,7 +44,7 @@ distillation_chamber = PageGroup(
             "",
             "对比蒸馏塔， 无法使用过高或过低的温度， 也无法生产副产物， 但是可以进行需要精细控温的蒸馏， 相比之下产率也更高。",
         ),
-        MachineryWorkstationRecipePage(id_enum.DISTILLATION_CHAMBER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.DISTILLATION_CHAMBER),
     ],
 )
 
@@ -61,7 +61,7 @@ electric_crafter = PageGroup(
                 )
             },
         ),
-        MachineryWorkstationRecipePage(id_enum.ELECTRIC_CRAFTER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ELECTRIC_CRAFTER),
     ],
 )
 
@@ -72,7 +72,7 @@ electric_heater = PageGroup(
             "电力加热仓",
             '通电后可按照设置的温度向上前后左右五个铜盘面输出<text color="§c" t="热能">， 供一些需热机器使用。\n\n适当调节输入功率和最大温度可以让其达到合适的产热温度。',
         ),
-        MachineryWorkstationRecipePage(id_enum.ELECTRIC_HEATER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ELECTRIC_HEATER),
     ],
 )
 
@@ -83,7 +83,7 @@ fluid_condenser = PageGroup(
             "流体冷却机",
             '流体冷却机可将<text color="§c" t="高温流体">进行冷却获得物品产物。 如将熔融金属冷却为锭。',
         ),
-        MachineryWorkstationRecipePage(id_enum.FLUID_CONDENSER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.FLUID_CONDENSER),
     ],
 )
 
@@ -94,7 +94,7 @@ freezer = PageGroup(
             "冷冻机",
             '可按照设置将水<text color="§9" t="冷冻">为冰雪。 可以选择生产冰块<item id="minecraft:ice">、 浮冰<item id="minecraft:packed_ice">、 蓝冰<item id="minecraft:blue_ice">、 雪块<item id="minecraft:snow">或雪球<item id="minecraft:snowball">， 所需水量、 加工时间和能耗各不相同。',
         ),
-        MachineryWorkstationRecipePage(id_enum.FREEZER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.FREEZER),
     ],
 )
 
@@ -106,7 +106,7 @@ hydroponic_base = PageGroup(
             '水培基座为其上方的<style color="§2"><link text="水培床" id="hydroponic_bed"><style color="R">提供作物生长所需水源， 同时水培床的作物产出也会存放到水培基座供抽取。\n\n水培床所需水分或营养液需要输入到其下方的水培基座才能被水培床利用。',
             hyperlink_cbs={"hydroponic_bed": lambda _: hydroponic_bed.FastJump()},
         ),
-        MachineryWorkstationRecipePage(id_enum.HYDROPONIC_BASE),
+        MachineryWorkstationRecipePage(id_enum.Machinery.HYDROPONIC_BASE),
     ],
 )
 
@@ -122,7 +122,7 @@ hydroponic_bed = PageGroup(
             "",
             '水培床会<text color="§2" t="自动">从产出中收取一枚种子进行补种， 剩余产物会被存入下方的<text color="§9" t="水培基座">。',
         ),
-        MachineryWorkstationRecipePage(id_enum.HYDROPONIC_BED),
+        MachineryWorkstationRecipePage(id_enum.Machinery.HYDROPONIC_BED),
     ],
 )
 
@@ -134,7 +134,7 @@ macerator = PageGroup(
             '磨粉机能被用于物品磨粉<item id="minecraft:bone_meal">、 矿物粉碎<item id="%s">等。 它能将金属锭隔绝空气磨成金属粉， 也能对部分自然资源进行粉碎处理， 还能对粗矿甚至远古残骸进行研磨增产。'
             % id_enum.Dusts.TIN,
         ),
-        MachineryWorkstationRecipePage(id_enum.MACERATOR),
+        MachineryWorkstationRecipePage(id_enum.Machinery.MACERATOR),
     ],
 )
 
@@ -145,7 +145,7 @@ magma_centrifuge = PageGroup(
             "高热流体离心机",
             '高热流体离心机主要用于对<text color="§4" t="熔岩"><item id="minecraft:lava_bucket">类混合物流体进行离心， 例如对深层熔岩进行离心， 再对产物进行进一步离心得到熔融矿物质。',
         ),
-        MachineryWorkstationRecipePage(id_enum.MAGMA_CENTRIFUGE),
+        MachineryWorkstationRecipePage(id_enum.Machinery.MAGMA_CENTRIFUGE),
     ],
 )
 
@@ -161,7 +161,7 @@ magma_furnace = PageGroup(
                 )
             },
         ),
-        MachineryWorkstationRecipePage(id_enum.MAGMA_FURNACE),
+        MachineryWorkstationRecipePage(id_enum.Machinery.MAGMA_FURNACE),
     ],
 )
 
@@ -173,7 +173,7 @@ metal_press = PageGroup(
             '可以使用一份金属原料<item id="%s">和润滑油生产金属棒<item id="%s">。'
             % (id_enum.Ingots.TIN, id_enum.Sticks.TIN),
         ),
-        MachineryWorkstationRecipePage(id_enum.METAL_PRESS),
+        MachineryWorkstationRecipePage(id_enum.Machinery.METAL_PRESS),
     ],
 )
 
@@ -184,7 +184,7 @@ mixed_macerator = PageGroup(
             "混合研磨机",
             "可以将多种固体进行混合研磨得到产物。\n\n输入物需要放在固定的槽位， 不能交换摆放。",
         ),
-        MachineryWorkstationRecipePage(id_enum.MIXED_MACERATOR),
+        MachineryWorkstationRecipePage(id_enum.Machinery.MIXED_MACERATOR),
     ],
 )
 
@@ -196,7 +196,7 @@ mixer = PageGroup(
             "固液搅拌机",
             "可以将固体与流体进行混合搅拌得到固体新产物。",
         ),
-        MachineryWorkstationRecipePage(id_enum.MIXER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.MIXER),
     ],
 )
 
@@ -207,7 +207,7 @@ oil_extractor = PageGroup(
             "榨油机",
             '可将部分植物种子<item id="minecraft:wheat_seeds">榨油以得到<text color="§a" t="植物油">。',
         ),
-        MachineryWorkstationRecipePage(id_enum.OIL_EXTRACTOR),
+        MachineryWorkstationRecipePage(id_enum.Machinery.OIL_EXTRACTOR),
     ],
 )
 
@@ -218,6 +218,6 @@ redstone_furnace = PageGroup(
             "红石炉",
             '红石炉将红石能这种能源作为燃料， 和熔炉<item id="minecraft:furnace">一样<text color="§c" t="烧制物品">。',
         ),
-        MachineryWorkstationRecipePage(id_enum.REDSTONE_FURNACE),
+        MachineryWorkstationRecipePage(id_enum.Machinery.REDSTONE_FURNACE),
     ],
 )

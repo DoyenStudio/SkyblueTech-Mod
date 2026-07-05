@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import CREATIVE_GENERATOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.CREATIVE_GENERATOR
 from .basic import BaseGenerator, RegisterMachine
 
 

@@ -12,7 +12,8 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import FARMING_STATION as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.FARMING_STATION
 from ...common.machinery_def.farming_station import (
     isRipedCrop,
     isBlockCrop,

@@ -17,9 +17,9 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantSettingsUpdate,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import (
-    RF_REPEATER_PLANT as MACHINE_ID,
-)
+from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
+
+MACHINE_ID = Machinery.RF_REPEATER_PLANT
 from skybluetech_scripts.skybluetech.common.define.facing import DXYZ_FACING, FACING_EN
 from skybluetech_scripts.skybluetech.common.define.ui_keys import RF_REPEATER_PLANT_UI
 from skybluetech_scripts.skybluetech.common.machinery_def.rf_repeater_plant import (

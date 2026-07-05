@@ -17,7 +17,7 @@ deepslate_lava_vibrator = PageGroup(
             "",
             "将深层熔岩谐振勘探器放置到地面， 为其输入能量就可以启动探测。 勘探进度越多， 勘探到的深层熔岩储量也越准确。 勘探进度到达百分百后探测到的深层熔岩储量就几乎是百分百准确了。",
         ),
-        MachineryWorkstationRecipePage(id_enum.DEEPSLATE_LAVA_VIBRATOR),
+        MachineryWorkstationRecipePage(id_enum.Machinery.DEEPSLATE_LAVA_VIBRATOR),
     ],
 )
 
@@ -28,6 +28,6 @@ hover_text_displayer = PageGroup(
             "悬浮文本投影器",
             '悬浮文本投影器通过消耗能量来将<text color="§5" t="悬浮文本">投射到世界上， 类似 NPC 头顶的悬浮字效果。\n文本的长度和是否带颜色会影响最终功耗。',
         ),
-        MachineryWorkstationRecipePage(id_enum.HOVER_TEXT_DISPLAYER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.HOVER_TEXT_DISPLAYER),
     ],
 )

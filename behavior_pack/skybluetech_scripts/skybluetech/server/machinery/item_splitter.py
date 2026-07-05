@@ -9,7 +9,8 @@ from ...common.events.machinery.item_splitter import (
     ItemSplitterSettingsSetLabel,
     ItemSplitterSimpleAction,
 )
-from ...common.define.id_enum.machinery import ITEM_SPLITTER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.ITEM_SPLITTER
 from ..transmitters.cable.logic import (
     logic_module as cable_logic,
     PushItemToGenericContainer,

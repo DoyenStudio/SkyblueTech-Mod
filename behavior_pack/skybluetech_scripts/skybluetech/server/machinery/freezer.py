@@ -1,7 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.events.machinery.freezer import FreezerModeChangedEvent
-from ...common.define.id_enum.machinery import FREEZER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.FREEZER
 from ...common.mini_jei.core import RecipesCollection
 from ...common.machinery_def.freezer import (
     recipes as Recipes,

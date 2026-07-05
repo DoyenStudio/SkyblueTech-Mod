@@ -1,7 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.items import Upgraders
-from ...common.define.id_enum.machinery import MAGMA_FURNACE as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.MAGMA_FURNACE
 from ...common.machinery_def.magma_furnace import (
     magma_factory_recipes as MagmaFactoryRecipes,
     recipes as Recipes,

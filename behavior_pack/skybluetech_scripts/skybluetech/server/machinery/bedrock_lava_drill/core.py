@@ -3,9 +3,9 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define import flags
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import (
-    BEDROCK_LAVA_DRILL_CONTROLLER as MACHINE_ID,
-)
+from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
+
+MACHINE_ID = Machinery.BEDROCK_LAVA_DRILL_CONTROLLER
 from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import DeepLava
 from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill import (
     STRUCTURE_PALETTE,

@@ -70,7 +70,7 @@ MAKE_MACHINERY_WORKSTATION = ItemQuest(
     "make_machinery_workstation",
     "制作机件加工台",
     "合成机件加工台， 用于制造各种机械",
-    {id_enum.MACHINERY_WORKSTATION: 1},
+    {id_enum.Machinery.MACHINERY_WORKSTATION: 1},
 )
 
 MAKE_THERMAL_GENERATOR = (
@@ -78,7 +78,7 @@ MAKE_THERMAL_GENERATOR = (
         "make_thermal_generator",
         "你的入门发电机",
         "使用机件加工台制造一个火力发电机",
-        {id_enum.THERMAL_GENERATOR: 1},
+        {id_enum.Machinery.THERMAL_GENERATOR: 1},
     )
     .SetPrevQuests(
         lambda: [

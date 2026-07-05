@@ -7,7 +7,8 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum.machinery import HEAVY_COMPRESSOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.HEAVY_COMPRESSOR
 from ...common.machinery_def.heavy_compressor import STORE_RF_MAX
 from .basic import (
     BaseMachine,

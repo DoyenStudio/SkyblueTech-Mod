@@ -23,7 +23,7 @@ alloy_furnace.AlloyFurnaceRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.alloy_furnace_recipes",
-            "recipe_icon_id": machinery.ALLOY_FURNACE,
+            "recipe_icon_id": machinery.Machinery.ALLOY_FURNACE,
         },
     )
 )
@@ -33,7 +33,7 @@ compressor.CompressorRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.compressor_recipes",
-            "recipe_icon_id": machinery.COMPRESSOR,
+            "recipe_icon_id": machinery.Machinery.COMPRESSOR,
         },
     )
 )
@@ -43,7 +43,7 @@ fluid_condenser.FluidCondenserRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.fluid_condenser_recipes",
-            "recipe_icon_id": machinery.FLUID_CONDENSER,
+            "recipe_icon_id": machinery.Machinery.FLUID_CONDENSER,
         },
     )
 )
@@ -53,7 +53,7 @@ macerator.MaceratorRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.macerator_recipes",
-            "recipe_icon_id": machinery.MACERATOR,
+            "recipe_icon_id": machinery.Machinery.MACERATOR,
         },
     )
 )
@@ -63,7 +63,7 @@ mixed_macerator.MixedMaceratorRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.mixed_macerator_recipes",
-            "recipe_icon_id": machinery.MIXED_MACERATOR,
+            "recipe_icon_id": machinery.Machinery.MIXED_MACERATOR,
         },
     )
 )
@@ -73,7 +73,7 @@ magma_centrifuge.MagmaCentrifugeRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.magma_centrifuge_recipes",
-            "recipe_icon_id": machinery.MAGMA_CENTRIFUGE,
+            "recipe_icon_id": machinery.Machinery.MAGMA_CENTRIFUGE,
         },
     )
 )
@@ -83,7 +83,7 @@ magma_furnace.MagmaFurnaceRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.magma_furnace_recipes",
-            "recipe_icon_id": machinery.MAGMA_FURNACE,
+            "recipe_icon_id": machinery.Machinery.MAGMA_FURNACE,
         },
     )
 )
@@ -93,7 +93,7 @@ metal_press.MetalPressRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.metal_press_recipes",
-            "recipe_icon_id": machinery.METAL_PRESS,
+            "recipe_icon_id": machinery.Machinery.METAL_PRESS,
         },
     )
 )
@@ -103,7 +103,7 @@ mixer.MixerRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.mixer_recipes",
-            "recipe_icon_id": machinery.MIXER,
+            "recipe_icon_id": machinery.Machinery.MIXER,
         },
     )
 )
@@ -113,7 +113,7 @@ oil_extractor.OilExtractorRecipe.SetRenderer(
         (MachineRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.oil_extractor_recipes",
-            "recipe_icon_id": machinery.OIL_EXTRACTOR,
+            "recipe_icon_id": machinery.Machinery.OIL_EXTRACTOR,
         },
     )
 )
@@ -123,7 +123,7 @@ reacting_thermal_generator.ReactingThermalGeneratorRecipe.SetRenderer(
         (GeneratorRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.reacting_thermal_generator_recipes",
-            "recipe_icon_id": machinery.REACTING_THERMAL_GENERATOR,
+            "recipe_icon_id": machinery.Machinery.REACTING_THERMAL_GENERATOR,
         },
     )
 )
@@ -134,7 +134,7 @@ redstone_generator.RedstoneGeneratorRecipe.SetRenderer(
         (GeneratorRecipeRenderer,),
         {
             "render_ui_def_name": "RecipeCheckerLib.redstone_generator_recipes",
-            "recipe_icon_id": machinery.REDSTONE_GENERATOR,
+            "recipe_icon_id": machinery.Machinery.REDSTONE_GENERATOR,
         },
     )
 )

@@ -11,7 +11,8 @@ from skybluetech_scripts.tooldelta.events.notify import (
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum.machinery import CHARGER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.CHARGER
 from ...common.machinery_def.charger import (
     K_CHARGE_RF,
     K_CHARGE_RF_MAX,

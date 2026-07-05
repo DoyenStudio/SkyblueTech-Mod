@@ -1,6 +1,6 @@
 # coding=utf-8
 from ..mini_jei.core import RecipesCollection
-from ..define.id_enum import MACERATOR, Dusts, SULFUR
+from ..define.id_enum import Machinery, Dusts, SULFUR
 from ..define.tag_enum.items import IngotTag, RawTag
 from ..mini_jei.machinery.macerator import (
     MachineRecipe,
@@ -17,7 +17,7 @@ preset_tagged = gen_tagged_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 
 
 recipes = RecipesCollection(
-    MACERATOR,
+    Machinery.MACERATOR,
     # Minecraft
     preset("minecraft:bone", 1, "minecraft:bone_meal", 5),
     preset("minecraft:clay", 1, "minecraft:clay_ball", 4),

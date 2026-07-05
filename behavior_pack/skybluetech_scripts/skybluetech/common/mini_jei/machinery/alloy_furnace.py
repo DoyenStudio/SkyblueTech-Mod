@@ -6,7 +6,7 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class AlloyFurnaceRecipe(MachineRecipe):
-    recipe_icon_id = machinery.ALLOY_FURNACE
+    recipe_icon_id = machinery.Machinery.ALLOY_FURNACE
 
     def __init__(self, item_inputs, item_outputs, power_cost, tick_duration):
         # type: (dict[int, Input], dict[int, Output], int, int) -> None

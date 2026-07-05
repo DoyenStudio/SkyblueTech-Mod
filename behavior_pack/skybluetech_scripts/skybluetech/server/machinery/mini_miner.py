@@ -13,7 +13,8 @@ from skybluetech_scripts.tooldelta.api.server import (
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum.machinery import MINI_MINER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.MINI_MINER
 from ...common.machinery_def.mini_miner import (
     WorkMode,
     K_DIGGING_POS,

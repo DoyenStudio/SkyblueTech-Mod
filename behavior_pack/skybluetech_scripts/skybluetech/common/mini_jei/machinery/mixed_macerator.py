@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class MixedMaceratorRecipe(MachineRecipe):
-    recipe_icon_id = machinery.MIXED_MACERATOR
+    recipe_icon_id = machinery.Machinery.MIXED_MACERATOR
 
     def __init__(self, input_items, output_item, power_cost, tick_duration):
         # type: (dict[int, Input], Output, int, int) -> None

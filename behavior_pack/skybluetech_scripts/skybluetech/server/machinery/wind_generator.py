@@ -19,7 +19,8 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum import WIND_GENERATOR as MACHINE_ID
+from ...common.define.id_enum import Machinery
+MACHINE_ID = Machinery.WIND_GENERATOR
 from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,

@@ -15,7 +15,8 @@ from ...common.machinery_def.redstoneflux_brake import (
     K_POWER_AVG,
     K_REDSTONE_STRENGTH,
 )
-from ...common.define.id_enum.machinery import REDSTONEFLUX_BRAKE as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.REDSTONEFLUX_BRAKE
 from ...common.define.ui_keys import REDSTONEFLUX_BRAKE_UI
 from ..transmitters.wire.logic import logic_module
 from .utils.action_commit import SafeGetMachine

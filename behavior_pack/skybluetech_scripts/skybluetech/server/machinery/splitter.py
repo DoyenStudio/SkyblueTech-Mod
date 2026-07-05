@@ -7,7 +7,8 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum.machinery import SPLITTER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.SPLITTER
 from ...common.machinery_def.splitter import STORE_RF_MAX
 from .basic import (
     BaseMachine,

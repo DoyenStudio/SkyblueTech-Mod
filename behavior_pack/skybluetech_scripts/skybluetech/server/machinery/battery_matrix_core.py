@@ -7,7 +7,8 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from skybluetech_scripts.tooldelta.extensions import item_nbt
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum import BATTERY_MATRIX_CORE as MACHINE_ID
+from ...common.define.id_enum import Machinery
+MACHINE_ID = Machinery.BATTERY_MATRIX_CORE
 from ...common.events.machinery.battery_matrix import BatteryMatrixCoreStatusUpdate
 from .basic import (
     BaseMachine,

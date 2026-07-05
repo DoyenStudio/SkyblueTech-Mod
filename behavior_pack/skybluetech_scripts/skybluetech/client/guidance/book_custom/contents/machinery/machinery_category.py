@@ -32,46 +32,46 @@ machinery_production_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.ALLOY_FURNACE,
+                    id_enum.Machinery.ALLOY_FURNACE,
                     0,
                     "合金炉",
                     machinery_production.alloy_furnace,
                 ),
                 TOCPageSection(
-                    id_enum.COMPRESSOR, 0, "压缩机", machinery_production.compressor
+                    id_enum.Machinery.COMPRESSOR, 0, "压缩机", machinery_production.compressor
                 ),
                 TOCPageSection(
-                    id_enum.DISTILLATION_CHAMBER,
+                    id_enum.Machinery.DISTILLATION_CHAMBER,
                     0,
                     "小型蒸馏仓",
                     machinery_production.distillation_chamber,
                 ),
                 TOCPageSection(
-                    id_enum.ELECTRIC_CRAFTER,
+                    id_enum.Machinery.ELECTRIC_CRAFTER,
                     0,
                     "电动合成台",
                     machinery_production.electric_crafter,
                 ),
                 TOCPageSection(
-                    id_enum.ELECTRIC_HEATER,
+                    id_enum.Machinery.ELECTRIC_HEATER,
                     0,
                     "电力加热仓",
                     machinery_production.electric_heater,
                 ),
                 TOCPageSection(
-                    id_enum.FLUID_CONDENSER,
+                    id_enum.Machinery.FLUID_CONDENSER,
                     0,
                     "流体冷却机",
                     machinery_production.fluid_condenser,
                 ),
                 TOCPageSection(
-                    id_enum.FREEZER,
+                    id_enum.Machinery.FREEZER,
                     0,
                     "冷冻机",
                     machinery_production.freezer,
                 ),
                 TOCPageSection(
-                    id_enum.HYDROPONIC_BASE,
+                    id_enum.Machinery.HYDROPONIC_BASE,
                     0,
                     "水培基座",
                     machinery_production.hydroponic_base,
@@ -82,55 +82,55 @@ machinery_production_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.HYDROPONIC_BED,
+                    id_enum.Machinery.HYDROPONIC_BED,
                     0,
                     "水培床",
                     machinery_production.hydroponic_bed,
                 ),
                 TOCPageSection(
-                    id_enum.MACERATOR,
+                    id_enum.Machinery.MACERATOR,
                     0,
                     "磨粉机",
                     machinery_production.macerator,
                 ),
                 TOCPageSection(
-                    id_enum.MAGMA_CENTRIFUGE,
+                    id_enum.Machinery.MAGMA_CENTRIFUGE,
                     0,
                     "高热流体离心机",
                     machinery_production.magma_centrifuge,
                 ),
                 TOCPageSection(
-                    id_enum.MAGMA_FURNACE,
+                    id_enum.Machinery.MAGMA_FURNACE,
                     0,
                     "熔岩炉",
                     machinery_production.magma_furnace,
                 ),
                 TOCPageSection(
-                    id_enum.METAL_PRESS,
+                    id_enum.Machinery.METAL_PRESS,
                     0,
                     "金属冲压机",
                     machinery_production.metal_press,
                 ),
                 TOCPageSection(
-                    id_enum.MIXED_MACERATOR,
+                    id_enum.Machinery.MIXED_MACERATOR,
                     0,
                     "混合研磨机",
                     machinery_production.mixed_macerator,
                 ),
                 TOCPageSection(
-                    id_enum.MIXER,
+                    id_enum.Machinery.MIXER,
                     0,
                     "固液搅拌机",
                     machinery_production.mixer,
                 ),
                 TOCPageSection(
-                    id_enum.OIL_EXTRACTOR,
+                    id_enum.Machinery.OIL_EXTRACTOR,
                     0,
                     "榨油机",
                     machinery_production.oil_extractor,
                 ),
                 TOCPageSection(
-                    id_enum.REDSTONE_FURNACE,
+                    id_enum.Machinery.REDSTONE_FURNACE,
                     0,
                     "红石炉",
                     machinery_production.redstone_furnace,
@@ -151,37 +151,37 @@ machinery_source_extraction_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.BEDROCK_LAVA_DRILL_CONTROLLER,
+                    id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER,
                     0,
                     "基岩熔岩钻",
                     machinery_source_extraction.bedrock_lava_drill,
                 ),
                 TOCPageSection(
-                    id_enum.DIGGER,
+                    id_enum.Machinery.DIGGER,
                     0,
                     "电力挖掘钻",
                     machinery_source_extraction.digger,
                 ),
                 TOCPageSection(
-                    id_enum.FARMING_STATION,
+                    id_enum.Machinery.FARMING_STATION,
                     0,
                     "种植站",
                     machinery_source_extraction.farming_station,
                 ),
                 TOCPageSection(
-                    id_enum.FORESTER,
+                    id_enum.Machinery.FORESTER,
                     0,
                     "伐木机",
                     machinery_source_extraction.forester,
                 ),
                 TOCPageSection(
-                    id_enum.MINI_MINER,
+                    id_enum.Machinery.MINI_MINER,
                     0,
                     "迷你采矿机",
                     machinery_source_extraction.mini_miner,
                 ),
                 TOCPageSection(
-                    id_enum.PUMP,
+                    id_enum.Machinery.PUMP,
                     0,
                     "电动泵",
                     machinery_source_extraction.pump,
@@ -201,43 +201,43 @@ machinery_generator_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.CREATIVE_GENERATOR,
+                    id_enum.Machinery.CREATIVE_GENERATOR,
                     0,
                     "创造模式发电机",
                     machinery_generator.creative_generator,
                 ),
                 TOCPageSection(
-                    id_enum.GEO_THERMAL_GENERATOR,
+                    id_enum.Machinery.GEO_THERMAL_GENERATOR,
                     0,
                     "地热发电机",
                     machinery_generator.geothermal_generator,
                 ),
                 TOCPageSection(
-                    id_enum.REACTING_THERMAL_GENERATOR,
+                    id_enum.Machinery.REACTING_THERMAL_GENERATOR,
                     0,
                     "热力反应发电机",
                     machinery_generator.reacting_thermal_generator,
                 ),
                 TOCPageSection(
-                    id_enum.REDSTONE_GENERATOR,
+                    id_enum.Machinery.REDSTONE_GENERATOR,
                     0,
                     "红石发电机",
                     machinery_generator.redstone_generator,
                 ),
                 TOCPageSection(
-                    id_enum.SOLAR_PANEL,
+                    id_enum.Machinery.SOLAR_PANEL,
                     0,
                     "太阳能电池板",
                     machinery_generator.solar_panel,
                 ),
                 TOCPageSection(
-                    id_enum.THERMAL_GENERATOR,
+                    id_enum.Machinery.THERMAL_GENERATOR,
                     0,
                     "火力发电机",
                     machinery_generator.thermal_generator,
                 ),
                 TOCPageSection(
-                    id_enum.WIND_GENERATOR,
+                    id_enum.Machinery.WIND_GENERATOR,
                     0,
                     "风力发电机",
                     machinery_generator.wind_generator,
@@ -257,25 +257,25 @@ machinery_energy_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.BATTERY_MATRIX_CONTROLLER,
+                    id_enum.Machinery.BATTERY_MATRIX_CONTROLLER,
                     0,
                     "电池仓",
                     machinery_energy.battery_matrix,
                 ),
                 TOCPageSection(
-                    id_enum.CHARGER,
+                    id_enum.Machinery.CHARGER,
                     0,
                     "充能台",
                     machinery_energy.charger,
                 ),
                 TOCPageSection(
-                    id_enum.CREATIVE_POWER_ACCEPTOR,
+                    id_enum.Machinery.CREATIVE_POWER_ACCEPTOR,
                     0,
                     "虚空放电器",
                     machinery_energy.creative_power_acceptor,
                 ),
                 TOCPageSection(
-                    id_enum.RF_REPEATER_PLANT,
+                    id_enum.Machinery.RF_REPEATER_PLANT,
                     0,
                     "能源中继塔",
                     machinery_energy.rf_repeater_plant,
@@ -295,13 +295,13 @@ machinery_misc_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.DEEPSLATE_LAVA_VIBRATOR,
+                    id_enum.Machinery.DEEPSLATE_LAVA_VIBRATOR,
                     0,
                     "深层熔岩谐振勘探器",
                     machinery_misc.deepslate_lava_vibrator,
                 ),
                 TOCPageSection(
-                    id_enum.HOVER_TEXT_DISPLAYER,
+                    id_enum.Machinery.HOVER_TEXT_DISPLAYER,
                     0,
                     "悬浮文本投影器",
                     machinery_misc.hover_text_displayer,
@@ -321,13 +321,13 @@ machinery_crafting_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.ASSEMBLER,
+                    id_enum.Machinery.ASSEMBLER,
                     0,
                     "装配站",
                     machinery_crafting.assembler,
                 ),
                 TOCPageSection(
-                    id_enum.MACHINERY_WORKSTATION,
+                    id_enum.Machinery.MACHINERY_WORKSTATION,
                     0,
                     "机件加工台",
                     machinery_crafting.machinery_workstation,
@@ -347,13 +347,13 @@ machinery_logistics_toc = PageGroup(
         TOCPage(
             [
                 TOCPageSection(
-                    id_enum.ITEM_SPLITTER,
+                    id_enum.Machinery.ITEM_SPLITTER,
                     0,
                     "物品分拣器",
                     machinery_logistics.item_splitter,
                 ),
                 TOCPageSection(
-                    id_enum.FLUID_SPLITTER,
+                    id_enum.Machinery.FLUID_SPLITTER,
                     0,
                     "分流器",
                     machinery_logistics.fluid_splitter,
@@ -373,43 +373,43 @@ machinery_toc = PageGroup(
         MainTOCPage(
             [
                 MainTOCPageSection(
-                    id_enum.MACHINERY_WORKSTATION,
+                    id_enum.Machinery.MACHINERY_WORKSTATION,
                     0,
                     "合成制造",
                     machinery_crafting_toc,
                 ),
                 MainTOCPageSection(
-                    id_enum.MACERATOR,
+                    id_enum.Machinery.MACERATOR,
                     0,
                     "生产加工",
                     machinery_production_toc,
                 ),
                 MainTOCPageSection(
-                    id_enum.RF_REPEATER_PLANT,
+                    id_enum.Machinery.RF_REPEATER_PLANT,
                     0,
                     "能源利用",
                     machinery_energy_toc,
                 ),
                 MainTOCPageSection(
-                    id_enum.ITEM_SPLITTER,
+                    id_enum.Machinery.ITEM_SPLITTER,
                     0,
                     "物流",
                     machinery_logistics_toc,
                 ),
                 MainTOCPageSection(
-                    id_enum.PUMP,
+                    id_enum.Machinery.PUMP,
                     0,
                     "资源开采",
                     machinery_source_extraction_toc,
                 ),
                 MainTOCPageSection(
-                    id_enum.THERMAL_GENERATOR,
+                    id_enum.Machinery.THERMAL_GENERATOR,
                     0,
                     "发电设备",
                     machinery_generator_toc,
                 ),
                 MainTOCPageSection(
-                    id_enum.HOVER_TEXT_DISPLAYER,
+                    id_enum.Machinery.HOVER_TEXT_DISPLAYER,
                     0,
                     "杂项",
                     machinery_misc_toc,

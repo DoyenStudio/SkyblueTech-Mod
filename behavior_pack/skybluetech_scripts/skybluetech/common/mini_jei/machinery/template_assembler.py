@@ -8,13 +8,13 @@ class TemplateAssemblerRecipesCollection(RecipesCollection):
     def __init__(self, *recipes):
         # type: (TemplateAssemblerRecipe) -> None
         super(TemplateAssemblerRecipesCollection, self).__init__(
-            machinery.TEMPLATE_ASSEMBLER, *recipes
+            machinery.Machinery.TEMPLATE_ASSEMBLER, *recipes
         )
         self.recipes_mapping = {recipe.output_item_id: recipe for recipe in recipes}
 
 
 class TemplateAssemblerRecipe(MachineRecipe):
-    recipe_icon_id = machinery.TEMPLATE_ASSEMBLER
+    recipe_icon_id = machinery.Machinery.TEMPLATE_ASSEMBLER
 
     def __init__(
         self,

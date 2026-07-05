@@ -14,7 +14,8 @@ from ...common.events.machinery.digger import (
     DiggerWorkModeUpdatedEvent,
     DiggerUpdateCrack,
 )
-from ...common.define.id_enum.machinery import DIGGER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.DIGGER
 from ...common.utils.block_sync import BlockSync
 
 TICKS_PER_SECOND = 20

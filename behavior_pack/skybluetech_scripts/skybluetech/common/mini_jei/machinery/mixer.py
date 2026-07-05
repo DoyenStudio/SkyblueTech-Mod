@@ -6,7 +6,7 @@ TAG_DUST_BLOCK = "dust_block"
 
 
 class MixerRecipe(MachineRecipe):
-    recipe_icon_id = machinery.MIXER
+    recipe_icon_id = machinery.Machinery.MIXER
 
     def __init__(
         self,

@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import METAL_PRESS as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.METAL_PRESS
 from ...common.machinery_def.metal_press import (
     recipes as Recipes,
     STORE_RF_MAX,

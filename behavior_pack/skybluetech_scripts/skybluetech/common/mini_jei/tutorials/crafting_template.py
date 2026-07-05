@@ -1,9 +1,7 @@
 from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
     CRAFTING_TEMPLATE,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import (
-    ELECTRIC_CRAFTER,
-)
+from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
 from ..core import CategoryType
 from ..common import RegisterDescription
 
@@ -20,7 +18,7 @@ content = (
 )
 
 RegisterDescription(
-    {CategoryType.ITEM: [CRAFTING_TEMPLATE, ELECTRIC_CRAFTER]},
+    {CategoryType.ITEM: [CRAFTING_TEMPLATE, Machinery.ELECTRIC_CRAFTER]},
     "自动合成台与合成样板",
     content.strip(),
 )

@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class MagmaCentrifugeRecipe(MachineRecipe):
-    recipe_icon_id = machinery.MAGMA_CENTRIFUGE
+    recipe_icon_id = machinery.Machinery.MAGMA_CENTRIFUGE
 
     def __init__(
         self, input_fluid, input_volume, output_fluids, power_cost, tick_duration

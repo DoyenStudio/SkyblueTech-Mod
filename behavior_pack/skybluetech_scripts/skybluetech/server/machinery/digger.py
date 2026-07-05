@@ -20,7 +20,8 @@ from ...common.events.machinery.digger import (
     DiggerWorkModeUpdatedEvent,
     DiggerUpdateCrack,
 )
-from ...common.define.id_enum.machinery import DIGGER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.DIGGER
 from ...common.machinery_def.digger import (
     STORE_RF_MAX,
     K_FRONT_BLOCK_ID,

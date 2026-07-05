@@ -9,7 +9,7 @@ def sec(second):
 
 
 class MagmaFurnaceRecipe(MachineRecipe):
-    recipe_icon_id = machinery.MAGMA_FURNACE
+    recipe_icon_id = machinery.Machinery.MAGMA_FURNACE
 
     def __init__(
         self,

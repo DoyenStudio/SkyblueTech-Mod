@@ -1,7 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.server import ServerPlaceBlockEntityEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import AIR_COMPRESSOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.AIR_COMPRESSOR
 from ...common.machinery_def.air_compressor import (
     STORE_RF_MAX,
     MAX_FLUID_VOLUME,

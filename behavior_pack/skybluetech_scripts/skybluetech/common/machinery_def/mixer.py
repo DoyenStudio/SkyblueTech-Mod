@@ -7,7 +7,7 @@ STORE_RF_MAX = 8800
 MAX_FLUID_VOLUME = 2000
 
 recipes = RecipesCollection(
-    id_enum.MIXER,
+    id_enum.Machinery.MIXER,
     MixerRecipe(
         "minecraft:lava",
         500,

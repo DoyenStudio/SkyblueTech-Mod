@@ -9,7 +9,7 @@ from .define import MachineRecipeRendererBase
 
 
 class DistillationChamberRecipeRenderer(MachineRecipeRendererBase):
-    recipe_icon_id = machinery.DISTILLATION_CHAMBER
+    recipe_icon_id = machinery.Machinery.DISTILLATION_CHAMBER
     render_ui_def_name = "RecipeCheckerLib.distillation_chamber_recipes"
 
     def __init__(self, recipe):

@@ -15,7 +15,7 @@ from ..core import RecipeRenderer
 
 class HydroponicBedSandRecipeRenderer(RecipeRenderer):
     render_progress = False
-    recipe_icon_id = machinery.HYDROPONIC_BED_SAND
+    recipe_icon_id = machinery.Machinery.HYDROPONIC_BED_SAND
     render_ui_def_name = "RecipeCheckerLib.hydroponic_bed_sand_recipes"
 
     def __init__(self, recipe):

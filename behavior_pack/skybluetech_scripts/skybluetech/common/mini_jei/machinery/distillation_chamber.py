@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class DistillationChamberRecipe(MachineRecipe):
-    recipe_icon_id = machinery.DISTILLATION_CHAMBER
+    recipe_icon_id = machinery.Machinery.DISTILLATION_CHAMBER
 
     def __init__(
         self,

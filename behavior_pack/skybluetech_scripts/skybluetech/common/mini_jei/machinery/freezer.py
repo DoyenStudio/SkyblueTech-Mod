@@ -7,13 +7,13 @@ class FreezerRecipesCollection(RecipesCollection):
     def __init__(self, recipes):
         # type: (dict[int, FreezerRecipe]) -> None
         super(FreezerRecipesCollection, self).__init__(
-            machinery.FREEZER, *recipes.values()
+            machinery.Machinery.FREEZER, *recipes.values()
         )
         self.recipes_mapping = recipes
 
 
 class FreezerRecipe(MachineRecipe):
-    recipe_icon_id = machinery.FREEZER
+    recipe_icon_id = machinery.Machinery.FREEZER
 
     def __init__(
         self,

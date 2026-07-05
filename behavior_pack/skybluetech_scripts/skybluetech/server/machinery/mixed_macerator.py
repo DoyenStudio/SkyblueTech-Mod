@@ -1,5 +1,6 @@
 # coding=utf-8
-from ...common.define.id_enum.machinery import MIXED_MACERATOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.MIXED_MACERATOR
 from ...common.machinery_def.mixed_macerator import recipes as Recipes, STORE_RF_MAX
 from .basic import RegisterMachine, Processor
 

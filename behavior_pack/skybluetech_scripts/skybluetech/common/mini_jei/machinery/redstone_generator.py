@@ -5,7 +5,7 @@ from .define import GeneratorRecipe
 
 
 class RedstoneGeneratorRecipe(GeneratorRecipe):
-    recipe_icon_id = machinery.REDSTONE_GENERATOR
+    recipe_icon_id = machinery.Machinery.REDSTONE_GENERATOR
 
     def __init__(
         self,

@@ -5,7 +5,7 @@ from .define import GeneratorRecipe
 
 
 class GasBurningGeneratorRecipe(GeneratorRecipe):
-    recipe_icon_id = machinery.GAS_BURNING_GENERATOR
+    recipe_icon_id = machinery.Machinery.GAS_BURNING_GENERATOR
 
     def __init__(
         self,

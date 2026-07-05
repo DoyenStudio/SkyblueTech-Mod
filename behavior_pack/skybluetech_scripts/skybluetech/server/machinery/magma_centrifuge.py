@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import MAGMA_CENTRIFUGE as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.MAGMA_CENTRIFUGE
 from ...common.machinery_def.magma_centrifuge import (
     recipes as Recipes,
     STORE_RF_MAX,

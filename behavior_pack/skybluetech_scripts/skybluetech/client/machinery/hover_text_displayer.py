@@ -8,7 +8,8 @@ from skybluetech_scripts.tooldelta.api.client import (
     GetBlockEntityData,
 )
 from skybluetech_scripts.tooldelta.utils import nbt
-from ...common.define.id_enum.machinery import HOVER_TEXT_DISPLAYER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.HOVER_TEXT_DISPLAYER
 from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
 )

@@ -8,7 +8,7 @@ from .define import GeneratorRecipeRenderer
 
 
 class GasBurningGeneratorRecipeRenderer(GeneratorRecipeRenderer):
-    recipe_icon_id = machinery.GAS_BURNING_GENERATOR
+    recipe_icon_id = machinery.Machinery.GAS_BURNING_GENERATOR
     render_ui_def_name = "RecipeCheckerLib.gas_burning_generator_recipes"
 
     def __init__(self, recipe):

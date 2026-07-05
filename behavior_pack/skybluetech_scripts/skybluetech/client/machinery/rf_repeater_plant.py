@@ -9,7 +9,8 @@ from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 from ...common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantBuildAddWire,
 )
-from ...common.define.id_enum.machinery import RF_REPEATER_PLANT as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.RF_REPEATER_PLANT
 from .utils.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,

@@ -16,7 +16,7 @@ from .define import MachineRecipeRendererBase
 
 
 class MachineryWorkstationRecipeRenderer(MachineRecipeRendererBase):
-    recipe_icon_id = machinery.MACHINERY_WORKSTATION
+    recipe_icon_id = machinery.Machinery.MACHINERY_WORKSTATION
     render_ui_def_name = "RecipeCheckerLib.machinery_workstation_recipes"
 
     LEVEL_IRON = 1

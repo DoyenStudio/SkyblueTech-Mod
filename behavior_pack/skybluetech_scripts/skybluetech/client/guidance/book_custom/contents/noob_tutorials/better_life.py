@@ -34,8 +34,8 @@ better_life = PageGroup(
         TextPage(
             "步入小康",
             '还在担心粮食和原木紧缺的问题吗？没关系， <item id="{farming_station}"><link id="farming_station" text="种植站">和<item id="{forester}"><link id="forester" text="伐木机">能帮你解决这些问题！ 它们只需要几台太阳能就可以持续工作了。\n\n种植站和伐木机会把产物存放到机器内供收取。 收取木头可以帮助你进行规模化的火力发电， 作物则可以让你告别饥饿。'.format(
-                farming_station=id_enum.FARMING_STATION,
-                forester=id_enum.FORESTER,
+                farming_station=id_enum.Machinery.FARMING_STATION,
+                forester=id_enum.Machinery.FORESTER,
             ),
             hyperlink_cbs={
                 "farming_station": jump_to_farming_station,
@@ -50,7 +50,7 @@ better_life = PageGroup(
                 shovel=id_enum.SkyblueTools.SHOVEL,
                 hoe=id_enum.SkyblueTools.HOE,
                 sword=id_enum.SkyblueTools.SWORD,
-                charger=id_enum.CHARGER,
+                charger=id_enum.Machinery.CHARGER,
                 battery=id_enum.Batteries.JUNIOR,
             ),
             hyperlink_cbs={
@@ -61,14 +61,14 @@ better_life = PageGroup(
                     id_enum.SkyblueTools.HOE,
                     id_enum.SkyblueTools.SWORD,
                 ]),
-                "charger": lambda _: CheckRecipe(id_enum.CHARGER),
+                "charger": lambda _: CheckRecipe(id_enum.Machinery.CHARGER),
                 "battery": lambda _: CheckRecipe(id_enum.Batteries.JUNIOR),
             },
         ),
         TextPage(
             "",
             '在《蔚蓝科技》接下来的更新中会逐步开放工具的升级模块的合成方式和使用方法， 当然你也可以在<text color="§5" t="创造物品栏">拿出工具升级使用<item id="{assembler}"><link id="assembler" text="装配站">抢先体验。'.format(
-                assembler=id_enum.ASSEMBLER,
+                assembler=id_enum.Machinery.ASSEMBLER,
             ),
             hyperlink_cbs={
                 "assembler": jump_to_assembler,

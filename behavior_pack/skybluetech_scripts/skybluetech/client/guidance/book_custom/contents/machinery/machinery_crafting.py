@@ -14,7 +14,7 @@ assembler = PageGroup(
             "装配站",
             '装配站可以为蔚蓝科技系列的<text color="§9" t="工具和武器">安装额外的<text color="§2" t="强化和特化升级模块">， 使得工具和装备更强大好用。\n将道具放入上方的槽位， 再将模块放入下方槽位， 接着点击 + 按钮就可以将模块装载到道具上了。',
         ),
-        MachineryWorkstationRecipePage(id_enum.ASSEMBLER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ASSEMBLER),
     ],
 )
 
@@ -41,10 +41,10 @@ machinery_workstation = PageGroup(
             "",
             '你还可以使用机件加工台进行工业研究以研究一些机器和工具的升级模块， 只要点击机件加工台界面左侧凸起的按钮就可以打开工业研究界面了。\n\n你需要消耗一些材料来研究目标物品的模版图， 然后把模版图刻印到<item id="{inscribing_template}"><link id="inscribing_template" text="刻印模版">上， 最后放进<item id="{template_assembler}"><link id="template_assembler" text="模版成型机">制造目标物品。'.format(
                 inscribing_template=id_enum.INSCRIBING_TEMPLATE,
-                template_assembler=id_enum.TEMPLATE_ASSEMBLER,
+                template_assembler=id_enum.Machinery.TEMPLATE_ASSEMBLER,
             ),
             hyperlink_cbs={
-                "template_assembler": lambda _: CheckRecipe(id_enum.TEMPLATE_ASSEMBLER),
+                "template_assembler": lambda _: CheckRecipe(id_enum.Machinery.TEMPLATE_ASSEMBLER),
                 "inscribing_template": lambda _: CheckRecipe(
                     id_enum.INSCRIBING_TEMPLATE
                 ),

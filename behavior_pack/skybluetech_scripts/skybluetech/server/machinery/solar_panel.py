@@ -9,7 +9,8 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import SOLAR_PANEL as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.SOLAR_PANEL
 from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.machinery_def.solar_panel import (
     STORE_RF_MAX,

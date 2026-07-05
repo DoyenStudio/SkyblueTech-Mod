@@ -11,7 +11,8 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
-from ...common.define.id_enum.machinery import CHARGER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.CHARGER
 from ...common.events.machinery.charger import (
     ChargerItemModelUpdate,
     ChargeItemModelRequest,

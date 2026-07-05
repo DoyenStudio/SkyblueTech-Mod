@@ -1,5 +1,5 @@
 # coding=utf-8
-from ..define.id_enum import METAL_PRESS, Ingots, Sticks
+from ..define.id_enum import Machinery, Ingots, Sticks
 from ..define.id_enum import fluids
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.metal_press import MachineRecipe, MetalPressRecipe
@@ -8,7 +8,7 @@ STORE_RF_MAX = 8800
 MAX_FLUID_VOLUME = 1000
 
 recipes = RecipesCollection(
-    METAL_PRESS,
+    Machinery.METAL_PRESS,
     MetalPressRecipe(
         fluids.CommonOil.LUBRICANT,
         10,

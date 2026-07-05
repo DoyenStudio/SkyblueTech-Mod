@@ -7,7 +7,8 @@ from skybluetech_scripts.tooldelta.api.server.block import (
     SetLiquidBlock,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum import PUMP as MACHINE_ID, Upgraders
+from ...common.define.id_enum import Machinery, Upgraders
+MACHINE_ID = Machinery.PUMP
 from ...common.define.global_config import BUCKET_VOLUME
 from .basic import (
     FluidContainer,

@@ -15,7 +15,8 @@ from ...common.events.machinery.electric_crafter import (
     ElectricCrafterUpdateRecipe,
 )
 from ...common.define.id_enum.items import CRAFTING_TEMPLATE
-from ...common.define.id_enum.machinery import ELECTRIC_CRAFTER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.ELECTRIC_CRAFTER
 from ...common.machinery_def.electric_crafter import STORE_RF_MAX
 from .basic import GUIControl, UpgradeControl, RegisterMachine
 

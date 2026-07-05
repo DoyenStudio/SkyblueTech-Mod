@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class MetalPressRecipe(MachineRecipe):
-    recipe_icon_id = machinery.METAL_PRESS
+    recipe_icon_id = machinery.Machinery.METAL_PRESS
 
     def __init__(
         self,

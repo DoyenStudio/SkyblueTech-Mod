@@ -75,8 +75,8 @@ energy_transmit_remote = PageGroup(
         TextPage(
             "能源远距离传输",
             '当你的发电机和用电器相隔甚远时， 就不能再依赖于线缆了， 铺设长距离的线缆可能会带来相当高的铺设成本。\n\n为了解决这个问题， 你需要布设<item id="%s"><link text="能源中继塔" id="a">来进行远距离能源传输。'
-            % id_enum.RF_REPEATER_PLANT,
-            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.RF_REPEATER_PLANT)},
+            % id_enum.Machinery.RF_REPEATER_PLANT,
+            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.Machinery.RF_REPEATER_PLANT)},
         ),
         TextPage(
             "",
@@ -101,7 +101,7 @@ energy_toc = PageGroup(
             [
                 TOCPageSection(id_enum.Wire.COPPER, 0, "能源传输", energy_transmit),
                 TOCPageSection(
-                    id_enum.RF_REPEATER_PLANT, 0, "能源远距传输", energy_transmit_remote
+                    id_enum.Machinery.RF_REPEATER_PLANT, 0, "能源远距传输", energy_transmit_remote
                 ),
             ],
         ),

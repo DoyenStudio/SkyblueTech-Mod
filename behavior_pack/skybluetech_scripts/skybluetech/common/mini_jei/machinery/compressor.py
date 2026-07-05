@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class CompressorRecipe(MachineRecipe):
-    recipe_icon_id = machinery.COMPRESSOR
+    recipe_icon_id = machinery.Machinery.COMPRESSOR
 
     def __init__(self, input_items, output_item, power_cost, tick_duration):
         # type: (dict[int, Input], Output, int, int) -> None

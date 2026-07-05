@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, Output
 
 
 class AirCompressorRecipe(MachineRecipe):
-    recipe_icon_id = machinery.AIR_COMPRESSOR
+    recipe_icon_id = machinery.Machinery.AIR_COMPRESSOR
 
     def __init__(
         self, dimension, output_fluid_id, output_fluid_volume, power_cost, tick_duration

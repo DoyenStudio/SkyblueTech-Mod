@@ -9,7 +9,8 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import FORESTER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.FORESTER
 from ...common.machinery_def.forester import getSaplingId, isLog, isLeave, STORE_RF_MAX
 from .basic import (
     BaseSpeedControl,

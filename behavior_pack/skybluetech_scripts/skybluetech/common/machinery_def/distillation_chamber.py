@@ -1,5 +1,5 @@
 # coding=utf-8
-from ..define.id_enum import DISTILLATION_CHAMBER
+from ..define.id_enum import Machinery
 from ..define.id_enum import fluids
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.distillation_chamber import DistillationChamberRecipe, c2k
@@ -9,7 +9,7 @@ INPUT_MAX_VOLUME = 1000
 OUTPUT_MAX_VOLUME = 1500
 
 recipes = RecipesCollection(
-    DISTILLATION_CHAMBER,
+    Machinery.DISTILLATION_CHAMBER,
     DistillationChamberRecipe(
         "minecraft:water",
         50,

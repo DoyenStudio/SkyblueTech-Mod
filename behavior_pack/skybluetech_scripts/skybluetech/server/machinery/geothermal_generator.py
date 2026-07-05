@@ -3,7 +3,8 @@ import random
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.define import Item
 from ...common.define import flags
-from ...common.define.id_enum import GEO_THERMAL_GENERATOR as MACHINE_ID, Dusts
+from ...common.define.id_enum import Machinery, Dusts
+MACHINE_ID = Machinery.GEO_THERMAL_GENERATOR
 from ...common.machinery_def.geothermal_generator import (
     WATER_ID,
     LAVA_ID,

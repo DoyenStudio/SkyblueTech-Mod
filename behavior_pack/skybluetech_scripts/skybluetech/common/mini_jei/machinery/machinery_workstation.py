@@ -13,7 +13,7 @@ from ..core import (
 
 
 class MachineryWorkstationRecipe(Recipe):
-    recipe_icon_id = machinery.MACHINERY_WORKSTATION
+    recipe_icon_id = machinery.Machinery.MACHINERY_WORKSTATION
 
     LEVEL_IRON = 1
     LEVEL_INVAR = 2

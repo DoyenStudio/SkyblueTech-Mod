@@ -1,5 +1,5 @@
 # coding=utf-8
-from ..define.id_enum import AIR_COMPRESSOR, fluids
+from ..define.id_enum import Machinery, fluids
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.air_compressor import AirCompressorRecipe
 
@@ -16,7 +16,7 @@ DIMENSION_NAMES = {
 
 
 recipes = RecipesCollection(
-    AIR_COMPRESSOR,
+    Machinery.AIR_COMPRESSOR,
     AirCompressorRecipe(
         DIMENSION_OVERWORLD,
         fluids.CommonGas.COMPRESSED_AIR,

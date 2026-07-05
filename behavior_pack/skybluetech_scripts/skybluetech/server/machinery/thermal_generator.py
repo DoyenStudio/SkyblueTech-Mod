@@ -2,7 +2,8 @@
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum.machinery import THERMAL_GENERATOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.THERMAL_GENERATOR
 from ...common.machinery_def.thermal_generator import (
     TICK_POWER,
     FUEL_SECONDS_MAP,

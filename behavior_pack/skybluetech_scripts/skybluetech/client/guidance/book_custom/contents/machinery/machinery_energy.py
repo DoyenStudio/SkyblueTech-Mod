@@ -22,9 +22,9 @@ battery_matrix = PageGroup(
             '在电池仓控制器处可以存入或取出电池、 启用或禁用能量输入或输出功能。 \n\n电池仓所存放的电池<text color="§9" t="最大输入输出功率总合">决定电池仓的最大输入输出功率。',
         ),
         MultiBlockStructureRenderPage(
-            id_enum.BATTERY_MATRIX_CONTROLLER, STRUCTURE_PALETTE
+            id_enum.Machinery.BATTERY_MATRIX_CONTROLLER, STRUCTURE_PALETTE
         ),
-        MachineryWorkstationRecipePage(id_enum.BATTERY_MATRIX_CONTROLLER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.BATTERY_MATRIX_CONTROLLER),
     ],
 )
 
@@ -35,7 +35,7 @@ charger = PageGroup(
             "充能台",
             '将需要充能的储能物品如<text color="§2" t="电池">和<text color="§9" t="装备">放入接入了电源的充能台内， 可以为其充能。 充能完成的道具会直接弹出到右边的输出槽中。\n\n储能装备需要充能后才可使用。',
         ),
-        MachineryWorkstationRecipePage(id_enum.CHARGER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.CHARGER),
     ],
 )
 
@@ -65,6 +65,6 @@ rf_repeater_plant = PageGroup(
             "",
             "在中继塔界面内可以配置中继塔的能源输入输出模式， 即中继塔应该向基座的电缆供应还是接收能量。 \n\n即使能源中继网的一部分不在区块加载范围内， 只要网络的供能端和用电端都被加载， 电网就能正常工作。",
         ),
-        MachineryWorkstationRecipePage(id_enum.RF_REPEATER_PLANT),
+        MachineryWorkstationRecipePage(id_enum.Machinery.RF_REPEATER_PLANT),
     ],
 )

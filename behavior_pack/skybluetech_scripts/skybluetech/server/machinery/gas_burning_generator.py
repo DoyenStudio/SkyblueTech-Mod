@@ -1,7 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum import GAS_BURNING_GENERATOR as MACHINE_ID
+from ...common.define.id_enum import Machinery
+MACHINE_ID = Machinery.GAS_BURNING_GENERATOR
 from ...common.machinery_def.gas_burning_generator import (
     recipes as Recipes,
     MAX_INPUT_GAS_VOLUME,

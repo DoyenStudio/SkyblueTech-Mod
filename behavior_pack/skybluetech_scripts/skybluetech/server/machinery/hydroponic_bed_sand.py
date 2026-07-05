@@ -2,7 +2,8 @@
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum.machinery import HYDROPONIC_BED_SAND as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.HYDROPONIC_BED_SAND
 from ...common.machinery_def.hydroponic_bed_sand import (
     HydroponicBedSandRecipe,
     recipes as Recipes,

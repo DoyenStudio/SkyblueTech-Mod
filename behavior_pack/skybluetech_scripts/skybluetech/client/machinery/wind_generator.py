@@ -16,7 +16,8 @@ from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,
     WindGeneratorStatesUpdate,
 )
-from ...common.define.id_enum.machinery import WIND_GENERATOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.WIND_GENERATOR
 from ...common.utils.block_sync import BlockSync
 from .utils.client_molangs import (
     FACE,

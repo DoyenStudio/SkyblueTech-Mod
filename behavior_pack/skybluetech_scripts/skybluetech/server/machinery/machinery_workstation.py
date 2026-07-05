@@ -6,7 +6,8 @@ from skybluetech_scripts.tooldelta.api.server import SetCommand, GetNameById
 from ...common.events.machinery.machinery_workstation import (
     MachineryWorkstationDoCraft,
 )
-from ...common.define.id_enum.machinery import MACHINERY_WORKSTATION as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.MACHINERY_WORKSTATION
 from ...common.machinery_def.machinery_workstation import (
     recipes as Recipes,
     K_CRAFTING_PROGRESS,

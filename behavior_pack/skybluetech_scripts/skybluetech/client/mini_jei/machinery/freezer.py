@@ -9,7 +9,7 @@ from .define import MachineRecipeRenderer
 
 
 class FreezerRecipeRenderer(MachineRecipeRenderer):
-    recipe_icon_id = machinery.FREEZER
+    recipe_icon_id = machinery.Machinery.FREEZER
     render_ui_def_name = "RecipeCheckerLib.freezer_recipes"
 
     def __init__(self, recipe):

@@ -127,7 +127,7 @@ recipes = TemplateAssemblerRecipesCollection(
     TemplateAssemblerRecipe(
         {
             0: Input(id_enum.ObjectUpgraders.PLATE_COMMON, 1),
-            1: Input(id_enum.REDSTONE_FURNACE, 1),
+            1: Input(id_enum.Machinery.REDSTONE_FURNACE, 1),
             2: Input(tag_enum.StickTag.COPPER, 2, is_tag=True),
             3: Input("minecraft:hopper", 1),
             4: Input("minecraft:dropper", 1),

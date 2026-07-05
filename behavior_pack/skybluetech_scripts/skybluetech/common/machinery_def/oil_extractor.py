@@ -1,5 +1,5 @@
 # coding=utf-8
-from ..define.id_enum import OIL_EXTRACTOR, items, fluids
+from ..define.id_enum import Machinery, items, fluids
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.oil_extractor import MachineRecipe, OilExtractorRecipe
 
@@ -8,7 +8,7 @@ MAX_FLUID_VOLUME = 1000
 
 
 recipes = RecipesCollection(
-    OIL_EXTRACTOR,
+    Machinery.OIL_EXTRACTOR,
     OilExtractorRecipe(
         items.SUNFLOWER_SEEDS,
         fluids.CommonOil.VEGETABLE_OIL,

@@ -11,7 +11,7 @@ from ..mini_jei.machinery.mixed_macerator import (
 STORE_RF_MAX = 14400
 
 recipes = RecipesCollection(
-    id_enum.MIXED_MACERATOR,
+    id_enum.Machinery.MIXED_MACERATOR,
     MixedMaceratorRecipe(
         {
             0: Input("minecraft:cobblestone"),

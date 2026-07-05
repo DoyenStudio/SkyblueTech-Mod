@@ -21,7 +21,8 @@ from ...common.machinery_def.deepslate_lava_vibrator import (
     K_DEEPSLATE_LAVA_PREDICTED,
     K_PREDICT_PROGRESS,
 )
-from ...common.define.id_enum.machinery import DEEPSLATE_LAVA_VIBRATOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.DEEPSLATE_LAVA_VIBRATOR
 from .basic import SPControl, RegisterMachine
 from .bedrock_lava_drill.lava_storage import get_available_lava_storage
 from .pool import GetMachineStrict

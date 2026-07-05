@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import ELECTRIC_HEATER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.ELECTRIC_HEATER
 from ...common.events.machinery.electric_heater import ElectricHeaterSubmitModifiesEvent
 from ...common.machinery_def.electric_heater import (
     K_SET_POWER,

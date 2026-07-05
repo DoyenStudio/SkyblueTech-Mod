@@ -1,5 +1,5 @@
 # coding=utf-8
-from ..define.id_enum import FLUID_CONDENSER, Molten
+from ..define.id_enum import Machinery, Molten
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.fluid_condenser import (
     MachineRecipe,
@@ -12,7 +12,7 @@ MAX_FLUID_VOLUME = 1000
 
 
 recipes = RecipesCollection(
-    FLUID_CONDENSER,
+    Machinery.FLUID_CONDENSER,
     FluidCondenserRecipe(
         "minecraft:lava",
         1000,

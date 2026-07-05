@@ -37,7 +37,7 @@ main_pages = PageGroup(
                     contents.mini_jei.mini_jei_desc,
                 ),
                 MainTOCPageSection(
-                    id_enum.ALLOY_FURNACE,
+                    id_enum.Machinery.ALLOY_FURNACE,
                     0,
                     "机器设备",
                     contents.machinery.machinery_toc,

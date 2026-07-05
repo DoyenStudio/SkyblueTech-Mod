@@ -1,7 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import HOVER_TEXT_DISPLAYER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.HOVER_TEXT_DISPLAYER
 from ...common.define.ui_keys import HOVER_TEXT_DISPLAYER_UI
 from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,

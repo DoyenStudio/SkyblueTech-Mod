@@ -13,7 +13,7 @@ fluid_splitter = PageGroup(
             "分流器",
             '分流器是根据给定设置对流体进行<text color="§2" t="分类">的机器。\n它可以将标记上了颜色序号的流体类型发送到<text color="§2" t="拥有相同颜色编号">的流体管道输入口中。 其与物品分拣器的大致操作方式相同。',
         ),
-        MachineryWorkstationRecipePage(id_enum.FLUID_SPLITTER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.FLUID_SPLITTER),
     ],
 )
 
@@ -40,6 +40,6 @@ item_splitter = PageGroup(
             "",
             '如果你只需要从物品中<text color="§2" t="分离出部分物品">， 可以使用<text color="§3" t="特化升级： 泛用物品过滤">， 将其插入到分拣器的升级槽内， 可以将所有<text color="§c" t="未在分类设置中">的物品全部发送到<text color="§c" t="红色标记（默认颜色标记）">的物品管道输入口中。',
         ),
-        MachineryWorkstationRecipePage(id_enum.ITEM_SPLITTER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ITEM_SPLITTER),
     ],
 )

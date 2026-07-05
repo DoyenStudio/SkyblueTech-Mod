@@ -8,7 +8,8 @@ from ...common.events.machinery.fluid_splitter import (
 )
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import FLUID_SPLITTER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.FLUID_SPLITTER
 from ...common.machinery_def.fluid_splitter import MAX_FLUID_VOLUME
 from ..transmitters.pipe.logic import (
     logic_module as pipe_logic,

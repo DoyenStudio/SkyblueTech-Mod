@@ -4,7 +4,8 @@ from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum import BATTERY_MATRIX_CONTROLLER as MACHINE_ID
+from ...common.define.id_enum import Machinery
+MACHINE_ID = Machinery.BATTERY_MATRIX_CONTROLLER
 from ...common.define.tag_enum import BatteryTag
 from ...common.events.machinery.battery_matrix import (
     BatteryMatrixActionRequest,

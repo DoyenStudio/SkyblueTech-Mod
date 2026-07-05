@@ -20,9 +20,7 @@ from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant i
     RFRepeaterPlantBuildRequest,
     RFRepeaterPlantBuildResponse,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import (
-    RF_REPEATER_PLANT,
-)
+from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
 from ...machinery.utils.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
@@ -180,13 +178,13 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
 loaded_client_machinerys = set()  # type: set[tuple[int, int, int]]
 
 
-@asModBlockLoadedListener(RF_REPEATER_PLANT)
+@asModBlockLoadedListener(Machinery.RF_REPEATER_PLANT)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     loaded_client_machinerys.add((event.posX, event.posY, event.posZ))
 
 
-@asModBlockRemovedListener(RF_REPEATER_PLANT)
+@asModBlockRemovedListener(Machinery.RF_REPEATER_PLANT)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     loaded_client_machinerys.discard((event.posX, event.posY, event.posZ))

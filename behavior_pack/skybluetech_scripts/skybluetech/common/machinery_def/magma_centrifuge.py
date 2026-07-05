@@ -1,5 +1,5 @@
 from ..define.id_enum import (
-    MAGMA_CENTRIFUGE,
+    Machinery,
     fluids,
     Molten,
     DeepLava,
@@ -15,7 +15,7 @@ STORE_RF_MAX = 8800
 FLUID_SLOT_MAX_VOLUMES = (2000, 500, 500, 500, 500, 500, 500)
 
 recipes = RecipesCollection(
-    MAGMA_CENTRIFUGE,
+    Machinery.MAGMA_CENTRIFUGE,
     MagmaCentrifugeRecipe(
         DeepLava.DEEPSLATE_LAVA,
         100,

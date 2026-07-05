@@ -16,7 +16,7 @@ general_intro_pages = PageGroup(
         TextPage(
             "引言",
             '蔚蓝科技是一款<text color="§9" t="科技模组">， 加入了多种多样的机器<item id="{macerator}">、 发电机<item id="{solar_panel}">、 工具等物品。 你可以使用机器和物流系统搭建全自动物品生产的工业流水线， 也可以制造使用红石能的装备来提升你的采集和挖掘能力！'.format(
-                macerator=id_enum.MACERATOR, solar_panel=id_enum.SOLAR_PANEL
+                macerator=id_enum.Machinery.MACERATOR, solar_panel=id_enum.Machinery.SOLAR_PANEL
             ),
         ),
         TextPage(

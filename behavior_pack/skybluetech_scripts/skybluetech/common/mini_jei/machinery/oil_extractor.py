@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, Input, Output
 
 
 class OilExtractorRecipe(MachineRecipe):
-    recipe_icon_id = machinery.OIL_EXTRACTOR
+    recipe_icon_id = machinery.Machinery.OIL_EXTRACTOR
 
     def __init__(
         self,

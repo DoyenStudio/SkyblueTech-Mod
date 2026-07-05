@@ -6,7 +6,7 @@ MC_METAL = {"copper", "iron", "gold"}
 
 
 class FluidCondenserRecipe(MachineRecipe):
-    recipe_icon_id = machinery.FLUID_CONDENSER
+    recipe_icon_id = machinery.Machinery.FLUID_CONDENSER
 
     def __init__(
         self,

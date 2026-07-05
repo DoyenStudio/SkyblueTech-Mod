@@ -5,7 +5,7 @@ from .define import GeneratorRecipe
 
 
 class ReactingThermalGeneratorRecipe(GeneratorRecipe):
-    recipe_icon_id = machinery.REACTING_THERMAL_GENERATOR
+    recipe_icon_id = machinery.Machinery.REACTING_THERMAL_GENERATOR
 
     def __init__(
         self,

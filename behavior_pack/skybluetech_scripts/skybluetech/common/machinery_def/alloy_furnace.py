@@ -1,6 +1,6 @@
 # coding=utf-8
 #
-from ..define.id_enum import ALLOY_FURNACE, Ingots, DEACTIVATION_REDSTONE
+from ..define.id_enum import Machinery, Ingots, DEACTIVATION_REDSTONE
 from ..define.tag_enum.items import DustTag, IngotTag
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.alloy_furnace import (
@@ -21,7 +21,7 @@ ingot_rcp = gen_preset_recipe(L_POWER, L_TICK_DURATION)
 
 
 recipes = RecipesCollection(
-    ALLOY_FURNACE,
+    Machinery.ALLOY_FURNACE,
     # Alloy
     # alumite
     ingot_rcp(

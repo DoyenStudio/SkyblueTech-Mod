@@ -4,7 +4,8 @@ from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
-from ...common.define.id_enum.machinery import REDSTONE_FURNACE as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.REDSTONE_FURNACE
 from ...common.machinery_def.redstone_furnace import TICK_POWER, STORE_RF_MAX
 from .basic import (
     ItemContainer,

@@ -11,7 +11,8 @@ from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
     CreateBlankModel,
 )
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
-from ...common.define.id_enum.machinery import HYDROPONIC_BED as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.HYDROPONIC_BED
 from ...common.machinery_def.hydroponic_bed import K_CROP_BLOCK_ID, K_GROW_STAGE
 from .utils.mod_block_event import (
     asModBlockLoadedListener,

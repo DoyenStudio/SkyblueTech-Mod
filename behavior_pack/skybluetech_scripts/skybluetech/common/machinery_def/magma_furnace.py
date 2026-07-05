@@ -1,6 +1,6 @@
 # coding=utf-8
 from ..define.global_config import RAW2MOTTEN_VOLUME, INGOT2MOTTEN_VOLUME
-from ..define.id_enum import MAGMA_FURNACE, Molten
+from ..define.id_enum import Machinery, Molten
 from ..define.tag_enum.items import RawTag, IngotTag
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.magma_furnace import MachineRecipe, MagmaFurnaceRecipe, sec
@@ -9,7 +9,7 @@ STORE_RF_MAX = 8800
 MAX_FLUID_VOLUME = 4000
 
 recipes = RecipesCollection(
-    MAGMA_FURNACE,
+    Machinery.MAGMA_FURNACE,
     # lava
     MagmaFurnaceRecipe(
         "minecraft:magma",
@@ -175,7 +175,7 @@ recipes = RecipesCollection(
     ),
 )  # type: RecipesCollection[MachineRecipe]
 
-magma_factory_recipes = RecipesCollection(MAGMA_FURNACE + ".magma_factory")
+magma_factory_recipes = RecipesCollection(Machinery.MAGMA_FURNACE + ".magma_factory")
 for recipe in recipes:
     if getattr(recipe, "output_fluid_id", None) == "minecraft:lava":
         magma_factory_recipes.add_recipe(recipe)

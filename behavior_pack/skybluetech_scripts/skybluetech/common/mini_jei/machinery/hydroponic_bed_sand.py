@@ -14,13 +14,13 @@ class HydroponicBedSandRecipesCollection(RecipesCollection):
     def __init__(self, recipes):
         # type: (dict[str, HydroponicBedSandRecipe]) -> None
         super(HydroponicBedSandRecipesCollection, self).__init__(
-            machinery.HYDROPONIC_BED_SAND, *recipes.values()
+            machinery.Machinery.HYDROPONIC_BED_SAND, *recipes.values()
         )
         self.recipes_mapping = recipes
 
 
 class HydroponicBedSandRecipe(MachineRecipe):
-    recipe_icon_id = machinery.HYDROPONIC_BED_SAND
+    recipe_icon_id = machinery.Machinery.HYDROPONIC_BED_SAND
 
     def __init__(
         self,

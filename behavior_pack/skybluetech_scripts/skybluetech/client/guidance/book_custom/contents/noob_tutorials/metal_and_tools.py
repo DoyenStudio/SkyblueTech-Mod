@@ -16,10 +16,10 @@ metal_and_tools = PageGroup(
         TextPage(
             "合金和工具",
             '接下来就是制作各种<text color="§9" t="合金">， 这意味着你需要制作一个<item id="{alloy_furnace}"><link id="alloy_furnace" text="合金炉">。 你可以在合金炉里查看合金炉可进行的所有配方， 也可以随意点击配方内的合金锭产物来看看<text color="§6" t="它们都能做成什么东西">。'.format(
-                alloy_furnace=id_enum.ALLOY_FURNACE,
+                alloy_furnace=id_enum.Machinery.ALLOY_FURNACE,
             ),
             hyperlink_cbs={
-                "alloy_furnace": lambda _: CheckRecipe(id_enum.ALLOY_FURNACE),
+                "alloy_furnace": lambda _: CheckRecipe(id_enum.Machinery.ALLOY_FURNACE),
             },
         ),
         TextPage(

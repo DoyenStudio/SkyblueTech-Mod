@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import HYDROPONIC_BASE as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.HYDROPONIC_BASE
 from ...common.machinery_def.hydroponic_base import (
     FLUID_0_MAX_VOLUME,
     FLUID_1_MAX_VOLUME,

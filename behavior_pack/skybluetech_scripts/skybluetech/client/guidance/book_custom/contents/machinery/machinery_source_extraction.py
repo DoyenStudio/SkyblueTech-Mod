@@ -32,9 +32,9 @@ bedrock_lava_drill = PageGroup(
             '每个区域的深层熔岩量是<text color="§n" t="有限的">， 你可以通过控制器界面查看该区域剩余熔岩储量。\n\n在安放机器前， 强烈推荐您先使用<text color="§d" t="深层熔岩谐振勘探器">探明此地的大致熔岩储量再搭建好熔岩钻！',
         ),
         MultiBlockStructureRenderPage(
-            id_enum.BEDROCK_LAVA_DRILL_CONTROLLER, STRUCTURE_PALETTE
+            id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER, STRUCTURE_PALETTE
         ),
-        MachineryWorkstationRecipePage(id_enum.BEDROCK_LAVA_DRILL_CONTROLLER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER),
     ],
 )
 
@@ -45,7 +45,7 @@ digger = PageGroup(
             "电力挖掘钻",
             '电力挖掘钻可消耗能量挖掘其钻尖所指向的方块。\n\n建议从侧面输入能量， 背对钻头的一面提取物品。\n\n<text color="§8" t="将两个面对面的钻头通电试试看？">',
         ),
-        MachineryWorkstationRecipePage(id_enum.DIGGER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.DIGGER),
     ],
 )
 
@@ -56,7 +56,7 @@ farming_station = PageGroup(
             "种植站",
             '种植站可<text color="§2" t="自动收获并补种">其上方 5x5 范围内耕地上的作物， 你需要把种植站放在耕地泥土方块的下方。\n支持我的世界原版及棱花农夫乐事的作物。',
         ),
-        MachineryWorkstationRecipePage(id_enum.FARMING_STATION),
+        MachineryWorkstationRecipePage(id_enum.Machinery.FARMING_STATION),
     ],
 )
 
@@ -67,7 +67,7 @@ forester = PageGroup(
             "伐木机",
             '伐木机可以<text color="§2" t="自动砍伐">上方 5x5 范围内的树木且<text color="§2" t="自动补种树苗">。\n\n你可以在伐木机上方 5x1x5 的范围内填满泥土后再往上一格种满树苗， 然后给伐木机通电以等待收成。',
         ),
-        MachineryWorkstationRecipePage(id_enum.FORESTER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.FORESTER),
     ],
 )
 
@@ -82,7 +82,7 @@ mini_miner = PageGroup(
             "",
             '迷你采矿机只会采掘<text color="§8" t="矿物和石头">， 不会采掘泥土、 砂砾和其它方块。\n\n如果迷你采掘机被放置到了之前被采掘的区域， 会进行<text color="§6" t="快进">以快进到之前的采掘进度。',
         ),
-        MachineryWorkstationRecipePage(id_enum.MINI_MINER),
+        MachineryWorkstationRecipePage(id_enum.Machinery.MINI_MINER),
     ],
 )
 
@@ -93,6 +93,6 @@ pump = PageGroup(
             "电动泵",
             '电动泵消耗能量<text color="§9" t="抽取">其下方的流体方块的流体源， 可以使用流体管道导出。\n\n泵会寻找 16 格以内的的<text color="§3" t="流体源">； 如果安装了<text color="§5" t="强化： 范围扩增">， 搜寻范围会变为原来的 4 倍！',
         ),
-        MachineryWorkstationRecipePage(id_enum.PUMP),
+        MachineryWorkstationRecipePage(id_enum.Machinery.PUMP),
     ],
 )

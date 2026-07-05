@@ -13,7 +13,7 @@ from .define import MachineRecipeRenderer
 
 
 class TemplateAssemblerRecipeRenderer(MachineRecipeRenderer):
-    recipe_icon_id = machinery.TEMPLATE_ASSEMBLER
+    recipe_icon_id = machinery.Machinery.TEMPLATE_ASSEMBLER
     render_ui_def_name = "RecipeCheckerLib.template_assembler_recipes"
 
     def __init__(self, recipe):

@@ -1,5 +1,6 @@
 # coding=utf-8
-from ...common.define.id_enum.machinery import COMPRESSOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.COMPRESSOR
 from ...common.machinery_def.compressor import recipes as Recipes, STORE_RF_MAX
 from .basic import RegisterMachine, Processor
 

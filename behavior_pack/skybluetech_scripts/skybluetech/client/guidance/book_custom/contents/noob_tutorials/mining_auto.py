@@ -34,8 +34,8 @@ mining_auto = PageGroup(
         TextPage(
             "采矿自由",
             '现在你已经得到了稳定的电力产出， 但是下矿仍然是一件苦差事。\n一个<item id="{mini_miner}"><link id="mini_miner" text="迷你采矿机">可以帮你解决所有麻烦！\n\n迷你采矿机只需要能量和润滑油就可以开始采矿。 还记得上一章里你种了很多作物吗？你可以拿多余的小麦种子放进<item id="{oil_extractor}"><link id="oil_extractor" text="榨油机">榨出植物油，'.format(
-                mini_miner=id_enum.MINI_MINER,
-                oil_extractor=id_enum.OIL_EXTRACTOR,
+                mini_miner=id_enum.Machinery.MINI_MINER,
+                oil_extractor=id_enum.Machinery.OIL_EXTRACTOR,
             ),
             hyperlink_cbs={
                 "mini_miner": jump_to_mini_miner,
@@ -45,7 +45,7 @@ mining_auto = PageGroup(
         TextPage(
             "",
             '然后再将植物油送进<item id="{distillation_chamber}"><link id="distillation_chamber" text="小型蒸馏仓">， 就可以将植物油转换为润滑油供迷你采矿机使用了！'.format(
-                distillation_chamber=id_enum.DISTILLATION_CHAMBER,
+                distillation_chamber=id_enum.Machinery.DISTILLATION_CHAMBER,
             ),
             hyperlink_cbs={
                 "distillation_chamber": jump_to_distillation_chamber,

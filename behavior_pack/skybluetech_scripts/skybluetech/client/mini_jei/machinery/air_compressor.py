@@ -23,7 +23,7 @@ def GetFluidDisplayName(fluid_id):
 
 
 class AirCompressorRecipeRenderer(MachineRecipeRenderer):
-    recipe_icon_id = machinery.AIR_COMPRESSOR
+    recipe_icon_id = machinery.Machinery.AIR_COMPRESSOR
     render_ui_def_name = "RecipeCheckerLib.air_compressor_recipes"
 
     def __init__(self, recipe):

@@ -1,5 +1,6 @@
 # coding=utf-8
-from ...common.define.id_enum.machinery import REDSTONE_GENERATOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.REDSTONE_GENERATOR
 from ...common.machinery_def.redstone_generator import recipes as Recipes, STORE_RF_MAX
 from .basic import (
     GeneratorProcessor,

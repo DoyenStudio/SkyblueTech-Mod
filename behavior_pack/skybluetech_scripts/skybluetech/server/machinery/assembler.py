@@ -12,7 +12,8 @@ from ...common.events.machinery.assembler import (
     ACTION_PULL_UPGRADER,
     ACTION_PUSH_UPGRADER,
 )
-from ...common.define.id_enum.machinery import ASSEMBLER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.ASSEMBLER
 from ...common.machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
 from .utils.action_commit import SafeGetMachine

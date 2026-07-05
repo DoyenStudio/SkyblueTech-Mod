@@ -6,7 +6,8 @@ from ...common.events.machinery.fermenter import (
     FermenterSetTemperatureEvent,
     FermenterSeMaxVolumeEvent,
 )
-from ...common.define.id_enum.machinery import FERMENTER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.FERMENTER
 from ...common.define.id_enum.multi_block_structure import Fermenter as FERMENTER_IDENUM
 from ...common.machinery_def.fermenter import (
     K_TEMPERATURE,

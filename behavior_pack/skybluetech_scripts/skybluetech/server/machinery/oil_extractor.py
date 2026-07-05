@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import OIL_EXTRACTOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.OIL_EXTRACTOR
 from ...common.machinery_def.oil_extractor import (
     STORE_RF_MAX,
     MAX_FLUID_VOLUME,

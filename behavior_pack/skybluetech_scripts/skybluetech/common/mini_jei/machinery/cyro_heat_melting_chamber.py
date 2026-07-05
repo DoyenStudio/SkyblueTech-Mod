@@ -4,7 +4,7 @@ from .define import CategoryType, MachineRecipe, RecipesCollection, Input, Outpu
 
 
 class CyroHeatMeltingChamberRecipe(MachineRecipe):
-    recipe_icon_id = machinery.CYRO_HEAT_MELTING_CHAMBER
+    recipe_icon_id = machinery.Machinery.CYRO_HEAT_MELTING_CHAMBER
 
     def __init__(
         self,

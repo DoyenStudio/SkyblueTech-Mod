@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import DISTILLATION_CHAMBER as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.DISTILLATION_CHAMBER
 from ...common.machinery_def.distillation_chamber import (
     recipes as Recipes,
     DistillationChamberRecipe,

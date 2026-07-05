@@ -23,13 +23,13 @@ noob_tutorial_toc = PageGroup(
             [
                 TOCPageSection("minecraft:wooden_axe", 0, "第一天", day_one.day_one),
                 TOCPageSection(
-                    id_enum.MACHINERY_WORKSTATION,
+                    id_enum.Machinery.MACHINERY_WORKSTATION,
                     0,
                     "第一台机器",
                     into_machinery.into_machinery,
                 ),
                 TOCPageSection(
-                    id_enum.ALLOY_FURNACE,
+                    id_enum.Machinery.ALLOY_FURNACE,
                     0,
                     "合金和工具",
                     metal_and_tools.metal_and_tools,
@@ -41,7 +41,7 @@ noob_tutorial_toc = PageGroup(
                     better_life.better_life,
                 ),
                 TOCPageSection(
-                    id_enum.MINI_MINER,
+                    id_enum.Machinery.MINI_MINER,
                     0,
                     "采矿自由",
                     mining_auto.mining_auto,

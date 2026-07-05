@@ -12,7 +12,8 @@ from skybluetech_scripts.tooldelta.events.client.block import (
 )
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.utils import nbt
-from ...common.define.id_enum.machinery import DEEPSLATE_LAVA_VIBRATOR as MACHINE_ID
+from ...common.define.id_enum.machinery import Machinery
+MACHINE_ID = Machinery.DEEPSLATE_LAVA_VIBRATOR
 from ...common.machinery_def.deepslate_lava_vibrator import (
     K_DEEPSLATE_LAVA_PREDICTED,
     K_PREDICT_PROGRESS,

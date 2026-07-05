@@ -4,9 +4,11 @@ from skybluetech_scripts.tooldelta.api.server import GetSeed
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.utils import nbt
 from ...common.define.id_enum import (
-    TEMPLATE_ASSEMBLER as MACHINE_ID,
+    Machinery,
     INSCRIBING_TEMPLATE,
 )
+
+MACHINE_ID = Machinery.TEMPLATE_ASSEMBLER
 from ...common.events.machinery.template_assembler import (
     TemplateAssemblerUpdateRecipeEvent,
     TemplateAssemblerUpdateRecipeEvent2,

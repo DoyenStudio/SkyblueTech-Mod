@@ -12,8 +12,7 @@
                     255
                 ],
                 "mob_effects": [],
-                "remove_effects": [],
-                "spread_fire": false
+                "remove_effects": []
             }
         },
         "description": {

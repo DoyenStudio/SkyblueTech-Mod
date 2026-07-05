@@ -10,7 +10,6 @@
                     128
                 ],
                 "spread_delay": 5,
-                "spread_fire": false,
                 "spread_range": 10
             }
         },

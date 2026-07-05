@@ -106,7 +106,7 @@ def getModelScaleRel(fluid_volume, max_volume):
         # max_volume 为 0 或 None, 避免除零
         return 2
     else:
-        return fluid_volume / max_volume
+        return fluid_volume * 1.0 / max_volume
 
 
 def updateClientTanksOnce():

@@ -10,16 +10,16 @@
                 "skybluetech:skyblue_shovel",
                 "skybluetech:skyblue_sword"
             ]
-        },
-        {
-            "group_name": "itemGroup.skybluetech.skyblue_armor",
-            "icon": "skybluetech:skyblue_helmet",
-            "list": [
-                "skybluetech:skyblue_helmet",
-                "skybluetech:skyblue_boots",
-                "skybluetech:skyblue_leggings",
-                "skybluetech:skyblue_chestplate"
-            ]
         }
+        // {
+        //     "group_name": "itemGroup.skybluetech.skyblue_armor",
+        //     "icon": "skybluetech:skyblue_helmet",
+        //     "list": [
+        //         "skybluetech:skyblue_helmet",
+        //         "skybluetech:skyblue_boots",
+        //         "skybluetech:skyblue_leggings",
+        //         "skybluetech:skyblue_chestplate"
+        //     ]
+        // }
     ]
 }

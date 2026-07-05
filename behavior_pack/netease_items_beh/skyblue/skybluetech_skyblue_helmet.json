@@ -66,7 +66,7 @@
             }
         },
         "description": {
-            "category": "skybluetech",
+            "category": "none",
             "custom_item_type": "armor",
             "identifier": "skybluetech:skyblue_helmet"
         }

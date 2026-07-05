@@ -16,6 +16,10 @@
     },
     "machinery_workstation_ui": {
         "type": "panel",
+        "size": [
+            "default",
+            200.0
+        ],
         "controls": [
             {
                 "flying_item_renderer@common.flying_item_renderer": {
@@ -47,478 +51,647 @@
                 "root_panel@common.root_panel": {
                     "controls": [
                         {
-                            "bg@common.dialog_background_opaque": {
+                            "bg": {
+                                "type": "image",
+                                "offset": [
+                                    40.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    13.0,
+                                    "100%+-8px"
+                                ],
+                                "layer": 1,
+                                "texture": "textures/ui/recipe_back_panel",
                                 "controls": [
                                     {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
+                                        "left_half": {
                                             "type": "panel",
+                                            "anchor_from": "left_middle",
+                                            "anchor_to": "right_middle",
+                                            "offset": [
+                                                4.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                180.0,
+                                                200.0
+                                            ],
+                                            "layer": 1,
                                             "controls": [
                                                 {
-                                                    "researching_btn@common.button": {
-                                                        "type": "button",
-                                                        "$control_alpha": 1.0,
-                                                        "$default_texture": "textures/ui/left_section",
-                                                        "$hover_texture": "textures/ui/left_section",
-                                                        "$is_new_nine_slice": false,
-                                                        "$label_color": [
-                                                            1,
-                                                            1,
-                                                            1
-                                                        ],
-                                                        "$label_font_scale_factor": 1.0,
-                                                        "$label_font_size": "large",
-                                                        "$label_layer": 3,
-                                                        "$label_offset": [
-                                                            0,
-                                                            0
-                                                        ],
-                                                        "$label_text": "Button",
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            3.0,
-                                                            3.0,
-                                                            3.0,
-                                                            3.0
-                                                        ],
-                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                                        "$pressed_texture": "textures/ui/left_section",
-                                                        "$texture_layer": 2,
-                                                        "anchor_from": "left_middle",
-                                                        "anchor_to": "right_middle",
-                                                        "offset": [
-                                                            4.0,
-                                                            0.0
-                                                        ],
-                                                        "size": [
-                                                            24.0,
-                                                            24.0
-                                                        ],
-                                                        "layer": 2,
-                                                        "button_mappings": [],
-                                                        "default_control": "default",
-                                                        "hover_control": "hover",
-                                                        "is_handle_button_move_event": true,
-                                                        "pressed_control": "pressed",
-                                                        "bindings": [
-                                                            {
-                                                                "binding_type": "collection_details",
-                                                                "binding_collection_name": "",
-                                                                "binding_condition": "always_when_visible"
-                                                            }
-                                                        ],
+                                                    "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                                },
+                                                {
+                                                    "bg@common.dialog_background_opaque": {
+                                                        "layer": 0
+                                                    }
+                                                },
+                                                {
+                                                    "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                                        "visible": true
+                                                    }
+                                                },
+                                                {
+                                                    "close@common.close_button": {}
+                                                },
+                                                {
+                                                    "main": {
+                                                        "type": "panel",
                                                         "controls": [
                                                             {
-                                                                "default@netease_editor_template_namespace.default": {}
-                                                            },
-                                                            {
-                                                                "hover@netease_editor_template_namespace.hover": {}
-                                                            },
-                                                            {
-                                                                "pressed@netease_editor_template_namespace.pressed": {}
-                                                            },
-                                                            {
-                                                                "image": {
-                                                                    "type": "image",
-                                                                    "size": [
-                                                                        "100%+-6px",
-                                                                        "100%+-6px"
+                                                                "tool_tip": {
+                                                                    "type": "label",
+                                                                    "offset": [
+                                                                        44.0,
+                                                                        -68.0
                                                                     ],
-                                                                    "layer": 3,
-                                                                    "texture": "textures/items/inscribing_template"
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "机件加工台",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "crafting_grid@MachineryWorkstationUI.container_slots": {
-                                                        "grid_dimensions": [
-                                                            3,
-                                                            3
-                                                        ],
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            19,
-                                                            38
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "craft_speed_bar_bg": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            51.0,
-                                                            -61.0
-                                                        ],
-                                                        "size": [
-                                                            36.0,
-                                                            4.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "texture": "textures/ui/rgb_bar_20_bg"
-                                                    }
-                                                },
-                                                {
-                                                    "craft_speed_bar": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            51.0,
-                                                            -61.0
-                                                        ],
-                                                        "size": [
-                                                            36.0,
-                                                            4.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "texture": "textures/ui/rgb_bar_20"
-                                                    }
-                                                },
-                                                {
-                                                    "wrench_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            42.0,
-                                                            -51.0
-                                                        ],
-                                                        "size": [
-                                                            18.0,
-                                                            18.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "$cell_overlay_ref|default": "MachineryWorkstationUI.wrench_slot_img",
-                                                                    "collection_index": 9,
-                                                                    "layer": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "pincer_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            60.0,
-                                                            -51.0
-                                                        ],
-                                                        "size": [
-                                                            18.0,
-                                                            18.0
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "$cell_overlay_ref|default": "MachineryWorkstationUI.pincer_slot_img",
-                                                                    "collection_index": 10,
-                                                                    "layer": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "output_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            42.0,
-                                                            -16.0
-                                                        ],
-                                                        "size": [
-                                                            18.0,
-                                                            18.0
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "$cell_overlay_ref|default": "MachineryWorkstationUI.void_item",
-                                                                    "collection_index": 11,
-                                                                    "layer": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            8,
-                                                            -16
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "craft_btn@common.button": {
-                                                        "type": "button",
-                                                        "$control_alpha": 1.0,
-                                                        "$default_texture": "textures/ui/button_default",
-                                                        "$hover_texture": "textures/ui/button_hovered",
-                                                        "$is_new_nine_slice": false,
-                                                        "$label_color": [
-                                                            1,
-                                                            1,
-                                                            1
-                                                        ],
-                                                        "$label_font_scale_factor": 1.0,
-                                                        "$label_font_size": "large",
-                                                        "$label_layer": 3,
-                                                        "$label_offset": [
-                                                            0,
-                                                            0
-                                                        ],
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            2.0,
-                                                            2.0,
-                                                            2.0,
-                                                            2.0
-                                                        ],
-                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                                        "$pressed_texture": "textures/ui/button_pressed",
-                                                        "$texture_layer": 2,
-                                                        "offset": [
-                                                            7.0,
-                                                            -53.0
-                                                        ],
-                                                        "size": [
-                                                            20.0,
-                                                            20.0
-                                                        ],
-                                                        "layer": 2,
-                                                        "button_mappings": [],
-                                                        "default_control": "default",
-                                                        "hover_control": "hover",
-                                                        "is_handle_button_move_event": true,
-                                                        "pressed_control": "pressed",
-                                                        "bindings": [
-                                                            {
-                                                                "binding_type": "collection_details",
-                                                                "binding_collection_name": "",
-                                                                "binding_condition": "always_when_visible"
-                                                            }
-                                                        ],
-                                                        "controls": [
-                                                            {
-                                                                "default@netease_editor_template_namespace.default": {}
-                                                            },
-                                                            {
-                                                                "hover@netease_editor_template_namespace.hover": {}
-                                                            },
-                                                            {
-                                                                "pressed@netease_editor_template_namespace.pressed": {}
-                                                            },
-                                                            {
-                                                                "image": {
-                                                                    "type": "image",
                                                                     "size": [
-                                                                        "100%+-2px",
-                                                                        "100%+-2px"
+                                                                        22.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "font_scale_factor": 1.2,
+                                                                    "font_type": "default",
+                                                                    "text": "工具"
+                                                                }
+                                                            },
+                                                            {
+                                                                "craft_tip": {
+                                                                    "type": "label",
+                                                                    "offset": [
+                                                                        -60.0,
+                                                                        -68.0
+                                                                    ],
+                                                                    "size": [
+                                                                        22.0,
+                                                                        12.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647,
+                                                                        0.2588235294117647
+                                                                    ],
+                                                                    "font_scale_factor": 1.2,
+                                                                    "font_type": "default",
+                                                                    "text": "合成"
+                                                                }
+                                                            },
+                                                            {
+                                                                "warning_bar": {
+                                                                    "type": "panel",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        3.0
+                                                                    ],
+                                                                    "size": [
+                                                                        160.0,
+                                                                        16.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "controls": [
+                                                                        {
+                                                                            "bg": {
+                                                                                "type": "image",
+                                                                                "layer": 1,
+                                                                                "alpha": 0.5,
+                                                                                "color": [
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    0.0
+                                                                                ],
+                                                                                "keep_ratio": false,
+                                                                                "nineslice_size": [
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    0.0,
+                                                                                    0.0
+                                                                                ],
+                                                                                "texture": "textures/ui/white"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "warning_ico": {
+                                                                                "type": "image",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "size": [
+                                                                                    20.0,
+                                                                                    "100%+-5px"
+                                                                                ],
+                                                                                "layer": 1,
+                                                                                "texture": "textures/ui/warning_icon"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "text1": {
+                                                                                "type": "label",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "offset": [
+                                                                                    20.0,
+                                                                                    0.0
+                                                                                ],
+                                                                                "layer": 3,
+                                                                                "color": [
+                                                                                    1.0,
+                                                                                    0.6666666666666666,
+                                                                                    0.0
+                                                                                ],
+                                                                                "font_scale_factor": 1.4,
+                                                                                "font_type": "default",
+                                                                                "text": "太快了！",
+                                                                                "text_alignment": "center"
+                                                                            }
+                                                                        },
+                                                                        {
+                                                                            "text2": {
+                                                                                "type": "label",
+                                                                                "anchor_from": "bottom_left",
+                                                                                "anchor_to": "bottom_left",
+                                                                                "offset": [
+                                                                                    58.0,
+                                                                                    -3.0
+                                                                                ],
+                                                                                "layer": 3,
+                                                                                "color": [
+                                                                                    1.0,
+                                                                                    1.0,
+                                                                                    1.0
+                                                                                ],
+                                                                                "font_type": "default",
+                                                                                "text": "这将导致工具快速磨损！",
+                                                                                "text_alignment": "center"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                                    "offset": [
+                                                                        62,
+                                                                        -16
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "craft_btn@common.button": {
+                                                                    "type": "button",
+                                                                    "$control_alpha": 1.0,
+                                                                    "$default_texture": "textures/ui/button_default",
+                                                                    "$hover_texture": "textures/ui/button_hovered",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$label_color": [
+                                                                        1,
+                                                                        1,
+                                                                        1
+                                                                    ],
+                                                                    "$label_font_scale_factor": 1.0,
+                                                                    "$label_font_size": "large",
+                                                                    "$label_layer": 3,
+                                                                    "$label_offset": [
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                                    "$pressed_texture": "textures/ui/button_pressed",
+                                                                    "$texture_layer": 2,
+                                                                    "offset": [
+                                                                        7.0,
+                                                                        -53.0
+                                                                    ],
+                                                                    "size": [
+                                                                        20.0,
+                                                                        20.0
                                                                     ],
                                                                     "layer": 2,
-                                                                    "texture": "textures/ui/workstation_craft_btn_icon"
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
-                                                        "offset": [
-                                                            62,
-                                                            -16
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "warning_bar": {
-                                                        "type": "panel",
-                                                        "offset": [
-                                                            0.0,
-                                                            3.0
-                                                        ],
-                                                        "size": [
-                                                            160.0,
-                                                            16.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "controls": [
-                                                            {
-                                                                "bg": {
-                                                                    "type": "image",
-                                                                    "layer": 1,
-                                                                    "alpha": 0.5,
-                                                                    "color": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0
+                                                                    "button_mappings": [],
+                                                                    "default_control": "default",
+                                                                    "hover_control": "hover",
+                                                                    "is_handle_button_move_event": true,
+                                                                    "pressed_control": "pressed",
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
                                                                     ],
-                                                                    "keep_ratio": false,
-                                                                    "nineslice_size": [
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0,
-                                                                        0.0
-                                                                    ],
-                                                                    "texture": "textures/ui/white"
+                                                                    "controls": [
+                                                                        {
+                                                                            "default@netease_editor_template_namespace.default": {}
+                                                                        },
+                                                                        {
+                                                                            "hover@netease_editor_template_namespace.hover": {}
+                                                                        },
+                                                                        {
+                                                                            "pressed@netease_editor_template_namespace.pressed": {}
+                                                                        },
+                                                                        {
+                                                                            "image": {
+                                                                                "type": "image",
+                                                                                "size": [
+                                                                                    "100%+-2px",
+                                                                                    "100%+-2px"
+                                                                                ],
+                                                                                "layer": 2,
+                                                                                "texture": "textures/ui/workstation_craft_btn_icon"
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             },
                                                             {
-                                                                "warning_ico": {
-                                                                    "type": "image",
-                                                                    "anchor_from": "left_middle",
-                                                                    "anchor_to": "left_middle",
-                                                                    "size": [
-                                                                        20.0,
-                                                                        "100%+-5px"
-                                                                    ],
-                                                                    "layer": 1,
-                                                                    "texture": "textures/ui/warning_icon"
-                                                                }
-                                                            },
-                                                            {
-                                                                "text1": {
-                                                                    "type": "label",
-                                                                    "anchor_from": "left_middle",
-                                                                    "anchor_to": "left_middle",
+                                                                "progress@SkybluePanelLib.ProgressBar": {
+                                                                    "layer": 0,
                                                                     "offset": [
-                                                                        20.0,
-                                                                        0.0
+                                                                        8,
+                                                                        -16
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "output_slot": {
+                                                                    "type": "stack_panel",
+                                                                    "offset": [
+                                                                        42.0,
+                                                                        -16.0
                                                                     ],
-                                                                    "layer": 3,
-                                                                    "color": [
-                                                                        1.0,
-                                                                        0.6666666666666666,
-                                                                        0.0
+                                                                    "size": [
+                                                                        18.0,
+                                                                        18.0
+                                                                    ],
+                                                                    "collection_name": "netease_container",
+                                                                    "controls": [
+                                                                        {
+                                                                            "slot@netease_container.custom_grid_item": {
+                                                                                "$cell_overlay_ref|default": "MachineryWorkstationUI.void_item",
+                                                                                "collection_index": 11,
+                                                                                "layer": 0
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "pincer_slot": {
+                                                                    "type": "stack_panel",
+                                                                    "offset": [
+                                                                        60.0,
+                                                                        -51.0
+                                                                    ],
+                                                                    "size": [
+                                                                        18.0,
+                                                                        18.0
+                                                                    ],
+                                                                    "collection_name": "netease_container",
+                                                                    "controls": [
+                                                                        {
+                                                                            "slot@netease_container.custom_grid_item": {
+                                                                                "$cell_overlay_ref|default": "MachineryWorkstationUI.pincer_slot_img",
+                                                                                "collection_index": 10,
+                                                                                "layer": 0
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "wrench_slot": {
+                                                                    "type": "stack_panel",
+                                                                    "offset": [
+                                                                        42.0,
+                                                                        -51.0
+                                                                    ],
+                                                                    "size": [
+                                                                        18.0,
+                                                                        18.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "collection_name": "netease_container",
+                                                                    "controls": [
+                                                                        {
+                                                                            "slot@netease_container.custom_grid_item": {
+                                                                                "$cell_overlay_ref|default": "MachineryWorkstationUI.wrench_slot_img",
+                                                                                "collection_index": 9,
+                                                                                "layer": 0
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "craft_speed_bar_bg": {
+                                                                    "type": "image",
+                                                                    "offset": [
+                                                                        51.0,
+                                                                        -61.0
+                                                                    ],
+                                                                    "size": [
+                                                                        36.0,
+                                                                        4.0
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "texture": "textures/ui/rgb_bar_20_bg"
+                                                                }
+                                                            },
+                                                            {
+                                                                "craft_speed_bar": {
+                                                                    "type": "image",
+                                                                    "offset": [
+                                                                        51.0,
+                                                                        -61.0
+                                                                    ],
+                                                                    "size": [
+                                                                        36.0,
+                                                                        4.0
+                                                                    ],
+                                                                    "layer": 2,
+                                                                    "texture": "textures/ui/rgb_bar_20"
+                                                                }
+                                                            },
+                                                            {
+                                                                "crafting_grid@MachineryWorkstationUI.container_slots": {
+                                                                    "grid_dimensions": [
+                                                                        3,
+                                                                        3
+                                                                    ],
+                                                                    "layer": 0,
+                                                                    "offset": [
+                                                                        19,
+                                                                        38
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "machine_label": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        4.0
                                                                     ],
                                                                     "font_scale_factor": 1.4,
                                                                     "font_type": "default",
-                                                                    "text": "太快了！",
+                                                                    "shadow": true,
+                                                                    "text": "机件加工台",
                                                                     "text_alignment": "center"
                                                                 }
                                                             },
                                                             {
-                                                                "text2": {
-                                                                    "type": "label",
-                                                                    "anchor_from": "bottom_left",
-                                                                    "anchor_to": "bottom_left",
+                                                                "researching_btn@common.button": {
+                                                                    "type": "button",
+                                                                    "$control_alpha": 1.0,
+                                                                    "$default_texture": "textures/ui/left_section",
+                                                                    "$hover_texture": "textures/ui/left_section",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$label_color": [
+                                                                        1,
+                                                                        1,
+                                                                        1
+                                                                    ],
+                                                                    "$label_font_scale_factor": 1.0,
+                                                                    "$label_font_size": "large",
+                                                                    "$label_layer": 3,
+                                                                    "$label_offset": [
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$label_text": "Button",
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        3.0,
+                                                                        3.0,
+                                                                        3.0,
+                                                                        3.0
+                                                                    ],
+                                                                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                                    "$pressed_texture": "textures/ui/left_section",
+                                                                    "$texture_layer": 2,
+                                                                    "anchor_from": "left_middle",
+                                                                    "anchor_to": "right_middle",
                                                                     "offset": [
-                                                                        58.0,
-                                                                        -3.0
+                                                                        4.0,
+                                                                        0.0
                                                                     ],
-                                                                    "layer": 3,
-                                                                    "color": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
+                                                                    "size": [
+                                                                        24.0,
+                                                                        24.0
                                                                     ],
-                                                                    "font_type": "default",
-                                                                    "text": "这将导致工具快速磨损！",
-                                                                    "text_alignment": "center"
+                                                                    "layer": 2,
+                                                                    "button_mappings": [],
+                                                                    "default_control": "default",
+                                                                    "hover_control": "hover",
+                                                                    "is_handle_button_move_event": true,
+                                                                    "pressed_control": "pressed",
+                                                                    "bindings": [
+                                                                        {
+                                                                            "binding_type": "collection_details",
+                                                                            "binding_collection_name": "",
+                                                                            "binding_condition": "always_when_visible"
+                                                                        }
+                                                                    ],
+                                                                    "controls": [
+                                                                        {
+                                                                            "default@netease_editor_template_namespace.default": {}
+                                                                        },
+                                                                        {
+                                                                            "hover@netease_editor_template_namespace.hover": {}
+                                                                        },
+                                                                        {
+                                                                            "pressed@netease_editor_template_namespace.pressed": {}
+                                                                        },
+                                                                        {
+                                                                            "image": {
+                                                                                "type": "image",
+                                                                                "size": [
+                                                                                    "100%+-6px",
+                                                                                    "100%+-6px"
+                                                                                ],
+                                                                                "layer": 3,
+                                                                                "texture": "textures/items/inscribing_template"
+                                                                            }
+                                                                        }
+                                                                    ]
                                                                 }
                                                             }
                                                         ]
                                                     }
                                                 },
                                                 {
-                                                    "craft_tip": {
-                                                        "type": "label",
+                                                    "backpack@SkybluePanelLib.player_backpack": {
                                                         "offset": [
-                                                            -60.0,
-                                                            -68.0
-                                                        ],
-                                                        "size": [
-                                                            22.0,
-                                                            12.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_scale_factor": 1.2,
-                                                        "font_type": "default",
-                                                        "text": "合成"
-                                                    }
-                                                },
-                                                {
-                                                    "tool_tip": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            44.0,
-                                                            -68.0
-                                                        ],
-                                                        "size": [
-                                                            22.0,
-                                                            12.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_scale_factor": 1.2,
-                                                        "font_type": "default",
-                                                        "text": "工具"
+                                                            0,
+                                                            46
+                                                        ]
                                                     }
                                                 }
                                             ]
                                         }
                                     },
                                     {
-                                        "backpack@SkybluePanelLib.player_backpack": {
+                                        "right_half": {
+                                            "type": "panel",
+                                            "anchor_from": "right_middle",
+                                            "anchor_to": "left_middle",
                                             "offset": [
-                                                0,
-                                                46
+                                                -4.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                100.0,
+                                                200.0
+                                            ],
+                                            "layer": 1,
+                                            "controls": [
+                                                {
+                                                    "bg@common.dialog_background_opaque": {
+                                                        "layer": 0
+                                                    }
+                                                },
+                                                {
+                                                    "recipes_view@common.scrolling_panel": {
+                                                        "$background_nine_slice_buttom": 0,
+                                                        "$background_nine_slice_left": 0,
+                                                        "$background_nine_slice_right": 0,
+                                                        "$background_nine_slice_top": 0,
+                                                        "$background_nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$box_nine_slice_buttom": 0,
+                                                        "$box_nine_slice_left": 0,
+                                                        "$box_nine_slice_right": 0,
+                                                        "$box_nine_slice_top": 0,
+                                                        "$box_nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$is_background_nine_slice": false,
+                                                        "$is_box_nine_slice": false,
+                                                        "$is_track_nine_slice": false,
+                                                        "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                                                        "$scroll_background_texture": "textures/ui/ScrollRail",
+                                                        "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                                        "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                                                        "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                                        "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                                                        "$scroll_track_texture": "textures/ui/ScrollRail",
+                                                        "$scrolling_content": "MachineryWorkstationUI.recipes_grid",
+                                                        "$show_background": true,
+                                                        "$track_nine_slice_buttom": 0,
+                                                        "$track_nine_slice_left": 0,
+                                                        "$track_nine_slice_right": 0,
+                                                        "$track_nine_slice_top": 0,
+                                                        "$track_nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "anchor_from": "bottom_middle",
+                                                        "anchor_to": "bottom_middle",
+                                                        "layer": 1,
+                                                        "offset": [
+                                                            0,
+                                                            -4
+                                                        ],
+                                                        "size": [
+                                                            "100%+-8px",
+                                                            "100%+-32px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "edit_box@common.text_edit_box": {
+                                                        "type": "edit_box",
+                                                        "$edit_box_default_texture": "textures/ui/edit_box_indent",
+                                                        "$edit_box_hover_texture": "textures/ui/edit_box_indent_hover",
+                                                        "$font_scale_factor": 1.0,
+                                                        "$font_size": "normal",
+                                                        "$is_new_nine_slice": false,
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$place_holder_text": "搜索配方..",
+                                                        "$place_holder_text_color": [
+                                                            0.5,
+                                                            0.5,
+                                                            0.5
+                                                        ],
+                                                        "$text_background_default": "netease_editor_template_namespace.edit_box_background_default",
+                                                        "$text_background_hover": "netease_editor_template_namespace.edit_box_background_hover",
+                                                        "$text_box_name": "#MachineryWorkstationUI.search_recipe",
+                                                        "$text_box_text_color": [
+                                                            1,
+                                                            1,
+                                                            1
+                                                        ],
+                                                        "$text_edit_box_content_binding_name": "#netease_editor_template_namespace.message_content",
+                                                        "$text_edit_box_label_anchor_point": "right_middle",
+                                                        "$text_edit_box_label_min_size": [
+                                                            "100%",
+                                                            0
+                                                        ],
+                                                        "$text_edit_box_label_size": [
+                                                            "default",
+                                                            "default"
+                                                        ],
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            0.0,
+                                                            6.0
+                                                        ],
+                                                        "size": [
+                                                            "100%+-8px",
+                                                            20.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "max_length": 40
+                                                    }
+                                                }
                                             ]
                                         }
                                     }
-                                ],
-                                "layer": 0
+                                ]
                             }
                         }
                     ],
                     "layer": 0,
                     "size": [
-                        180,
-                        200
+                        "default",
+                        "default"
                     ]
                 }
             }
@@ -532,6 +705,167 @@
         "type": "image",
         "layer": 1,
         "texture": "textures/ui/slot_pincer_img"
+    },
+    "recipes_grid": {
+        "type": "grid",
+        "size": [
+            "100%+0px",
+            "default"
+        ],
+        "layer": 1,
+        "collection_name": "machinery_workstation_recipes_grid",
+        "grid_dimensions": [
+            2,
+            2
+        ],
+        "grid_item_template": "MachineryWorkstationUI.recipes_grid_item",
+        "grid_rescaling_type": "horizontal",
+        "maximum_grid_items": 64,
+        "property_bag": {
+            "#maximum_grid_items": 1
+        },
+        "bindings": [
+            {
+                "binding_name_override": "#maximum_grid_items",
+                "binding_collection_name": "machinery_workstation_recipes_grid",
+                "binding_condition": "always_when_visible",
+                "binding_type": "collection",
+                "binding_name": "#MachineryWorkstationUI.recipe_count"
+            }
+        ]
+    },
+    "recipes_grid_item": {
+        "type": "panel",
+        "offset": [
+            0.0,
+            58.0
+        ],
+        "size": [
+            18.0,
+            18.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 1,
+                    "color": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "texture": "textures/ui/button_borderless_light",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "machinery_workstation_recipes_grid",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_name_override": "#color",
+                            "binding_collection_name": "machinery_workstation_recipes_grid",
+                            "binding_condition": "always_when_visible",
+                            "binding_type": "collection",
+                            "binding_name": "#MachineryWorkstationUI.recipe_bg_color"
+                        }
+                    ]
+                }
+            },
+            {
+                "recipe_result_item": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 2,
+                    "property_bag": {
+                        "#item_id_aux": 131072
+                    },
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "machinery_workstation_recipes_grid",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_name_override": "#item_id_aux",
+                            "binding_collection_name": "machinery_workstation_recipes_grid",
+                            "binding_condition": "always_when_visible",
+                            "binding_type": "collection",
+                            "binding_name": "#MachineryWorkstationUI.recipe_item_id_aux"
+                        }
+                    ]
+                }
+            },
+            {
+                "interact_button@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "",
+                    "$hover_texture": "",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "Button",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "#MachineryWorkstationUI.recipe_select",
+                    "$pressed_texture": "",
+                    "$texture_layer": 2,
+                    "layer": 2,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "machinery_workstation_recipes_grid",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        }
+                    ]
+                }
+            }
+        ]
     },
     "void_item": {
         "type": "panel",

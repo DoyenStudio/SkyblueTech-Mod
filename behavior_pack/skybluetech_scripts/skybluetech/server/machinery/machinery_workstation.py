@@ -1,10 +1,18 @@
 # coding=utf-8
 import random
+from mod.server.extraServerApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import SetCommand, GetNameById
+from skybluetech_scripts.tooldelta.api.server import (
+    SetCommand,
+    GetNameById,
+    GetAllInventoryItems,
+    SetPlayerAllItems,
+    GiveItem,
+)
 from ...common.events.machinery.machinery_workstation import (
     MachineryWorkstationDoCraft,
+    MachineryWorkstationTransferRecipe,
 )
 from ...common.define.id_enum.machinery import Machinery
 MACHINE_ID = Machinery.MACHINERY_WORKSTATION
@@ -19,6 +27,7 @@ from .utils.action_commit import SafeGetMachine
 from .basic import BaseMachine, RegisterMachine, GUIControl, ItemContainer
 
 K_CRAFT_TIMES = "craft_times"
+ItemPosType = GetMinecraftEnum().ItemPosType
 
 
 @RegisterMachine
@@ -167,6 +176,100 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         # type: (int) -> None
         self.bdata[K_CRAFT_TIMES] = value
 
+    def transfer_recipe_items(self, player_id, output_item_id):
+        # type: (str, str) -> None
+        """点击配方: 先把合成格现有物品(以及不满足需求的工具)归还玩家背包,
+        再从背包填充合成格, 并自动放入等级足够的扳手/钳。物品不足时只放入已有的部分。"""
+        recipe = None
+        for rcp in Recipes:
+            if rcp.output_item_id == output_item_id:
+                recipe = rcp
+                break
+        if recipe is None:
+            return
+        # 扳手槽=9, 钳槽=10
+        tool_reqs = (
+            (9, recipe.wrench_level, get_wrench_level),
+            (10, recipe.pincer_level, get_pincer_level),
+        )
+        # 归还合成格现有物品(归还失败则保留, 避免背包满时丢物品)
+        for slot in range(9):
+            cur = self.GetSlotItem(slot, get_user_data=True)
+            if cur is not None and GiveItem(player_id, cur):
+                self.SetSlotItem(slot, None)
+        for tool_slot, need_level, level_of in tool_reqs:
+            if need_level <= 0:
+                continue
+            cur = self.GetSlotItem(tool_slot, get_user_data=True)
+            if cur is None or level_of(cur) >= need_level:
+                continue
+            if GiveItem(player_id, cur):
+                self.SetSlotItem(tool_slot, None)
+        inv_items = {
+            slot: item.copy()
+            for slot, item in GetAllInventoryItems(player_id, get_userdata=True).items()
+        }
+        changed_inv = {}  # type: dict[tuple[int, int], Item]
+        for slot, input in recipe.input_items.items():
+            if self.GetSlotItem(slot, get_user_data=True) is not None:
+                continue
+            target_id = None
+            for it in inv_items.values():
+                if it.count > 0 and input.match_item_id(it.id):
+                    target_id = it.id
+                    break
+            if target_id is None:
+                continue
+            need = input.count
+            placed = None
+            for inv_slot, it in inv_items.items():
+                if need <= 0:
+                    break
+                if it.count <= 0 or it.id != target_id:
+                    continue
+                take = min(it.count, need)
+                if placed is None:
+                    placed = it.copy()
+                    placed.count = take
+                else:
+                    placed.count += take
+                it.count -= take
+                need -= take
+                changed_inv[(ItemPosType.INVENTORY, inv_slot)] = (
+                    it.copy() if it.count > 0 else Item("minecraft:air", count=0)
+                )
+            if placed is not None and placed.count > 0:
+                self.SetSlotItem(slot, placed)
+        # 放入等级足够的扳手/钳, 优先最低满足等级以保留高级工具
+        for tool_slot, need_level, level_of in tool_reqs:
+            if need_level <= 0:
+                continue
+            if self.GetSlotItem(tool_slot, get_user_data=True) is not None:
+                continue
+            best_slot = None
+            best_level = None
+            for inv_slot, it in inv_items.items():
+                if it.count <= 0:
+                    continue
+                lv = level_of(it)
+                if lv >= need_level and (best_level is None or lv < best_level):
+                    best_slot = inv_slot
+                    best_level = lv
+            if best_slot is None:
+                continue
+            it = inv_items[best_slot]
+            tool_item = it.copy()
+            tool_item.count = 1
+            it.count -= 1
+            changed_inv[(ItemPosType.INVENTORY, best_slot)] = (
+                it.copy() if it.count > 0 else Item("minecraft:air", count=0)
+            )
+            self.SetSlotItem(tool_slot, tool_item)
+        if changed_inv:
+            SetPlayerAllItems(player_id, changed_inv)
+        self.load_recipe()
+        self.CallSync()
+
 
 @MachineryWorkstationDoCraft.Listen()
 def onDoCraft(event):
@@ -175,3 +278,12 @@ def onDoCraft(event):
     if not isinstance(m, MachineryWorkstation):
         return
     m.on_craft(event)
+
+
+@MachineryWorkstationTransferRecipe.Listen()
+def onTransferRecipe(event):
+    # type: (MachineryWorkstationTransferRecipe) -> None
+    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
+    if not isinstance(m, MachineryWorkstation):
+        return
+    m.transfer_recipe_items(event.player_id, event.output_item_id)

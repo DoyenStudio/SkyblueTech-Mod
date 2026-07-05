@@ -20,6 +20,7 @@ from ...common.machinery_def.machinery_workstation import (
     recipes as Recipes,
     K_CRAFTING_PROGRESS,
     K_OUTPUT_ITEM_ID,
+    K_NEED_TOOL,
     get_pincer_level,
     get_wrench_level,
 )
@@ -39,6 +40,7 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.current_recipe = None
+        self.need_tool = False
         self.load_recipe(init=True)
         self.CallSync()
 
@@ -55,6 +57,7 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         self.bdata[K_OUTPUT_ITEM_ID] = (
             self.current_recipe.output_item_id if self.current_recipe else None
         )
+        self.bdata[K_NEED_TOOL] = self.need_tool
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None
@@ -67,6 +70,7 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         else:
             last_recipe = None
         self.current_recipe = None
+        self.need_tool = False
         slotitems = self.GetInputSlotItems()
         pincer_item = slotitems.get(10)
         wrench_item = slotitems.get(9)
@@ -74,14 +78,12 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         wrench_level = get_wrench_level(wrench_item) if wrench_item else 0
         for rcp in Recipes:
             input_items = rcp.input_items
-            if pincer_level < rcp.pincer_level or wrench_level < rcp.wrench_level:
-                continue
-            ok = True
+            materials_ok = True
             for slot in range(9):
                 slotitem = slotitems.get(slot)
                 if slot not in input_items:
                     if slotitem is not None:
-                        ok = False
+                        materials_ok = False
                         break
                 else:
                     input = input_items[slot]
@@ -90,11 +92,16 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
                         or not input.match_item_id(slotitem.id)
                         or slotitem.count < input.count
                     ):
-                        ok = False
+                        materials_ok = False
                         break
-            if ok:
+            if not materials_ok:
+                continue
+            # 材料已凑齐(合成格与某配方完全匹配), 仅工具等级不足时提示放入工具
+            if pincer_level < rcp.pincer_level or wrench_level < rcp.wrench_level:
+                self.need_tool = True
+            else:
                 self.current_recipe = rcp
-                break
+            break
         if not init and last_recipe != self.current_recipe:
             self.craft_times = 0
 

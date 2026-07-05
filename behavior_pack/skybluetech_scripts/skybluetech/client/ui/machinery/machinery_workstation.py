@@ -10,6 +10,7 @@ from skybluetech_scripts.tooldelta.api.client.player import (
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder, UBaseCtrl
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from skybluetech_scripts.skybluetech.common.events.machinery.machinery_workstation import (
     MachineryWorkstationDoCraft,
     MachineryWorkstationTransferRecipe,
@@ -19,6 +20,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.machinery_workstation 
     recipes,
     K_CRAFTING_PROGRESS,
     K_OUTPUT_ITEM_ID,
+    K_NEED_TOOL,
 )
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define import MachinePanelUIProxy, MAIN_PATH
@@ -32,16 +34,27 @@ EMPTY_ITEM_ID_AUX = 131072
 RECIPE_REFRESH_INTERVAL = 10
 NORMAL_BG_COLOR = (1.0, 1.0, 1.0)
 INCOMPLETE_BG_COLOR = (1.0, 85 / 255.0, 85 / 255.0)  # 0xFF5555
+NO_RECIPE_TEXT = py2_unicode("无配方")
+NEED_TOOL_TEXT = py2_unicode("请放入工具")
+RESULT_LABEL_NORMAL_COLOR = (80 / 255.0, 80 / 255.0, 80 / 255.0)
+RESULT_LABEL_INCOMPLETE_COLOR = (170 / 255.0, 0.0, 0.0)  # 0xAA0000
 _hover_name_cache = {}  # type: dict[str, str]
+
+
+def _get_output_display_name(output_item_id):
+    # type: (str) -> str
+    cached = _hover_name_cache.get(output_item_id)
+    if cached is None:
+        cached = py2_unicode(GetItemHoverName(output_item_id) or output_item_id)
+        if cached.startswith("§f"):
+            cached = cached[2:]
+        _hover_name_cache[output_item_id] = cached
+    return cached
 
 
 def _get_output_hover_name(output_item_id):
     # type: (str) -> str
-    cached = _hover_name_cache.get(output_item_id)
-    if cached is None:
-        cached = (GetItemHoverName(output_item_id) or output_item_id).lower()
-        _hover_name_cache[output_item_id] = cached
-    return cached
+    return _get_output_display_name(output_item_id).lower()
 
 
 # 本 UI 的 main 面板被嵌入 left_half 中(右侧为配方表), 故在共享 MAIN_PATH 基础上补一层
@@ -53,6 +66,7 @@ CRAFT_SPEED_BAR_PATH = MAIN_PATH / "craft_speed_bar"
 WARNING_BAR_PATH = MAIN_PATH / "warning_bar"
 PRGS_PATH = MAIN_PATH / "progress"
 RESEARCHING_BTN_PATH = MAIN_PATH / "researching_btn"
+RESULT_LABEL_PATH = MAIN_PATH / "result_item_label"
 OUTPUT_ITEM_PREVIEWER_PATH = (
     MAIN_PATH / "output_slot/slot/item_cell_overlay_ref/item_renderer"
 )
@@ -70,6 +84,9 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         self.recipe_refresh_ticks = 0
         self.visible_recipes = []  # type: list[dict]
         self.recipes_grid = None  # type: UBaseCtrl | None
+        # 点击红色(材料不足)配方时暂存其结果物 id, 用红字预览; 有成型配方或点击可合成配方时清空
+        self.incomplete_preview = None  # type: str | None
+        self._result_label_key = None  # type: tuple | None
         self.craft_btn = (
             self.GetElement(CRAFT_BTN_PATH).asButton().SetCallback(self.onClickCraftBtn)
         )
@@ -85,6 +102,7 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
             OUTPUT_ITEM_PREVIEWER_PATH
         ).asItemRenderer()
         self.progress_bar = self.GetElement(PRGS_PATH)
+        self.result_item_label = self.GetElement(RESULT_LABEL_PATH).asLabel()
         self.warning_bar.SetVisible(False)
         self.output_item_previewer.SetVisible(False)
         AsRecipeCheckerBtn(
@@ -121,16 +139,41 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
             return
         data = data["exData"]
         output_item_id = GetValue(data, K_OUTPUT_ITEM_ID, None)
+        need_tool = GetValue(data, K_NEED_TOOL, False)
         progress = GetValue(data, K_CRAFTING_PROGRESS, 0.0)
         self.craft_strength = max(0.0, self.craft_strength - 0.01)
         self.warning_bar_display_time = max(0, self.warning_bar_display_time - 1)
         self.update_craft_speed_bar()
+        self.update_result_item_label(output_item_id, need_tool)
         if output_item_id is None:
             self.output_item_previewer.SetVisible(False)
         else:
             self.output_item_previewer.SetVisible(True)
             self.output_item_previewer.SetUiItem(Item(output_item_id))
             UpdateGenericProgressL2R(self.progress_bar, progress)
+
+    def update_result_item_label(self, output_item_id, need_tool):
+        # type: (str | None, bool) -> None
+        if output_item_id is not None:
+            self.incomplete_preview = None
+            key = ("item", output_item_id, RESULT_LABEL_NORMAL_COLOR)
+        elif need_tool:
+            # 材料已凑齐但缺对应扳手/钳
+            self.incomplete_preview = None
+            key = ("text", NEED_TOOL_TEXT, RESULT_LABEL_NORMAL_COLOR)
+        elif self.incomplete_preview is not None:
+            key = ("item", self.incomplete_preview, RESULT_LABEL_INCOMPLETE_COLOR)
+        else:
+            key = ("text", NO_RECIPE_TEXT, RESULT_LABEL_NORMAL_COLOR)
+        if key == self._result_label_key:
+            return
+        self._result_label_key = key
+        kind, value, color = key
+        if kind == "item":
+            self.result_item_label.SetText(_get_output_display_name(value))
+        else:
+            self.result_item_label.SetText(value)
+        self.result_item_label.SetColor(color)
 
     def update_craft_speed_bar(self):
         self.craft_speed_bar.SetSpriteClipRatio(
@@ -249,10 +292,10 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         index = params["#collection_index"]
         if index >= len(self.visible_recipes):
             return
+        recipe = self.visible_recipes[index]
+        self.incomplete_preview = None if recipe["complete"] else recipe["output_item_id"]
         _, x, y, z = self.pos
-        MachineryWorkstationTransferRecipe(
-            x, y, z, self.visible_recipes[index]["output_item_id"]
-        ).send()
+        MachineryWorkstationTransferRecipe(x, y, z, recipe["output_item_id"]).send()
         self.refresh_visible_recipes()
 
     @Binder.binding(

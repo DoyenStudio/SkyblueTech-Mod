@@ -455,6 +455,27 @@
                                                                 }
                                                             },
                                                             {
+                                                                "result_item_label": {
+                                                                    "type": "label",
+                                                                    "offset": [
+                                                                        50.0,
+                                                                        -34.0
+                                                                    ],
+                                                                    "size": [
+                                                                        62.0,
+                                                                        10.0
+                                                                    ],
+                                                                    "color": [
+                                                                        0.3137254901960784,
+                                                                        0.3137254901960784,
+                                                                        0.3137254901960784
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "无配方",
+                                                                    "text_alignment": "center"
+                                                                }
+                                                            },
+                                                            {
                                                                 "researching_btn@common.button": {
                                                                     "type": "button",
                                                                     "$control_alpha": 1.0,

@@ -10,6 +10,7 @@ from ..mini_jei.machinery.machinery_workstation import (
 
 K_CRAFTING_PROGRESS = "st:crafting_progress"
 K_OUTPUT_ITEM_ID = "st:output_item_id"
+K_NEED_TOOL = "st:need_tool"
 
 recipes = RecipesCollection(
     id_enum.Machinery.MACHINERY_WORKSTATION,
@@ -131,6 +132,9 @@ recipes = RecipesCollection(
     # bedrock lava drill structure
     MRecipe(
         {
+            0: Input(id_enum.ELECTRIC_MOTOR),
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            2: Input(id_enum.ELECTRIC_MOTOR),
             3: Input(id_enum.Wire.SILVER_INSULATED),
             4: Input(id_enum.BedrockLavaDrill.FRAME),
             5: Input(id_enum.Wire.SILVER_INSULATED),

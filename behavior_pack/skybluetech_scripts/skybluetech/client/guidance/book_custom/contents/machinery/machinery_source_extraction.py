@@ -11,6 +11,17 @@ from ...define import (
     PageGroup,
 )
 
+air_compressor = PageGroup(
+    "air_compressor_description",
+    [
+        TextPage(
+            "空气压缩机",
+            '空气压缩机可以吸收并压缩<text color="§2" t="本维度的空气">。\n\n目前仅能在主世界收集<text color="§9" t="压缩空气">。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.AIR_COMPRESSOR),
+    ],
+)
+
 bedrock_lava_drill = PageGroup(
     "bedrock_lava_drill_description",
     [
@@ -76,7 +87,7 @@ mini_miner = PageGroup(
     [
         TextPage(
             "迷你采矿机",
-            '迷你采矿机是最简单的<text color="§3" t="采矿机">， 不需要搭建多方块结构，只需要输入能量和润滑油即可开始采矿。\n\n它可以对下方 <text color="§9" t="15x64x16"> 的范围进行采矿。 对应地， 它无法进行更高级的采矿设置， 如接受时运或精准采集设置。',
+            '迷你采矿机是最简单的<text color="§3" t="采矿机">， 不需要搭建多方块结构，只需要输入能量和润滑油即可开始采矿。\n\n它可以对下方 <text color="§9" t="16x64x16"> 的范围进行采矿。 对应地， 它无法进行更高级的采矿设置， 如接受时运或精准采集设置。',
         ),
         TextPage(
             "",

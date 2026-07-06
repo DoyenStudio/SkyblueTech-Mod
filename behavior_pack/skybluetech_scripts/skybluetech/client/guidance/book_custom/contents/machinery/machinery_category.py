@@ -38,7 +38,10 @@ machinery_production_toc = PageGroup(
                     machinery_production.alloy_furnace,
                 ),
                 TOCPageSection(
-                    id_enum.Machinery.COMPRESSOR, 0, "压缩机", machinery_production.compressor
+                    id_enum.Machinery.COMPRESSOR,
+                    0,
+                    "压缩机",
+                    machinery_production.compressor,
                 ),
                 TOCPageSection(
                     id_enum.Machinery.DISTILLATION_CHAMBER,
@@ -150,6 +153,12 @@ machinery_source_extraction_toc = PageGroup(
         ),
         TOCPage(
             [
+                TOCPageSection(
+                    id_enum.Machinery.AIR_COMPRESSOR,
+                    0,
+                    "空气压缩机",
+                    machinery_source_extraction.air_compressor,
+                ),
                 TOCPageSection(
                     id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER,
                     0,

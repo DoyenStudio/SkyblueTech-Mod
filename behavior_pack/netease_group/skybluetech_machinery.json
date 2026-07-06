@@ -57,6 +57,7 @@
             "group_name": "itemGroup.skybluetech.machinery_source_extraction",
             "icon": "skybluetech:pump",
             "list": [
+                "skybluetech:air_compressor",
                 "skybluetech:digger",
                 "skybluetech:farming_station",
                 "skybluetech:forester",

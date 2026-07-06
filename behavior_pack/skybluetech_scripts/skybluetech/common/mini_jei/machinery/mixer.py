@@ -10,7 +10,7 @@ class MixerRecipe(MachineRecipe):
 
     def __init__(
         self,
-        input_fluid_id,  # type: str | None
+        input_fluid_id,  # type: str
         input_volume,  # type: float
         input_item_id,  # type: str
         input_count,  # type: int
@@ -19,14 +19,12 @@ class MixerRecipe(MachineRecipe):
         power_cost,  # type: int
         tick_duration,  # type: int
     ):
-        inputs = {
-            CategoryType.ITEM: {0: Input(input_item_id, input_count)},
-        }
-        if input_fluid_id is not None:
-            inputs[CategoryType.FLUID] = {0: Input(input_fluid_id, input_volume)}
         MachineRecipe.__init__(
             self,
-            inputs,
+            {
+                CategoryType.ITEM: {0: Input(input_item_id, input_count)},
+                CategoryType.FLUID: {0: Input(input_fluid_id, input_volume)},
+            },
             {CategoryType.ITEM: {1: Output(output_item_id, output_count)}},
             power_cost,
             tick_duration,

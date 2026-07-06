@@ -29,8 +29,8 @@ recipes = RecipesCollection(
         power_cost=30,
     ),
     MixerRecipe(
-        None,
-        0,
+        id_enum.fluids.CommonGas.COMPRESSED_AIR,
+        200,
         id_enum.Dusts.LEAD,
         1,
         id_enum.Dusts.LEAD_OXIDE,

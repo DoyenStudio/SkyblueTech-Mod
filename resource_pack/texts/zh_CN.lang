@@ -134,6 +134,7 @@ itemCategory.name.skybluetech=蔚蓝科技
 itemGroup.name.metal_sticks=金属棍
 itemGroup.skybluetech.buckets=流体桶
 itemGroup.skybluetech.cartidges=卡带
+itemGroup.skybluetech.debuggers=调试工具
 itemGroup.skybluetech.dusts=金属粉
 itemGroup.skybluetech.metal_blocks=金属块
 itemGroup.skybluetech.ingots=金属锭

@@ -19,6 +19,15 @@
             ]
         },
         {
+            "group_name": "itemGroup.skybluetech.debuggers",
+            "icon": "skybluetech:simple_blocknbt_debugger",
+            "list": [
+                "skybluetech:simple_block_debugger",
+                "skybluetech:simple_blocknbt_debugger",
+                "skybluetech:simple_machine_checker"
+            ]
+        },
+        {
             "group_name": "itemGroup.skybluetech.paddles",
             "icon": "skybluetech:paddle_iron",
             "list": [

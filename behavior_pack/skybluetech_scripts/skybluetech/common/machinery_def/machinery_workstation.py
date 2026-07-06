@@ -555,6 +555,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         16,
     ),
+    # mixed macerator
+    MRecipe(
+        {
+            0: Input(id_enum.Coils.COPPER),
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            2: Input(id_enum.Coils.COPPER),
+            3: Input("minecraft:flint"),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input("minecraft:flint"),
+            6: Input(id_enum.Sticks.STEEL),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(id_enum.Sticks.STEEL),
+        },
+        id_enum.Machinery.MIXED_MACERATOR,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # mixer
     MRecipe(
         {

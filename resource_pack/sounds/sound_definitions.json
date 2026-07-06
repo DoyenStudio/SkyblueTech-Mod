@@ -35,6 +35,17 @@
                 }
             ]
         },
+        "music.skybluetech.famicom_4": {
+            "category": "music",
+            "sounds": [
+                {
+                    "load_on_low_memory": true,
+                    "name": "sounds/music/skybluetech/famicom_4",
+                    "stream": true,
+                    "volume": 1
+                }
+            ]
+        },
         "note.bit125": {
             "category": "record",
             "sounds": [

@@ -1,8 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
-    GetPlayersInDim,
-    GetPos,
     GetBlockEntityData,
     SpawnDroppedItem,
     SetCommand,
@@ -14,23 +12,21 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerBlockUseEvent,
     BlockRemoveServerEvent,
 )
-from skybluetech_scripts.tooldelta.events.notify import NotifyToClients
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
+from skybluetech_scripts.tooldelta.utils import nbt
 from ...common.define.id_enum.blocks import FAMICOM
 from ...common.define.id_enum.items import FamicomCartidges
-from ...common.events.misc.famicom import FamicomPlaySoundEvent
 
-MUSIC_MAPPING = {
-    FamicomCartidges.YELLOW: "music.skybluetech.famicom_1",
-    FamicomCartidges.PURPLE: "music.skybluetech.famicom_2",
-    FamicomCartidges.BLUE: "music.skybluetech.famicom_3",
-}
 STATE_MAPPING = {
     FamicomCartidges.YELLOW: 1,
     FamicomCartidges.PURPLE: 2,
     FamicomCartidges.BLUE: 3,
+    FamicomCartidges.RED: 4,
 }
 K_CARTIDGE_TYPE_STATE = "skybluetech:fc_rom_type"
+K_UD_SONG = "song_included"
+K_BE_CARTIDGE = "st:cartidge"
+K_BE_SONG = "st:song"
 
 rate_limiter = PlayerRateLimiter(0.5)
 
@@ -45,13 +41,13 @@ def onBlockUse(event):
     bdata = GetBlockEntityData(event.dimensionId, (event.x, event.y, event.z))
     if bdata is None:
         return
-    x = event.x
-    y = event.y
-    z = event.z
-    cartidge = bdata["st:cartidge"]
+    cartidge = bdata[K_BE_CARTIDGE]
     if cartidge is not None:
-        removeCartidge(event.dimensionId, x, y, z, cartidge)
-        bdata["st:cartidge"] = None
+        removeCartidge(
+            event.dimensionId, event.x, event.y, event.z, cartidge, bdata[K_BE_SONG]
+        )
+        bdata[K_BE_CARTIDGE] = None
+        bdata[K_BE_SONG] = None
 
 
 @ServerItemUseOnEvent.Listen()
@@ -65,50 +61,36 @@ def onUseItemOn(event):
     x = event.x
     y = event.y
     z = event.z
-    cartidge = bdata["st:cartidge"]
+    cartidge = bdata[K_BE_CARTIDGE]
     if cartidge is not None:
-        removeCartidge(event.dimensionId, x, y, z, cartidge)
-        bdata["st:cartidge"] = None
+        removeCartidge(event.dimensionId, x, y, z, cartidge, bdata[K_BE_SONG])
+        bdata[K_BE_CARTIDGE] = None
+        bdata[K_BE_SONG] = None
         return
     item = event.item
-    music_name = MUSIC_MAPPING.get(item.id)
-    if music_name is None:
+    state = STATE_MAPPING.get(item.id)
+    if state is None:
         return
-    bdata["st:cartidge"] = item.id
+    song = nbt.GetValueWithDefault(item.userData or {}, K_UD_SONG, None)
+    if song is None:
+        return
+    bdata[K_BE_CARTIDGE] = item.id
+    bdata[K_BE_SONG] = song
     UpdateBlockStates(
         event.dimensionId,
         (x, y, z),
-        {K_CARTIDGE_TYPE_STATE: STATE_MAPPING[item.id]},
+        {K_CARTIDGE_TYPE_STATE: state},
     )
-    # inrange_players = [
-    #     i
-    #     for i in GetPlayersInDim(event.dimensionId)
-    #     if all(abs(b - a) <= 32 for a, b in zip(GetPos(i), (x, y, z)))
-    # ]
-    # NotifyToClients(
-    #     inrange_players,
-    #     FamicomPlaySoundEvent(event.dimensionId, x, y, z, music_name),
-    # )
-    SetCommand("/playsound %s @a[r=30] %d %d %d" % (music_name, x, y, z))
+    SetCommand("/playsound %s @a[r=30] %d %d %d" % (song, x, y, z))
     SpawnItemToPlayerCarried(event.entityId, Item("minecraft:air"))
 
 
-def removeCartidge(dim, x, y, z, cartidge):
-    # type: (int, int, int, int, str) -> None
+def removeCartidge(dim, x, y, z, cartidge, song):
+    # type: (int, int, int, int, str, str | None) -> None
     SpawnDroppedItem(dim, (x + 0.5, y, z + 0.5), Item(cartidge))
-    music_name = MUSIC_MAPPING.get(cartidge)
-    if music_name is None:
-        return
     UpdateBlockStates(dim, (x, y, z), {K_CARTIDGE_TYPE_STATE: 0})
-    # inrange_players = [
-    #     i
-    #     for i in GetPlayersInDim(dim)
-    #     if all(abs(b - a) <= 32 for a, b in zip(GetPos(i), (x, y, z)))
-    # ]
-    # NotifyToClients(
-    #     inrange_players, FamicomPlaySoundEvent(dim, x, y, z, music_name, True)
-    # )
-    SetCommand("/stopsound @a[r=30] %s" % music_name)
+    if song is not None:
+        SetCommand("/stopsound @a[r=30] %s" % song)
 
 
 @BlockRemoveServerEvent.Listen()
@@ -119,9 +101,8 @@ def onBlockRemoved(event):
     bdata = GetBlockEntityData(event.dimension, (event.x, event.y, event.z))
     if bdata is None:
         return
-    x = event.x
-    y = event.y
-    z = event.z
-    cartidge = bdata["st:cartidge"]
+    cartidge = bdata[K_BE_CARTIDGE]
     if cartidge is not None:
-        removeCartidge(event.dimension, x, y, z, cartidge)
+        removeCartidge(
+            event.dimension, event.x, event.y, event.z, cartidge, bdata[K_BE_SONG]
+        )

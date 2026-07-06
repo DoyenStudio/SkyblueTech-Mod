@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:famicom_cartidge_4"
+        },
+        "description": {
+            "identifier": "skybluetech:famicom_cartidge_4"
+        }
+    }
+}

@@ -18,7 +18,7 @@ famicom = PageGroup(
         ),
         TextPage(
             "",
-            '如果运气好， 你可以在地牢内找到三种<item id="{cartridge}"><text color="§a" t="音乐卡带">中的一个或多个， 可以直接将其插入红白机播放卡带内的音乐。'.format(
+            '如果运气好， 你可以在地牢内找到四种<item id="{cartridge}"><text color="§a" t="音乐卡带">中的一个或多个， 可以直接将其插入红白机播放卡带内的音乐。'.format(
                 cartridge=id_enum.FamicomCartidges.YELLOW,
             ),
             hyperlink_cbs={

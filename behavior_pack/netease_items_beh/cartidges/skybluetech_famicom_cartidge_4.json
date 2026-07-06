@@ -4,18 +4,18 @@
         "components": {
             "minecraft:max_stack_size": 1,
             "netease:customtips": {
-                "value": "\n§eMilky Fields.nsf\n§7Origin 20XX 2A03-Puritans"
+                "value": "\n§cAno Natsu no Nioi.nsf\n§7Origin FC AIR9"
             },
             "netease:initial_user_data": {
                 "song_included": {
                     "__type__": 8,
-                    "__value__": "music.skybluetech.famicom_1"
+                    "__value__": "music.skybluetech.famicom_4"
                 }
             }
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:famicom_cartidge_1"
+            "identifier": "skybluetech:famicom_cartidge_4"
         }
     }
 }

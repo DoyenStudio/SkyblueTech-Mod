@@ -5,6 +5,12 @@
             "minecraft:max_stack_size": 1,
             "netease:customtips": {
                 "value": "\n§bRainBow Static.vgm\n§7Origin 2023 ByteBeat"
+            },
+            "netease:initial_user_data": {
+                "song_included": {
+                    "__type__": 8,
+                    "__value__": "music.skybluetech.famicom_3"
+                }
             }
         },
         "description": {

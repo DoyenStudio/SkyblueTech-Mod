@@ -11,19 +11,6 @@ from skybluetech_scripts.tooldelta.events.client import (
 from ...common.define.id_enum.blocks import FAMICOM
 from ...common.events.misc.famicom import FamicomPlaySoundEvent
 
-MUSIC_MAPPING = {
-    "skybluetech:famicom_cartidge_1": "music.skybluetech.famicom_1",
-    "skybluetech:famicom_cartidge_2": "music.skybluetech.famicom_2",
-    "skybluetech:famicom_cartidge_3": "music.skybluetech.famicom_3",
-}
-STATE_MAPPING = {
-    "skybluetech:famicom_cartidge_1": 1,
-    "skybluetech:famicom_cartidge_2": 2,
-    "skybluetech:famicom_cartidge_3": 3,
-}
-K_CARTIDGE_TYPE_STATE = "skybluetech:fc_rom_type"
-
-
 client_music_ids = {}  # type: dict[str, str]
 
 

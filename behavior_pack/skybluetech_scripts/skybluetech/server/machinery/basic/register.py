@@ -5,6 +5,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerBlockEntityTickEvent,
     BlockNeighborChangedServerEvent,
     BlockStrengthChangedServerEvent,
+    BlockRandomTickServerEvent,
     BlockRemoveServerEvent,
     ServerBlockUseEvent,
     ServerEntityTryPlaceBlockEvent,
@@ -94,6 +95,14 @@ def onTicking(event):
     m = pool.GetMachineStrict(event.dimension, event.posX, event.posY, event.posZ)
     if m:
         m.OnTicking()
+
+
+@BlockRandomTickServerEvent.Listen()
+def onBlockRandomTick(event):
+    # type: (BlockRandomTickServerEvent) -> None
+    m = pool.GetMachineStrict(event.dimensionId, event.posX, event.posY, event.posZ)
+    if m:
+        m.OnBlockRandomTick(event)
 
 
 @ServerBlockUseEvent.Listen()

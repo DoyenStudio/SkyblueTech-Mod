@@ -4,6 +4,7 @@ from skybluetech_scripts.tooldelta.events.server.block import (
     BlockNeighborChangedServerEvent,
     BlockStrengthChangedServerEvent,
     ServerEntityTryPlaceBlockEvent,
+    BlockRandomTickServerEvent,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.base_machine import (
@@ -84,6 +85,10 @@ class BaseMachine(object):
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         "事件方法, 邻近方块变化时调用。"
+
+    def OnBlockRandomTick(self, event):
+        # type: (BlockRandomTickServerEvent) -> None
+        "事件方法, 方块收到随机 tick 时调用。需方块开启 netease:random_tick。"
 
     def OnDeactiveFlagsChanged(self):
         "机器激活状态更改时调用。"

@@ -4,6 +4,9 @@
         1,
         0
     ],
+    "skybluetech:air_compressor": {
+        "sound": "iron"
+    },
     "skybluetech:alloy_furnace": {
         "textures": {
             "down": "skybluetech:frame_bottom",
@@ -13,9 +16,6 @@
             "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
         }
-    },
-    "skybluetech:air_compressor": {
-        "sound": "iron"
     },
     "skybluetech:aluminum_ore": {
         "textures": "skybluetech:aluminum_ore"
@@ -81,6 +81,10 @@
         "client_entity": {},
         "sound": "iron"
     },
+    "skybluetech:compressed_air": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
     "skybluetech:compressor": {
         "textures": {
             "down": "skybluetech:frame_bottom",
@@ -91,6 +95,14 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:concentrated_sulfuric_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_static"
+        }
+    },
     "skybluetech:creative_generator": {
         "textures": "skybluetech:creative_generator"
     },
@@ -98,21 +110,9 @@
         "client_entity": {},
         "textures": "skybluetech:creative_power_acceptor"
     },
-    "skybluetech:redstoneflux_brake": {
-        "client_entity": {},
-        "textures": {
-            "side": "skybluetech:redstoneflux_brake_otherside",
-            "up": "skybluetech:redstoneflux_brake_top",
-            "down": "skybluetech:redstoneflux_brake_otherside"
-        }
-    },
     "skybluetech:deepslate_lava": {
         "blockshape": "water",
         "textures": "skybluetech:deepslate_lava_still"
-    },
-    "skybluetech:compressed_air": {
-        "blockshape": "water",
-        "textures": "skybluetech:gas"
     },
     "skybluetech:deepslate_lava_vibrator": {
         "client_entity": {},
@@ -208,6 +208,18 @@
     "skybluetech:fermenter_io_item1": {
         "textures": "skybluetech:fermenter_item_interface"
     },
+    "skybluetech:flowing_compressed_air": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
+    "skybluetech:flowing_concentrated_sulfuric_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_flowing"
+        }
+    },
     "skybluetech:flowing_deepslate_lava": {
         "blockshape": "water",
         "textures": {
@@ -215,10 +227,6 @@
             "side": "skybluetech:deepslate_lava_flow",
             "up": "skybluetech:deepslate_lava_still"
         }
-    },
-    "skybluetech:flowing_compressed_air": {
-        "blockshape": "water",
-        "textures": "skybluetech:gas"
     },
     "skybluetech:flowing_distilled_water": {
         "blockshape": "water",
@@ -267,10 +275,6 @@
     "skybluetech:flowing_methane": {
         "blockshape": "water",
         "textures": "skybluetech:gas"
-    },
-    "skybluetech:flowing_water_vapor": {
-        "blockshape": "water",
-        "textures": "skybluetech:water_vapor"
     },
     "skybluetech:flowing_methane_mud": {
         "blockshape": "water",
@@ -380,23 +384,15 @@
             "up": "skybluetech:basic_water_flowing"
         }
     },
-    "skybluetech:flowing_sulfuric_acid": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:basic_water_static",
-            "side": "skybluetech:basic_water_flowing",
-            "up": "skybluetech:basic_water_flowing"
-        }
-    },
-    "skybluetech:flowing_concentrated_sulfuric_acid": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:basic_water_static",
-            "side": "skybluetech:basic_water_flowing",
-            "up": "skybluetech:basic_water_flowing"
-        }
-    },
     "skybluetech:flowing_so3": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_flowing"
+        }
+    },
+    "skybluetech:flowing_sulfuric_acid": {
         "blockshape": "water",
         "textures": {
             "down": "skybluetech:basic_water_static",
@@ -411,6 +407,10 @@
             "side": "skybluetech:basic_water_flowing",
             "up": "skybluetech:basic_water_flowing"
         }
+    },
+    "skybluetech:flowing_water_vapor": {
+        "blockshape": "water",
+        "textures": "skybluetech:water_vapor"
     },
     "skybluetech:fluid_condenser": {
         "sound": "iron",
@@ -554,17 +554,6 @@
             "west": "skybluetech:frame"
         }
     },
-    "skybluetech:mixed_macerator": {
-        "sound": "iron",
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:mixed_macerator_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_top",
-            "west": "skybluetech:frame"
-        }
-    },
     "skybluetech:machinery_frame": {
         "textures": {
             "down": "skybluetech:frame_bottom",
@@ -612,10 +601,6 @@
         "blockshape": "water",
         "textures": "skybluetech:gas"
     },
-    "skybluetech:water_vapor": {
-        "blockshape": "water",
-        "textures": "skybluetech:water_vapor"
-    },
     "skybluetech:methane_mud": {
         "blockshape": "water",
         "textures": "skybluetech:methane_mud"
@@ -626,6 +611,17 @@
     },
     "skybluetech:mini_miner": {
         "sound": "iron"
+    },
+    "skybluetech:mixed_macerator": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:mixed_macerator_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:mixer": {
         "sound": "iron",
@@ -686,14 +682,14 @@
         "blockshape": "water",
         "textures": "skybluetech:gray_molten_metal_still"
     },
+    "skybluetech:nether_sulfur_ore": {
+        "textures": "skybluetech:nether_sulfur_ore"
+    },
     "skybluetech:nickel_block": {
         "textures": "skybluetech:nickel_block"
     },
     "skybluetech:nickel_ore": {
         "textures": "skybluetech:nickel_ore"
-    },
-    "skybluetech:nether_sulfur_ore": {
-        "textures": "skybluetech:nether_sulfur_ore"
     },
     "skybluetech:oil_extractor": {
         "sound": "iron",
@@ -751,6 +747,7 @@
         "textures": "skybluetech:raw_tin_block"
     },
     "skybluetech:reacting_thermal_generator": {
+        "sound": "iron",
         "textures": {
             "down": "skybluetech:generator_frame_bottom",
             "east": "skybluetech:generator_frame_side",
@@ -758,8 +755,7 @@
             "south": "skybluetech:generator_frame_side",
             "up": "skybluetech:generator_frame_top",
             "west": "skybluetech:generator_frame_side"
-        },
-        "sound": "iron"
+        }
     },
     "skybluetech:redstone_furnace": {
         "textures": {
@@ -782,6 +778,14 @@
             "west": "skybluetech:generator_frame_side"
         }
     },
+    "skybluetech:redstoneflux_brake": {
+        "client_entity": {},
+        "textures": {
+            "down": "skybluetech:redstoneflux_brake_otherside",
+            "side": "skybluetech:redstoneflux_brake_otherside",
+            "up": "skybluetech:redstoneflux_brake_top"
+        }
+    },
     "skybluetech:resin_collector": {
         "sound": "wood"
     },
@@ -794,6 +798,14 @@
     },
     "skybluetech:silver_ore": {
         "textures": "skybluetech:silver_ore"
+    },
+    "skybluetech:so3": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:basic_water_static",
+            "side": "skybluetech:basic_water_flowing",
+            "up": "skybluetech:basic_water_static"
+        }
     },
     "skybluetech:solar_panel": {
         "sound": "iron"
@@ -813,22 +825,6 @@
         "textures": "skybluetech:steel_block"
     },
     "skybluetech:sulfuric_acid": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:basic_water_static",
-            "side": "skybluetech:basic_water_flowing",
-            "up": "skybluetech:basic_water_static"
-        }
-    },
-    "skybluetech:concentrated_sulfuric_acid": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:basic_water_static",
-            "side": "skybluetech:basic_water_flowing",
-            "up": "skybluetech:basic_water_static"
-        }
-    },
-    "skybluetech:so3": {
         "blockshape": "water",
         "textures": {
             "down": "skybluetech:basic_water_static",
@@ -879,12 +875,12 @@
     "skybluetech:titanium_ore": {
         "textures": "skybluetech:titanium_ore"
     },
-    "skybluetech:uranium_ore": {
-        "textures": "skybluetech:uranium_ore"
-    },
     "skybluetech:ultraheatinum_block": {
         "sound": "copper",
         "textures": "skybluetech:ultraheatinum_block"
+    },
+    "skybluetech:uranium_ore": {
+        "textures": "skybluetech:uranium_ore"
     },
     "skybluetech:vegetable_oil": {
         "blockshape": "water",
@@ -893,6 +889,10 @@
             "side": "skybluetech:basic_water_flowing",
             "up": "skybluetech:basic_water_static"
         }
+    },
+    "skybluetech:water_vapor": {
+        "blockshape": "water",
+        "textures": "skybluetech:water_vapor"
     },
     "skybluetech:wind_generator": {
         "client_entity": {},

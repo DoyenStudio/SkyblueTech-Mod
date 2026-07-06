@@ -1,6 +1,9 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import id_enum
-from skybluetech_scripts.skybluetech.client.ui.recipe_checker import CheckRecipes
+from skybluetech_scripts.skybluetech.client.ui.recipe_checker import (
+    CheckRecipe,
+    CheckRecipes,
+)
 from skybluetech_scripts.skybluetech.client.guidance.book_custom.define import (
     TextPage,
     MainTOCPage,
@@ -50,6 +53,13 @@ fluid_intro = PageGroup(
             hyperlink_cbs={
                 "fluid_container": lambda _: CheckRecipes(list(id_enum.Tank.all()))
             },
-        )
+        ),
+        TextPage(
+            "",
+            '使用<item id="{glass_tube}"><link id="glass_tube" text="试管">可以从容器中取出和装入少量任意量的流体， 比使用桶装填流体更灵活。'.format(
+                glass_tube=id_enum.GLASS_TUBE
+            ),
+            hyperlink_cbs={"glass_tube": lambda _: CheckRecipe(id_enum.GLASS_TUBE)},
+        ),
     ],
 )

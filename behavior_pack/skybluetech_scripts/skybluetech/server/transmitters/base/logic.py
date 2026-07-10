@@ -2,6 +2,7 @@
 from collections import deque
 from weakref import WeakValueDictionary
 from skybluetech_scripts.tooldelta.api.server import (
+    CheckChunkState,
     GetBlockName,
     GetBlockStates,
     UpdateBlockStates,
@@ -479,9 +480,13 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         """
         按当前邻居方块刷新管线方块的连接状态。
 
-        区块边缘加载顺序不稳定时, 邻区块方块可能晚一点才可读取。
-        此方法只更新已能读取到的邻居, 避免把暂时未加载的邻居误写成断开。
+        区块边缘加载顺序不稳定时, 邻区块方块可能晚一点才可读取,
+        且未就绪的区块可能把方块暂时读成空气而不是 None。
+        此方法只更新所在区块已加载完成的邻居, 避免把暂时未加载的邻居误写成断开
+        (管线间连接只清不补, 一旦误写无法自愈)。
         """
+        if not CheckChunkState(dim, (x, y, z)):
+            return
         if block_name is None:
             block_name = GetBlockName(dim, (x, y, z))
         if block_name is None or not self.transmitter_check_func(block_name):
@@ -490,6 +495,8 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         current_states = GetBlockStates(dim, (x, y, z)) or {}
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
             neighbor_pos = (x + dx, y + dy, z + dz)
+            if not CheckChunkState(dim, neighbor_pos):
+                continue
             neighbor_name = GetBlockName(dim, neighbor_pos)
             if neighbor_name is None:
                 continue

@@ -39,7 +39,11 @@ CLOSE_BTN_PATH = BG_PATH / "close_btn"
 ITEMS_COLLECTION = "minijei_item_list_grid"
 EMPTY_ITEM_ID_AUX = 131072
 GRID_ITEM_SIZE_Y = 20.0
+MAX_ITEMS_PER_PAGE = 200
 ITEM_NAME_CACHE = {}  # type: dict[str, str]
+ALL_ITEM_IDS_CACHE = []  # type: list[str]
+ITEM_CATEGORIES_CACHE = {}  # type: dict[str, str]
+ITEM_ID_AUX_CACHE = {}  # type: dict[str, int]
 
 
 def _get_item_category(item_basic_info):
@@ -54,6 +58,26 @@ def _get_item_category(item_basic_info):
 def _get_search_text(text):
     # type: (str) -> str
     return (text or "").replace("§r", "").replace("§f", "").strip().lower()
+
+
+def _scan_all_items():
+    # type: () -> None
+    for item_id in sorted(GetAllItems()):
+        try:
+            basic_info = Item(item_id).GetBasicInfo()
+        except Exception:
+            continue
+        category = _get_item_category(basic_info)
+        if category == "none" or category == "commands":
+            continue
+        ALL_ITEM_IDS_CACHE.append(item_id)
+        ITEM_CATEGORIES_CACHE[item_id] = category
+        ITEM_ID_AUX_CACHE[item_id] = basic_info.id_aux
+        if item_id not in ITEM_NAME_CACHE:
+            try:
+                ITEM_NAME_CACHE[item_id] = GetItemHoverName(item_id) or item_id
+            except Exception:
+                ITEM_NAME_CACHE[item_id] = item_id
 
 
 @RegistToolDeltaScreen("MiniJEIItemListUI.main")
@@ -90,28 +114,11 @@ class MiniJEIItemListUI(ToolDeltaScreen):
 
     def load_items(self):
         # type: () -> None
-        item_ids = []
-        item_categories = {}
-        item_id_aux_cache = {}
-        for item_id in sorted(GetAllItems()):
-            try:
-                basic_info = Item(item_id).GetBasicInfo()
-            except Exception:
-                continue
-            category = _get_item_category(basic_info)
-            if category == "none":
-                continue
-            item_ids.append(item_id)
-            item_categories[item_id] = category
-            item_id_aux_cache[item_id] = basic_info.id_aux
-            if item_id not in ITEM_NAME_CACHE:
-                try:
-                    ITEM_NAME_CACHE[item_id] = GetItemHoverName(item_id) or item_id
-                except Exception:
-                    ITEM_NAME_CACHE[item_id] = item_id
-        self.all_item_ids = item_ids
-        self.item_categories = item_categories
-        self.item_id_aux_cache = item_id_aux_cache
+        if not ALL_ITEM_IDS_CACHE:
+            _scan_all_items()
+        self.all_item_ids = ALL_ITEM_IDS_CACHE
+        self.item_categories = ITEM_CATEGORIES_CACHE
+        self.item_id_aux_cache = ITEM_ID_AUX_CACHE
 
     def update_grid_capacity(self, after=None):
         # type: (Callable[[], None] | None) -> None
@@ -122,7 +129,7 @@ class MiniJEIItemListUI(ToolDeltaScreen):
             rows = max(1, int(self.jei_items_grid.GetGridDimension()[1]))
         else:
             rows = max(1, int(grid_panel_size_y / GRID_ITEM_SIZE_Y))
-        self.items_per_page = columns * rows
+        self.items_per_page = min(columns * rows, MAX_ITEMS_PER_PAGE)
         if after:
             after()
             ExecLater(0, after)

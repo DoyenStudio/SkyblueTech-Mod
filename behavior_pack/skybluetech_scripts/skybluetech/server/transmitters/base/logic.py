@@ -276,6 +276,11 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                     if first_transmitter_name != block_name:
                         # 不同等级的管道无法并用
                         continue
+                    if not block_states.get(
+                        "skybluetech:connection_" + FACING_EN[facing], False
+                    ):
+                        # 该面连接已被扳手切断
+                        continue
                     if xyz in walked:
                         continue
                     walked.add(xyz)
@@ -482,6 +487,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         if block_name is None or not self.transmitter_check_func(block_name):
             return
         states = {}  # type: dict[str, bool]
+        current_states = GetBlockStates(dim, (x, y, z)) or {}
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
             neighbor_pos = (x + dx, y + dy, z + dz)
             neighbor_name = GetBlockName(dim, neighbor_pos)
@@ -490,7 +496,13 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             facing_key = (
                 "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
             )
-            states[facing_key] = self.can_connect(block_name, neighbor_name)
+            if self.transmitter_check_func(neighbor_name):
+                # 管线间连接可被扳手切断, 这里只清除失效连接, 不自动补连
+                states[facing_key] = current_states.get(
+                    facing_key, False
+                ) and self.transmitter_can_connect(block_name, neighbor_name)
+            else:
+                states[facing_key] = self.can_connect(block_name, neighbor_name)
         if states:
             UpdateBlockStates(dim, (x, y, z), states)
 
@@ -522,12 +534,18 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             )
             if old_network is not None:
                 old_networks.add(old_network)
-            for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
+            current_states = GetBlockStates(dim, (x, y, z)) or {}
+            for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
                 neighbor_pos = (x + dx, y + dy, z + dz)
                 neighbor_name = GetBlockName(dim, neighbor_pos)
                 if neighbor_name is None or not self.transmitter_can_connect(
                     blockName, neighbor_name
                 ):
+                    continue
+                if not current_states.get(
+                    "skybluetech:connection_" + FACING_EN[facing], False
+                ):
+                    # 连接已被扳手切断, 对侧属于独立网络, 不参与本节点的重建
                     continue
                 old_network = self.GetNetworkByTransmitter(
                     dim, x + dx, y + dy, z + dz, force_use_cached=True

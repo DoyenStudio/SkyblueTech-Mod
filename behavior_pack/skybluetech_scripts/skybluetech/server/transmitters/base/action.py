@@ -20,7 +20,10 @@ from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
     TRANSMITTER_WRENCH,
     TRANSMITTER_SETTINGS_WRENCH,
 )
-from skybluetech_scripts.skybluetech.common.define.facing import NEIGHBOR_BLOCKS_ENUM
+from skybluetech_scripts.skybluetech.common.define.facing import (
+    NEIGHBOR_BLOCKS_ENUM,
+    OPPOSITE_FACING,
+)
 from ..base.define import AP_MODE_INPUT, AP_MODE_OUTPUT
 from ..constants import FACING_EN, FACING_ZHCN
 from .logic import (
@@ -85,6 +88,65 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
             return r1
         # 角落区域, 两个方向都有投影, 取深入程度更大的
         return r1 if p1 >= p2 else r2
+
+    def _pick_cut_link_facing(self, event):
+        # type: (ServerBlockUseEvent) -> int | None
+        # 连接被切断后连接臂缩回, 玩家只能点到中心方块朝向邻居的面 (中心区域);
+        # 此时以被点击面的朝向作为目标方向。臂存在时该面被邻居方块遮挡, 无歧义。
+        dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[event.face]
+        next_block = GetBlockName(
+            event.dimensionId, (event.x + dx, event.y + dy, event.z + dz)
+        )
+        if next_block == event.blockName:
+            return event.face
+        return None
+
+    def toggle_transmitter_link(self, dim, x, y, z, face, player_id=None):
+        # type: (int, int, int, int, int, str | None) -> bool
+        "切断/恢复两根同名管线之间的连接, 并重建相关网络。"
+        states = GetBlockStates(dim, (x, y, z))
+        if states is None:
+            return False
+        dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[face]
+        neighbor_pos = (x + dx, y + dy, z + dz)
+        connect = not states.get("skybluetech:connection_" + FACING_EN[face], False)
+        UpdateBlockStates(
+            dim,
+            (x, y, z),
+            {"skybluetech:connection_" + FACING_EN[face]: connect},
+        )
+        UpdateBlockStates(
+            dim,
+            neighbor_pos,
+            {"skybluetech:connection_" + FACING_EN[OPPOSITE_FACING[face]]: connect},
+        )
+        logic = self.logic_module
+        old_networks = set()
+        for px, py, pz in ((x, y, z), neighbor_pos):
+            network = logic.GetNetworkByTransmitter(
+                dim, px, py, pz, force_use_cached=True
+            )
+            if network is not None:
+                old_networks.add(network)
+        for network in old_networks:
+            logic.delete_network(network)
+        tmp_set = set()
+        for px, py, pz in ((x, y, z), neighbor_pos):
+            network = logic.GetNetworkByTransmitter(
+                dim, px, py, pz, cacher=tmp_set, disable_cache=True
+            )
+            if network is not None:
+                logic.apply_network_to_pool(network)
+        if player_id is not None:
+            if connect:
+                SetOnePopupNotice(
+                    player_id, "§f已重新连接管道的§6" + FACING_ZHCN[face] + "§f面"
+                )
+            else:
+                SetOnePopupNotice(
+                    player_id, "§f已断开管道§6" + FACING_ZHCN[face] + "§f面的连接"
+                )
+        return True
 
     def switch_access_mode(self, dim, x, y, z, face, player_id=None):
         # type: (int, int, int, int, int, str | None) -> bool
@@ -159,8 +221,32 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
                 event.clickX, event.clickY, event.clickZ, event.face
             )
             if face is None:
+                face = self._pick_cut_link_facing(event)
+            if face is None:
                 SetOnePopupNotice(event.playerId, "无效扳手调节位置")
                 return
+            dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[face]
+            next_block = GetBlockName(
+                event.dimensionId, (event.x + dx, event.y + dy, event.z + dz)
+            )
+            if next_block is not None and self.logic_module.transmitter_check_func(
+                next_block
+            ):
+                if next_block == event.blockName:
+                    self.toggle_transmitter_link(
+                        event.dimensionId,
+                        event.x,
+                        event.y,
+                        event.z,
+                        face,
+                        event.playerId,
+                    )
+                else:
+                    SetOnePopupNotice(
+                        event.playerId,
+                        "§6不同种类的管道无法互相连接",
+                        "§7[§cx§7] §c错误",
+                    )
             else:
                 self.switch_access_mode(
                     event.dimensionId, event.x, event.y, event.z, face, event.playerId

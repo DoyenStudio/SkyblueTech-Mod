@@ -1,8 +1,12 @@
 # coding=utf-8
 from .utils import SimpleEnum
 
+class Fluids(SimpleEnum):
+    "所有流体"
 
-class Acid(SimpleEnum):
+    pass
+
+class Acid(Fluids):
     "酸性流体"
 
     SULFURIC_ACID = "skybluetech:sulfuric_acid"
@@ -10,26 +14,26 @@ class Acid(SimpleEnum):
     SO3 = "skybluetech:so3"
 
 
-class Gas(SimpleEnum):
+class Gas(Fluids):
     "气体"
 
     pass
 
 
-class Oil(SimpleEnum):
+class Oil(Fluids):
     "油类"
 
     pass
 
 
-class Vanilla(SimpleEnum):
+class Vanilla(Fluids):
     "Minecraft 的流体"
 
     WATER = "minecraft:water"
     LAVA = "minecraft:lava"
 
 
-class Common(SimpleEnum):
+class Common(Fluids):
     "对流体管道无特殊要求的流体"
 
     pass
@@ -60,13 +64,13 @@ class CommonLiquid(Common):
     METHANE_MUD = "skybluetech:methane_mud"
 
 
-class HotFluid(SimpleEnum):
+class HotFluid(Fluids):
     "需要白铜流体管道运输的流体"
 
     pass
 
 
-class ExtremeHotFluid(SimpleEnum):
+class ExtremeHotFluid(Fluids):
     "需要耐热流体管道运输的流体"
 
     pass
@@ -102,29 +106,3 @@ class Molten(HotFluid):
     PLATINUM = "skybluetech:molten_platinum"
 
 
-all_fluids = [
-    CommonLiquid.WATER,
-    Vanilla.LAVA,
-    DeepLava.DEEPSLATE_LAVA,
-    DeepLava.HEAVY_LAVA,
-    DeepLava.MID_LAVA,
-    DeepLava.LIGHT_LAVA,
-    CommonGas.COMPRESSED_AIR,
-    CommonOil.RAW_OIL,
-    CommonOil.LUBRICANT,
-    CommonGas.METHANE,
-    CommonGas.WATER_VAPOR,
-    CommonLiquid.METHANE_MUD,
-    CommonLiquid.DISTILLED_WATER,
-    CommonOil.VEGETABLE_OIL,
-    Molten.EARTH,
-    Molten.IMPURITY,
-    Molten.COPPER,
-    Molten.IRON,
-    Molten.GOLD,
-    Molten.TIN,
-    Molten.LEAD,
-    Molten.SILVER,
-    Molten.NICKEL,
-    Molten.PLATINUM,
-]

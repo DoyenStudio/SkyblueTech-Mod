@@ -35,8 +35,8 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         self.selected_setting_index = -1
 
     def OnDestroy(self):
-        self.closeLabelSelector()
-        self.closeItemSelector()
+        self.close_label_selector()
+        self.close_item_selector()
 
     def onGridUpdated(self, lis):
         # type: (list[tuple[int, str]]) -> None
@@ -50,7 +50,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             griditem["color_img"].asImage().SetSpriteColor(rand_rgb_by_index(label))
             griditem["item_renderer"].asItemRenderer().SetUiItem(Item(fluid_id))
 
-    def createLabelSelector(self, x, y):
+    def create_label_selector(self, x, y):
         # type: (float, float) -> UBaseCtrl
         if self.label_selector_window is not None:
             return self.label_selector_window
@@ -63,7 +63,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         window.SetPos((x, y))
         self.label_selector_window = window
         self.label_selector_window["close_btn"].asButton().SetCallback(
-            lambda _: self.closeLabelSelector()
+            lambda _: self.close_label_selector()
         )
         for i in range(24):
             e = stack.AddElement(
@@ -78,12 +78,12 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             e["btn"].SetPropertyBag({"#index": i})
         return window
 
-    def closeLabelSelector(self):
+    def close_label_selector(self):
         if self.label_selector_window is not None:
             self.label_selector_window.Remove()
             self.label_selector_window = None
 
-    def createItemSelector(self, x, y):
+    def create_item_selector(self, x, y):
         # type: (float, float) -> UBaseCtrl
         if self.item_selector_window is not None:
             return self.item_selector_window
@@ -94,7 +94,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         window.SetPos((x - stack_sizex / 2, y))
         self.item_selector_window = window
         self.item_selector_window["close_btn"].asButton().SetCallback(
-            lambda _: self.closeItemSelector()
+            lambda _: self.close_item_selector()
         )
         _i0 = 0
         items = GetLocalPlayerHotbarAndInvItems()
@@ -114,7 +114,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             _i0 += 1
         return window
 
-    def closeItemSelector(self):
+    def close_item_selector(self):
         if self.item_selector_window is not None:
             self.item_selector_window.Remove()
             self.item_selector_window = None
@@ -134,7 +134,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         btn_x, btn_y = btn.GetRootPos()
         idx = params["#collection_index"]
         self.selected_setting_index = idx
-        self.createLabelSelector(btn_x, btn_y)
+        self.create_label_selector(btn_x, btn_y)
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.item_editing")
     def onEditItem(self, params):
@@ -145,7 +145,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         btn_x, btn_y = btn.GetRootPos()
         idx = params["#collection_index"]
         self.selected_setting_index = idx
-        self.createItemSelector(btn_x, btn_y)
+        self.create_item_selector(btn_x, btn_y)
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.label_selected")
     def onSelectLabel(self, params):
@@ -161,7 +161,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
                 "[Error] ItemSplitterUISync: onLabelSelected: selected_setting_index empty"
             )
             return
-        self.closeLabelSelector()
+        self.close_label_selector()
         dim, x, y, z = self.pos
         ItemSplitterSettingsSetLabel(
             dim, x, y, z, self.selected_setting_index, idx
@@ -184,7 +184,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         selected_item = GetLocalPlayerHotbarAndInvItems()[idx]
         if selected_item is None:
             return
-        self.closeItemSelector()
+        self.close_item_selector()
         dim, x, y, z = self.pos
         ItemSplitterSettingsSetItem(
             dim, x, y, z, self.selected_setting_index, selected_item.id

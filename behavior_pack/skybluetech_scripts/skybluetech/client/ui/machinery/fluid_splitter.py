@@ -12,7 +12,7 @@ from skybluetech_scripts.skybluetech.common.events.machinery.fluid_splitter impo
     FluidSplitterSettingsListUpdate,
     FluidSplitterSimpleAction,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import all_fluids
+from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Fluids
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient
 from skybluetech_scripts.skybluetech.common.machinery_def.fluid_splitter import (
     MAX_FLUID_VOLUME,
@@ -46,8 +46,8 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
 
     def OnDestroy(self):
         MachinePanelUIProxyEx.OnDestroy(self)
-        self.closeLabelSelector()
-        self.closeFluidSelector()
+        self.close_label_selector()
+        self.close_fluid_selector()
 
     def OnTicking(self):
         data = GetBlockEntityData(*self.pos[1:])
@@ -71,7 +71,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
                 Item(fluid_id + "_bucket")
             )
 
-    def createLabelSelector(self, x, y):
+    def create_label_selector(self, x, y):  
         # type: (float, float) -> UBaseCtrl
         self.selected_setting_index
         if self.label_selector_window is not None:
@@ -85,7 +85,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
         window.SetPos((x, y))
         self.label_selector_window = window
         self.label_selector_window["close_btn"].asButton().SetCallback(
-            lambda _: self.closeLabelSelector()
+            lambda _: self.close_label_selector()
         )
         for i in range(24):
             e = stack.AddElement("FluidSplitterUI.index_selector", "selector%d" % i)
@@ -99,12 +99,12 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
             self.fluid_selector_window_elements.append(e)
         return window
 
-    def closeLabelSelector(self):
+    def close_label_selector(self):
         if self.label_selector_window is not None:
             self.label_selector_window.Remove()
             self.label_selector_window = None
 
-    def createFluidSelector(self, x, y):
+    def create_fluid_selector(self, x, y):
         # type: (float, float) -> UBaseCtrl
         self.selected_setting_index
         if self.fluid_selector_window is not None:
@@ -117,18 +117,18 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
         window["title"].asLabel().SetText("选择流体")
         self.fluid_selector_window = window
         self.fluid_selector_window["close_btn"].asButton().SetCallback(
-            lambda _: self.closeFluidSelector()
+            lambda _: self.close_fluid_selector()
         )
-        self.flushFluidSelector([])
+        self.flush_fluid_selector([])
         return window
 
-    def closeFluidSelector(self):
+    def close_fluid_selector(self):
         if self.fluid_selector_window is not None:
             self.fluid_selector_window.Remove()
             self.fluid_selector_window = None
             self.fluid_selector_window_elements = [None] * 24
 
-    def flushFluidSelector(self, sections):
+    def flush_fluid_selector(self, sections):
         # type: (list[str]) -> None
         if self.fluid_selector_window is None:
             return
@@ -164,7 +164,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
         btn_x, btn_y = btn.GetRootPos()
         idx = params["#collection_index"]
         self.selected_setting_index = idx
-        self.createLabelSelector(btn_x, btn_y)
+        self.create_label_selector(btn_x, btn_y)
 
     @Binder.binding(Binder.BF_ButtonClick, "#FluidSplitterUI.fluid_editing")
     def onEditFluid(self, params):
@@ -175,7 +175,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
         btn_x, btn_y = btn.GetRootPos()
         idx = params["#collection_index"]
         self.selected_setting_index = idx
-        self.createFluidSelector(btn_x, btn_y)
+        self.create_fluid_selector(btn_x, btn_y)
 
     @Binder.binding(Binder.BF_ButtonClick, "#FluidSplitterUI.label_selected")
     def onSelectLabel(self, params):
@@ -191,7 +191,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
                 "[Error] FluidSplitterUISync: onLabelSelected: selected_setting_index empty"
             )
             return
-        self.closeLabelSelector()
+        self.close_label_selector()
         dim, x, y, z = self.pos
         FluidSplitterSettingsSetLabel(
             dim, x, y, z, self.selected_setting_index, idx
@@ -239,11 +239,11 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
     def onSearchFluid(self, params):
         text = params["Text"]  # type: str
         if not text.replace(":", "").strip():
-            self.flushFluidSelector([])
+            self.flush_fluid_selector([])
             return
-        searches = getFluidNamesForSearch()
+        searches = _get_all_fluid_names()
         res = [searches[i] for i in fuzzySearch(text, list(searches))]
-        self.flushFluidSelector(res)
+        self.flush_fluid_selector(res)
 
     @Binder.binding(Binder.BF_ButtonClick, "#FluidSplitterUI.fluid_selected_confirm")
     def onConfirmFluid(self, params):
@@ -255,7 +255,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
         FluidSplitterSettingsSetFluid(
             dim, x, y, z, self.selected_setting_index, fluid_id
         ).send()
-        self.closeFluidSelector()
+        self.close_fluid_selector()
 
     @MachinePanelUIProxyEx.Listen(FluidSplitterSettingsListUpdate)
     def onListUpdated(self, event):
@@ -276,14 +276,14 @@ def fuzzySearch(text, sections):
     ]
 
 
-def getFluidNamesForSearch():
-    if getFluidNamesForSearch.cache is None:
+def _get_all_fluid_names():
+    if _get_all_fluid_names.cache is None:
         SEARCHABLE_FLUIDS = {
-            GetItemHoverName(fluid_id): fluid_id for fluid_id in all_fluids
+            GetItemHoverName(fluid_id).replace("§f", ""): fluid_id for fluid_id in Fluids.all_sub()
         }
-        SEARCHABLE_FLUIDS.update({fluid_id: fluid_id for fluid_id in all_fluids})
-        getFluidNamesForSearch.cache = SEARCHABLE_FLUIDS
-    return getFluidNamesForSearch.cache
+        SEARCHABLE_FLUIDS.update({fluid_id: fluid_id for fluid_id in Fluids.all_sub()})
+        _get_all_fluid_names.cache = SEARCHABLE_FLUIDS
+    return _get_all_fluid_names.cache
 
 
-getFluidNamesForSearch.cache = None
+_get_all_fluid_names.cache = None

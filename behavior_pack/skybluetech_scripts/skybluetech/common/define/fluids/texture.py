@@ -1,74 +1,58 @@
 from ..id_enum import fluids
+from .define import BasicFluidTexture, FluidTexture
 
+AIR = BasicFluidTexture("textures/fluid/gas", 1)
+WATER = BasicFluidTexture("textures/fluid/basic_water_static", 32, 2)
+WATER_VAPOR = BasicFluidTexture("textures/fluid/water_vapor", 1)
+LAVA = BasicFluidTexture("textures/fluid/gray_lava_static", 20, 5)
+MOLTEN_METAL = BasicFluidTexture("textures/fluid/gray_molten_metal_static", 49, 5)
+VANILLA_WATER = BasicFluidTexture("textures/fluid/water_static", 32, 2)
+VANILLA_LAVA = BasicFluidTexture("textures/fluid/lava_static", 20, 16)
+DEEPSLATE_LAVA = BasicFluidTexture("textures/fluid/deepslate_lava_static", 20, 5)
+METHANE_MUD = BasicFluidTexture("textures/fluid/methane_mud", 1)
+BASIC_FLUID = BasicFluidTexture("textures/fluid/basic_fluid", 1)
+
+BASIC_FLUID_TEXTURE = FluidTexture((255, 255, 255), 255, BASIC_FLUID)
 
 FLUID_COLORS_AND_TEXTURES = {
-    fluids.CommonGas.COMPRESSED_AIR: ((240, 240, 240), 4),
-    fluids.CommonLiquid.DISTILLED_WATER: ((0, 229, 255), 3),
-    fluids.DeepLava.HEAVY_LAVA: ((168, 36, 36), 0),
-    fluids.CommonGas.HYDROGEN: ((220, 240, 255), 4),
-    fluids.DeepLava.LIGHT_LAVA: ((255, 60, 0), 0),
-    fluids.DeepLava.MID_LAVA: ((255, 0, 0), 0),
-    fluids.CommonGas.METHANE: ((255, 240, 200), 4),
-    fluids.CommonGas.WATER_VAPOR: ((240, 240, 255), 5),
-    fluids.CommonOil.LUBRICANT: ((255, 207, 0), 3),
-    fluids.CommonOil.RAW_OIL: ((44, 39, 28), 3),
-    fluids.CommonOil.VEGETABLE_OIL: ((170, 255, 0), 3),
-    fluids.Acid.SULFURIC_ACID: ((255, 216, 216), 3),
-    fluids.Acid.CONCENTRATED_SULFURIC_ACID: ((255, 216, 216), 3),
-    fluids.Acid.SO3: ((255, 216, 216), 3),
-    fluids.Molten.COPPER: ((231, 124, 86), 1),
-    fluids.Molten.EARTH: ((127, 54, 0), 2),
-    fluids.Molten.GOLD: ((255, 255, 0), 1),
-    fluids.Molten.IMPURITY: ((74, 47, 21), 2),
-    fluids.Molten.IRON: ((200, 200, 200), 1),
-    fluids.Molten.LEAD: ((163, 153, 229), 1),
-    fluids.Molten.NICKEL: ((197, 197, 145), 1),
-    fluids.Molten.PLATINUM: ((158, 235, 255), 1),
-    fluids.Molten.SILVER: ((239, 248, 249), 1),
-    fluids.Molten.TIN: ((233, 233, 233), 1),
-}
-
-TEXTURE_2_INDEX = {
-    "textures/fluid/gray_lava_flow": 0,
-    "textures/fluid/gray_molten_metal_static": 1,
-    "textures/fluid/gray_lava_static": 2,
-    "textures/fluid/basic_water_static": 3,
-    "textures/fluid/gas": 4,
-    "textures/fluid/water_vapor": 5,
-}
-INDEX_2_TEXTUREURE = {v: k for k, v in TEXTURE_2_INDEX.items()}
-
-
-NONCOLOR_TEXTURES = {
-    "minecraft:water": "textures/fluid/water",
-    "minecraft:flowing_water": "textures/fluid/flowing_water",
-    "minecraft:lava": "textures/fluid/lava",
-    "minecraft:flowing_lava": "textures/fluid/flowing_lava",
-    #
-    fluids.DeepLava.DEEPSLATE_LAVA: "textures/fluid/deepslate_lava_static",
-    fluids.CommonLiquid.METHANE_MUD: "textures/fluid/methane_mud",
+    fluids.CommonLiquid.DISTILLED_WATER: FluidTexture((0, 229, 255), 128, WATER),
+    fluids.CommonGas.COMPRESSED_AIR: FluidTexture((240, 240, 240), 64, AIR),
+    fluids.CommonGas.HYDROGEN: FluidTexture((220, 240, 255), 64, AIR),
+    fluids.CommonGas.METHANE: FluidTexture((255, 240, 200), 64, AIR),
+    fluids.CommonGas.WATER_VAPOR: FluidTexture((240, 240, 255), 64, WATER_VAPOR),
+    fluids.CommonOil.LUBRICANT: FluidTexture((255, 207, 0), 192, WATER),
+    fluids.CommonOil.RAW_OIL: FluidTexture((44, 39, 28), 255, WATER),
+    fluids.CommonOil.VEGETABLE_OIL: FluidTexture((170, 255, 0), 192, WATER),
+    fluids.Acid.SULFURIC_ACID: FluidTexture((255, 216, 216), 128, WATER),
+    fluids.Acid.CONCENTRATED_SULFURIC_ACID: FluidTexture((255, 216, 216), 128, WATER),
+    fluids.Acid.SO3: FluidTexture((255, 216, 216), 128, WATER),
+    fluids.DeepLava.HEAVY_LAVA: FluidTexture((168, 36, 36), 255, LAVA),
+    fluids.DeepLava.LIGHT_LAVA: FluidTexture((255, 60, 0), 255, LAVA),
+    fluids.DeepLava.MID_LAVA: FluidTexture((255, 0, 0), 255, LAVA),
+    fluids.Molten.COPPER: FluidTexture((231, 124, 86), 255, MOLTEN_METAL),
+    fluids.Molten.EARTH: FluidTexture((127, 54, 0), 255, LAVA),
+    fluids.Molten.GOLD: FluidTexture((255, 255, 0), 255, MOLTEN_METAL),
+    fluids.Molten.IMPURITY: FluidTexture((74, 47, 21), 255, LAVA),
+    fluids.Molten.IRON: FluidTexture((200, 200, 200), 255, MOLTEN_METAL),
+    fluids.Molten.LEAD: FluidTexture((163, 153, 229), 255, MOLTEN_METAL),
+    fluids.Molten.NICKEL: FluidTexture((197, 197, 145), 255, MOLTEN_METAL),
+    fluids.Molten.PLATINUM: FluidTexture((158, 235, 255), 255, MOLTEN_METAL),
+    fluids.Molten.SILVER: FluidTexture((239, 248, 249), 255, MOLTEN_METAL),
+    fluids.Molten.TIN: FluidTexture((233, 233, 233), 255, MOLTEN_METAL),
+    # Vanilla
+    fluids.Vanilla.WATER: FluidTexture((255, 255, 255), 128, VANILLA_WATER),
+    fluids.Vanilla.LAVA: FluidTexture((255, 255, 255), 255, VANILLA_LAVA),
+    # color-special
+    fluids.DeepLava.DEEPSLATE_LAVA: FluidTexture((255, 255, 255), 255, DEEPSLATE_LAVA),
+    fluids.CommonLiquid.METHANE_MUD: FluidTexture((255, 255, 255), 255, METHANE_MUD),
 }
 
 
-def GetFluidTextureAndColor(fluid_id):
-    # type: (str) -> tuple[str, tuple[int, int, int] | None]
-    if fluid_id in NONCOLOR_TEXTURES:
-        return NONCOLOR_TEXTURES.get(fluid_id, "textures/fluid/basic_fluid"), None
-    elif fluid_id in FLUID_COLORS_AND_TEXTURES:
-        color, texture_idx = FLUID_COLORS_AND_TEXTURES[fluid_id]
-        return INDEX_2_TEXTUREURE[texture_idx], color
-    else:
-        return "textures/fluid/basic_fluid", None
+def GetFluidTexture(fluid_id):
+    # type: (str) -> FluidTexture
+    return FLUID_COLORS_AND_TEXTURES.get(fluid_id, BASIC_FLUID_TEXTURE)
 
 
-def RegisterFluidTexture(fluid_id, texture_path, color=None):
-    # type: (str, str, tuple[int, int, int] | None) -> None
-    if color is None:
-        NONCOLOR_TEXTURES[fluid_id] = texture_path
-    else:
-        idx = TEXTURE_2_INDEX.get(texture_path, None)
-        if idx is None:
-            idx = len(TEXTURE_2_INDEX)
-            TEXTURE_2_INDEX[texture_path] = idx
-            INDEX_2_TEXTUREURE[idx] = texture_path
-        FLUID_COLORS_AND_TEXTURES[fluid_id] = (color, idx)
+def RegisterFluidTexture(fluid_id, basic_texture, rgb=(255, 255, 255), alpha=255):
+    # type: (str, BasicFluidTexture, tuple[int, int, int], int) -> None
+    FLUID_COLORS_AND_TEXTURES[fluid_id] = FluidTexture(rgb, alpha, basic_texture)

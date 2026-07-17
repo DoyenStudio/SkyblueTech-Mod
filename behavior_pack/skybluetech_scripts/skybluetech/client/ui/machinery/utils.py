@@ -9,6 +9,9 @@ from skybluetech_scripts.tooldelta.utils.nbt import (
 from skybluetech_scripts.skybluetech.common.define.fluids import (
     texture as fluid_texture,
 )
+from skybluetech_scripts.skybluetech.common.define.fluids.define import (
+    BasicFluidTexture,
+)
 from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Gas
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STRUCTURE_LACKED_BLOCKS,
@@ -23,6 +26,10 @@ if 0:
 # TYPE_CHECKING END
 
 INFINITY = float("inf")
+
+FLUID_SMOOTH_FACTOR = 0.05
+FLUID_SMOOTH_EPSILON = 0.001
+FLUID_FRAME_SIZE = 16
 
 
 def FormatNum(n, fmt="%.2f %s"):
@@ -129,6 +136,11 @@ class FluidDisplayer(object):
         self.fluid_id = None
         self.fluid_volume = None
         self.max_volume = None
+        self.rendered_display_fluid_id = None
+        self.rendered_display_fluid_relative_volume = 0.0
+        self.flipbook_frame = 0
+        self.flipbook_tick = 0
+        self.first_update = True
         self.enable_interact = enable_interact
         btn = ctrl["data_btn"].asButton()
         screen_vars = ctrl._root._vars
@@ -180,48 +192,91 @@ class FluidDisplayer(object):
         self.fluid_id = fluid_id
         self.fluid_volume = fluid_volume
         self.max_volume = max_volume
-        fluid_img = self.ctrl["fluid/img"].asImage()
-        volume_disp = self.ctrl["text"].asLabel()
-        if fluid_id is None:
-            fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=0))
-        else:
-            texture, color = fluid_texture.GetFluidTextureAndColor(fluid_id)
-            texture_path = texture
-            fluid_img.SetSprite(texture_path)
-            if color is not None:
-                r, g, b = color
-                color = (float(r) / 255, float(g) / 255, float(b) / 255)
-                fluid_img.SetSpriteColor(color)
-            else:
-                fluid_img.SetSpriteColor((1, 1, 1))
-        if fluid_volume == INFINITY:
-            prgs = 1
-        elif max_volume == INFINITY:
-            prgs = 0
-        else:
-            prgs = float(fluid_volume) / max_volume
-        volume_disp.SetText(
+
+        self.ctrl["text"].asLabel().SetText(
             "%s / %s"
             % (
                 FormatFluidVolume(fluid_volume),
                 FormatFluidVolume(max_volume),
             )
         )
-        if fluid_id is not None and fluid_id in Gas.all_sub():
+        self._update_fluid_img()
+        if self.enable_interact:
+            self._update_hover()
+
+    def _get_target_relative_volume(self):
+        # type: () -> float
+        if (
+            self.fluid_id is None
+            or self.fluid_volume is None
+            or self.max_volume is None
+        ):
+            return 0.0
+        elif self.fluid_volume == INFINITY:
+            return 1.0
+        elif self.max_volume == INFINITY:
+            return 0.0
+        return float(self.fluid_volume) / self.max_volume
+
+    def _update_fluid_img(self):
+        # type: () -> None
+        fluid_img = self.ctrl["fluid/img"].asImage()
+        target = self._get_target_relative_volume()
+
+        if self.first_update:
+            self.first_update = False
+            self.rendered_display_fluid_id = self.fluid_id
+            rendered = target
+        else:
+            if self.fluid_id != self.rendered_display_fluid_id:
+                if self.rendered_display_fluid_relative_volume <= FLUID_SMOOTH_EPSILON:
+                    self.rendered_display_fluid_id = self.fluid_id
+                    self.flipbook_frame = 0
+                    self.flipbook_tick = 0
+                else:
+                    target = 0.0
+            rendered = self.rendered_display_fluid_relative_volume
+            rendered += (target - rendered) * FLUID_SMOOTH_FACTOR
+            if abs(target - rendered) <= FLUID_SMOOTH_EPSILON:
+                rendered = target
+        self.rendered_display_fluid_relative_volume = rendered
+
+        rendered_fluid_id = self.rendered_display_fluid_id
+        if rendered_fluid_id is None:
+            fluid_img.SetFullSize("y", UICtrlPosData("parent", relative_value=0))
+            return
+
+        texture = fluid_texture.GetFluidTexture(rendered_fluid_id)
+        fluid_img.SetSprite(texture.basic_texture.texture_path)
+        r, g, b = texture.rgb
+        fluid_img.SetSpriteColor((float(r) / 255, float(g) / 255, float(b) / 255))
+        fluid_img.SetAlpha(float(texture.alpha) / 255)
+        self._update_flipbook(fluid_img, texture.basic_texture)
+
+        if rendered_fluid_id in Gas.all_sub():
             fluid_img.SetAnchorFrom("top_middle")
             fluid_img.SetAnchorTo("top_middle")
-            fluid_img.SetFullSize(
-                "y", UICtrlPosData("parent", relative_value=min(2, prgs))
-            )
         else:
             fluid_img.SetAnchorFrom("bottom_middle")
             fluid_img.SetAnchorTo("bottom_middle")
             fluid_img.SetFullPos("y", UICtrlPosData("none", relative_value=0))
-            fluid_img.SetFullSize(
-                "y", UICtrlPosData("parent", relative_value=min(2, prgs))
-            )
-        if self.enable_interact:
-            self._update_hover()
+        fluid_img.SetFullSize(
+            "y", UICtrlPosData("parent", relative_value=min(2, rendered))
+        )
+
+    def _update_flipbook(self, fluid_img, basic_texture):
+        # type: (UImage, BasicFluidTexture) -> None
+        if basic_texture.flipbook_frames > 1:
+            self.flipbook_tick += 1
+            if self.flipbook_tick >= basic_texture.ticks_per_frame:
+                self.flipbook_tick = 0
+                self.flipbook_frame = (
+                    self.flipbook_frame + 1
+                ) % basic_texture.flipbook_frames
+        fluid_img.SetUV(
+            (0, self.flipbook_frame * FLUID_FRAME_SIZE),
+            (FLUID_FRAME_SIZE, FLUID_FRAME_SIZE),
+        )
 
     def _update_hover(self):
         # type: () -> None

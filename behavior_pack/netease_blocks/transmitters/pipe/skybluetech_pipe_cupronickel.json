@@ -25,7 +25,7 @@
             },
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "blend",
+                    "render_method": "opaque",
                     "texture": "skybluetech:pipe_cupronickel"
                 }
             },
@@ -2008,7 +2008,6 @@
             },
             {
                 "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
-                
                 "components": {
                     "netease:aabb": {
                         "collision": {

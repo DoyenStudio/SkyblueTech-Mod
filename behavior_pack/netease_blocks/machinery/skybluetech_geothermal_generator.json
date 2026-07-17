@@ -16,7 +16,7 @@
             "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "blend",
+                    "render_method": "opaque",
                     "texture": "skybluetech:geothermal_generator"
                 }
             },

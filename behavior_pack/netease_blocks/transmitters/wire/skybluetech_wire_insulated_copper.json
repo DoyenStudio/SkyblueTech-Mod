@@ -21,7 +21,7 @@
             },
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "blend",
+                    "render_method": "opaque",
                     "texture": "skybluetech:wire_insulated_copper"
                 }
             },

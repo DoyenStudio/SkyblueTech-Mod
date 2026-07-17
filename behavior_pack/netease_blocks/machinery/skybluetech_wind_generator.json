@@ -7,7 +7,7 @@
             },
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "blend",
+                    "render_method": "opaque",
                     "texture": "skybluetech:wind_generator"
                 }
             },

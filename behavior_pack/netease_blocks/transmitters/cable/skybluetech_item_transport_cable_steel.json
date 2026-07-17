@@ -26,7 +26,7 @@
             "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "blend",
+                    "render_method": "opaque",
                     "texture": "skybluetech:item_transport_cable_steel"
                 }
             },

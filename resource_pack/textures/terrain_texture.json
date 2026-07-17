@@ -101,12 +101,12 @@
         "skybluetech:creative_power_acceptor": {
             "textures": "textures/machines/creative_power_acceptor"
         },
-        "skybluetech:deepslate_lava_flow": {
+        "skybluetech:deepslate_lava_flowing": {
             "quad": 2,
-            "textures": "textures/fluid/deepslate_lava_flow"
+            "textures": "textures/fluid/deepslate_lava_flowing"
         },
-        "skybluetech:deepslate_lava_still": {
-            "textures": "textures/fluid/deepslate_lava_still"
+        "skybluetech:deepslate_lava_static": {
+            "textures": "textures/fluid/deepslate_lava_static"
         },
         "skybluetech:deepslate_lava_vibrator": {
             "textures": "textures/models/deepslate_lava_vibrator_texture"
@@ -246,19 +246,19 @@
         "skybluetech:geothermal_generator": {
             "textures": "textures/models/geothermal_generator_texture"
         },
-        "skybluetech:gray_lava_flow": {
+        "skybluetech:gray_lava_flowing": {
             "quad": 1,
-            "textures": "textures/fluid/gray_lava_flow"
+            "textures": "textures/fluid/gray_lava_flowing"
         },
-        "skybluetech:gray_lava_still": {
-            "textures": "textures/fluid/gray_lava_still"
+        "skybluetech:gray_lava_static": {
+            "textures": "textures/fluid/gray_lava_static"
         },
-        "skybluetech:gray_molten_metal_flow": {
+        "skybluetech:gray_molten_metal_flowing": {
             "quad": 1,
-            "textures": "textures/fluid/gray_molten_metal_flow"
+            "textures": "textures/fluid/gray_molten_metal_flowing"
         },
-        "skybluetech:gray_molten_metal_still": {
-            "textures": "textures/fluid/gray_molten_metal_still"
+        "skybluetech:gray_molten_metal_static": {
+            "textures": "textures/fluid/gray_molten_metal_static"
         },
         "skybluetech:heavy_compressor_front": {
             "textures": "textures/machines/heavy_compressor_front"
@@ -429,7 +429,7 @@
             "textures": "textures/models/rf_repeater_plant_texture"
         },
         "skybluetech:rf_repeater_plant_icon": {
-            "textures": "textures/machines/rf_repeater_plant"
+            "textures": "textures/icon/rf_repeater_plant_icon"
         },
         "skybluetech:silver_block": {
             "textures": "textures/blocks/ingot_block/silver_block"

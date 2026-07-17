@@ -30,8 +30,8 @@ FLUID_COLORS_AND_TEXTURES = {
 
 TEXTURE_2_INDEX = {
     "textures/fluid/gray_lava_flow": 0,
-    "textures/fluid/gray_molten_metal_still": 1,
-    "textures/fluid/gray_lava_still": 2,
+    "textures/fluid/gray_molten_metal_static": 1,
+    "textures/fluid/gray_lava_static": 2,
     "textures/fluid/basic_water_static": 3,
     "textures/fluid/gas": 4,
     "textures/fluid/water_vapor": 5,
@@ -45,7 +45,7 @@ NONCOLOR_TEXTURES = {
     "minecraft:lava": "textures/fluid/lava",
     "minecraft:flowing_lava": "textures/fluid/flowing_lava",
     #
-    fluids.DeepLava.DEEPSLATE_LAVA: "textures/fluid/deepslate_lava_still",
+    fluids.DeepLava.DEEPSLATE_LAVA: "textures/fluid/deepslate_lava_static",
     fluids.CommonLiquid.METHANE_MUD: "textures/fluid/methane_mud",
 }
 

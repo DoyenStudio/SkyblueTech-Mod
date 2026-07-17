@@ -11,36 +11,36 @@
         "ticks_per_frame": 2
     },
     {
-        "flipbook_texture": "textures/fluid/gray_lava_flow",
-        "atlas_tile": "skybluetech:gray_lava_flow",
+        "flipbook_texture": "textures/fluid/gray_lava_flowing",
+        "atlas_tile": "skybluetech:gray_lava_flowing",
         "replicate": 2,
         "ticks_per_frame": 5
     },
     {
-        "flipbook_texture": "textures/fluid/gray_lava_still",
-        "atlas_tile": "skybluetech:gray_lava_still",
+        "flipbook_texture": "textures/fluid/gray_lava_static",
+        "atlas_tile": "skybluetech:gray_lava_static",
         "ticks_per_frame": 5
     },
     {
-        "flipbook_texture": "textures/fluid/gray_molten_metal_flow",
-        "atlas_tile": "skybluetech:gray_molten_metal_flow",
+        "flipbook_texture": "textures/fluid/gray_molten_metal_flowing",
+        "atlas_tile": "skybluetech:gray_molten_metal_flowing",
         "replicate": 2,
         "ticks_per_frame": 5
     },
     {
-        "flipbook_texture": "textures/fluid/gray_molten_metal_still",
-        "atlas_tile": "skybluetech:gray_molten_metal_still",
+        "flipbook_texture": "textures/fluid/gray_molten_metal_static",
+        "atlas_tile": "skybluetech:gray_molten_metal_static",
         "ticks_per_frame": 5
     },
     {
-        "flipbook_texture": "textures/fluid/deepslate_lava_flow",
-        "atlas_tile": "skybluetech:deepslate_lava_flow",
+        "flipbook_texture": "textures/fluid/deepslate_lava_flowing",
+        "atlas_tile": "skybluetech:deepslate_lava_flowing",
         "replicate": 2,
         "ticks_per_frame": 5
     },
     {
-        "flipbook_texture": "textures/fluid/deepslate_lava_still",
-        "atlas_tile": "skybluetech:deepslate_lava_still",
+        "flipbook_texture": "textures/fluid/deepslate_lava_static",
+        "atlas_tile": "skybluetech:deepslate_lava_static",
         "ticks_per_frame": 5
     },
     {

@@ -359,6 +359,7 @@
                                                                         18.0,
                                                                         18.0
                                                                     ],
+                                                                    "layer": 2,
                                                                     "collection_name": "netease_container",
                                                                     "controls": [
                                                                         {
@@ -382,7 +383,7 @@
                                                                         18.0,
                                                                         18.0
                                                                     ],
-                                                                    "layer": 1,
+                                                                    "layer": 2,
                                                                     "collection_name": "netease_container",
                                                                     "controls": [
                                                                         {

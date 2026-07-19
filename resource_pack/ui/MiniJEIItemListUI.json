@@ -378,7 +378,7 @@
                                             ],
                                             "grid_item_template": "MiniJEIItemListUI.single_mjei_item",
                                             "grid_rescaling_type": "horizontal",
-                                            "maximum_grid_items": 128,
+                                            "maximum_grid_items": 200,
                                             "property_bag": {
                                                 "#maximum_grid_items": 1
                                             },
@@ -450,6 +450,7 @@
                         "100%+0px",
                         "100%+0px"
                     ],
+                    "layer": 0,
                     "button_mappings": [
                         {
                             "to_button_id": "$pressed_button_name",
@@ -501,7 +502,7 @@
                         "100%+-2px",
                         "100%+-2px"
                     ],
-                    "layer": 8,
+                    "layer": 3,
                     "property_bag": {
                         "#item_id_aux": 131072
                     },

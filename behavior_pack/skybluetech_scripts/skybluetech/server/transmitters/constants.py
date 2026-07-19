@@ -1,3 +1,4 @@
+# coding: utf-8
 COMMON_CONTAINERS = {
     "minecraft:chest",
     "minecraft:trapped_chest",

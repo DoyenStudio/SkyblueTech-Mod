@@ -1,3 +1,4 @@
+# coding: utf-8
 def b(num):
     # type: (int) -> int
     return 1 << (num - 1)

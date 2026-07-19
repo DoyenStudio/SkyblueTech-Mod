@@ -1,3 +1,4 @@
+# coding: utf-8
 NEIGHBOR_BLOCKS_ENUM = (
     (0, -1, 0),
     (0, 1, 0),

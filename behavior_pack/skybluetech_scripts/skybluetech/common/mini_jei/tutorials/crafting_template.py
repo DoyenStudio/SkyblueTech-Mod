@@ -1,3 +1,4 @@
+# coding: utf-8
 from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
     CRAFTING_TEMPLATE,
 )

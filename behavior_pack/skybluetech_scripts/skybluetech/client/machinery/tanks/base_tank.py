@@ -13,7 +13,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic.fluid_container 
     K_FLUID_VOLUME,
     K_MAX_VOLUME,
 )
-from ..utils.fluid_model import FluidModel
+from ...utils.fluid_model import FluidModel
 
 INFINITY = float("inf")
 FIRST_TANK_LOADED = False

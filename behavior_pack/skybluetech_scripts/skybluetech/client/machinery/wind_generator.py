@@ -19,7 +19,7 @@ from ...common.events.machinery.wind_generator import (
 from ...common.define.id_enum.machinery import Machinery
 MACHINE_ID = Machinery.WIND_GENERATOR
 from ...common.utils.block_sync import BlockSync
-from .utils.client_molangs import (
+from ..utils.client_molangs import (
     FACE,
     ANIM_SPEED,
     IS_BASE_BLOCK,
@@ -28,7 +28,7 @@ from .utils.client_molangs import (
     WIRE_CONNECT_SOUTH,
     WIRE_CONNECT_WEST,
 )
-from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
+from ..utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
 PaddleEnum = WindGeneratorStatesUpdate
 

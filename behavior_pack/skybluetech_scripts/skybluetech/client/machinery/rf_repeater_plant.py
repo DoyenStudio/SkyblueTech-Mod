@@ -11,13 +11,13 @@ from ...common.events.machinery.rf_repeater_plant import (
 )
 from ...common.define.id_enum.machinery import Machinery
 MACHINE_ID = Machinery.RF_REPEATER_PLANT
-from .utils.mod_block_event import (
+from ...common.utils.block_sync import BlockSync
+from ..utils.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
-from ...common.utils.block_sync import BlockSync
 
 block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 lasers = {}  # type: dict[tuple[int, int, int], dict[tuple[int, int, int], WireLaser]]

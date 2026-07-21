@@ -16,7 +16,7 @@ from ...common.events.machinery.hover_text_displayer import (
 from ...common.machinery_def.basic.base_machine import K_DEACTIVE_FLAGS
 from ...common.machinery_def.hover_text_displayer import K_TEXT
 from ...common.utils.block_sync import BlockSync
-from .utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
+from ..utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
 if 0:
     from typing import Any

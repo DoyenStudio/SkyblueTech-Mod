@@ -11,7 +11,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from ...common.define.id_enum.machinery import Machinery
 MACHINE_ID = Machinery.CREATIVE_POWER_ACCEPTOR
 from ...common.machinery_def.creative_power_acceptor import K_POWER
-from .utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
+from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 
 if 0:
     from typing import Any

@@ -17,7 +17,7 @@ from ...common.machinery_def.hydroponic_bed_sand import (
     K_CROP_BLOCK_ID,
     K_GROW_PROGRESS,
 )
-from .utils.mod_block_event import (
+from ..utils.mod_block_event import (
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )

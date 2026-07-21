@@ -21,7 +21,7 @@ from ...common.machinery_def.deepslate_lava_vibrator import (
     STORE_RF_MAX,
 )
 from ..ui.machinery.utils import FormatNum, FormatFluidVolume
-from .utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
+from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 
 
 CF = GetEngineCompFactory()

@@ -14,7 +14,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from ...common.define.id_enum.machinery import Machinery
 MACHINE_ID = Machinery.HYDROPONIC_BED
 from ...common.machinery_def.hydroponic_bed import K_CROP_BLOCK_ID, K_GROW_STAGE
-from .utils.mod_block_event import (
+from ..utils.mod_block_event import (
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )

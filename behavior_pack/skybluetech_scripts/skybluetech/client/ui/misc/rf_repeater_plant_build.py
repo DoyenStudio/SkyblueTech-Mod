@@ -21,7 +21,7 @@ from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant i
     RFRepeaterPlantBuildResponse,
 )
 from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
-from ...machinery.utils.mod_block_event import (
+from ...utils.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
     asModBlockLoadedListener,

@@ -1,100 +1,26 @@
 {
 	"format_version": "1.8.0",
 	"animations": {
-		"animation.skybluetech.digger_ani.rot": {
+		"animation.skybluetech.digger.new": {
+			"loop": true
+		},
+		"animation.skybluetech.digger.rot": {
 			"loop": true,
 			"animation_length": 0.9,
 			"bones": {
 				"digger": {
 					"rotation": {
 						"0.0": [0, 0, 0],
-						"0.9": [0, 360, 0]
+						"0.9": [0, "variable.working?360:0", 0]
 					}
 				}
 			}
 		},
-		"animation.skybluetech.digger_ani.still": {
-			"loop": false,
-			"animation_length": 0,
-			"bones": {
-				"digger": {}
-			}
-		},
-		"animation.skybluetech.digger_ani.rot2": {
-			"loop": true,
-			"animation_length": 0.9,
-			"bones": {
-				"digger": {
-					"rotation": {
-						"0.0": [0, 0, 0],
-						"0.9": [0, 0, -360]
-					}
-				}
-			}
-		},
-		"animation.skybluetech.digger_ani.facing_up": {
+		"animation.skybluetech.digger.facing": {
 			"loop": true,
 			"bones": {
-				"bottom": {
-					"rotation": [180, 0, 0]
-				},
-				"digger": {
-					"rotation": [180, 0, 0]
-				}
-			}
-		},
-		"animation.skybluetech.digger_ani.facing_down": {
-			"loop": true,
-			"bones": {
-				"bottom": {
-					"rotation": [0, 0, 0]
-				},
-				"digger": {
-					"rotation": [0, 0, 0]
-				}
-			}
-		},
-		"animation.skybluetech.digger_ani.facing_north": {
-			"loop": true,
-			"bones": {
-				"bottom": {
-					"rotation": [-90, 0, 90]
-				},
-				"digger": {
-					"rotation": [-90, 0, 90]
-				}
-			}
-		},
-		"animation.skybluetech.digger_ani.facing_south": {
-			"loop": true,
-			"bones": {
-				"bottom": {
-					"rotation": [90, 0, -90]
-				},
-				"digger": {
-					"rotation": [90, 0, -90]
-				}
-			}
-		},
-		"animation.skybluetech.digger_ani.facing_west": {
-			"loop": true,
-			"bones": {
-				"bottom": {
-					"rotation": [0, 0, -90]
-				},
-				"digger": {
-					"rotation": [0, 0, -90]
-				}
-			}
-		},
-		"animation.skybluetech.digger_ani.facing_east": {
-			"loop": true,
-			"bones": {
-				"bottom": {
-					"rotation": [0, 0, 90]
-				},
-				"digger": {
-					"rotation": [0, 0, 90]
+				"root": {
+					"rotation": ["variable.rotation_x", 0, "variable.rotation_z"]
 				}
 			}
 		}

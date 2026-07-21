@@ -15,18 +15,28 @@ from ...common.events.machinery.digger import (
     DiggerUpdateCrack,
 )
 from ...common.define.id_enum.machinery import Machinery
+
 MACHINE_ID = Machinery.DIGGER
 from ...common.utils.block_sync import BlockSync
 
 TICKS_PER_SECOND = 20
 block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
 
+ROTATION_VALUES = {
+    0: (0, 0),
+    1: (180,  0),
+    2: (-90,  90),
+    3: (90,  -90),
+    4: (0,  -90),
+    5: (0,  90),
+}
+
 
 @DiggerWorkModeUpdatedEvent.Listen()
 def clientOnDiggerWorkModeUpdated(event):
     # type: (DiggerWorkModeUpdatedEvent) -> None
     SetBlockEntityMolangValue(
-        (event.x, event.y, event.z), "variable.mod_block_is_active", event.active
+        (event.x, event.y, event.z), "variable.working", event.active
     )
 
 
@@ -35,10 +45,16 @@ def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     if event.blockName == MACHINE_ID:
         _, aux = CGetBlockNameAndAux((event.posX, event.posY, event.posZ))
+        rot_x, rot_z = ROTATION_VALUES[aux & 0b111]
         SetBlockEntityMolangValue(
             (event.posX, event.posY, event.posZ),
-            "variable.mod_block_facing",
-            aux & 0b111,
+            "variable.rotation_x",
+            rot_x,
+        )
+        SetBlockEntityMolangValue(
+            (event.posX, event.posY, event.posZ),
+            "variable.rotation_z",
+            rot_z,
         )
 
 

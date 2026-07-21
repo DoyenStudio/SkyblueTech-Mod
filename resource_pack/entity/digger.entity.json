@@ -4,7 +4,7 @@
         "description": {
             "identifier": "skybluetech:digger",
             "geometry": {
-                "default": "geometry.skybluetech.digger_ani"
+                "default": "geometry.skybluetech.digger"
             },
             "textures": {
                 "default": "textures/models/digger_model"
@@ -14,29 +14,21 @@
             },
             "scripts": {
                 "initialize": [
-                    "variable.mod_block_is_active=false;",
-                    "variable.mod_block_facing=0;"
+                    "variable.working=false;",
+                    "variable.rotation_x=0;",
+                    "variable.rotation_z=0;"
                 ],
                 "animate": [
-                    "facing_ctrl",
-                    "active"
+                    "facing",
+                    "rot"
                 ]
             },
             "animations": {
-                "facing_up": "animation.skybluetech.digger_ani.facing_up",
-                "facing_down": "animation.skybluetech.digger_ani.facing_down",
-                "facing_east": "animation.skybluetech.digger_ani.facing_east",
-                "facing_west": "animation.skybluetech.digger_ani.facing_west",
-                "facing_south": "animation.skybluetech.digger_ani.facing_south",
-                "facing_north": "animation.skybluetech.digger_ani.facing_north",
-                "still": "animation.skybluetech.digger_ani.still",
-                "rot": "animation.skybluetech.digger_ani.rot",
-                "rot2": "animation.skybluetech.digger_ani.rot2",
-                "facing_ctrl": "controller.animation.skybluetech.digger_ani.facing_ctrl",
-                "active": "controller.animation.skybluetech.digger_ani.active"
+                "facing": "animation.skybluetech.digger.facing",
+                "rot": "animation.skybluetech.digger.rot"
             },
             "render_controllers": [
-                "controller.render.skybluetech.digger_ani"
+                "controller.render.skybluetech.digger"
             ]
         }
     }

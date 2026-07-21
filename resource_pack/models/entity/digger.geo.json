@@ -3,16 +3,21 @@
 	"minecraft:geometry": [
 		{
 			"description": {
-				"identifier": "geometry.skybluetech.digger_ani",
+				"identifier": "geometry.skybluetech.digger",
 				"texture_width": 16,
 				"texture_height": 16,
-				"visible_bounds_width": 4,
+				"visible_bounds_width": 3,
 				"visible_bounds_height": 2.5,
 				"visible_bounds_offset": [0, 0.75, 0]
 			},
 			"bones": [
 				{
+					"name": "root",
+					"pivot": [-8, 8, 8]
+				},
+				{
 					"name": "bottom",
+					"parent": "root",
 					"pivot": [-8, 8, 8],
 					"cubes": [
 						{
@@ -85,6 +90,7 @@
 				},
 				{
 					"name": "digger",
+					"parent": "root",
 					"pivot": [-8, 8, 8]
 				},
 				{

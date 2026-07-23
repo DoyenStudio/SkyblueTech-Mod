@@ -11,7 +11,7 @@
             "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "opaque",
+                    "render_method": "alpha_test",
                     "texture": "skybluetech:template_assembler"
                 }
             },

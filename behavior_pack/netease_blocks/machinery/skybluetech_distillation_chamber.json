@@ -10,7 +10,7 @@
             },
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "opaque",
+                    "render_method": "alpha_test",
                     "texture": "skybluetech:distillation_chamber"
                 }
             },

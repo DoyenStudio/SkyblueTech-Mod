@@ -16,7 +16,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.mini_miner import (
     K_WORK_MODE,
     STORE_RF_MAX,
     MAX_FLUID_VOLUME,
-    VOLUME_COST_ONCE,
 )
 from ..machinery_extra_pages import (
     CableSettingsPageIndirectional,
@@ -52,13 +51,8 @@ class MiniMinerUI(MachinePanelUIProxyEx):
         store_rf = GetValue(data, K_STORE_RF, 0)
         work_mode = GetValue(data, K_WORK_MODE, 0)
         digging_pos = GetValue(data, K_DIGGING_POS, [0, 0, 0])
-        self.fluid_displayer.update(fluid_id, fluid_volume, VOLUME_COST_ONCE)
+        self.fluid_displayer.update(fluid_id, fluid_volume, MAX_FLUID_VOLUME)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        self.fluid_displayer.update(
-            fluid_id,
-            fluid_volume,
-            MAX_FLUID_VOLUME,
-        )
         dx, dy, dz = digging_pos
         dx = ValueOf(dx)
         dy = ValueOf(dy)

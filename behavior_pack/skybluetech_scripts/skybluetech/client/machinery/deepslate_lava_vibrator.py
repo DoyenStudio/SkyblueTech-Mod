@@ -1,5 +1,6 @@
 # coding=utf-8
 from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+
 from skybluetech_scripts.tooldelta.api.client import (
     GetBlockEntityData,
     GetBlockNameAndAux,
@@ -10,19 +11,21 @@ from skybluetech_scripts.tooldelta.events.client.block import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
+    asModBlockLoadedListener,
+    asModBlockRemovedListener,
+)
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.utils import nbt
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.DEEPSLATE_LAVA_VIBRATOR
 from ...common.machinery_def.deepslate_lava_vibrator import (
     K_DEEPSLATE_LAVA_PREDICTED,
     K_PREDICT_PROGRESS,
     K_STORE_RF,
     STORE_RF_MAX,
 )
-from ..ui.machinery.utils import FormatNum, FormatFluidVolume
-from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
-
+from ..ui.machinery.utils import FormatFluidVolume, FormatNum
 
 CF = GetEngineCompFactory()
 text_pool = {}  # type: dict[tuple[int, tuple[int, int, int]], DeepslateVibratorText]
@@ -105,7 +108,7 @@ def remove_text(x, y, z):
         res.remove()
 
 
-@asModBlockLoadedListener(MACHINE_ID)
+@asModBlockLoadedListener(Machinery.DEEPSLATE_LAVA_VIBRATOR)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     _, aux = GetBlockNameAndAux((event.posX, event.posY, event.posZ))
@@ -114,7 +117,7 @@ def onModBlockLoaded(event):
     add_text(event.posX, event.posY, event.posZ)
 
 
-@asModBlockRemovedListener(MACHINE_ID)
+@asModBlockRemovedListener(Machinery.DEEPSLATE_LAVA_VIBRATOR)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     remove_text(event.posX, event.posY, event.posZ)

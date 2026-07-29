@@ -1,27 +1,30 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.client import (
-    ModBlockEntityLoadedClientEvent,
-    ModBlockEntityRemoveClientEvent,
-)
 from skybluetech_scripts.tooldelta.api.client import (
     CreateShapeFactory,
     GetBlockEntityData,
 )
+from skybluetech_scripts.tooldelta.events.client import (
+    ModBlockEntityLoadedClientEvent,
+    ModBlockEntityRemoveClientEvent,
+)
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
+    asModBlockLoadedListener,
+    asModBlockRemovedListener,
+)
 from skybluetech_scripts.tooldelta.utils import nbt
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.HOVER_TEXT_DISPLAYER
 from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
 )
 from ...common.machinery_def.basic.base_machine import K_DEACTIVE_FLAGS
 from ...common.machinery_def.hover_text_displayer import K_TEXT
 from ...common.utils.block_sync import BlockSync
-from ..utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
 if 0:
     from typing import Any
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
+block_sync = BlockSync(Machinery.HOVER_TEXT_DISPLAYER, side=BlockSync.SIDE_CLIENT)
 shapes = {}  # type: dict[tuple[int, int, int], Any]
 
 
@@ -63,7 +66,7 @@ def init_text(pos):
         update_text(pos, text)
 
 
-@asModBlockLoadedListener(MACHINE_ID)
+@asModBlockLoadedListener(Machinery.HOVER_TEXT_DISPLAYER)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)
@@ -71,7 +74,7 @@ def onModBlockLoaded(event):
         init_text(pos)
 
 
-@asModBlockRemovedListener(MACHINE_ID)
+@asModBlockRemovedListener(Machinery.HOVER_TEXT_DISPLAYER)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)

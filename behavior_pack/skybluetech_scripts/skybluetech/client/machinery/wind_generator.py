@@ -1,38 +1,41 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.client import (
-    ModBlockEntityLoadedClientEvent,
-    ModBlockEntityRemoveClientEvent,
-    ClientBlockUseEvent,
-)
 from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockNameAndAux,
+    AddTextureToOneActor,
     CreateClientEntity,
     DestroyClientEntity,
-    AddTextureToOneActor,
+    GetBlockNameAndAux,
     RebuildRenderForOneActor,
     SetEntityShadowShow,
 )
+from skybluetech_scripts.tooldelta.events.client import (
+    ClientBlockUseEvent,
+    ModBlockEntityLoadedClientEvent,
+    ModBlockEntityRemoveClientEvent,
+)
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
+    asModBlockLoadedListener,
+    asModBlockRemovedListener,
+)
+
+from ...common.define.id_enum.machinery import Machinery
 from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,
     WindGeneratorStatesUpdate,
 )
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.WIND_GENERATOR
 from ...common.utils.block_sync import BlockSync
 from ..utils.client_molangs import (
-    FACE,
     ANIM_SPEED,
+    FACE,
     IS_BASE_BLOCK,
     WIRE_CONNECT_EAST,
     WIRE_CONNECT_NORTH,
     WIRE_CONNECT_SOUTH,
     WIRE_CONNECT_WEST,
 )
-from ..utils.mod_block_event import asModBlockLoadedListener, asModBlockRemovedListener
 
 PaddleEnum = WindGeneratorStatesUpdate
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
+block_sync = BlockSync(Machinery.WIND_GENERATOR, side=BlockSync.SIDE_CLIENT)
 client_modelentity_pool = {}  # type: dict[tuple[int, int, int], str]
 client_modelentity_paddle_pool = {}  # type: dict[tuple[int, int, int], int]
 client_modelentity_rot_speed_pool = {}  # type: dict[tuple[int, int, int], float]
@@ -112,9 +115,9 @@ def destroy_model_entity(x, y, z):
 
 
 @ClientBlockUseEvent.Listen(inner_priority=10)
-def onClientBlockUse(event):
+def onClickWindGenerator(event):
     # type: (ClientBlockUseEvent) -> None
-    if event.blockName != MACHINE_ID:
+    if event.blockName != Machinery.WIND_GENERATOR:
         return
     _, aux = GetBlockNameAndAux((event.x, event.y, event.z))
     layer = (aux & 0b1100) >> 2
@@ -123,8 +126,8 @@ def onClientBlockUse(event):
         event.y -= layer
 
 
-@asModBlockLoadedListener(MACHINE_ID)
-def onModBlockLoaded(event):
+@asModBlockLoadedListener(Machinery.WIND_GENERATOR)
+def onWindGeneratorLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     layer = get_layer(event.posX, event.posY, event.posZ)
     if layer != 0:
@@ -134,14 +137,14 @@ def onModBlockLoaded(event):
     WindGeneratorStatesRequest(event.posX, event.posY, event.posZ).send()
 
 
-@asModBlockRemovedListener(MACHINE_ID)
-def onModBlockRemoved(event):
+@asModBlockRemovedListener(Machinery.WIND_GENERATOR)
+def onWindGeneratorRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     destroy_model_entity(event.posX, event.posY, event.posZ)
 
 
 @WindGeneratorStatesUpdate.Listen()
-def onStateUpdated(event):
+def onWindGeneratorStateUpdated(event):
     # type: (WindGeneratorStatesUpdate) -> None
     entity_id = client_modelentity_pool.get((event.x, event.y, event.z))
     if entity_id is None:

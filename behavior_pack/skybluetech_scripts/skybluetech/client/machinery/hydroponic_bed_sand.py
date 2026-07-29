@@ -5,27 +5,27 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
-from skybluetech_scripts.tooldelta.general import ClientInitCallback
-from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
-    GeometryModel,
-    CreateBlankModel,
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
+    asModBlockLoadedListener,
+    asModBlockRemovedListener,
 )
+from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
+    CreateBlankModel,
+    GeometryModel,
+)
+from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.HYDROPONIC_BED_SAND
 from ...common.machinery_def.hydroponic_bed_sand import (
     K_CROP_BLOCK_ID,
     K_GROW_PROGRESS,
-)
-from ..utils.mod_block_event import (
-    asModBlockLoadedListener,
-    asModBlockRemovedListener,
 )
 
 loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]
 
 
-@asModBlockLoadedListener(MACHINE_ID)
+@asModBlockLoadedListener(Machinery.HYDROPONIC_BED_SAND)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     if (event.posX, event.posY, event.posZ) in loaded_models:
@@ -37,7 +37,7 @@ def onModBlockLoaded(event):
     ))
 
 
-@asModBlockRemovedListener(MACHINE_ID)
+@asModBlockRemovedListener(Machinery.HYDROPONIC_BED_SAND)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     model = loaded_models.pop((event.posX, event.posY, event.posZ), None)

@@ -1,25 +1,27 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.api.client import (
     CreateShapeFactory,
     GetBlockNameAndAux,
+)
+from skybluetech_scripts.tooldelta.api.client import (
     GetBlockEntityData as CGetBlockEntityData,
 )
-from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
-from ...common.events.machinery.rf_repeater_plant import (
-    RFRepeaterPlantBuildAddWire,
-)
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.RF_REPEATER_PLANT
-from ...common.utils.block_sync import BlockSync
-from ..utils.mod_block_event import (
+from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
+from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
+from ...common.define.id_enum.machinery import Machinery
+from ...common.events.machinery.rf_repeater_plant import (
+    RFRepeaterPlantBuildAddWire,
+)
+from ...common.utils.block_sync import BlockSync
+
+block_sync = BlockSync(Machinery.RF_REPEATER_PLANT, side=BlockSync.SIDE_CLIENT)
 lasers = {}  # type: dict[tuple[int, int, int], dict[tuple[int, int, int], WireLaser]]
 
 
@@ -88,7 +90,7 @@ def remove_wire_src(xyz):
 @ClientBlockUseEvent.Listen(inner_priority=10)
 def onClientBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
-    if event.blockName != MACHINE_ID:
+    if event.blockName != Machinery.RF_REPEATER_PLANT:
         return
     _, aux = GetBlockNameAndAux((event.x, event.y, event.z))
     layer = (aux & 0b1100) >> 2
@@ -97,7 +99,7 @@ def onClientBlockUse(event):
         event.y -= layer
 
 
-@asModBlockLoadedListener(MACHINE_ID)
+@asModBlockLoadedListener(Machinery.RF_REPEATER_PLANT)
 def onPlantLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     block_entity_data = CGetBlockEntityData(event.posX, event.posY, event.posZ)
@@ -109,7 +111,7 @@ def onPlantLoaded(event):
         add_wire((event.posX, event.posY, event.posZ), tuple(con_node))
 
 
-@asModBlockRemovedListener(MACHINE_ID)
+@asModBlockRemovedListener(Machinery.RF_REPEATER_PLANT)
 def onPlantUnloaded(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     remove_wire_src((event.posX, event.posY, event.posZ))

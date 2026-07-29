@@ -1,17 +1,21 @@
 # coding=utf-8
 from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.api.common import Repeat
 from skybluetech_scripts.tooldelta.events.client.block import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
+    asModBlockLoadedListener,
+    asModBlockRemovedListener,
+)
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.CREATIVE_POWER_ACCEPTOR
 from ...common.machinery_def.creative_power_acceptor import K_POWER
-from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 
 if 0:
     from typing import Any
@@ -51,13 +55,13 @@ def get_power(x, y, z):
     return GetValueWithDefault(b["exData"], K_POWER, -1)
 
 
-@asModBlockLoadedListener(MACHINE_ID)
+@asModBlockLoadedListener(Machinery.CREATIVE_POWER_ACCEPTOR)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     add_text(event.dimensionId, (event.posX, event.posY, event.posZ), "输入功率： --")
 
 
-@asModBlockRemovedListener(MACHINE_ID)
+@asModBlockRemovedListener(Machinery.CREATIVE_POWER_ACCEPTOR)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     remove_text(event.dimensionId, (event.posX, event.posY, event.posZ))

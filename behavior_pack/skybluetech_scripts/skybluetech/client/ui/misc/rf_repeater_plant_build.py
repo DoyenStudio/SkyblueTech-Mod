@@ -1,34 +1,34 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
+from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
+    RFRepeaterPlantBuildRequest,
+    RFRepeaterPlantBuildResponse,
+)
 from skybluetech_scripts.tooldelta.api.client import (
-    GetFootPos,
-    GetLocalPlayerId,
     GetBlockNameAndAux,
     GetControlMode,
     GetControlModeEnum,
+    GetFootPos,
+    GetLocalPlayerId,
     SetPopupNotice,
 )
 from skybluetech_scripts.tooldelta.events.client import (
     OnCustomGamepadPressInGame,
     OnCustomKeyPressInGame,
 )
-from skybluetech_scripts.tooldelta.ui import (
-    RegistToolDeltaScreen,
-    UBaseCtrl,
-    ToolDeltaScreen,
-)
-from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
-    RFRepeaterPlantBuildRequest,
-    RFRepeaterPlantBuildResponse,
-)
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
-from ...utils.mod_block_event import (
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
-from ...user_config import key_mapping
+from skybluetech_scripts.tooldelta.ui import (
+    RegistToolDeltaScreen,
+    ToolDeltaScreen,
+    UBaseCtrl,
+)
 
+from ...user_config import key_mapping
 
 BG_PATH = "/bg"
 METER_LABEL_PATH = BG_PATH + "/meter_label"

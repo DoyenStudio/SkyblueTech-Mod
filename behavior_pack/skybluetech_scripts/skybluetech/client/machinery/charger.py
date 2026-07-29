@@ -1,26 +1,31 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.api.client import (
+    CreateDropItemModelEntity,
+    DeleteClientDropItemEntity,
+    SetDropItemTransform,
+)
 from skybluetech_scripts.tooldelta.api.client import (
     GetPlayerDimensionId as CGetPlayerDim,
-    CreateDropItemModelEntity,
-    SetDropItemTransform,
-    DeleteClientDropItemEntity,
 )
-from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
+from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
+    asModBlockLoadedListener,
+    asModBlockRemovedListener,
+)
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.CHARGER
 from ...common.events.machinery.charger import (
-    ChargerItemModelUpdate,
     ChargeItemModelRequest,
+    ChargerItemModelUpdate,
 )
 from ...common.utils.block_sync import BlockSync
-from ..utils.mod_block_event import asModBlockRemovedListener, asModBlockLoadedListener
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
+block_sync = BlockSync(Machinery.CHARGER, side=BlockSync.SIDE_CLIENT)
 
 
 cli_loading_machines = set()  # type: set[tuple[int, int, int]]
@@ -49,7 +54,7 @@ def onModelUpdate(event):
         )
 
 
-@asModBlockLoadedListener(MACHINE_ID)
+@asModBlockLoadedListener(Machinery.CHARGER)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)
@@ -58,7 +63,7 @@ def onModBlockLoaded(event):
     NotifyToServer(ChargeItemModelRequest(event.posX, event.posY, event.posZ))
 
 
-@asModBlockRemovedListener(MACHINE_ID)
+@asModBlockRemovedListener(Machinery.CHARGER)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)

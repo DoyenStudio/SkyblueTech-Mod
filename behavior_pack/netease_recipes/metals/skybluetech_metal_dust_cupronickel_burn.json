@@ -1,0 +1,22 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_furnace": {
+        "description": {
+            "identifier": "skybluetech:cupronickel_dust_burn"
+        },
+        "input": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:cupronickel_dust"
+        },
+        "output": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:cupronickel_ingot"
+        },
+        "tags": [
+            "furnace",
+            "blast_furnace"
+        ]
+    }
+}

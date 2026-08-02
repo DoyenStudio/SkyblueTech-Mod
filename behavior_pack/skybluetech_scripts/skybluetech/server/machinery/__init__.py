@@ -42,6 +42,7 @@ from .reacting_thermal_generator import ReactingThermalGenerator
 from .redstoneflux_brake import RedstonefluxBrake
 from .redstone_furnace import RedstoneFurnace
 from .redstone_generator import RedstoneGenerator
+from .resin_collector_outputer import ResinCollectorOutputer
 from .rf_repeater_plant import RFRepeaterPlant
 from .splitter import Splitter
 from .solar_panel import SolarPanel

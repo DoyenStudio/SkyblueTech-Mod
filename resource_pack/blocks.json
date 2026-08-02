@@ -841,6 +841,9 @@
     "skybluetech:resin_collector": {
         "sound": "wood"
     },
+    "skybluetech:resin_collector_outputer": {
+        "sound": "wood"
+    },
     "skybluetech:rf_repeater_plant": {
         "client_entity": {},
         "sound": "iron"

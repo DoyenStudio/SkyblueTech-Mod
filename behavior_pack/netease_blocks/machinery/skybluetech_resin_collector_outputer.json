@@ -7,6 +7,7 @@
             },
             "minecraft:geometry": {
                 "bone_visibility": {
+                    "cable": "q.block_state('skybluetech:down_cable_connection')",
                     "resin_level_1": "q.block_state('skybluetech:resin_storage') == 1",
                     "resin_level_2": "q.block_state('skybluetech:resin_storage') == 2",
                     "resin_level_3": "q.block_state('skybluetech:resin_storage') == 3",
@@ -14,7 +15,7 @@
                     "resin_level_5": "q.block_state('skybluetech:resin_storage') == 5",
                     "resin_level_6": "q.block_state('skybluetech:resin_storage') == 6"
                 },
-                "identifier": "geometry.skybluetech.resin_collector"
+                "identifier": "geometry.skybluetech.resin_collector_outputer"
             },
             "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
@@ -49,9 +50,20 @@
                     ]
                 }
             },
+            "netease:block_container": {
+                "container_size": 1,
+                "screen_name": "",
+                "hopper": {
+                    "input": false,
+                    "output": true,
+                    "output_slot": [
+                        0
+                    ]
+                }
+            },
             "netease:block_entity": {},
             "netease:custom_tips": {
-                "value": "\n§7置于橡树侧面离地 1 格高的树干侧收集橡胶。\n使用§f树脂采集勺§7取出树脂。"
+                "value": "\n§7置于§f树脂采集斗§7的侧面。"
             },
             "netease:fuel": {
                 "duration": 8
@@ -62,20 +74,27 @@
             "netease:neighborchanged_sendto_script": {
                 "value": true
             },
-            "netease:random_tick": {
-                "enable": true,
-                "tick_to_script": true
-            },
             "netease:tier": {
                 "destroy_special": true,
                 "digger": "hatchet",
                 "level": 0
-            }
+            },
+            "netease:random_tick": {
+                "enable": true,
+                "tick_to_script": true
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_machine": {}
         },
         "description": {
-            "category": "skybluetech",
-            "identifier": "skybluetech:resin_collector",
+            "category": "none",
+            "identifier": "skybluetech:resin_collector_outputer",
             "states": {
+                "skybluetech:down_cable_connection": [
+                    false,
+                    true
+                ],
                 "skybluetech:resin_storage": [
                     0,
                     1,
@@ -84,54 +103,17 @@
                     4,
                     5,
                     6
-                ],
-                "skybluetech:is_connect_outputer": [
-                    false,
-                    true
                 ]
             },
             "traits": {
                 "minecraft:placement_direction": {
                     "enabled_states": [
                         "minecraft:cardinal_direction"
-                    ],
-                    "y_rotation_offset": 180.0
+                    ]
                 }
             }
         },
         "permutations": [
-            {
-                "components": {
-                    "minecraft:geometry": {
-                        "bone_visibility": {
-                            "resin_level_1": "q.block_state('skybluetech:resin_storage') == 1",
-                            "resin_level_2": "q.block_state('skybluetech:resin_storage') == 2",
-                            "resin_level_3": "q.block_state('skybluetech:resin_storage') == 3",
-                            "resin_level_4": "q.block_state('skybluetech:resin_storage') == 4",
-                            "resin_level_5": "q.block_state('skybluetech:resin_storage') == 5",
-                            "resin_level_6": "q.block_state('skybluetech:resin_storage') == 6"
-                        },
-                        "identifier": "geometry.skybluetech.resin_collector_output"
-                    }
-                },
-                "condition": "q.block_state('skybluetech:is_connect_outputer')"
-            },
-            {
-                "components": {
-                    "minecraft:geometry": {
-                        "bone_visibility": {
-                            "resin_level_1": "q.block_state('skybluetech:resin_storage') == 1",
-                            "resin_level_2": "q.block_state('skybluetech:resin_storage') == 2",
-                            "resin_level_3": "q.block_state('skybluetech:resin_storage') == 3",
-                            "resin_level_4": "q.block_state('skybluetech:resin_storage') == 4",
-                            "resin_level_5": "q.block_state('skybluetech:resin_storage') == 5",
-                            "resin_level_6": "q.block_state('skybluetech:resin_storage') == 6"
-                        },
-                        "identifier": "geometry.skybluetech.resin_collector"
-                    }
-                },
-                "condition": "!q.block_state('skybluetech:is_connect_outputer')"
-            },
             {
                 "components": {
                     "minecraft:transformation": {

@@ -49,6 +49,7 @@ class Machinery(SimpleEnum):
     REDSTONE_GENERATOR = "skybluetech:redstone_generator"
     REDSTONEFLUX_BRAKE = "skybluetech:redstoneflux_brake"
     REPAIRING_ANVIL = "skybluetech:repairing_anvil"
+    RESIN_COLLECTOR_OUTPUTER = "skybluetech:resin_collector_outputer"
     RF_REPEATER_PLANT = "skybluetech:rf_repeater_plant"
     SOLAR_PANEL = "skybluetech:solar_panel"
     SPLITTER = "skybluetech:splitter"

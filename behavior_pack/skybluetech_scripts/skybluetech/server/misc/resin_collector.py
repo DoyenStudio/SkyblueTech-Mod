@@ -4,6 +4,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockStates,
+    GetBlockStatesFromAuxValue,
     GetBlockName,
     UpdateBlockStates,
     SpawnItemToPlayerCarried,
@@ -18,7 +19,7 @@ from skybluetech_scripts.tooldelta.events.server import (
 )
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
-from ...common.define.id_enum.blocks import RESIN_COLLECTOR
+from ...common.define.id_enum import RESIN_COLLECTOR, Machinery
 from ...common.define.id_enum.items import RESIN, RESIN_SPOON
 from ...common.define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
 
@@ -106,9 +107,11 @@ def onItemUseOnEvent(event):
 @BlockNeighborChangedServerEvent.Listen()
 def onNeighborChanged(event):
     # type: (BlockNeighborChangedServerEvent) -> None
+    if event.blockName != RESIN_COLLECTOR:
+        return
     if (
-        event.blockName == RESIN_COLLECTOR
-        and event.fromBlockName == "minecraft:oak_log"
+        event.fromBlockName == "minecraft:oak_log"
+        and event.toBlockName != "minecraft:oak_log"
     ):
         blockstates = GetBlockStates(
             event.dimensionId, (event.posX, event.posY, event.posZ)
@@ -132,6 +135,44 @@ def onNeighborChanged(event):
             (event.posX + 0.5, event.posY + 0.5, event.posZ + 0.5),
             Item(RESIN, count=resin_drop),
         )
+    elif event.fromBlockName == Machinery.RESIN_COLLECTOR_OUTPUTER:
+        # 连接此树脂采集斗的树脂输出器被挖掉等
+        if (
+            event.toBlockName == Machinery.RESIN_COLLECTOR_OUTPUTER
+            and event.toAuxValue == event.fromBlockAuxValue
+        ):
+            return
+        disconnect = False
+        if event.toBlockName == Machinery.RESIN_COLLECTOR_OUTPUTER:
+            prev_facing = FACING_EN2NUM[
+                GetBlockStatesFromAuxValue(
+                    Machinery.RESIN_COLLECTOR_OUTPUTER, event.fromBlockAuxValue
+                )["minecraft:cardinal_direction"]
+            ]
+            current_facing = FACING_EN2NUM[
+                GetBlockStatesFromAuxValue(
+                    Machinery.RESIN_COLLECTOR_OUTPUTER, event.toAuxValue
+                )["minecraft:cardinal_direction"]
+            ]
+            dx, dz = FACING_DXZ[prev_facing - 2]
+            dx2, dz2 = FACING_DXZ[current_facing - 2]
+            # 原连接到此树脂采集斗的树脂输出器被诸如机械动力扳手这样的东西调整方向
+            disconnect = (
+                event.neighborPosX + dx == event.posX
+                and event.neighborPosZ + dz == event.posZ
+            ) and (
+                event.neighborPosX + dx2 != event.posX
+                or event.neighborPosZ + dz2 != event.posZ
+            )
+        else:
+            disconnect = True
+
+        if disconnect:
+            UpdateBlockStates(
+                event.dimensionId,
+                (event.posX, event.posY, event.posZ),
+                {"skybluetech:is_connect_outputer": False},
+            )
 
 
 def log_is_in_tree(dim, x, y, z):

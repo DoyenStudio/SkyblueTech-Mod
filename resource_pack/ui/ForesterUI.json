@@ -55,6 +55,16 @@
                             "bg@common.dialog_background_opaque": {
                                 "controls": [
                                     {
+                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
+                                            "$slot0": 24,
+                                            "$slot1": 25,
+                                            "$slot2": 26,
+                                            "$slot3": 27,
+                                            "anchor_from": "top_right",
+                                            "anchor_to": "top_left"
+                                        }
+                                    },
+                                    {
                                         "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
                                     },
                                     {

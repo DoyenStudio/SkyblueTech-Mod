@@ -9,21 +9,23 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 MACHINE_ID = Machinery.FORESTER
 from ...common.machinery_def.forester import getSaplingId, isLog, isLeave, STORE_RF_MAX
 from .basic import (
     BaseSpeedControl,
-    ItemContainer,
     GUIControl,
-    SPControl,
     RegisterMachine,
+    UpgradeControl,
 )
 
-DX = 2
-DY = 15
-DZ = 2
+DX = 8
+DY = 32
+DZ = 8
 Y_OFFSET = 2
+DX_EXPANDED = 20
+DY_EXPANDED = 128
+SEED_RADIUS = 2
 
 ALL_NEIGHBOUR_BLOCKS_ENUM = [
     (dx, dy, dz)
@@ -35,13 +37,18 @@ ALL_NEIGHBOUR_BLOCKS_ENUM = [
 
 
 @RegisterMachine
-class Forester(GUIControl, ItemContainer, SPControl):
+class Forester(GUIControl, UpgradeControl):
     block_name = MACHINE_ID
     store_rf_max = STORE_RF_MAX
     running_power = 80
     origin_process_ticks = 20 * 5
     input_slots = ()
     output_slots = tuple(range(24))
+    upgrade_slot_start = 24
+    upgrade_slots = 4
+    allow_upgrader_tags = {
+        "skybluetech:upgraders/expansion",
+    }
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -55,7 +62,21 @@ class Forester(GUIControl, ItemContainer, SPControl):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        if self.InUpgradeSlot(slot):
+            return UpgradeControl.IsValidInput(self, slot, item)
         return True
+
+    def _scan_dx(self):
+        # type: () -> int
+        if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
+            return DX_EXPANDED
+        return DX
+
+    def _scan_dy(self):
+        # type: () -> int
+        if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
+            return DY_EXPANDED
+        return DY
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -65,9 +86,17 @@ class Forester(GUIControl, ItemContainer, SPControl):
         ok = self.collect_tree()
         if not ok:
             return False
+        dx = self._scan_dx()
         item_uqids = GetEntitiesBySelector(
             "@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
-            % (self.x - DX, self.y + Y_OFFSET, self.z - DZ, DX * 2 + 1, DY, DZ * 2 + 1)
+            % (
+                self.x - dx,
+                self.y + Y_OFFSET,
+                self.z - dx,
+                dx * 2 + 1,
+                self._scan_dy(),
+                dx * 2 + 1,
+            )
         )
         items = [GetDroppedItem(item_uqid, True) for item_uqid in item_uqids]
         for item_uqid in item_uqids:
@@ -82,7 +111,13 @@ class Forester(GUIControl, ItemContainer, SPControl):
 
     def collect_tree(self):
         main_log_block, logs, leaves = forester_bfs(
-            self.dim, self.x, self.y + Y_OFFSET, self.z, DX, DY, DZ
+            self.dim,
+            self.x,
+            self.y + Y_OFFSET,
+            self.z,
+            self._scan_dx(),
+            self._scan_dy(),
+            self._scan_dx(),
         )
         sapling_id = getSaplingId(main_log_block)
         if len(logs) + len(leaves) < 10:
@@ -112,7 +147,9 @@ def forester_bfs(dim, _x, _y, _z, rx, ry, rz):
     found_logs = set()  # type: set[tuple[int, int, int]]
     found_leaves = set()  # type: set[tuple[int, int, int]]
     remainings = deque(
-        (_x + i, _y + 1, _z + j) for i in range(-rx, rx + 1) for j in range(-rz, rz + 1)
+        (_x + i, _y + 1, _z + j)
+        for i in range(-SEED_RADIUS, SEED_RADIUS + 1)
+        for j in range(-SEED_RADIUS, SEED_RADIUS + 1)
     )
     main_log_block = ""
     while len(remainings) > 0:

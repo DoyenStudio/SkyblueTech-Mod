@@ -34,6 +34,7 @@ from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_ch
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.multi_block_structure import (
     K_DESTROY_FLAG,
     K_STRUCTURE_LACKED_BLOCKS,
+    K_STRUCTURE_LACKED_BLOCK_POSES,
 )
 from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
     StructureBlockPalette,
@@ -52,6 +53,8 @@ if 0:
 DEBUG = False
 
 FLAG_OK = 0
+MAX_STRUCTURE_MISMATCH_POSES = 5
+"最多写入方块实体数据的结构不匹配位置数量, 避免 UI 溢出."
 STRUCTURE_DEACTIVE_FLAGS = (
     DEACTIVE_FLAG_STRUCTURE_BROKEN | DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
 )
@@ -185,6 +188,7 @@ class DetectArea(object):
 
     def detect(self):
         if self.chunks_not_loaded:
+            self.bound.lacked_block_poses = []
             return DEACTIVE_FLAG_STRUCTURE_BROKEN
         else:
             return self._detect_structure()
@@ -229,6 +233,7 @@ class DetectArea(object):
         )
         if current_palette is None:
             logger.error("[Error] Palette is None")
+            self.bound.lacked_block_poses = []
             return DEACTIVE_FLAG_STRUCTURE_BROKEN
         co_x = self.center_x - self.min_x
         co_y = self.center_y - self.min_y
@@ -256,7 +261,36 @@ class DetectArea(object):
             else:
                 self.bound.lacked_blocks = lacked_blocks
                 return DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
+        self.bound.lacked_block_poses = self._find_mismatch_poses(
+            spalette, current_palette, co_x, co_y, co_z
+        )
         return DEACTIVE_FLAG_STRUCTURE_BROKEN
+
+    def _find_mismatch_poses(self, spalette, current_palette, co_x, co_y, co_z):
+        # type: (typing.Any, typing.Any, int, int, int) -> list[dict]
+        """结构不完整时, 找出期望方块与当前方块不匹配的具体位置."""
+        res = []
+        for index, block_ids in sorted(spalette.palette_data.items()):
+            if isinstance(block_ids, str):
+                block_ids = [block_ids]
+            actua_pos_set = set(
+                (x - co_x, y - co_y, z - co_z)
+                for block_id in block_ids
+                for x, y, z in current_palette.GetLocalPosListOfBlocks(block_id)
+            )
+            expected_pos_set = spalette.posblock_data[index]
+            for x, y, z in sorted(expected_pos_set - actua_pos_set):
+                wx, wy, wz = x + self.center_x, y + self.center_y, z + self.center_z
+                res.append({
+                    "x": wx,
+                    "y": wy,
+                    "z": wz,
+                    "expected": block_ids,
+                    "actual": GetBlockName(self.dim, (wx, wy, wz)) or "",
+                })
+                if len(res) >= MAX_STRUCTURE_MISMATCH_POSES:
+                    return res
+        return res
 
     @property
     def bound(self):
@@ -312,6 +346,7 @@ class MultiBlockStructure(BaseMachine):
             raise ValueError("StructureBlockPalette: structure_palette is None")
         self._last_destroy_flag = DEACTIVE_FLAG_STRUCTURE_BROKEN
         self._lacked_blocks = {}  # type: dict[str, int]
+        self._lacked_block_poses = []  # type: list[dict[str, object]]
         self._palette = self.structure_palette
         self.dim = dim
         self.x = x
@@ -350,6 +385,7 @@ class MultiBlockStructure(BaseMachine):
                 self.OnDeactiveFlagsChanged()
             self.last_destroy_flag = FLAG_OK
             self.lacked_blocks = {}
+            self.lacked_block_poses = []
             self.FlushDeactiveFlags()
             self.OnStructureChanged(True)
             if isinstance(self, GUIControl):
@@ -360,6 +396,10 @@ class MultiBlockStructure(BaseMachine):
 
     def GetStructureLackedBlocks(self):
         return self.lacked_blocks
+
+    def GetStructureLackedBlockPoses(self):
+        "返回缺失方块的具体位置列表, 每条为 (x, y, z, 期望方块, 实际方块) 组成的 dict."
+        return self.lacked_block_poses
 
     def GetFunctionalBlockPoses(self):
         "返回功能性方块对于多方块结构核心位置的相对坐标。"
@@ -458,6 +498,17 @@ class MultiBlockStructure(BaseMachine):
         # type: (dict[str, int]) -> None
         value = value or {}
         self.bdata[K_STRUCTURE_LACKED_BLOCKS] = self._lacked_blocks = value
+
+    @property
+    def lacked_block_poses(self):
+        # type: () -> list[dict[str, object]]
+        return self._lacked_block_poses
+
+    @lacked_block_poses.setter
+    def lacked_block_poses(self, value):
+        # type: (list[dict[str, object]]) -> None
+        value = value or []
+        self.bdata[K_STRUCTURE_LACKED_BLOCK_POSES] = self._lacked_block_poses = value
 
 
 def get_chunks_in_range(startx, startz, endx, endz):

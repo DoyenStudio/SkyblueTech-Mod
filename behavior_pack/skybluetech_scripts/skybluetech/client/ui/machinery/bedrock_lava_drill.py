@@ -10,6 +10,7 @@ from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_ch
     MultiBlockStructureCheckRequest,
 )
 from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_STRUCTURE_BROKEN,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
@@ -25,7 +26,13 @@ from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill imp
     K_MAX_FLUID_VOLUME,
 )
 from .define import MachinePanelUIProxy, MAIN_PATH
-from .utils import UpdatePowerBar, FluidDisplayer, GetStructureLackedBlocks
+from .utils import (
+    UpdatePowerBar,
+    FluidDisplayer,
+    GetStructureLackedBlocks,
+    GetStructureLackedBlockPoses,
+    FormatStructureLackedBlockPoses,
+)
 
 POWER_PATH = MAIN_PATH / "power_bar"
 FLUID_PATH = MAIN_PATH / "fluid_display"
@@ -58,6 +65,7 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
         )
         self.last_destroy_flag = None
         self.last_structure_lacked_blocks = None
+        self.last_structure_lacked_poses = None
 
     def OnTicking(self):
         data = GetBlockEntityData(*self.pos[1:])
@@ -72,6 +80,7 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
         lava_storage_left = GetValue(data, K_VOLUME_LEFT_PERCENT, 0.0)
         destroy_flag = GetValue(data, K_DESTROY_FLAG, 0)
         structure_lacked_blocks = GetStructureLackedBlocks(data)
+        structure_lacked_poses = GetStructureLackedBlockPoses(data)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
         self.fluid_displayer.update(fluid_id, fluid_volume, max_volume)
         self.drill_progress.SetFullSize("x", UICtrlPosData("parent", drill_progress))
@@ -79,11 +88,20 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
         if (
             destroy_flag != self.last_destroy_flag
             or structure_lacked_blocks != self.last_structure_lacked_blocks
+            or structure_lacked_poses != self.last_structure_lacked_poses
         ):
             self.structure_not_finished_tip.SetVisible(destroy_flag != 0)
             self.last_destroy_flag = destroy_flag
             self.last_structure_lacked_blocks = dict(structure_lacked_blocks)
+            self.last_structure_lacked_poses = structure_lacked_poses
             if (
+                destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN
+                and structure_lacked_poses
+            ):
+                self.structure_desc_label.SetText(
+                    FormatStructureLackedBlockPoses(structure_lacked_poses)
+                )
+            elif (
                 destroy_flag == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
                 and structure_lacked_blocks
             ):

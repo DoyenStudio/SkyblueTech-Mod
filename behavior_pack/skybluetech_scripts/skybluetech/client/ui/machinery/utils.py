@@ -15,6 +15,7 @@ from skybluetech_scripts.skybluetech.common.define.fluids.define import (
 from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Gas
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STRUCTURE_LACKED_BLOCKS,
+    K_STRUCTURE_LACKED_BLOCK_POSES,
 )
 
 # TYPE_CHECKING
@@ -116,6 +117,60 @@ def GetStructureLackedBlocks(data):
     if isinstance(lacked_blocks, dict) and lacked_blocks:
         return {str(k): int(v) for k, v in lacked_blocks.items()}
     return {}
+
+
+def GetStructureLackedBlockPoses(data):
+    # type: (dict) -> list[dict]
+    """从方块实体数据中解析缺失方块的具体位置列表."""
+    raw = NBT2Py(data.get(K_STRUCTURE_LACKED_BLOCK_POSES, []))
+    poses = []
+    if not isinstance(raw, list):
+        return poses
+    for item in raw:
+        if not isinstance(item, dict):
+            continue
+        x = item.get("x")
+        y = item.get("y")
+        z = item.get("z")
+        if x is None or y is None or z is None:
+            continue
+        expected = item.get("expected")
+        if isinstance(expected, str):
+            expected = [expected]
+        if not isinstance(expected, list):
+            continue
+        actual = item.get("actual")
+        poses.append({
+            "x": int(x),
+            "y": int(y),
+            "z": int(z),
+            "expected": [str(v) for v in expected],
+            "actual": str(actual) if actual else "",
+        })
+    return poses
+
+
+def FormatStructureLackedBlockPoses(poses):
+    # type: (list[dict]) -> str
+    """将缺失方块位置列表格式化为 '(x, y, z) 应为xxx, 目前xxx' 的多行文本."""
+    lines = []
+    for pose in poses:
+        expected = " / ".join(
+            (GetItemHoverName(v) or v).replace("§r", "").replace("§f", "")
+            for v in pose["expected"]
+        )
+        actual_id = pose.get("actual") or ""
+        if not actual_id or actual_id == "minecraft:air":
+            actual = "空气"
+        else:
+            actual = (GetItemHoverName(actual_id) or actual_id).replace(
+                "§r", ""
+            ).replace("§f", "")
+        lines.append(
+            "(%d, %d, %d) 应为%s, 当前为%s"
+            % (pose["x"], pose["y"], pose["z"], expected, actual)
+        )
+    return "\n".join(lines)
 
 
 def UpdateImageTransformColor(

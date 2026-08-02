@@ -15,6 +15,7 @@ from skybluetech_scripts.skybluetech.common.events.machinery.fermenter import (
     FermenterSeMaxVolumeEvent,
 )
 from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_STRUCTURE_BROKEN,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
@@ -59,6 +60,8 @@ from .utils import (
     UpdateImageTransformColor,
     FluidDisplayer,
     GetStructureLackedBlocks,
+    GetStructureLackedBlockPoses,
+    FormatStructureLackedBlockPoses,
 )
 
 FLAG_OK = 0
@@ -115,6 +118,7 @@ class FermenterUI(MachinePanelUIProxy):
         expected_water_max_volume = GetValue(data, K_EXPECTED_WATER_MAX_VOLUME, 0.0)
         structure_destroy_flag = GetValue(data, K_DESTROY_FLAG, 0)
         structure_lacked_blocks = GetStructureLackedBlocks(data)
+        structure_lacked_poses = GetStructureLackedBlockPoses(data)
         recipe_id = GetValue(data, K_RECIPE, 0)
         gas_id = GetValue(data, K_OUTPUT_GAS_ID, None)
         gas_volume = GetValue(data, K_OUTPUT_GAS_VOLUME, 0.0)
@@ -177,7 +181,12 @@ class FermenterUI(MachinePanelUIProxy):
             self.pool_tip.SetText("发酵池 （缺少必要模块）")
         else:
             self.pool_tip.SetText("发酵池 （结构不完整）")
-        if structure_lacked_blocks and sstatus == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
+        if sstatus == DEACTIVE_FLAG_STRUCTURE_BROKEN and structure_lacked_poses:
+            fmt = "§l§4结构缺失：\n" + FormatStructureLackedBlockPoses(
+                structure_lacked_poses
+            )
+            self.lack_blocks_tip.SetText(fmt)
+        elif structure_lacked_blocks and sstatus == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
             fmt = "§l§4结构缺失必须组件：\n" + "\n".join(
                 "§9"
                 + GetItemHoverName(k).replace("§r", "").replace("§f", "")

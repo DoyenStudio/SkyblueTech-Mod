@@ -15,6 +15,7 @@ from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_ch
     MultiBlockStructureCheckRequest,
 )
 from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_STRUCTURE_BROKEN,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
 )
 from skybluetech_scripts.skybluetech.common.events.machinery.battery_matrix import (
@@ -35,7 +36,13 @@ from skybluetech_scripts.skybluetech.common.machinery_def.battery_matrix import 
     K_RF_MAX,
 )
 from .define import MachinePanelUIProxy, MAIN_PATH
-from .utils import UpdateGenericProgressL2R, FormatRF, GetStructureLackedBlocks
+from .utils import (
+    UpdateGenericProgressL2R,
+    FormatRF,
+    GetStructureLackedBlocks,
+    GetStructureLackedBlockPoses,
+    FormatStructureLackedBlockPoses,
+)
 
 ENERGY_LABEL_PATH = MAIN_PATH / "battery_icon/energy_label"
 TOTAL_POWER_PATH = MAIN_PATH / "total_power"
@@ -95,6 +102,7 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         self.storage_window.SetVisible(False)
         self.last_destroy_flag = None
         self.last_structure_lacked_blocks = None
+        self.last_structure_lacked_poses = None
         self.battery_slots_data = []  # type: list[tuple[str, int, int]]
 
     def OnTicking(self):
@@ -108,6 +116,7 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         rf_max = GetValue(data, K_RF_MAX, 1.0) or 1.0
         destroy_flag = GetValue(data, K_DESTROY_FLAG, 0)
         structure_lacked_blocks = GetStructureLackedBlocks(data)
+        structure_lacked_poses = GetStructureLackedBlockPoses(data)
         self.input_power_label.SetText("输入 %s/t" % FormatRF(input_power))
         self.output_power_label.SetText("输出 %s/t" % FormatRF(output_power))
         self.energy_label.SetText("{:.1f}%%".format(float(storage_rf * 100) / rf_max))
@@ -116,11 +125,20 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         if (
             destroy_flag != self.last_destroy_flag
             or structure_lacked_blocks != self.last_structure_lacked_blocks
+            or structure_lacked_poses != self.last_structure_lacked_poses
         ):
             self.structure_not_finished_tip.SetVisible(destroy_flag != 0)
             self.last_destroy_flag = destroy_flag
             self.last_structure_lacked_blocks = dict(structure_lacked_blocks)
+            self.last_structure_lacked_poses = structure_lacked_poses
             if (
+                destroy_flag == DEACTIVE_FLAG_STRUCTURE_BROKEN
+                and structure_lacked_poses
+            ):
+                self.structure_desc_label.SetText(
+                    FormatStructureLackedBlockPoses(structure_lacked_poses)
+                )
+            elif (
                 destroy_flag == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
                 and structure_lacked_blocks
             ):

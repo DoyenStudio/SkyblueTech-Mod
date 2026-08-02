@@ -14,6 +14,18 @@ from ..basic import BaseMachine
 class TransmitterConn(object):
     def __init__(self, cable=False, pipe=False, wire=False):
         # type: (bool, bool, bool) -> None
+        """
+        为传输管道渲染提供的便捷类。
+
+        Args:
+            cable: 是否渲染物品管道连接
+            pipe: 是否渲染管道连接
+            wire: 是否渲染电缆连接
+
+        Methods:
+            block_placed: 当机器放置时调用, 渲染连接
+            neighbor_block_changed: 当相邻块改变时调用, 更新连接
+        """
         self.cable = cable
         self.pipe = pipe
         self.wire = wire
@@ -42,7 +54,7 @@ class TransmitterConn(object):
         dy = event.neighborPosY - machine.y
         dz = event.neighborPosZ - machine.z
         facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-        if facing_en not in {"south", "north", "east", "west"}:
+        if facing_en not in {"south", "north", "east", "west", "up", "down"}:
             return
         states = {}
         if self.cable:

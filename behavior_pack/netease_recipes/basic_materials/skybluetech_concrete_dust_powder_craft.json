@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:concrete_dust_light_gray_powder_craft"
+        },
+        "key": {
+            "A": {
+                "item": "skybluetech:concrete_dust"
+            }
+        },
+        "pattern": [
+            "AA",
+            "AA"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "minecraft:light_gray_concrete_powder"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

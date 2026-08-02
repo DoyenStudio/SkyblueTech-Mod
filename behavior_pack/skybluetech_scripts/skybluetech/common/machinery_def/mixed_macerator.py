@@ -17,7 +17,7 @@ recipes = RecipesCollection(
             0: Input("minecraft:cobblestone"),
             1: Input("minecraft:sand"),
         },
-        Output("minecraft:gravel"),
+        Output("minecraft:gravel", 2),
         40,
         240,
     ),

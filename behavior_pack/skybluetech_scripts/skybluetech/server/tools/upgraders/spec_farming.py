@@ -7,9 +7,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SpawnItemToPlayerCarried,
 )
 from skybluetech_scripts.skybluetech.common.define.id_enum import ObjectUpgraders
-from skybluetech_scripts.skybluetech.common.machinery_def.farming_station import (
-    isRipedCrop,
-)
+from ...machinery.farming_station import isRipedCrop
 from ...machinery.utils.charge import GetCharge, UpdateCharge
 from .register import RegisterItemUseOnCallback
 from .utils import GetUpgraderLevel

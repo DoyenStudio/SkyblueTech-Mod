@@ -15,11 +15,15 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from ...common.define.id_enum.machinery import Machinery
 MACHINE_ID = Machinery.FARMING_STATION
 from ...common.machinery_def.farming_station import (
-    isRipedCrop,
-    isBlockCrop,
+    COMMON_CROP_MAX_GROWTH,
+    FRUITLESS_CROPS,
     STORE_RF_MAX,
+    isArrisCrop,
+    isArrisCropRiped,
+    isBlockCrop,
+    isCommonCrop,
 )
-from .basic import BaseMachine, ItemContainer, GUIControl, SPControl, RegisterMachine
+from .basic import ItemContainer, GUIControl, SPControl, RegisterMachine
 
 DX = 2
 DZ = 2
@@ -81,10 +85,10 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
                 if bstates is None:
                     continue
                 if isRipedCrop(bname, bstates):
-                    breakAndResetBlock(dim, (x, _y, z), bname)
+                    _breakAndResetBlock(dim, (x, _y, z), bname)
                     reduce_power = True
                 elif isBlockCrop(bname):
-                    breakBlock(dim, (x, _y, z))
+                    _breakBlock(dim, (x, _y, z))
                     reduce_power = True
                 if reduce_power:
                     collected = True
@@ -105,11 +109,25 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
         pass
 
 
-def breakBlock(dim, xyz):
+def isRipedCrop(block_name, block_states):
+    # type: (str, dict) -> bool
+    if block_name in FRUITLESS_CROPS:
+        return False
+    if isCommonCrop(block_states):
+        max_growth = COMMON_CROP_MAX_GROWTH.get(block_name, 7)
+        return block_states.get("growth") == max_growth
+    elif isArrisCrop(block_states):
+        return isArrisCropRiped(block_states)
+    else:
+        return False
+
+
+def _breakBlock(dim, xyz):
     # type: (int, tuple[int, int, int]) -> None
     SetBlock(dim, xyz, "minecraft:air", old_block_handing=1)
 
 
-def breakAndResetBlock(dim, xyz, block_name):
+def _breakAndResetBlock(dim, xyz, block_name):
     # type: (int, tuple[int, int, int], str) -> None
     SetBlock(dim, xyz, block_name, old_block_handing=1)
+

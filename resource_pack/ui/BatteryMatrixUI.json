@@ -117,11 +117,11 @@
                                                         "anchor_from": "left_middle",
                                                         "anchor_to": "left_middle",
                                                         "offset": [
-                                                            11.0,
+                                                            8.0,
                                                             8.0
                                                         ],
                                                         "size": [
-                                                            90.0,
+                                                            100.0,
                                                             "default"
                                                         ],
                                                         "color": [
@@ -807,7 +807,8 @@
                                                         "offset": [
                                                             0,
                                                             -8
-                                                        ]
+                                                        ],
+                                                        "visible": false
                                                     }
                                                 }
                                             ]

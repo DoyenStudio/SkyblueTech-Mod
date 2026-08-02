@@ -113,14 +113,17 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         input_power = GetValue(data, K_INPUT_POWER, 0)
         output_power = GetValue(data, K_OUTPUT_POWER, 0)
         storage_rf = GetValue(data, K_STORE_RF, 0.0)
-        rf_max = GetValue(data, K_RF_MAX, 1.0) or 1.0
+        rf_max = GetValue(data, K_RF_MAX, 1) or 1
         destroy_flag = GetValue(data, K_DESTROY_FLAG, 0)
         structure_lacked_blocks = GetStructureLackedBlocks(data)
         structure_lacked_poses = GetStructureLackedBlockPoses(data)
         self.input_power_label.SetText("输入 %s/t" % FormatRF(input_power))
         self.output_power_label.SetText("输出 %s/t" % FormatRF(output_power))
         self.energy_label.SetText("{:.1f}%%".format(float(storage_rf * 100) / rf_max))
-        self.total_power.SetText("%s / %s" % (FormatRF(storage_rf), FormatRF(rf_max)))
+        if rf_max != 1.0:
+            self.total_power.SetText("%s / %s" % (FormatRF(storage_rf), FormatRF(rf_max)))
+        else:
+            self.total_power.SetText("请打开仓储界面放入电池")
         UpdateGenericProgressL2R(self.battery_icon, float(storage_rf) / rf_max)
         if (
             destroy_flag != self.last_destroy_flag

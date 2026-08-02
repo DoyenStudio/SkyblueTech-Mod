@@ -410,3 +410,4 @@ item.skybluetech:soldering_ingot.name=焊锡锭
 item.skybluetech:raw_uranium.name=粗铀
 tile.skybluetech:uranium_ore.name=铀矿石
 tile.skybluetech:deepslate_uranium_ore.name=深层铀矿石
+tile.skybluetech:transmit_belt.name=传送带

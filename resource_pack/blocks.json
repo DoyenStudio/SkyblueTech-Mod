@@ -930,6 +930,10 @@
     "skybluetech:titanium_ore": {
         "textures": "skybluetech:titanium_ore"
     },
+    "skybluetech:transmit_belt": {
+        "client_entity": {},
+        "textures": "skybluetech:transmit_belt"
+    },
     "skybluetech:ultraheatinum_block": {
         "sound": "copper",
         "textures": "skybluetech:ultraheatinum_block"

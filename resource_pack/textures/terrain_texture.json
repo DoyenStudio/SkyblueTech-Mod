@@ -488,6 +488,9 @@
         "skybluetech:titanium_ore": {
             "textures": "textures/blocks/ore/titanium_ore"
         },
+        "skybluetech:transmit_belt_texture": {
+            "textures": "textures/models/transmit_belt/transmit_belt_texture"
+        },
         "skybluetech:ultraheatinum_block": {
             "textures": "textures/blocks/ingot_block/ultraheatinum_block"
         },

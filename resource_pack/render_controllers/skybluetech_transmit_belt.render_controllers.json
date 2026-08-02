@@ -1,0 +1,68 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.skybluetech.transmit_belt": {
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                },
+                {
+                    "straight_belt": "Material.straight_belt"
+                },
+                {
+                    "corner_left_belt": "Material.straight_belt"
+                },
+                {
+                    "corner_right_belt": "Material.straight_belt"
+                },
+                {
+                    "corner_left_belt_smaller": "Material.straight_belt"
+                },
+                {
+                    "corner_right_belt_smaller": "Material.straight_belt"
+                }
+            ],
+            "textures": [
+                "Texture.default"
+            ],
+            "uv_anim": {
+                "offset": [
+                    0.625,
+                    "math.mod((query.mod.skybluetech_time_offset+query.life_time)*0.5, 0.5)"
+                ],
+                "scale": [
+                    1,
+                    1
+                ]
+            },
+            "part_visibility": [
+                {
+                    "straight": "query.mod.skybluetech_transmit_belt_state==0"
+                },
+                {
+                    "straight_belt": "query.mod.skybluetech_transmit_belt_state==0"
+                },
+                {
+                    "corner_left": "query.mod.skybluetech_transmit_belt_state==1"
+                },
+                {
+                    "corner_left_belt": "query.mod.skybluetech_transmit_belt_state==1"
+                },
+                {
+                    "corner_left_belt_smaller": "query.mod.skybluetech_transmit_belt_state==1"
+                },
+                {
+                    "corner_right": "query.mod.skybluetech_transmit_belt_state==2"
+                },
+                {
+                    "corner_right_belt": "query.mod.skybluetech_transmit_belt_state==2"
+                },
+                {
+                    "corner_right_belt_smaller": "query.mod.skybluetech_transmit_belt_state==2"
+                }
+            ],
+            "ignore_lighting": true
+        }
+    }
+}

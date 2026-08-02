@@ -60,3 +60,5 @@ class Machinery(SimpleEnum):
     WIND_GENERATOR = "skybluetech:wind_generator"
     WIRELESS_RF_TRANSPORTER = "skybluetech:wireless_rf_transporter"
 
+class TransmitBelt(SimpleEnum):
+    BELT = "skybluetech:transmit_belt"

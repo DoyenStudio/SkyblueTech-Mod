@@ -1,25 +1,15 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.api.client import (
     RegisterQueryMolang,
     SetQueryMolang,
 )
-
-registered_molangs = {}  # type: dict[str, float]
-
-
-@ClientInitCallback()
-def onClientInit():
-    # type: () -> None
-    for molang_name, default_value in registered_molangs.items():
-        RegisterQueryMolang(molang_name, default_value)
 
 
 class ClientMolang:
     def __init__(self, name, default_value=0.0):
         # type: (str, float) -> None
         self.name = name
-        registered_molangs[name] = default_value
+        RegisterQueryMolang(name, default_value)
 
     def set_to_entity(self, entity_id, value):
         # type: (str, float) -> bool
@@ -35,3 +25,7 @@ WIRE_CONNECT_EAST = ClientMolang("query.mod.skybluetech_wire_connect_east")
 WIRE_CONNECT_WEST = ClientMolang("query.mod.skybluetech_wire_connect_west")
 WIRE_CONNECT_NORTH = ClientMolang("query.mod.skybluetech_wire_connect_north")
 WIRE_CONNECT_SOUTH = ClientMolang("query.mod.skybluetech_wire_connect_south")
+
+TRANSMIT_BELT_STATE = ClientMolang("query.mod.skybluetech_transmit_belt_state")
+TRANSMIT_BELT_FACING = ClientMolang("query.mod.transmit_belt_facing") # enum: 0=north 1=east 2=south 3=west
+TIME_OFFSET = ClientMolang("query.mod.skybluetech_time_offset")

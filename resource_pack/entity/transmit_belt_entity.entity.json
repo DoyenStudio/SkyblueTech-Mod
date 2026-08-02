@@ -1,0 +1,27 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:transmit_belt_entity",
+            "geometry": {
+                "default": "geometry.skybluetech.transmit_belt"
+            },
+            "textures": {
+                "default": "textures/models/transmit_belt/transmit_belt_texture"
+            },
+            "materials": {
+                "default": "entity",
+                "straight_belt": "skybluetech_transmit_belt"
+            },
+            "scripts": {
+                "initialize": [
+                    "variable.working=false;",
+                    "variable.skybluetech_transmit_belt_state=0;"
+                ]
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.transmit_belt"
+            ]
+        }
+    }
+}

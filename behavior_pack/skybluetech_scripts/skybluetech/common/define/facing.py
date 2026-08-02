@@ -29,6 +29,20 @@ DXYZ_FACING = {
     (1, 0, 0): 5,
     (-1, 0, 0): 4,
 }
+CARDINAL_DIRECTION_TO_DXZ = {
+    "north": (0, -1),
+    "south": (0, 1),
+    "east": (1, 0),
+    "west": (-1, 0),
+}
+FACING_DIRECTION_TO_DXYZ = {
+    "north": (0, 0, -1),
+    "south": (0, 0, 1),
+    "east": (1, 0, 0),
+    "west": (-1, 0, 0),
+    "up": (0, 1, 0),
+    "down": (0, -1, 0),
+}
 
 _XZ_FACINGS = (4, 2, 5, 3)
 

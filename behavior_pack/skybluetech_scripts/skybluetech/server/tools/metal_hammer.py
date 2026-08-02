@@ -45,7 +45,7 @@ def onStartDestroyBlock(event):
         item.count -= 1
         mhitem.durability -= 1
         # todo: 添加粒子特效
-        SetCommand("playsound random.anvil_land @a", entity_id)
+        SetCommand("playsound random.anvil_land @a[r=25]", entity_id)
         DestroyEntity(entity_id)
         if item.count > 0:
             dp_entity_id = SpawnDroppedItem(event.dimensionId, pos, item)

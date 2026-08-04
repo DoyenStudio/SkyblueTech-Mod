@@ -35,9 +35,6 @@
             "netease:pathable": {
                 "value": true
             },
-            "netease:solid": {
-                "value": true
-            },
             "netease:block_container": {
                 "container_size": 2,
                 "custom_description": "泵",

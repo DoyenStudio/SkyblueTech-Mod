@@ -20,6 +20,22 @@
             }
         },
         "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.empty"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:digger"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.digger_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:digger"
+                    }
+                }
+            },
             "minecraft:destructible_by_mining": {
                 "seconds_to_destroy": 3.0
             },
@@ -39,9 +55,6 @@
                 "value": true
             },
             "netease:neighborchanged_sendto_script": {
-                "value": true
-            },
-            "netease:solid": {
                 "value": true
             },
             "netease:block_container": {

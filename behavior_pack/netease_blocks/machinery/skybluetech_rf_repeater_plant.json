@@ -68,9 +68,6 @@
             "netease:neighborchanged_sendto_script": {
                 "value": true
             },
-            "netease:solid": {
-                "value": false
-            },
             "netease:tier": {
                 "destroy_special": true,
                 "digger": "pickaxe",

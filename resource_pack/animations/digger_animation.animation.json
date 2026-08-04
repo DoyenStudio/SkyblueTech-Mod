@@ -6,12 +6,21 @@
 		},
 		"animation.skybluetech.digger.rot": {
 			"loop": true,
-			"animation_length": 0.9,
+			"animation_length": 1,
+			"anim_time_update": "variable.rot_speed=variable.working?query.delta_time:0;variable.anim_rot_speed=variable.anim_rot_speed+(variable.rot_speed-variable.anim_rot_speed)*0.1;return query.anim_time+variable.anim_rot_speed;",
 			"bones": {
 				"digger": {
 					"rotation": {
-						"0.0": [0, 0, 0],
-						"0.9": [0, "variable.working?360:0", 0]
+						"0.0": [
+							0,
+							0,
+							0
+						],
+						"1": [
+							0,
+							360,
+							0
+						]
 					}
 				}
 			}
@@ -20,7 +29,11 @@
 			"loop": true,
 			"bones": {
 				"root": {
-					"rotation": ["variable.rotation_x", 0, "variable.rotation_z"]
+					"rotation": [
+						"variable.rotation_x",
+						0,
+						"variable.rotation_z"
+					]
 				}
 			}
 		}

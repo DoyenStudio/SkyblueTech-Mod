@@ -3,7 +3,7 @@
     "minecraft:block": {
         "components": {
             "minecraft:geometry": {
-                "identifier": "geometry.skybluetech.empty"
+                "identifier": "geometry.empty"
             },
             "minecraft:material_instances": {
                 "*": {
@@ -56,9 +56,6 @@
                         0.625
                     ]
                 }
-            },
-            "netease:solid": {
-                "value": false
             },
             "netease:custom_tips": {
                 "value": "\n§7通过风能吹动扇叶产生能量。\n§b高处风强更大。\n§6扇叶前有方块阻挡会降低风速。"

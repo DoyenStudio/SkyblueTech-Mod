@@ -3,7 +3,7 @@
     "minecraft:block": {
         "components": {
             "minecraft:geometry": {
-                "identifier": "geometry.skybluetech.empty"
+                "identifier": "geometry.empty"
             },
             "minecraft:material_instances": {
                 "*": {
@@ -36,9 +36,6 @@
                 "value": true
             },
             "netease:pathable": {
-                "value": false
-            },
-            "netease:solid": {
                 "value": false
             },
             "netease:tier": {

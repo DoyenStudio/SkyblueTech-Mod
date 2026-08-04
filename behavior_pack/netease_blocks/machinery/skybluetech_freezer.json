@@ -23,9 +23,6 @@
             "netease:listen_block_remove": {
                 "value": true
             },
-            "netease:solid": {
-                "value": true
-            },
             "netease:block_container": {
                 "container_size": 6,
                 "custom_description": "冷冻机",

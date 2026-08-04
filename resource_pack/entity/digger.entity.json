@@ -10,13 +10,14 @@
                 "default": "textures/models/digger_model"
             },
             "materials": {
-                "default": "entity_alphatest"
+                "default": "entity"
             },
             "scripts": {
                 "initialize": [
                     "variable.working=false;",
                     "variable.rotation_x=0;",
-                    "variable.rotation_z=0;"
+                    "variable.rotation_z=0;",
+                    "variable.anim_rot_speed=0;"
                 ],
                 "animate": [
                     "facing",

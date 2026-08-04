@@ -59,9 +59,6 @@
             "netease:pathable": {
                 "value": true
             },
-            "netease:solid": {
-                "value": false
-            },
             "tag:piston_denier": {},
             "tag:skybluetech_pipe": {},
             "netease:aabb": {

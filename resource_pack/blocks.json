@@ -142,8 +142,6 @@
     },
     "skybluetech:digger": {
         "client_entity": {
-            "block_icon": "skybluetech:digger_icon",
-            "hand_model_use_client_entity": true,
             "identifier": "skybluetech:digger"
         },
         "sound": "iron"

@@ -50,9 +50,6 @@
             "netease:pathable": {
                 "value": true
             },
-            "netease:solid": {
-                "value": false
-            },
             "netease:tier": {
                 "digger": "pickaxe"
             },

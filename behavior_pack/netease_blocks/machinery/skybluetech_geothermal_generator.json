@@ -16,7 +16,7 @@
             "minecraft:light_dampening": 0,
             "minecraft:material_instances": {
                 "*": {
-                    "render_method": "opaque",
+                    "render_method": "alpha_test",
                     "texture": "skybluetech:geothermal_generator"
                 }
             },
@@ -30,9 +30,6 @@
                 "value": true
             },
             "netease:pathable": {
-                "value": true
-            },
-            "netease:solid": {
                 "value": true
             },
             "netease:block_container": {

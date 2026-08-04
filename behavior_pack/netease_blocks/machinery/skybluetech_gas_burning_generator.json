@@ -26,6 +26,20 @@
                     "texture": "skybluetech:gas_burning_generator"
                 }
             },
+            "netease:aabb": {
+                "collision": {
+                    "min": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "max": [
+                        1,
+                        1,
+                        1
+                    ]
+                }
+            },
             "netease:block_entity": {
                 "tick": true
             },
@@ -39,9 +53,6 @@
                 "value": true
             },
             "netease:pathable": {
-                "value": true
-            },
-            "netease:solid": {
                 "value": true
             },
             "netease:block_container": {

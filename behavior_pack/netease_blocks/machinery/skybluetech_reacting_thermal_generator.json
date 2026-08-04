@@ -71,9 +71,6 @@
             "netease:pathable": {
                 "value": true
             },
-            "netease:solid": {
-                "value": true
-            },
             "netease:tier": {
                 "destroy_special": true,
                 "digger": "pickaxe",

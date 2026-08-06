@@ -1,0 +1,47 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 1,
+            "netease:customtips": {
+                "value": "\n§7放置于§f机件加工台§7以用于制造机器。\n§3加工等级： §7殷钢\n§c充能已耗尽， 无法使用"
+            },
+            "netease:initial_user_data": {
+                "display": {
+                    "Lore": [
+                        {
+                            "__type__": 8,
+                            "__value__": "§r§e⚡ §b已储能 §a0 / 100000 RF"
+                        }
+                    ]
+                },
+                "lore_pos": {
+                    "charge": {
+                        "__type__": 3,
+                        "__value__": 0
+                    }
+                },
+                "st:cost_rf": {
+                    "__type__": 3,
+                    "__value__": 1000
+                },
+                "max_input_power": {
+                    "__type__": 4,
+                    "__value__": 1000
+                },
+                "store_rf": {
+                    "__type__": 4,
+                    "__value__": 0
+                },
+                "store_rf_max": {
+                    "__type__": 4,
+                    "__value__": 100000
+                }
+            }
+        },
+        "description": {
+            "category": "none",
+            "identifier": "skybluetech:wrench_skyblue_useless"
+        }
+    }
+}

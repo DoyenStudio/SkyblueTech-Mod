@@ -24,8 +24,10 @@
             "list": [
                 "skybluetech:wrench_iron",
                 "skybluetech:wrench_invar",
+                "skybluetech:wrench_skyblue",
                 "skybluetech:pincer_iron",
-                "skybluetech:pincer_invar"
+                "skybluetech:pincer_invar",
+                "skybluetech:pincer_skyblue"
             ]
         }
     ]

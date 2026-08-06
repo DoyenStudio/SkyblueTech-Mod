@@ -117,6 +117,7 @@ class Pincer(SimpleEnum):
     # 新增物品后需在 machinery_workstation 中同步添加
     IRON = "skybluetech:pincer_iron"
     INVAR = "skybluetech:pincer_invar"
+    SKYBLUE = "skybluetech:pincer_skyblue"
 
 
 class Plates(SimpleEnum):
@@ -185,6 +186,7 @@ class Wrench(SimpleEnum):
     # 新增物品后需在 machinery_workstation 中同步添加
     IRON = "skybluetech:wrench_iron"
     INVAR = "skybluetech:wrench_invar"
+    SKYBLUE = "skybluetech:wrench_skyblue"
 
 
 AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"

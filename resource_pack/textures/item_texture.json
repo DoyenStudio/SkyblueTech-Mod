@@ -493,6 +493,18 @@
         "skybluetech:skyblue_sword_useless": {
             "textures": "textures/items/skyblue_sword"
         },
+        "skybluetech:pincer_skyblue": {
+            "textures": "textures/items/charged_tools/pincer_skyblue"
+        },
+        "skybluetech:pincer_skyblue_useless": {
+            "textures": "textures/items/charged_tools/pincer_skyblue"
+        },
+        "skybluetech:wrench_skyblue": {
+            "textures": "textures/items/charged_tools/wrench_skyblue"
+        },
+        "skybluetech:wrench_skyblue_useless": {
+            "textures": "textures/items/charged_tools/wrench_skyblue"
+        },
         "skybluetech:solar_panel_pane": {
             "textures": "textures/items/solar_panel_pane"
         },

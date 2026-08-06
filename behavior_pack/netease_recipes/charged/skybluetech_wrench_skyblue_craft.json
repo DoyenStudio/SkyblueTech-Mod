@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:wrench_skyblue_craft"
+        },
+        "key": {
+            "A": {
+                "item": "skybluetech:superconduct_stick"
+            },
+            "B": {
+                "item": "skybluetech:light_skyblue_ingot"
+            },
+            "C": {
+                "item": "skybluetech:skyblue_core"
+            }
+        },
+        "pattern": [
+            " BC",
+            " AB",
+            "B  "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:wrench_skyblue"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

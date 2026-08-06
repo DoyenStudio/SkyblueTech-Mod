@@ -24,6 +24,8 @@ from ...common.machinery_def.machinery_workstation import (
     get_pincer_level,
     get_wrench_level,
 )
+from ..machinery.utils.charge import ChargeEnough, GetCharge, GetPowerCost, UpdateCharge
+from ..tools.actions.utils import MakeItemUseless
 from .utils.action_commit import SafeGetMachine
 from .basic import BaseMachine, RegisterMachine, GUIControl, ItemContainer
 
@@ -76,6 +78,10 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         wrench_item = slotitems.get(9)
         pincer_level = get_pincer_level(pincer_item) if pincer_item else 0
         wrench_level = get_wrench_level(wrench_item) if wrench_item else 0
+        if pincer_item is not None and self._is_charged_tool_without_charge(pincer_item):
+            pincer_level = 0
+        if wrench_item is not None and self._is_charged_tool_without_charge(wrench_item):
+            wrench_level = 0
         for rcp in Recipes:
             input_items = rcp.input_items
             materials_ok = True
@@ -105,6 +111,41 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         if not init and last_recipe != self.current_recipe:
             self.craft_times = 0
 
+    @staticmethod
+    def _is_charged_tool_without_charge(tool_item):
+        # type: (Item) -> bool
+        """充能工具余量不足一次消耗时视为不可用。"""
+        ud = tool_item.userData
+        if ud is None or GetPowerCost(ud) <= 0:
+            return False
+        return not ChargeEnough(ud)
+
+    def _consume_tool_use(self, tool_item, craft_strength):
+        # type: (Item, float) -> tuple[Item | None, bool]
+        """消耗一次工具使用(耐久或充能), 返回 (处理后物品, 是否可继续制造)。
+
+        蔚蓝充能工具每次使用消耗 st:cost_rf 对应充能(默认 1000RF),
+        余量不足一次消耗时不可继续使用; 耗尽的充能工具转为 _useless 形态。
+        """
+        ud = tool_item.userData
+        if ud is not None and GetPowerCost(ud) > 0:
+            if self._is_charged_tool_without_charge(tool_item):
+                return tool_item, False
+            if random.random() < craft_strength:
+                cur_charge, _ = GetCharge(ud)
+                UpdateCharge(tool_item, cur_charge - GetPowerCost(ud))
+                if not ChargeEnough(ud):
+                    MakeItemUseless(tool_item)
+            return tool_item, True
+        orig_durability = tool_item.durability
+        if orig_durability is None:
+            return tool_item, False
+        if random.random() < craft_strength:
+            tool_item.durability = max(0, orig_durability - 1)
+            if tool_item.durability <= 0:
+                tool_item = None
+        return tool_item, True
+
     def on_craft(self, event):
         # type: (MachineryWorkstationDoCraft) -> None
         recipe = self.current_recipe
@@ -116,32 +157,30 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         if recipe.pincer_level > 0:
             if pincer_item is None:
                 return
-            orig_durability = pincer_item.durability
-            if orig_durability is None:
+            pincer_item, usable = self._consume_tool_use(
+                pincer_item, event.craft_strength
+            )
+            if not usable:
                 return
-            if random.random() < event.craft_strength:
-                pincer_item.durability = max(0, orig_durability - 1)
-                if pincer_item.durability <= 0:
-                    pincer_item = None
-                    SetCommand(
-                        'execute as "%s" at @s positioned %d %d %d run playsound random.break'
-                        % (GetNameById(event.player_id), self.x, self.y, self.z)
-                    )
+            if pincer_item is None:
+                SetCommand(
+                    'execute as "%s" at @s positioned %d %d %d run playsound random.break'
+                    % (GetNameById(event.player_id), self.x, self.y, self.z)
+                )
             self.SetSlotItem(10, pincer_item)
         if recipe.wrench_level > 0:
             if wrench_item is None:
                 return
-            orig_durability = wrench_item.durability
-            if orig_durability is None:
+            wrench_item, usable = self._consume_tool_use(
+                wrench_item, event.craft_strength
+            )
+            if not usable:
                 return
-            if random.random() < event.craft_strength:
-                wrench_item.durability = max(0, orig_durability - 1)
-                if wrench_item.durability <= 0:
-                    wrench_item = None
-                    SetCommand(
-                        'execute as "%s" at @s positioned %d %d %d run playsound random.break'
-                        % (GetNameById(event.player_id), self.x, self.y, self.z)
-                    )
+            if wrench_item is None:
+                SetCommand(
+                    'execute as "%s" at @s positioned %d %d %d run playsound random.break'
+                    % (GetNameById(event.player_id), self.x, self.y, self.z)
+                )
             self.SetSlotItem(9, wrench_item)
         self.craft_times += 1
         if self.craft_times >= recipe.craft_times:

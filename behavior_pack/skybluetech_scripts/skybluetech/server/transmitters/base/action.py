@@ -166,7 +166,9 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
                     "§7[§cx§7] §c错误",
                 )
             return False
-        elif not self.logic_module.can_connect(nextBlock, block_name):
+        elif not self.logic_module.can_connect(
+            dim, nextBlock, (x + dx, y + dy, z + dz), block_name, (x, y, z)
+        ):
             if player_id is not None:
                 SetOnePopupNotice(
                     player_id,

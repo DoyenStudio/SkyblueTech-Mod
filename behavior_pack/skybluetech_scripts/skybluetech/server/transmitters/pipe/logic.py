@@ -13,7 +13,8 @@ def isPipe(blockName):
     return BlockHasTag(blockName, "skybluetech_pipe")
 
 
-def isFluidContainer(blockName):
+def isFluidContainer(blockName, dim=None, xyz=None):
+    # type: (str, int | None, tuple[int, int, int] | None) -> bool
     return BlockHasTag(blockName, "skybluetech_fluid_container")
 
 

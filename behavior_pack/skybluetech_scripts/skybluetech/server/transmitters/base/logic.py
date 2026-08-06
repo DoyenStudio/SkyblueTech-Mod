@@ -51,7 +51,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         network_cls,  # type: type[_NT]
         access_point_cls,  # type: type[_APT]
         transmitter_check_func,  # type: typing.Callable[[str], bool]
-        transmittable_block_check_func,  # type: typing.Callable[[str], bool]
+        transmittable_block_check_func,  # type: typing.Callable[[str, int, tuple[int, int, int]], bool]
         on_transmittable_block_placed_later,  # type: typing.Callable[[int, int, int, int], None]
         on_network_tick,  # type: typing.Callable[[_NT], None]
         provider_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
@@ -63,7 +63,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         self.transmitter_check_func = transmitter_check_func
         "方块是否为传输管线方块。"
         self.transmittable_block_check_func = transmittable_block_check_func
-        "方块是否为传输目标方块。"
+        "方块是否为传输目标方块。传入(方块ID, 维度, 方块坐标), 坐标可为None(仅按名称判断, 用于被移除的方块)"
         self.provider_check_func = provider_check_func
         "目标方块是否为传输源检测函数, 传入(方块ID, 维度, 方块坐标+朝向)"
         self.accepter_check_func = accepter_check_func
@@ -221,16 +221,16 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             self.transmitter_check_func(block_name) and block_name == other_block_name
         )
 
-    def can_connect(self, block_name, other_block_name):
-        # type: (str, str) -> bool
+    def can_connect(self, dim, block_name, block_pos, other_block_name, other_pos):
+        # type: (int, str, tuple[int, int, int], str, tuple[int, int, int]) -> bool
         return (
             self.transmitter_can_connect(block_name, other_block_name)
             or (
-                self.transmittable_block_check_func(block_name)
+                self.transmittable_block_check_func(block_name, dim, block_pos)
                 and self.transmitter_check_func(other_block_name)
             )
             or (
-                self.transmittable_block_check_func(other_block_name)
+                self.transmittable_block_check_func(other_block_name, dim, other_pos)
                 and self.transmitter_check_func(block_name)
             )
         )
@@ -287,7 +287,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                     walked.add(xyz)
                     queue.append(xyz)
                     continue
-                elif self.transmittable_block_check_func(block_name):
+                elif self.transmittable_block_check_func(block_name, dim, xyz):
                     custom_provider_checker = self.provider_check_func
                     custom_accepter_checker = self.accepter_check_func
                     if (
@@ -509,7 +509,9 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                     facing_key, False
                 ) and self.transmitter_can_connect(block_name, neighbor_name)
             else:
-                states[facing_key] = self.can_connect(block_name, neighbor_name)
+                states[facing_key] = self.can_connect(
+                    dim, block_name, (x, y, z), neighbor_name, neighbor_pos
+                )
         if states:
             UpdateBlockStates(dim, (x, y, z), states)
 
@@ -571,7 +573,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             y = block_entity_posdata["posY"]
             z = block_entity_posdata["posZ"]
             blockName = block_entity_posdata["blockName"]
-            if not self.transmittable_block_check_func(blockName):
+            if not self.transmittable_block_check_func(blockName, dim, (x, y, z)):
                 continue
             self.clean_container_networks(dim, x, y, z)
             self.refresh_nearby_transmitter_connections(dim, x, y, z)
@@ -615,7 +617,11 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                     continue
                 states[facing_key] = (
                     self.transmitter_check_func(bname) and bname == event.fullName
-                ) or self.transmittable_block_check_func(bname)
+                ) or self.transmittable_block_check_func(
+                    bname,
+                    event.dimensionId,
+                    (event.x + dx, event.y + dy, event.z + dz),
+                )
             UpdateBlockStates(event.dimensionId, (event.x, event.y, event.z), states)
             # self.clean_access_point(event.dimensionId, event.x, event.y, event.z)
             # 不再需要, 直接覆盖即可
@@ -624,7 +630,9 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             )
             if network is not None:
                 self.apply_network_to_pool(network)
-        elif self.transmittable_block_check_func(event.fullName):
+        elif self.transmittable_block_check_func(
+            event.fullName, event.dimensionId, (event.x, event.y, event.z)
+        ):
             # 图方便
             self.clean_container_networks(
                 event.dimensionId, event.x, event.y, event.z, on_block_placed=True
@@ -637,30 +645,48 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             return
         if not self.transmitter_check_func(event.blockName):
             return
-        from_block_can_connect = self.can_connect(event.fromBlockName, event.blockName)
-        to_block_can_connect = self.can_connect(event.toBlockName, event.blockName)
-        if from_block_can_connect != to_block_can_connect:
-            # 需要更新连接状态
-            dxyz = (
-                event.neighborPosX - event.posX,
-                event.neighborPosY - event.posY,
-                event.neighborPosZ - event.posZ,
-            )
-            facing_key = "skybluetech:connection_" + FACING_EN[DXYZ_FACING[dxyz]]
-            if self.transmittable_block_check_func(event.toBlockName):
+        dxyz = (
+            event.neighborPosX - event.posX,
+            event.neighborPosY - event.posY,
+            event.neighborPosZ - event.posZ,
+        )
+        facing_en = FACING_EN[DXYZ_FACING[dxyz]]
+        facing_key = "skybluetech:connection_" + facing_en
+        neighbor_pos = (
+            event.neighborPosX,
+            event.neighborPosY,
+            event.neighborPosZ,
+        )
+        to_block_can_connect = self.can_connect(
+            event.dimensionId,
+            event.toBlockName,
+            neighbor_pos,
+            event.blockName,
+            (event.posX, event.posY, event.posZ),
+        )
+        # 需要更新连接状态: 以当前状态为准, 不依赖变化前方块名称
+        current_states = GetBlockStates(
+            event.dimensionId, (event.posX, event.posY, event.posZ)
+        ) or {}
+        if current_states.get(facing_key, False) != to_block_can_connect:
+            if self.transmittable_block_check_func(
+                event.toBlockName, event.dimensionId, neighbor_pos
+            ):
                 UpdateBlockStates(
                     event.dimensionId,
                     (event.posX, event.posY, event.posZ),
                     {facing_key: to_block_can_connect},
                 )
             else:
-                io_key = "skybluetech:cable_io_" + FACING_EN[DXYZ_FACING[dxyz]]
+                io_key = "skybluetech:cable_io_" + facing_en
                 UpdateBlockStates(
                     event.dimensionId,
                     (event.posX, event.posY, event.posZ),
                     {facing_key: to_block_can_connect, io_key: False},
                 )
-        if self.transmittable_block_check_func(event.toBlockName):
+        if self.transmittable_block_check_func(
+            event.toBlockName, event.dimensionId, neighbor_pos
+        ):
             ExecLater(
                 0,
                 lambda: self.on_transmittable_block_placed_later(
@@ -681,9 +707,14 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         # 校验直接清理, 会把刚建好的接入点从活网络中永久误删 (2026-07 实证)。
         # 所以延迟处理时必须先确认该处现状: 仍是同类方块则跳过, 交给放置事件。
         current = GetBlockName(event.dimension, (event.x, event.y, event.z))
-        if self.transmittable_block_check_func(event.fullName):
+        # 被移除方块已不存在, 只能按名称判断; 但新连接规则按容器大小判断,
+        # 因此同时以该位置是否存在容器节点缓存为准, 避免漏掉按名称无法识别的容器
+        has_container_node = (event.dimension, (event.x, event.y, event.z)) in self.container_nodes_pool
+        if has_container_node or self.transmittable_block_check_func(event.fullName):
             # 是容器
-            if current is None or not self.transmittable_block_check_func(current):
+            if current is None or not self.transmittable_block_check_func(
+                current, event.dimension, (event.x, event.y, event.z)
+            ):
                 self.clean_nearby_network(event.dimension, event.x, event.y, event.z)
         if self.transmitter_check_func(event.fullName):
             # 是管道

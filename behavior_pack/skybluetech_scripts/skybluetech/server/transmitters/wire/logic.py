@@ -30,7 +30,8 @@ def isWire(blockName):
     return BlockHasTag(blockName, "skybluetech_wire")
 
 
-def isRFMachine(blockName):
+def isRFMachine(blockName, dim=None, xyz=None):
+    # type: (str, int | None, tuple[int, int, int] | None) -> bool
     return BlockHasTag(blockName, "redstoneflux_accepter") or BlockHasTag(
         blockName, "redstoneflux_provider"
     )

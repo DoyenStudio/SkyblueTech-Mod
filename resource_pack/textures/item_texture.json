@@ -371,10 +371,10 @@
             "textures": "textures/items/paddle_steel"
         },
         "skybluetech:pincer_invar": {
-            "textures": "textures/items/pincer_invar"
+            "textures": "textures/items/producted_tools/pincer_invar"
         },
         "skybluetech:pincer_iron": {
-            "textures": "textures/items/pincer_iron"
+            "textures": "textures/items/producted_tools/pincer_iron"
         },
         "skybluetech:platinum_dust": {
             "textures": "textures/items/dusts/platinum_dust"
@@ -461,37 +461,37 @@
             "textures": "textures/items/simple_machine_checker"
         },
         "skybluetech:skyblue_axe": {
-            "textures": "textures/items/skyblue_axe"
+            "textures": "textures/items/charged_tools/skyblue_axe"
         },
         "skybluetech:skyblue_axe_useless": {
-            "textures": "textures/items/skyblue_axe"
+            "textures": "textures/items/charged_tools/skyblue_axe"
         },
         "skybluetech:skyblue_core": {
             "textures": "textures/items/skyblue_core"
         },
         "skybluetech:skyblue_hoe": {
-            "textures": "textures/items/skyblue_hoe"
+            "textures": "textures/items/charged_tools/skyblue_hoe"
         },
         "skybluetech:skyblue_hoe_useless": {
-            "textures": "textures/items/skyblue_hoe"
+            "textures": "textures/items/charged_tools/skyblue_hoe"
         },
         "skybluetech:skyblue_pickaxe": {
-            "textures": "textures/items/skyblue_pickaxe"
+            "textures": "textures/items/charged_tools/skyblue_pickaxe"
         },
         "skybluetech:skyblue_pickaxe_useless": {
-            "textures": "textures/items/skyblue_pickaxe"
+            "textures": "textures/items/charged_tools/skyblue_pickaxe"
         },
         "skybluetech:skyblue_shovel": {
-            "textures": "textures/items/skyblue_shovel"
+            "textures": "textures/items/charged_tools/skyblue_shovel"
         },
         "skybluetech:skyblue_shovel_useless": {
-            "textures": "textures/items/skyblue_shovel"
+            "textures": "textures/items/charged_tools/skyblue_shovel"
         },
         "skybluetech:skyblue_sword": {
-            "textures": "textures/items/skyblue_sword"
+            "textures": "textures/items/charged_tools/skyblue_sword"
         },
         "skybluetech:skyblue_sword_useless": {
-            "textures": "textures/items/skyblue_sword"
+            "textures": "textures/items/charged_tools/skyblue_sword"
         },
         "skybluetech:pincer_skyblue": {
             "textures": "textures/items/charged_tools/pincer_skyblue"
@@ -623,10 +623,10 @@
             "textures": "textures/transmitters/wire_tin_item"
         },
         "skybluetech:wrench_invar": {
-            "textures": "textures/items/wrench_invar"
+            "textures": "textures/items/producted_tools/wrench_invar"
         },
         "skybluetech:wrench_iron": {
-            "textures": "textures/items/wrench_iron"
+            "textures": "textures/items/producted_tools/wrench_iron"
         },
         "skybluetech:heavy_water_bucket": {
             "textures": "textures/items/buckets/heavy_water_bucket"

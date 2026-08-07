@@ -19,10 +19,29 @@ class BasePowerProvider(BaseMachine):
         self._power_output_faces = tuple(
             i for i, n in enumerate(self.energy_io_mode) if n == 1
         )
+        self._output_neighbors_cache = None
 
     def PowerFull(self):
         "能量是否已满。"
         return self.store_rf >= self.store_rf_max
+
+    def OnInvalidateCaches(self):
+        "邻居机缓存失效: 邻居方块放置/移除/变化后调用, 下一个 tick 惰性重建。"
+        self._output_neighbors_cache = None
+
+    def _get_output_neighbors(self):
+        # type: () -> list
+        "输出方向的邻居机列表(含朝向), 结构固定时缓存, 仅邻居变化时重建。"
+        cache = self._output_neighbors_cache
+        if cache is None:
+            from .. import pool
+
+            cache = self._output_neighbors_cache = list(
+                pool.GetNearbyMachines(
+                    self.dim, self.x, self.y, self.z, self._power_output_faces
+                )
+            )
+        return cache
 
     def GeneratePower(self, rf):
         # type: (int) -> tuple[bool, int]
@@ -41,12 +60,8 @@ class BasePowerProvider(BaseMachine):
 
     def _output_nearby(self, output_rf):
         # type: (int) -> tuple[bool, int]
-        from .. import pool
-
         ok = False
-        for machine, facing in pool.GetNearbyMachines(
-            self.dim, self.x, self.y, self.z, self._power_output_faces
-        ):
+        for machine, facing in self._get_output_neighbors():
             io_mode = machine.energy_io_mode[OPPOSITE_FACING[facing]]
             if io_mode != 0:
                 continue

@@ -31,6 +31,7 @@ def GetMachine(dimension, x, y, z, machine_cls):
             )
         cache = machine_cls(dimension, x, y, z, bdata)
         cached_machines[(dimension, x, y, z)] = cache
+        InvalidateNearbyCaches(dimension, x, y, z)
         return cache
 
 
@@ -65,6 +66,16 @@ def GetMachineWithoutCls(dimension, x, y, z, block_id=None):
 def GetMachineStrict(dimension, x, y, z):
     # type: (int, int, int, int) -> BaseMachine | None
     return cached_machines.get((dimension, x, y, z))
+
+
+def InvalidateNearbyCaches(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    "失效 (x,y,z) 周围 6 个邻居机器的缓存, 方块放置/移除/区块装卸/邻居变化时调用。"
+    for dx, dy, dz in DXYZ_FACING:
+        m = cached_machines.get((dim, x + dx, y + dy, z + dz))
+        if m is not None:
+            m.OnInvalidateCaches()
+
 
 
 def PopMachine(dimension, x, y, z, machine_cls):
@@ -115,6 +126,7 @@ def onChunkLoaded(event):
         cached_machines[(event.dimension, x, y, z)] = machine_cls(
             event.dimension, x, y, z, bdata
         )
+        InvalidateNearbyCaches(event.dimension, x, y, z)
 
 
 @ChunkAcquireDiscardedServerEvent.Listen()
@@ -127,3 +139,4 @@ def onChunkDiscarded(event):
         m = cached_machines.pop((event.dimension, x, y, z), None)
         if m is not None:
             m.OnUnload()
+        InvalidateNearbyCaches(event.dimension, x, y, z)

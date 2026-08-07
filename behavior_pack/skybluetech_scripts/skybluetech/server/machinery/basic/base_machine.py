@@ -94,6 +94,10 @@ class BaseMachine(object):
         "机器激活状态更改时调用。"
         pass
 
+    def OnInvalidateCaches(self):
+        "缓存失效钩子: 子类若缓存了按位置/邻居相关的数据, 重写此方法, 在方块放置/移除/邻居变化/区块装卸时被调用。"
+        pass
+
     # ==== API ====
 
     def AddPower(self, rf):
@@ -260,7 +264,9 @@ class BaseMachine(object):
     @store_rf.setter
     def store_rf(self, value):
         # type: (int) -> None
-        self.bdata[K_STORE_RF] = value
+        "值比对早退: 能量值没变化时跳过 bdata 写入, 避免每 tick 无谓触发引擎同步写(实测 __setitem__ 约 50us/次)。"
+        if (self.bdata[K_STORE_RF] or 0) != value:
+            self.bdata[K_STORE_RF] = value
 
     def __hash__(self):
         return hash((self.dim, self.x, self.y, self.z))

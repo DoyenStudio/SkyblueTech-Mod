@@ -46,39 +46,13 @@ def RegisterMachine(machine_cls):
     return machine_cls
 
 
-@ContainerItemChangedServerEvent.ListenWithUserData()
-@Delay(0)
-def onSlotUpdate(event):
-    # type: (ContainerItemChangedServerEvent) -> None
-    pos = event.pos
-    if pos is None:
-        return
-    x, y, z = pos
-    m = pool.GetMachineStrict(event.dimensionId, x, y, z)
-    if isinstance(m, ItemContainer):
-        m.OnSlotUpdate(event.slot)
-
-
-@PlayerTryPutCustomContainerItemServerEvent.ListenWithUserData()
-def onCustomCotainerPutItem(event):
-    # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
-    from ..interfaces import FluidInputInterface, FluidOutputInterface
-
-    dimensionId = GetPlayerDimensionId(event.playerId)
-    m = pool.GetMachineStrict(dimensionId, event.x, event.y, event.z)
-    if isinstance(m, (FluidInputInterface, FluidOutputInterface)):
-        event.cancel()
-        return
-    if isinstance(m, ItemContainer):
-        m.OnCustomCotainerPutItem(event)
-
-
 @BlockNeighborChangedServerEvent.Listen()
 def onNeighborChanged(event):
     # type: (BlockNeighborChangedServerEvent) -> None
     m = pool.GetMachineStrict(event.dimensionId, event.posX, event.posY, event.posZ)
     if m:
         m.OnNeighborChanged(event)
+        m.OnInvalidateCaches()
 
 
 @BlockStrengthChangedServerEvent.Listen()
@@ -154,6 +128,7 @@ def onPlaced(event):
     )
     if m:
         m.OnPlaced(event)
+    pool.InvalidateNearbyCaches(event.dimension, event.posX, event.posY, event.posZ)
 
 
 @BlockRemoveServerEvent.Listen()
@@ -163,6 +138,21 @@ def OnUnload(event):
     if m is not None:
         m.OnDestroy()
         m.OnUnload()
+    pool.InvalidateNearbyCaches(event.dimension, event.x, event.y, event.z)
+
+
+@PlayerTryPutCustomContainerItemServerEvent.ListenWithUserData()
+def onCustomContainerPutItem(event):
+    # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
+    from ..interfaces import FluidInputInterface, FluidOutputInterface
+
+    dimensionId = GetPlayerDimensionId(event.playerId)
+    m = pool.GetMachineStrict(dimensionId, event.x, event.y, event.z)
+    if isinstance(m, (FluidInputInterface, FluidOutputInterface)):
+        event.cancel()
+        return
+    if isinstance(m, ItemContainer):
+        m.OnCustomCotainerPutItem(event)
 
 
 @ItemPushInCustomContainerServerEvent.Listen()
@@ -171,10 +161,10 @@ def onItemPushIn(event):
     from ..interfaces import FluidInputInterface, FluidOutputInterface
 
     m = pool.GetMachineStrict(event.dimension, event.x, event.y, event.z)
-    if not isinstance(m, ItemContainer):
-        return
     if isinstance(m, (FluidInputInterface, FluidOutputInterface)):
         event.cancel()
+        return
+    if not isinstance(m, ItemContainer):
         return
     if (
         not m.IsValidInput(event.collectionIndex, event.item)
@@ -191,3 +181,16 @@ def onItemPullOut(event):
         return
     if event.collectionIndex not in m.output_slots:
         event.cancel()
+
+
+@ContainerItemChangedServerEvent.ListenWithUserData()
+@Delay(0)
+def onSlotUpdate(event):
+    # type: (ContainerItemChangedServerEvent) -> None
+    pos = event.pos
+    if pos is None:
+        return
+    x, y, z = pos
+    m = pool.GetMachineStrict(event.dimensionId, x, y, z)
+    if isinstance(m, ItemContainer):
+        m.OnSlotUpdate(event.slot)

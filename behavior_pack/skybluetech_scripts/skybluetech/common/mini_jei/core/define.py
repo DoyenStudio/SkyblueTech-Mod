@@ -116,27 +116,29 @@ class RecipeBase(object):
 
 
 class Element(object):
-    def __init__(self, id, count=1):
-        # type: (str, float) -> None
+    def __init__(self, id, count=1, aux=0):
+        # type: (str, float, int) -> None
         self.id = id
         self.count = count
+        self.aux = aux
 
     def __repr__(self):
         return "io(%s, %d)" % (self.id, self.count)
 
 
 class Input(Element):
-    def __init__(self, id, count=1, is_tag=False):
-        # type: (str, float, bool) -> None
-        Element.__init__(self, id, count)
+    def __init__(self, id, count=1, aux=0, is_tag=False):
+        # type: (str, float, int, bool) -> None
+        Element.__init__(self, id, count, aux)
         self.is_tag = is_tag
+        self.aux = aux
 
-    def match_item_id(self, item_id):
-        # type: (str) -> bool
+    def match_item_id(self, item_id, aux=0):
+        # type: (str, int) -> bool
         if self.is_tag:
-            return self.id in GetItemTags(item_id, 0)
+            return self.id in GetItemTags(item_id, self.aux)
         else:
-            return item_id == self.id
+            return item_id == self.id and (self.aux == -1 or self.aux == aux)
 
     @classmethod
     def from_dict(
@@ -148,19 +150,19 @@ class Input(Element):
         if "tag" in dct:
             return cls(dct["tag"], dct.get("count", 1), is_tag=True)
         else:
-            return cls(dct["item"], dct.get("count", 1))
+            return cls(dct["item"], dct.get("count", 1), aux=dct.get("aux", 0))
 
     def to_dict(self):
         if self.is_tag:
             return {"tag": self.id, "count": self.count}
         else:
-            return {"item": self.id, "count": self.count}
+            return {"item": self.id, "count": self.count, "aux": self.aux}
 
 
 class Output(Element):
-    def __init__(self, id, count=1, prob=1):
-        # type: (str, float, float) -> None
-        Element.__init__(self, id, count)
+    def __init__(self, id, count=1, aux=0, prob=1):
+        # type: (str, float, int, float) -> None
+        Element.__init__(self, id, count, aux=aux)
         self.prob = prob
 
     @classmethod
@@ -168,10 +170,15 @@ class Output(Element):
         cls,
         dct,  # type: dict
     ):
-        return cls(dct["id"], dct.get("count", 1), dct.get("prob", 1))
+        if "tag" in dct:
+            return cls(dct["tag"], dct.get("count", 1), prob=dct.get("prob", 1))
+        else:
+            return cls(
+                dct["id"], dct.get("count", 1), aux=dct.get("aux", 0), prob=dct.get("prob", 1)
+            )
 
     def to_dict(self):
-        res = {"id": self.id, "count": self.count}
+        res = {"id": self.id, "count": self.count, "aux": self.aux}
         if self.prob != 1:
             res["prob"] = self.prob
         return res

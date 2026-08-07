@@ -60,6 +60,9 @@
             "netease:listen_block_remove": {
                 "value": true
             },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
             "netease:tier": {
                 "destroy_special": true,
                 "digger": "pickaxe",

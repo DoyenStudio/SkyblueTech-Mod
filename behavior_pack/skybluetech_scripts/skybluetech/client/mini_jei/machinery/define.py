@@ -29,19 +29,21 @@ class MachineRecipeRendererBase(RecipeRenderer):
             if is_tag:
                 try:
                     item_id = next(iter(GetItemsByTag(item)))
+                    item_aux = 0
                 except StopIteration:
                     raise ValueError("tag2item not found: " + item)
             else:
                 item_id = item
+                item_aux = input.aux if input.aux != -1 else 0 # TODO: 如果 aux=-1, 应当渲染所有 aux 对应的方块
             ItemDisplayer(
                 panel["slot%d" % slot],
-                Item(item_id, count=int(input.count)),
+                Item(item_id, item_aux, count=int(input.count)),
                 tag=item if is_tag else None,
             )
         output_items = recipe.outputs.get("item", {})
-        for slot, input in output_items.items():
-            item_id = input.id
-            ItemDisplayer(panel["slot%d" % slot], Item(item_id, count=int(input.count)))
+        for slot, output in output_items.items():
+            item_id = output.id
+            ItemDisplayer(panel["slot%d" % slot], Item(item_id, 0, count=int(output.count)))
         input_fluids = recipe.inputs.get("fluid", {})
         if input_fluids:
             max_input_fluid_volume = max(

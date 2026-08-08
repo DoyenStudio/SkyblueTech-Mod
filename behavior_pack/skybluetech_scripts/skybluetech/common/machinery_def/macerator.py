@@ -28,6 +28,7 @@ recipes = RecipesCollection(
     preset("minecraft:coal", 1, "skybluetech:carbon_dust", 1),
     preset("minecraft:charcoal", 1, "skybluetech:carbon_dust", 1),
     preset("minecraft:ancient_debris", 1, "skybluetech:ancient_debris_dust", 1),
+    preset("minecraft:glowstone", 1, "minecraft:glowstone_dust", 4),
     preset(SULFUR, 1, Dusts.SULFUR, 1),
     # Ingot 2 Dust
     preset("minecraft:copper_ingot", 1, Dusts.COPPER, 1),

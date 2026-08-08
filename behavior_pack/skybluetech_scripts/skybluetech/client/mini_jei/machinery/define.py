@@ -43,7 +43,11 @@ class MachineRecipeRendererBase(RecipeRenderer):
         output_items = recipe.outputs.get("item", {})
         for slot, output in output_items.items():
             item_id = output.id
-            ItemDisplayer(panel["slot%d" % slot], Item(item_id, 0, count=int(output.count)))
+            ItemDisplayer(
+                panel["slot%d" % slot],
+                Item(item_id, 0, count=int(output.count)),
+                prob=output.prob,
+            )
         input_fluids = recipe.inputs.get("fluid", {})
         if input_fluids:
             max_input_fluid_volume = max(

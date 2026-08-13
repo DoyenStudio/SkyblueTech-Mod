@@ -87,7 +87,7 @@ def remove_wire_src(xyz):
                 del lasers[other_xyz]
 
 
-@ClientBlockUseEvent.Listen(inner_priority=10)
+@ClientBlockUseEvent.Listen(priority=10)
 def onClientBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
     if event.blockName != Machinery.RF_REPEATER_PLANT:

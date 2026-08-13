@@ -1,40 +1,42 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.server import (
-    ServerBlockUseEvent,
-    PushUIRequest,
+from skybluetech_scripts.skybluetech.common.define.facing import (
+    NEIGHBOR_BLOCKS_ENUM,
+    OPPOSITE_FACING,
+)
+from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
+    TRANSMITTER_SETTINGS_WRENCH,
+    TRANSMITTER_WRENCH,
+)
+from skybluetech_scripts.skybluetech.common.events.misc.transmitter_settings import (
+    TransmitterSetLabel,
+    TransmitterSetPriority,
+    TransmitterSwitchAccessMode,
 )
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
     GetBlockStates,
     GetPlayerDimensionId,
-    UpdateBlockStates,
     SetOnePopupNotice,
+    UpdateBlockStates,
 )
-from skybluetech_scripts.tooldelta.events.service import ServerListenerService
-from skybluetech_scripts.skybluetech.common.events.misc.transmitter_settings import (
-    TransmitterSwitchAccessMode,
-    TransmitterSetLabel,
-    TransmitterSetPriority,
+from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
+from skybluetech_scripts.tooldelta.events.server import (
+    PushUIRequest,
+    ServerBlockUseEvent,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
-    TRANSMITTER_WRENCH,
-    TRANSMITTER_SETTINGS_WRENCH,
-)
-from skybluetech_scripts.skybluetech.common.define.facing import (
-    NEIGHBOR_BLOCKS_ENUM,
-    OPPOSITE_FACING,
-)
+from skybluetech_scripts.tooldelta.events.service import EventListenerService
+
 from ..base.define import AP_MODE_INPUT, AP_MODE_OUTPUT
 from ..constants import FACING_EN, FACING_ZHCN
 from .logic import (
-    LogicModule,
-    Generic,
-    _NT,
     _APT,
+    _NT,
+    Generic,
+    LogicModule,
 )
 
 
-class ActionModule(Generic[_NT, _APT], ServerListenerService):
+class ActionModule(Generic[_NT, _APT], EventListenerService):
     def __init__(
         self,
         logic_module,  # type: LogicModule[_NT, _APT]
@@ -42,7 +44,7 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
         enable_io_mode_settings=True,
         enable_label_settings=True,
     ):
-        ServerListenerService.__init__(self)
+        EventListenerService.__init__(self, GetMCServerEventBus())
         self.logic_module = logic_module
         self.wrench_pick_threshold = wrench_pick_threshold
         self.enable_io_mode_settings = enable_io_mode_settings
@@ -213,7 +215,7 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
         UpdateBlockStates(dim, (x, y, z), block_orig_status)
         return True
 
-    @ServerListenerService.Listen(ServerBlockUseEvent)
+    @EventListenerService.Listen(ServerBlockUseEvent)
     def onPlayerUseWrench(self, event):
         # type: (ServerBlockUseEvent) -> None
         if not self.logic_module.transmitter_check_func(event.blockName):
@@ -298,7 +300,7 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
                 },
             ).send(event.playerId)
 
-    @ServerListenerService.Listen(TransmitterSwitchAccessMode)
+    @EventListenerService.Listen(TransmitterSwitchAccessMode)
     def onSwitchAccessMode(self, event):
         # type: (TransmitterSwitchAccessMode) -> None
         if event.transmitter_type != self.logic_module.network_cls.network_type:
@@ -312,7 +314,7 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
             event.pid,
         )
 
-    @ServerListenerService.Listen(TransmitterSetLabel)
+    @EventListenerService.Listen(TransmitterSetLabel)
     def onSetLabel(self, event):
         # type: (TransmitterSetLabel) -> None
         if not self.enable_label_settings:
@@ -330,7 +332,7 @@ class ActionModule(Generic[_NT, _APT], ServerListenerService):
             return
         ap.set_label(event.label)
 
-    @ServerListenerService.Listen(TransmitterSetPriority)
+    @EventListenerService.Listen(TransmitterSetPriority)
     def onSetPriority(self, event):
         # type: (TransmitterSetPriority) -> None
         if not self.enable_label_settings:

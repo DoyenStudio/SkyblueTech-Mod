@@ -1,29 +1,28 @@
 # coding=utf-8
 import random
-from skybluetech_scripts.tooldelta.define import Item
+
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import (
+    GetBlockName,
     GetBlockStates,
     GetBlockStatesFromAuxValue,
-    GetBlockName,
-    UpdateBlockStates,
-    SpawnItemToPlayerCarried,
-    SpawnDroppedItem,
     SetBlock,
+    SpawnDroppedItem,
+    SpawnItemToPlayerCarried,
+    UpdateBlockStates,
 )
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import (
+    BlockNeighborChangedServerEvent,
     BlockRandomTickServerEvent,
     ServerEntityTryPlaceBlockEvent,
-    BlockNeighborChangedServerEvent,
     ServerItemUseOnEvent,
 )
-from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
+
+from ...common.define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
 from ...common.define.id_enum import RESIN_COLLECTOR, Machinery
 from ...common.define.id_enum.items import RESIN, RESIN_SPOON
-from ...common.define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
-
-# SERVER PART
 
 
 @ServerEntityTryPlaceBlockEvent.Listen()
@@ -199,16 +198,3 @@ def log_is_in_tree(dim, x, y, z):
         return 0
     else:
         return -4
-
-
-# CLIENT PART
-
-limiter = PlayerRateLimiter(0.2)
-
-
-@ClientBlockUseEvent.Listen()
-def onClientBlockUse(event):
-    # type: (ClientBlockUseEvent) -> None
-    if event.blockName == RESIN_COLLECTOR:
-        if not limiter.record(event.playerId):
-            event.cancel()

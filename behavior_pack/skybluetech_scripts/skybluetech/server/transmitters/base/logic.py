@@ -1,35 +1,38 @@
 # coding=utf-8
 from collections import deque
 from weakref import WeakValueDictionary
+
+from skybluetech_scripts.skybluetech.common.define.facing import (
+    NEIGHBOR_BLOCKS_ENUM,
+    OPPOSITE_FACING,
+)
+from skybluetech_scripts.tooldelta.api.common import Delay, ExecLater
 from skybluetech_scripts.tooldelta.api.server import (
     CheckChunkState,
     GetBlockName,
     GetBlockStates,
     UpdateBlockStates,
 )
-from skybluetech_scripts.tooldelta.api.common import ExecLater, Delay
+from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
 from skybluetech_scripts.tooldelta.events.server import (
-    EntityPlaceBlockAfterServerEvent,
     BlockNeighborChangedServerEvent,
     BlockRemoveServerEvent,
-    ChunkLoadedServerEvent,
     ChunkAcquireDiscardedServerEvent,
+    ChunkLoadedServerEvent,
+    EntityPlaceBlockAfterServerEvent,
     OnSimTickServerEvent,
 )
-from skybluetech_scripts.tooldelta.events.service import ServerListenerService
-from skybluetech_scripts.tooldelta.extensions.typing import TypeVar, Generic
-from skybluetech_scripts.skybluetech.common.define.facing import (
-    NEIGHBOR_BLOCKS_ENUM,
-    OPPOSITE_FACING,
-)
-from ..constants import FACING_EN, DXYZ_FACING
+from skybluetech_scripts.tooldelta.events.service import EventListenerService
+from skybluetech_scripts.tooldelta.extensions.typing import Generic, TypeVar
+
 from ..base.define import (
     AP_MODE_INPUT,
     AP_MODE_OUTPUT,
-    BaseNetwork,
     BaseAccessPoint,
+    BaseNetwork,
     ContainerNode,
 )
+from ..constants import DXYZ_FACING, FACING_EN
 
 # TYPE_CHECKING
 if 0:
@@ -43,7 +46,7 @@ _NT = TypeVar("_NT", bound=BaseNetwork)
 _APT = TypeVar("_APT", bound=BaseAccessPoint)
 
 
-class LogicModule(Generic[_NT, _APT], ServerListenerService):
+class LogicModule(Generic[_NT, _APT], EventListenerService):
     _instances = {}  # type: dict[str, LogicModule]
 
     def __init__(
@@ -57,7 +60,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         provider_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
         accepter_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
     ):
-        ServerListenerService.__init__(self)
+        EventListenerService.__init__(self, GetMCServerEventBus())
         self.network_cls = network_cls
         self.access_point_cls = access_point_cls
         self.transmitter_check_func = transmitter_check_func
@@ -591,7 +594,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 (network.dim, ap.target_pos), ContainerNode()
             ).set_face(OPPOSITE_FACING[ap.access_facing], ap.io_mode, network)
 
-    @ServerListenerService.Listen(EntityPlaceBlockAfterServerEvent)
+    @EventListenerService.Listen(EntityPlaceBlockAfterServerEvent)
     def onBlockPlaced(self, event):
         # type: (EntityPlaceBlockAfterServerEvent) -> None
         if self.transmitter_check_func(event.fullName):
@@ -638,7 +641,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 event.dimensionId, event.x, event.y, event.z, on_block_placed=True
             )
 
-    @ServerListenerService.Listen(BlockNeighborChangedServerEvent)
+    @EventListenerService.Listen(BlockNeighborChangedServerEvent)
     def onNeighbourBlockChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         if event.fromBlockName == event.toBlockName:
@@ -697,10 +700,10 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                 ),
             )
 
-    @ServerListenerService.Listen(BlockRemoveServerEvent)
+    @EventListenerService.Listen(BlockRemoveServerEvent)
     @Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
     def onBlockRemoved(self, event):
-        # type: (BlockRemoveServerEvent) -> None
+        # type: (BlockRemoveServerEvent) ->  None
         # NOTE: BlockRemove 的同步回调期间该位置仍读到原方块 (便于最后一刻读取
         # 方块数据), 因此清理必须延迟到下一 tick; 但玩家可能在这 1t 内原地重放
         # 同类方块 (快速拆+放), 此时放置事件已经完成了正确的清理与重建, 若不加
@@ -710,7 +713,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
         # 被移除方块已不存在, 只能按名称判断; 但新连接规则按容器大小判断,
         # 因此同时以该位置是否存在容器节点缓存为准, 避免漏掉按名称无法识别的容器
         has_container_node = (event.dimension, (event.x, event.y, event.z)) in self.container_nodes_pool
-        if has_container_node or self.transmittable_block_check_func(event.fullName):
+        if has_container_node or self.transmittable_block_check_func(event.fullName, event.dimension, (event.x, event.y, event.z)):
             # 是容器
             if current is None or not self.transmittable_block_check_func(
                 current, event.dimension, (event.x, event.y, event.z)
@@ -721,13 +724,13 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
             if current is None or not self.transmitter_check_func(current):
                 self.clean_node(event.dimension, event.x, event.y, event.z)
 
-    @ServerListenerService.Listen(ChunkLoadedServerEvent)
+    @EventListenerService.Listen(ChunkLoadedServerEvent)
     @Delay(1)  # 我也不知道为什么, 过早检测管道会导致区块边缘的一些容器方块检测为空气
     def onChunkLoaded(self, event):
         # type: (ChunkLoadedServerEvent) -> None
         self.refresh_loaded_block_entities(event.dimension, event.blockEntities)
 
-    @ServerListenerService.Listen(ChunkAcquireDiscardedServerEvent)
+    @EventListenerService.Listen(ChunkAcquireDiscardedServerEvent)
     def onChunkUnloaded(self, event):
         # type: (ChunkAcquireDiscardedServerEvent) -> None
         for block_entity_posdata in event.blockEntities:
@@ -746,7 +749,7 @@ class LogicModule(Generic[_NT, _APT], ServerListenerService):
                     if not network._nodes_to_discard:
                         self.delete_network(network)
 
-    @ServerListenerService.Listen(OnSimTickServerEvent)
+    @EventListenerService.Listen(OnSimTickServerEvent)
     def onWorldTick(self, _):
         self._tick_counter += 1
         if self._tick_counter % 5 == 0:

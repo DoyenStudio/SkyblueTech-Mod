@@ -1,18 +1,22 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server import (
-    GetPlayerDimensionId,
     GetBlockName,
+    GetPlayerDimensionId,
     SetOnePopupNotice,
 )
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
+
 from ...common.events.misc.transmitter_visual_checker import (
+    TransmitterVisualCheckerCheckMultiResponse,
     TransmitterVisualCheckerCheckRequest,
     TransmitterVisualCheckerCheckResponse,
-    TransmitterVisualCheckerCheckMultiResponse,
 )
-from ..transmitters.cable.logic import logic_module as cable_logic, isCable
-from ..transmitters.pipe.logic import logic_module as pipe_logic, isPipe
-from ..transmitters.wire.logic import logic_module as wire_logic, isWire
+from ..transmitters.cable.logic import isCable
+from ..transmitters.cable.logic import logic_module as cable_logic
+from ..transmitters.pipe.logic import isPipe
+from ..transmitters.pipe.logic import logic_module as pipe_logic
+from ..transmitters.wire.logic import isWire
+from ..transmitters.wire.logic import logic_module as wire_logic
 
 RATE_LIMIT = 0.5
 

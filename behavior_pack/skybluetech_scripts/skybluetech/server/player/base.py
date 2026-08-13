@@ -1,8 +1,9 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.service import ServerListenerService
+from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
+from skybluetech_scripts.tooldelta.events.service import EventListenerService
 
 
-class PlayerService(ServerListenerService):
+class PlayerService(EventListenerService):
     """每玩家服务基类。
 
     子类用 ``@PlayerService.Listen(...)`` 绑定服务端事件;若需要周期逻辑,
@@ -15,7 +16,7 @@ class PlayerService(ServerListenerService):
 
     def __init__(self, player_id):
         # type: (str) -> None
-        ServerListenerService.__init__(self)
+        EventListenerService.__init__(self, GetMCServerEventBus())
         self.player_id = player_id
         self.enable_listeners()
 

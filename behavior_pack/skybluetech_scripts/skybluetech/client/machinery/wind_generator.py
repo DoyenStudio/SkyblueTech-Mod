@@ -114,7 +114,7 @@ def destroy_model_entity(x, y, z):
         DestroyClientEntity(entity_id)
 
 
-@ClientBlockUseEvent.Listen(inner_priority=10)
+@ClientBlockUseEvent.Listen(priority=10)
 def onClickWindGenerator(event):
     # type: (ClientBlockUseEvent) -> None
     if event.blockName != Machinery.WIND_GENERATOR:

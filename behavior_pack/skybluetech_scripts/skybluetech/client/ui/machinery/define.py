@@ -14,6 +14,12 @@ KeyEnum = GetMinecraftEnum().KeyBoardType
 _ESCAPE = KeyEnum.KEY_ESCAPE
 MAIN_PATH = SCREEN_BASE_PATH / "root_panel/bg/main"
 
+class _RUNTIME:
+    GPlayerId = None # type: str | None
+    GPos = None # type: tuple[int, int, int, int] | None
+
+
+
 
 class UIOpen(CustomC2SEvent):
     name = "skybluetech:UIOpen"
@@ -88,13 +94,12 @@ class MachinePanelUI(ToolDeltaScreen):
 
 class MachinePanelUIProxy(ToolDeltaScreen):
     def __init__(self, screen_name, screen_instance, params=None):
-        global GPlayerId, GPos
         ToolDeltaScreen.__init__(self, screen_name, screen_instance, params)
-        if GPos is None:
+        if _RUNTIME.GPos is None:
             raise RuntimeError("Player do not click machine but create UI")
-        self.pid = GPlayerId
-        self.pos = GPos
-        sync_id = "machine_%d_%d_%d_%d" % GPos
+        self.pid = _RUNTIME.GPlayerId
+        self.pos = _RUNTIME.GPos
+        sync_id = "machine_%d_%d_%d_%d" % _RUNTIME.GPos
         self.ui_sync = S2CSync.NewClient(sync_id)
 
     def _on_create(self):
@@ -113,14 +118,12 @@ class MachinePanelUIProxy(ToolDeltaScreen):
         ExecLater(0, self.RemoveUI)
 
 
-GPlayerId = ""
-GPos = None
+
 
 
 @ClientBlockUseEvent.Listen()
-def onCliBlockUse(event):
+def onClisBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
-    global GPlayerId, GPos
     dim = GetPlayerDimensionId()
-    GPlayerId = event.playerId
-    GPos = (dim, int(event.x), int(event.y), int(event.z))
+    _RUNTIME.GPlayerId = event.playerId
+    _RUNTIME.GPos = (dim, int(event.x), int(event.y), int(event.z))

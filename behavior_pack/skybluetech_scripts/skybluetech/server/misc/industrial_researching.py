@@ -1,20 +1,9 @@
 # coding=utf-8
 import time
+
 from mod.server.extraServerApi import GetMinecraftEnum
 from mod_log import logger
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    GetAllInventoryItems,
-    GetExtraData,
-    GetPlayerMainhandItem,
-    GetSeed,
-    SetExtraData,
-    SetOnePopupNotice,
-    SetPlayerAllItems,
-)
-from skybluetech_scripts.tooldelta.events.service import ServerListenerService
-from skybluetech_scripts.tooldelta.utils import nbt
+
 from skybluetech_scripts.skybluetech.common.define.id_enum import INSCRIBING_TEMPLATE
 from skybluetech_scripts.skybluetech.common.events.misc.industrial_researching import (
     IndustrialResearchingInscribeRequest,
@@ -26,9 +15,23 @@ from skybluetech_scripts.skybluetech.common.misc.industrial_researching import (
     all_researchings,
 )
 from skybluetech_scripts.skybluetech.common.misc.inscribing_template import (
-    GetTemplateGraph,
     K_UD_TEMPLATE_GRAPH,
+    GetTemplateGraph,
 )
+from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.api.server import (
+    GetAllInventoryItems,
+    GetExtraData,
+    GetPlayerMainhandItem,
+    GetSeed,
+    SetExtraData,
+    SetOnePopupNotice,
+    SetPlayerAllItems,
+)
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
+from skybluetech_scripts.tooldelta.events.service import EventListenerService
+from skybluetech_scripts.tooldelta.utils import nbt
 
 if 0:
     from skybluetech_scripts.skybluetech.common.mini_jei.misc.industrial_researching import (
@@ -119,12 +122,12 @@ class IndustrialResearchingPlayerMgr(object):
         return cls._instance
 
 
-class IndustrialResearchingQueryHandler(ServerListenerService):
+class IndustrialResearchingQueryHandler(EventListenerService):
     def __init__(self):
-        ServerListenerService.__init__(self)
+        EventListenerService.__init__(self, GetMCServerEventBus())
         self.enable_listeners()
 
-    @ServerListenerService.Listen(IndustrialResearchingQueryRequest)
+    @EventListenerService.Listen(IndustrialResearchingQueryRequest)
     def on_query_researchings(self, event):
         # type: (IndustrialResearchingQueryRequest) -> None
         researched_items = (
@@ -151,7 +154,7 @@ class IndustrialResearchingQueryHandler(ServerListenerService):
                 payload,
             )
 
-    @ServerListenerService.Listen(IndustrialResearchingSubmitRequest)
+    @EventListenerService.Listen(IndustrialResearchingSubmitRequest)
     def on_submit_researching(self, event):
         # type: (IndustrialResearchingSubmitRequest) -> None
         player_id = event.player_id
@@ -200,7 +203,7 @@ class IndustrialResearchingQueryHandler(ServerListenerService):
         SetPlayerAllItems(player_id, new_items)
         return True
 
-    @ServerListenerService.Listen(IndustrialResearchingInscribeRequest)
+    @EventListenerService.Listen(IndustrialResearchingInscribeRequest)
     def on_inscribe_template(self, event):
         # type: (IndustrialResearchingInscribeRequest) -> None
         player_id = event.player_id

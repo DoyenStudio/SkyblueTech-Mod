@@ -33,7 +33,7 @@ main_pages = PageGroup(
                 MainTOCPageSection(
                     "minecraft:crafting_table",
                     0,
-                    "内置 JEI",
+                    "§9§l内置 JEI",
                     contents.mini_jei.mini_jei_desc,
                 ),
                 MainTOCPageSection(

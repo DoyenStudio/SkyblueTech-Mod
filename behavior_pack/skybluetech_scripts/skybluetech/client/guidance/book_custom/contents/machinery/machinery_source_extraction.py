@@ -65,7 +65,7 @@ farming_station = PageGroup(
     [
         TextPage(
             "种植站",
-            '种植站可<text color="§2" t="自动收获并补种">其上方 5x5 范围内耕地上的作物， 你需要把种植站放在耕地泥土方块的下方。\n支持我的世界原版及棱花农夫乐事的作物。',
+            '种植站可<text color="§2" t="自动收获并补种">其上方 5x5 范围内耕地上的作物， 你需要把种植站放在耕地泥土方块的下方。\n支持我的世界原版、 棱花农夫乐事以及 MI4C 神秘农业等的作物。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.FARMING_STATION),
     ],
@@ -76,7 +76,7 @@ forester = PageGroup(
     [
         TextPage(
             "伐木机",
-            '伐木机可以<text color="§2" t="自动砍伐">上方 17x17 范围内的树木且<text color="§2" t="自动补种树苗">。\n\n你可以在伐木机上方 5x1x5 的范围内填满泥土后再往上一格种满树苗， 然后给伐木机通电以等待收成。\n\n如果安装了<text color="§5" t="强化： 范围扩增">， 砍伐范围会迅速提升至 41x41！',
+            '伐木机可以<text color="§2" t="自动砍伐">上方 17x17 范围内的树木且<text color="§2" t="自动补种树苗">。兼容绝大部分模组的树木。\n\n你可以在伐木机上方 5x1x5 的范围内填满泥土后再往上一格种满树苗， 然后给伐木机通电以等待收成。\n\n如果安装了<text color="§5" t="强化： 范围扩增">， 砍伐范围会迅速提升至 41x41！',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.FORESTER),
     ],

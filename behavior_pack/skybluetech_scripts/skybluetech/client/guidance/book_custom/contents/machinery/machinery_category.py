@@ -376,7 +376,7 @@ machinery_toc = PageGroup(
     "machinery_toc",
     [
         TextPage(
-            "机器",
+            "机器设备",
             '蔚蓝科技内的功能性方块统称为<text color="§9" t="设备">， 它们是蔚蓝科技工业系统中不可或缺的成分。\n\n在目录中选择一个你感兴趣的设备类型以查看详细内容。',
         ),
         MainTOCPage(

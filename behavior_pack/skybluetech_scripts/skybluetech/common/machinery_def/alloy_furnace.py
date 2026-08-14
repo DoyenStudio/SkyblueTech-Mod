@@ -42,11 +42,11 @@ recipes = RecipesCollection(
     ),
     # bronze
     dust_rcp(
-        {0: Input(DustTag.COPPER, 3, True), 1: Input(DustTag.TIN, 1, True)},
+        {0: Input(DustTag.COPPER, 3, is_tag=True), 1: Input(DustTag.TIN, 1, is_tag=True)},
         {4: Output(Ingots.BRONZE, 4)},
     ),
     ingot_rcp(
-        {0: Input("minecraft:copper_ingot", 3), 1: Input(IngotTag.TIN, 1, True)},
+        {0: Input("minecraft:copper_ingot", 3), 1: Input(IngotTag.TIN, 1, is_tag=True)},
         {4: Output(Ingots.BRONZE, 4)},
     ),
     # cupronickel
@@ -66,11 +66,11 @@ recipes = RecipesCollection(
     ),
     # invar
     dust_rcp(
-        {0: Input(DustTag.IRON, 2, True), 1: Input(DustTag.NICKEL, 1, True)},
+        {0: Input(DustTag.IRON, 2, is_tag=True), 1: Input(DustTag.NICKEL, 1, is_tag=True)},
         {4: Output(Ingots.INVAR, 3)},
     ),
     ingot_rcp(
-        {0: Input("minecraft:iron_ingot", 2), 1: Input(IngotTag.NICKEL, 1, True)},
+        {0: Input("minecraft:iron_ingot", 2), 1: Input(IngotTag.NICKEL, 1, is_tag=True)},
         {4: Output(Ingots.INVAR, 3)},
     ),
     # light skyblue
@@ -90,25 +90,25 @@ recipes = RecipesCollection(
     ),
     # steel
     dust_rcp(
-        {0: Input(DustTag.IRON, 1, True), 2: Input(DustTag.CARBON, 1, True)},
+        {0: Input(DustTag.IRON, 1, is_tag=True), 2: Input(DustTag.CARBON, 1, is_tag=True)},
         {4: Output(Ingots.STEEL, 1)},
     ),
     ingot_rcp(
-        {0: Input("minecraft:iron_ingot", 1), 2: Input(DustTag.CARBON, 1, True)},
+        {0: Input("minecraft:iron_ingot", 1), 2: Input(DustTag.CARBON, 1, is_tag=True)},
         {4: Output(Ingots.STEEL, 1)},
     ),
     # netherite
     dust_rcp(
         {
             0: Input("minecraft:gold_ingot", 2),
-            2: Input(DustTag.ANCIENT_DEBRIS, 3, True),
+            2: Input(DustTag.ANCIENT_DEBRIS, 3, is_tag=True),
         },
         {4: Output("minecraft:netherite_ingot", 1)},
     ),
     dust_rcp(
         {
             0: Input(DustTag.GOLD, 2, is_tag=True),
-            2: Input(DustTag.ANCIENT_DEBRIS, 3, True),
+            2: Input(DustTag.ANCIENT_DEBRIS, 3, is_tag=True),
         },
         {4: Output("minecraft:netherite_ingot", 1)},
     ),

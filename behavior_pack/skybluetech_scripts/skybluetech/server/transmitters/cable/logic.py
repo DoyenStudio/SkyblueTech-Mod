@@ -177,20 +177,33 @@ def onNetworkTick(network):
     network._output_cursor = (start + 1) % output_count
 
     break_flag1 = False
+    # 大箱子两个半箱经容器 API 暴露同一份 0-53 全局槽位, 同一 tick 内
+    # 每个大箱子只允许一个输出端/输入端参与, 否则同一批物品会被重复搬移
+    scanned_out_chest_pairs = set()  # type: set[tuple[tuple[int, int, int], tuple[int, int, int]]]
+    scanned_in_chest_pairs = set()  # type: set[tuple[tuple[int, int, int], tuple[int, int, int]]]
     for output_index in range(output_count):
         output_ap = outputs[(start + output_index) % output_count]
         output_pos = output_ap.target_pos
         output_slotposes = _get_container_output_slots(network, output_pos)
 
-        if _get_block_name(network, output_pos) == "minecraft:chest":
+        pair_pos = None
+        if _is_chest(network, output_pos):
             pair_data, _ = _get_container_nbt(
                 network.dim, output_pos, network._cache_datas
             )
             pair_x = GetValueWithDefault(pair_data or {}, "pairx", None)
             pair_z = GetValueWithDefault(pair_data or {}, "pairz", None)
             pair_y = output_pos[1]
+            if pair_x is not None and pair_z is not None:
+                pair_pos = (pair_x, pair_y, pair_z)
         else:
             pair_x = pair_z = pair_y = None
+
+        if pair_pos is not None:
+            pair_key = (min(output_pos, pair_pos), max(output_pos, pair_pos))
+            if pair_key in scanned_out_chest_pairs:
+                continue
+            scanned_out_chest_pairs.add(pair_key)
 
         for output_slot in output_slotposes:
             output_item = _get_container_item(network, output_pos, output_slot)
@@ -209,13 +222,30 @@ def onNetworkTick(network):
                 if input_pos == output_pos:
                     continue
                 if (
-                    _get_block_name(network, input_pos) == "minecraft:chest"
+                    _is_chest(network, input_pos)
                     and pair_x == input_pos[0]
                     and pair_z == input_pos[2]
                     and pair_y == input_pos[1]
                 ):
                     # 跳过双箱子的另一半, 避免同一容器互相搬运
                     continue
+
+                # 输入端同一 tick 也只允许大箱子的一个半箱参与投递
+                if _is_chest(network, input_pos):
+                    ipair_data, _ = _get_container_nbt(
+                        network.dim, input_pos, network._cache_datas
+                    )
+                    ipair_x = GetValueWithDefault(ipair_data or {}, "pairx", None)
+                    ipair_z = GetValueWithDefault(ipair_data or {}, "pairz", None)
+                    if ipair_x is not None and ipair_z is not None:
+                        ipair_pos = (ipair_x, input_pos[1], ipair_z)
+                        ipair_key = (
+                            min(input_pos, ipair_pos),
+                            max(input_pos, ipair_pos),
+                        )
+                        if ipair_key in scanned_in_chest_pairs:
+                            continue
+                        scanned_in_chest_pairs.add(ipair_key)
 
                 m = GetMachineStrict(network.dim, *input_pos)
 
@@ -271,18 +301,39 @@ def onNetworkTick(network):
         if break_flag1:
             break
 
+    # 先收集本次 tick 所有待写回槽位: SetContainerItem 会同步触发容器变化
+    # 事件并使缓存失效, 若边写边读缓存, 配对半箱的写回会被"缓存中途失效"
+    # 逻辑丢弃, 导致源箱扣减少于目标增加 (刷物)
+    pending_writes = {}  # type: dict[tuple[int, int, int], list[tuple[int, Item | None]]]
     for pos, changed_slots in slotitem_changed.items():
         slotitems = network._cache_slotitems.get(pos)
         if slotitems is None:
             # 缓存中途被外部事件失效, 放弃本次写回, 下次 tick 重新读取
             continue
-        data, items = _get_container_nbt(network.dim, pos, network._cache_datas)
-        if data is None:
-            continue
+        writes = []
         for slot in changed_slots:
             item = slotitems.get(slot, MISSING)
             if item is MISSING:
                 continue
+            writes.append((slot, item))
+        if writes:
+            pending_writes[pos] = writes
+
+    for pos, writes in pending_writes.items():
+        if _is_chest(network, pos):
+            # 箱子/陷阱箱使用容器 API 读写: 大箱子两个方块实体各自只存
+            # 本地 0-26 槽, 而容器 API 把两个半箱映射成统一的 0-53 槽位
+            for slot, item in writes:
+                if item is None:
+                    SetContainerItem(network.dim, pos, slot, Item("minecraft:air"))
+                else:
+                    SetContainerItem(network.dim, pos, slot, item)
+            _invalidate_container(network, pos)
+            continue
+        data, items = _get_container_nbt(network.dim, pos, network._cache_datas)
+        if data is None:
+            continue
+        for slot, item in writes:
             list_index, _ = _find_slot_entry(items, slot)
             if item is None:
                 if list_index >= 0:
@@ -303,8 +354,6 @@ def onNetworkTick(network):
         # 自己写回后同样标记失效, 下次 tick 与引擎实际状态重新对齐
         _invalidate_container(network, pos)
 
-    # print slotitem_changed
-
 
 def _get_container_item(network, xyz, slot):
     # type: (CableNetwork, tuple[int, int, int], int) -> Item | None
@@ -313,6 +362,12 @@ def _get_container_item(network, xyz, slot):
         cache = network._cache_slotitems[xyz] = {}
     elif slot in cache:
         return cache[slot]
+    if _is_chest(network, xyz):
+        res = GetContainerItem(network.dim, xyz, slot, getUserData=True)
+        if res is None or res.count <= 0:
+            res = None
+        cache[slot] = res
+        return res
     _, items = _get_container_nbt(network.dim, xyz, network._cache_datas)
     _, entry = _find_slot_entry(items, slot)
     if entry is None:
@@ -363,6 +418,12 @@ def _get_block_name(network, xyz):
     return res
 
 
+def _is_chest(network, xyz):
+    # type: (CableNetwork, tuple[int, int, int]) -> bool
+    "箱子/陷阱箱可组成大箱子, 每半的方块实体 NBT 只含本地 0-26 槽, 需走容器 API"
+    return _get_block_name(network, xyz) in ("minecraft:chest", "minecraft:trapped_chest")
+
+
 def _invalidate_container(network, xyz):
     # type: (CableNetwork, tuple[int, int, int]) -> None
     "容器内容/方块变化后使该容器的缓存失效, 下次 tick 重新读取"
@@ -370,6 +431,18 @@ def _invalidate_container(network, xyz):
     network._cache_block_names.pop(xyz, None)
     network._cache_slotposes.pop(xyz, None)
     network._cache_slotitems.pop(xyz, None)
+    # 大箱子两个半箱共享同一个容器视图, 内容变化时同步失效另一半的缓存
+    if _is_chest(network, xyz):
+        data, _ = _get_container_nbt(network.dim, xyz, network._cache_datas)
+        pair_x = GetValueWithDefault(data or {}, "pairx", None)
+        pair_z = GetValueWithDefault(data or {}, "pairz", None)
+        if pair_x is not None and pair_z is not None:
+            pair_pos = (pair_x, xyz[1], pair_z)
+            if pair_pos != xyz:
+                network._cache_datas.pop(pair_pos, None)
+                network._cache_block_names.pop(pair_pos, None)
+                network._cache_slotposes.pop(pair_pos, None)
+                network._cache_slotitems.pop(pair_pos, None)
 
 
 logic_module = LogicModule(

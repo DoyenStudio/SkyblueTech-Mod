@@ -344,6 +344,12 @@
         "skybluetech:mixer_front_active": {
             "textures": "textures/machines/flipbook_textures/mixer_front_active"
         },
+        "skybluetech:precision_cutter_front": {
+            "textures": "textures/machines/precision_cutter_front"
+        },
+        "skybluetech:precision_cutter_front_active": {
+            "textures": "textures/machines/flipbook_textures/precision_cutter_front_active"
+        },
         "skybluetech:nether_sulfur_ore": {
             "textures": "textures/blocks/ore/nether_sulfur_ore"
         },

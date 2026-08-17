@@ -1,0 +1,16 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_damage": 256,
+            "minecraft:max_stack_size": 1,
+            "netease:customtips": {
+                "value": "\n§7锋利的切割刀片， 放入§f精密切割机§7中使用。"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:steel_cutter"
+        }
+    }
+}

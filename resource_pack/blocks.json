@@ -644,6 +644,17 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:precision_cutter": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:precision_cutter_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
+    },
     "skybluetech:molten_copper": {
         "blockshape": "water",
         "textures": {

@@ -36,6 +36,7 @@ from .mini_miner import MiniMinerUI
 from .mixed_macerator import MixedMaceratorUI
 from .mixer import MixerUI
 from .oil_extractor import OilExtractorUI
+from .precision_cutter import PrecisionCutterUI
 from .pump import PumpUI
 from .reacting_thermal_generator import ReactingThermalGeneratorUI
 from .redstoneflux_brake import RedstoneFluxBrakeUI

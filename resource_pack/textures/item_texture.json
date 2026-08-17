@@ -514,6 +514,9 @@
         "skybluetech:steel_dust": {
             "textures": "textures/items/dusts/steel_dust"
         },
+        "skybluetech:steel_cutter": {
+            "textures": "textures/items/steel_cutter"
+        },
         "skybluetech:steel_ingot": {
             "textures": "textures/items/ingots/steel_ingot"
         },

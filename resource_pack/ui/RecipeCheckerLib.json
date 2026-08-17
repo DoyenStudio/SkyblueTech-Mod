@@ -2246,6 +2246,84 @@
             }
         ]
     },
+    "precision_cutter_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            66.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -45,
+                        10
+                    ]
+                }
+            },
+            {
+                "cutter_slot@SkybluePanelLib.item_displayer": {
+                    "layer": 2,
+                    "offset": [
+                        -24,
+                        -16
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        10,
+                        10
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        30,
+                        10
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        50,
+                        10
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/precision_cutter_arrow_bg",
+                    "$mask_image": "textures/ui/precision_cutter_arrow_mask",
+                    "offset": [
+                        -18,
+                        6
+                    ],
+                    "size": [
+                        34,
+                        27
+                    ]
+                }
+            }
+        ]
+    },
     "reacting_thermal_generator_recipes": {
         "type": "panel",
         "size": [

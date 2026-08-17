@@ -1,0 +1,310 @@
+{
+    "main@common.inventory_screen_common": {
+        "$screen_content": "PrecisionCutterUI.precision_cutter_ui"
+    },
+    "namespace": "PrecisionCutterUI",
+    "precision_cutter_ui": {
+        "type": "panel",
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
+                                            "$slot0": 5,
+                                            "$slot1": 6,
+                                            "$slot2": 7,
+                                            "$slot3": 8,
+                                            "anchor_from": "top_right",
+                                            "anchor_to": "top_left"
+                                        }
+                                    },
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "machine_label": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            0.0,
+                                                            4.0
+                                                        ],
+                                                        "font_scale_factor": 1.4,
+                                                        "font_type": "default",
+                                                        "shadow": true,
+                                                        "text": "精密切割机",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "offset": [
+                                                            28,
+                                                            -53
+                                                        ],
+                                                        "size": [
+                                                            54,
+                                                            35
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "fluid_bar": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            -7.0,
+                                                            -44.0
+                                                        ],
+                                                        "size": [
+                                                            18.0,
+                                                            4.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "color": [
+                                                            0.7137254901960784,
+                                                            0.7137254901960784,
+                                                            0.7137254901960784
+                                                        ],
+                                                        "nineslice_size": [
+                                                            0.0,
+                                                            0.0,
+                                                            0.0,
+                                                            0.0
+                                                        ],
+                                                        "texture": "textures/ui/white",
+                                                        "tiled": true
+                                                    }
+                                                },
+                                                {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
+                                                        "$bg_image": "textures/ui/precision_cutter_arrow_bg",
+                                                        "$mask_image": "textures/ui/precision_cutter_arrow_mask",
+                                                        "offset": [
+                                                            -18,
+                                                            -22
+                                                        ],
+                                                        "size": [
+                                                            36,
+                                                            27
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            -44.0,
+                                                            -18.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 0
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "cutter_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            -24.0,
+                                                            -44.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 1
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slot1": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            10.0,
+                                                            -18.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 2
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slot2": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            28.0,
+                                                            -18.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 3
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slot3": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            46.0,
+                                                            -18.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm+0px",
+                                                            "100%cm+0px"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 4
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "offset": [
+                                                            "-42%+-1px",
+                                                            "-20%+2px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            65,
+                                                            -18
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_right",
+                                            "layer": 4,
+                                            "offset": [
+                                                -2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "ex_panel": {
+                                            "type": "panel",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "size": [
+                                                "default",
+                                                "56%+0px"
+                                            ],
+                                            "layer": 1
+                                        }
+                                    }
+                                ],
+                                "layer": 0
+                            }
+                        }
+                    ],
+                    "layer": 0,
+                    "size": [
+                        180,
+                        200
+                    ]
+                }
+            }
+        ]
+    }
+}

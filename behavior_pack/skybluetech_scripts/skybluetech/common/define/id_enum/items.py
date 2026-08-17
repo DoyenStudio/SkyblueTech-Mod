@@ -188,6 +188,8 @@ class Wrench(SimpleEnum):
     INVAR = "skybluetech:wrench_invar"
     SKYBLUE = "skybluetech:wrench_skyblue"
 
+class Cutter(SimpleEnum):
+    STEEL = "skybluetech:steel_cutter"
 
 AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"
 CIRCUIT_BASE_PLATE = "skybluetech:circuit_base_plate"

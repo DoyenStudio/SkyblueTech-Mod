@@ -43,6 +43,7 @@ class Machinery(SimpleEnum):
     MIXED_MACERATOR = "skybluetech:mixed_macerator"
     MIXER = "skybluetech:mixer"
     OIL_EXTRACTOR = "skybluetech:oil_extractor"
+    PRECISION_CUTTER = "skybluetech:precision_cutter"
     PUMP = "skybluetech:pump"
     REACTING_THERMAL_GENERATOR = "skybluetech:reacting_thermal_generator"
     REDSTONE_FURNACE = "skybluetech:redstone_furnace"

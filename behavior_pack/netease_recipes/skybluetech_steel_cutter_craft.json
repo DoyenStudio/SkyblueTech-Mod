@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:steel_cutter_craft"
+        },
+        "key": {
+            "A": {
+                "item": "minecraft:iron_nugget"
+            },
+            "B": {
+                "item": "skybluetech:steel_plate"
+            }
+        },
+        "pattern": [
+            "AAA",
+            "ABA",
+            "AAA"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:steel_cutter"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

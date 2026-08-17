@@ -66,6 +66,11 @@
         "ticks_per_frame": 3
     },
     {
+        "flipbook_texture": "textures/machines/flipbook_textures/precision_cutter_front_active",
+        "atlas_tile": "skybluetech:precision_cutter_front_active",
+        "ticks_per_frame": 3
+    },
+    {
         "flipbook_texture": "textures/machines/flipbook_textures/fluid_condenser_front_active",
         "atlas_tile": "skybluetech:fluid_condenser_front_active",
         "ticks_per_frame": 3

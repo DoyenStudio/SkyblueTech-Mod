@@ -52,6 +52,7 @@ class Machinery(SimpleEnum):
     REPAIRING_ANVIL = "skybluetech:repairing_anvil"
     RESIN_COLLECTOR_OUTPUTER = "skybluetech:resin_collector_outputer"
     RF_REPEATER_PLANT = "skybluetech:rf_repeater_plant"
+    SAWMILL = "skybluetech:sawmill"
     SOLAR_PANEL = "skybluetech:solar_panel"
     SPLITTER = "skybluetech:splitter"
     TEMPLATE_ASSEMBLER = "skybluetech:template_assembler"

@@ -45,6 +45,7 @@ from .redstone_furnace import RedstoneFurnace
 from .redstone_generator import RedstoneGenerator
 from .resin_collector_outputer import ResinCollectorOutputer
 from .rf_repeater_plant import RFRepeaterPlant
+from .sawmill import Sawmill
 from .splitter import Splitter
 from .solar_panel import SolarPanel
 from .template_assembler import TemplateAssembler

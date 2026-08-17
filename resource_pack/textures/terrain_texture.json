@@ -437,6 +437,18 @@
         "skybluetech:rf_repeater_plant_icon": {
             "textures": "textures/icon/rf_repeater_plant_icon"
         },
+        "skybluetech:sawmill_side_a": {
+            "textures": "textures/machines/sawmill_side_a"
+        },
+        "skybluetech:sawmill_side_a_active": {
+            "textures": "textures/machines/flipbook_textures/sawmill_side_a_active"
+        },
+        "skybluetech:sawmill_side_b": {
+            "textures": "textures/machines/sawmill_side_b"
+        },
+        "skybluetech:sawmill_side_b_active": {
+            "textures": "textures/machines/flipbook_textures/sawmill_side_b_active"
+        },
         "skybluetech:silver_block": {
             "textures": "textures/blocks/ingot_block/silver_block"
         },

@@ -111,3 +111,4 @@ class BatteryTag:
 
 
 RUBBER = "common:rubber"
+SAWDUST = "common:sawdust"

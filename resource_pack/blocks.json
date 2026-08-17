@@ -655,6 +655,17 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:sawmill": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:sawmill_side_b",
+            "north": "skybluetech:sawmill_side_a",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:sawmill_side_b"
+        }
+    },
     "skybluetech:molten_copper": {
         "blockshape": "water",
         "textures": {

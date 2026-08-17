@@ -71,6 +71,16 @@
         "ticks_per_frame": 3
     },
     {
+        "flipbook_texture": "textures/machines/flipbook_textures/sawmill_side_a_active",
+        "atlas_tile": "skybluetech:sawmill_side_a_active",
+        "ticks_per_frame": 3
+    },
+    {
+        "flipbook_texture": "textures/machines/flipbook_textures/sawmill_side_b_active",
+        "atlas_tile": "skybluetech:sawmill_side_b_active",
+        "ticks_per_frame": 3
+    },
+    {
         "flipbook_texture": "textures/machines/flipbook_textures/fluid_condenser_front_active",
         "atlas_tile": "skybluetech:fluid_condenser_front_active",
         "ticks_per_frame": 3

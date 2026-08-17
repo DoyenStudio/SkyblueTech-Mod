@@ -430,6 +430,9 @@
         "skybluetech:rough_rubber": {
             "textures": "textures/items/rough_rubber"
         },
+        "skybluetech:sawdust": {
+            "textures": "textures/items/dusts/sawdust"
+        },
         "skybluetech:searcher": {
             "textures": "textures/items/searcher"
         },

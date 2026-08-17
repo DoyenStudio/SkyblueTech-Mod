@@ -1,4 +1,6 @@
 # coding=utf-8
+import random
+
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.mini_jei.core import (
@@ -178,6 +180,8 @@ class Processor(ProcessorBase):
             for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
                 slotitems[slot_pos].count -= int(input.count)
             for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
+                if output.prob != 1 and random.random() > output.prob:
+                    continue
                 orig_item = slotitems.get(slot_pos, None)
                 if orig_item is None:
                     orig_item = Item(output.id, 0, int(output.count))
@@ -200,4 +204,6 @@ class Processor(ProcessorBase):
             )
             last_index = len(slots_pos_and_outputs) - 1
             for idx, (slot_pos, output) in enumerate(slots_pos_and_outputs):
+                if output.prob != 1 and random.random() > output.prob:
+                    continue
                 self.OutputFluid(output.id, output.count, slot_pos, idx == last_index)

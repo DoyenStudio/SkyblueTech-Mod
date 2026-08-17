@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.api.server import GetItemBasicInfo, SetItemLa
 from skybluetech_scripts.tooldelta.utils import nbt
 from .lore import GetLorePos, SetLoreAtPos, SetLoreAuto
 
-if 0:
+if 0>1:
     import typing
 
 K_STORE_RF = "store_rf"

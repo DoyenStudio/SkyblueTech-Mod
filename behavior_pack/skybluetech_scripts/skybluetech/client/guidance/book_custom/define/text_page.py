@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.extensions.richer_text import (
 )
 from .base_page import BasePage
 
-if 0:
+if 0>1:
     import typing
 
 

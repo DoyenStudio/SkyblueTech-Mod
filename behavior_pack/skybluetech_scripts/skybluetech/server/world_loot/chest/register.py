@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     OnContainerFillLoottableServerEvent,
 )
 
-if 0:
+if 0>1:
     import typing  # noqa: F401
     from skybluetech_scripts.tooldelta.define import Item  # noqa: F401
 

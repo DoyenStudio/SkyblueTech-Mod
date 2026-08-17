@@ -21,7 +21,7 @@ from ...common.machinery_def.basic.base_machine import K_DEACTIVE_FLAGS
 from ...common.machinery_def.hover_text_displayer import K_TEXT
 from ...common.utils.block_sync import BlockSync
 
-if 0:
+if 0>1:
     from typing import Any
 
 block_sync = BlockSync(Machinery.HOVER_TEXT_DISPLAYER, side=BlockSync.SIDE_CLIENT)

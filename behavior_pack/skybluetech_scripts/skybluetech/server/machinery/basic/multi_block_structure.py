@@ -42,7 +42,7 @@ from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
 from .base_machine import BaseMachine, GUIControl
 
 
-if 0:
+if 0>1:
     import typing
     from .base_machine import BaseMachine
 

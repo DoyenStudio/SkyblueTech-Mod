@@ -7,7 +7,7 @@ from skybluetech_scripts.skybluetech.common.mini_jei.core.define import Category
 from .render_utils import ItemDisplayer, CreateDescBoard
 
 
-if 0:
+if 0>1:
     from skybluetech_scripts.skybluetech.common.mini_jei.core import Input
 
 

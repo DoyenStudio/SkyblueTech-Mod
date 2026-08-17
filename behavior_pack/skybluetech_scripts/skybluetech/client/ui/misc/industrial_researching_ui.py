@@ -25,7 +25,7 @@ from skybluetech_scripts.skybluetech.common.misc.industrial_researching import (
     all_researchings,
 )
 
-if 0:
+if 0>1:
     from skybluetech_scripts.skybluetech.common.mini_jei.misc.industrial_researching import (
         IndustrialResearchingRecipe,  # noqa: F401
         Input,  # noqa: F401

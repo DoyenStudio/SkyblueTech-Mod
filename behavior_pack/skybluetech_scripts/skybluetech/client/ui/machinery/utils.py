@@ -19,7 +19,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
 )
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     import typing
 
     T = typing.TypeVar("T")

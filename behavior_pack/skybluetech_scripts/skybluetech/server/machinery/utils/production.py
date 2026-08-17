@@ -4,7 +4,7 @@ from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import MachineRecipeBase  # noqa: F401
 from skybluetech_scripts.skybluetech.common.define import flags
 
-if 0:
+if 0>1:
     import typing  # noqa: F401
     from ..basic import BaseMachine  # noqa: F401
 

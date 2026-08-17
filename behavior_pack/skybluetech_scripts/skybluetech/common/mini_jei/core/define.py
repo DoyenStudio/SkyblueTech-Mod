@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.common import GetItemTags
 
-if 0:
+if 0>1:
     import typing  # noqa: F401
     from skybluetech_scripts.skybluetech.client.mini_jei.core import RecipeRenderer
 

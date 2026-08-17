@@ -9,7 +9,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 from ...common.define.facing import DXYZ_FACING, FACING_DXYZ
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     from .basic.base_machine import BaseMachine
 # TYPE_CHECKING END
 

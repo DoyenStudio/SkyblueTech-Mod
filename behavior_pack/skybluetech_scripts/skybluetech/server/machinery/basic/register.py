@@ -26,7 +26,7 @@ from .item_container import ItemContainer
 from .gui_ctrl import GUIControl
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     import typing
 
     MT = typing.TypeVar("MT", bound=BaseMachine)

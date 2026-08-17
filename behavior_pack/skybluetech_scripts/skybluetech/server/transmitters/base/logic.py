@@ -35,7 +35,7 @@ from ..base.define import (
 from ..constants import DXYZ_FACING, FACING_EN
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     import typing
 
     PosData = typing.Tuple[int, int, int]  # x y z

@@ -35,7 +35,7 @@ from .register import (
 from .utils import MakeItemUseless, MakeToolUseless
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     import typing
 # TYPE_CHECKING END
 

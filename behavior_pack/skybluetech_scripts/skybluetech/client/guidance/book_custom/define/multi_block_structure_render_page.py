@@ -8,7 +8,7 @@ from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
 )
 from .base_page import BasePage
 
-if 0:
+if 0>1:
     import typing  # noqa: F401
 
 

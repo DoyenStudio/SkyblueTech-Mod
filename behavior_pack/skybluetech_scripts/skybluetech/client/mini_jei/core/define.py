@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.extensions.typing import Generic, TypeVar
 from skybluetech_scripts.skybluetech.common.mini_jei import RecipeBase
 
 
-if 0:
+if 0>1:
     import typing  # noqa: F401
 
 

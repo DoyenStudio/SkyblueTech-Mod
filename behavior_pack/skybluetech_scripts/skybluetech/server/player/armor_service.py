@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.events.server import InventoryItemChangedServ
 from skybluetech_scripts.tooldelta.api.server import GetArmorSlotItems, SetPlayerAllItems
 from .base import PlayerService
 
-if 0:
+if 0>1:
     import typing
     from skybluetech_scripts.tooldelta.define import Item
 

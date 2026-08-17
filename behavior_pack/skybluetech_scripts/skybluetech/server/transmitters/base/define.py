@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.extensions.typing import Generic, TypeVar
 from skybluetech_scripts.skybluetech.common.misc.transmitter import TransmitterType
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     import typing
 
     PosData = typing.Tuple[int, int, int, int]

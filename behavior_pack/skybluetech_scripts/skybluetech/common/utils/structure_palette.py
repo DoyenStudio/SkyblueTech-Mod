@@ -1,5 +1,5 @@
 # coding=utf-8
-if 0:
+if 0>1:
     import typing
 
     BLOCK_PAT_INDEX = int

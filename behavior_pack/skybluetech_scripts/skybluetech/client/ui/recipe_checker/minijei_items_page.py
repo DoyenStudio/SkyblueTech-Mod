@@ -20,7 +20,7 @@ from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetAllItems
 from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType
 from .recipe_checker_ui import RecipeCheckerUI
 
-if 0:
+if 0>1:
     from typing import Callable
 
 MAIN_PATH = UIPath(

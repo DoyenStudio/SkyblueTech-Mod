@@ -1,5 +1,5 @@
 # coding=utf-8
-if 0:
+if 0>1:
     from .base_page import BasePage
 
 page_groups = {}  # type: dict[str, PageGroup]

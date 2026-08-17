@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.extensions.method_weakref import ref_method
 from ..basic import FluidContainer, GUIControl, RegisterMachine
 from .base_interface import BaseInterface
 
-if 0:
+if 0>1:
     import typing
 
 

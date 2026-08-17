@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetExtraData,
 )
 
-if 0:
+if 0>1:
     import typing
 
 K_RUNNING_QUESTS = "st:running_quests"

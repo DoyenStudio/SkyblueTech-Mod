@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from ..define.page_group import PageGroup
 from .base_page import BasePage
 
-if 0:
+if 0>1:
     import typing
     from .page_group import PageGroup
 

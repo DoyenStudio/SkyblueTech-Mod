@@ -9,7 +9,7 @@ from ...machinery.utils.charge import ChargeEnough, SetUpdateChargeCallback
 from .utils import GetUselessItemId, RecoverItemFromUseless, RecoverToolFromUseless
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     import typing
 # TYPE_CHECKING END
 

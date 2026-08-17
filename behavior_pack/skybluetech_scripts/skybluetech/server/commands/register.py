@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.api.server import GetBlockName
 from skybluetech_scripts.tooldelta.events.server import CustomCommandTriggerServerEvent
 from .utils import generate_simple_arg_mapping
 
-if 0:
+if 0>1:
     import typing
 
     T = typing.TypeVar(

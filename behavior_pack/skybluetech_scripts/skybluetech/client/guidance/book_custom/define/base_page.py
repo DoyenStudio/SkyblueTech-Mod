@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
-if 0:
+if 0>1:
     from .page_group import PageGroup
 
 

@@ -14,7 +14,7 @@ from ..base import LogicModule
 from .define import WireNetwork, WireAccessPoint, TRANSFER_SPEED_MAPPING
 
 # TYPE_CHECKING
-if 0:
+if 0>1:
     import typing
 
     PosData = typing.Tuple[int, int, int]  # x y z

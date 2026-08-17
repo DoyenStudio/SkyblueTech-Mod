@@ -33,7 +33,7 @@ from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
 from skybluetech_scripts.tooldelta.events.service import EventListenerService
 from skybluetech_scripts.tooldelta.utils import nbt
 
-if 0:
+if 0>1:
     from skybluetech_scripts.skybluetech.common.mini_jei.misc.industrial_researching import (
         IndustrialResearchingRecipe,  # noqa: F401
     )

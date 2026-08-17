@@ -7,7 +7,7 @@ from skybluetech_scripts.tooldelta.ui import (
 )
 from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
 
-if 0:
+if 0>1:
     from ...guidance.book_custom.define import BasePage, PageGroup
 
 

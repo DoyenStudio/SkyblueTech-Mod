@@ -55,6 +55,9 @@ def IsFavourite(category, item_id, display_item_id):
 
 def update():
     global favourite_items_idauxs
-    favourite_items_idauxs[:] = [
-        Item(id).GetBasicInfo().id_aux for _, _, id in GetFavourites()
-    ]
+    try:
+        favourite_items_idauxs[:] = [
+            Item(id).GetBasicInfo().id_aux for _, _, id in GetFavourites()
+        ]
+    except ValueError:
+        favourite_items_idauxs[:] = []

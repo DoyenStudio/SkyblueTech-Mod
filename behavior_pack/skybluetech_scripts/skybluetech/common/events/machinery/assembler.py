@@ -1,4 +1,11 @@
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2SEvent
+# coding=utf-8
+
+from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
+
+from .basic import MachineryOperationC2S
+
+ACTION_PUSH_UPGRADER = 0
+ACTION_PULL_UPGRADER = 1
 
 
 class AssemblerUpgradersUpdate(CustomS2CEvent):
@@ -15,12 +22,10 @@ class AssemblerUpgradersUpdate(CustomS2CEvent):
     def unmarshal(cls, data):
         return cls(data["lis"])
 
-ACTION_PUSH_UPGRADER = 0
-ACTION_PULL_UPGRADER = 1
 
-
-class AssemblerActionRequest(CustomC2SEvent):
+class AssemblerActionRequest(MachineryOperationC2S):
     name = "st:APUR"
+    extra_attrs = ("action", "index")
 
     def __init__(self, x, y, z, action, index, player_id=""):
         # type: (int, int, int, int, int, str) -> None
@@ -30,17 +35,3 @@ class AssemblerActionRequest(CustomC2SEvent):
         self.action = action
         self.index = index
         self.player_id = player_id
-
-    def marshal(self):
-        return {"action": self.action, "index": self.index, "x": self.x, "y": self.y, "z": self.z}
-
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            data["x"],
-            data["y"],
-            data["z"],
-            data["action"],
-            data["index"],
-            data["__id__"],
-        )

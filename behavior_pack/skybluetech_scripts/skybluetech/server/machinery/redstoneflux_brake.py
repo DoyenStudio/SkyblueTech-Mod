@@ -1,11 +1,14 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events.server.block import (
     BlockNeighborChangedServerEvent,
     BlockStrengthChangedServerEvent,
     ServerBlockUseEvent,
 )
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
+from ...common.define.id_enum.machinery import Machinery
+from ...common.define.ui_keys import REDSTONEFLUX_BRAKE_UI
 from ...common.events.machinery.redstoneflux_brake import (
     RedstoneFluxBrakeModeSwitchRequest,
 )
@@ -15,18 +18,20 @@ from ...common.machinery_def.redstoneflux_brake import (
     K_POWER_AVG,
     K_REDSTONE_STRENGTH,
 )
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.REDSTONEFLUX_BRAKE
-from ...common.define.ui_keys import REDSTONEFLUX_BRAKE_UI
 from ..transmitters.wire.logic import logic_module
-from .utils.action_commit import SafeGetMachine
-from .basic import RegisterMachine, BaseClicker, BasePowerProvider, GUIControl
+from .basic import (
+    BaseClicker,
+    BasePowerProvider,
+    GUIControl,
+    OperationListener,
+    RegisterMachine,
+)
 
 
 @RegisterMachine
-class RedstonefluxBrake(BaseClicker, BasePowerProvider, GUIControl):
+class RedstonefluxBrake(BaseClicker, BasePowerProvider, GUIControl, OperationListener):
     bound_ui = REDSTONEFLUX_BRAKE_UI
-    block_name = MACHINE_ID
+    block_name = Machinery.REDSTONEFLUX_BRAKE
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -128,10 +133,7 @@ class RedstonefluxBrake(BaseClicker, BasePowerProvider, GUIControl):
         self.update_enabled_by_redstone()
 
 
-@RedstoneFluxBrakeModeSwitchRequest.Listen()
-def onRedstoneFluxBrakeModeSwitch(event):
-    # type: (RedstoneFluxBrakeModeSwitchRequest) -> None
-    machine = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(machine, RedstonefluxBrake):
-        return
+@RedstonefluxBrake.ForOperation(RedstoneFluxBrakeModeSwitchRequest)
+def onRedstoneFluxBrakeModeSwitch(event, machine):
+    # type: (RedstoneFluxBrakeModeSwitchRequest, RedstonefluxBrake) -> None
     machine.invert_redstone = event.invert_redstone

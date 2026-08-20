@@ -1,9 +1,13 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2SEvent
+from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
+
+from .basic import MachineryOperationC2S
 
 
-class BatteryMatrixActionRequest(CustomC2SEvent):
+class BatteryMatrixActionRequest(MachineryOperationC2S):
     name = "st:BMAR"
+    extra_attrs = ("op", "value")
+
     OPERATION_INPUT = 0
     OPERATION_OUTPUT = 1
 
@@ -16,24 +20,10 @@ class BatteryMatrixActionRequest(CustomC2SEvent):
         self.value = value
         self.player_id = player_id
 
-    def marshal(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "z": self.z,
-            "op": self.op,
-            "value": self.value,
-        }
 
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            data["x"], data["y"], data["z"], data["op"], data["value"], data["__id__"]
-        )
-
-
-class BatteryMatrixPopBatteryRequest(CustomC2SEvent):
+class BatteryMatrixPopBatteryRequest(MachineryOperationC2S):
     name = "st:BMPBR"
+    extra_attrs = ("index",)
 
     def __init__(self, x, y, z, index, player_id=""):
         # type: (int, int, int, int, str) -> None
@@ -43,15 +33,8 @@ class BatteryMatrixPopBatteryRequest(CustomC2SEvent):
         self.index = index
         self.player_id = player_id
 
-    def marshal(self):
-        return {"x": self.x, "y": self.y, "z": self.z, "index": self.index}
 
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(data["x"], data["y"], data["z"], data["index"], data["__id__"])
-
-
-class BatteryMatrixStoreBatteryRequest(CustomC2SEvent):
+class BatteryMatrixStoreBatteryRequest(MachineryOperationC2S):
     name = "st:BMBSBR"
 
     def __init__(self, x, y, z, player_id=""):
@@ -61,15 +44,8 @@ class BatteryMatrixStoreBatteryRequest(CustomC2SEvent):
         self.z = z
         self.player_id = player_id
 
-    def marshal(self):
-        return {"x": self.x, "y": self.y, "z": self.z}
 
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(data["x"], data["y"], data["z"], data["__id__"])
-
-
-class BatteryMatrixCheckCoreBatterysRequest(CustomC2SEvent):
+class BatteryMatrixCheckCoreBatterysRequest(MachineryOperationC2S):
     name = "st:BMCCBR"
 
     def __init__(self, x, y, z, player_id=""):
@@ -78,13 +54,6 @@ class BatteryMatrixCheckCoreBatterysRequest(CustomC2SEvent):
         self.y = y
         self.z = z
         self.player_id = player_id
-
-    def marshal(self):
-        return {"x": self.x, "y": self.y, "z": self.z}
-
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(data["x"], data["y"], data["z"], data["__id__"])
 
 
 class BatteryMatrixCoreStatusUpdate(CustomS2CEvent):

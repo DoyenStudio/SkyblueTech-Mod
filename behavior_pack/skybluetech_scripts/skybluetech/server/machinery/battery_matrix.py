@@ -1,51 +1,51 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define.id_enum import Machinery
-MACHINE_ID = Machinery.BATTERY_MATRIX_CONTROLLER
 from ...common.define.tag_enum import BatteryTag
 from ...common.events.machinery.battery_matrix import (
     BatteryMatrixActionRequest,
     BatteryMatrixCheckCoreBatterysRequest,
     BatteryMatrixPopBatteryRequest,
-    BatteryMatrixStoreBatteryRequest,
     BatteryMatrixStatesUpdate,
+    BatteryMatrixStoreBatteryRequest,
 )
 from ...common.machinery_def.battery_matrix import (
-    STRUCTURE_PALETTE,
-    STRUCTURE_REQUIRE_BLOCKS,
     IO_ENERGY_INPUT,
     IO_ENERGY_OUTPUT,
-    K_STORE_RF,
     K_ENABLE_INPUT,
     K_ENABLE_OUTPUT,
     K_INPUT_POWER,
     K_OUTPUT_POWER,
     K_RF_MAX,
+    K_STORE_RF,
+    STRUCTURE_PALETTE,
+    STRUCTURE_REQUIRE_BLOCKS,
 )
 from .basic import (
-    BaseMachine,
     GUIControl,
     ItemContainer,
     MultiBlockStructure,
-    WorkRenderer,
+    OperationListener,
     RegisterMachine,
+    WorkRenderer,
 )
-from .utils.action_commit import SafeGetMachine
-from .interfaces import EnergyInputInterface, EnergyOutputInterface
 from .battery_matrix_core import BatteryMatrixCore
-
+from .interfaces import EnergyInputInterface, EnergyOutputInterface
 
 EnergyInputInterface.AddExtraMachineId(IO_ENERGY_INPUT)
 EnergyOutputInterface.AddExtraMachineId(IO_ENERGY_OUTPUT)
 
 
 @RegisterMachine
-class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure, WorkRenderer):
-    block_name = MACHINE_ID
+class BatteryMatrix(
+    GUIControl, ItemContainer, MultiBlockStructure, OperationListener, WorkRenderer
+):
+    block_name = Machinery.BATTERY_MATRIX_CONTROLLER
     store_rf_max = 100000
     input_slots = (0, 1, 2, 3, 4, 5, 6)
     output_slots = (0, 1, 2, 3, 4, 5, 6)
@@ -256,41 +256,29 @@ class BatteryMatrix(GUIControl, ItemContainer, MultiBlockStructure, WorkRenderer
         self.bdata[K_ENABLE_OUTPUT] = value
 
 
-@BatteryMatrixActionRequest.Listen()
-def onRequest(event):
-    # type: (BatteryMatrixActionRequest) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
-        return
+@BatteryMatrix.ForOperation(BatteryMatrixActionRequest)
+def onRequest(event, machine):
+    # type: (BatteryMatrixActionRequest, BatteryMatrix) -> None
     if event.op == event.OPERATION_INPUT:
-        m.set_enable_input(event.value)
+        machine.set_enable_input(event.value)
     elif event.op == event.OPERATION_OUTPUT:
-        m.set_enable_output(event.value)
-    m.CallSync()
+        machine.set_enable_output(event.value)
+    machine.CallSync()
 
 
-@BatteryMatrixCheckCoreBatterysRequest.Listen()
-def onRecvCheckRequest(event):
-    # type: (BatteryMatrixCheckCoreBatterysRequest) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
-        return
-    m.get_core().gen_update_event(first=True).send(event.player_id)
+@BatteryMatrix.ForOperation(BatteryMatrixCheckCoreBatterysRequest)
+def onRecvCheckRequest(event, machine):
+    # type: (BatteryMatrixCheckCoreBatterysRequest, BatteryMatrix) -> None
+    machine.get_core().gen_update_event(first=True).send(event.player_id)
 
 
-@BatteryMatrixPopBatteryRequest.Listen()
-def onRecvPopRequest(event):
-    # type: (BatteryMatrixPopBatteryRequest) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
-        return
-    m.pop_battery_from_core(event.index)
+@BatteryMatrix.ForOperation(BatteryMatrixPopBatteryRequest)
+def onRecvPopRequest(event, machine):
+    # type: (BatteryMatrixPopBatteryRequest, BatteryMatrix) -> None
+    machine.pop_battery_from_core(event.index)
 
 
-@BatteryMatrixStoreBatteryRequest.Listen()
-def onRecvStoreRequest(event):
-    # type: (BatteryMatrixStoreBatteryRequest) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, BatteryMatrix) or not m.StructureFinished():
-        return
-    m.push_batteries_to_core()
+@BatteryMatrix.ForOperation(BatteryMatrixStoreBatteryRequest)
+def onRecvStoreRequest(event, machine):
+    # type: (BatteryMatrixStoreBatteryRequest, BatteryMatrix) -> None
+    machine.push_batteries_to_core()

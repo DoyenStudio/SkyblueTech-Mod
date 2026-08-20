@@ -1,9 +1,11 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2SEvent
+from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
+from .basic import MachineryOperationC2S
 
 
-class RFRepeaterPlantSettingUpload(CustomC2SEvent):
+class RFRepeaterPlantSettingUpload(MachineryOperationC2S):
     name = "st:RFRPSU"
+    extra_attrs = ("io_mode",)
 
     MODE_INPUT = False
     MODE_OUTPUT = True
@@ -22,24 +24,6 @@ class RFRepeaterPlantSettingUpload(CustomC2SEvent):
         self.z = z
         self.io_mode = io_mode
         self.player_id = player_id
-
-    def marshal(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "z": self.z,
-            "io_mode": self.io_mode,
-        }
-
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            data["x"],
-            data["y"],
-            data["z"],
-            data["io_mode"],
-            data["__id__"],
-        )
 
 
 class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
@@ -110,8 +94,9 @@ class RFRepeaterPlantSettingsUpdate(CustomS2CEvent):
         )
 
 
-class RFRepeaterPlantBuildRequest(CustomC2SEvent):
+class RFRepeaterPlantBuildRequest(MachineryOperationC2S):
     name = "st:RFRPBR"
+    extra_attrs = ("to_x", "to_y", "to_z")
 
     def __init__(
         self,
@@ -131,28 +116,6 @@ class RFRepeaterPlantBuildRequest(CustomC2SEvent):
         self.to_y = to_y
         self.to_z = to_z
         self.player_id = player_id
-
-    def marshal(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "z": self.z,
-            "to_x": self.to_x,
-            "to_y": self.to_y,
-            "to_z": self.to_z,
-        }
-
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            data["x"],
-            data["y"],
-            data["z"],
-            data["to_x"],
-            data["to_y"],
-            data["to_z"],
-            data["__id__"],
-        )
 
 
 class RFRepeaterPlantBuildResponse(CustomS2CEvent):

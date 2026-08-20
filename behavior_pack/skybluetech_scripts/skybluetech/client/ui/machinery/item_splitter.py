@@ -120,9 +120,9 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             self.item_selector_window = None
 
     def onAddSetting(self, _):
-        dim, x, y, z = self.pos
+        _, x, y, z = self.pos
         ItemSplitterSimpleAction(
-            dim, x, y, z, ItemSplitterSimpleAction.ACTION_ADD_SETTING, 0
+            x, y, z, ItemSplitterSimpleAction.ACTION_ADD_SETTING, 0
         ).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.label_editing")
@@ -162,10 +162,8 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             )
             return
         self.close_label_selector()
-        dim, x, y, z = self.pos
-        ItemSplitterSettingsSetLabel(
-            dim, x, y, z, self.selected_setting_index, idx
-        ).send()
+        _, x, y, z = self.pos
+        ItemSplitterSettingsSetLabel(x, y, z, self.selected_setting_index, idx).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.item_selected")
     def onSelectItem(self, params):
@@ -185,9 +183,9 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         if selected_item is None:
             return
         self.close_item_selector()
-        dim, x, y, z = self.pos
+        _, x, y, z = self.pos
         ItemSplitterSettingsSetItem(
-            dim, x, y, z, self.selected_setting_index, selected_item.id
+            x, y, z, self.selected_setting_index, selected_item.id
         ).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.delete")
@@ -196,9 +194,8 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         if params["ButtonState"] != 0:
             return
         idx = params["#collection_index"]
-        dim, x, y, z = self.pos
+        _, x, y, z = self.pos
         ItemSplitterSimpleAction(
-            dim,
             x,
             y,
             z,

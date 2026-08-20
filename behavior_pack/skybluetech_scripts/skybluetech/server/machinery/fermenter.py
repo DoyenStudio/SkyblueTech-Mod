@@ -42,10 +42,10 @@ from ...common.machinery_def.fermenter import (
     spec_recipes,
     FermenterRecipe,
 )
-from .utils.action_commit import SafeGetMachine
 from .basic import (
     GUIControl,
     MultiBlockStructure,
+    OperationListener,
     UpgradeControl,
     WorkRenderer,
     RegisterMachine,
@@ -66,7 +66,7 @@ ItemInputInterface.AddExtraMachineId(FERMENTER_IDENUM.IO_ITEM)
 
 
 @RegisterMachine
-class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
+class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, OperationListener):
     block_name = MACHINE_ID
     store_rf_max = STORE_RF_MAX
     origin_process_ticks = 1
@@ -592,25 +592,17 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer):
         self.bdata[K_TEMPERATURE] = value
 
 
-@FermenterSetTemperatureEvent.Listen()
-def onFermenterSetTemperatureEvent(event):
-    # type: (FermenterSetTemperatureEvent) -> None
-    global Fermenter
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, Fermenter):
-        return
+@Fermenter.ForOperation(FermenterSetTemperatureEvent)
+def onFermenterSetTemperatureEvent(event, machine):
+    # type: (FermenterSetTemperatureEvent, Fermenter) -> None
     if not isinstance(event.temperature, float):
         return
-    m.setExpectedTemperature(event.temperature)
+    machine.setExpectedTemperature(event.temperature)
 
 
-@FermenterSeMaxVolumeEvent.Listen()
-def onFermenterSeMaxVolumeEvent(event):
-    # type: (FermenterSeMaxVolumeEvent) -> None
-    global Fermenter
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, Fermenter):
-        return
+@Fermenter.ForOperation(FermenterSeMaxVolumeEvent)
+def onFermenterSeMaxVolumeEvent(event, machine):
+    # type: (FermenterSeMaxVolumeEvent, Fermenter) -> None
     if not isinstance(event.volume, float):
         return
-    m.setExpectedWaterMaxVolume(event.volume)
+    machine.setExpectedWaterMaxVolume(event.volume)

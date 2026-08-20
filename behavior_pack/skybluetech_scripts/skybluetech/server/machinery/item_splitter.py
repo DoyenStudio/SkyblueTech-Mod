@@ -1,22 +1,23 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from skybluetech_scripts.tooldelta.api.common import ExecLater
+
+from ...common.define.id_enum.machinery import Machinery
 from ...common.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
     ItemSplitterSettingsSetLabel,
     ItemSplitterSimpleAction,
 )
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.ITEM_SPLITTER
 from ..transmitters.cable.logic import (
-    logic_module as cable_logic,
     PushItemToGenericContainer,
 )
-from .utils.action_commit import SafeGetMachine
-from .basic import GUIControl, UpgradeControl, RegisterMachine
+from ..transmitters.cable.logic import (
+    logic_module as cable_logic,
+)
+from .basic import GUIControl, OperationListener, RegisterMachine, UpgradeControl
 
 K_RECORD_LABELS = "record_settings"
 K_SETTINGS_LIMIT = "settings_limit"
@@ -25,8 +26,8 @@ DEFAULT_SETTINGS_LIMIT = 6
 
 
 @RegisterMachine
-class ItemSplitter(GUIControl, UpgradeControl):
-    block_name = MACHINE_ID
+class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
+    block_name = Machinery.ITEM_SPLITTER
     input_slots = (0, 1, 2)
     upgrade_slot_start = 3
     allow_upgrader_tags = {"skybluetech:upgraders/generic_split"}
@@ -173,39 +174,30 @@ class ItemSplitter(GUIControl, UpgradeControl):
         ]
 
 
-@ItemSplitterSimpleAction.Listen()
-def onSimpleAction(event):
-    # type: (ItemSplitterSimpleAction) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, ItemSplitter):
-        return
+@ItemSplitter.ForOperation(ItemSplitterSimpleAction)
+def onSimpleAction(event, machine):
+    # type: (ItemSplitterSimpleAction, ItemSplitter) -> None
     if event.action == event.ACTION_ADD_SETTING:
-        m.on_add_setting(event.player_id)
+        machine.on_add_setting(event.player_id)
     elif event.action == event.ACTION_REMOVE_SETTING:
-        m.on_delete_setting(event.player_id, event.extra)
+        machine.on_delete_setting(event.player_id, event.extra)
 
 
-@ItemSplitterSettingsSetLabel.Listen()
-def onSetLabel(event):
-    # type: (ItemSplitterSettingsSetLabel) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, ItemSplitter):
-        return
+@ItemSplitter.ForOperation(ItemSplitterSettingsSetLabel)
+def onSetLabel(event, machine):
+    # type: (ItemSplitterSettingsSetLabel, ItemSplitter) -> None
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
-    m.on_set_label(event.player_id, event.setting_index, event.label)
+    machine.on_set_label(event.player_id, event.setting_index, event.label)
 
 
-@ItemSplitterSettingsSetItem.Listen()
-def onSetItem(event):
-    # type: (ItemSplitterSettingsSetItem) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, ItemSplitter):
-        return
+@ItemSplitter.ForOperation(ItemSplitterSettingsSetItem)
+def onSetItem(event, machine):
+    # type: (ItemSplitterSettingsSetItem, ItemSplitter) -> None
     if (
         not isinstance(event.setting_index, int)
         or not isinstance(event.item_id, str)
         or len(event.item_id) > 256
     ):
         return
-    m.on_set_item(event.player_id, event.setting_index, event.item_id)
+    machine.on_set_item(event.player_id, event.setting_index, event.item_id)

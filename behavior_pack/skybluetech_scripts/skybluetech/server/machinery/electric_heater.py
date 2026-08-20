@@ -4,18 +4,23 @@ from ...common.define.id_enum.machinery import Machinery
 MACHINE_ID = Machinery.ELECTRIC_HEATER
 from ...common.events.machinery.electric_heater import ElectricHeaterSubmitModifiesEvent
 from ...common.machinery_def.electric_heater import (
-    K_SET_POWER,
     K_KELVIN_LIMIT,
+    K_SET_POWER,
     STORE_RF_MAX,
 )
-from .utils.action_commit import SafeGetMachine
-from .basic import HeatCtrl, GUIControl, PowerControl, RegisterMachine
+from .basic import (
+    GUIControl,
+    HeatCtrl,
+    OperationListener,
+    PowerControl,
+    RegisterMachine,
+)
 
 MAX_POWER = STORE_RF_MAX
 
 
 @RegisterMachine
-class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
+class ElectricHeater(HeatCtrl, GUIControl, PowerControl, OperationListener):
     block_name = MACHINE_ID
     store_rf_max = STORE_RF_MAX
     max_heat_value = 500
@@ -75,13 +80,10 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl):
         self.bdata[K_KELVIN_LIMIT] = value
 
 
-@ElectricHeaterSubmitModifiesEvent.Listen()
-def onSetPower(event):
-    # type: (ElectricHeaterSubmitModifiesEvent) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, ElectricHeater):
-        return
+@ElectricHeater.ForOperation(ElectricHeaterSubmitModifiesEvent)
+def onSetPower(event, machine):
+    # type: (ElectricHeaterSubmitModifiesEvent, ElectricHeater) -> None
     if not isinstance(event.power, int) or not isinstance(event.kelvin_limit, int):
         return
-    m.set_power(event.power)
-    m.set_kelvin_limit(event.kelvin_limit)
+    machine.set_power(event.power)
+    machine.set_kelvin_limit(event.kelvin_limit)

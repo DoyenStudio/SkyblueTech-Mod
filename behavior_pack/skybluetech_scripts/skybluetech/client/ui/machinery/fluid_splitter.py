@@ -1,25 +1,26 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
-)
-from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl, Binder
+from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Fluids
 from skybluetech_scripts.skybluetech.common.events.machinery.fluid_splitter import (
+    FluidSplitterSettingsListUpdate,
     FluidSplitterSettingsSetFluid,
     FluidSplitterSettingsSetLabel,
-    FluidSplitterSettingsListUpdate,
     FluidSplitterSimpleAction,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Fluids
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient
 from skybluetech_scripts.skybluetech.common.machinery_def.fluid_splitter import (
     MAX_FLUID_VOLUME,
 )
+from skybluetech_scripts.tooldelta.api.client import (
+    GetBlockEntityData,
+    GetItemHoverName,
+)
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
+
 from ..machinery_extra_pages import PipeSettingsPageIndirectional
-from ..misc.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
+from ..misc.transmitter_settings_ui import get_opposite_color, rand_rgb_by_index
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer
 
 SETTINGS_VIEW_PATH = MAIN_PATH / "settings_view"
@@ -150,9 +151,9 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
             e["btn"].SetPropertyBag({"#fluid_id": section})
 
     def onAddSetting(self, _):
-        dim, x, y, z = self.pos
+        _, x, y, z = self.pos
         FluidSplitterSimpleAction(
-            dim, x, y, z, FluidSplitterSimpleAction.ACTION_ADD_SETTING, 0
+            x, y, z, FluidSplitterSimpleAction.ACTION_ADD_SETTING, 0
         ).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#FluidSplitterUI.label_editing")

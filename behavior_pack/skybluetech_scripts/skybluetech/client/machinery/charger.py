@@ -12,7 +12,6 @@ from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
-from skybluetech_scripts.tooldelta.events.notify import NotifyToServer
 from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
     asModBlockLoadedListener,
     asModBlockRemovedListener,
@@ -60,7 +59,7 @@ def onModBlockLoaded(event):
     pos = (event.posX, event.posY, event.posZ)
     cli_loading_machines.add(pos)
     # item_id
-    NotifyToServer(ChargeItemModelRequest(event.posX, event.posY, event.posZ))
+    ChargeItemModelRequest(event.posX, event.posY, event.posZ).send()
 
 
 @asModBlockRemovedListener(Machinery.CHARGER)

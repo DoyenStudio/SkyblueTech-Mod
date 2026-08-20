@@ -1,8 +1,10 @@
-from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent
+# coding=utf-8
+from .basic import MachineryOperationC2S
 
 
-class FermenterSetTemperatureEvent(CustomC2SEvent):
+class FermenterSetTemperatureEvent(MachineryOperationC2S):
     name = "st:FST"
+    extra_attrs = ("temperature",)
 
     def __init__(self, x, y, z, temperature, player_id=""):
         # type: (int, int, int, float, str) -> None
@@ -12,27 +14,10 @@ class FermenterSetTemperatureEvent(CustomC2SEvent):
         self.temperature = temperature
         self.player_id = player_id
 
-    def marshal(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "z": self.z,
-            "t": self.temperature
-        }
 
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            x=data["x"],
-            y=data["y"],
-            z=data["z"],
-            temperature=data["t"],
-            player_id=data["__id__"]
-        )
-
-
-class FermenterSeMaxVolumeEvent(CustomC2SEvent):
+class FermenterSeMaxVolumeEvent(MachineryOperationC2S):
     name = "st:FSMV"
+    extra_attrs = ("volume",)
 
     def __init__(self, x, y, z, volume, player_id=""):
         # type: (int, int, int, float, str) -> None
@@ -41,21 +26,3 @@ class FermenterSeMaxVolumeEvent(CustomC2SEvent):
         self.z = z
         self.volume = volume
         self.player_id = player_id
-
-    def marshal(self):
-        return {
-            "x": self.x,
-            "y": self.y,
-            "z": self.z,
-            "v": self.volume
-        }
-
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            x=data["x"],
-            y=data["y"],
-            z=data["z"],
-            volume=data["v"],
-            player_id=data["__id__"]
-        )

@@ -1,24 +1,23 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
-    ServerBlockUseEvent,
     BlockNeighborChangedServerEvent,
+    ServerBlockUseEvent,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
+from ...common.define.id_enum.machinery import Machinery
 from ...common.events.machinery.assembler import (
-    AssemblerActionRequest,
-    AssemblerUpgradersUpdate,
     ACTION_PULL_UPGRADER,
     ACTION_PUSH_UPGRADER,
+    AssemblerActionRequest,
+    AssemblerUpgradersUpdate,
 )
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.ASSEMBLER
 from ...common.machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
-from .utils.action_commit import SafeGetMachine
+from .basic import GUIControl, OperationListener, RegisterMachine, UpgradeControl
 from .utils.lore import GetLorePos, SetLoreAtPos
-from .basic import GUIControl, UpgradeControl, RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
 
@@ -30,8 +29,8 @@ TCON = TransmitterConn(wire=True)
 
 
 @RegisterMachine
-class Assembler(GUIControl, UpgradeControl):
-    block_name = MACHINE_ID
+class Assembler(GUIControl, OperationListener, UpgradeControl):
+    block_name = Machinery.ASSEMBLER
     store_rf_max = RF_MAX
     energy_io_mode = (0, 0, 0, 0, 0, 0)
 
@@ -157,6 +156,17 @@ class Assembler(GUIControl, UpgradeControl):
         return getMaxUpgradersCount(item) > len(exist_upgraders)
 
 
+@Assembler.ForOperation(AssemblerActionRequest)
+def onHandleAction(event, machine):
+    # type: (AssemblerActionRequest, Assembler) -> None
+    if event.action == ACTION_PULL_UPGRADER:
+        if not isinstance(event.index, int):
+            return
+        machine.on_pull_upgrader(event.index)
+    elif event.action == ACTION_PUSH_UPGRADER:
+        machine.on_push_upgrader()
+
+
 def getUpgraders(item):
     # type: (Item) -> dict[str, Item]
     ud = item.userData
@@ -196,17 +206,3 @@ def getMaxUpgradersCount(item):
     if ud is None:
         return 0
     return g(ud, K_UD_MAX_UPGRADERS)
-
-
-@AssemblerActionRequest.Listen()
-def onHandleAction(event):
-    # type: (AssemblerActionRequest) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, Assembler):
-        return
-    if event.action == ACTION_PULL_UPGRADER:
-        if not isinstance(event.index, int):
-            return
-        m.on_pull_upgrader(event.index)
-    elif event.action == ACTION_PUSH_UPGRADER:
-        m.on_push_upgrader()

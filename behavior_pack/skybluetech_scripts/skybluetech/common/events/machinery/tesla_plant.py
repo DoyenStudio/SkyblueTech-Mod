@@ -1,9 +1,16 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2SEvent
+from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
+from .basic import MachineryOperationC2S
 
 
-class TeslaPlantSettingsUpload(CustomC2SEvent):
+class TeslaPlantSettingsUpload(MachineryOperationC2S):
     name = "st:TPSU"
+    extra_attrs = (
+        "work_range",
+        "do_attack_monster",
+        "do_attack_mob",
+        "do_attack_player",
+    )
 
     def __init__(
         self,

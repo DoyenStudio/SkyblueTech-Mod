@@ -1,8 +1,8 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.HOVER_TEXT_DISPLAYER
 from ...common.define.ui_keys import HOVER_TEXT_DISPLAYER_UI
 from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
@@ -10,20 +10,20 @@ from ...common.events.machinery.hover_text_displayer import (
 )
 from ...common.machinery_def.hover_text_displayer import K_TEXT, STORE_RF_MAX
 from ...common.utils.block_sync import BlockSync
-from .utils.action_commit import SafeGetMachine
 from .basic import (
     BaseClicker,
     GUIControl,
+    OperationListener,
     PowerControl,
     RegisterMachine,
 )
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
+block_sync = BlockSync(Machinery.HOVER_TEXT_DISPLAYER, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
-class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
-    block_name = MACHINE_ID
+class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl, OperationListener):
+    block_name = Machinery.HOVER_TEXT_DISPLAYER
     bound_ui = HOVER_TEXT_DISPLAYER_UI
     store_rf_max = STORE_RF_MAX
     running_power = 1
@@ -94,7 +94,7 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
         pass
 
     def calcuate_power_cost(self):
-        cost = len(self.text) * 0.2 * (1.5 if "§" in self.text else 1)
+        cost = len(self.text) * 0.2 * (1.5 if "搂" in self.text else 1)
         if cost % 1 > 0:
             return int(cost) + 1
         else:
@@ -111,12 +111,9 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl):
         self.bdata[K_TEXT] = str(value)
 
 
-@HoverTextDisplayerContentUpload.Listen()
-def onTextUploaded(event):
-    # type: (HoverTextDisplayerContentUpload) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, HoverTextDisplayer):
-        return
+@HoverTextDisplayer.ForOperation(HoverTextDisplayerContentUpload)
+def onTextUploaded(event, machine):
+    # type: (HoverTextDisplayerContentUpload, HoverTextDisplayer) -> None
     text = py2_unicode(event.new_text.strip())
     if len(text) > 256:
         text = text[:256]
@@ -129,7 +126,7 @@ def onTextUploaded(event):
             cached_text = ""
             length = 0
         else:
-            if char != "§":
+            if char != "搂":
                 length += 1
             if length > 40:
                 text_list.append(cached_text)
@@ -138,4 +135,4 @@ def onTextUploaded(event):
             cached_text += char
     if cached_text != "":
         text_list.append(cached_text)
-    m.set_text("\n".join(text_list))
+    machine.set_text("\n".join(text_list))

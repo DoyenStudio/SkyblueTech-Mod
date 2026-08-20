@@ -1,27 +1,28 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.events.machinery.freezer import FreezerModeChangedEvent
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.FREEZER
-from ...common.mini_jei.core import RecipesCollection
+from ...common.events.machinery.freezer import FreezerModeChangedEvent
+from ...common.machinery_def.freezer import (
+    K_MODE,
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
 from ...common.machinery_def.freezer import (
     recipes as Recipes,
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
-    K_MODE,
 )
-from .utils.action_commit import SafeGetMachine
-from .basic import MultiFluidContainer, Processor, RegisterMachine
+from ...common.mini_jei.core import RecipesCollection
+from .basic import MultiFluidContainer, OperationListener, Processor, RegisterMachine
 
 
 @RegisterMachine
-class Freezer(MultiFluidContainer, Processor):
-    block_name = MACHINE_ID
+class Freezer(MultiFluidContainer, Processor, OperationListener):
+    block_name = Machinery.FREEZER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     process_item = True
     process_fluid = True
-    recipes = RecipesCollection(MACHINE_ID)
+    recipes = RecipesCollection(Machinery.FREEZER)
     output_slots = (0,)
     fluid_input_slots = {0}
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
@@ -45,7 +46,7 @@ class Freezer(MultiFluidContainer, Processor):
         # type: (int) -> None
         if new_mode >= len(Recipes):
             new_mode %= len(Recipes)
-        self.recipes = RecipesCollection(MACHINE_ID, Recipes.recipes_mapping[new_mode])
+        self.recipes = RecipesCollection(Machinery.FREEZER, Recipes.recipes_mapping[new_mode])
         self.recipe_mode = new_mode
         self.start_next()
 
@@ -60,10 +61,7 @@ class Freezer(MultiFluidContainer, Processor):
         self.bdata[K_MODE] = value
 
 
-@FreezerModeChangedEvent.Listen()
-def onFreezerModeChanged(event):
-    # type: (FreezerModeChangedEvent) -> None
-    machine = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(machine, Freezer):
-        return
+@Freezer.ForOperation(FreezerModeChangedEvent)
+def onFreezerModeChanged(event, machine):
+    # type: (FreezerModeChangedEvent, Freezer) -> None
     machine.set_mode(event.new_mode)

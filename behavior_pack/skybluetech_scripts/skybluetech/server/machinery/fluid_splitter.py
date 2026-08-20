@@ -1,22 +1,29 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
+from ...common.define.id_enum.machinery import Machinery
 from ...common.events.machinery.fluid_splitter import (
     FluidSplitterSettingsListUpdate,
     FluidSplitterSettingsSetFluid,
     FluidSplitterSettingsSetLabel,
     FluidSplitterSimpleAction,
 )
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.FLUID_SPLITTER
 from ...common.machinery_def.fluid_splitter import MAX_FLUID_VOLUME
 from ..transmitters.pipe.logic import (
-    logic_module as pipe_logic,
     PushFluidToFluidContainer,
 )
-from .utils.action_commit import SafeGetMachine
-from .basic import MultiFluidContainer, GUIControl, UpgradeControl, RegisterMachine
+from ..transmitters.pipe.logic import (
+    logic_module as pipe_logic,
+)
+from .basic import (
+    GUIControl,
+    MultiFluidContainer,
+    OperationListener,
+    RegisterMachine,
+    UpgradeControl,
+)
 
 K_RECORD_LABELS = "record_settings"
 K_SETTINGS_LIMIT = "settings_limit"
@@ -25,8 +32,8 @@ DEFAULT_SETTINGS_LIMIT = 3
 
 
 @RegisterMachine
-class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
-    block_name = MACHINE_ID
+class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationListener):
+    block_name = Machinery.FLUID_SPLITTER
     fluid_io_fix_mode = -1
     fluid_input_slots = {0}
     fluid_output_slots = set()
@@ -177,39 +184,30 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl):
         ]
 
 
-@FluidSplitterSimpleAction.Listen()
-def onSimpleAction(event):
-    # type: (FluidSplitterSimpleAction) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, FluidSplitter):
-        return
+@FluidSplitter.ForOperation(FluidSplitterSimpleAction)
+def onSimpleAction(event, machine):
+    # type: (FluidSplitterSimpleAction, FluidSplitter) -> None
     if event.action == event.ACTION_ADD_SETTING:
-        m.on_add_setting(event.player_id)
+        machine.on_add_setting(event.player_id)
     elif event.action == event.ACTION_REMOVE_SETTING:
-        m.on_delete_setting(event.player_id, event.extra)
+        machine.on_delete_setting(event.player_id, event.extra)
 
 
-@FluidSplitterSettingsSetLabel.Listen()
-def onSetLabel(event):
-    # type: (FluidSplitterSettingsSetLabel) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, FluidSplitter):
-        return
+@FluidSplitter.ForOperation(FluidSplitterSettingsSetLabel)
+def onSetLabel(event, machine):
+    # type: (FluidSplitterSettingsSetLabel, FluidSplitter) -> None
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
-    m.on_set_label(event.player_id, event.setting_index, event.label)
+    machine.on_set_label(event.player_id, event.setting_index, event.label)
 
 
-@FluidSplitterSettingsSetFluid.Listen()
-def onSetFluid(event):
-    # type: (FluidSplitterSettingsSetFluid) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, FluidSplitter):
-        return
+@FluidSplitter.ForOperation(FluidSplitterSettingsSetFluid)
+def onSetFluid(event, machine):
+    # type: (FluidSplitterSettingsSetFluid, FluidSplitter) -> None
     if (
         not isinstance(event.setting_index, int)
         or not isinstance(event.fluid_id, str)
         or len(event.fluid_id) > 256
     ):
         return
-    m.on_set_fluid(event.player_id, event.setting_index, event.fluid_id)
+    machine.on_set_fluid(event.player_id, event.setting_index, event.fluid_id)

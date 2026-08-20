@@ -1,8 +1,9 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2SEvent
+from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
+from .basic import MachineryOperationC2S
 
 
-class WindGeneratorStatesRequest(CustomC2SEvent):
+class WindGeneratorStatesRequest(MachineryOperationC2S):
     name = "st:WGSR"
 
     def __init__(self, x, y, z, player_id=""):
@@ -11,18 +12,6 @@ class WindGeneratorStatesRequest(CustomC2SEvent):
         self.y = y
         self.z = z
         self.player_id = player_id
-
-    def marshal(self):
-        return {"x": self.x, "y": self.y, "z": self.z}
-
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            x=data["x"],
-            y=data["y"],
-            z=data["z"],
-            player_id=data["__id__"],
-        )
 
 
 class WindGeneratorStatesUpdate(CustomS2CEvent):

@@ -73,9 +73,9 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         kelvin_limit_str = self.kevin_limit_input.GetText()
         if kelvin_limit_str == "":
             return
-        dim, x, y, z = self.pos
+        _, x, y, z = self.pos
         ElectricHeaterSubmitModifiesEvent(
-            dim, x, y, z, int(power_str), int(kelvin_limit_str)
+            x, y, z, int(power_str), int(kelvin_limit_str)
         ).send()
 
     @Binder.binding(Binder.BF_EditFinished, "#electric_heater.power")

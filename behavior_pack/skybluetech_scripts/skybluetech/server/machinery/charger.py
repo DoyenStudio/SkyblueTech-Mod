@@ -1,43 +1,32 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    GetPos,
-    GetPlayerDimensionId as SGetPlayerDim,
-)
-
-from skybluetech_scripts.tooldelta.events.notify import (
-    NotifyToClients,
-    NotifyToClient,
-)
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.CHARGER
+from ...common.events.machinery.charger import (
+    ChargeItemModelRequest,
+    ChargerItemModelUpdate,
+)
 from ...common.machinery_def.charger import (
     K_CHARGE_RF,
     K_CHARGE_RF_MAX,
-    CHARGE_SPEED,
     STORE_RF_MAX,
 )
-from ...common.events.machinery.charger import (
-    ChargerItemModelUpdate,
-    ChargeItemModelRequest,
-)
+from ...common.utils.block_sync import BlockSync
+from .basic import GUIControl, OperationListener, RegisterMachine, UpgradeControl
 from .utils.charge import (
-    GetCharge,
     ChargeItem,
+    GetCharge,
     GetIOPower,
 )
-from ...common.utils.block_sync import BlockSync
-from .basic import GUIControl, UpgradeControl, RegisterMachine
-from .pool import GetMachineStrict
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
+block_sync = BlockSync(Machinery.CHARGER, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
-class Charger(GUIControl, UpgradeControl):
-    block_name = MACHINE_ID
+class Charger(GUIControl, OperationListener, UpgradeControl):
+    block_name = Machinery.CHARGER
     allow_upgrader_tags = {"skybluetech:upgraders/charger"}
     input_slots = (0,)
     output_slots = (1,)
@@ -70,9 +59,9 @@ class Charger(GUIControl, UpgradeControl):
         # type: (int, Item) -> bool
         if slot != 0:
             return False
-        if item.userData is None or GetIOPower(item.userData, -1, -1) == (-1, -1):
-            return False
-        return True
+        return not (
+            item.userData is None or GetIOPower(item.userData, -1, -1) == (-1, -1)
+        )
 
     @SuperExecutorMeta.execute_super
     def OnSlotUpdate(self, slot_pos):
@@ -91,9 +80,8 @@ class Charger(GUIControl, UpgradeControl):
                 self.charge_rf = 0
                 self.charge_rf_max = 1
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-                NotifyToClients(
+                ChargerItemModelUpdate(self.x, self.y, self.z, None).sendMulti(
                     block_sync.get_players((self.dim, self.x, self.y, self.z)),
-                    ChargerItemModelUpdate(self.x, self.y, self.z, None),
                 )
                 return
             ud = charge_item.userData
@@ -102,11 +90,10 @@ class Charger(GUIControl, UpgradeControl):
                 return
             self.charge_rf, self.charge_rf_max = GetCharge(ud)
             self.ResetDeactiveFlags()
-            NotifyToClients(
+            ChargerItemModelUpdate(
+                self.x, self.y, self.z, charge_item.id, charge_item.isEnchanted
+            ).sendMulti(
                 block_sync.get_players((self.dim, self.x, self.y, self.z)),
-                ChargerItemModelUpdate(
-                    self.x, self.y, self.z, charge_item.id, charge_item.isEnchanted
-                ),
             )
 
     def charge_once(self):
@@ -155,25 +142,16 @@ class Charger(GUIControl, UpgradeControl):
         self.bdata[K_CHARGE_RF_MAX] = self._charge_rf_max = value
 
 
-@ChargeItemModelRequest.Listen()
-def onItemModelRequest(event):
-    # type: (ChargeItemModelRequest) -> None
-    x = event.x
-    y = event.y
-    z = event.z
-    if not isinstance(x, int) or not isinstance(y, int) or not isinstance(z, int):
-        return
-    posx, posy, posz = GetPos(event.pid)
-    if abs(posx - x) + abs(posy - y) + abs(posz - z) > 64:
-        return
-    m = GetMachineStrict(SGetPlayerDim(event.pid), x, y, z)
-    if not isinstance(m, Charger):
-        return
-    it = m.GetSlotItem(0)
+@Charger.ForOperation(ChargeItemModelRequest)
+def onItemModelRequest(event, machine):
+    # type: (ChargeItemModelRequest, Charger) -> None
+    it = machine.GetSlotItem(0)
     if it is None:
         item_id = None
         enchanted = False
     else:
         item_id = it.id
         enchanted = it.isEnchanted
-    NotifyToClient(event.pid, ChargerItemModelUpdate(x, y, z, item_id, enchanted))
+    ChargerItemModelUpdate(machine.x, machine.y, machine.z, item_id, enchanted).send(
+        event.player_id
+    )

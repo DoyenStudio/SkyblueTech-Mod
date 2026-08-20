@@ -15,7 +15,6 @@ from ...common.events.machinery.machinery_workstation import (
     MachineryWorkstationTransferRecipe,
 )
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.MACHINERY_WORKSTATION
 from ...common.machinery_def.machinery_workstation import (
     recipes as Recipes,
     K_CRAFTING_PROGRESS,
@@ -26,16 +25,15 @@ from ...common.machinery_def.machinery_workstation import (
 )
 from ..machinery.utils.charge import ChargeEnough, GetCharge, GetPowerCost, UpdateCharge
 from ..tools.actions.utils import MakeItemUseless
-from .utils.action_commit import SafeGetMachine
-from .basic import BaseMachine, RegisterMachine, GUIControl, ItemContainer
+from .basic import BaseMachine, RegisterMachine, GUIControl, ItemContainer, OperationListener
 
 K_CRAFT_TIMES = "craft_times"
 ItemPosType = GetMinecraftEnum().ItemPosType
 
 
 @RegisterMachine
-class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
-    block_name = MACHINE_ID
+class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer, OperationListener):
+    block_name = Machinery.MACHINERY_WORKSTATION
     input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     output_slots = (11,)
 
@@ -317,19 +315,13 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer):
         self.CallSync()
 
 
-@MachineryWorkstationDoCraft.Listen()
-def onDoCraft(event):
-    # type: (MachineryWorkstationDoCraft) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, MachineryWorkstation):
-        return
-    m.on_craft(event)
+@MachineryWorkstation.ForOperation(MachineryWorkstationDoCraft)
+def onDoCraft(event, machine):
+    # type: (MachineryWorkstationDoCraft, MachineryWorkstation) -> None
+    machine.on_craft(event)
 
 
-@MachineryWorkstationTransferRecipe.Listen()
-def onTransferRecipe(event):
-    # type: (MachineryWorkstationTransferRecipe) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, MachineryWorkstation):
-        return
-    m.transfer_recipe_items(event.player_id, event.output_item_id)
+@MachineryWorkstation.ForOperation(MachineryWorkstationTransferRecipe)
+def onTransferRecipe(event, machine):
+    # type: (MachineryWorkstationTransferRecipe, MachineryWorkstation) -> None
+    machine.transfer_recipe_items(event.player_id, event.output_item_id)

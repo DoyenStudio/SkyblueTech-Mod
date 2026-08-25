@@ -153,6 +153,9 @@
         "skybluetech:electric_heater": {
             "textures": "textures/models/electric_heater_texture"
         },
+        "skybluetech:energy_cube_junior": {
+            "textures": "textures/models/energy_cube/energy_cube_junior_texture"
+        },
         "skybluetech:famicom": {
             "textures": "textures/models/famicom_texture"
         },

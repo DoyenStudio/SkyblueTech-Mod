@@ -1,0 +1,1109 @@
+{
+    "energy_cube_ui": {
+        "type": "panel",
+        "size": [
+            180.0,
+            200.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "upper": {
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "size": [
+                        "default",
+                        "55%+0px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "machine_label": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    4.0
+                                ],
+                                "layer": 2,
+                                "font_scale_factor": 1.4,
+                                "font_type": "default",
+                                "shadow": true,
+                                "text": "能量立方",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "close_btn@common.button": {
+                                "type": "button",
+                                "$control_alpha": 1.0,
+                                "$default_texture": "textures/ui/close_button_default",
+                                "$hover_texture": "textures/ui/close_button_default",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1.0,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                "$pressed_texture": "textures/ui/close_button_default",
+                                "$texture_layer": 2,
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [
+                                    -4.0,
+                                    4.0
+                                ],
+                                "size": [
+                                    18.0,
+                                    18.0
+                                ],
+                                "layer": 21,
+                                "button_mappings": [],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "pressed_control": "pressed",
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "battery_icon": {
+                                "type": "panel",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    24.0
+                                ],
+                                "size": [
+                                    96.0,
+                                    36.0
+                                ],
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "bg": {
+                                            "type": "image",
+                                            "layer": 1,
+                                            "texture": "textures/ui/battery_big_img"
+                                        }
+                                    },
+                                    {
+                                        "mask": {
+                                            "type": "image",
+                                            "layer": 1,
+                                            "texture": "textures/ui/battery_big_mask"
+                                        }
+                                    },
+                                    {
+                                        "energy_label": {
+                                            "type": "label",
+                                            "offset": [
+                                                -4.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                "default",
+                                                18.0
+                                            ],
+                                            "layer": 4,
+                                            "font_scale_factor": 1.1,
+                                            "font_size": "large",
+                                            "font_type": "MinecraftTen",
+                                            "text": "100.0%%",
+                                            "text_alignment": "center"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "total_power": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    62.0
+                                ],
+                                "size": [
+                                    128.0,
+                                    "default"
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "999.99 MRF / 999.99 MRF",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "input_power": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    18.0,
+                                    72.0
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.6666666666666666,
+                                    0.0,
+                                    0.0
+                                ],
+                                "font_scale_factor": 1.2,
+                                "font_type": "rune",
+                                "text": "输入 0.0 RF/t",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "output_power": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    18.0,
+                                    84.0
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "font_scale_factor": 1.2,
+                                "font_type": "rune",
+                                "text": "输出 0.0 RF/t",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "input_switch@common_toggles.switch_toggle_collection": {
+                                "type": "panel",
+                                "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                "$default_texture": "textures/ui/simple_switch_off",
+                                "$hover_texture": "textures/ui/simple_switch_on",
+                                "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
+                                "$pressed_texture": "textures/ui/simple_switch_off",
+                                "$toggle_name": "#EnergyCubeUI.input_switch",
+                                "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [
+                                    -12.0,
+                                    66.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "output_switch@common_toggles.switch_toggle_collection": {
+                                "type": "panel",
+                                "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                "$default_border_visible|default": false,
+                                "$default_texture": "textures/ui/simple_switch_off",
+                                "$hover_texture": "textures/ui/simple_switch_on",
+                                "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
+                                "$pressed_texture": "textures/ui/simple_switch_off",
+                                "$toggle_name": "#EnergyCubeUI.output_switch",
+                                "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                                "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [
+                                    -12.0,
+                                    79.0
+                                ],
+                                "size": [
+                                    25.0,
+                                    25.0
+                                ],
+                                "layer": 1,
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "input_tip": {
+                                "type": "label",
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [
+                                    -40.0,
+                                    73.0
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "允许输入",
+                                "text_alignment": "center"
+                            }
+                        },
+                        {
+                            "output_tip": {
+                                "type": "label",
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
+                                "offset": [
+                                    -41.0,
+                                    85.0
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "允许输出",
+                                "text_alignment": "center"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "lower": {
+                    "type": "panel",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "size": [
+                        "default",
+                        "45%+0px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "io_settings": {
+                                "type": "panel",
+                                "size": [
+                                    100,
+                                    73.0
+                                ],
+                                "layer": 1,
+                                "controls": [
+                                    {
+                                        "south_set_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/button_default",
+                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$label_font_scale_factor": 1.0,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "Button",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$texture_layer": 2,
+                                            "size": [
+                                                25.0,
+                                                25.0
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "icon": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            12.0,
+                                                            12.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "uv_size": [
+                                                            4.0,
+                                                            4.0
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "dir_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "bottom_right",
+                                                        "anchor_to": "bottom_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "南",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "io_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 0.8,
+                                                        "font_type": "default",
+                                                        "text": "输入",
+                                                        "text_alignment": "center"
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "top_set_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/button_default",
+                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$label_font_scale_factor": 1.0,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "Button",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$texture_layer": 2,
+                                            "offset": [
+                                                0.0,
+                                                -25.0
+                                            ],
+                                            "size": [
+                                                25.0,
+                                                25.0
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "dir_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "bottom_right",
+                                                        "anchor_to": "bottom_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "上",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "io_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 0.8,
+                                                        "font_type": "default",
+                                                        "text": "输入",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "icon": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            12.0,
+                                                            12.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "uv_size": [
+                                                            4.0,
+                                                            4.0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "bottom_set_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/button_default",
+                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$label_font_scale_factor": 1.0,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "Button",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$texture_layer": 2,
+                                            "offset": [
+                                                0.0,
+                                                25.0
+                                            ],
+                                            "size": [
+                                                25.0,
+                                                25.0
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "dir_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "bottom_right",
+                                                        "anchor_to": "bottom_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "下",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "io_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 0.8,
+                                                        "font_type": "default",
+                                                        "text": "输入",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "icon": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            12.0,
+                                                            12.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "uv_size": [
+                                                            4.0,
+                                                            4.0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "west_set_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/button_default",
+                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$label_font_scale_factor": 1.0,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "Button",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$texture_layer": 2,
+                                            "offset": [
+                                                -25.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                25.0,
+                                                25.0
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "dir_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "bottom_right",
+                                                        "anchor_to": "bottom_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "西",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "io_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 0.8,
+                                                        "font_type": "default",
+                                                        "text": "输入",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "icon": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            12.0,
+                                                            12.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "uv_size": [
+                                                            4.0,
+                                                            4.0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "east_set_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/button_default",
+                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$label_font_scale_factor": 1.0,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "Button",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$texture_layer": 2,
+                                            "offset": [
+                                                25.0,
+                                                0.0
+                                            ],
+                                            "size": [
+                                                25.0,
+                                                25.0
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "dir_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "bottom_right",
+                                                        "anchor_to": "bottom_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "东",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "io_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 0.8,
+                                                        "font_type": "default",
+                                                        "text": "输入",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "icon": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            12.0,
+                                                            12.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "uv_size": [
+                                                            4.0,
+                                                            4.0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "north_set_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/button_default",
+                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$is_new_nine_slice": false,
+                                            "$label_color": [
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$label_font_scale_factor": 1.0,
+                                            "$label_font_size": "large",
+                                            "$label_layer": 3,
+                                            "$label_offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "$label_text": "Button",
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                1.0,
+                                                1.0,
+                                                1.0,
+                                                1.0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/button_hovered",
+                                            "$texture_layer": 2,
+                                            "offset": [
+                                                25.0,
+                                                25.0
+                                            ],
+                                            "size": [
+                                                25.0,
+                                                25.0
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                },
+                                                {
+                                                    "dir_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "bottom_right",
+                                                        "anchor_to": "bottom_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "北",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "io_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -1.0,
+                                                            0.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_scale_factor": 0.8,
+                                                        "font_type": "default",
+                                                        "text": "输入",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "icon": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            12.0,
+                                                            12.0
+                                                        ],
+                                                        "layer": 3,
+                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "uv_size": [
+                                                            4.0,
+                                                            4.0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "$screen_content": "EnergyCubeUI.energy_cube_ui"
+    },
+    "namespace": "EnergyCubeUI"
+}

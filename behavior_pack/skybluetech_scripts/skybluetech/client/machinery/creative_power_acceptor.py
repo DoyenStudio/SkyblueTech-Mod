@@ -39,7 +39,7 @@ def add_text(dim, pos, default_text=""):
     text = texts.get(dim, {}).pop(pos, None)
     if text is not None:
         text.Remove()
-    t = CF.CreateDrawing(GetLevelId()).AddTextShape((tx, ty, tz), default_text)
+    text = CF.CreateDrawing(GetLevelId()).AddTextShape((tx, ty, tz), default_text)
     texts.setdefault(dim, {})[pos] = text
 
 

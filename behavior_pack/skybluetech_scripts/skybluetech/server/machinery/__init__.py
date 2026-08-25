@@ -15,6 +15,7 @@ from .digger import Digger
 from .distillation_chamber import DistillationChamber
 from .electric_heater import ElectricHeater
 from .electric_crafter import ElectricCrafter
+from .energy_cube import EnergyCubeJunior
 from .farming_station import FarmingStation
 from .fermenter import Fermenter
 from .forester import Forester

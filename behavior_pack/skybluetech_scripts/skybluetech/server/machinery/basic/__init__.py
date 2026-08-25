@@ -1,7 +1,6 @@
 from .base_clicker import BaseClicker
 from .base_generator import BaseGenerator
 from .base_machine import BaseMachine
-from .processor import Processor
 from .base_power_provider import BasePowerProvider
 from .base_speed_control import BaseSpeedControl
 from .fluid_container import FluidContainer
@@ -11,7 +10,9 @@ from .heat_ctrl import HeatCtrl
 from .item_container import ItemContainer
 from .multi_block_structure import MultiBlockStructure
 from .multi_fluid_container import MultiFluidContainer
+from .operation_listener import OperationListener
 from .power_control import PowerControl
+from .processor import Processor
 from .register import RegisterMachine
 from .sp_control import SPControl
 from .upgrade_control import UpgradeControl

@@ -30,7 +30,6 @@ class BasePowerProvider(BaseMachine):
         self._output_neighbors_cache = None
 
     def _get_output_neighbors(self):
-        # type: () -> list
         "输出方向的邻居机列表(含朝向), 结构固定时缓存, 仅邻居变化时重建。"
         cache = self._output_neighbors_cache
         if cache is None:

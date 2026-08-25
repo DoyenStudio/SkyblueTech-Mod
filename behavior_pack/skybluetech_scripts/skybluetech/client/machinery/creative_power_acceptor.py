@@ -1,9 +1,13 @@
 # coding=utf-8
 from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
 
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.api.client import (
+    GetBlockEntityData,
+    GetPlayerDimensionId,
+)
 from skybluetech_scripts.tooldelta.api.common import Repeat
-from skybluetech_scripts.tooldelta.events.client.block import (
+from skybluetech_scripts.tooldelta.events.client import (
+    DimensionChangeClientEvent,
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
@@ -17,13 +21,13 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from ...common.define.id_enum.machinery import Machinery
 from ...common.machinery_def.creative_power_acceptor import K_POWER
 
-if 0>1:
+if 0 > 1:
     from typing import Any
 
 CF = GetEngineCompFactory()
 
 
-texts = {}  # type: dict[tuple[int, tuple[int, int, int]], Any]
+texts = {}  # type: dict[int, dict[tuple[int, int, int], Any]]
 
 
 def add_text(dim, pos, default_text=""):
@@ -32,15 +36,18 @@ def add_text(dim, pos, default_text=""):
     tx = x + 0.5
     ty = y + 1.1
     tz = z + 0.5
-    if (dim, pos) in texts:
-        texts.pop((dim, pos)).Remove()
+    text = texts.get(dim, {}).pop(pos, None)
+    if text is not None:
+        text.Remove()
     t = CF.CreateDrawing(GetLevelId()).AddTextShape((tx, ty, tz), default_text)
-    texts[(dim, pos)] = t
+    texts.setdefault(dim, {})[pos] = text
 
 
 def remove_text(dim, pos):
     # type: (int, tuple[int, int, int]) -> None
-    texts.pop((dim, pos)).Remove()
+    text = texts[dim].pop(pos, None)
+    if text is not None:
+        text.Remove()
 
 
 def update_text(text_shape, text):
@@ -53,6 +60,14 @@ def get_power(x, y, z):
     if b is None:
         return None
     return GetValueWithDefault(b["exData"], K_POWER, -1)
+
+
+@DimensionChangeClientEvent.Listen()
+def onChangeDimension(event):
+    # type: (DimensionChangeClientEvent) -> None
+    dim_texts = texts[event.fromDimensionId]
+    for pos in tuple(dim_texts):
+        remove_text(event.fromDimensionId, pos)
 
 
 @asModBlockLoadedListener(Machinery.CREATIVE_POWER_ACCEPTOR)
@@ -70,10 +85,11 @@ def onModBlockRemoved(event):
 @ClientInitCallback()
 @Repeat(1)
 def onRepeat1s():
-    for (dim, pos), text_shape in texts.copy().items():
+    dim = GetPlayerDimensionId()
+    for pos, text_shape in texts.get(dim, {}).copy().items():
         power = get_power(*pos)
         if power is None:
-            del texts[(dim, pos)]
+            remove_text(dim, pos)
             continue
         else:
             update_text(text_shape, "输入功率： §a%d RF/t" % power)

@@ -7,7 +7,8 @@ from skybluetech_scripts.tooldelta.api.client import (
     GetPlayerDimensionId,
 )
 from skybluetech_scripts.tooldelta.api.common import Repeat
-from skybluetech_scripts.tooldelta.events.client.block import (
+from skybluetech_scripts.tooldelta.events.client import (
+    DimensionChangeClientEvent,
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
@@ -28,7 +29,7 @@ from ...common.machinery_def.deepslate_lava_vibrator import (
 from ..ui.machinery.utils import FormatFluidVolume, FormatNum
 
 CF = GetEngineCompFactory()
-text_pool = {}  # type: dict[tuple[int, tuple[int, int, int]], DeepslateVibratorText]
+texts = {}  # type: dict[int, dict[tuple[int, int, int], DeepslateVibratorText]]
 
 
 class DeepslateVibratorText(object):
@@ -95,15 +96,16 @@ class DeepslateVibratorText(object):
 
 def add_text(x, y, z):
     # type: (int, int, int) -> None
-    key = (GetPlayerDimensionId(), (x, y, z))
-    if key in text_pool:
+    dim = GetPlayerDimensionId()
+    pos = (x, y, z)
+    if pos in texts.get(dim, {}):
         return
-    text_pool[key] = DeepslateVibratorText(x, y, z)
+    texts.setdefault(dim, {})[pos] = DeepslateVibratorText(x, y, z)
 
 
-def remove_text(x, y, z):
-    # type: (int, int, int) -> None
-    res = text_pool.pop((GetPlayerDimensionId(), (x, y, z)), None)
+def remove_text(dim, x, y, z):
+    # type: (int, int, int, int) -> None
+    res = texts.get(dim, {}).pop(((x, y, z)), None)
     if res is not None:
         res.remove()
 
@@ -120,11 +122,19 @@ def onModBlockLoaded(event):
 @asModBlockRemovedListener(Machinery.DEEPSLATE_LAVA_VIBRATOR)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
-    remove_text(event.posX, event.posY, event.posZ)
+    remove_text(GetPlayerDimensionId(), event.posX, event.posY, event.posZ)
 
 
 @ClientInitCallback()
 @Repeat(1)
 def onRepeatUpdate():
-    for v in text_pool.values():
+    for v in texts.get(GetPlayerDimensionId(), {}).values():
         v.update()
+
+
+@DimensionChangeClientEvent.Listen()
+def onChangeDimension(event):
+    # type: (DimensionChangeClientEvent) -> None
+    dim_texts = texts.get(event.fromDimensionId, {})
+    for x, y, z in tuple(dim_texts):
+        remove_text(event.fromDimensionId, x, y, z)

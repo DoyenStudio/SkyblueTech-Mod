@@ -2,14 +2,16 @@
 from skybluetech_scripts.tooldelta.api.client import (
     CreateShapeFactory,
     GetBlockNameAndAux,
-)
-from skybluetech_scripts.tooldelta.api.client import (
     GetBlockEntityData as CGetBlockEntityData,
+    GetPlayerDimensionId,
 )
-from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
-from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
+from skybluetech_scripts.tooldelta.events.client import (
+    ClientBlockUseEvent,
+    DimensionChangeClientEvent,
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
+)
+from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
     asModBlockLoadedListener,
     asModBlockRemovedListener,
 )
@@ -22,7 +24,7 @@ from ...common.events.machinery.rf_repeater_plant import (
 from ...common.utils.block_sync import BlockSync
 
 block_sync = BlockSync(Machinery.RF_REPEATER_PLANT, side=BlockSync.SIDE_CLIENT)
-lasers = {}  # type: dict[tuple[int, int, int], dict[tuple[int, int, int], WireLaser]]
+lasers = {}  # type: dict[int, dict[tuple[int, int, int], dict[tuple[int, int, int], WireLaser]]]
 
 
 class WireLaser:
@@ -60,43 +62,33 @@ def hex2rgb(hex):
 
 def add_wire(xyz1, xyz2):
     # type: (tuple[int, int, int], tuple[int, int, int]) -> None
+    dim = GetPlayerDimensionId()
     laser = WireLaser(xyz1, xyz2)
-    prev_laser = lasers.get(xyz1, {}).get(xyz2, None)
+    prev_laser = lasers.get(dim, {}).get(xyz1, {}).get(xyz2, None)
     if prev_laser:
         prev_laser.Remove()
-    prev_laser = lasers.get(xyz2, {}).get(xyz1, None)
+    prev_laser = lasers.get(dim, {}).get(xyz2, {}).get(xyz1, None)
     if prev_laser:
         prev_laser.Remove()
-    lasers.setdefault(xyz1, {})[xyz2] = laser
-    lasers.setdefault(xyz2, {})[xyz1] = laser
+    lasers.setdefault(dim, {}).setdefault(xyz1, {})[xyz2] = laser
+    lasers.setdefault(dim, {}).setdefault(xyz2, {})[xyz1] = laser
 
 
 def remove_wire_src(xyz):
     # type: (tuple[int, int, int]) -> None
-    pos_lasers = lasers.pop(xyz, None)
+    dim = GetPlayerDimensionId()
+    pos_lasers = lasers.get(dim, {}).pop(xyz, None)
     if pos_lasers is None:
         return
     for other_xyz, laser in pos_lasers.copy().items():
         laser.Remove()
-        other_pos_lasers = lasers.get(other_xyz)
+        other_pos_lasers = lasers.get(dim, {}).get(other_xyz)
         if other_pos_lasers is not None:
             laser_2 = other_pos_lasers.pop(xyz, None)
             if laser_2:
                 laser_2.Remove()
             if not other_pos_lasers:
-                del lasers[other_xyz]
-
-
-@ClientBlockUseEvent.Listen(priority=10)
-def onClientBlockUse(event):
-    # type: (ClientBlockUseEvent) -> None
-    if event.blockName != Machinery.RF_REPEATER_PLANT:
-        return
-    _, aux = GetBlockNameAndAux((event.x, event.y, event.z))
-    layer = (aux & 0b1100) >> 2
-    if layer != 0:
-        # 只改变 GUI 读取到的 xyz。。
-        event.y -= layer
+                del lasers[dim][other_xyz]
 
 
 @asModBlockLoadedListener(Machinery.RF_REPEATER_PLANT)
@@ -115,6 +107,26 @@ def onPlantLoaded(event):
 def onPlantUnloaded(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     remove_wire_src((event.posX, event.posY, event.posZ))
+
+
+@ClientBlockUseEvent.Listen(priority=10)
+def onClientBlockUse(event):
+    # type: (ClientBlockUseEvent) -> None
+    if event.blockName != Machinery.RF_REPEATER_PLANT:
+        return
+    _, aux = GetBlockNameAndAux((event.x, event.y, event.z))
+    layer = (aux & 0b1100) >> 2
+    if layer != 0:
+        # 只改变 GUI 读取到的 xyz。。
+        event.y -= layer
+
+
+@DimensionChangeClientEvent.Listen()
+def onChangeDimension(event):
+    # type: (DimensionChangeClientEvent) -> None
+    dim_lasers = lasers.get(event.fromDimensionId, {})
+    for xyz in tuple(dim_lasers):
+        remove_wire_src(xyz)
 
 
 @RFRepeaterPlantBuildAddWire.Listen()

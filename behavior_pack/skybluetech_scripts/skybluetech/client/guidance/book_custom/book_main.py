@@ -73,6 +73,7 @@ main_pages = PageGroup(
                     contents.update_log.update_log_desc,
                 ),
             ],
+            "skybluetech_guidance_main_toc"
         ),
     ],
 )

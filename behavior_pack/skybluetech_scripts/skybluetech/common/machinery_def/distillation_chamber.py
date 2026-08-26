@@ -5,7 +5,7 @@ from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.distillation_chamber import DistillationChamberRecipe, c2k
 
 K_OUTPUT_RATE = "st:output_rate"
-INPUT_MAX_VOLUME = 1000
+INPUT_MAX_VOLUME = 1500
 OUTPUT_MAX_VOLUME = 1500
 
 recipes = RecipesCollection(

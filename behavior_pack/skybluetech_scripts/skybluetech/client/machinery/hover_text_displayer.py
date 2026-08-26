@@ -92,5 +92,5 @@ def onTextUpdated(event):
 @DimensionChangeClientEvent.Listen()
 def onChangeDimension(event):
     # type: (DimensionChangeClientEvent) -> None
-    for pos in tuple(shapes[event.fromDimensionId]):
+    for pos in tuple(shapes.get(event.fromDimensionId, {})):
         remove_text(event.fromDimensionId, pos)

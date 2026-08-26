@@ -65,7 +65,7 @@ def get_power(x, y, z):
 @DimensionChangeClientEvent.Listen()
 def onChangeDimension(event):
     # type: (DimensionChangeClientEvent) -> None
-    dim_texts = texts[event.fromDimensionId]
+    dim_texts = texts.get(event.fromDimensionId, {})
     for pos in tuple(dim_texts):
         remove_text(event.fromDimensionId, pos)
 

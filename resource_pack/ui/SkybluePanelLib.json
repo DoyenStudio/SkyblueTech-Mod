@@ -830,7 +830,7 @@
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
                     "size": [
-                        "100%+1px",
+                        "100%+0px",
                         "default"
                     ],
                     "layer": 5,
@@ -841,7 +841,8 @@
                     ],
                     "font_scale_factor": 1.6,
                     "font_size": "small",
-                    "font_type": "default"
+                    "font_type": "unicode",
+                    "text_alignment": "right"
                 }
             }
         ]

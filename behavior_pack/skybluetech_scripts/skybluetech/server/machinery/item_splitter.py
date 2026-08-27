@@ -86,12 +86,10 @@ class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
         # type: (Item) -> Item | None
         matched_label = self.get_label_by_item(item.id)
         networks = (
-            i
-            for i in cable_logic
+            cable_logic
             .GetContainerNode(self.dim, self.x, self.y, self.z, enable_cache=True)
             .get_outputs()
             .values()
-            if i is not None
         )
         for network in networks:
             for ap in network.get_input_access_points():

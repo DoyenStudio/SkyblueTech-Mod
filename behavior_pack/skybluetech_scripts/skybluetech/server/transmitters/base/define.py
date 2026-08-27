@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.extensions.typing import Generic, TypeVar
 from skybluetech_scripts.skybluetech.common.misc.transmitter import TransmitterType
 
 # TYPE_CHECKING
-if 0>1:
+if 0 > 1:
     import typing
 
     PosData = typing.Tuple[int, int, int, int]
@@ -218,12 +218,12 @@ class ContainerNode(Generic[_NT]):
         self.inited = not self.uninited_faces
 
     def get_inputs(self):
-        # type: () -> dict[int, _NT | None]
-        return self.inputs
+        # type: () -> dict[int, _NT]
+        return {k: v for k, v in self.inputs.items() if v is not None}
 
     def get_outputs(self):
-        # type: () -> dict[int, _NT | None]
-        return self.outputs
+        # type: () -> dict[int, _NT]
+        return {k: v for k, v in self.outputs.items() if v is not None}
 
     def all_empty(self):
         return all(i is None for i in self.inputs.values()) and all(

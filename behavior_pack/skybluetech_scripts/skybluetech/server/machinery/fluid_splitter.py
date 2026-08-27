@@ -96,12 +96,10 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationLi
             return fluid_volume
         matched_label = self.get_label_by_fluid(fluid_id)
         networks = (
-            i
-            for i in pipe_logic
+            pipe_logic
             .GetContainerNode(self.dim, self.x, self.y, self.z, enable_cache=True)
             .get_outputs()
             .values()
-            if i is not None
         )
         for network in networks:
             for ap in network.group_inputs:

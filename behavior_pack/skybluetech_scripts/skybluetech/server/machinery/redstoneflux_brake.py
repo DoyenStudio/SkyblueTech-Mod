@@ -71,10 +71,7 @@ class RedstonefluxBrake(BaseClicker, BasePowerProvider, GUIControl, OperationLis
 
     def get_networks(self):
         cnode = logic_module.GetContainerNode(self.dim, self.x, self.y, self.z)
-        networks = list(cnode.get_inputs().values()) + list(
-            cnode.get_outputs().values()
-        )
-        return [n for n in networks if n is not None]
+        return list(cnode.get_inputs().values()) + list(cnode.get_outputs().values())
 
     def update_stat(self):
         networks = self.get_networks()

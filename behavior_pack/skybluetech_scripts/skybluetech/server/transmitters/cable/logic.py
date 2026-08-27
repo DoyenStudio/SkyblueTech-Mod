@@ -36,7 +36,7 @@ from .nbt_utils import (
 )
 
 # TYPE_CHECKING
-if 0>1:
+if 0 > 1:
     import typing
 
     PosData = typing.Tuple[int, int, int]  # x y z
@@ -75,12 +75,10 @@ def PostItemIntoNetworks(dim, xyz, item, networks):
     if networks is None:
         x, y, z = xyz
         networks = set(
-            i
-            for i in logic_module
+            logic_module
             .GetContainerNode(dim, x, y, z, enable_cache=True)
             .get_outputs()
             .values()
-            if i is not None
         )
     for network in networks:
         transfer_speed = network.transfer_speed

@@ -25,7 +25,7 @@ from skybluetech_scripts.tooldelta.utils.py_comp import py2_xrange
 from ...machinery.basic.item_container import ItemContainer
 from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
 from ..base.logic import LogicModule
-from ..constants import COMMON_CONTAINERS
+from ..constants import CHEST_CONTAINERS, COMMON_CONTAINERS
 from .define import CableAccessPoint, CableNetwork
 from .nbt_utils import (
     MISSING,
@@ -420,8 +420,8 @@ def _get_block_name(network, xyz):
 
 def _is_chest(network, xyz):
     # type: (CableNetwork, tuple[int, int, int]) -> bool
-    "箱子/陷阱箱可组成大箱子, 每半的方块实体 NBT 只含本地 0-26 槽, 需走容器 API"
-    return _get_block_name(network, xyz) in ("minecraft:chest", "minecraft:trapped_chest")
+    "箱子、陷阱箱和铜箱子变种可组成大箱子, 每半的方块实体 NBT 只含本地 0-26 槽, 需走容器 API"
+    return _get_block_name(network, xyz) in CHEST_CONTAINERS
 
 
 def _invalidate_container(network, xyz):
@@ -462,17 +462,32 @@ def onContainerItemChanged(event):
     pos = event.pos
     if pos is None:
         return
-    cnode = logic_module.container_nodes_pool.get(
-        (event.dimensionId, (pos[0], pos[1], pos[2]))
-    )
-    if cnode is None:
-        return
-    for network in cnode.inputs.values():
-        if network is not None:
-            _invalidate_container(network, (pos[0], pos[1], pos[2]))
-    for network in cnode.outputs.values():
-        if network is not None:
-            _invalidate_container(network, (pos[0], pos[1], pos[2]))
+    dim = event.dimensionId
+    # 大箱子: 物品变化事件只携带实际发生变化的半箱坐标, 而管道可能只连接了
+    # 另一个半箱。若事件半箱不在连接池中, 沿 pairx/pairz 找到配对半箱, 让连接
+    # 在配对半箱上的网络缓存一并失效, 否则另一侧半箱的物品永远读不到。
+    positions = [pos]
+    if GetBlockName(dim, pos) in CHEST_CONTAINERS:
+        data, _ = _get_container_nbt(dim, pos, {})
+        pair_x = GetValueWithDefault(data or {}, "pairx", None)
+        pair_z = GetValueWithDefault(data or {}, "pairz", None)
+        if pair_x is not None and pair_z is not None:
+            pair_pos = (pair_x, pos[1], pair_z)
+            if pair_pos != pos:
+                positions.append(pair_pos)
+    invalidated_networks = set()  # type: set[CableNetwork]
+    for p in positions:
+        cnode = logic_module.container_nodes_pool.get((dim, (p[0], p[1], p[2])))
+        if cnode is None:
+            continue
+        for network in cnode.inputs.values():
+            if network is not None and network not in invalidated_networks:
+                _invalidate_container(network, p)
+                invalidated_networks.add(network)
+        for network in cnode.outputs.values():
+            if network is not None and network not in invalidated_networks:
+                _invalidate_container(network, p)
+                invalidated_networks.add(network)
 
 
 BlockRemoveServerEvent.AddExtraBlocks(COMMON_CONTAINERS)

@@ -1,7 +1,17 @@
 # coding: utf-8
-COMMON_CONTAINERS = {
+CHEST_CONTAINERS = {
     "minecraft:chest",
     "minecraft:trapped_chest",
+    "minecraft:copper_chest",
+    "minecraft:exposed_copper_chest",
+    "minecraft:weathered_copper_chest",
+    "minecraft:oxidized_copper_chest",
+    "minecraft:waxed_copper_chest",
+    "minecraft:waxed_exposed_copper_chest",
+    "minecraft:waxed_weathered_copper_chest",
+    "minecraft:waxed_oxidized_copper_chest",
+}
+COMMON_CONTAINERS = CHEST_CONTAINERS | {
     "minecraft:barrel",
     "minecraft:hopper",
     "minecraft:shulker_box",

@@ -3,6 +3,7 @@ entity.skybluetech:model_entity.name=模型实体
 item.skybluetech:ancient_debris_dust.name=远古残骸粉末
 item.skybluetech:aluminum_dust.name=铝粉
 item.skybluetech:aluminum_ingot.name=铝锭
+item.skybluetech:aluminum_plate.name=铝板
 item.skybluetech:alumite_dust.name=耐酸铝粉
 item.skybluetech:alumite_ingot.name=耐酸铝锭
 item.skybluetech:alumite_plate.name=耐酸铝板

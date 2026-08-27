@@ -62,6 +62,7 @@ class RawTag:
 
 
 class PlateTag:
+    ALUMINUM = "plates/aluminum"
     COPPER = "plates/copper"
     IRON = "plates/iron"
     GOLD = "plates/gold"

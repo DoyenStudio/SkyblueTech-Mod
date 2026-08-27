@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:aluminum_plate"
+        },
+        "description": {
+            "identifier": "skybluetech:aluminum_plate"
+        }
+    }
+}

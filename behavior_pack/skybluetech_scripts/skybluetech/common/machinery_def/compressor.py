@@ -28,6 +28,7 @@ recipes = RecipesCollection(
     preset("minecraft:copper_ingot", Plates.COPPER),
     preset("minecraft:iron_ingot", Plates.IRON),
     preset("minecraft:gold_ingot", Plates.GOLD),
+    preset_tagged(IngotTag.ALUMINUM, Plates.ALUMINUM),
     preset_tagged(IngotTag.TIN, Plates.TIN),
     preset_tagged(IngotTag.LEAD, Plates.LEAD),
     preset_tagged(IngotTag.SILVER, Plates.SILVER),

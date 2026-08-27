@@ -122,6 +122,7 @@ class Pincer(SimpleEnum):
 
 
 class Plates(SimpleEnum):
+    ALUMINUM = "skybluetech:aluminum_plate"
     IRON = "skybluetech:iron_plate"
     GOLD = "skybluetech:gold_plate"
     COPPER = "skybluetech:copper_plate"

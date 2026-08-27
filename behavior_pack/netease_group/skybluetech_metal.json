@@ -82,6 +82,7 @@
             "group_name": "itemGroup.skybluetech.plates",
             "icon": "skybluetech:copper_plate",
             "list": [
+                "skybluetech:aluminum_plate",
                 "skybluetech:copper_plate",
                 "skybluetech:iron_plate",
                 "skybluetech:gold_plate",

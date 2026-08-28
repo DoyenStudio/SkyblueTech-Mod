@@ -1,11 +1,14 @@
 # codng=utf-8
 from skybluetech_scripts.tooldelta.define import Item
+
 from ..define import id_enum, tag_enum
-from ..define.tag_enum import Wrench, Pincer
+from ..define.tag_enum import Pincer, Wrench
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.machinery_workstation import (
-    MachineryWorkstationRecipe as MRecipe,
     Input,
+)
+from ..mini_jei.machinery.machinery_workstation import (
+    MachineryWorkstationRecipe as MRecipe,
 )
 
 K_CRAFTING_PROGRESS = "st:crafting_progress"
@@ -278,6 +281,24 @@ recipes = RecipesCollection(
         id_enum.Machinery.ELECTRIC_HEATER,
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
+        8,
+    ),
+    # energy cube : junior
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            1: Input(id_enum.Batteries.JUNIOR),
+            2: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            3: Input(id_enum.Batteries.JUNIOR),
+            4: Input(id_enum.SKYBLUE_CORE),
+            5: Input(id_enum.Batteries.JUNIOR),
+            6: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            7: Input(id_enum.Batteries.JUNIOR),
+            8: Input(tag_enum.PlateTag.TIN, is_tag=True),
+        },
+        id_enum.Machinery.ENERGY_CUBE_JUNIOR,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
         8,
     ),
     # farming station

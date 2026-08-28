@@ -52,6 +52,7 @@
             "icon": "skybluetech:item_splitter",
             "list": [
                 "skybluetech:item_splitter",
+                "skybluetech:item_spreader",
                 "skybluetech:fluid_splitter"
             ]
         },

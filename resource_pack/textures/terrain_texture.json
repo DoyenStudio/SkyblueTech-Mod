@@ -299,6 +299,15 @@
         "skybluetech:item_splitter_top": {
             "textures": "textures/machines/item_splitter_top"
         },
+        "skybluetech:item_spreader_bottom": {
+            "textures": "textures/machines/item_spreader_bottom"
+        },
+        "skybluetech:item_spreader_side": {
+            "textures": "textures/machines/item_spreader_side"
+        },
+        "skybluetech:item_spreader_top": {
+            "textures": "textures/machines/item_spreader_top"
+        },
         "skybluetech:item_transport_cable_steel": {
             "textures": "textures/transmitters/item_transport_cable_steel_texture"
         },

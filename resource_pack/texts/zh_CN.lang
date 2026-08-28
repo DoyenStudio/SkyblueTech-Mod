@@ -240,6 +240,7 @@ tile.skybluetech:hydroponic_base.name=水培基座
 tile.skybluetech:hydroponic_bed.name=水培床
 tile.skybluetech:hydroponic_bed_sand.name=沙底水培床
 tile.skybluetech:item_splitter.name=物品分拣器
+tile.skybluetech:item_spreader.name=物流分发机
 tile.skybluetech:item_transport_cable_steel.name=钢制物品传输管道
 tile.skybluetech:lead_block.name=铅块
 tile.skybluetech:lead_ore.name=铅矿石

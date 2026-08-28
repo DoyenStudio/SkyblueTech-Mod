@@ -516,6 +516,13 @@
             "up": "skybluetech:item_splitter_top"
         }
     },
+    "skybluetech:item_spreader": {
+        "textures": {
+            "down": "skybluetech:item_spreader_bottom",
+            "side": "skybluetech:item_spreader_side",
+            "up": "skybluetech:item_spreader_top"
+        }
+    },
     "skybluetech:item_transport_cable_steel": {
         "sound": "stone"
     },

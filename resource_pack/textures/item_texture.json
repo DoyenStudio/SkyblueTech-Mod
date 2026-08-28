@@ -67,9 +67,6 @@
         "skybluetech:carbon_dust": {
             "textures": "textures/items/dusts/carbon_dust"
         },
-        "skybluetech:concrete_dust": {
-            "textures": "textures/items/dusts/concrete_dust"
-        },
         "skybluetech:cartidge_1_model": {
             "textures": "textures/models/cartidges/cartidge_yellow"
         },
@@ -87,6 +84,9 @@
         },
         "skybluetech:coil_copper": {
             "textures": "textures/items/coil_copper"
+        },
+        "skybluetech:concrete_dust": {
+            "textures": "textures/items/dusts/concrete_dust"
         },
         "skybluetech:control_circuit_advanced": {
             "textures": "textures/items/control_circuit_advanced"
@@ -142,6 +142,51 @@
         "skybluetech:electric_motor": {
             "textures": "textures/items/electric_motor"
         },
+        "skybluetech:energy_bar_0": {
+            "textures": "textures/misc/energy_bar/energy_bar_0"
+        },
+        "skybluetech:energy_bar_1": {
+            "textures": "textures/misc/energy_bar/energy_bar_1"
+        },
+        "skybluetech:energy_bar_10": {
+            "textures": "textures/misc/energy_bar/energy_bar_10"
+        },
+        "skybluetech:energy_bar_11": {
+            "textures": "textures/misc/energy_bar/energy_bar_11"
+        },
+        "skybluetech:energy_bar_12": {
+            "textures": "textures/misc/energy_bar/energy_bar_12"
+        },
+        "skybluetech:energy_bar_13": {
+            "textures": "textures/misc/energy_bar/energy_bar_13"
+        },
+        "skybluetech:energy_bar_14": {
+            "textures": "textures/misc/energy_bar/energy_bar_14"
+        },
+        "skybluetech:energy_bar_2": {
+            "textures": "textures/misc/energy_bar/energy_bar_2"
+        },
+        "skybluetech:energy_bar_3": {
+            "textures": "textures/misc/energy_bar/energy_bar_3"
+        },
+        "skybluetech:energy_bar_4": {
+            "textures": "textures/misc/energy_bar/energy_bar_4"
+        },
+        "skybluetech:energy_bar_5": {
+            "textures": "textures/misc/energy_bar/energy_bar_5"
+        },
+        "skybluetech:energy_bar_6": {
+            "textures": "textures/misc/energy_bar/energy_bar_6"
+        },
+        "skybluetech:energy_bar_7": {
+            "textures": "textures/misc/energy_bar/energy_bar_7"
+        },
+        "skybluetech:energy_bar_8": {
+            "textures": "textures/misc/energy_bar/energy_bar_8"
+        },
+        "skybluetech:energy_bar_9": {
+            "textures": "textures/misc/energy_bar/energy_bar_9"
+        },
         "skybluetech:famicom_cartidge_1": {
             "textures": "textures/items/cartidges/famicom_cartidge_1"
         },
@@ -156,6 +201,9 @@
         },
         "skybluetech:fan_blade": {
             "textures": "textures/items/fan_blade"
+        },
+        "skybluetech:glass_tube": {
+            "textures": "textures/items/glass_tube"
         },
         "skybluetech:gold_dust": {
             "textures": "textures/items/dusts/gold_dust"
@@ -174,6 +222,9 @@
         },
         "skybluetech:heavy_lava_bucket": {
             "textures": "textures/items/buckets/heavy_lava_bucket"
+        },
+        "skybluetech:heavy_water_bucket": {
+            "textures": "textures/items/buckets/heavy_water_bucket"
         },
         "skybluetech:hydrogen_bucket": {
             "textures": "textures/items/buckets/hydrogen_bucket"
@@ -232,11 +283,11 @@
         "skybluetech:lead_oxide_dust": {
             "textures": "textures/items/dusts/lead_oxide_dust"
         },
-        "skybluetech:lead_sulfate_dust": {
-            "textures": "textures/items/dusts/lead_sulfate_dust"
-        },
         "skybluetech:lead_plate": {
             "textures": "textures/items/plates/lead_plate"
+        },
+        "skybluetech:lead_sulfate_dust": {
+            "textures": "textures/items/dusts/lead_sulfate_dust"
         },
         "skybluetech:light_lava_bucket": {
             "textures": "textures/items/buckets/light_lava_bucket"
@@ -261,9 +312,6 @@
         },
         "skybluetech:methane_mud_bucket": {
             "textures": "textures/items/buckets/methane_mud_bucket"
-        },
-        "skybluetech:water_vapor_bucket": {
-            "textures": "textures/items/buckets/water_vapor_bucket"
         },
         "skybluetech:mid_lava_bucket": {
             "textures": "textures/items/buckets/mid_lava_bucket"
@@ -343,30 +391,6 @@
         "skybluetech:obsidian_dust": {
             "textures": "textures/items/dusts/obsidian_dust"
         },
-        "skybluetech:skyblue_boots": {
-            "textures": "textures/items/armor/skyblue_boots"
-        },
-        "skybluetech:skyblue_boots_useless": {
-            "textures": "textures/items/armor/skyblue_boots"
-        },
-        "skybluetech:skyblue_chestplate": {
-            "textures": "textures/items/armor/skyblue_chestplate"
-        },
-        "skybluetech:skyblue_chestplate_useless": {
-            "textures": "textures/items/armor/skyblue_chestplate"
-        },
-        "skybluetech:skyblue_helmet": {
-            "textures": "textures/items/armor/skyblue_helmet"
-        },
-        "skybluetech:skyblue_helmet_useless": {
-            "textures": "textures/items/armor/skyblue_helmet"
-        },
-        "skybluetech:skyblue_leggings": {
-            "textures": "textures/items/armor/skyblue_leggings"
-        },
-        "skybluetech:skyblue_leggings_useless": {
-            "textures": "textures/items/armor/skyblue_leggings"
-        },
         "skybluetech:paddle_iron": {
             "textures": "textures/items/paddle_iron"
         },
@@ -378,6 +402,12 @@
         },
         "skybluetech:pincer_iron": {
             "textures": "textures/items/producted_tools/pincer_iron"
+        },
+        "skybluetech:pincer_skyblue": {
+            "textures": "textures/items/charged_tools/pincer_skyblue"
+        },
+        "skybluetech:pincer_skyblue_useless": {
+            "textures": "textures/items/charged_tools/pincer_skyblue"
         },
         "skybluetech:platinum_dust": {
             "textures": "textures/items/dusts/platinum_dust"
@@ -472,14 +502,38 @@
         "skybluetech:skyblue_axe_useless": {
             "textures": "textures/items/charged_tools/skyblue_axe"
         },
+        "skybluetech:skyblue_boots": {
+            "textures": "textures/items/armor/skyblue_boots"
+        },
+        "skybluetech:skyblue_boots_useless": {
+            "textures": "textures/items/armor/skyblue_boots"
+        },
+        "skybluetech:skyblue_chestplate": {
+            "textures": "textures/items/armor/skyblue_chestplate"
+        },
+        "skybluetech:skyblue_chestplate_useless": {
+            "textures": "textures/items/armor/skyblue_chestplate"
+        },
         "skybluetech:skyblue_core": {
             "textures": "textures/items/skyblue_core"
+        },
+        "skybluetech:skyblue_helmet": {
+            "textures": "textures/items/armor/skyblue_helmet"
+        },
+        "skybluetech:skyblue_helmet_useless": {
+            "textures": "textures/items/armor/skyblue_helmet"
         },
         "skybluetech:skyblue_hoe": {
             "textures": "textures/items/charged_tools/skyblue_hoe"
         },
         "skybluetech:skyblue_hoe_useless": {
             "textures": "textures/items/charged_tools/skyblue_hoe"
+        },
+        "skybluetech:skyblue_leggings": {
+            "textures": "textures/items/armor/skyblue_leggings"
+        },
+        "skybluetech:skyblue_leggings_useless": {
+            "textures": "textures/items/armor/skyblue_leggings"
         },
         "skybluetech:skyblue_pickaxe": {
             "textures": "textures/items/charged_tools/skyblue_pickaxe"
@@ -499,29 +553,17 @@
         "skybluetech:skyblue_sword_useless": {
             "textures": "textures/items/charged_tools/skyblue_sword"
         },
-        "skybluetech:pincer_skyblue": {
-            "textures": "textures/items/charged_tools/pincer_skyblue"
-        },
-        "skybluetech:pincer_skyblue_useless": {
-            "textures": "textures/items/charged_tools/pincer_skyblue"
-        },
-        "skybluetech:wrench_skyblue": {
-            "textures": "textures/items/charged_tools/wrench_skyblue"
-        },
-        "skybluetech:wrench_skyblue_useless": {
-            "textures": "textures/items/charged_tools/wrench_skyblue"
-        },
         "skybluetech:solar_panel_pane": {
             "textures": "textures/items/solar_panel_pane"
         },
         "skybluetech:soldering_ingot": {
             "textures": "textures/items/ingots/soldering_ingot"
         },
-        "skybluetech:steel_dust": {
-            "textures": "textures/items/dusts/steel_dust"
-        },
         "skybluetech:steel_cutter": {
             "textures": "textures/items/steel_cutter"
+        },
+        "skybluetech:steel_dust": {
+            "textures": "textures/items/dusts/steel_dust"
         },
         "skybluetech:steel_ingot": {
             "textures": "textures/items/ingots/steel_ingot"
@@ -556,26 +598,20 @@
         "skybluetech:tin_dust": {
             "textures": "textures/items/dusts/tin_dust"
         },
-        "skybluetech:titanium_dust": {
-            "textures": "textures/items/dusts/titanium_dust"
-        },
-        "skybluetech:glass_tube": {
-            "textures": "textures/items/glass_tube"
-        },
-        "skybluetech:uranium_dust": {
-            "textures": "textures/items/dusts/uranium_dust"
-        },
         "skybluetech:tin_ingot": {
             "textures": "textures/items/ingots/tin_ingot"
-        },
-        "skybluetech:titanium_ingot": {
-            "textures": "textures/items/ingots/titanium_ingot"
         },
         "skybluetech:tin_plate": {
             "textures": "textures/items/plates/tin_plate"
         },
         "skybluetech:tin_stick": {
             "textures": "textures/items/sticks/tin_stick"
+        },
+        "skybluetech:titanium_dust": {
+            "textures": "textures/items/dusts/titanium_dust"
+        },
+        "skybluetech:titanium_ingot": {
+            "textures": "textures/items/ingots/titanium_ingot"
         },
         "skybluetech:transmitter_settings_wrench": {
             "textures": "textures/items/transmitter_settings_wrench"
@@ -613,8 +649,14 @@
         "skybluetech:upgrader_spec_magma_factory": {
             "textures": "textures/items/upgraders/upgrader_spec_magma_factory"
         },
+        "skybluetech:uranium_dust": {
+            "textures": "textures/items/dusts/uranium_dust"
+        },
         "skybluetech:vegetable_oil_bucket": {
             "textures": "textures/items/buckets/vegetable_oil_bucket"
+        },
+        "skybluetech:water_vapor_bucket": {
+            "textures": "textures/items/buckets/water_vapor_bucket"
         },
         "skybluetech:wire_copper": {
             "textures": "textures/transmitters/wire_copper_item"
@@ -637,53 +679,11 @@
         "skybluetech:wrench_iron": {
             "textures": "textures/items/producted_tools/wrench_iron"
         },
-        "skybluetech:heavy_water_bucket": {
-            "textures": "textures/items/buckets/heavy_water_bucket"
+        "skybluetech:wrench_skyblue": {
+            "textures": "textures/items/charged_tools/wrench_skyblue"
         },
-        "skybluetech:energy_bar_0": {
-            "textures": "textures/misc/energy_bar/energy_bar_0"
-        },
-        "skybluetech:energy_bar_1": {
-            "textures": "textures/misc/energy_bar/energy_bar_1"
-        },
-        "skybluetech:energy_bar_2": {
-            "textures": "textures/misc/energy_bar/energy_bar_2"
-        },
-        "skybluetech:energy_bar_3": {
-            "textures": "textures/misc/energy_bar/energy_bar_3"
-        },
-        "skybluetech:energy_bar_4": {
-            "textures": "textures/misc/energy_bar/energy_bar_4"
-        },
-        "skybluetech:energy_bar_5": {
-            "textures": "textures/misc/energy_bar/energy_bar_5"
-        },
-        "skybluetech:energy_bar_6": {
-            "textures": "textures/misc/energy_bar/energy_bar_6"
-        },
-        "skybluetech:energy_bar_7": {
-            "textures": "textures/misc/energy_bar/energy_bar_7"
-        },
-        "skybluetech:energy_bar_8": {
-            "textures": "textures/misc/energy_bar/energy_bar_8"
-        },
-        "skybluetech:energy_bar_9": {
-            "textures": "textures/misc/energy_bar/energy_bar_9"
-        },
-        "skybluetech:energy_bar_10": {
-            "textures": "textures/misc/energy_bar/energy_bar_10"
-        },
-        "skybluetech:energy_bar_11": {
-            "textures": "textures/misc/energy_bar/energy_bar_11"
-        },
-        "skybluetech:energy_bar_12": {
-            "textures": "textures/misc/energy_bar/energy_bar_12"
-        },
-        "skybluetech:energy_bar_13": {
-            "textures": "textures/misc/energy_bar/energy_bar_13"
-        },
-        "skybluetech:energy_bar_14": {
-            "textures": "textures/misc/energy_bar/energy_bar_14"
+        "skybluetech:wrench_skyblue_useless": {
+            "textures": "textures/items/charged_tools/wrench_skyblue"
         }
     },
     "texture_name": "atlas.items"

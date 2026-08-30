@@ -31,14 +31,14 @@ def isCommonCrop(block_states):
     return "growth" in block_states
 
 
-def isArrisCrop(block_states):
-    # type: (dict) -> bool
-    return "arris:growth" in block_states
+def isArrisCrop(block_id, block_states):
+    # type: (str, dict) -> bool
+    return block_id[-7:-1] == "_stage"
 
 
-def isArrisCropRiped(block_states):
-    # type: (dict) -> bool
-    return block_states["arris:growth"] == 7
+def isArrisCropRiped(block_id, block_states):
+    # type: (str, dict) -> bool
+    return block_id.endswith("_stage7")
 
 
 def isBlockCrop(block_name):

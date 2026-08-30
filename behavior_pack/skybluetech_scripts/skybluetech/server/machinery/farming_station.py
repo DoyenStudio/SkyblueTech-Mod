@@ -1,19 +1,19 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockName,
     GetBlockStates,
     SetBlock,
 )
 from skybluetech_scripts.tooldelta.api.server.entity import (
-    GetEntitiesBySelector,
-    GetDroppedItem,
     DestroyEntity,
+    GetDroppedItem,
+    GetEntitiesBySelector,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.FARMING_STATION
 from ...common.machinery_def.farming_station import (
     COMMON_CROP_MAX_GROWTH,
     FRUITLESS_CROPS,
@@ -23,7 +23,7 @@ from ...common.machinery_def.farming_station import (
     isBlockCrop,
     isCommonCrop,
 )
-from .basic import ItemContainer, GUIControl, SPControl, RegisterMachine
+from .basic import GUIControl, ItemContainer, RegisterMachine, SPControl
 
 DX = 2
 DZ = 2
@@ -32,7 +32,7 @@ Y_OFFSET = 2
 
 @RegisterMachine
 class FarmingStation(GUIControl, ItemContainer, SPControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.FARMING_STATION
     dump_progress_to_block_entity_data = True
     store_rf_max = STORE_RF_MAX
     running_power = 30
@@ -116,8 +116,8 @@ def isRipedCrop(block_name, block_states):
     if isCommonCrop(block_states):
         max_growth = COMMON_CROP_MAX_GROWTH.get(block_name, 7)
         return block_states.get("growth") == max_growth
-    elif isArrisCrop(block_states):
-        return isArrisCropRiped(block_states)
+    elif isArrisCrop(block_name, block_states):
+        return isArrisCropRiped(block_name, block_states)
     else:
         return False
 

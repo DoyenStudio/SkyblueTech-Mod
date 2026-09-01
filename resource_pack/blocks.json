@@ -556,6 +556,17 @@
             "up": "skybluetech:basic_water_static"
         }
     },
+    "skybluetech:lexical_transmuter": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:lexical_transmuter_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
+    },
     "skybluetech:macerator": {
         "sound": "iron",
         "textures": {

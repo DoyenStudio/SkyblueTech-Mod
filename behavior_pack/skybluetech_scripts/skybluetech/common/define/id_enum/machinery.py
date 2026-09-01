@@ -35,6 +35,7 @@ class Machinery(SimpleEnum):
     HYDROPONIC_BED_SAND = "skybluetech:hydroponic_bed_sand"
     ITEM_SPLITTER = "skybluetech:item_splitter"
     ITEM_SPREADER = "skybluetech:item_spreader"
+    LEXICAL_TRANSMUTER = "skybluetech:lexical_transmuter"
     MACERATOR = "skybluetech:macerator"
     MACHINERY_BASE_LIGHT = "skybluetech:machinery_base_light"
     MACHINERY_WORKSTATION = "skybluetech:machinery_workstation"

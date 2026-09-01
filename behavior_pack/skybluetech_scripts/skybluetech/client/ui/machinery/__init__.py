@@ -28,10 +28,12 @@ from .hydroponic_base import HydroponicBaseUI
 from .hydroponic_bed import HydroponicBedUI
 from .hydroponic_bed_sand import HydroponicBedSandUI
 from .item_splitter import ItemSplitterUI
+from .item_spreader import ItemSpreaderUI
+from .lexical_transmuter import LexicalTransmuterUI
 from .macerator import MaceratorUI
 from .machinery_workstation import MachineryWorkstationUI
-from .magma_furnace import MagmaFurnaceUI
 from .magma_centrifuge import MagmaCentrifugeUI
+from .magma_furnace import MagmaFurnaceUI
 from .metal_press import MetalPressUI
 from .mini_miner import MiniMinerUI
 from .mixed_macerator import MixedMaceratorUI
@@ -40,9 +42,9 @@ from .oil_extractor import OilExtractorUI
 from .precision_cutter import PrecisionCutterUI
 from .pump import PumpUI
 from .reacting_thermal_generator import ReactingThermalGeneratorUI
-from .redstoneflux_brake import RedstoneFluxBrakeUI
 from .redstone_furnace import RedstoneFurnaceUI
 from .redstone_generator import RedstoneGeneratorUI
+from .redstoneflux_brake import RedstoneFluxBrakeUI
 from .rf_repeater_plant import RFRepeaterPlantUI
 from .sawmill import SawmillUI
 from .solar_panel import SolarPanelUI

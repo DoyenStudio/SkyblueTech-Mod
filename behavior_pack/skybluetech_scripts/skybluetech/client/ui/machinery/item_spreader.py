@@ -10,7 +10,8 @@ from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from .define import MAIN_PATH, MachinePanelUIProxy
+from ..machinery_extra_pages import CableSettingsPage
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
@@ -19,7 +20,9 @@ NOTE_LABEL_PATH = MAIN_PATH / "note_label"
 
 
 @RegistToolDeltaScreen("ItemSpreaderUI.main", is_proxy=True)
-class ItemSpreaderUI(MachinePanelUIProxy):
+class ItemSpreaderUI(MachinePanelUIProxyEx):
+    available_extra_pages = (CableSettingsPage,)
+
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.progress = self.GetElement(PROGRESS_PATH)

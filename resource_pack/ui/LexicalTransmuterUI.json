@@ -1,0 +1,245 @@
+{
+    "lexical_transmuter_ui": {
+        "type": "panel",
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "machine_label": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            0.0,
+                                                            4.0
+                                                        ],
+                                                        "font_scale_factor": 1.4,
+                                                        "font_type": "default",
+                                                        "shadow": true,
+                                                        "text": "矿词转换机",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "upgrader@SkybluePanelLib.UpgradeSlots": {
+                                                        "$slot0": 3,
+                                                        "$slot1": 4,
+                                                        "$slot2": 5,
+                                                        "$slot3": 6,
+                                                        "offset": [
+                                                            106,
+                                                            -57
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "slot_conn_img": {
+                                                        "type": "image",
+                                                        "offset": [
+                                                            32.0,
+                                                            -40.0
+                                                        ],
+                                                        "size": [
+                                                            6.0,
+                                                            14.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "color": [
+                                                            0.6666666666666666,
+                                                            0.6666666666666666,
+                                                            0.6666666666666666
+                                                        ],
+                                                        "fill": true,
+                                                        "texture": "textures/ui/white"
+                                                    }
+                                                },
+                                                {
+                                                    "input_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            -32.0,
+                                                            -24.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm",
+                                                            "100%cm"
+                                                        ],
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 0
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            32.0,
+                                                            -24.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm",
+                                                            "100%cm"
+                                                        ],
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 1
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "template_slot": {
+                                                        "type": "stack_panel",
+                                                        "offset": [
+                                                            32.0,
+                                                            -56.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm",
+                                                            "100%cm"
+                                                        ],
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 2
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "label": {
+                                                        "type": "label",
+                                                        "offset": [
+                                                            0.0,
+                                                            -56.0
+                                                        ],
+                                                        "color": [
+                                                            0.3058823529411765,
+                                                            0.2549019607843137,
+                                                            0.3137254901960784
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "模版物品",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "progress@SkybluePanelLib.ProgressBar": {
+                                                        "offset": [
+                                                            0,
+                                                            -24
+                                                        ],
+                                                        "size": [
+                                                            40,
+                                                            20
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_right",
+                                            "layer": 4,
+                                            "offset": [
+                                                -2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "ex_panel": {
+                                            "type": "panel",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "size": [
+                                                "default",
+                                                "56%+0px"
+                                            ],
+                                            "layer": 1
+                                        }
+                                    }
+                                ],
+                                "layer": 0
+                            }
+                        }
+                    ],
+                    "layer": 0,
+                    "size": [
+                        180,
+                        200
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "LexicalTransmuterUI.lexical_transmuter_ui"
+    },
+    "namespace": "LexicalTransmuterUI"
+}

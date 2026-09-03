@@ -167,11 +167,34 @@
                                         }
                                     },
                                     {
+                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_right",
+                                            "layer": 4,
+                                            "offset": [
+                                                -2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
                                         "backpack@SkybluePanelLib.player_backpack": {
                                             "offset": [
                                                 0,
                                                 46
                                             ]
+                                        }
+                                    },
+                                    {
+                                        "ex_panel": {
+                                            "type": "panel",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "size": [
+                                                "default",
+                                                "56%+0px"
+                                            ],
+                                            "layer": 1
                                         }
                                     }
                                 ],

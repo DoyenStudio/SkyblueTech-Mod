@@ -26,6 +26,7 @@
                 "skybluetech:upgrader_basic_speed",
                 "skybluetech:upgrader_generic_split",
                 "skybluetech:upgrader_generic_expansion",
+                "skybluetech:upgrader_generic_auto_ejection",
                 "skybluetech:upgrader_spec_magma_factory",
                 "skybluetech:upgrader_generic_autostop"
             ]

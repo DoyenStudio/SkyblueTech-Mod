@@ -512,6 +512,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # lexical transmuter
+        MRecipe(
+            {
+                0: Input(tag_enum.PlateTag.TIN, is_tag=True),
+                1: Input("minecraft:enchanting_table"),
+                2: Input(tag_enum.PlateTag.TIN, is_tag=True),
+                3: Input(id_enum.Cable.STEEL),
+                4: Input(id_enum.MACHINERY_FRAME),
+                5: Input(id_enum.Cable.STEEL),
+                6: Input("minecraft:redstone_block"),
+                7: Input(id_enum.SKYBLUE_CORE),
+                8: Input("minecraft:lapis_block"),
+            },
+            id_enum.Machinery.LEXICAL_TRANSMUTER,
+            MRecipe.LEVEL_IRON,
+            MRecipe.LEVEL_IRON,
+            8,
+        ),
     # macerator
     MRecipe(
         {

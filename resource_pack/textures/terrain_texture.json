@@ -317,6 +317,9 @@
         "skybluetech:lead_ore": {
             "textures": "textures/blocks/ore/lead_ore"
         },
+        "skybluetech:lexical_transmuter_front": {
+            "textures": "textures/machines/lexical_transmuter_front"
+        },
         "skybluetech:macerator_front": {
             "textures": "textures/machines/macerator_front"
         },

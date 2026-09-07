@@ -15,7 +15,7 @@ from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
 )
 from skybluetech_scripts.tooldelta.utils import nbt
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
 )

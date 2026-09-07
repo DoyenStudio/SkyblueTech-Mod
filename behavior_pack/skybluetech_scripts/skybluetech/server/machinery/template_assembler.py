@@ -1,37 +1,38 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import GetSeed
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.utils import nbt
-from ...common.define.id_enum import (
-    Machinery,
-    INSCRIBING_TEMPLATE,
-)
 
-MACHINE_ID = Machinery.TEMPLATE_ASSEMBLER
+from ...common.define.id_enum import (
+    INSCRIBING_TEMPLATE,
+    Machinery,
+)
 from ...common.events.machinery.template_assembler import (
     TemplateAssemblerUpdateRecipeEvent,
     TemplateAssemblerUpdateRecipeEvent2,
 )
-from ...common.misc.inscribing_template import K_UD_TEMPLATE_GRAPH
 from ...common.machinery_def.template_assembler import (
-    TemplateAssemblerRecipe,
-    TemplateAssemblerRecipesCollection,
-    recipes as Recipes,
-    GetResultByTemplateGraph,
-    STORE_RF_MAX,
-    TEMPLATE_SLOT_INDEX,
     K_TEMPLATE_ITEM_COUNT,
     K_TEMPLATE_ITEM_ID,
     K_TEMPLATE_ITEM_IS_TAG,
     K_TEMPLATE_ITEMS,
+    STORE_RF_MAX,
+    TEMPLATE_SLOT_INDEX,
+    GetResultByTemplateGraph,
+    TemplateAssemblerRecipe,
+    TemplateAssemblerRecipesCollection,
 )
+from ...common.machinery_def.template_assembler import (
+    recipes as Recipes,
+)
+from ...common.misc.inscribing_template import K_UD_TEMPLATE_GRAPH
 from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 
 @RegisterMachine
 class TemplateAssembler(MultiFluidContainer, Processor):
-    block_name = MACHINE_ID
+    block_name = Machinery.TEMPLATE_ASSEMBLER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     process_item = True

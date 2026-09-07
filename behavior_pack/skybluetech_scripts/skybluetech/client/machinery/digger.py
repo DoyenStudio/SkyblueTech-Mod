@@ -1,26 +1,27 @@
 # coding=utf-8
 #
-from skybluetech_scripts.tooldelta.events.client import (
-    ModBlockEntityLoadedClientEvent,
-    UiInitFinishedEvent,
-)
 from skybluetech_scripts.tooldelta.api.client.block import (
-    GetBlockNameAndAux as CGetBlockNameAndAux,
     GetBlockName,
     SetBlockEntityMolangValue,
     SetCrackFrame,
 )
-from ...common.events.machinery.digger import (
-    DiggerWorkModeUpdatedEvent,
-    DiggerUpdateCrack,
+from skybluetech_scripts.tooldelta.api.client.block import (
+    GetBlockNameAndAux as CGetBlockNameAndAux,
 )
-from ...common.define.id_enum.machinery import Machinery
+from skybluetech_scripts.tooldelta.events.client import (
+    ModBlockEntityLoadedClientEvent,
+    UiInitFinishedEvent,
+)
 
-MACHINE_ID = Machinery.DIGGER
+from ...common.define.id_enum import Machinery
+from ...common.events.machinery.digger import (
+    DiggerUpdateCrack,
+    DiggerWorkModeUpdatedEvent,
+)
 from ...common.utils.block_sync import BlockSync
 
 TICKS_PER_SECOND = 20
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_CLIENT)
+block_sync = BlockSync(Machinery.DIGGER, side=BlockSync.SIDE_CLIENT)
 
 ROTATION_VALUES = {
     0: (0, 0),
@@ -43,7 +44,7 @@ def clientOnDiggerWorkModeUpdated(event):
 @ModBlockEntityLoadedClientEvent.Listen()
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
-    if event.blockName == MACHINE_ID:
+    if event.blockName == Machinery.DIGGER:
         _, aux = CGetBlockNameAndAux((event.posX, event.posY, event.posZ))
         rot_x, rot_z = ROTATION_VALUES[aux & 0b111]
         SetBlockEntityMolangValue(

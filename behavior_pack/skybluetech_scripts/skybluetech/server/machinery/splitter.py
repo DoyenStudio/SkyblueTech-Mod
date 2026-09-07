@@ -1,22 +1,22 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
-    GetCraftingRecipe,
     CraftingRecipeRes,
+    GetCraftingRecipe,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.SPLITTER
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.splitter import STORE_RF_MAX
 from .basic import (
     BaseMachine,
-    ItemContainer,
     GUIControl,
+    ItemContainer,
+    RegisterMachine,
     SPControl,
     WorkRenderer,
-    RegisterMachine,
 )
 
 split_recipes = {}  # type: dict[str, str]
@@ -25,7 +25,7 @@ cant_split_recipes = set()  # type: set[str]
 
 @RegisterMachine
 class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
-    block_name = MACHINE_ID
+    block_name = Machinery.SPLITTER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     origin_process_ticks = 20 * 8

@@ -16,7 +16,7 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from ...common.define import flags
 from ...common.define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
 from ...common.define.id_enum import RESIN_COLLECTOR, RESIN
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from .basic import (
     BaseMachine,
     ItemContainer,

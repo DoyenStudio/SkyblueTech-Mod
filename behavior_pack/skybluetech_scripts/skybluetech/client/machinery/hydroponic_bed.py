@@ -16,7 +16,7 @@ from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.hydroponic_bed import K_CROP_BLOCK_ID, K_GROW_STAGE
 
 loaded_models = {}  # type: dict[tuple[int, int, int], GeometryModel]

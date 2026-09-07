@@ -19,7 +19,7 @@ from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.utils import nbt
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.deepslate_lava_vibrator import (
     K_DEEPSLATE_LAVA_PREDICTED,
     K_PREDICT_PROGRESS,

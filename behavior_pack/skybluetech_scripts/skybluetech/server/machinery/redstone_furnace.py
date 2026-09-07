@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.redstone_furnace import STORE_RF_MAX, TICK_POWER
 from .basic import (
     GUIControl,

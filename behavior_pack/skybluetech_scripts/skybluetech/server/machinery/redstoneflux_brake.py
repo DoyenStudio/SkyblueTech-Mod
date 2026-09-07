@@ -7,7 +7,7 @@ from skybluetech_scripts.tooldelta.events.server.block import (
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.define.ui_keys import REDSTONEFLUX_BRAKE_UI
 from ...common.events.machinery.redstoneflux_brake import (
     RedstoneFluxBrakeModeSwitchRequest,

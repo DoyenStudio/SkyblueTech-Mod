@@ -2,8 +2,7 @@
 from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.id_enum.items import Upgraders
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.magma_furnace import (
     MAX_FLUID_VOLUME,
     STORE_RF_MAX,

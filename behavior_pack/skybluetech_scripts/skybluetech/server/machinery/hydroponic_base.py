@@ -1,16 +1,16 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.HYDROPONIC_BASE
+
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.hydroponic_base import (
     FLUID_0_MAX_VOLUME,
     FLUID_1_MAX_VOLUME,
 )
 from .basic import (
     BaseMachine,
+    GUIControl,
     ItemContainer,
     MultiFluidContainer,
-    GUIControl,
     RegisterMachine,
 )
 
@@ -22,7 +22,7 @@ POWER_COST = 4
 
 @RegisterMachine
 class HydroponicBase(BaseMachine, ItemContainer, MultiFluidContainer, GUIControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.HYDROPONIC_BASE
     is_non_energy_machine = True
     input_slots = ()
     output_slots = tuple(range(16))

@@ -1,31 +1,31 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
-    GetCraftingRecipe,
     CraftingRecipeRes,
-    UnorderedCraftingRecipeRes,
+    GetCraftingRecipe,
     RecipeInput,
     RecipeOutput,
+    UnorderedCraftingRecipeRes,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
+
 from ...common.define import flags
+from ...common.define.id_enum import CRAFTING_TEMPLATE, Machinery
+from ...common.define.tag_enum import UpgraderTag
 from ...common.events.machinery.electric_crafter import (
     ElectricCrafterUpdateRecipe,
 )
-from ...common.define.id_enum.items import CRAFTING_TEMPLATE
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.ELECTRIC_CRAFTER
 from ...common.machinery_def.electric_crafter import STORE_RF_MAX
-from .basic import GUIControl, UpgradeControl, RegisterMachine
+from .basic import GUIControl, RegisterMachine, UpgradeControl
 
 TEMPLATE_SLOT = 12
 
 
 @RegisterMachine
 class ElectricCrafter(GUIControl, UpgradeControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.ELECTRIC_CRAFTER
     origin_process_ticks = 60
     dump_progress_to_block_entity_data = True
     running_power = 35
@@ -34,10 +34,10 @@ class ElectricCrafter(GUIControl, UpgradeControl):
     output_slots = tuple(range(9, 12))
     upgrade_slot_start = TEMPLATE_SLOT + 1
     energy_io_mode = (0, 0, 0, 0, 0, 0)
-    allow_upgrader_tags = {
-        "skybluetech:upgraders/speed",
-        "skybluetech:upgraders/energy",
-    }
+    allow_upgrader_tags = frozenset({
+        UpgraderTag.SPEED,
+        UpgraderTag.ENERGY,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

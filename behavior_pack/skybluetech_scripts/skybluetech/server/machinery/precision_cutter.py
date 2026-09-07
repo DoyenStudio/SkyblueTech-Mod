@@ -2,7 +2,7 @@
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define import flags
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.precision_cutter import (
     STORE_RF_MAX,
     MAX_FLUID_VOLUME,

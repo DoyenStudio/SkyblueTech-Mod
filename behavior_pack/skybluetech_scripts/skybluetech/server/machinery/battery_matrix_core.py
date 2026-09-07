@@ -1,27 +1,27 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockEntityDataDict,
     SetBlockEntityData,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions import item_nbt
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define.id_enum import Machinery
-MACHINE_ID = Machinery.BATTERY_MATRIX_CORE
 from ...common.events.machinery.battery_matrix import BatteryMatrixCoreStatusUpdate
 from .basic import (
     BaseMachine,
     RegisterMachine,
 )
-from .utils.charge import GetCharge, UpdateCharge, GetIOPower, UpdateChargeNBT
+from .utils.charge import GetCharge, GetIOPower, UpdateCharge, UpdateChargeNBT
 
 K_ITEMS = "st:items"
 
 
 @RegisterMachine
 class BatteryMatrixCore(BaseMachine):
-    block_name = MACHINE_ID
+    block_name = Machinery.BATTERY_MATRIX_CORE
     store_rf_max = 1
     slots_num = 27
     is_non_energy_machine = True  # 以防被直接接入电网
@@ -36,7 +36,7 @@ class BatteryMatrixCore(BaseMachine):
         self.save_core_data()
         blocknbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
         if blocknbt is None:
-            return None
+            return
         exData = blocknbt["exData"]
         items = exData.get(K_ITEMS, [])  # type: list[dict]
         for item_inbt in items:

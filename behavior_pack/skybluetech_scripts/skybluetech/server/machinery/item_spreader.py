@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.item_spreader import (
     K_NUM_CONTAINERS,
     K_SPREADER_POINTER,

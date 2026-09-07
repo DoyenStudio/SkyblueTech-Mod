@@ -1,29 +1,29 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.api.server import (
-    GetTopBlockHeight,
+    GetBlockName,
     GetLocalTime,
+    GetTopBlockHeight,
     IsRaining,
     UpdateBlockStates,
-    GetBlockName,
 )
+from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.SOLAR_PANEL
+
 from ...common.define.facing import DXYZ_FACING, FACING_EN
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.solar_panel import (
-    STORE_RF_MAX,
     K_LIGHT_LEVEL,
     K_OUTPUT_POWER,
+    STORE_RF_MAX,
 )
 from ..transmitters.wire.logic import isWire
-from .basic import BaseGenerator, ItemContainer, GUIControl, RegisterMachine
+from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
 
 
 @RegisterMachine
 class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.SOLAR_PANEL
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
 

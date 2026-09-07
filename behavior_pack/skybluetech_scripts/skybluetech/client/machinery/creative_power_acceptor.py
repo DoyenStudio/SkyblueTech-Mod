@@ -18,7 +18,7 @@ from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.creative_power_acceptor import K_POWER
 
 if 0 > 1:

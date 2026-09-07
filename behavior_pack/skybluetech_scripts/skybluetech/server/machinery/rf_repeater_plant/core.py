@@ -1,57 +1,54 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.server import (
-    ServerEntityTryPlaceBlockEvent,
-    ServerBlockUseEvent,
-    BlockNeighborChangedServerEvent,
-)
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockAuxValueFromStates,
-    GetBlockName,
-    GetBlockStates,
-    SetBlock,
-    UpdateBlockStates,
-    MayPlace,
-    PlayerUseItemToPos,
-)
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+from skybluetech_scripts.skybluetech.common.define.facing import DXYZ_FACING, FACING_EN
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
+from skybluetech_scripts.skybluetech.common.define.ui_keys import RF_REPEATER_PLANT_UI
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantSettingsUpdate,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
-
-MACHINE_ID = Machinery.RF_REPEATER_PLANT
-from skybluetech_scripts.skybluetech.common.define.facing import DXYZ_FACING, FACING_EN
-from skybluetech_scripts.skybluetech.common.define.ui_keys import RF_REPEATER_PLANT_UI
 from skybluetech_scripts.skybluetech.common.machinery_def.rf_repeater_plant import (
     MODE_INPUT,
     MODE_OUTPUT,
 )
 from skybluetech_scripts.skybluetech.common.utils.block_sync import BlockSync
+from skybluetech_scripts.tooldelta.api.server import (
+    GetBlockAuxValueFromStates,
+    GetBlockName,
+    GetBlockStates,
+    MayPlace,
+    PlayerUseItemToPos,
+    SetBlock,
+    UpdateBlockStates,
+)
+from skybluetech_scripts.tooldelta.events.server import (
+    BlockNeighborChangedServerEvent,
+    ServerBlockUseEvent,
+    ServerEntityTryPlaceBlockEvent,
+)
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...transmitters.wire.logic import isWire
-from ..basic import BaseMachine, BaseClicker, GUIControl, RegisterMachine
+from ..basic import BaseClicker, BaseMachine, GUIControl, RegisterMachine
 from ..pool import GetMachineStrict
 from .node import (
     NetworkData,
     NodeData,
-    get_node,
-    get_network,
-    sum_network_data,
     add_single_node,
+    get_network,
+    get_node,
     remove_node_and_flush,
+    sum_network_data,
 )
-
 
 K_GLOBAL_NETWORK_DATAS = "st:global_rf_repeater_network_datas"
 K_GLOBAL_NODES = "st:global_rf_repeater_nodes"
 
-
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
+block_sync = BlockSync(Machinery.RF_REPEATER_PLANT, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
 class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
     bound_ui = RF_REPEATER_PLANT_UI
-    block_name = MACHINE_ID
+    block_name = Machinery.RF_REPEATER_PLANT
     store_rf_max = 120000
     energy_io_mode = (0, 0, 0, 0, 0, 0)
 

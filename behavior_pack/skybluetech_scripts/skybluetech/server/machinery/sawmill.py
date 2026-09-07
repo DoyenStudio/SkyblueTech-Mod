@@ -1,5 +1,5 @@
 # coding=utf-8
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.sawmill import recipes as Recipes, STORE_RF_MAX
 from .basic import RegisterMachine, Processor
 

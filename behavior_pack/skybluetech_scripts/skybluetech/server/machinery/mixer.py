@@ -1,10 +1,12 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.MIXER
+
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.mixer import (
-    STORE_RF_MAX,
     MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
+from ...common.machinery_def.mixer import (
     recipes as Recipes,
 )
 from .basic import MultiFluidContainer, Processor, RegisterMachine
@@ -12,7 +14,7 @@ from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 @RegisterMachine
 class Mixer(MultiFluidContainer, Processor):
-    block_name = MACHINE_ID
+    block_name = Machinery.MIXER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     process_item = True

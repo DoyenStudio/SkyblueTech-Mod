@@ -1,20 +1,22 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.FLUID_CONDENSER
+
+from ...common.define.id_enum import Machinery
+from ...common.machinery_def.fluid_condenser import (
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
 from ...common.machinery_def.fluid_condenser import (
     recipes as Recipes,
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
 )
 from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 
 @RegisterMachine
 class FluidCondenser(MultiFluidContainer, Processor):
-    block_name = MACHINE_ID
-    store_rf_max = STORE_RF_MAX
+    block_name = Machinery.FLUID_CONDENSER
     dump_progress_to_block_entity_data = True
+    store_rf_max = STORE_RF_MAX
     process_fluid = True
     process_item = True
     recipes = Recipes

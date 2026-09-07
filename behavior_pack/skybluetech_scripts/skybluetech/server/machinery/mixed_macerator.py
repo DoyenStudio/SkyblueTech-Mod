@@ -1,13 +1,13 @@
 # coding=utf-8
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.MIXED_MACERATOR
-from ...common.machinery_def.mixed_macerator import recipes as Recipes, STORE_RF_MAX
-from .basic import RegisterMachine, Processor
+from ...common.define.id_enum import Machinery
+from ...common.machinery_def.mixed_macerator import STORE_RF_MAX
+from ...common.machinery_def.mixed_macerator import recipes as Recipes
+from .basic import Processor, RegisterMachine
 
 
 @RegisterMachine
 class MixedMacerator(Processor):
-    block_name = MACHINE_ID
+    block_name = Machinery.MIXED_MACERATOR
     dump_progress_to_block_entity_data = True
     store_rf_max = STORE_RF_MAX
     process_item = True

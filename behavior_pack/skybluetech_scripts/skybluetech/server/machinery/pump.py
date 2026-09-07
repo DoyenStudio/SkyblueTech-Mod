@@ -1,32 +1,32 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server.block import (
-    GetLiquidBlock,
     GetBlockNameAndAux,
     GetBlockStatesFromAuxValue,
+    GetLiquidBlock,
     SetBlock,
     SetLiquidBlock,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum import Machinery, Upgraders
-MACHINE_ID = Machinery.PUMP
+
 from ...common.define.global_config import BUCKET_VOLUME
+from ...common.define.id_enum import Machinery, Upgraders
+from ...common.machinery_def.pump import (
+    K_CACHED_FLUID_ID,
+    K_CACHED_VOLUME,
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
 from .basic import (
     FluidContainer,
     GUIControl,
-    UpgradeControl,
     RegisterMachine,
-)
-from ...common.machinery_def.pump import (
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
-    K_CACHED_FLUID_ID,
-    K_CACHED_VOLUME,
+    UpgradeControl,
 )
 
 
 @RegisterMachine
 class Pump(FluidContainer, GUIControl, UpgradeControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.PUMP
     store_rf_max = STORE_RF_MAX
     running_power = 20
     input_slots = (0,)

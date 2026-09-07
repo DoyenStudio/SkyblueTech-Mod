@@ -1,13 +1,15 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.server import ServerPlaceBlockEntityEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.AIR_COMPRESSOR
+
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.air_compressor import (
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
     K_PLACED_DIMENSION,
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
     GetRecipeByDimension,
+)
+from ...common.machinery_def.air_compressor import (
     recipes as Recipes,
 )
 from .basic import MultiFluidContainer, Processor, RegisterMachine
@@ -15,7 +17,7 @@ from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 @RegisterMachine
 class AirCompressor(MultiFluidContainer, Processor):
-    block_name = MACHINE_ID
+    block_name = Machinery.AIR_COMPRESSOR
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     process_fluid = True

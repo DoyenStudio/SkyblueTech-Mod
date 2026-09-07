@@ -1,40 +1,38 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define import flags
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
-
-MACHINE_ID = Machinery.BEDROCK_LAVA_DRILL_CONTROLLER
-from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import DeepLava
+from skybluetech_scripts.skybluetech.common.define.id_enum import DeepLava, Machinery
 from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill import (
-    STRUCTURE_PALETTE,
-    STRUCTURE_REQUIRE_BLOCKS,
-    IO_FLUID1,
-    IO_ENERGY,
     DRILL_POWER,
-    PUMP_POWER,
-    STORE_RF_MAX,
-    K_POS_OK,
-    K_DRILL_TIMES,
-    K_TOTAL_DRILL_TIMES,
+    IO_ENERGY,
+    IO_FLUID1,
     K_DRILL_PROGRESS,
-    K_VOLUME_LEFT_PERCENT,
+    K_DRILL_TIMES,
     K_FLUID_ID,
     K_FLUID_VOLUME,
     K_MAX_FLUID_VOLUME,
+    K_POS_OK,
+    K_TOTAL_DRILL_TIMES,
+    K_VOLUME_LEFT_PERCENT,
+    PUMP_POWER,
+    STORE_RF_MAX,
+    STRUCTURE_PALETTE,
+    STRUCTURE_REQUIRE_BLOCKS,
 )
+from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
+from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ..basic import (
     GUIControl,
     MultiBlockStructure,
-    UpgradeControl,
     RegisterMachine,
+    UpgradeControl,
 )
 from ..interfaces import EnergyInputInterface, FluidOutputInterface
 from .lava_storage import (
-    pump_deepslate_lava,
-    get_chunk_drill_time,
     get_available_lava_storage,
+    get_chunk_drill_time,
+    pump_deepslate_lava,
 )
 
 EnergyInputInterface.AddExtraMachineId(IO_ENERGY)
@@ -43,7 +41,7 @@ FluidOutputInterface.AddExtraMachineId(IO_FLUID1)
 
 @RegisterMachine
 class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.BEDROCK_LAVA_DRILL_CONTROLLER
     store_rf_max = STORE_RF_MAX
     pump_speed = 400
     origin_process_ticks = 10

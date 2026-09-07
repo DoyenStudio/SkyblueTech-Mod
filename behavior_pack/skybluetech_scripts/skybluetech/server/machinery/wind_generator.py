@@ -1,51 +1,51 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.api.server import (
+    GetBlockAuxValueFromStates,
+    GetBlockName,
+    GetBlockPaletteBetweenPos,
+    GetBlockStates,
+    GetPlayerDimensionId,
+    MayPlace,
+    PlayerUseItemToPos,
+    SetBlock,
+    UpdateBlockStates,
+)
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
     ServerBlockUseEvent,
     ServerEntityTryPlaceBlockEvent,
 )
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockName,
-    GetBlockStates,
-    GetPlayerDimensionId,
-    SetBlock,
-    UpdateBlockStates,
-    PlayerUseItemToPos,
-    MayPlace,
-    GetBlockAuxValueFromStates,
-    GetBlockPaletteBetweenPos,
-)
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.define.id_enum import Machinery
-MACHINE_ID = Machinery.WIND_GENERATOR
 from ...common.define.facing import DXYZ_FACING, FACING_EN
+from ...common.define.id_enum import Machinery
 from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,
     WindGeneratorStatesUpdate,
 )
 from ...common.machinery_def.wind_generator import (
-    get_paddle_output,
-    item2paddle,
     FINAL_OUTPUT_POWER_MULTIPLIER,
     K_MCW,
     K_OUTPUT_POWER,
     MAX_MCW_HEIGHT_MULTIPLIER,
     STORE_RF_MAX,
+    get_paddle_output,
+    item2paddle,
 )
 from ...common.utils.block_sync import BlockSync
 from ..transmitters.wire.logic import isWire
-from .basic import BaseGenerator, ItemContainer, GUIControl, RegisterMachine
+from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
 from .pool import GetMachineStrict
 
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
+block_sync = BlockSync(Machinery.WIND_GENERATOR, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
 class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.WIND_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     input_slots = (0,)

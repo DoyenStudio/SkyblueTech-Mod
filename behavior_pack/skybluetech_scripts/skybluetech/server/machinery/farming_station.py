@@ -13,7 +13,7 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.farming_station import (
     COMMON_CROP_MAX_GROWTH,
     FRUITLESS_CROPS,

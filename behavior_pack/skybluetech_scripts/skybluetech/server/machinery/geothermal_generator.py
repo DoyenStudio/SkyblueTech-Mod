@@ -1,31 +1,32 @@
 # coding=utf-8
 import random
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.define.id_enum import Machinery, Dusts
-MACHINE_ID = Machinery.GEO_THERMAL_GENERATOR
+from ...common.define.id_enum import Dusts, Machinery
 from ...common.machinery_def.geothermal_generator import (
-    WATER_ID,
-    LAVA_ID,
+    GENERATED_POWER_WITH_WATER,
     K_BURN_TICKS_LEFT,
     K_OUTPUT_POWER,
+    LAVA_ID,
+    MAX_LAVA_VOLUME,
+    MAX_WATER_VOLUME,
     ONCE_BURNING_TICKS,
     ONCE_LAVA_REDUCE_VOLUME,
     ONCE_WATER_REDUCE_VOLUME,
     ORIGIN_GENERATED_POWER,
-    GENERATED_POWER_WITH_WATER,
-    MAX_LAVA_VOLUME,
-    MAX_WATER_VOLUME,
     STORE_RF_MAX,
+    WATER_ID,
 )
 from .basic import (
     BaseGenerator,
     GUIControl,
     ItemContainer,
     MultiFluidContainer,
-    WorkRenderer,
     RegisterMachine,
+    WorkRenderer,
 )
 
 
@@ -33,7 +34,7 @@ from .basic import (
 class GeoThermalGenerator(
     BaseGenerator, GUIControl, ItemContainer, MultiFluidContainer, WorkRenderer
 ):
-    block_name = MACHINE_ID
+    block_name = Machinery.GEO_THERMAL_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     fluid_input_slots = {0, 1}

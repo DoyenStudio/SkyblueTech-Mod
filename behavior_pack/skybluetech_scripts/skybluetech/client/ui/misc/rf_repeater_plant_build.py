@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantBuildRequest,
     RFRepeaterPlantBuildResponse,

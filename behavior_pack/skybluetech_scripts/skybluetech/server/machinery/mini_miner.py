@@ -1,34 +1,34 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockPaletteBetweenPos,
+    DestroyEntity,
+    GetBlockBasicInfo,
     GetBlockName,
+    GetBlockPaletteBetweenPos,
     GetDroppedItem,
     GetEntitiesInSquareArea,
-    GetBlockBasicInfo,
-    DestroyEntity,
     SetBlock,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.MINI_MINER
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.mini_miner import (
-    WorkMode,
+    BLOCK_CAN_MINE,
     K_DIGGING_POS,
     K_WORK_MODE,
-    VOLUME_COST_ONCE,
     USE_FLUID,
-    BLOCK_CAN_MINE,
+    VOLUME_COST_ONCE,
+    WorkMode,
 )
 from .basic import (
     BaseSpeedControl,
     FluidContainer,
     GUIControl,
-    UpgradeControl,
     RegisterMachine,
+    UpgradeControl,
 )
 from .utils.transmitter_conn import TransmitterConn
 
@@ -41,7 +41,7 @@ TCON = TransmitterConn(cable=True, pipe=True)
 
 @RegisterMachine
 class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.MINI_MINER
     max_fluid_volume = 2000
     fluid_io_fix_mode = 0
     fluid_io_mode = (0, 0, 0, 0, 0, 0)

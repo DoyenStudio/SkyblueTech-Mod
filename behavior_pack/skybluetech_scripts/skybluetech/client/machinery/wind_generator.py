@@ -17,7 +17,7 @@ from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
     asModBlockRemovedListener,
 )
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,
     WindGeneratorStatesUpdate,

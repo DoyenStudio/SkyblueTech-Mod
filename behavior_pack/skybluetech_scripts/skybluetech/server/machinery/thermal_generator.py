@@ -1,24 +1,23 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.THERMAL_GENERATOR
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.thermal_generator import (
-    TICK_POWER,
     FUEL_SECONDS_MAP,
-    STORE_RF_MAX,
     K_BURN_SEC_LEFT,
     K_MAX_BURN_SEC,
+    STORE_RF_MAX,
+    TICK_POWER,
 )
 from .basic import (
     BaseGenerator,
-    ItemContainer,
     GUIControl,
-    WorkRenderer,
+    ItemContainer,
     RegisterMachine,
+    WorkRenderer,
 )
-
 
 SecondsPerTick = 0.05
 
@@ -27,7 +26,7 @@ BURN_SYNC_TICKS = 20  # 燃烧余量 bdata 同步间隔(1秒); 燃料耗尽/重�
 
 @RegisterMachine
 class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
-    block_name = MACHINE_ID
+    block_name = Machinery.THERMAL_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     input_slots = (0,)

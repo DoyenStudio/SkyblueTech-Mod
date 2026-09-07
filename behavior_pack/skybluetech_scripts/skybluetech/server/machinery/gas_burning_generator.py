@@ -1,13 +1,15 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define.id_enum import Machinery
-MACHINE_ID = Machinery.GAS_BURNING_GENERATOR
 from ...common.machinery_def.gas_burning_generator import (
-    recipes as Recipes,
     MAX_INPUT_GAS_VOLUME,
     MAX_OUTPUT_GAS_VOLUME,
     STORE_RF_MAX,
+)
+from ...common.machinery_def.gas_burning_generator import (
+    recipes as Recipes,
 )
 from .basic import (
     GeneratorProcessor,
@@ -21,7 +23,7 @@ TCON = TransmitterConn(pipe=True)
 
 @RegisterMachine
 class GasBurningGenerator(MultiFluidContainer, GeneratorProcessor):
-    block_name = MACHINE_ID
+    block_name = Machinery.GAS_BURNING_GENERATOR
     store_rf_max = STORE_RF_MAX
     process_fluid = True
     recipes = Recipes

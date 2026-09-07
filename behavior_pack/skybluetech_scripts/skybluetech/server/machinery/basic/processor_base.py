@@ -1,6 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define import flags as flags
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
@@ -10,10 +8,13 @@ from skybluetech_scripts.skybluetech.common.mini_jei.core import (
     RecipesCollection,
 )
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import MachineRecipeBase
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from .gui_ctrl import GUIControl
 from .multi_fluid_container import MultiFluidContainer
-from .work_renderer import WorkRenderer
 from .upgrade_control import UpgradeControl
+from .work_renderer import WorkRenderer
 
 
 class ProcessorBase(GUIControl, UpgradeControl, WorkRenderer):

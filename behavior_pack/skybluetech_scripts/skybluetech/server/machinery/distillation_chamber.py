@@ -1,22 +1,21 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.DISTILLATION_CHAMBER
+
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.distillation_chamber import (
-    recipes as Recipes,
+    INPUT_MAX_VOLUME,
+    K_OUTPUT_RATE,
+    OUTPUT_MAX_VOLUME,
     DistillationChamberRecipe,
 )
+from ...common.machinery_def.distillation_chamber import (
+    recipes as Recipes,
+)
 from .basic import (
-    BaseMachine,
+    GUIControl,
     HeatCtrl,
     MultiFluidContainer,
-    GUIControl,
     RegisterMachine,
-)
-from ...common.machinery_def.distillation_chamber import (
-    K_OUTPUT_RATE,
-    INPUT_MAX_VOLUME,
-    OUTPUT_MAX_VOLUME,
 )
 from .basic.multi_fluid_container import FluidSlotServer
 
@@ -29,7 +28,7 @@ for recipe in Recipes:
 
 @RegisterMachine
 class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.DISTILLATION_CHAMBER
     is_non_energy_machine = True
     fluid_io_fix_mode = 0
     fluid_input_slots = {0}

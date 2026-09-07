@@ -1,18 +1,20 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.METAL_PRESS
+
+from ...common.define.id_enum import Machinery
+from ...common.machinery_def.metal_press import (
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
 from ...common.machinery_def.metal_press import (
     recipes as Recipes,
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
 )
 from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 
 @RegisterMachine
 class MetalPress(MultiFluidContainer, Processor):
-    block_name = MACHINE_ID
+    block_name = Machinery.METAL_PRESS
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     process_item = True

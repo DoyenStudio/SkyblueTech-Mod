@@ -1,11 +1,13 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.REACTING_THERMAL_GENERATOR
+
+from ...common.define.id_enum import Machinery
+from ...common.machinery_def.reacting_thermal_generator import (
+    MAX_FLUID_VOLUMES,
+    STORE_RF_MAX,
+)
 from ...common.machinery_def.reacting_thermal_generator import (
     recipes as Recipes,
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUMES,
 )
 from .basic import (
     GeneratorProcessor,
@@ -16,7 +18,7 @@ from .basic import (
 
 @RegisterMachine
 class ReactingThermalGenerator(MultiFluidContainer, GeneratorProcessor):
-    block_name = MACHINE_ID
+    block_name = Machinery.REACTING_THERMAL_GENERATOR
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     process_item = True

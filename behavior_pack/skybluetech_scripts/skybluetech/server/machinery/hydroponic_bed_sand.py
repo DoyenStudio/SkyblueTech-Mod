@@ -1,28 +1,30 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.HYDROPONIC_BED_SAND
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.hydroponic_bed_sand import (
-    HydroponicBedSandRecipe,
-    recipes as Recipes,
     K_CROP_BLOCK_ID,
     K_GROW_PROGRESS,
     K_WATER_STORE,
-    STORE_RF_MAX,
-    POWER_COST,
-    WORK_TICK_DELAY,
     MAX_WATER_STORE,
     ONCE_WATER_COST,
+    POWER_COST,
+    STORE_RF_MAX,
+    WORK_TICK_DELAY,
+    HydroponicBedSandRecipe,
+)
+from ...common.machinery_def.hydroponic_bed_sand import (
+    recipes as Recipes,
 )
 from .basic import (
-    ItemContainer,
-    GUIControl,
     BaseSpeedControl,
+    GUIControl,
+    ItemContainer,
     PowerControl,
-    WorkRenderer,
     RegisterMachine,
+    WorkRenderer,
 )
 from .pool import GetMachineStrict
 
@@ -31,7 +33,7 @@ from .pool import GetMachineStrict
 class HydroponicBedSand(
     BaseSpeedControl, ItemContainer, GUIControl, PowerControl, WorkRenderer
 ):
-    block_name = MACHINE_ID
+    block_name = Machinery.HYDROPONIC_BED_SAND  
     store_rf_max = STORE_RF_MAX
     input_slots = (0,)
     running_power = POWER_COST

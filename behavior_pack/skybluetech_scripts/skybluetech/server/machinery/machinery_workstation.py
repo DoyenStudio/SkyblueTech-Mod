@@ -14,7 +14,7 @@ from ...common.events.machinery.machinery_workstation import (
     MachineryWorkstationDoCraft,
     MachineryWorkstationTransferRecipe,
 )
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.machinery_workstation import (
     recipes as Recipes,
     K_CRAFTING_PROGRESS,

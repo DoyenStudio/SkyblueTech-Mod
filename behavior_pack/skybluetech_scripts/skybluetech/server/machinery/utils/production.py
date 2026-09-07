@@ -122,8 +122,8 @@ def OutputRecipe(machine, recipe):
         recipe (MachineRecipeBase): 机器配方基类
     """
     from ..basic import (
-        ItemContainer,
         FluidContainer,
+        ItemContainer,
         MultiFluidContainer,
         UpgradeControl,
     )

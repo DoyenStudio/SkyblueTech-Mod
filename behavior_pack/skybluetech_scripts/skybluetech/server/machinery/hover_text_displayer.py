@@ -2,7 +2,7 @@
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 
-from ...common.define.id_enum.machinery import Machinery
+from ...common.define.id_enum import Machinery
 from ...common.define.ui_keys import HOVER_TEXT_DISPLAYER_UI
 from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,

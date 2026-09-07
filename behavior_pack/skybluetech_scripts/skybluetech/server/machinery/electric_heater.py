@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.ELECTRIC_HEATER
+
+from ...common.define.id_enum import Machinery
 from ...common.events.machinery.electric_heater import ElectricHeaterSubmitModifiesEvent
 from ...common.machinery_def.electric_heater import (
     K_KELVIN_LIMIT,
@@ -21,7 +21,7 @@ MAX_POWER = STORE_RF_MAX
 
 @RegisterMachine
 class ElectricHeater(HeatCtrl, GUIControl, PowerControl, OperationListener):
-    block_name = MACHINE_ID
+    block_name = Machinery.ELECTRIC_HEATER
     store_rf_max = STORE_RF_MAX
     max_heat_value = 500
     spread_heat = True

@@ -1,42 +1,42 @@
 # coding=utf-8
 import random
-from skybluetech_scripts.tooldelta.events.server.block import (
-    ServerPlaceBlockEntityEvent,
-)
+
 from skybluetech_scripts.tooldelta.api.server import (
+    GetBlockAuxValueFromStates,
     GetBlockName,
     GetBlockStates,
-    SetBlock,
     MayPlace,
-    GetBlockAuxValueFromStates,
+    SetBlock,
 )
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
     ServerBlockUseEvent,
     ServerEntityTryPlaceBlockEvent,
 )
+from skybluetech_scripts.tooldelta.events.server.block import (
+    ServerPlaceBlockEntityEvent,
+)
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.deepslate_lava_vibrator import (
-    STORE_RF_MAX,
     K_DEEPSLATE_LAVA_PREDICTED,
     K_PREDICT_PROGRESS,
+    STORE_RF_MAX,
 )
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.DEEPSLATE_LAVA_VIBRATOR
-from .basic import SPControl, RegisterMachine
+from .basic import RegisterMachine, SPControl
 from .bedrock_lava_drill.lava_storage import get_available_lava_storage
-from .pool import GetMachineStrict
 
 K_REAL_STORAGE = "st:real_storage"
 
 
 @RegisterMachine
 class DeepslateLavaVibrator(SPControl):
-    block_name = MACHINE_ID
-    store_rf_max = STORE_RF_MAX
+    block_name = Machinery.DEEPSLATE_LAVA_VIBRATOR
     energy_io_mode = (2, 2, 0, 0, 0, 0)
     running_power = 400
     origin_process_ticks = 20
+    store_rf_max = STORE_RF_MAX
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

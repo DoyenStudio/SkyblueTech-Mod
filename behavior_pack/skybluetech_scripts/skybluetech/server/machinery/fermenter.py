@@ -1,54 +1,54 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.events.machinery.fermenter import (
-    FermenterSetTemperatureEvent,
-    FermenterSeMaxVolumeEvent,
-)
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.FERMENTER
+from ...common.define.id_enum import Machinery
 from ...common.define.id_enum.multi_block_structure import Fermenter as FERMENTER_IDENUM
+from ...common.events.machinery.fermenter import (
+    FermenterSeMaxVolumeEvent,
+    FermenterSetTemperatureEvent,
+)
 from ...common.machinery_def.fermenter import (
-    K_TEMPERATURE,
+    HI_TEMPERATURE_VITALITY_REDUCE,
+    K_CELL_HUNGER,
     K_EXPECTED_TEMPERTURE,
     K_EXPECTED_WATER_MAX_VOLUME,
-    K_MUD_VOLUME,
-    K_WATER_VOLUME,
-    K_MUD_VITALITY,
-    K_RECIPE,
-    K_CELL_HUNGER,
-    K_INOCULATING_RECIPE,
+    K_FLUID_PRODUCE_SPEED,
+    K_GAS_PRODUCE_SPEED,
     K_INOCULATE_TIME,
-    K_OUTPUT_GAS_ID,
-    K_OUTPUT_GAS_VOLUME,
-    K_OUTPUT_GAS_MAX_VOLUME,
+    K_INOCULATING_RECIPE,
+    K_MUD_THICKNESS,
+    K_MUD_VITALITY,
+    K_MUD_VOLUME,
     K_OUTPUT_FLUID_ID,
     K_OUTPUT_FLUID_MAX_VOLUME,
     K_OUTPUT_FLUID_VOLUME,
-    K_GAS_PRODUCE_SPEED,
-    K_FLUID_PRODUCE_SPEED,
+    K_OUTPUT_GAS_ID,
+    K_OUTPUT_GAS_MAX_VOLUME,
+    K_OUTPUT_GAS_VOLUME,
+    K_RECIPE,
+    K_TEMPERATURE,
     K_TOTAL_VOLUME,
-    K_MUD_THICKNESS,
+    K_WATER_VOLUME,
+    POOL_MAX_VOLUME,
     STORE_RF_MAX,
     STRUCTURE_PALETTE,
-    POOL_MAX_VOLUME,
-    TEMPERATURE_MIN,
     TEMPERATURE_MAX,
-    VITALITY_ADD_MAX,
-    HI_TEMPERATURE_VITALITY_REDUCE,
-    VITALITY_HUNGER_REDUCE_MAX,
+    TEMPERATURE_MIN,
     THICKNESS_OVERFLOW_VITALITY_REDUCE,
-    spec_recipes,
+    VITALITY_ADD_MAX,
+    VITALITY_HUNGER_REDUCE_MAX,
     FermenterRecipe,
+    spec_recipes,
 )
 from .basic import (
     GUIControl,
     MultiBlockStructure,
     OperationListener,
+    RegisterMachine,
     UpgradeControl,
     WorkRenderer,
-    RegisterMachine,
 )
 from .interfaces import (
     EnergyInputInterface,
@@ -56,7 +56,6 @@ from .interfaces import (
     FluidOutputInterface,
     ItemInputInterface,
 )
-
 
 EnergyInputInterface.AddExtraMachineId(FERMENTER_IDENUM.IO_ENERGY)
 FluidInputInterface.AddExtraMachineId(FERMENTER_IDENUM.IO_FLUID1)
@@ -67,7 +66,7 @@ ItemInputInterface.AddExtraMachineId(FERMENTER_IDENUM.IO_ITEM)
 
 @RegisterMachine
 class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, OperationListener):
-    block_name = MACHINE_ID
+    block_name = Machinery.FERMENTER
     store_rf_max = STORE_RF_MAX
     origin_process_ticks = 1
     running_power = 5

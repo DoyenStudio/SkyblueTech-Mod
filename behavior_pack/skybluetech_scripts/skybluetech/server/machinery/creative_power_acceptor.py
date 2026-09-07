@@ -1,14 +1,14 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.CREATIVE_POWER_ACCEPTOR
+
+from ...common.define.id_enum import Machinery
 from ...common.machinery_def.creative_power_acceptor import K_POWER
 from .basic import BaseMachine, RegisterMachine
 
 
 @RegisterMachine
 class CreativePowerAcceptor(BaseMachine):
-    block_name = MACHINE_ID
+    block_name = Machinery.CREATIVE_POWER_ACCEPTOR
     store_rf_max = 0
 
     @SuperExecutorMeta.execute_super

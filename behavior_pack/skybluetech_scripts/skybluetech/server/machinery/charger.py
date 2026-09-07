@@ -27,7 +27,7 @@ block_sync = BlockSync(Machinery.CHARGER, side=BlockSync.SIDE_SERVER)
 @RegisterMachine
 class Charger(GUIControl, OperationListener, UpgradeControl):
     block_name = Machinery.CHARGER
-    allow_upgrader_tags = {"skybluetech:upgraders/charger"}
+    allow_upgrader_tags = frozenset()
     input_slots = (0,)
     output_slots = (1,)
     upgrade_slot_start = 2

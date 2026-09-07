@@ -1,47 +1,48 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
+from skybluetech_scripts.tooldelta.api.server.block import (
+    GetBlockBasicInfo,
+    GetBlockFacingDir,
+    GetBlockNameAndAux,
+    SetBlock,
+)
+from skybluetech_scripts.tooldelta.api.server.entity import (
+    DestroyEntity,
+    GetDroppedItem,
+    GetEntitiesBySelector,
+    SpawnDroppedItem,
+)
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.api.server.block import (
-    GetBlockNameAndAux,
-    GetBlockBasicInfo,
-    SetBlock,
-    GetBlockFacingDir,
-)
-from skybluetech_scripts.tooldelta.api.server.entity import (
-    GetEntitiesBySelector,
-    GetDroppedItem,
-    DestroyEntity,
-    SpawnDroppedItem,
-)
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
-from ...common.events.machinery.digger import (
-    DiggerWorkModeUpdatedEvent,
-    DiggerUpdateCrack,
-)
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.DIGGER
+from ...common.events.machinery.digger import (
+    DiggerUpdateCrack,
+    DiggerWorkModeUpdatedEvent,
+)
 from ...common.machinery_def.digger import (
-    STORE_RF_MAX,
-    K_FRONT_BLOCK_ID,
     K_FRONT_BLOCK_AUX,
+    K_FRONT_BLOCK_ID,
+    STORE_RF_MAX,
 )
 from ...common.utils.block_sync import BlockSync
 from .basic import (
     GUIControl,
+    RegisterMachine,
     UpgradeControl,
     WorkRenderer,
-    RegisterMachine,
 )
 
 TICKS_PER_SECOND = 20
-block_sync = BlockSync(MACHINE_ID, side=BlockSync.SIDE_SERVER)
+block_sync = BlockSync(Machinery.DIGGER, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
 class Digger(GUIControl, UpgradeControl, WorkRenderer):
-    block_name = MACHINE_ID
+    block_name = Machinery.DIGGER
     dump_progress_to_block_entity_data = True
     input_slots = ()
     output_slots = (0,)
@@ -49,10 +50,10 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
     running_power = 40
     upgrade_slot_start = 1
     upgrade_slots = 4
-    allow_upgrader_tags = {
-        "skybluetech:upgraders/speed",
-        "skybluetech:upgraders/energy",
-    }
+    allow_upgrader_tags = frozenset({
+        UpgraderTag.SPEED,
+        UpgraderTag.ENERGY,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

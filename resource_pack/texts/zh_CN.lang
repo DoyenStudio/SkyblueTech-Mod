@@ -422,3 +422,4 @@ tile.skybluetech:deepslate_uranium_ore.name=深层铀矿石
 tile.skybluetech:transmit_belt.name=传送带
 item.skybluetech:steel_cutter.name=钢锯片
 tile.skybluetech:energy_cube_junior.name=基础能量立方
+item.skybluetech:upgrader_generic_auto_ejection.name=泛用升级： 自动弹出

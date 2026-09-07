@@ -1,22 +1,23 @@
 # coding=utf-8
 import random
 
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.skybluetech.common.mini_jei.core import (
     CategoryType,
     RecipesCollection,
 )
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
-    MachineRecipeBase,
     GeneratorRecipe,
+    MachineRecipeBase,
 )
-from skybluetech_scripts.skybluetech.common.define import flags
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from .base_generator import BaseGenerator
 from .base_speed_control import BaseSpeedControl
 from .multi_fluid_container import MultiFluidContainer
-from .upgrade_control import UpgradeControl
 from .processor_base import ProcessorBase
+from .upgrade_control import UpgradeControl
 
 K_OUTPUT_POWER = "st:output_power"
 K_RECIPE_INDEX = "st:recipe_index"
@@ -207,6 +208,7 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
                     orig_item.count += int(output.count)
                 slotitems[slot_pos] = orig_item
             self.SetSlotItems(slotitems)
+            self.FlushOutputSlots(list(recipe.outputs.get(CategoryType.ITEM, {}).keys()))
         if self.process_fluid and isinstance(self, MultiFluidContainer):
             slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
             last_index = len(slots_and_outputs) - 1

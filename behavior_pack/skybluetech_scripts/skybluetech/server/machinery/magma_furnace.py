@@ -1,20 +1,25 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define.id_enum.items import Upgraders
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.MAGMA_FURNACE
+from ...common.machinery_def.magma_furnace import (
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
 from ...common.machinery_def.magma_furnace import (
     magma_factory_recipes as MagmaFactoryRecipes,
+)
+from ...common.machinery_def.magma_furnace import (
     recipes as Recipes,
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
 )
 from .basic import MultiFluidContainer, Processor, RegisterMachine
 
 
 @RegisterMachine
 class MagmaFurnace(MultiFluidContainer, Processor):
-    block_name = MACHINE_ID
+    block_name = Machinery.MAGMA_FURNACE
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     process_item = True
@@ -27,9 +32,9 @@ class MagmaFurnace(MultiFluidContainer, Processor):
     fluid_output_slots = {0}
     upgrade_slot_start = 1
     upgrade_slots = 4
-    allow_upgrader_tags = Processor.allow_upgrader_tags | {
-        "skybluetech:upgraders/spec_magma_factory"
-    }
+    allow_upgrader_tags = Processor.allow_upgrader_tags | frozenset({
+        UpgraderTag.SPEC_MAGMA_FACTORY,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

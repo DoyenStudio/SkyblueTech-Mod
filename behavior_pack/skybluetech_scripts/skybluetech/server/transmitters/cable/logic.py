@@ -119,6 +119,29 @@ def PushItemToGenericContainer(ap, item, limit_count=None):
         send_item.count += overflow_count
     return send_item
 
+def PushItemToGenericContainerEasy(dim, xyz, face, item, limit_count=None):
+    # type: (int, tuple[int, int, int], int, Item, int | None) -> Item | None
+    send_item = item.copy()
+    if limit_count is not None:
+        send_item.count = min(send_item.count, limit_count)
+    overflow_count = item.count - send_item.count
+    m = GetMachineWithoutCls(dim, *xyz)
+    if m is not None and isinstance(m, ItemContainer):
+        res = m.PushItem(send_item)
+    else:
+        container_size = GetContainerSize(xyz, dim)
+        if container_size is None or container_size <= 0:
+            return item
+        res = PushItemToOrigContainer(dim, xyz, send_item, container_size)
+    if res is None:
+        if overflow_count <= 0:
+            return None
+        else:
+            send_item.count = overflow_count
+    else:
+        send_item.count += overflow_count
+    return send_item
+
 
 def PushItemToOrigContainer(dim, xyz, item, container_size):
     # type: (int, tuple[int, int, int], Item, int) -> Item | None

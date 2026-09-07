@@ -1,17 +1,19 @@
 # coding=utf-8
 from collections import deque
-from skybluetech_scripts.tooldelta.define.item import Item
+
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockName, SetBlock
 from skybluetech_scripts.tooldelta.api.server.entity import (
-    GetEntitiesBySelector,
-    GetDroppedItem,
     DestroyEntity,
+    GetDroppedItem,
+    GetEntitiesBySelector,
     SpawnDroppedItem,
 )
+from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define.id_enum import Machinery, Upgraders
-MACHINE_ID = Machinery.FORESTER
-from ...common.machinery_def.forester import getSaplingId, isLog, isLeave, STORE_RF_MAX
+from ...common.define.tag_enum import UpgraderTag
+from ...common.machinery_def.forester import STORE_RF_MAX, ForesterUtils
 from .basic import (
     BaseSpeedControl,
     GUIControl,
@@ -38,7 +40,7 @@ ALL_NEIGHBOUR_BLOCKS_ENUM = [
 
 @RegisterMachine
 class Forester(GUIControl, UpgradeControl):
-    block_name = MACHINE_ID
+    block_name = Machinery.FORESTER
     store_rf_max = STORE_RF_MAX
     running_power = 80
     origin_process_ticks = 20 * 5
@@ -46,9 +48,10 @@ class Forester(GUIControl, UpgradeControl):
     output_slots = tuple(range(24))
     upgrade_slot_start = 24
     upgrade_slots = 4
-    allow_upgrader_tags = {
-        "skybluetech:upgraders/expansion",
-    }
+    allow_upgrader_tags = frozenset({
+        UpgraderTag.ENERGY,
+        UpgraderTag.GENERIC_AUTO_EJECTION, 
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -118,8 +121,8 @@ class Forester(GUIControl, UpgradeControl):
             self._scan_dx(),
             self._scan_dy(),
             self._scan_dx(),
-        )
-        sapling_id = getSaplingId(main_log_block)
+            )
+        sapling_id = ForesterUtils.GetSaplingId(main_log_block)
         if len(logs) + len(leaves) < 10:
             return False
         for x, y, z in logs:
@@ -174,11 +177,11 @@ def forester_bfs(dim, _x, _y, _z, rx, ry, rz):
             block_id = GetBlockName(dim, next_pos)
             if block_id is None:
                 continue
-            elif isLog(block_id):
+            elif ForesterUtils.IsLog(block_id):
                 found_logs.add(next_pos)
                 if main_log_block == "":
                     main_log_block = block_id
-            elif isLeave(block_id):
+            elif ForesterUtils.IsLeave(block_id):
                 found_leaves.add(next_pos)
             else:
                 continue

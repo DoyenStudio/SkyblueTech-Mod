@@ -1,18 +1,20 @@
 # coding=utf-8
-#
-from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define import flags
+from skybluetech_scripts.skybluetech.common.define.facing import FACING_DXYZ
+from skybluetech_scripts.skybluetech.common.define.id_enum.items import Upgraders
 from skybluetech_scripts.skybluetech.common.machinery_def.upgraders import (
-    SPEED_NEGATIVE,
-    SPEED_POSITIVE,
     POWER_NEGATIVE,
     POWER_POSITIVE,
+    SPEED_NEGATIVE,
+    SPEED_POSITIVE,
 )
-from skybluetech_scripts.tooldelta.api.server.entity import SpawnDroppedItem
+from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server.item import (
     PlayerTryPutCustomContainerItemServerEvent,
 )
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from .base_machine import BaseMachine
 from .item_container import ItemContainer
 from .sp_control import SPControl
@@ -42,7 +44,7 @@ class UpgradeControl(ItemContainer, SPControl):
 
     upgrade_slot_start = 2  # type: int
     upgrade_slots = 4  # type: int
-    allow_upgrader_tags = set()  # type: set[str]
+    allow_upgrader_tags = frozenset()  # type: set[str] | frozenset[str]
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -62,8 +64,8 @@ class UpgradeControl(ItemContainer, SPControl):
         return (
             slot >= self.upgrade_slot_start
             and slot < self.upgrade_slot_start + self.upgrade_slots
-            and self.itemIsValidUpgrader(item)
-            and not self.otherSlotHasSameUpgrader(slot, item.id)
+            and self._item_is_valid_upgrader(item)
+            and not self._other_slot_has_same_upgrader(slot, item.id)
         )
 
     def OnCustomCotainerPutItem(self, event):
@@ -71,7 +73,7 @@ class UpgradeControl(ItemContainer, SPControl):
         "超类方法, 处理玩家向升级槽放入物品的事件。"
         if not self.InUpgradeSlot(event.collectionIndex):
             return ItemContainer.OnCustomCotainerPutItem(self, event)
-        if not self.itemIsValidUpgrader(event.item):
+        if not self._item_is_valid_upgrader(event.item):
             event.cancel()
             return
         # 升级槽已有物品则禁止放入
@@ -80,7 +82,7 @@ class UpgradeControl(ItemContainer, SPControl):
             event.cancel()
             return
         # 不能在不同槽位放入相同的升级
-        if self.otherSlotHasSameUpgrader(event.collectionIndex, event.item.id):
+        if self._other_slot_has_same_upgrader(event.collectionIndex, event.item.id):
             event.cancel()
             return
 
@@ -148,6 +150,17 @@ class UpgradeControl(ItemContainer, SPControl):
             res[item.id] = item.count
         return res
 
+    def FlushOutputSlots(self, slots):
+        # type: (list[int]) -> None
+        if self.HasUpgrader(Upgraders.GENERIC_AUTO_EJECTION):
+            self._auto_eject_item(slots)
+
+    def OutputItem(self, item):
+        # type: (Item) -> Item | None
+        rest = ItemContainer.OutputItem(self, item)
+        self.FlushOutputSlots(list(self.output_slots))
+        return rest
+
     def UpdateUpgraders(self, upgraders):
         # type: (dict[str, int]) -> None
         "超类方法更新基本的速度和能量升级处理。超类方法作进一步处理"
@@ -170,7 +183,7 @@ class UpgradeControl(ItemContainer, SPControl):
         # type: (str) -> bool
         return item_id in self._upgraders
 
-    def otherSlotHasSameUpgrader(self, slot, item_name):
+    def _other_slot_has_same_upgrader(self, slot, item_name):
         # type: (int, str) -> bool
         slot_range = range(
             self.upgrade_slot_start, self.upgrade_slot_start + self.upgrade_slots
@@ -186,6 +199,33 @@ class UpgradeControl(ItemContainer, SPControl):
                 return True
         return False
 
-    def itemIsValidUpgrader(self, item):
+    def _item_is_valid_upgrader(self, item):
         # type: (Item) -> bool
         return any(tag in self.allow_upgrader_tags for tag in item.GetBasicInfo().tags)
+
+
+    def _auto_eject_item(self, slots):
+        # type: (list[int]) -> None
+        """尝试把指定输出槽中的物品送入六面相邻容器。"""
+        from ...transmitters.cable.logic import PushItemToGenericContainerEasy
+
+        for slot in slots:
+            if slot not in self.output_slots:
+                continue
+            item = self.GetSlotItem(slot, get_user_data=True)
+            if item is None:
+                continue
+            rest = item
+            for face, (dx, dy, dz) in enumerate(FACING_DXYZ):
+                rest = PushItemToGenericContainerEasy(
+                    self.dim,
+                    (self.x + dx, self.y + dy, self.z + dz),
+                    face,
+                    rest,
+                )
+                if rest is None:
+                    break
+            if rest is None:
+                ItemContainer.SetSlotItem(self, slot, None)
+            elif rest.count != item.count:
+                ItemContainer.SetSlotItem(self, slot, rest)

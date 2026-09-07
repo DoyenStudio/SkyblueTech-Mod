@@ -1,24 +1,25 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
+from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
 from ...common.define.id_enum.machinery import Machinery
-MACHINE_ID = Machinery.REDSTONE_FURNACE
-from ...common.machinery_def.redstone_furnace import TICK_POWER, STORE_RF_MAX
+from ...common.machinery_def.redstone_furnace import STORE_RF_MAX, TICK_POWER
 from .basic import (
-    ItemContainer,
     GUIControl,
+    ItemContainer,
+    RegisterMachine,
     UpgradeControl,
     WorkRenderer,
-    RegisterMachine,
 )
 
 
 @RegisterMachine
 class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
-    block_name = MACHINE_ID
+    block_name = Machinery.REDSTONE_FURNACE
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
     origin_process_ticks = 20 * 8  # 8s
@@ -27,9 +28,10 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
     output_slots = (1,)
     upgrade_slot_start = 2
     upgrade_slots = 4
-    allow_upgrader_tags = {
-        "skybluetech:upgraders/speed",
-    }
+    allow_upgrader_tags = frozenset({
+        UpgraderTag.SPEED,
+        UpgraderTag.GENERIC_AUTO_EJECTION,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -79,6 +81,7 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
         else:
             output_item = Item(expected_output)
         self.SetSlotItem(1, output_item)
+        self.FlushOutputSlots([1])
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool

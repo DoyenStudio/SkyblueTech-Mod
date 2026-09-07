@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 8,
+            "minecraft:tags": {
+                "tags": [
+                    "skybluetech:upgraders/generic_auto_ejection"
+                ]
+            },
+            "netease:customtips": {
+                "value": "\n§7使得机器可以自动弹出物品产品。\n§b在机器进行一次产出时， 自动尝试将物品产物弹出到最近的容器内。"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:upgrader_generic_auto_ejection"
+        }
+    }
+}

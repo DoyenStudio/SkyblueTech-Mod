@@ -178,6 +178,8 @@ class Upgraders(SimpleEnum):
     EMPTY = "skybluetech:upgrader_plate_empty"
     BASIC_SPEED_UPGRADER = "skybluetech:upgrader_basic_speed"
     BASIC_ENERGY_UPGRADER = "skybluetech:upgrader_basic_energy"
+    GENERIC_AUTO_EJECTION = "skybluetech:upgrader_generic_auto_ejection"
+    GENERIC_AUTOSTOP = "skybluetech:upgrader_generic_autostop"
     GENERIC_EXPANSION_UPGRADER = "skybluetech:upgrader_generic_expansion"
     GENERIC_AUTOSTOP = "skybluetech:upgrader_generic_autostop"
     GENERIC_FILTER_DEFAULT = "skybluetech:upgrader_generic_split"

@@ -1,20 +1,22 @@
 # coding=utf-8
 import random
 
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+from skybluetech_scripts.skybluetech.common.define import flags
+from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
 from skybluetech_scripts.skybluetech.common.mini_jei.core import (
     CategoryType,
     RecipesCollection,
 )
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
-    MachineRecipeBase,
     MachineRecipe,
+    MachineRecipeBase,
 )
-from skybluetech_scripts.skybluetech.common.define import flags as flags
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from .multi_fluid_container import MultiFluidContainer
-from .upgrade_control import UpgradeControl
 from .processor_base import ProcessorBase
+from .upgrade_control import UpgradeControl
 
 
 class Processor(ProcessorBase):
@@ -30,10 +32,11 @@ class Processor(ProcessorBase):
     recipes = RecipesCollection("???")  # type: RecipesCollection[MachineRecipe]
     "机器配方, 改变配方表时记得重置工作进度"
     energy_mode = (0, 0, 0, 0, 0, 0)
-    allow_upgrader_tags = {
-        "skybluetech:upgraders/speed",
-        "skybluetech:upgraders/energy",
-    }
+    allow_upgrader_tags = frozenset({
+        UpgraderTag.SPEED,
+        UpgraderTag.ENERGY,
+        UpgraderTag.GENERIC_AUTO_EJECTION,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -189,6 +192,9 @@ class Processor(ProcessorBase):
                     orig_item.count += int(output.count)
                 slotitems[slot_pos] = orig_item
             self.SetSlotItems(slotitems)
+            self.FlushOutputSlots(
+                list(recipe.outputs.get(CategoryType.ITEM, {}).keys())
+            )
         if self.process_fluid and isinstance(self, MultiFluidContainer):
             slot_pos_and_inputs = list(
                 recipe.inputs.get(CategoryType.FLUID, {}).items()

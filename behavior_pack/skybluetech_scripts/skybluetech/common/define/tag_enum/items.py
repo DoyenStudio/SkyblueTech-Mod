@@ -111,5 +111,15 @@ class BatteryTag:
     COMMON = "skybluetech:battery"
 
 
+class UpgraderTag:
+    ENERGY = "skybluetech:upgraders/energy"
+    SPEED = "skybluetech:upgraders/speed"
+    GENERIC_AUTOSTOP = "skybluetech:upgraders/generic_autostop"
+    GENERIC_AUTO_EJECTION = "skybluetech:upgraders/generic_auto_ejection"
+    EXPANSION = "skybluetech:upgraders/expansion"
+    GENERIC_SPLIT = "skybluetech:upgraders/generic_split"
+    SPEC_MAGMA_FACTORY = "skybluetech:upgraders/spec_magma_factory"
+
+
 RUBBER = "common:rubber"
 SAWDUST = "common:sawdust"

@@ -103,6 +103,7 @@ class LexicalTransmuter(GUIControl, UpgradeControl):
         input_item.count = overflow_count
         self.SetSlotItem(0, input_item)
         self.SetSlotItem(1, output_item)
+        self.FlushOutputSlots([1])
 
     def refresh_template_info(self):
         template_item = self.GetSlotItem(self.template_slot)

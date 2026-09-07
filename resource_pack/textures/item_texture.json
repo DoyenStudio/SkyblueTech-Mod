@@ -634,6 +634,9 @@
         "skybluetech:upgrader_basic_speed": {
             "textures": "textures/items/upgraders/upgrader_basic_speed"
         },
+"skybluetech:upgrader_generic_auto_ejection": {
+            "textures": "textures/items/upgraders/upgrader_generic_auto_ejection"
+        },
         "skybluetech:upgrader_generic_autostop": {
             "textures": "textures/items/upgraders/upgrader_generic_autostop"
         },

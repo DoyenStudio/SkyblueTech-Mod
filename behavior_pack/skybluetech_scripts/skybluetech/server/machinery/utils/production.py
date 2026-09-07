@@ -121,7 +121,12 @@ def OutputRecipe(machine, recipe):
         machine (BaseMachine): 机器基类
         recipe (MachineRecipeBase): 机器配方基类
     """
-    from ..basic import ItemContainer, FluidContainer, MultiFluidContainer
+    from ..basic import (
+        ItemContainer,
+        FluidContainer,
+        MultiFluidContainer,
+        UpgradeControl,
+    )
 
     if isinstance(machine, ItemContainer):
         output_items = recipe.GetMachineOutputs().get(CategoryType.ITEM, {})
@@ -132,6 +137,8 @@ def OutputRecipe(machine, recipe):
             else:
                 machine_slot.count += int(output.count)
                 machine.SetSlotItem(slot, machine_slot)
+        if isinstance(machine, UpgradeControl):
+            machine.FlushOutputSlots(list(output_items.keys()))
     if isinstance(machine, FluidContainer):
         output_fluid = recipe.GetMachineOutputs().get(CategoryType.FLUID, {}).get(0)
         if output_fluid is None:

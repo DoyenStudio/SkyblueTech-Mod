@@ -507,7 +507,7 @@ recipes = RecipesCollection(
             7: Input("minecraft:piston"),
             8: Input("minecraft:iron_ingot"),
         },
-        id_enum.Machinery.ITEM_SPLITTER,
+        id_enum.Machinery.ITEM_SPREADER,
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
         8,

@@ -36,11 +36,11 @@ class Pump(FluidContainer, GUIControl, UpgradeControl):
     origin_process_ticks = 5
     upgrade_slot_start = 0
     allow_player_use_bucket_push = False
-    allow_upgrader_tags = {
-        "skybluetech:upgraders/speed",
-        "skybluetech:upgraders/energy",
-        "skybluetech:upgraders/expansion",
-    }
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_SPEED_UPGRADER,
+        Upgraders.BASIC_ENERGY_UPGRADER,
+        Upgraders.GENERIC_EXPANSION_UPGRADER,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

@@ -31,7 +31,7 @@ class UpgradeControl(ItemContainer, SPControl):
     类属性:
         upgrade_slot_start (int): 升级槽起始槽位
         upgrade_slots (int): 升级槽数量
-        allow_upgrader_tags (set[str]): 可接受的机器升级卡标签。
+        allow_upgraders (frozenset[str]): 可接受的机器升级卡ID。
 
     覆写:
         - `__init__`
@@ -44,7 +44,7 @@ class UpgradeControl(ItemContainer, SPControl):
 
     upgrade_slot_start = 2  # type: int
     upgrade_slots = 4  # type: int
-    allow_upgrader_tags = frozenset()  # type: set[str] | frozenset[str]
+    allow_upgraders = frozenset()  # type: set[str] | frozenset[str]
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -201,7 +201,7 @@ class UpgradeControl(ItemContainer, SPControl):
 
     def _item_is_valid_upgrader(self, item):
         # type: (Item) -> bool
-        return any(tag in self.allow_upgrader_tags for tag in item.GetBasicInfo().tags)
+        return item.id in self.allow_upgraders
 
 
     def _auto_eject_item(self, slots):

@@ -1,12 +1,11 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.redstone_furnace import STORE_RF_MAX, TICK_POWER
 from .basic import (
     GUIControl,
@@ -28,9 +27,9 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
     output_slots = (1,)
     upgrade_slot_start = 2
     upgrade_slots = 4
-    allow_upgrader_tags = frozenset({
-        UpgraderTag.SPEED,
-        UpgraderTag.GENERIC_AUTO_EJECTION,
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_SPEED_UPGRADER,
+        Upgraders.GENERIC_AUTO_EJECTION,
     })
 
     @SuperExecutorMeta.execute_super

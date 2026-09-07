@@ -33,7 +33,7 @@ from .pool import GetMachineStrict
 class HydroponicBedSand(
     BaseSpeedControl, ItemContainer, GUIControl, PowerControl, WorkRenderer
 ):
-    block_name = Machinery.HYDROPONIC_BED_SAND  
+    block_name = Machinery.HYDROPONIC_BED_SAND
     store_rf_max = STORE_RF_MAX
     input_slots = (0,)
     running_power = POWER_COST

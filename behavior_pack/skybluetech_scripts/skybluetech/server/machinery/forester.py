@@ -12,7 +12,6 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery, Upgraders
-from ...common.define.tag_enum import UpgraderTag
 from ...common.machinery_def.forester import STORE_RF_MAX, ForesterUtils
 from .basic import (
     BaseSpeedControl,
@@ -48,9 +47,9 @@ class Forester(GUIControl, UpgradeControl):
     output_slots = tuple(range(24))
     upgrade_slot_start = 24
     upgrade_slots = 4
-    allow_upgrader_tags = frozenset({
-        UpgraderTag.ENERGY,
-        UpgraderTag.GENERIC_AUTO_EJECTION, 
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_ENERGY_UPGRADER,
+        Upgraders.GENERIC_AUTO_EJECTION, 
     })
 
     @SuperExecutorMeta.execute_super

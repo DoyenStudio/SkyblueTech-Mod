@@ -2,7 +2,7 @@
 import random
 
 from skybluetech_scripts.skybluetech.common.define import flags
-from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery, Upgraders
 from skybluetech_scripts.skybluetech.common.mini_jei.core import (
     CategoryType,
     RecipesCollection,
@@ -32,10 +32,10 @@ class Processor(ProcessorBase):
     recipes = RecipesCollection("???")  # type: RecipesCollection[MachineRecipe]
     "机器配方, 改变配方表时记得重置工作进度"
     energy_mode = (0, 0, 0, 0, 0, 0)
-    allow_upgrader_tags = frozenset({
-        UpgraderTag.SPEED,
-        UpgraderTag.ENERGY,
-        UpgraderTag.GENERIC_AUTO_EJECTION,
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_SPEED_UPGRADER,  
+        Upgraders.BASIC_ENERGY_UPGRADER,
+        Upgraders.GENERIC_AUTO_EJECTION,
     })
 
     @SuperExecutorMeta.execute_super

@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.item_spreader import (
     K_NUM_CONTAINERS,
     K_SPREADER_POINTER,
@@ -36,10 +36,10 @@ class ItemSpreader(GUIControl, OperationListener, UpgradeControl):
     origin_process_ticks = TICK_DURATION
     upgrade_slot_start = 1
     upgrade_slots = 4
-    allow_upgrader_tags = {
-        "skybluetech:upgraders/speed",
-        "skybluetech:upgraders/energy",
-    }
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_SPEED_UPGRADER,
+        Upgraders.BASIC_ENERGY_UPGRADER,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

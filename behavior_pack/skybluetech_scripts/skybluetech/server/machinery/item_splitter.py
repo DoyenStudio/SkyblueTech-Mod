@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
@@ -30,7 +30,9 @@ class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
     block_name = Machinery.ITEM_SPLITTER
     input_slots = (0, 1, 2)
     upgrade_slot_start = 3
-    allow_upgrader_tags = {"skybluetech:upgraders/generic_split"}
+    allow_upgraders = frozenset({
+        Upgraders.GENERIC_SPLIT,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -107,7 +109,7 @@ class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
         for label, _item_id in self.record_settings:
             if item_id == _item_id:
                 return label
-        return 0 if self.HasUpgrader("skybluetech:upgrader_generic_split") else -1
+        return 0 if self.HasUpgrader(Upgraders.GENERIC_SPLIT) else -1
 
     def on_add_setting(self, player_id):
         # type: (str) -> None

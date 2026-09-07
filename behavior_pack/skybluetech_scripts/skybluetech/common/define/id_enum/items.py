@@ -181,8 +181,7 @@ class Upgraders(SimpleEnum):
     GENERIC_AUTO_EJECTION = "skybluetech:upgrader_generic_auto_ejection"
     GENERIC_AUTOSTOP = "skybluetech:upgrader_generic_autostop"
     GENERIC_EXPANSION_UPGRADER = "skybluetech:upgrader_generic_expansion"
-    GENERIC_AUTOSTOP = "skybluetech:upgrader_generic_autostop"
-    GENERIC_FILTER_DEFAULT = "skybluetech:upgrader_generic_split"
+    GENERIC_SPLIT = "skybluetech:upgrader_generic_split"
     SPEC_MAGMA_FACTORY = "skybluetech:upgrader_spec_magma_factory"
 
 

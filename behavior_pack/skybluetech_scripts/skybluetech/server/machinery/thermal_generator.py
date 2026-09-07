@@ -19,7 +19,7 @@ from .basic import (
     WorkRenderer,
 )
 
-SecondsPerTick = 0.05
+SECOND_PER_TICK = 0.05
 
 BURN_SYNC_TICKS = 20  # 燃烧余量 bdata 同步间隔(1秒); 燃料耗尽/重新加料时立即同步
 
@@ -51,7 +51,7 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
             if self.burn_seconds_left <= 0:
                 self.is_burning = self.next_burn()
                 return
-            self.burn_seconds_left -= SecondsPerTick
+            self.burn_seconds_left -= SECOND_PER_TICK
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool

@@ -78,7 +78,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
     fluid_slot_max_volumes = (1000, 1000, 1000)
     work_ticks_delay = 5
     upgrade_slot_start = 2
-    allow_upgrader_tags = set()
+    allow_upgraders = frozenset()
     functional_block_ids = {
         FERMENTER_IDENUM.IO_ENERGY,
         FERMENTER_IDENUM.IO_ITEM,

@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery, Upgraders
@@ -31,8 +30,8 @@ class MagmaFurnace(MultiFluidContainer, Processor):
     fluid_output_slots = {0}
     upgrade_slot_start = 1
     upgrade_slots = 4
-    allow_upgrader_tags = Processor.allow_upgrader_tags | frozenset({
-        UpgraderTag.SPEC_MAGMA_FACTORY,
+    allow_upgraders = Processor.allow_upgraders | frozenset({
+        Upgraders.SPEC_MAGMA_FACTORY,
     })
 
     @SuperExecutorMeta.execute_super

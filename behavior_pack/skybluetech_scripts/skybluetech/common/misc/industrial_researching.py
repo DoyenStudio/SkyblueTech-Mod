@@ -37,7 +37,7 @@ all_researchings = RecipesCollection(
             Input("minecraft:redstone", 4),
         ],
         15,
-        id_enum.Upgraders.GENERIC_FILTER_DEFAULT,
+        id_enum.Upgraders.GENERIC_SPLIT,
     ),
     IndustrialResearchingRecipe(
         [

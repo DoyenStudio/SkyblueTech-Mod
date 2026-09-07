@@ -36,7 +36,7 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
     recipes = RecipesCollection("???")  # type: RecipesCollection[GeneratorRecipe]
     "机器配方, 改变配方表时记得重置工作进度"
     energy_io_mode = (1, 1, 1, 1, 1, 1)
-    allow_upgrader_tags = set()
+    allow_upgraders = frozenset()
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

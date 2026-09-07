@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.fluid_splitter import (
     FluidSplitterSettingsListUpdate,
     FluidSplitterSettingsSetFluid,
@@ -39,7 +39,9 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationLi
     fluid_output_slots = set()
     fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
     upgrade_slot_start = 0
-    allow_upgrader_tags = {"skybluetech:upgraders/generic_split"}
+    allow_upgraders = frozenset({
+        Upgraders.GENERIC_SPLIT,
+    })
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):

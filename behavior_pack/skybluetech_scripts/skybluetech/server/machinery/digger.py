@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.common.define.tag_enum import UpgraderTag
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockBasicInfo,
     GetBlockFacingDir,
@@ -18,7 +17,7 @@ from skybluetech_scripts.tooldelta.events.server import (
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.digger import (
     DiggerUpdateCrack,
     DiggerWorkModeUpdatedEvent,
@@ -50,9 +49,9 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
     running_power = 40
     upgrade_slot_start = 1
     upgrade_slots = 4
-    allow_upgrader_tags = frozenset({
-        UpgraderTag.SPEED,
-        UpgraderTag.ENERGY,
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_SPEED_UPGRADER,
+        Upgraders.BASIC_ENERGY_UPGRADER,
     })
 
     @SuperExecutorMeta.execute_super

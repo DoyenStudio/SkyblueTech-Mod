@@ -12,8 +12,7 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 
 from ...common.define import flags
-from ...common.define.id_enum import CRAFTING_TEMPLATE, Machinery
-from ...common.define.tag_enum import UpgraderTag
+from ...common.define.id_enum import CRAFTING_TEMPLATE, Machinery, Upgraders
 from ...common.events.machinery.electric_crafter import (
     ElectricCrafterUpdateRecipe,
 )
@@ -34,9 +33,9 @@ class ElectricCrafter(GUIControl, UpgradeControl):
     output_slots = tuple(range(9, 12))
     upgrade_slot_start = TEMPLATE_SLOT + 1
     energy_io_mode = (0, 0, 0, 0, 0, 0)
-    allow_upgrader_tags = frozenset({
-        UpgraderTag.SPEED,
-        UpgraderTag.ENERGY,
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_SPEED_UPGRADER,
+        Upgraders.BASIC_ENERGY_UPGRADER,
     })
 
     @SuperExecutorMeta.execute_super

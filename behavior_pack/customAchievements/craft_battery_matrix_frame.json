@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_battery_matrix_frame",
     "parent_node": "skybluetech:craft_wire",
     "title": "削峰填谷",
-    "unfinished_icon": "textures/machines/battery_matrix_controller_front",
-    "finished_icon": "textures/machines/battery_matrix_controller_front_active",
+    "unfinished_icon": "textures/blocks/machinery/battery_matrix_controller_front",
+    "finished_icon": "textures/blocks/machinery/battery_matrix_controller_front_active",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:battery_matrix_frame"

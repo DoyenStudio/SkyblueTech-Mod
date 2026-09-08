@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_bedrock_lava_drill",
     "parent_node": "skybluetech:craft_mini_miner",
     "title": "可控火山",
-    "unfinished_icon": "textures/machines/bedrock_lava_drill_controller_front",
-    "finished_icon": "textures/machines/bedrock_lava_drill_controller_front",
+    "unfinished_icon": "textures/blocks/machinery/bedrock_lava_drill_controller_front",
+    "finished_icon": "textures/blocks/machinery/bedrock_lava_drill_controller_front",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:bedrock_lava_drill_controller"

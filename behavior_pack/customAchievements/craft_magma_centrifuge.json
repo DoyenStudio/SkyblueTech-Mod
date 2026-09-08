@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_magma_centrifuge",
     "parent_node": "skybluetech:craft_bedrock_lava_drill",
     "title": "烫手山芋",
-    "unfinished_icon": "textures/machines/magma_centrifuge_front",
-    "finished_icon": "textures/machines/magma_centrifuge_front",
+    "unfinished_icon": "textures/blocks/machinery/magma_centrifuge_front",
+    "finished_icon": "textures/blocks/machinery/magma_centrifuge_front",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:magma_centrifuge"

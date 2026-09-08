@@ -36,7 +36,7 @@ class MainPage(PageBase):
 
     @staticmethod
     def GetIconPath():
-        return "textures/machines/frame"
+        return "textures/blocks/machinery/frame"
 
     @staticmethod
     def GetControlDef():

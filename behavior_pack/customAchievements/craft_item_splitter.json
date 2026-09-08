@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_item_splitter",
     "parent_node": "skybluetech:craft_cable",
     "title": "集成式快递分拣站",
-    "unfinished_icon": "textures/machines/item_splitter_side",
-    "finished_icon": "textures/machines/item_splitter_side",
+    "unfinished_icon": "textures/blocks/machinery/item_splitter_side",
+    "finished_icon": "textures/blocks/machinery/item_splitter_side",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:item_splitter"

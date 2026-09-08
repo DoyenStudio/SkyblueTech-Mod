@@ -1,17 +1,14 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
-        "bedrock_lava_drill_controller_side": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_side"
-        },
         "skybluetech:air_compressor": {
             "textures": "textures/models/air_compressor_texture"
         },
         "skybluetech:alloy_furnace_front": {
-            "textures": "textures/machines/alloy_furnace_front"
+            "textures": "textures/blocks/machinery/alloy_furnace_front"
         },
         "skybluetech:alloy_furnace_front_active": {
-            "textures": "textures/machines/alloy_furnace_front_active"
+            "textures": "textures/blocks/machinery/alloy_furnace_front_active"
         },
         "skybluetech:aluminum_ore": {
             "textures": "textures/blocks/ore/aluminum_ore"
@@ -27,52 +24,52 @@
             "textures": "textures/fluid/basic_water_static"
         },
         "skybluetech:battery_matrix_controller_front": {
-            "textures": "textures/machines/battery_matrix_controller_front"
+            "textures": "textures/blocks/multi_block_structure/battery_matrix/battery_matrix_controller_front"
         },
         "skybluetech:battery_matrix_controller_front_active": {
-            "textures": "textures/machines/battery_matrix_controller_front_active"
+            "textures": "textures/blocks/multi_block_structure/battery_matrix/battery_matrix_controller_front_active"
         },
         "skybluetech:battery_matrix_controller_side": {
-            "textures": "textures/machines/battery_matrix_controller_side"
+            "textures": "textures/blocks/multi_block_structure/battery_matrix/battery_matrix_controller_side"
         },
         "skybluetech:battery_matrix_core": {
-            "textures": "textures/machines/battery_matrix_core"
+            "textures": "textures/blocks/multi_block_structure/battery_matrix/battery_matrix_core"
         },
         "skybluetech:battery_matrix_energy_input_interface": {
-            "textures": "textures/machines/battery_matrix_energy_input_interface"
+            "textures": "textures/blocks/multi_block_structure/battery_matrix/battery_matrix_energy_input_interface"
         },
         "skybluetech:battery_matrix_energy_output_interface": {
-            "textures": "textures/machines/battery_matrix_energy_output_interface"
+            "textures": "textures/blocks/multi_block_structure/battery_matrix/battery_matrix_energy_output_interface"
         },
         "skybluetech:battery_matrix_frame": {
-            "textures": "textures/blocks/battery_matrix_frame"
+            "textures": "textures/blocks/multi_block_structure/battery_matrix/battery_matrix_frame"
         },
         "skybluetech:bedrock_lava_drill_controller": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_front"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front"
         },
         "skybluetech:bedrock_lava_drill_controller_active": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_front_active"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front_active"
         },
         "skybluetech:bedrock_lava_drill_controller_front": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_front"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front"
         },
         "skybluetech:bedrock_lava_drill_controller_front_active": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_front_active"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front_active"
         },
         "skybluetech:bedrock_lava_drill_controller_side": {
-            "textures": "textures/machines/bedrock_lava_drill_controller_side"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_side"
         },
         "skybluetech:bedrock_lava_drill_energy_interface": {
-            "textures": "textures/machines/bedrock_lava_drill_energy_interface"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_energy_interface"
         },
         "skybluetech:bedrock_lava_drill_frame": {
-            "textures": "textures/blocks/bedrock_lava_drill_frame"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_frame"
         },
         "skybluetech:bedrock_lava_drill_io_fluid": {
-            "textures": "textures/machines/bedrock_lava_drill_io_fluid"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_io_fluid"
         },
         "skybluetech:bronze_block": {
-            "textures": "textures/blocks/ingot_block/bronze_block"
+            "textures": "textures/blocks/metal_block/bronze_block"
         },
         "skybluetech:cartidge_1_model": {
             "textures": "textures/models/cartidges/cartidge_yellow"
@@ -90,16 +87,16 @@
             "textures": "textures/models/charger_texture"
         },
         "skybluetech:compressor_front": {
-            "textures": "textures/machines/compressor_front"
+            "textures": "textures/blocks/machinery/compressor_front"
         },
         "skybluetech:compressor_front_active": {
-            "textures": "textures/machines/flipbook_textures/compressor_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/compressor_front_active"
         },
         "skybluetech:creative_generator": {
-            "textures": "textures/machines/creative_generator"
+            "textures": "textures/blocks/machinery/creative_generator"
         },
         "skybluetech:creative_power_acceptor": {
-            "textures": "textures/machines/creative_power_acceptor"
+            "textures": "textures/blocks/machinery/creative_power_acceptor"
         },
         "skybluetech:deepslate_lava_flowing": {
             "quad": 2,
@@ -133,7 +130,7 @@
             "textures": "textures/models/digger_model"
         },
         "skybluetech:digger_icon": {
-            "textures": "textures/machines/digger"
+            "textures": "textures/blocks/machinery/digger"
         },
         "skybluetech:distillation_chamber": {
             "textures": "textures/models/distillation_chamber_texture"
@@ -142,13 +139,13 @@
             "textures": "textures/blocks/dust_block"
         },
         "skybluetech:electric_crafter_front": {
-            "textures": "textures/machines/electric_crafter_front"
+            "textures": "textures/blocks/machinery/electric_crafter_front"
         },
         "skybluetech:electric_crafter_side": {
-            "textures": "textures/machines/electric_crafter_side"
+            "textures": "textures/blocks/machinery/electric_crafter_side"
         },
         "skybluetech:electric_crafter_top": {
-            "textures": "textures/machines/electric_crafter_top"
+            "textures": "textures/blocks/machinery/electric_crafter_top"
         },
         "skybluetech:electric_heater": {
             "textures": "textures/models/electric_heater_texture"
@@ -160,70 +157,70 @@
             "textures": "textures/models/famicom_texture"
         },
         "skybluetech:farming_station_side": {
-            "textures": "textures/machines/farming_station_side"
+            "textures": "textures/blocks/machinery/farming_station_side"
         },
         "skybluetech:farming_station_top": {
-            "textures": "textures/machines/farming_station_top"
+            "textures": "textures/blocks/machinery/farming_station_top"
         },
         "skybluetech:fermenter_controller_front": {
-            "textures": "textures/machines/fermenter_controller_front"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_controller_front"
         },
         "skybluetech:fermenter_controller_front_active": {
-            "textures": "textures/machines/fermenter_controller_front_active"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_controller_front_active"
         },
         "skybluetech:fermenter_controller_side": {
-            "textures": "textures/machines/fermenter_controller_side"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_controller_side"
         },
         "skybluetech:fermenter_energy_interface": {
-            "textures": "textures/machines/fermenter_energy_interface"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_energy_interface"
         },
         "skybluetech:fermenter_fluid_interface": {
-            "textures": "textures/machines/fermenter_fluid_interface"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_fluid_interface"
         },
         "skybluetech:fermenter_fluid_interface2": {
-            "textures": "textures/machines/fermenter_fluid_interface2"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_fluid_interface2"
         },
         "skybluetech:fermenter_gas_interface": {
-            "textures": "textures/machines/fermenter_gas_interface"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_gas_interface"
         },
         "skybluetech:fermenter_item_interface": {
-            "textures": "textures/machines/fermenter_item_interface"
+            "textures": "textures/blocks/multi_block_structure/fermenter/fermenter_item_interface"
         },
         "skybluetech:fluid_condenser_front": {
-            "textures": "textures/machines/fluid_condenser_front"
+            "textures": "textures/blocks/machinery/fluid_condenser_front"
         },
         "skybluetech:fluid_condenser_front_active": {
-            "textures": "textures/machines/flipbook_textures/fluid_condenser_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/fluid_condenser_front_active"
         },
         "skybluetech:fluid_splitter_bottom": {
-            "textures": "textures/machines/fluid_splitter_bottom"
+            "textures": "textures/blocks/machinery/fluid_splitter_bottom"
         },
         "skybluetech:fluid_splitter_side": {
-            "textures": "textures/machines/fluid_splitter_side"
+            "textures": "textures/blocks/machinery/fluid_splitter_side"
         },
         "skybluetech:fluid_splitter_top": {
-            "textures": "textures/machines/fluid_splitter_top"
+            "textures": "textures/blocks/machinery/fluid_splitter_top"
         },
         "skybluetech:forester_side": {
-            "textures": "textures/machines/forester_side"
+            "textures": "textures/blocks/machinery/forester_side"
         },
         "skybluetech:forester_top": {
-            "textures": "textures/machines/forester_top"
+            "textures": "textures/blocks/machinery/forester_top"
         },
         "skybluetech:frame": {
-            "textures": "textures/machines/frame"
+            "textures": "textures/blocks/machinery/frame"
         },
         "skybluetech:frame_bottom": {
-            "textures": "textures/machines/frame_bottom"
+            "textures": "textures/blocks/machinery/frame_bottom"
         },
         "skybluetech:frame_top": {
-            "textures": "textures/machines/frame_top"
+            "textures": "textures/blocks/machinery/frame_top"
         },
         "skybluetech:freezer_front": {
-            "textures": "textures/machines/freezer_front"
+            "textures": "textures/blocks/machinery/freezer_front"
         },
         "skybluetech:freezer_front_active": {
-            "textures": "textures/machines/freezer_front_active"
+            "textures": "textures/blocks/machinery/freezer_front_active"
         },
         "skybluetech:gas": {
             "textures": "textures/fluid/gas"
@@ -232,19 +229,19 @@
             "textures": "textures/models/gas_burning_generator_texture"
         },
         "skybluetech:generator_frame": {
-            "textures": "textures/machines/generator_frame"
+            "textures": "textures/blocks/machinery/generator_frame"
         },
         "skybluetech:generator_frame_bottom": {
-            "textures": "textures/machines/generator_frame_bottom"
+            "textures": "textures/blocks/machinery/generator_frame_bottom"
         },
         "skybluetech:generator_frame_side": {
-            "textures": "textures/machines/generator_frame_side"
+            "textures": "textures/blocks/machinery/generator_frame_side"
         },
         "skybluetech:generator_frame_side_2": {
-            "textures": "textures/machines/generator_frame_side_2"
+            "textures": "textures/blocks/machinery/generator_frame_side_2"
         },
         "skybluetech:generator_frame_top": {
-            "textures": "textures/machines/generator_frame_top"
+            "textures": "textures/blocks/machinery/generator_frame_top"
         },
         "skybluetech:geothermal_generator": {
             "textures": "textures/models/geothermal_generator_texture"
@@ -264,22 +261,22 @@
             "textures": "textures/fluid/gray_molten_metal_static"
         },
         "skybluetech:heavy_compressor_front": {
-            "textures": "textures/machines/heavy_compressor_front"
+            "textures": "textures/blocks/machinery/heavy_compressor_front"
         },
         "skybluetech:heavy_compressor_front_active": {
-            "textures": "textures/machines/flipbook_textures/heavy_compressor_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/heavy_compressor_front_active"
         },
         "skybluetech:hover_text_displayer": {
             "textures": "textures/models/hover_text_displayer_texture"
         },
         "skybluetech:hydroponic_base_fluid_side": {
-            "textures": "textures/machines/hydroponic_base_fluid_side"
+            "textures": "textures/blocks/machinery/hydroponic_base_fluid_side"
         },
         "skybluetech:hydroponic_base_item_side": {
-            "textures": "textures/machines/hydroponic_base_item_side"
+            "textures": "textures/blocks/machinery/hydroponic_base_item_side"
         },
         "skybluetech:hydroponic_base_upside": {
-            "textures": "textures/machines/hydroponic_base_upside"
+            "textures": "textures/blocks/machinery/hydroponic_base_upside"
         },
         "skybluetech:hydroponic_bed": {
             "textures": "textures/models/hydroponic_bed_texture"
@@ -288,58 +285,58 @@
             "textures": "textures/models/hydroponic_bed_sand_texture"
         },
         "skybluetech:invar_block": {
-            "textures": "textures/blocks/ingot_block/invar_block"
+            "textures": "textures/blocks/metal_block/invar_block"
         },
         "skybluetech:item_splitter_bottom": {
-            "textures": "textures/machines/item_splitter_bottom"
+            "textures": "textures/blocks/machinery/item_splitter_bottom"
         },
         "skybluetech:item_splitter_side": {
-            "textures": "textures/machines/item_splitter_side"
+            "textures": "textures/blocks/machinery/item_splitter_side"
         },
         "skybluetech:item_splitter_top": {
-            "textures": "textures/machines/item_splitter_top"
+            "textures": "textures/blocks/machinery/item_splitter_top"
         },
         "skybluetech:item_spreader_bottom": {
-            "textures": "textures/machines/item_spreader_bottom"
+            "textures": "textures/blocks/machinery/item_spreader_bottom"
         },
         "skybluetech:item_spreader_side": {
-            "textures": "textures/machines/item_spreader_side"
+            "textures": "textures/blocks/machinery/item_spreader_side"
         },
         "skybluetech:item_spreader_top": {
-            "textures": "textures/machines/item_spreader_top"
+            "textures": "textures/blocks/machinery/item_spreader_top"
         },
         "skybluetech:item_transport_cable_steel": {
             "textures": "textures/transmitters/item_transport_cable_steel_texture"
         },
         "skybluetech:lead_block": {
-            "textures": "textures/blocks/ingot_block/lead_block"
+            "textures": "textures/blocks/metal_block/lead_block"
         },
         "skybluetech:lead_ore": {
             "textures": "textures/blocks/ore/lead_ore"
         },
         "skybluetech:lexical_transmuter_front": {
-            "textures": "textures/machines/lexical_transmuter_front"
+            "textures": "textures/blocks/machinery/lexical_transmuter_front"
         },
         "skybluetech:macerator_front": {
-            "textures": "textures/machines/macerator_front"
+            "textures": "textures/blocks/machinery/macerator_front"
         },
         "skybluetech:macerator_front_active": {
-            "textures": "textures/machines/flipbook_textures/macerator_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/macerator_front_active"
         },
         "skybluetech:machinery_workstation": {
             "textures": "textures/models/machinery_workstation_texture"
         },
         "skybluetech:magma_furnace_front": {
-            "textures": "textures/machines/magma_furnace_front"
+            "textures": "textures/blocks/machinery/magma_furnace_front"
         },
         "skybluetech:magma_furnace_front_active": {
-            "textures": "textures/machines/flipbook_textures/magma_furnace_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/magma_furnace_front_active"
         },
         "skybluetech:metal_press_front": {
-            "textures": "textures/machines/metal_press_front"
+            "textures": "textures/blocks/machinery/metal_press_front"
         },
         "skybluetech:metal_press_front_active": {
-            "textures": "textures/machines/flipbook_textures/metal_press_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/metal_press_front_active"
         },
         "skybluetech:methane_mud": {
             "textures": "textures/fluid/methane_mud"
@@ -348,37 +345,37 @@
             "textures": "textures/models/mini_miner_texture"
         },
         "skybluetech:mixed_macerator_front": {
-            "textures": "textures/machines/mixed_macerator_front"
+            "textures": "textures/blocks/machinery/mixed_macerator_front"
         },
         "skybluetech:mixed_macerator_front_active": {
-            "textures": "textures/machines/flipbook_textures/mixed_macerator_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/mixed_macerator_front_active"
         },
         "skybluetech:mixer_front": {
-            "textures": "textures/machines/mixer_front"
+            "textures": "textures/blocks/machinery/mixer_front"
         },
         "skybluetech:mixer_front_active": {
-            "textures": "textures/machines/flipbook_textures/mixer_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/mixer_front_active"
         },
         "skybluetech:precision_cutter_front": {
-            "textures": "textures/machines/precision_cutter_front"
+            "textures": "textures/blocks/machinery/precision_cutter_front"
         },
         "skybluetech:precision_cutter_front_active": {
-            "textures": "textures/machines/flipbook_textures/precision_cutter_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/precision_cutter_front_active"
         },
         "skybluetech:nether_sulfur_ore": {
             "textures": "textures/blocks/ore/nether_sulfur_ore"
         },
         "skybluetech:nickel_block": {
-            "textures": "textures/blocks/ingot_block/nickel_block"
+            "textures": "textures/blocks/metal_block/nickel_block"
         },
         "skybluetech:nickel_ore": {
             "textures": "textures/blocks/ore/nickel_ore"
         },
         "skybluetech:oil_extractor_front": {
-            "textures": "textures/machines/oil_extractor_front"
+            "textures": "textures/blocks/machinery/oil_extractor_front"
         },
         "skybluetech:oil_extractor_front_active": {
-            "textures": "textures/machines/flipbook_textures/oil_extractor_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/oil_extractor_front_active"
         },
         "skybluetech:pipe_acidproof": {
             "textures": "textures/transmitters/pipe_acidproof_texture"
@@ -393,7 +390,7 @@
             "textures": "textures/transmitters/pipe_ultraheatinum_texture"
         },
         "skybluetech:platinum_block": {
-            "textures": "textures/blocks/ingot_block/platinum_block"
+            "textures": "textures/blocks/metal_block/platinum_block"
         },
         "skybluetech:platinum_ore": {
             "textures": "textures/blocks/ore/platinum_ore"
@@ -417,31 +414,31 @@
             "textures": "textures/blocks/raw_ore_block/raw_tin_block"
         },
         "skybluetech:reacting_thermal_generator_front": {
-            "textures": "textures/machines/reacting_thermal_generator_front"
+            "textures": "textures/blocks/machinery/reacting_thermal_generator_front"
         },
         "skybluetech:reacting_thermal_generator_front_active": {
-            "textures": "textures/machines/reacting_thermal_generator_front_active"
+            "textures": "textures/blocks/machinery/reacting_thermal_generator_front_active"
         },
         "skybluetech:rect_panel_bg": {
             "textures": "textures/ui/rect_panel_bg"
         },
         "skybluetech:redstone_furnace_front": {
-            "textures": "textures/machines/redstone_furnace_front"
+            "textures": "textures/blocks/machinery/redstone_furnace_front"
         },
         "skybluetech:redstone_furnace_front_active": {
-            "textures": "textures/machines/redstone_furnace_front_active"
+            "textures": "textures/blocks/machinery/redstone_furnace_front_active"
         },
         "skybluetech:redstone_generator_front": {
-            "textures": "textures/machines/redstone_generator_front"
+            "textures": "textures/blocks/machinery/redstone_generator_front"
         },
         "skybluetech:redstone_generator_front_active": {
-            "textures": "textures/machines/redstone_generator_front_active"
+            "textures": "textures/blocks/machinery/redstone_generator_front_active"
         },
         "skybluetech:redstoneflux_brake_otherside": {
-            "textures": "textures/machines/redstoneflux_brake_otherside"
+            "textures": "textures/blocks/machinery/redstoneflux_brake_otherside"
         },
         "skybluetech:redstoneflux_brake_top": {
-            "textures": "textures/machines/redstoneflux_brake_top"
+            "textures": "textures/blocks/machinery/redstoneflux_brake_top"
         },
         "skybluetech:resin_collector": {
             "textures": "textures/models/resin_collector_texture"
@@ -453,19 +450,19 @@
             "textures": "textures/icon/rf_repeater_plant_icon"
         },
         "skybluetech:sawmill_side_a": {
-            "textures": "textures/machines/sawmill_side_a"
+            "textures": "textures/blocks/machinery/sawmill_side_a"
         },
         "skybluetech:sawmill_side_a_active": {
-            "textures": "textures/machines/flipbook_textures/sawmill_side_a_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/sawmill_side_a_active"
         },
         "skybluetech:sawmill_side_b": {
-            "textures": "textures/machines/sawmill_side_b"
+            "textures": "textures/blocks/machinery/sawmill_side_b"
         },
         "skybluetech:sawmill_side_b_active": {
-            "textures": "textures/machines/flipbook_textures/sawmill_side_b_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/sawmill_side_b_active"
         },
         "skybluetech:silver_block": {
-            "textures": "textures/blocks/ingot_block/silver_block"
+            "textures": "textures/blocks/metal_block/silver_block"
         },
         "skybluetech:silver_ore": {
             "textures": "textures/blocks/ore/silver_ore"
@@ -474,13 +471,13 @@
             "textures": "textures/models/solar_panel_texture"
         },
         "skybluetech:solar_panel_top": {
-            "textures": "textures/machines/solar_panel_top"
+            "textures": "textures/blocks/machinery/solar_panel_top"
         },
         "skybluetech:splitter_front": {
-            "textures": "textures/machines/splitter_front"
+            "textures": "textures/blocks/machinery/splitter_front"
         },
         "skybluetech:steel_block": {
-            "textures": "textures/blocks/ingot_block/steel_block"
+            "textures": "textures/blocks/metal_block/steel_block"
         },
         "skybluetech:tank_bronze": {
             "textures": "textures/models/tanks/tank_bronze_texture"
@@ -501,19 +498,19 @@
             "textures": "textures/models/template_assembler_texture"
         },
         "skybluetech:thermal_generator_front": {
-            "textures": "textures/machines/thermal_generator_front"
+            "textures": "textures/blocks/machinery/thermal_generator_front"
         },
         "skybluetech:thermal_generator_front_active": {
-            "textures": "textures/machines/flipbook_textures/thermal_generator_front_active"
+            "textures": "textures/blocks/machinery/flipbook_textures/thermal_generator_front_active"
         },
         "skybluetech:thermoelectric_generator_side": {
-            "textures": "textures/machines/thermoelectric_generator_side"
+            "textures": "textures/blocks/machinery/thermoelectric_generator_side"
         },
         "skybluetech:thermoelectric_generator_upside": {
-            "textures": "textures/machines/thermoelectric_generator_upside"
+            "textures": "textures/blocks/machinery/thermoelectric_generator_upside"
         },
         "skybluetech:tin_block": {
-            "textures": "textures/blocks/ingot_block/tin_block"
+            "textures": "textures/blocks/metal_block/tin_block"
         },
         "skybluetech:tin_ore": {
             "textures": "textures/blocks/ore/tin_ore"
@@ -525,7 +522,7 @@
             "textures": "textures/models/transmit_belt/transmit_belt_texture"
         },
         "skybluetech:ultraheatinum_block": {
-            "textures": "textures/blocks/ingot_block/ultraheatinum_block"
+            "textures": "textures/blocks/metal_block/ultraheatinum_block"
         },
         "skybluetech:uranium_ore": {
             "textures": "textures/blocks/ore/uranium_ore"
@@ -537,7 +534,7 @@
             "textures": "textures/models/wind_generator_empty_texture"
         },
         "skybluetech:wind_generator_icon": {
-            "textures": "textures/machines/wind_generator"
+            "textures": "textures/blocks/machinery/wind_generator"
         },
         "skybluetech:wire_copper": {
             "textures": "textures/transmitters/wire_copper_texture"

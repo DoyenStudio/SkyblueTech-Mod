@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_machinery_frame",
     "parent_node": "skybluetech:get_tin",
     "title": "壳牌机器",
-    "unfinished_icon": "textures/machines/frame",
-    "finished_icon": "textures/machines/frame",
+    "unfinished_icon": "textures/blocks/machinery/frame",
+    "finished_icon": "textures/blocks/machinery/frame",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:machinery_frame"

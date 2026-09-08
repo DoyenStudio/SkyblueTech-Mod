@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_fluid_splitter",
     "parent_node": "skybluetech:craft_pipe",
     "title": "拉闸分液",
-    "unfinished_icon": "textures/machines/fluid_splitter_side",
-    "finished_icon": "textures/machines/fluid_splitter_side",
+    "unfinished_icon": "textures/blocks/machinery/fluid_splitter_side",
+    "finished_icon": "textures/blocks/machinery/fluid_splitter_side",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:fluid_splitter"

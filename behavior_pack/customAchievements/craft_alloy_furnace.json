@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_alloy_furnace",
     "parent_node": "skybluetech:craft_thermal_generator",
     "title": "“热”门话题",
-    "unfinished_icon": "textures/machines/alloy_furnace_front",
-    "finished_icon": "textures/machines/alloy_furnace_front",
+    "unfinished_icon": "textures/blocks/machinery/alloy_furnace_front",
+    "finished_icon": "textures/blocks/machinery/alloy_furnace_front",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:alloy_furnace"

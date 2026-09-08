@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_macerator",
     "parent_node": "skybluetech:craft_thermal_generator",
     "title": "粉碎机..粉碎..粉碎机？",
-    "unfinished_icon": "textures/machines/macerator_front",
-    "finished_icon": "textures/machines/macerator_front",
+    "unfinished_icon": "textures/blocks/machinery/macerator_front",
+    "finished_icon": "textures/blocks/machinery/macerator_front",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:macerator"

@@ -207,7 +207,7 @@
                                     20.0
                                 ],
                                 "layer": 4,
-                                "texture": "textures/machines/frame",
+                                "texture": "textures/blocks/machinery/frame",
                                 "controls": [
                                     {
                                         "energy_icon": {

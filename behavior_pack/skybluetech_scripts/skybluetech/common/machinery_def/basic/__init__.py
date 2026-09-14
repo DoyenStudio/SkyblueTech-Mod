@@ -6,7 +6,7 @@ from .fluid_container import (
     K_FLUID_VOLUME,
     K_MAX_VOLUME,
 )
-from .heat_ctrl import K_HEAT_VALUE, ENV_TEMPERATURE
+from .heat_ctrl import K_HEAT_VALUE
 from .multi_block_structure import (
     K_DESTROY_FLAG,
     K_STRUCTURE_LACKED_BLOCKS,

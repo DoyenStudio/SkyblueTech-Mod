@@ -3,6 +3,7 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.distillation_chamber import (
+    CHAMBER_HEAT_CAPACITY,
     INPUT_MAX_VOLUME,
     K_OUTPUT_RATE,
     OUTPUT_MAX_VOLUME,
@@ -30,6 +31,8 @@ for recipe in Recipes:
 class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
     block_name = Machinery.DISTILLATION_CHAMBER
     is_non_energy_machine = True
+    heat_capacity = CHAMBER_HEAT_CAPACITY
+    # 本机热容远大于默认值, 产油扣热才不会把仓温踹穿, 见 CHAMBER_HEAT_CAPACITY
     fluid_io_fix_mode = 0
     fluid_input_slots = {0}
     fluid_output_slots = {1}
@@ -110,6 +113,6 @@ class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
                 in_fluid.volume -= consume
                 self._produce_accum += produce
                 self.OutputFluid(rcp.produce_matter, produce, 1, True)
-                self.heat_value -= produce
+                self.heat_value -= produce * rcp.heat_per_produce
                 if in_fluid.volume <= 0:
                     in_fluid.fluid_id = None

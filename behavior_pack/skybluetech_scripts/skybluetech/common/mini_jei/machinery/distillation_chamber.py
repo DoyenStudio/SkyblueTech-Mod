@@ -15,6 +15,7 @@ class DistillationChamberRecipe(MachineRecipe):
         min_temperature,  # type: float
         fit_temperature,  # type: float
         max_temperature,  # type: float
+        heat_per_produce=1.0,  # type: float
     ):
         MachineRecipe.__init__(
             self,
@@ -30,6 +31,9 @@ class DistillationChamberRecipe(MachineRecipe):
         self.min_temperature = min_temperature
         self.max_temperature = max_temperature
         self.fit_temperature = fit_temperature
+        # 每产出 1 mB 产物要从本机热值里扣掉多少 RF 热, 单位 RF热/mB, 默认 1.0。
+        # 调大它 = 同样产量要多掏热, 也就需要加热仓比最适温度高出一截才推得动。
+        self.heat_per_produce = heat_per_produce
 
     def Marshal(self):
         # type: () -> dict
@@ -41,6 +45,7 @@ class DistillationChamberRecipe(MachineRecipe):
             "min_temperature": self.min_temperature,
             "fit_temperature": self.fit_temperature,
             "max_temperature": self.max_temperature,
+            "heat_per_produce": self.heat_per_produce,
         }
 
     @classmethod
@@ -54,6 +59,7 @@ class DistillationChamberRecipe(MachineRecipe):
             min_temperature=c2k(data["min_temperature"]),
             fit_temperature=c2k(data["fit_temperature"]),
             max_temperature=c2k(data["max_temperature"]),
+            heat_per_produce=data["heat_per_produce"],
         )
 
 

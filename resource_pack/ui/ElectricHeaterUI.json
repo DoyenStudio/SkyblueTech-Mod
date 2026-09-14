@@ -104,7 +104,7 @@
                                                                         0.0
                                                                     ],
                                                                     "font_type": "default",
-                                                                    "text": "设定功率： 0.0 RF/t\n当前温度： 0.0 K"
+                                                                    "text": "最大功率： 0.0 RF/t\n当前温度： 0.0 K"
                                                                 }
                                                             }
                                                         ]
@@ -137,7 +137,7 @@
                                                             0,
                                                             0
                                                         ],
-                                                        "$place_holder_text": "设定功率(RF/t)...",
+                                                        "$place_holder_text": "最大功率(RF/t)...",
                                                         "$place_holder_text_color": [
                                                             0.5,
                                                             0.5,

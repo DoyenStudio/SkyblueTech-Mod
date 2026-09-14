@@ -5,8 +5,8 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
     K_HEAT_VALUE,
-    ENV_TEMPERATURE,
 )
+from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
 from skybluetech_scripts.skybluetech.common.machinery_def.distillation_chamber import (
     recipes,
     INPUT_MAX_VOLUME,
@@ -49,7 +49,9 @@ class DistillationChamberUI(MachinePanelUIProxyEx):
         input_fluid = FluidSlotClient(data, 0)
         output_fluid = FluidSlotClient(data, 1)
         output_rate = GetValue(data, K_OUTPUT_RATE, 0)
-        current_temperature = GetValue(data, K_HEAT_VALUE, 0) + ENV_TEMPERATURE
+        current_temperature = Thermal.GetKelvin(
+            GetValue(data, K_HEAT_VALUE, Thermal.ENV_HEAT)
+        )
         self.fluid_displayer1.update(
             input_fluid.fluid_id, input_fluid.volume, INPUT_MAX_VOLUME
         )

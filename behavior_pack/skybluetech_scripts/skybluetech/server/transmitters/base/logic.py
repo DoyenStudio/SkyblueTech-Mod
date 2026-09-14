@@ -272,6 +272,12 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             _i = set()  # type: set[_APT]
             _o = set()  # type: set[_APT]
             for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+                if not block_states.get(
+                    "skybluetech:connection_" + FACING_EN[facing], False
+                ):
+                    # 连接只在放置 / 拆除方块时改变: 这一面没有连接记录就不走,
+                    # 未连接的面也不必再读邻居方块
+                    continue
                 xyz = (cx + dx, cy + dy, cz + dz)
                 block_name = GetBlockName(dim, xyz)
                 if block_name is None:
@@ -279,11 +285,6 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 elif self.transmitter_check_func(block_name):
                     if first_transmitter_name != block_name:
                         # 不同等级的管道无法并用
-                        continue
-                    if not block_states.get(
-                        "skybluetech:connection_" + FACING_EN[facing], False
-                    ):
-                        # 该面连接已被扳手切断
                         continue
                     if xyz in walked:
                         continue
@@ -481,12 +482,12 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
     def refresh_transmitter_connections(self, dim, x, y, z, block_name=None):
         # type: (int, int, int, int, str | None) -> None
         """
-        按当前邻居方块刷新管线方块的连接状态。
+        按当前邻居方块清理管线方块上已经失效的连接状态。
 
-        区块边缘加载顺序不稳定时, 邻区块方块可能晚一点才可读取,
-        且未就绪的区块可能把方块暂时读成空气而不是 None。
-        此方法只更新所在区块已加载完成的邻居, 避免把暂时未加载的邻居误写成断开
-        (管线间连接只清不补, 一旦误写无法自愈)。
+        连接只在放置 / 拆除方块时建立, 这里只清不补: 尚未建立过的连接和玩家
+        手动切断过的连接都不会被自动接回来 (管线连接一旦误写就无法自愈)。
+        区块边缘加载顺序不稳定时, 邻区块方块可能晚一点才可读取, 因此只处理
+        所在区块已加载完成的邻居。
         """
         if not CheckChunkState(dim, (x, y, z)):
             return
@@ -497,24 +498,22 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         states = {}  # type: dict[str, bool]
         current_states = GetBlockStates(dim, (x, y, z)) or {}
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
+            facing_key = (
+                "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
+            )
+            if not current_states.get(facing_key, False):
+                # 这一面本来就没有连接记录, 不在此处补连
+                continue
             neighbor_pos = (x + dx, y + dy, z + dz)
             if not CheckChunkState(dim, neighbor_pos):
                 continue
             neighbor_name = GetBlockName(dim, neighbor_pos)
-            if neighbor_name is None:
+            if neighbor_name is not None and self.can_connect(
+                dim, block_name, (x, y, z), neighbor_name, neighbor_pos
+            ):
                 continue
-            facing_key = (
-                "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
-            )
-            if self.transmitter_check_func(neighbor_name):
-                # 管线间连接可被扳手切断, 这里只清除失效连接, 不自动补连
-                states[facing_key] = current_states.get(
-                    facing_key, False
-                ) and self.transmitter_can_connect(block_name, neighbor_name)
-            else:
-                states[facing_key] = self.can_connect(
-                    dim, block_name, (x, y, z), neighbor_name, neighbor_pos
-                )
+            # 邻居方块已不存在或不再可连接, 清除这一面的连接记录
+            states[facing_key] = False
         if states:
             UpdateBlockStates(dim, (x, y, z), states)
 
@@ -525,6 +524,90 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             block_name = GetBlockName(dim, (tx, ty, tz))
             if block_name is not None and self.transmitter_check_func(block_name):
                 self.refresh_transmitter_connections(dim, tx, ty, tz, block_name)
+
+    def refresh_machine_socket(self, dim, machine_pos, neighbor_pos):
+        # type: (int, tuple[int, int, int], tuple[int, int, int]) -> bool
+        """
+        重刷机器朝向某个邻居的插座模型状态。
+
+        机器一侧的插座与管线一侧的连接是各画一半, 管线放置 / 拆除 / 被扳手
+        切断或恢复后都要调用, 让机器一侧的插座跟着显示或收起。
+        """
+        # 延迟导入: 机器侧模块会导入本模块, 模块级互相导入会形成循环
+        from ...machinery.utils.transmitter_conn import (
+            refresh_machine_socket as _refresh_machine_socket,
+        )
+
+        return _refresh_machine_socket(dim, machine_pos, neighbor_pos)
+
+    def connect_around_placed(self, dim, x, y, z, block_name):
+        # type: (int, int, int, int, str) -> None
+        """
+        方块放置后, 建立它与四周管线之间的连接。
+
+        连接只在放置 / 拆除方块时改变, 所以这里是"建立连接"的入口:
+        两个管道的连接状态两边各记一半, 必须对称写入; 机器一侧的插座模型
+        跟随管线一侧的连接状态, 由 refresh_machine_socket 刷新。
+        """
+        is_transmitter = self.transmitter_check_func(block_name)
+        for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+            neighbor_pos = (x + dx, y + dy, z + dz)
+            neighbor_name = GetBlockName(dim, neighbor_pos)
+            if neighbor_name is None:
+                continue
+            if self.transmitter_check_func(neighbor_name):
+                if not self.can_connect(
+                    dim, block_name, (x, y, z), neighbor_name, neighbor_pos
+                ):
+                    # 不同等级的管道无法互相连接
+                    continue
+                key = "skybluetech:connection_" + FACING_EN[OPPOSITE_FACING[facing]]
+                neighbor_states = GetBlockStates(dim, neighbor_pos) or {}
+                if not neighbor_states.get(key, False):
+                    # 相邻管道朝向本方块的那一面也要点亮, 两侧的连接状态必须对称
+                    UpdateBlockStates(dim, neighbor_pos, {key: True})
+                if not is_transmitter:
+                    # 机器自身朝向该管道的插座模型: 放置事件与机器放置事件谁先
+                    # 谁后不确定, 机器一侧的模型统一在这里再刷一次
+                    self.refresh_machine_socket(dim, (x, y, z), neighbor_pos)
+            elif self.transmittable_block_check_func(neighbor_name, dim, neighbor_pos):
+                # 机器一侧的插座模型
+                self.refresh_machine_socket(dim, neighbor_pos, (x, y, z))
+
+    def disconnect_around_removed(self, dim, x, y, z, block_name):
+        # type: (int, int, int, int, str) -> None
+        """
+        方块(管道或机器)被拆除后, 断开四周管线朝向它的连接。
+
+        被拆除方块的位置已经空了, 只处理邻居一侧: 管道清掉连接记录与 IO 模式,
+        机器清掉朝向该面的插座模型。
+        """
+        for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+            neighbor_pos = (x + dx, y + dy, z + dz)
+            neighbor_name = GetBlockName(dim, neighbor_pos)
+            if neighbor_name is None:
+                continue
+            if self.transmitter_check_func(neighbor_name):
+                if self.transmitter_check_func(block_name) and (
+                    block_name != neighbor_name
+                ):
+                    # 不同等级的管道本来就不会互相连接
+                    continue
+                opposite_en = FACING_EN[OPPOSITE_FACING[facing]]
+                neighbor_states = GetBlockStates(dim, neighbor_pos) or {}
+                if not neighbor_states.get(
+                    "skybluetech:connection_" + opposite_en, False
+                ):
+                    continue
+                new_states = {"skybluetech:connection_" + opposite_en: False}
+                io_key = "skybluetech:cable_io_" + opposite_en
+                if io_key in neighbor_states:
+                    # 只有物品管道声明了 IO 模式状态, 别给其他管线写不存在的键
+                    new_states[io_key] = False
+                UpdateBlockStates(dim, neighbor_pos, new_states)
+            elif self.transmittable_block_check_func(neighbor_name, dim, neighbor_pos):
+                # 机器一侧的插座模型: 管线没了, 插座也要收回去
+                self.refresh_machine_socket(dim, neighbor_pos, (x, y, z))
 
     def refresh_loaded_block_entities(self, dim, block_entities):
         # type: (int, list[dict]) -> None
@@ -578,8 +661,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             blockName = block_entity_posdata["blockName"]
             if not self.transmittable_block_check_func(blockName, dim, (x, y, z)):
                 continue
-            self.clean_container_networks(dim, x, y, z)
+            # 先清掉四周管道里已经失效的连接, 再重建容器网络,
+            # 否则 BFS 会按旧 state 把已经不存在的接入点又建回来
             self.refresh_nearby_transmitter_connections(dim, x, y, z)
+            self.clean_container_networks(dim, x, y, z)
 
     def apply_network_to_pool(self, network):
         # type: (_NT) -> None
@@ -628,6 +713,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             UpdateBlockStates(event.dimensionId, (event.x, event.y, event.z), states)
             # self.clean_access_point(event.dimensionId, event.x, event.y, event.z)
             # 不再需要, 直接覆盖即可
+            # 相邻管道朝向本方块的那一面也要点亮, 两侧的连接状态必须对称
+            self.connect_around_placed(
+                event.dimensionId, event.x, event.y, event.z, event.fullName
+            )
             network = self.GetNetworkByTransmitter(
                 event.dimensionId, event.x, event.y, event.z, disable_cache=True
             )
@@ -636,7 +725,17 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         elif self.transmittable_block_check_func(
             event.fullName, event.dimensionId, (event.x, event.y, event.z)
         ):
-            # 图方便
+            # 机器放置: 先点亮相邻管线朝向它的面, 再让机器索取一次资源, 最后
+            # 重建网络 (顺序反了的话 BFS 读到的还是旧 state)
+            self.connect_around_placed(
+                event.dimensionId, event.x, event.y, event.z, event.fullName
+            )
+            ExecLater(
+                0,
+                lambda: self.on_transmittable_block_placed_later(
+                    event.dimensionId, event.x, event.y, event.z
+                ),
+            )
             self.clean_container_networks(
                 event.dimensionId, event.x, event.y, event.z, on_block_placed=True
             )
@@ -655,50 +754,35 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         )
         facing_en = FACING_EN[DXYZ_FACING[dxyz]]
         facing_key = "skybluetech:connection_" + facing_en
+        # 连接只在放置 / 拆除方块时建立, 这里不自动补连, 只清理已经失效的连接
+        current_states = GetBlockStates(
+            event.dimensionId, (event.posX, event.posY, event.posZ)
+        ) or {}
+        if not current_states.get(facing_key, False):
+            return
         neighbor_pos = (
             event.neighborPosX,
             event.neighborPosY,
             event.neighborPosZ,
         )
-        to_block_can_connect = self.can_connect(
+        neighbor_name = GetBlockName(event.dimensionId, neighbor_pos)
+        if neighbor_name is not None and self.can_connect(
             event.dimensionId,
-            event.toBlockName,
-            neighbor_pos,
             event.blockName,
             (event.posX, event.posY, event.posZ),
-        )
-        # 需要更新连接状态: 以当前状态为准, 不依赖变化前方块名称
-        current_states = GetBlockStates(
-            event.dimensionId, (event.posX, event.posY, event.posZ)
-        ) or {}
-        if current_states.get(facing_key, False) != to_block_can_connect:
-            if self.transmittable_block_check_func(
-                event.toBlockName, event.dimensionId, neighbor_pos
-            ):
-                UpdateBlockStates(
-                    event.dimensionId,
-                    (event.posX, event.posY, event.posZ),
-                    {facing_key: to_block_can_connect},
-                )
-            else:
-                io_key = "skybluetech:cable_io_" + facing_en
-                UpdateBlockStates(
-                    event.dimensionId,
-                    (event.posX, event.posY, event.posZ),
-                    {facing_key: to_block_can_connect, io_key: False},
-                )
-        if self.transmittable_block_check_func(
-            event.toBlockName, event.dimensionId, neighbor_pos
+            neighbor_name,
+            neighbor_pos,
         ):
-            ExecLater(
-                0,
-                lambda: self.on_transmittable_block_placed_later(
-                    event.dimensionId,
-                    event.neighborPosX,
-                    event.neighborPosY,
-                    event.neighborPosZ,
-                ),
-            )
+            return
+        # 邻居方块已消失或不再可连接: 清除连接记录与 IO 模式
+        new_states = {facing_key: False}
+        io_key = "skybluetech:cable_io_" + facing_en
+        if io_key in current_states:
+            # 只有物品管道声明了 IO 模式状态, 别给其他管线写不存在的键
+            new_states[io_key] = False
+        UpdateBlockStates(
+            event.dimensionId, (event.posX, event.posY, event.posZ), new_states
+        )
 
     @EventListenerService.Listen(BlockRemoveServerEvent)
     @Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
@@ -718,10 +802,18 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             if current is None or not self.transmittable_block_check_func(
                 current, event.dimension, (event.x, event.y, event.z)
             ):
+                # 先断开四周管线朝向它的连接与插座模型, 再清容器网络
+                self.disconnect_around_removed(
+                    event.dimension, event.x, event.y, event.z, event.fullName
+                )
                 self.clean_nearby_network(event.dimension, event.x, event.y, event.z)
         if self.transmitter_check_func(event.fullName):
             # 是管道
             if current is None or not self.transmitter_check_func(current):
+                # 相邻同名管道朝向它的面要清掉, 免得手臂指着空气
+                self.disconnect_around_removed(
+                    event.dimension, event.x, event.y, event.z, event.fullName
+                )
                 self.clean_node(event.dimension, event.x, event.y, event.z)
 
     @EventListenerService.Listen(ChunkLoadedServerEvent)

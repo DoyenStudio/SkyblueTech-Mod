@@ -1,16 +1,16 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import (
-    UpdateBlockStates,
-    GetBlockName,
     ItemExists,
 )
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define.global_config import BUCKET_VOLUME
-from skybluetech_scripts.skybluetech.common.define.facing import DXYZ_FACING, FACING_EN
-from ...transmitters.pipe.logic import isPipe
 from ..basic import BaseMachine, FluidContainer, ItemContainer, GUIControl
+from ..utils.transmitter_conn import TransmitterConn
+
+
+TCON = TransmitterConn(pipe=True)
 
 INFINITY = float("inf")
 registered_tanks = {}  # type: dict[str, type[BasicTank]]
@@ -31,30 +31,11 @@ class BasicTank(BaseMachine, FluidContainer, ItemContainer, GUIControl):
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
-        for dx, dy, dz in DXYZ_FACING.keys():
-            facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-            bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
-            if not bname:
-                continue
-            connectToWire = isPipe(bname)
-            UpdateBlockStates(
-                self.dim,
-                (self.x, self.y, self.z),
-                {"skybluetech:connection_" + facing_en: connectToWire},
-            )
+        TCON.block_placed(self)
 
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
-        dx = event.neighborPosX - self.x
-        dy = event.neighborPosY - self.y
-        dz = event.neighborPosZ - self.z
-        facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-        connectToWire = isPipe(event.toBlockName)
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"skybluetech:connection_" + facing_en: connectToWire},
-        )
+        TCON.neighbor_block_changed(self, event)
 
     def OnSlotUpdate(self, slot_pos):
         # type: (int) -> None

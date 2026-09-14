@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.common.define.facing import DXYZ_FACING, FACING_EN
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.define.ui_keys import RF_REPEATER_PLANT_UI
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
@@ -17,7 +16,6 @@ from skybluetech_scripts.tooldelta.api.server import (
     MayPlace,
     PlayerUseItemToPos,
     SetBlock,
-    UpdateBlockStates,
 )
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -26,9 +24,9 @@ from skybluetech_scripts.tooldelta.events.server import (
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...transmitters.wire.logic import isWire
 from ..basic import BaseClicker, BaseMachine, GUIControl, RegisterMachine
 from ..pool import GetMachineStrict
+from ..utils.transmitter_conn import TransmitterConn
 from .node import (
     NetworkData,
     NodeData,
@@ -41,6 +39,8 @@ from .node import (
 
 K_GLOBAL_NETWORK_DATAS = "st:global_rf_repeater_network_datas"
 K_GLOBAL_NODES = "st:global_rf_repeater_nodes"
+
+TCON = TransmitterConn(wire=True)
 
 block_sync = BlockSync(Machinery.RF_REPEATER_PLANT, side=BlockSync.SIDE_SERVER)
 
@@ -116,19 +116,7 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
     def OnPlaced(self, event):
         if not self.is_base_block:
             return
-        states = {}
-        for dx, dy, dz in DXYZ_FACING.keys():
-            facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-            bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
-            if not bname:
-                continue
-            connectToWire = isWire(bname)
-            states["skybluetech:connection_" + facing_en] = connectToWire
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            states,
-        )
+        TCON.block_placed(self)
         for i in range(1, 3):
             SetBlock(
                 self.dim,
@@ -142,18 +130,7 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
         # type: (BlockNeighborChangedServerEvent) -> None
         if not self.is_base_block:
             return
-        dx = event.neighborPosX - self.x
-        dy = event.neighborPosY - self.y
-        dz = event.neighborPosZ - self.z
-        facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-        if facing_en not in {"south", "north", "east", "west"}:
-            return
-        connectToWire = isWire(event.toBlockName)
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"skybluetech:connection_" + facing_en: connectToWire},
-        )
+        TCON.neighbor_block_changed(self, event)
 
     def OnDestroy(self):
         remove_node_and_flush(self.dim, (self.x, self.y, self.z))

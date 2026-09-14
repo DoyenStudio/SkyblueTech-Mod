@@ -9,7 +9,6 @@ from skybluetech_scripts.tooldelta.api.server import (
     MayPlace,
     PlayerUseItemToPos,
     SetBlock,
-    UpdateBlockStates,
 )
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
@@ -20,7 +19,6 @@ from skybluetech_scripts.tooldelta.events.server import (
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
-from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.wind_generator import (
     WindGeneratorStatesRequest,
@@ -36,9 +34,12 @@ from ...common.machinery_def.wind_generator import (
     item2paddle,
 )
 from ...common.utils.block_sync import BlockSync
-from ..transmitters.wire.logic import isWire
 from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
 from .pool import GetMachineStrict
+from .utils.transmitter_conn import TransmitterConn
+
+
+TCON = TransmitterConn(wire=True)
 
 block_sync = BlockSync(Machinery.WIND_GENERATOR, side=BlockSync.SIDE_SERVER)
 
@@ -105,19 +106,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
     def OnPlaced(self, _):
         if not self.is_base_block:
             return
-        states = {}
-        for dx, dy, dz in DXYZ_FACING.keys():
-            facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-            bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
-            if not bname:
-                continue
-            connectToWire = isWire(bname)
-            states["skybluetech:connection_" + facing_en] = connectToWire
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            states,
-        )
+        TCON.block_placed(self)
         for i in range(1, 3):
             SetBlock(
                 self.dim,
@@ -130,18 +119,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
         # type: (BlockNeighborChangedServerEvent) -> None
         if not self.is_base_block:
             return
-        dx = event.neighborPosX - self.x
-        dy = event.neighborPosY - self.y
-        dz = event.neighborPosZ - self.z
-        facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-        if facing_en not in {"south", "north", "east", "west"}:
-            return
-        connectToWire = isWire(event.toBlockName)
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"skybluetech:connection_" + facing_en: connectToWire},
-        )
+        TCON.neighbor_block_changed(self, event)
         ExecLater(
             0,
             lambda: WindGeneratorStatesUpdate(

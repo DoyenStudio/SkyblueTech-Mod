@@ -16,6 +16,7 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetBlockName,
     GetBlockStates,
     GetPlayerDimensionId,
+    IsSneaking,
     SetOnePopupNotice,
     UpdateBlockStates,
 )
@@ -23,8 +24,10 @@ from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
 from skybluetech_scripts.tooldelta.events.server import (
     PushUIRequest,
     ServerBlockUseEvent,
+    ServerItemUseOnEvent,
 )
 from skybluetech_scripts.tooldelta.events.service import EventListenerService
+from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 
 from ..base.define import AP_MODE_INPUT, AP_MODE_OUTPUT
 from ..constants import FACING_EN, FACING_ZHCN
@@ -34,6 +37,11 @@ from .logic import (
     Generic,
     LogicModule,
 )
+
+SNEAK_CUT_RATE_LIMIT = 0.5
+
+# 潜行右键会每 tick 触发一次 ServerItemUseOnEvent, 用限速器把一次长按收敛成一次操作
+sneak_cut_limiter = PlayerRateLimiter(SNEAK_CUT_RATE_LIMIT)
 
 
 class ActionModule(Generic[_NT, _APT], EventListenerService):
@@ -92,61 +100,124 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         return r1 if p1 >= p2 else r2
 
     def _pick_cut_link_facing(self, event):
-        # type: (ServerBlockUseEvent) -> int | None
+        # type: (ServerBlockUseEvent | ServerItemUseOnEvent) -> int | None
         # 连接被切断后连接臂缩回, 玩家只能点到中心方块朝向邻居的面 (中心区域);
         # 此时以被点击面的朝向作为目标方向。臂存在时该面被邻居方块遮挡, 无歧义。
+        # 可连接的邻居包含机器, 这样断开的机器-管道连接也能被点回来。
         dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[event.face]
-        next_block = GetBlockName(
-            event.dimensionId, (event.x + dx, event.y + dy, event.z + dz)
-        )
-        if next_block == event.blockName:
+        next_pos = (event.x + dx, event.y + dy, event.z + dz)
+        next_block = GetBlockName(event.dimensionId, next_pos)
+        if next_block is None:
+            return None
+        if self.logic_module.can_connect(
+            event.dimensionId,
+            event.blockName,
+            (event.x, event.y, event.z),
+            next_block,
+            next_pos,
+        ):
             return event.face
         return None
 
+    def resolve_wrench_facing(self, event):
+        # type: (ServerBlockUseEvent | ServerItemUseOnEvent) -> int | None
+        "取扳手点击的目标面: 先看点击位置落在哪个延伸体上, 再看被点击的面本身。"
+        face = self.get_pick_facing(event.clickX, event.clickY, event.clickZ, event.face)
+        if face is None:
+            face = self._pick_cut_link_facing(event)
+        return face
+
     def toggle_transmitter_link(self, dim, x, y, z, face, player_id=None):
         # type: (int, int, int, int, int, str | None) -> bool
-        "切断/恢复两根同名管线之间的连接, 并重建相关网络。"
+        "切断/恢复此面与相邻管道或机器之间的连接, 并重建相关网络。"
         states = GetBlockStates(dim, (x, y, z))
         if states is None:
             return False
+        block_name = GetBlockName(dim, (x, y, z))
+        if block_name is None:
+            return False
         dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[face]
         neighbor_pos = (x + dx, y + dy, z + dz)
-        connect = not states.get("skybluetech:connection_" + FACING_EN[face], False)
-        UpdateBlockStates(
-            dim,
-            (x, y, z),
-            {"skybluetech:connection_" + FACING_EN[face]: connect},
+        neighbor_name = GetBlockName(dim, neighbor_pos)
+        facing_key = "skybluetech:connection_" + FACING_EN[face]
+        connect = not states.get(facing_key, False)
+        is_transmitter = (
+            neighbor_name is not None
+            and self.logic_module.transmitter_check_func(neighbor_name)
         )
-        UpdateBlockStates(
-            dim,
-            neighbor_pos,
-            {"skybluetech:connection_" + FACING_EN[OPPOSITE_FACING[face]]: connect},
-        )
+        if connect and not (
+            neighbor_name is not None
+            and self.logic_module.can_connect(
+                dim, block_name, (x, y, z), neighbor_name, neighbor_pos
+            )
+        ):
+            if player_id is not None:
+                if is_transmitter:
+                    SetOnePopupNotice(
+                        player_id,
+                        "§6不同种类的管道无法互相连接",
+                        "§7[§cx§7] §c错误",
+                    )
+                else:
+                    SetOnePopupNotice(
+                        player_id,
+                        "§6此方向没有可连接的管道或容器",
+                        "§7[§cx§7] §c错误",
+                    )
+            return False
+        UpdateBlockStates(dim, (x, y, z), {facing_key: connect})
+        if is_transmitter:
+            # 管道之间的连接状态需要两侧同时记录
+            UpdateBlockStates(
+                dim,
+                neighbor_pos,
+                {"skybluetech:connection_" + FACING_EN[OPPOSITE_FACING[face]]: connect},
+            )
+        elif neighbor_name is not None:
+            # 机器一侧的插座模型需要跟着显示 / 隐藏
+            self.logic_module.refresh_machine_socket(dim, neighbor_pos, (x, y, z))
         logic = self.logic_module
-        old_networks = set()
-        for px, py, pz in ((x, y, z), neighbor_pos):
-            network = logic.GetNetworkByTransmitter(
-                dim, px, py, pz, force_use_cached=True
-            )
-            if network is not None:
-                old_networks.add(network)
-        for network in old_networks:
-            logic.delete_network(network)
-        tmp_set = set()
-        for px, py, pz in ((x, y, z), neighbor_pos):
-            network = logic.GetNetworkByTransmitter(
-                dim, px, py, pz, cacher=tmp_set, disable_cache=True
-            )
-            if network is not None:
-                logic.apply_network_to_pool(network)
+        if neighbor_name is not None and not is_transmitter:
+            # 机器: 容器节点的缓存与相邻网络都要按新状态重建
+            logic.clean_container_networks(dim, *neighbor_pos)
+        else:
+            old_networks = set()
+            for px, py, pz in ((x, y, z), neighbor_pos):
+                network = logic.GetNetworkByTransmitter(
+                    dim, px, py, pz, force_use_cached=True
+                )
+                if network is not None:
+                    old_networks.add(network)
+            for network in old_networks:
+                logic.delete_network(network)
+            tmp_set = set()
+            for px, py, pz in ((x, y, z), neighbor_pos):
+                network = logic.GetNetworkByTransmitter(
+                    dim, px, py, pz, cacher=tmp_set, disable_cache=True
+                )
+                if network is not None:
+                    logic.apply_network_to_pool(network)
         if player_id is not None:
+            if is_transmitter:
+                target = "管道"
+            else:
+                target = "容器"
             if connect:
                 SetOnePopupNotice(
-                    player_id, "§f已重新连接管道的§6" + FACING_ZHCN[face] + "§f面"
+                    player_id,
+                    "§f已连接管道的§6"
+                    + FACING_ZHCN[face]
+                    + "§f面与"
+                    + target,
                 )
             else:
                 SetOnePopupNotice(
-                    player_id, "§f已断开管道§6" + FACING_ZHCN[face] + "§f面的连接"
+                    player_id,
+                    "§f已断开管道§6"
+                    + FACING_ZHCN[face]
+                    + "§f面与"
+                    + target
+                    + "§f的连接",
                 )
         return True
 
@@ -215,17 +286,39 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         UpdateBlockStates(dim, (x, y, z), block_orig_status)
         return True
 
+    @EventListenerService.Listen(ServerItemUseOnEvent)
+    def onPlayerSneakUseWrench(self, event):
+        # type: (ServerItemUseOnEvent) -> None
+        """
+        潜行 + 右键管道: 断开 / 恢复这一面的连接。
+
+        潜行右键不会触发 ServerBlockUseEvent, 而是走 ServerItemUseOnEvent,
+        按住不放时每 tick 触发一次, 因此这里单独处理并用限速器收敛。
+        """
+        if event.item is None or event.item.newItemName != TRANSMITTER_WRENCH:
+            return
+        if not IsSneaking(event.entityId):
+            return
+        if not self.logic_module.transmitter_check_func(event.blockName):
+            return
+        event.cancel()
+        if not sneak_cut_limiter.record(event.entityId):
+            return
+        face = self.resolve_wrench_facing(event)
+        if face is None:
+            SetOnePopupNotice(event.entityId, "无效扳手调节位置")
+            return
+        self.toggle_transmitter_link(
+            event.dimensionId, event.x, event.y, event.z, face, event.entityId
+        )
+
     @EventListenerService.Listen(ServerBlockUseEvent)
     def onPlayerUseWrench(self, event):
         # type: (ServerBlockUseEvent) -> None
         if not self.logic_module.transmitter_check_func(event.blockName):
             return
         if event.item.newItemName == TRANSMITTER_WRENCH:
-            face = self.get_pick_facing(
-                event.clickX, event.clickY, event.clickZ, event.face
-            )
-            if face is None:
-                face = self._pick_cut_link_facing(event)
+            face = self.resolve_wrench_facing(event)
             if face is None:
                 SetOnePopupNotice(event.playerId, "无效扳手调节位置")
                 return
@@ -233,6 +326,19 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             next_block = GetBlockName(
                 event.dimensionId, (event.x + dx, event.y + dy, event.z + dz)
             )
+            if IsSneaking(event.playerId):
+                # 潜行点击: 断开 / 恢复此面的连接 (机器与管道之间同样适用)
+                # 潜行时一般走 ServerItemUseOnEvent, 这里只作兜底
+                if sneak_cut_limiter.record(event.playerId):
+                    self.toggle_transmitter_link(
+                        event.dimensionId,
+                        event.x,
+                        event.y,
+                        event.z,
+                        face,
+                        event.playerId,
+                    )
+                return
             if next_block is not None and self.logic_module.transmitter_check_func(
                 next_block
             ):
@@ -252,6 +358,10 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
                         "§7[§cx§7] §c错误",
                     )
             else:
+                if not self.enable_io_mode_settings:
+                    # 电线没有输入 / 提取模式可切换, 按无效位置处理
+                    SetOnePopupNotice(event.playerId, "无效扳手调节位置")
+                    return
                 self.switch_access_mode(
                     event.dimensionId, event.x, event.y, event.z, face, event.playerId
                 )

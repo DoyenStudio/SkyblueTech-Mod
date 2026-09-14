@@ -1,24 +1,24 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockName,
     GetLocalTime,
     GetTopBlockHeight,
     IsRaining,
-    UpdateBlockStates,
 )
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ...common.define.facing import DXYZ_FACING, FACING_EN
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.solar_panel import (
     K_LIGHT_LEVEL,
     K_OUTPUT_POWER,
     STORE_RF_MAX,
 )
-from ..transmitters.wire.logic import isWire
 from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
+from .utils.transmitter_conn import TransmitterConn
+
+
+TCON = TransmitterConn(wire=True)
 
 
 @RegisterMachine
@@ -45,32 +45,11 @@ class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):
-        for dx, dy, dz in DXYZ_FACING.keys():
-            facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-            bname = GetBlockName(self.dim, (self.x + dx, self.y + dy, self.z + dz))
-            if not bname:
-                continue
-            connectToWire = isWire(bname)
-            UpdateBlockStates(
-                self.dim,
-                (self.x, self.y, self.z),
-                {"skybluetech:connection_" + facing_en: connectToWire},
-            )
+        TCON.block_placed(self)
 
     def OnNeighborChanged(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
-        dx = event.neighborPosX - self.x
-        dy = event.neighborPosY - self.y
-        dz = event.neighborPosZ - self.z
-        facing_en = FACING_EN[DXYZ_FACING[dx, dy, dz]]
-        if facing_en not in {"south", "north", "east", "west"}:
-            return
-        connectToWire = isWire(event.toBlockName)
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"skybluetech:connection_" + facing_en: connectToWire},
-        )
+        TCON.neighbor_block_changed(self, event)
 
     def update(self):
         can_generate = GetTopBlockHeight((self.x, self.z), self.dim) == self.y

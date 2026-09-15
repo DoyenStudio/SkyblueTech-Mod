@@ -44,73 +44,73 @@
         "ticks_per_frame": 5
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/compressor_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/compressor_front_active",
         "atlas_tile": "skybluetech:compressor_front_active",
         "ticks_per_frame": 4,
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/heavy_compressor_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/heavy_compressor_front_active",
         "atlas_tile": "skybluetech:heavy_compressor_front_active",
         "ticks_per_frame": 4,
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/magma_furnace_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/magma_furnace_front_active",
         "atlas_tile": "skybluetech:magma_furnace_front_active",
         "ticks_per_frame": 4
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/mixer_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/mixer_front_active",
         "atlas_tile": "skybluetech:mixer_front_active",
         "ticks_per_frame": 3
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/precision_cutter_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/precision_cutter_front_active",
         "atlas_tile": "skybluetech:precision_cutter_front_active",
         "ticks_per_frame": 3
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/sawmill_side_a_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/sawmill_side_a_active",
         "atlas_tile": "skybluetech:sawmill_side_a_active",
         "ticks_per_frame": 3
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/sawmill_side_b_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/sawmill_side_b_active",
         "atlas_tile": "skybluetech:sawmill_side_b_active",
         "ticks_per_frame": 3
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/fluid_condenser_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/fluid_condenser_front_active",
         "atlas_tile": "skybluetech:fluid_condenser_front_active",
         "ticks_per_frame": 3
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/metal_press_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/metal_press_front_active",
         "atlas_tile": "skybluetech:metal_press_front_active",
         "ticks_per_frame": 3,
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/macerator_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/macerator_front_active",
         "atlas_tile": "skybluetech:macerator_front_active",
         "ticks_per_frame": 4,
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/mixed_macerator_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/mixed_macerator_front_active",
         "atlas_tile": "skybluetech:mixed_macerator_front_active",
         "ticks_per_frame": 4,
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/thermal_generator_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/thermal_generator_front_active",
         "atlas_tile": "skybluetech:thermal_generator_front_active",
         "ticks_per_frame": 3,
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/machines/flipbook_textures/oil_extractor_front_active",
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/oil_extractor_front_active",
         "atlas_tile": "skybluetech:oil_extractor_front_active",
         "ticks_per_frame": 4,
         "blend_frames": false

@@ -16,6 +16,9 @@
         "skybluetech:assembler": {
             "textures": "textures/models/assembler_texture"
         },
+        "skybluetech:basic_fluid": {
+            "textures": "textures/fluid/basic_fluid"
+        },
         "skybluetech:basic_water_flowing": {
             "quad": 1,
             "textures": "textures/fluid/basic_water_flowing"
@@ -356,12 +359,6 @@
         "skybluetech:mixer_front_active": {
             "textures": "textures/blocks/machinery/flipbook_textures/mixer_front_active"
         },
-        "skybluetech:precision_cutter_front": {
-            "textures": "textures/blocks/machinery/precision_cutter_front"
-        },
-        "skybluetech:precision_cutter_front_active": {
-            "textures": "textures/blocks/machinery/flipbook_textures/precision_cutter_front_active"
-        },
         "skybluetech:nether_sulfur_ore": {
             "textures": "textures/blocks/ore/nether_sulfur_ore"
         },
@@ -394,6 +391,12 @@
         },
         "skybluetech:platinum_ore": {
             "textures": "textures/blocks/ore/platinum_ore"
+        },
+        "skybluetech:precision_cutter_front": {
+            "textures": "textures/blocks/machinery/precision_cutter_front"
+        },
+        "skybluetech:precision_cutter_front_active": {
+            "textures": "textures/blocks/machinery/flipbook_textures/precision_cutter_front_active"
         },
         "skybluetech:pump": {
             "textures": "textures/models/pump_texture"

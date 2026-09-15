@@ -1,7 +1,7 @@
 from ..id_enum import fluids
 from .define import BasicFluidTexture, FluidTexture
 
-AIR = BasicFluidTexture("textures/fluid/gas", 1)
+AIR = BasicFluidTexture("textures/fluid/gas_static", 32, 2)
 WATER = BasicFluidTexture("textures/fluid/basic_water_static", 32, 2)
 WATER_VAPOR = BasicFluidTexture("textures/fluid/water_vapor", 1)
 LAVA = BasicFluidTexture("textures/fluid/gray_lava_static", 20, 5)
@@ -18,6 +18,7 @@ FLUID_COLORS_AND_TEXTURES = {
     fluids.CommonLiquid.DISTILLED_WATER: FluidTexture((0, 229, 255), 128, WATER),
     fluids.CommonGas.COMPRESSED_AIR: FluidTexture((240, 240, 240), 64, AIR),
     fluids.CommonGas.HYDROGEN: FluidTexture((220, 240, 255), 64, AIR),
+    fluids.CommonGas.NITROGEN: FluidTexture((240, 255, 240), 64, AIR),
     fluids.CommonGas.METHANE: FluidTexture((255, 240, 200), 64, AIR),
     fluids.CommonGas.WATER_VAPOR: FluidTexture((240, 240, 255), 64, WATER_VAPOR),
     fluids.CommonOil.LUBRICANT: FluidTexture((255, 207, 0), 192, WATER),
@@ -45,6 +46,7 @@ FLUID_COLORS_AND_TEXTURES = {
     # color-special
     fluids.DeepLava.DEEPSLATE_LAVA: FluidTexture((255, 255, 255), 255, DEEPSLATE_LAVA),
     fluids.CommonLiquid.METHANE_MUD: FluidTexture((255, 255, 255), 255, METHANE_MUD),
+    fluids.CommonLiquid.LIQUID_AIR: FluidTexture((205, 218, 238), 128, BASIC_FLUID),
 }
 
 

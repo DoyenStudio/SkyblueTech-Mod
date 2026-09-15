@@ -295,6 +295,9 @@
         "skybluetech:light_skyblue_ingot": {
             "textures": "textures/items/ingots/light_skyblue_ingot"
         },
+        "skybluetech:liquid_air_bucket": {
+            "textures": "textures/items/buckets/liquid_air_bucket"
+        },
         "skybluetech:low_purity_silicon_panel": {
             "textures": "textures/items/low_purity_silicon_panel"
         },

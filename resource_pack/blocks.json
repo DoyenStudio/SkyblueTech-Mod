@@ -258,6 +258,10 @@
             "up": "skybluetech:gray_lava_static"
         }
     },
+    "skybluetech:flowing_liquid_air": {
+        "blockshape": "water",
+        "textures": "skybluetech:basic_fluid"
+    },
     "skybluetech:flowing_liquid_soldering_tin": {
         "blockshape": "water",
         "textures": {
@@ -377,6 +381,10 @@
             "side": "skybluetech:gray_molten_metal_flowing",
             "up": "skybluetech:gray_molten_metal_static"
         }
+    },
+    "skybluetech:flowing_nitrogen": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
     },
     "skybluetech:flowing_raw_oil": {
         "blockshape": "water",
@@ -532,6 +540,17 @@
     "skybluetech:lead_ore": {
         "textures": "skybluetech:lead_ore"
     },
+    "skybluetech:lexical_transmuter": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:lexical_transmuter_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
+    },
     "skybluetech:light_lava": {
         "blockshape": "water",
         "textures": {
@@ -539,6 +558,10 @@
             "side": "skybluetech:gray_lava_flowing",
             "up": "skybluetech:gray_lava_static"
         }
+    },
+    "skybluetech:liquid_air": {
+        "blockshape": "water",
+        "textures": "skybluetech:basic_fluid"
     },
     "skybluetech:liquid_soldering_tin": {
         "blockshape": "water",
@@ -554,17 +577,6 @@
             "down": "skybluetech:basic_water_static",
             "side": "skybluetech:basic_water_flowing",
             "up": "skybluetech:basic_water_static"
-        }
-    },
-    "skybluetech:lexical_transmuter": {
-        "sound": "iron",
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:lexical_transmuter_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_top",
-            "west": "skybluetech:frame"
         }
     },
     "skybluetech:macerator": {
@@ -660,28 +672,6 @@
             "south": "skybluetech:frame",
             "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
-        }
-    },
-    "skybluetech:precision_cutter": {
-        "sound": "iron",
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:precision_cutter_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_top",
-            "west": "skybluetech:frame"
-        }
-    },
-    "skybluetech:sawmill": {
-        "sound": "iron",
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:sawmill_side_b",
-            "north": "skybluetech:sawmill_side_a",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_top",
-            "west": "skybluetech:sawmill_side_b"
         }
     },
     "skybluetech:molten_copper": {
@@ -781,6 +771,10 @@
     "skybluetech:nickel_ore": {
         "textures": "skybluetech:nickel_ore"
     },
+    "skybluetech:nitrogen": {
+        "blockshape": "water",
+        "textures": "skybluetech:gas"
+    },
     "skybluetech:oil_extractor": {
         "sound": "iron",
         "textures": {
@@ -809,6 +803,17 @@
     },
     "skybluetech:platinum_ore": {
         "textures": "skybluetech:platinum_ore"
+    },
+    "skybluetech:precision_cutter": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:precision_cutter_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     },
     "skybluetech:pump": {
         "sound": "stone"
@@ -885,6 +890,17 @@
     "skybluetech:rf_repeater_plant": {
         "client_entity": {},
         "sound": "iron"
+    },
+    "skybluetech:sawmill": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:sawmill_side_b",
+            "north": "skybluetech:sawmill_side_a",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:sawmill_side_b"
+        }
     },
     "skybluetech:silver_block": {
         "textures": "skybluetech:silver_block"

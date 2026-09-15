@@ -44,6 +44,7 @@ class CommonGas(Common, Gas):
 
     COMPRESSED_AIR = "skybluetech:compressed_air"
     HYDROGEN = "skybluetech:hydrogen"
+    NITROGEN = "skybluetech:nitrogen"
     METHANE = "skybluetech:methane"
     WATER_VAPOR = "skybluetech:water_vapor"
 
@@ -59,6 +60,7 @@ class CommonOil(Common, Oil):
 class CommonLiquid(Common):
     "对流体管道无特殊要求的液体"
 
+    LIQUID_AIR = "skybluetech:liquid_air"
     WATER = Vanilla.WATER
     DISTILLED_WATER = "skybluetech:distilled_water"
     METHANE_MUD = "skybluetech:methane_mud"
@@ -104,5 +106,4 @@ class Molten(HotFluid):
     SILVER = "skybluetech:molten_silver"
     NICKEL = "skybluetech:molten_nickel"
     PLATINUM = "skybluetech:molten_platinum"
-
 

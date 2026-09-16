@@ -10,4 +10,5 @@ from . import (
     machinery_workstation,
     precision_cutter,
     template_assembler,
+    vacuum_freezer,
 )

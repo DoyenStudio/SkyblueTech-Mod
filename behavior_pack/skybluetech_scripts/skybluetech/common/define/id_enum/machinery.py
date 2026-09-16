@@ -63,6 +63,7 @@ class Machinery(SimpleEnum):
     TESLA_PLANT = "skybluetech:tesla_plant"
     THERMAL_GENERATOR = "skybluetech:thermal_generator"
     THERMOELECTRIC_GENERATOR = "skybluetech:thermoelectric_generator"
+    VACUUM_FREEZER = "skybluetech:vacuum_freezer_controller"
     WIND_GENERATOR = "skybluetech:wind_generator"
     WIRELESS_RF_TRANSPORTER = "skybluetech:wireless_rf_transporter"
 

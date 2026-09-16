@@ -1,0 +1,501 @@
+{
+    "main@common.inventory_screen_common": {
+        "$screen_content": "VacuumFreezerUI.vacuum_freezer_ui"
+    },
+    "namespace": "VacuumFreezerUI",
+    "vacuum_freezer_ui": {
+        "type": "panel",
+        "size": [
+            0.0,
+            0.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg_down": {
+                                "type": "image",
+                                "offset": [
+                                    0.0,
+                                    60.0
+                                ],
+                                "size": [
+                                    "default",
+                                    93
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "nineslice_size": [
+                                    4.0,
+                                    4.0,
+                                    4.0,
+                                    4.0
+                                ],
+                                "texture": "textures/ui/dialog_background_opaque",
+                                "controls": [
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                -7
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
+                                            "anchor_from": "top_right",
+                                            "anchor_to": "top_left"
+                                        }
+                                    },
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {
+                                            "button_mappings": [
+                                                {
+                                                    "from_button_id": "button.menu_select",
+                                                    "mapping_type": "pressed",
+                                                    "to_button_id": "button.menu_exit"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "offset": [
+                                                            -36,
+                                                            36
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "machine_label": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            0.0,
+                                                            4.0
+                                                        ],
+                                                        "font_scale_factor": 1.4,
+                                                        "font_type": "default",
+                                                        "shadow": true,
+                                                        "text": "真空冷却仓",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "offset": [
+                                                            "-50%+14px",
+                                                            "0%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "multi_block_structure_check_btn@common.button": {
+                                                        "type": "button",
+                                                        "$control_alpha": 1.0,
+                                                        "$default_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$hover_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$is_new_nine_slice": false,
+                                                        "$label_color": [
+                                                            1,
+                                                            1,
+                                                            1
+                                                        ],
+                                                        "$label_font_scale_factor": 1.0,
+                                                        "$label_font_size": "large",
+                                                        "$label_layer": 3,
+                                                        "$label_offset": [
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$nine_slice_buttom": 0,
+                                                        "$nine_slice_left": 0,
+                                                        "$nine_slice_right": 0,
+                                                        "$nine_slice_top": 0,
+                                                        "$nineslice_size": [
+                                                            0,
+                                                            0,
+                                                            0,
+                                                            0
+                                                        ],
+                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                                        "$pressed_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$texture_layer": 2,
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            -40.0,
+                                                            2.0
+                                                        ],
+                                                        "size": [
+                                                            14.0,
+                                                            16.0
+                                                        ],
+                                                        "layer": 5,
+                                                        "button_mappings": [],
+                                                        "default_control": "default",
+                                                        "hover_control": "hover",
+                                                        "is_handle_button_move_event": true,
+                                                        "pressed_control": "pressed",
+                                                        "bindings": [
+                                                            {
+                                                                "binding_type": "collection_details",
+                                                                "binding_collection_name": "",
+                                                                "binding_condition": "always_when_visible"
+                                                            }
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "default@netease_editor_template_namespace.default": {}
+                                                            },
+                                                            {
+                                                                "hover@netease_editor_template_namespace.hover": {}
+                                                            },
+                                                            {
+                                                                "pressed@netease_editor_template_namespace.pressed": {}
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input_slot": {
+                                                        "type": "stack_panel",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            36.0,
+                                                            -21.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm",
+                                                            "100%cm"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 0
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "input_fluid_disp@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_size": "small",
+                                                        "$text_visible": false,
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            30,
+                                                            20
+                                                        ],
+                                                        "size": [
+                                                            24,
+                                                            64
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_slot": {
+                                                        "type": "stack_panel",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            102.0,
+                                                            -21.0
+                                                        ],
+                                                        "size": [
+                                                            "100%cm",
+                                                            "100%cm"
+                                                        ],
+                                                        "layer": 1,
+                                                        "collection_name": "netease_container",
+                                                        "controls": [
+                                                            {
+                                                                "slot@netease_container.custom_grid_item": {
+                                                                    "collection_index": 1
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_fluid_disp@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            102,
+                                                            20
+                                                        ],
+                                                        "size": [
+                                                            24,
+                                                            64
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "databoard": {
+                                                        "type": "panel",
+                                                        "anchor_from": "right_middle",
+                                                        "anchor_to": "right_middle",
+                                                        "offset": [
+                                                            -10.0,
+                                                            8.0
+                                                        ],
+                                                        "size": [
+                                                            80.0,
+                                                            89.0
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "bg": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "bottom_middle",
+                                                                    "anchor_to": "bottom_middle",
+                                                                    "size": [
+                                                                        "default",
+                                                                        "100%+-40px"
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "clip_direction": "left",
+                                                                    "clip_ratio": 0.0,
+                                                                    "nineslice_size": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "texture": "textures/ui/bg_frame_slim"
+                                                                }
+                                                            },
+                                                            {
+                                                                "input_kelvin@common.text_edit_box": {
+                                                                    "type": "edit_box",
+                                                                    "$edit_box_default_texture": "textures/ui/edit_box_indent",
+                                                                    "$edit_box_hover_texture": "textures/ui/edit_box_indent_hover",
+                                                                    "$font_scale_factor": 1.0,
+                                                                    "$font_size": "normal",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$place_holder_text": "设定温度 (K)..",
+                                                                    "$place_holder_text_color": [
+                                                                        0.5,
+                                                                        0.5,
+                                                                        0.5
+                                                                    ],
+                                                                    "$text_background_default": "netease_editor_template_namespace.edit_box_background_default",
+                                                                    "$text_background_hover": "netease_editor_template_namespace.edit_box_background_hover",
+                                                                    "$text_box_name": "#vacuum_freezer.kelvin",
+                                                                    "$text_box_text_color": [
+                                                                        1,
+                                                                        1,
+                                                                        1
+                                                                    ],
+                                                                    "$text_edit_box_content_binding_name": "#netease_editor_template_namespace.message_content",
+                                                                    "$text_edit_box_label_anchor_point": "right_middle",
+                                                                    "$text_edit_box_label_min_size": [
+                                                                        "100%",
+                                                                        0
+                                                                    ],
+                                                                    "$text_edit_box_label_size": [
+                                                                        "default",
+                                                                        "default"
+                                                                    ],
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "size": [
+                                                                        "default",
+                                                                        20.0
+                                                                    ],
+                                                                    "max_length": 6
+                                                                }
+                                                            },
+                                                            {
+                                                                "label": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        42.0
+                                                                    ],
+                                                                    "size": [
+                                                                        "100%+-4px",
+                                                                        "100%+-44px"
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "color": [
+                                                                        0.0,
+                                                                        1.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "设定温度： 300K\n额定功率： 0 RF/t\n配方效率： 0%%"
+                                                                }
+                                                            },
+                                                            {
+                                                                "input_power@common.text_edit_box": {
+                                                                    "type": "edit_box",
+                                                                    "$edit_box_default_texture": "textures/ui/edit_box_indent",
+                                                                    "$edit_box_hover_texture": "textures/ui/edit_box_indent_hover",
+                                                                    "$font_scale_factor": 1.0,
+                                                                    "$font_size": "normal",
+                                                                    "$is_new_nine_slice": false,
+                                                                    "$nine_slice_buttom": 0,
+                                                                    "$nine_slice_left": 0,
+                                                                    "$nine_slice_right": 0,
+                                                                    "$nine_slice_top": 0,
+                                                                    "$nineslice_size": [
+                                                                        0,
+                                                                        0,
+                                                                        0,
+                                                                        0
+                                                                    ],
+                                                                    "$place_holder_text": "设定功率 (RF/t)..",
+                                                                    "$place_holder_text_color": [
+                                                                        0.5,
+                                                                        0.5,
+                                                                        0.5
+                                                                    ],
+                                                                    "$text_background_default": "netease_editor_template_namespace.edit_box_background_default",
+                                                                    "$text_background_hover": "netease_editor_template_namespace.edit_box_background_hover",
+                                                                    "$text_box_name": "#vacuum_freezer.power",
+                                                                    "$text_box_text_color": [
+                                                                        1,
+                                                                        1,
+                                                                        1
+                                                                    ],
+                                                                    "$text_edit_box_content_binding_name": "#netease_editor_template_namespace.message_content",
+                                                                    "$text_edit_box_label_anchor_point": "right_middle",
+                                                                    "$text_edit_box_label_min_size": [
+                                                                        "100%",
+                                                                        0
+                                                                    ],
+                                                                    "$text_edit_box_label_size": [
+                                                                        "default",
+                                                                        "default"
+                                                                    ],
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        20.0
+                                                                    ],
+                                                                    "size": [
+                                                                        "default",
+                                                                        20.0
+                                                                    ],
+                                                                    "max_length": 8
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "progress1@SkybluePanelLib.ProgressBar": {
+                                                        "$bg_image": "textures/ui/vacuum_freezer_progress_bg",
+                                                        "$mask_image": "textures/ui/vacuum_freezer_progress_mask",
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            54,
+                                                            -4
+                                                        ],
+                                                        "size": [
+                                                            48,
+                                                            58
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "structure_not_finished_tip@SkybluePanelLib.StructureNotFinishedTip": {
+                                                        "anchor_from": "bottom_middle",
+                                                        "anchor_to": "bottom_middle",
+                                                        "offset": [
+                                                            0,
+                                                            -4
+                                                        ],
+                                                        "size": [
+                                                            "100%+-10px",
+                                                            "100%+-20px"
+                                                        ],
+                                                        "visible": false
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "offset": [
+                                    0,
+                                    -45
+                                ],
+                                "size": [
+                                    "100%+48px",
+                                    120
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        180,
+                        200
+                    ]
+                }
+            }
+        ]
+    }
+}

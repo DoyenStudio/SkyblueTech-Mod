@@ -17,6 +17,9 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STRUCTURE_LACKED_BLOCKS,
     K_STRUCTURE_LACKED_BLOCK_POSES,
 )
+from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
+    AIR_BLOCK_ID,
+)
 
 # TYPE_CHECKING
 if 0>1:
@@ -150,22 +153,23 @@ def GetStructureLackedBlockPoses(data):
     return poses
 
 
+def FormatBlockName(block_id):
+    # type: (str) -> str
+    "把方块 ID 转成玩家能看懂的名字; 空气没有物品名, 单独处理。"
+    if not block_id:
+        return "未知方块"
+    if block_id == AIR_BLOCK_ID:
+        return "空气"
+    return (GetItemHoverName(block_id) or block_id).replace("§r", "").replace("§f", "")
+
+
 def FormatStructureLackedBlockPoses(poses):
     # type: (list[dict]) -> str
     """将缺失方块位置列表格式化为 '(x, y, z) 应为xxx, 目前xxx' 的多行文本."""
     lines = []
     for pose in poses:
-        expected = " / ".join(
-            (GetItemHoverName(v) or v).replace("§r", "").replace("§f", "")
-            for v in pose["expected"]
-        )
-        actual_id = pose.get("actual") or ""
-        if not actual_id or actual_id == "minecraft:air":
-            actual = "空气"
-        else:
-            actual = (GetItemHoverName(actual_id) or actual_id).replace(
-                "§r", ""
-            ).replace("§f", "")
+        expected = " / ".join(FormatBlockName(v) for v in pose["expected"])
+        actual = FormatBlockName(pose.get("actual") or "")
         lines.append(
             "(%d, %d, %d) 应为%s, 当前为%s"
             % (pose["x"], pose["y"], pose["z"], expected, actual)

@@ -33,6 +33,20 @@
                 "skybluetech:bedrock_lava_drill_io_energy",
                 "skybluetech:bedrock_lava_drill_io_fluid"
             ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.vacuum_freezer",
+            "icon": "skybluetech:vacuum_freezer_controller",
+            "list": [
+                "skybluetech:vacuum_freezer_controller",
+                "skybluetech:vacuum_freezer_frame",
+                "skybluetech:vacuum_freezer_condenser",
+                "skybluetech:vacuum_freezer_io_fluid1",
+                "skybluetech:vacuum_freezer_io_fluid2",
+                "skybluetech:vacuum_freezer_io_energy",
+                "skybluetech:vacuum_freezer_io_item1",
+                "skybluetech:vacuum_freezer_io_item2"
+            ]
         }
     ]
 }

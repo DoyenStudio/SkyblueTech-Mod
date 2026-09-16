@@ -75,6 +75,7 @@
         "ui/TeslaPlantUI.json",
         "ui/ThermalGeneratorUI.json",
         "ui/TransmitterSettingsUI.json",
+        "ui/VacuumFreezerUI.json",
         "ui/WindGeneratorUI.json"
     ]
 }

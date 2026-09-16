@@ -23,4 +23,14 @@ class Fermenter:
     IO_FLUID1 = "skybluetech:fermenter_io_fluid1"
     IO_FLUID2 = "skybluetech:fermenter_io_fluid2"
     IO_GAS = "skybluetech:fermenter_io_gas"
-    IO_ITEM = "skybluetech:fermenter_io_item1"
+
+class VacuumFreezer:
+    CONDENSER = "skybluetech:vacuum_freezer_condenser"
+    CONTROLLER = "skybluetech:vacuum_freezer_controller"
+    FRAME = "skybluetech:vacuum_freezer_frame"
+    IO_ENERGY = "skybluetech:vacuum_freezer_io_energy"
+    IO_FLUID1 = "skybluetech:vacuum_freezer_io_fluid1"
+    IO_FLUID2 = "skybluetech:vacuum_freezer_io_fluid2"
+    IO_ITEM1 = "skybluetech:vacuum_freezer_io_item1"
+    IO_ITEM2 = "skybluetech:vacuum_freezer_io_item2"
+

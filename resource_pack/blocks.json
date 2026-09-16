@@ -1006,6 +1006,41 @@
     "skybluetech:uranium_ore": {
         "textures": "skybluetech:uranium_ore"
     },
+    "skybluetech:vacuum_freezer_condenser": {
+        "textures": {
+            "down": "skybluetech:vacuum_freezer_frame",
+            "side": "skybluetech:vacuum_freezer_condenser_side",
+            "up": "skybluetech:vacuum_freezer_condenser_top"
+        }
+    },
+    "skybluetech:vacuum_freezer_controller": {
+        "textures": {
+            "down": "skybluetech:vacuum_freezer_frame",
+            "east": "skybluetech:vacuum_freezer_frame",
+            "north": "skybluetech:vacuum_freezer_controller",
+            "south": "skybluetech:vacuum_freezer_frame",
+            "up": "skybluetech:vacuum_freezer_frame",
+            "west": "skybluetech:vacuum_freezer_frame"
+        }
+    },
+    "skybluetech:vacuum_freezer_frame": {
+        "textures": "skybluetech:vacuum_freezer_frame"
+    },
+    "skybluetech:vacuum_freezer_io_energy": {
+        "textures": "skybluetech:vacuum_freezer_io_energy"
+    },
+    "skybluetech:vacuum_freezer_io_fluid1": {
+        "textures": "skybluetech:vacuum_freezer_io_fluid1"
+    },
+    "skybluetech:vacuum_freezer_io_fluid2": {
+        "textures": "skybluetech:vacuum_freezer_io_fluid2"
+    },
+    "skybluetech:vacuum_freezer_io_item1": {
+        "textures": "skybluetech:vacuum_freezer_io_item1"
+    },
+    "skybluetech:vacuum_freezer_io_item2": {
+        "textures": "skybluetech:vacuum_freezer_io_item2"
+    },
     "skybluetech:vegetable_oil": {
         "blockshape": "water",
         "textures": {

@@ -1,0 +1,18 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {},
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:vacuum_freezer_frame",
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            }
+        }
+    }
+}

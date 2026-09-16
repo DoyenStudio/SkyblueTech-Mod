@@ -1,0 +1,24 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:block_entity": {},
+            "netease:custom_tips": {
+                "value": "\n§7用于作为真空冷却仓的能量输入接口。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:solid": {
+                "value": true
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_connectable": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:vacuum_freezer_io_energy"
+        }
+    }
+}

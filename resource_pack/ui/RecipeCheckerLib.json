@@ -2944,5 +2944,209 @@
                 }
             }
         ]
+    },
+    "vacuum_freezer_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            120.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "right_board": {
+                    "type": "image",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -4.0,
+                        0.0
+                    ],
+                    "size": [
+                        66.0,
+                        86.0
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/panel_bg",
+                    "controls": [
+                        {
+                            "max_kelvin_tip": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    4.0
+                                ],
+                                "size": [
+                                    "100%+-8px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "冷凝温度上限"
+                            }
+                        },
+                        {
+                            "max_kelvin": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    16.0
+                                ],
+                                "size": [
+                                    "100%+-10px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.0,
+                                    0.6666666666666666,
+                                    0.0
+                                ],
+                                "font_type": "default",
+                                "text": "0 K"
+                            }
+                        },
+                        {
+                            "fit_kelvin_tip": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    30.0
+                                ],
+                                "size": [
+                                    "100%+-10px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_type": "default",
+                                "text": "最佳冷凝温度"
+                            }
+                        },
+                        {
+                            "fit_kelvin": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    42.0
+                                ],
+                                "size": [
+                                    "100%+-10px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.0,
+                                    0.0,
+                                    1.0
+                                ],
+                                "font_type": "default",
+                                "text": "0 K"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/vacuum_freezer_progress_bg",
+                    "$mask_image": "textures/ui/vacuum_freezer_progress_mask",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        32,
+                        -14
+                    ],
+                    "size": [
+                        48,
+                        58
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_size": "small",
+                    "$text_visible": false,
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        8,
+                        10
+                    ],
+                    "size": [
+                        24,
+                        64
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        80,
+                        10
+                    ],
+                    "size": [
+                        24,
+                        64
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        12,
+                        -32
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "layer": 1,
+                    "offset": [
+                        80,
+                        -32
+                    ]
+                }
+            }
+        ]
     }
 }

@@ -35,6 +35,10 @@ class ProcessorBase(GUIControl, UpgradeControl, WorkRenderer):
         _, self.current_recipe = self.get_recipe()
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+        else:
+            # 停机旗是落盘保存的, 老存档可能带着"无配方"旗存下来(比如输入是后来才补上的),
+            # 构造时既然已经匹配到配方, 就顺手把它清掉, 否则机器重进世界后再也醒不过来
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
     @SuperExecutorMeta.execute_super
     def OnPlaced(self, _):

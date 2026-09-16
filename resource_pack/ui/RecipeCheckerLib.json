@@ -705,6 +705,146 @@
             }
         ]
     },
+    "engraver_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            80.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        6,
+                        36
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        6,
+                        56
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        46,
+                        36
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        46,
+                        56
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        102,
+                        46
+                    ]
+                }
+            },
+            {
+                "bar_img": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25.0,
+                        53.0
+                    ],
+                    "size": [
+                        21.0,
+                        5.0
+                    ],
+                    "layer": 1,
+                    "color": [
+                        0.7176470588235294,
+                        0.7176470588235294,
+                        0.7176470588235294
+                    ],
+                    "texture": "textures/ui/white",
+                    "tiled": true
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        6,
+                        6
+                    ],
+                    "size": [
+                        60,
+                        30
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        66,
+                        6
+                    ],
+                    "size": [
+                        60,
+                        30
+                    ]
+                }
+            },
+            {
+                "progress@MixerUI.mixer_progress": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask_redstone",
+                    "offset": [
+                        -6,
+                        16
+                    ],
+                    "size": [
+                        37,
+                        25
+                    ]
+                }
+            }
+        ]
+    },
     "fluid_condenser_recipes": {
         "type": "panel",
         "size": [

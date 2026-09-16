@@ -156,6 +156,12 @@
         "skybluetech:energy_cube_junior": {
             "textures": "textures/models/energy_cube/energy_cube_junior_texture"
         },
+        "skybluetech:engraver_front": {
+            "textures": "textures/blocks/machinery/engraver_front"
+        },
+        "skybluetech:engraver_front_active": {
+            "textures": "textures/blocks/machinery/flipbook_textures/engraver_front_active"
+        },
         "skybluetech:famicom": {
             "textures": "textures/models/famicom_texture"
         },

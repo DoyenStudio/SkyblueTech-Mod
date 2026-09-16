@@ -171,6 +171,17 @@
             "west": "skybluetech:electric_crafter_side"
         }
     },
+    "skybluetech:engraver": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:engraver_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
+    },
     "skybluetech:famicom": {
         "sound": "iron"
     },

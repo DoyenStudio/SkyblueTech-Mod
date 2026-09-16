@@ -201,6 +201,7 @@ tile.skybluetech:distilled_water.name=蒸馏水
 tile.skybluetech:dust_block.name=尘土块
 tile.skybluetech:electric_crafter.name=电动合成台
 tile.skybluetech:electric_heater.name=电力加热仓
+tile.skybluetech:engraver.name=蚀刻机
 tile.skybluetech:famicom.name=红白机
 tile.skybluetech:farming_station.name=种植站
 tile.skybluetech:fermenter_controller.name=发酵池控制器

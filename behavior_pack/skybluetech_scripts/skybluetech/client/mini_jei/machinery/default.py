@@ -4,6 +4,7 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     alloy_furnace,
     charger,
     compressor,
+    engraver,
     fluid_condenser,
     macerator,
     magma_centrifuge,
@@ -46,6 +47,16 @@ compressor.CompressorRecipe.SetRenderer(
         {
             "render_ui_def_name": "RecipeCheckerLib.compressor_recipes",
             "recipe_icon_id": machinery.Machinery.COMPRESSOR,
+        },
+    )
+)
+engraver.EngraverRecipe.SetRenderer(
+    type(
+        "EngraverRecipeRenderer",
+        (MachineRecipeRenderer,),
+        {
+            "render_ui_def_name": "RecipeCheckerLib.engraver_recipes",
+            "recipe_icon_id": machinery.Machinery.ENGRAVER,
         },
     )
 )

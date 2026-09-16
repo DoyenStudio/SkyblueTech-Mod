@@ -15,6 +15,7 @@
         "ui/ElectricCrafterUI.json",
         "ui/ElectricHeaterUI.json",
         "ui/EnergyCubeUI.json",
+        "ui/EngraverUI.json",
         "ui/FarmingStationUI.json",
         "ui/FermenterUI.json",
         "ui/FluidCondenserUI.json",

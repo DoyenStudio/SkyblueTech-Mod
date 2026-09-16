@@ -234,6 +234,59 @@
             }
         ]
     },
+    "charger_recipes": {
+        "type": "panel",
+        "size": [
+            180.0,
+            40.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2.0,
+                        2.0,
+                        2.0,
+                        2.0
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -30,
+                        0
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "layer": 1,
+                    "offset": [
+                        30,
+                        0
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "offset": [
+                        0,
+                        0
+                    ],
+                    "size": [
+                        40,
+                        20
+                    ]
+                }
+            }
+        ]
+    },
     "compressor_recipes": {
         "type": "panel",
         "size": [

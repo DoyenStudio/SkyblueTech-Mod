@@ -424,6 +424,9 @@
         "skybluetech:platinum_stick": {
             "textures": "textures/items/sticks/platinum_stick"
         },
+        "skybluetech:polished_diamond": {
+            "textures": "textures/items/polished_diamond"
+        },
         "skybluetech:raw_aluminum": {
             "textures": "textures/items/raw_ore/raw_aluminum"
         },

@@ -44,6 +44,15 @@ recipes = RecipesCollection(
         25,
         160,
     ),
+    # diamond
+    PrecisionCutterRecipe(
+        Input("minecraft:diamond"),
+        {2: Output(id_enum.POLISHED_DIAMOND, 1)},
+        1,
+        16,
+        50,
+        320,
+    ),
     # quartz
     PrecisionCutterRecipe(
         Input("minecraft:quartz_block"),

@@ -1,0 +1,17 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "common:polished_diamond",
+                    "diamond/polished"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:polished_diamond"
+        }
+    }
+}

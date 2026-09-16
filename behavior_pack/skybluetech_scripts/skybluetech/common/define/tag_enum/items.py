@@ -111,5 +111,11 @@ class BatteryTag:
     COMMON = "skybluetech:battery"
 
 
+class DiamondTag:
+    POLISHED = "diamond/polished"
+
+
+POLISHED_DIAMOND = "common:polished_diamond"
+
 RUBBER = "common:rubber"
 SAWDUST = "common:sawdust"

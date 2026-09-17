@@ -92,6 +92,7 @@ class StickTag:
     NICKEL = "sticks/nickel"
     SILVER = "sticks/silver"
     PLATINUM = "sticks/platinum"
+    STEEL = "sticks/steel"
     INVAR = "sticks/invar"
     CUPRONICKEL = "sticks/cupronickel"
     SUPERCONDUCT = "sticks/superconduct"

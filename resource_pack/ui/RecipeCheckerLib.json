@@ -725,7 +725,7 @@
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
-{
+            {
                 "bar_img": {
                     "type": "image",
                     "anchor_from": "top_left",
@@ -766,7 +766,7 @@
                 "slot0@SkybluePanelLib.item_displayer": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                                        "offset": [
+                    "offset": [
                         6,
                         36
                     ]
@@ -786,7 +786,7 @@
                 "slot2@SkybluePanelLib.item_displayer": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-"layer": 2,
+                    "layer": 2,
                     "offset": [
                         46,
                         36
@@ -797,7 +797,7 @@
                 "slot3@SkybluePanelLib.item_displayer": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-"layer": 2,
+                    "layer": 2,
                     "offset": [
                         46,
                         56
@@ -808,14 +808,14 @@
                 "slot4@SkybluePanelLib.item_displayer": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-"layer": 2,
+                    "layer": 2,
                     "offset": [
                         104,
                         46
                     ]
                 }
             },
-                        {
+            {
                 "fluid0@SkybluePanelLib.FluidDisplay": {
                     "$text_visible": false,
                     "anchor_from": "top_left",
@@ -844,7 +844,7 @@
                         30
                     ]
                 }
-                        }
+            }
         ]
     },
     "fluid_condenser_recipes": {
@@ -3076,6 +3076,41 @@
                                 ],
                                 "font_type": "default",
                                 "text": "0 K"
+                            }
+                        },
+                        {
+                            "upgrader_slot@SkybluePanelLib.item_displayer": {
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "layer": 1,
+                                "offset": [
+                                    4,
+                                    -4
+                                ]
+                            }
+                        },
+                        {
+                            "upgrader_tip": {
+                                "type": "label",
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "offset": [
+                                    24.0,
+                                    -8.0
+                                ],
+                                "size": [
+                                    40.0,
+                                    10.0
+                                ],
+                                "color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "font_scale_factor": 1.4,
+                                "font_size": "small",
+                                "font_type": "default",
+                                "text": "--"
                             }
                         }
                     ]

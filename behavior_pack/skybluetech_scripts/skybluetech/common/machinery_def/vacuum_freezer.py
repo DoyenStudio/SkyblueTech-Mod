@@ -1,7 +1,7 @@
 # coding=utf-8
 import math
 
-from ..define.id_enum import Machinery, VacuumFreezer, fluids
+from ..define.id_enum import Machinery, Upgraders, VacuumFreezer, fluids
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.vacuum_freezer import (
     Input,
@@ -15,6 +15,9 @@ MAX_FLUID_VOLUMES = (4000, 4000)
 
 K_MAX_POWER = "st:max_power"
 K_EXPECTED_KELVIN = "st:expected_kelvin"
+K_RECIPE = "st:recipe"
+# 服务端同步给客户端的"当前配方下标", 索引 ALL_RECIPES; 没有配方在跑时为 -1。
+# 客户端拿它算"配方效率"读数。
 MAX_POWER = STORE_RF_MAX
 MIN_EXPECTED_KELVIN = 6.0
 # 可设定的最低目标温度, 单位 K
@@ -60,8 +63,7 @@ EVAPORATOR_APPROACH = 5.0
 # 越费电(同样一份热量要多花 (T_h - T_c) / T_c 的功), 能到的温度也越高。取 0
 # 相当于直接拿被冷却物的温度当蒸发温度, 是最乐观的估计。
 
-recipes = RecipesCollection(
-    Machinery.VACUUM_FREEZER,
+ALL_RECIPES = [
     VacuumFreezerRecipe(
         input_fluid=Input(fluids.CommonGas.COMPRESSED_AIR, 16),
         output_fluid=Output(fluids.CommonLiquid.LIQUID_AIR, 1),
@@ -85,7 +87,45 @@ recipes = RecipesCollection(
         max_tick_duration=8,
         tick_heat_value_add=20,
     ),
-)  # type: RecipesCollection[VacuumFreezerRecipe]
+    VacuumFreezerRecipe(
+        input_fluid=Input(fluids.CommonGas.COMPRESSED_AIR, 24),
+        output_fluid=Output(fluids.CommonGas.NITROGEN, 1),
+        max_temperature=78,
+        fit_temperature=75,
+        max_tick_duration=10,
+        tick_heat_value_add=2,
+        extra_upgrader_id=Upgraders.SPEC_NITROGEN_EXTRACTION,
+    ),
+]
+
+RECIPES_NOT_NEED_UPGRADERS = [
+    recipe for recipe in ALL_RECIPES if recipe.extra_upgrader_id is None
+]
+RECIPES_NEED_UPGRADERS = [
+    (recipe.extra_upgrader_id, recipe)
+    for recipe in ALL_RECIPES
+    if recipe.extra_upgrader_id is not None
+]
+
+recipes = RecipesCollection(Machinery.VACUUM_FREEZER, *RECIPES_NOT_NEED_UPGRADERS)
+# 本机的默认配方组, 即所有不需要升级卡的配方。
+
+upgrader_recipes = {
+    upgrader: RecipesCollection(Machinery.VACUUM_FREEZER + "." + upgrader, recipe)
+    for upgrader, recipe in RECIPES_NEED_UPGRADERS
+}
+# 需要升级卡的配方各自预建一个只含它自己的配方组, 键是升级卡 id。
+
+# 与 MagmaFurnace 的差别: 那边装卡是"特化成另一套配方表"(另一套配方与基础配方并存),
+# 本机装卡后是"只跑这一条配方", 基础配方全部停用, 所以每个组里只放一条。
+
+# 在模块级预建而不是在机器的 `UpdateUpgraders` 里现建: 那里每次升级槽变动都会 new 一个
+# 同名配方组, 而 `RecipesCollection.__init__` 会重跑一遍 `RegisterRecipe` 并把
+# `_registered_collections[Machinery.VACUUM_FREEZER]` 覆盖成最后被碰过的那个实例。
+
+all_recipes = RecipesCollection(Machinery.VACUUM_FREEZER + ".all", *ALL_RECIPES)
+# 全量配方组, 只给客户端的配方页用: 那一页要把需要升级卡的配方也列出来(渲染器会在
+# 配方上标"需要机器升级"), 而机器实际在跑的配方表是 `recipes` 或 `upgrader_recipes`。
 
 
 STRUCTURE_PALETTE = GenerateSimpleStructureTemplate(

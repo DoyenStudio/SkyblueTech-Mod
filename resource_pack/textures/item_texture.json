@@ -640,7 +640,7 @@
         "skybluetech:upgrader_basic_speed": {
             "textures": "textures/items/upgraders/upgrader_basic_speed"
         },
-"skybluetech:upgrader_generic_auto_ejection": {
+        "skybluetech:upgrader_generic_auto_ejection": {
             "textures": "textures/items/upgraders/upgrader_generic_auto_ejection"
         },
         "skybluetech:upgrader_generic_autostop": {
@@ -657,6 +657,9 @@
         },
         "skybluetech:upgrader_spec_magma_factory": {
             "textures": "textures/items/upgraders/upgrader_spec_magma_factory"
+        },
+        "skybluetech:upgrader_spec_nitrogen_ext": {
+            "textures": "textures/items/upgraders/upgrader_spec_nitrogen_ext"
         },
         "skybluetech:uranium_dust": {
             "textures": "textures/items/dusts/uranium_dust"

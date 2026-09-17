@@ -1,20 +1,14 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
+from skybluetech_scripts.skybluetech.client.ui.machinery.utils import FormatKelvin
 from skybluetech_scripts.skybluetech.common.define.id_enum import machinery
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.vacuum_freezer import (
     VacuumFreezerRecipe,
 )
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
+
+from ...ui.recipe_checker.render_utils import ItemDisplayer
 from .define import MachineRecipeRenderer
-
-
-def FormatRecipeKelvin(kelvin):
-    # type: (float) -> str
-    """按右侧面板的占位样式显示温度: 整数不带小数点, 小数最多两位, 末尾跟 " K"。
-
-    面板里两个温度值的占位文本是 "0 K", 所以这里也照这个样式填值, 例如
-    "100 K" / "80 K" / "77.5 K", 而不是 FormatKelvin 的 "100.00 K"。
-    """
-    return ("%.2f" % kelvin).rstrip("0").rstrip(".") + " K"
 
 
 class VacuumFreezerRecipeRenderer(MachineRecipeRenderer):
@@ -45,11 +39,22 @@ class VacuumFreezerRecipeRenderer(MachineRecipeRenderer):
         # type: (UBaseCtrl) -> None
         MachineRecipeRenderer.RenderInit(self, panel)
         panel["right_board/max_kelvin"].asLabel().SetText(
-            FormatRecipeKelvin(self.recipe.max_temperature)
+            FormatKelvin(self.recipe.max_temperature)
         )
         panel["right_board/fit_kelvin"].asLabel().SetText(
-            FormatRecipeKelvin(self.recipe.fit_temperature)
+            FormatKelvin(self.recipe.fit_temperature)
         )
+        if self.recipe.extra_upgrader_id is None:
+            panel["/right_board/upgrader_slot"].SetVisible(False)
+            panel["/right_board/upgrader_tip"].SetVisible(False)
+        else:
+            ItemDisplayer(
+                panel["/right_board/upgrader_slot"],
+                Item(self.recipe.extra_upgrader_id),
+            )
+            panel["/right_board/upgrader_tip"].asLabel().SetText(
+                "需要机器升级"
+            )
 
 
 VacuumFreezerRecipe.SetRenderer(VacuumFreezerRecipeRenderer)

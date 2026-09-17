@@ -17,14 +17,16 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import (
+    ALL_RECIPES,
     K_EXPECTED_KELVIN,
     K_MAX_POWER,
+    K_RECIPE,
     MAX_EXPECTED_KELVIN,
     MAX_FLUID_VOLUMES,
     STORE_RF_MAX,
+    all_recipes,
     clamp_expected_kelvin,
     clamp_power,
-    recipes,
 )
 from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
 from skybluetech_scripts.tooldelta.api.client import (
@@ -93,10 +95,11 @@ class VacuumFreezerUI(MachinePanelUIProxy):
             .asButton()
             .SetCallback(self.onCheckMultiBlockStructure)
         )
-        # 打开本机的配方页, 与 MaceratorUI 等机器一致
+        # 打开本机的配方页, 与 MaceratorUI 等机器一致; 用的是全量配方组, 需要升级卡的
+        # 配方也列出来(配方页上会标"需要机器升级")
         AsRecipeCheckerBtn(
             self.GetElement(RECIPE_CHECK_BTN_PATH).asButton(),
-            recipes,
+            all_recipes,
         )
         self.last_destroy_flag = None
         self.last_structure_lacked_blocks = None
@@ -139,8 +142,18 @@ class VacuumFreezerUI(MachinePanelUIProxy):
         )
         max_power = GetValue(data, K_MAX_POWER, 0) or 0
         progress = GetValue(data, K_PROGRESS, 0.0) or 0.0
-        # 配方效率 = 当前温度下的推进速率(离最适温度有多近), 与机器端 ProcessOnce 同一公式
-        efficiency = recipes[0].GetRateAtKelvin(current_kelvin) if len(recipes) else 0.0
+        # 配方效率 = 当前温度下正在跑的那条配方的推进速率(离最适温度有多近), 与机器端
+        # ProcessOnce 同一公式。要按服务端同步来的下标取: 温度窗口是配方自带的, 不同配方
+        # 差得很远(液空 80K / 冰 265K), 取错配方这个读数就是错的; 没有配方在跑时显示 0。
+        recipe_index = GetValue(data, K_RECIPE, -1)
+        recipe = (
+            ALL_RECIPES[recipe_index]
+            if 0 <= recipe_index < len(ALL_RECIPES)
+            else None
+        )
+        efficiency = (
+            recipe.GetRateAtKelvin(current_kelvin) if recipe is not None else 0.0
+        )
         self.server_power = max_power
         self.server_kelvin = expected_kelvin
         input_fluid = FluidSlotClient(data, 0)

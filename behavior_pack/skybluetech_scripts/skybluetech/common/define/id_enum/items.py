@@ -183,6 +183,7 @@ class Upgraders(SimpleEnum):
     GENERIC_EXPANSION_UPGRADER = "skybluetech:upgrader_generic_expansion"
     GENERIC_SPLIT = "skybluetech:upgrader_generic_split"
     SPEC_MAGMA_FACTORY = "skybluetech:upgrader_spec_magma_factory"
+    SPEC_NITROGEN_EXTRACTION = "skybluetech:upgrader_spec_nitrogen_ext"
 
 
 class Wrench(SimpleEnum):

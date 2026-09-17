@@ -7,26 +7,34 @@ from ...common.define.id_enum import Machinery
 from ...common.define.id_enum import VacuumFreezer as ids
 from ...common.events.machinery.vacuum_freezer import VacuumFreezerSubmitModifiesEvent
 from ...common.machinery_def.vacuum_freezer import (
+    ALL_RECIPES,
     CHAMBER_HEAT_CAPACITY,
     COLD_HEAD_EFFICIENCY,
     EVAPORATOR_APPROACH,
     K_EXPECTED_KELVIN,
     K_MAX_POWER,
+    K_RECIPE,
     MAX_EXPECTED_KELVIN,
     MAX_FLUID_VOLUMES,
     MAX_POWER,
     MAX_TICK_COOLDOWN_RATE,
     MIN_EXPECTED_KELVIN,
+    RECIPES_NEED_UPGRADERS,
     STORE_RF_MAX,
     STRUCTURE_PALETTE,
     clamp_expected_kelvin,
     clamp_power,
 )
-from ...common.machinery_def.vacuum_freezer import recipes as Recipes
+from ...common.machinery_def.vacuum_freezer import (
+    recipes as Recipes,
+)
+from ...common.machinery_def.vacuum_freezer import (
+    upgrader_recipes as UpgraderRecipes,
+)
+from ...common.mini_jei.machinery import MachineRecipeBase
 from ...common.mini_jei.machinery.vacuum_freezer import VacuumFreezerRecipe
 from ...common.utils.phys_math import Thermal
 from .basic import (
-    BaseMachine,
     HeatCtrl,
     MultiBlockStructure,
     MultiFluidContainer,
@@ -94,7 +102,13 @@ class VacuumFreezer(
     store_rf_max = STORE_RF_MAX
     heat_capacity = CHAMBER_HEAT_CAPACITY
     # 本机热容远大于默认值, 所以搬运同样的温区要耗多得多的电, 见 CHAMBER_HEAT_CAPACITY
-    recipes = Recipes # pyright: ignore[reportAssignmentType]
+    recipes = Recipes  # pyright: ignore[reportAssignmentType]
+    allow_upgraders = Processor.allow_upgraders | frozenset(
+        upgrader for upgrader, _ in RECIPES_NEED_UPGRADERS
+    )
+    # 只有配方表里真的标了 `extra_upgrader_id` 的升级卡才允许插进来。现在
+    # `RECIPES_NEED_UPGRADERS` 是空的, 所以与基类等价; 以后哪条配方标了卡, 那张卡就
+    # 自动可以插, 不用再回来改这里。
     process_item = True
     process_fluid = True
     input_slots = (0,)
@@ -115,11 +129,11 @@ class VacuumFreezer(
     def __init__(self, dim, x, y, z, block_entity_data):
         # 流体吞吐的重入保护标志, 见 transmit_fluids
         self._fluid_io_busy = False
-        self._energy_in_ios = [] # type: list[EnergyInputInterface]
-        self._fluid_in_ios = [] # type: list[FluidInputInterface]
-        self._fluid_out_ios = [] # type: list[FluidOutputInterface]
-        self._item_in_ios = [] # type: list[ItemInputInterface]
-        self._item_out_ios = [] # type: list[ItemOutputInterface]
+        self._energy_in_ios = []  # type: list[EnergyInputInterface]
+        self._fluid_in_ios = []  # type: list[FluidInputInterface]
+        self._fluid_out_ios = []  # type: list[FluidOutputInterface]
+        self._item_in_ios = []  # type: list[ItemInputInterface]
+        self._item_out_ios = []  # type: list[ItemOutputInterface]
 
     @SuperExecutorMeta.execute_super
     def OnTicking(self):
@@ -140,6 +154,38 @@ class VacuumFreezer(
         # type: (int, bool) -> None
         if slot_pos in self.fluid_input_slots or slot_pos in self.fluid_output_slots:
             self.transmit_fluids()
+
+    def UpdateUpgraders(self, upgraders):
+        Processor.UpdateUpgraders(self, upgraders)
+        self.recipes = Recipes # pyright: ignore[reportAttributeAccessIssue]
+        for upgrader, recipes in UpgraderRecipes.items():
+            if self.HasUpgrader(upgrader):
+                self.recipes = recipes # pyright: ignore[reportAttributeAccessIssue]
+                break
+        if hasattr(self, "current_recipe"):
+            self.recheck_recipe()
+
+    def get_recipe(self):
+        # type: () -> tuple[int, MachineRecipeBase | None]
+        # 覆写只为顺带把匹配结果同步给客户端: 界面上的配方效率要按"正在跑的那条配方"算,
+        # 而温度窗口是配方自带的, 拿错配方读数就是错的。
+
+        # 写在这里而不是逐处调用, 是因为服务端每次确定配方 —— 构造时
+        # `ProcessorBase.__init__`、`recheck_recipe`、`start_next` —— 都要先走这里匹配一次,
+        # 集中在这一处就不会漏; 没有配方时匹配到 `(0, None)`, 正好写给客户端 -1。
+
+        # 也要覆盖"机器加载后没配方"这一路: 那种情况下别的钩子都不会被调到, 不写的话
+        # 客户端会一直读着上次落盘的下标, 机器明明停着却还显示着一个效率读数。
+        idx, recipe = Processor.get_recipe(self)
+        # 写的是配方在 `ALL_RECIPES` 里的下标, 不是上面那个 `idx` —— 后者是 `self.recipes`
+        # 的下标, 而升级后这张表只含一条配方, 与客户端手里的全量表对不上。
+        index = -1
+        for i, r in enumerate(ALL_RECIPES):
+            if r is recipe:
+                index = i
+                break
+        self.bdata[K_RECIPE] = index
+        return idx, recipe
 
     def OnItemInputSlotUpdate(self, slot_pos):
         # type: (int) -> None
@@ -165,7 +211,6 @@ class VacuumFreezer(
         # 机器一旦因为在输入槽还空着的时候挂上 `DEACTIVE_FLAG_NO_RECIPE`, 之后灌进来的流体
         # 就再也唤不醒它了(见 `OnTicking`: 停机旗挂着时配方循环整个不跑), 而界面搬运又是
         # 被动的, 输入槽灌满后不会再有任何流体变动回调, 于是永久卡死。
-
         # 之所以不能只靠 `MultiFluidContainer.OnAddedFluid`, 是因为它自己也带着
         # `execute_super`, 按 MRO 排在 `Processor` 前面, 会把 `Processor` 的实现整个挡掉;
         # 所以具体机器必须像 `AirCompressor` / `FluidCondenser` 那样把这两个钩子重声明一遍。
@@ -257,24 +302,22 @@ class VacuumFreezer(
 
     def freeze(self):
         # type: () -> None
-        """
-        主动降温: 按卡诺制冷机(`Thermal.ActiveCool`)把本机温度压向设定温度。
+        # 主动降温: 按卡诺制冷机(`Thermal.ActiveCool`)把本机温度压向设定温度。
 
-        每个结算周期先按 `MAX_TICK_COOLDOWN_RATE` 的移热速率上限算出本周期想移走
-        多少热量, 再由 `Thermal` 沿这段温区积分算出耗电。算的是一台接近现实的
-        制冷机, 而不是可逆的理想机:
+        # 每个结算周期先按 `MAX_TICK_COOLDOWN_RATE` 的移热速率上限算出本周期想移走
+        # 多少热量, 再由 `Thermal` 沿这段温区积分算出耗电。算的是一台接近现实的
+        # 制冷机, 而不是可逆的理想机:
 
-            - 冷头效率 `COLD_HEAD_EFFICIENCY`(相对理想卡诺)打折
-            - 蒸发器要有温差 `EVAPORATOR_APPROACH`, 本机温度最多只能逼近它
-            - 移热速率只决定降温有多快、峰值功率有多高, 不改变总电量
+        #     - 冷头效率 `COLD_HEAD_EFFICIENCY`(相对理想卡诺)打折
+        #     - 蒸发器要有温差 `EVAPORATOR_APPROACH`, 本机温度最多只能逼近它
+        #     - 移热速率只决定降温有多快、峰值功率有多高, 不改变总电量
 
-        本周期的电能预算是 `min(设定功率 * WORK_INTERVAL, 当前储电)`, 耗电超出
-        预算时按可负担的比例少移一点热量(同一温度下耗电与移热量成正比)。
+        # 本周期的电能预算是 `min(设定功率 * WORK_INTERVAL, 当前储电)`, 耗电超出
+        # 预算时按可负担的比例少移一点热量(同一温度下耗电与移热量成正比)。
 
-        本机热容远大于默认值(`CHAMBER_HEAT_CAPACITY`), 所以同样的温度变化要搬走的
-        热量、以及对应的电费都按热容放大: 从环境温度降到液化温度的总电量在几十万 RF
-        这个量级。
-        """
+        # 本机热容远大于默认值(`CHAMBER_HEAT_CAPACITY`), 所以同样的温度变化要搬走的
+        # 热量、以及对应的电费都按热容放大: 从环境温度降到液化温度的总电量在几十万 RF
+        # 这个量级。
         if self.kelvin <= self.expected_kelvin:
             return
         budget = min(self.max_power * self.WORK_INTERVAL, self.store_rf)
@@ -431,16 +474,4 @@ def onSetModifies(event, machine):
     machine.set_power(power)
     machine.set_expected_kelvin(kelvin)
 
-def _num_check(value):
-    # type: (object) -> float | None
-    if not isinstance(value, (int, float)):
-        return None
-    return None if (math.isinf(value) or math.isnan(value)) else value
 
-def clamp_power(value):
-    # type: (object) -> int | None
-    "把玩家端传来的设定功率夹到 0 ~ MAX_POWER, 非法值返回 None。"
-    value = _num_check(value)
-    if value is None:
-        return None
-    return int(min(max(value, 0.0), MAX_POWER))

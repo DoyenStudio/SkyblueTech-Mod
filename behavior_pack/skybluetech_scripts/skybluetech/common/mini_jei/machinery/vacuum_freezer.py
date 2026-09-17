@@ -5,23 +5,21 @@ from .define import CategoryType, Input, MachineRecipe, Output, RecipesCollectio
 
 
 class VacuumFreezerRecipe(MachineRecipe):
-    """真空冷却仓配方。
+    # 真空冷却仓配方。
 
-    这类配方比普通机器配方多两个概念, 都是"温度"带来的:
+    # 这类配方比普通机器配方多两个概念, 都是"温度"带来的:
 
-        - 温度窗口: 高于 `max_temperature` 时配方完全不推进(进度还会被顶回去),
-          相当于"还没冷到能液化"; 低于 `fit_temperature` 时按最快速度推进, 中间
-          则按比例线性变慢。
-        - 自身放热: 每推进一点就往机器热值里加 `tick_heat_value_add`(按推进速率
-          折扣), 这份热量不是白给的, 由机器的制冷机搬走, 温度越低搬走它越费电。
+    #     - 温度窗口: 高于 `max_temperature` 时配方完全不推进(进度还会被顶回去),
+    #       相当于"还没冷到能液化"; 低于 `fit_temperature` 时按最快速度推进, 中间
+    #       则按比例线性变慢。
+    #     - 自身放热: 每推进一点就往机器热值里加 `tick_heat_value_add`(按推进速率
+    #       折扣), 这份热量不是白给的, 由机器的制冷机搬走, 温度越低搬走它越费电。
 
-    计时方式: `ticks_left` 每 tick 减少"本 tick 的推进速率"(0~1), 所以 `max_tick_duration`
-    就是温度足够低时的最少耗时; 跑完一次后 `ticks_left` 会加上原时长重新开始, 也就是
-    这个配方是"一份原料一份产出"循环执行, 而不是一直烧。
+    # 计时方式: `ticks_left` 每 tick 减少"本 tick 的推进速率"(0~1), 所以 `max_tick_duration`
+    # 就是温度足够低时的最少耗时; 跑完一次后 `ticks_left` 会加上原时长重新开始, 也就是
+    # 这个配方是"一份原料一份产出"循环执行, 而不是一直烧。
 
-    注意 `power_cost` 恒为 0: 配方本身不直接吃电, 耗电全部体现在制冷机搬热上。
-    """
-
+    # 注意 `power_cost` 恒为 0: 配方本身不直接吃电, 耗电全部体现在制冷机搬热上。
     recipe_icon_id = VacuumFreezer.CONTROLLER
 
     def __init__(
@@ -34,11 +32,10 @@ class VacuumFreezerRecipe(MachineRecipe):
         fit_temperature=200,  # type: float
         max_tick_duration=200,  # type: int
         tick_heat_value_add=1,  # type: float
+        extra_upgrader_id=None,  # type: str | None
     ):
         inputs = {}  # type: dict[str, dict[int, Input]]
         outputs = {}  # type: dict[str, dict[int, Output]]
-        # 这里必须用形参而不是 self.xxx: 属性要到下面才赋值, 先读 self.xxx 只会读到
-        # 类属性(根本没有)并抛 AttributeError
         if input_item is not None:
             inputs[CategoryType.ITEM] = {0: input_item}
         if output_item is not None:
@@ -58,20 +55,19 @@ class VacuumFreezerRecipe(MachineRecipe):
         self.fit_temperature = fit_temperature
         self.max_tick_duration = max_tick_duration
         self.tick_heat_value_add = tick_heat_value_add
+        self.extra_upgrader_id = extra_upgrader_id
 
     def GetRateAtKelvin(self, kelvin):
         # type: (float) -> float
-        """
-        返回本配方在温度 `kelvin`(K) 下的推进速率, 取值 0~1, 含义是"每 tick 能推进多少个
-        tick 的进度":
+        # 返回本配方在温度 `kelvin`(K) 下的推进速率, 取值 0~1, 含义是"每 tick 能推进多少个
+        # tick 的进度":
 
-            - 高于 `max_temperature`: 0, 完全不推进
-            - 低于 `fit_temperature`: 1, 按 `max_tick_duration` 的最快速度推进
-            - 中间按温度线性插值, 温度每高 1K 就慢一点
+        #     - 高于 `max_temperature`: 0, 完全不推进
+        #     - 低于 `fit_temperature`: 1, 按 `max_tick_duration` 的最快速度推进
+        #     - 中间按温度线性插值, 温度每高 1K 就慢一点
 
-        机器端 `ProcessOnce` 按它推进进度, 客户端 UI 的"配方效率"读数也用它, 两处共用同一
-        个公式, 免得界面数字和实际推进速度对不上。
-        """
+        # 机器端 `ProcessOnce` 按它推进进度, 客户端 UI 的"配方效率"读数也用它, 两处共用同一
+        # 个公式, 免得界面数字和实际推进速度对不上。
         if kelvin > self.max_temperature:
             return 0.0
         return (self.max_temperature - max(kelvin, self.fit_temperature)) / (
@@ -88,6 +84,7 @@ class VacuumFreezerRecipe(MachineRecipe):
             "fit_temperature": self.fit_temperature,
             "max_tick_duration": self.max_tick_duration,
             "tick_heat_value_add": self.tick_heat_value_add,
+            "extra_upgrader_id": self.extra_upgrader_id,
         }
 
     @classmethod
@@ -109,4 +106,6 @@ class VacuumFreezerRecipe(MachineRecipe):
             fit_temperature=dct["fit_temperature"],
             max_tick_duration=dct["max_tick_duration"],
             tick_heat_value_add=dct["tick_heat_value_add"],
+            # 旧数据里没有这个键, 缺省按"不需要升级卡"处理
+            extra_upgrader_id=dct.get("extra_upgrader_id"),
         )

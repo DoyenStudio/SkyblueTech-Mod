@@ -17,7 +17,6 @@ from ...common.machinery_def.solar_panel import (
 from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
-
 TCON = TransmitterConn(wire=True)
 
 

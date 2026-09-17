@@ -1,26 +1,26 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.machinery_def.air_compressor import (
+    K_PLACED_DIMENSION,
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+    GetDimensionName,
+    GetRecipeByDimension,
+    recipes,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
+    K_PROGRESS,
+    K_STORE_RF,
+    FluidSlotClient,
+)
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_STORE_RF,
-    K_PROGRESS,
-    FluidSlotClient,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.air_compressor import (
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
-    K_PLACED_DIMENSION,
-    recipes,
-    GetDimensionName,
-    GetRecipeByDimension,
-)
-from ..recipe_checker import AsRecipeCheckerBtn
-from ..machinery_extra_pages import PipeSettingsPageIndirectional
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
-from .utils import UpdatePowerBar, UpdateGenericProgressL2R, FluidDisplayer
 
+from ..machinery_extra_pages import PipeSettingsPageIndirectional
+from ..recipe_checker import AsRecipeCheckerBtn
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
+from .utils import FluidDisplayer, UpdateGenericProgressL2R, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "progress"

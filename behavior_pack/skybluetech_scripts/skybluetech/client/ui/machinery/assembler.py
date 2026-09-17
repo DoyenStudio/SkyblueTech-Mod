@@ -1,25 +1,26 @@
 # coding=utf-8
 
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
-)
-from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.events.machinery.assembler import (
-    AssemblerActionRequest,
-    AssemblerUpgradersUpdate,
     ACTION_PULL_UPGRADER,
     ACTION_PUSH_UPGRADER,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_STORE_RF,
+    AssemblerActionRequest,
+    AssemblerUpgradersUpdate,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.assembler import (
     RF_MAX,
 )
-from .define import MachinePanelUIProxy, MAIN_PATH
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
+    K_STORE_RF,
+)
+from skybluetech_scripts.tooldelta.api.client import (
+    GetBlockEntityData,
+    GetItemHoverName,
+)
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
+from .define import MAIN_PATH, MachinePanelUIProxy
 from .utils import UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"

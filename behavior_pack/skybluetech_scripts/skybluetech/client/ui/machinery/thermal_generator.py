@@ -1,16 +1,17 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
+from skybluetech_scripts.skybluetech.common.machinery_def.thermal_generator import (
+    K_BURN_SEC_LEFT,
+    K_MAX_BURN_SEC,
+    STORE_RF_MAX,
+)
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
-from skybluetech_scripts.skybluetech.common.machinery_def.thermal_generator import (
-    STORE_RF_MAX,
-    K_BURN_SEC_LEFT,
-    K_MAX_BURN_SEC,
-)
+
 from ..machinery_extra_pages import CableSettingsPage
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
-from .utils import UpdatePowerBar, UpdateFlame
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
+from .utils import UpdateFlame, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 FLAME_PATH = MAIN_PATH / "flame"

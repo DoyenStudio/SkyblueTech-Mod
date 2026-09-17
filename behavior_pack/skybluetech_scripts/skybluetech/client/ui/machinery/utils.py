@@ -1,11 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import UICtrlPosData
-from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
-from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
-from skybluetech_scripts.tooldelta.utils.nbt import (
-    GetValueWithDefault as GetValue,
-    NBT2Py,
-)
 from skybluetech_scripts.skybluetech.common.define.fluids import (
     texture as fluid_texture,
 )
@@ -14,11 +7,17 @@ from skybluetech_scripts.skybluetech.common.define.fluids.define import (
 )
 from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Gas
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_STRUCTURE_LACKED_BLOCKS,
     K_STRUCTURE_LACKED_BLOCK_POSES,
+    K_STRUCTURE_LACKED_BLOCKS,
 )
 from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
     AIR_BLOCK_ID,
+)
+from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
+from skybluetech_scripts.tooldelta.define import UICtrlPosData
+from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
+from skybluetech_scripts.tooldelta.utils.nbt import (
+    NBT2Py,
 )
 
 # TYPE_CHECKING

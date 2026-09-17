@@ -1,4 +1,14 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.define import id_enum
+
+from ...define import (
+    MainTOCPage,
+    MainTOCPageSection,
+    PageGroup,
+    TextPage,
+    TOCPage,
+    TOCPageSection,
+)
 from . import (
     machinery_crafting,
     machinery_energy,
@@ -6,21 +16,8 @@ from . import (
     machinery_logistics,
     machinery_misc,
     machinery_production,
-)
-from skybluetech_scripts.skybluetech.common.define import id_enum
-from ...define import (
-    TextPage,
-    MainTOCPage,
-    MainTOCPageSection,
-    TOCPage,
-    TOCPageSection,
-    PageGroup,
-)
-
-from . import (
     machinery_source_extraction,
 )
-
 
 machinery_production_toc = PageGroup(
     "machinery_production_toc",

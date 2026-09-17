@@ -1,19 +1,20 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl, Binder
+from skybluetech_scripts.skybluetech.common.events.machinery.item_splitter import (
+    ItemSplitterSettingsListUpdate,
+    ItemSplitterSettingsSetItem,
+    ItemSplitterSettingsSetLabel,
+    ItemSplitterSimpleAction,
+)
 from skybluetech_scripts.tooldelta.api.client import (
     GetItemHoverName,
     GetLocalPlayerHotbarAndInvItems,
 )
-from skybluetech_scripts.skybluetech.common.events.machinery.item_splitter import (
-    ItemSplitterSettingsSetItem,
-    ItemSplitterSettingsSetLabel,
-    ItemSplitterSettingsListUpdate,
-    ItemSplitterSimpleAction,
-)
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
+
 from ..machinery_extra_pages import CableSettingsPageIndirectional
-from ..misc.transmitter_settings_ui import rand_rgb_by_index, get_opposite_color
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
+from ..misc.transmitter_settings_ui import get_opposite_color, rand_rgb_by_index
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 
 SETTINGS_VIEW_PATH = MAIN_PATH / "settings_view"
 ADD_BTN_PATH = MAIN_PATH / "add_btn"

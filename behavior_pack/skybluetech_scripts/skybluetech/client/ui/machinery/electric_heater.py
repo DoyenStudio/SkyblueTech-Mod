@@ -1,15 +1,11 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.events.machinery.electric_heater import (
     ElectricHeaterSubmitModifiesEvent,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_STORE_RF,
     K_HEAT_VALUE,
+    K_STORE_RF,
 )
-from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
 from skybluetech_scripts.skybluetech.common.machinery_def.electric_heater import (
     K_CURRENT_POWER,
     K_KELVIN_LIMIT,
@@ -19,7 +15,12 @@ from skybluetech_scripts.skybluetech.common.machinery_def.electric_heater import
     MIN_KELVIN,
     STORE_RF_MAX,
 )
-from .define import MachinePanelUIProxy, MAIN_PATH
+from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
+from .define import MAIN_PATH, MachinePanelUIProxy
 from .utils import UpdatePowerBar
 
 POWER_BAR_PATH = MAIN_PATH / "power_bar"

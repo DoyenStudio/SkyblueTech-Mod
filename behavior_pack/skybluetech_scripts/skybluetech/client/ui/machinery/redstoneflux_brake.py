@@ -1,7 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, SCREEN_BASE_PATH, Binder
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.define.ui_keys import REDSTONEFLUX_BRAKE_UI
 from skybluetech_scripts.skybluetech.common.events.machinery.redstoneflux_brake import (
     RedstoneFluxBrakeModeSwitchRequest,
@@ -12,6 +9,14 @@ from skybluetech_scripts.skybluetech.common.machinery_def.redstoneflux_brake imp
     K_POWER_AVG,
     K_REDSTONE_STRENGTH,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.ui import (
+    SCREEN_BASE_PATH,
+    Binder,
+    RegistToolDeltaScreen,
+)
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
 from .define import MachinePanelUI
 from .utils import FormatRF
 

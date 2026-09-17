@@ -1,14 +1,15 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData, GetBlockName
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_FLUID_ID,
     K_FLUID_VOLUME,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.tank import TANK_MAX_VOLUMES
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData, GetBlockName
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
 from ..machinery_extra_pages import PipeSettingsPageIndirectional
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer
 
 FLUID_PATH = MAIN_PATH / "fluid_display"

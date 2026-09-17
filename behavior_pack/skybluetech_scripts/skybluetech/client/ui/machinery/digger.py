@@ -1,23 +1,24 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
+    K_PROGRESS,
+    K_STORE_RF,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.digger import (
+    K_FRONT_BLOCK_AUX,
+    K_FRONT_BLOCK_ID,
+    STORE_RF_MAX,
+)
 from skybluetech_scripts.tooldelta.api.client import (
     GetBlockEntityData,
     GetItemHoverName,
 )
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_STORE_RF,
-    K_PROGRESS,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.digger import (
-    STORE_RF_MAX,
-    K_FRONT_BLOCK_ID,
-    K_FRONT_BLOCK_AUX,
-)
+
 from ..machinery_extra_pages import CableSettingsPageIndirectional
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
-from .utils import UpdatePowerBar, UpdateGenericProgressL2R
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
+from .utils import UpdateGenericProgressL2R, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "progress"

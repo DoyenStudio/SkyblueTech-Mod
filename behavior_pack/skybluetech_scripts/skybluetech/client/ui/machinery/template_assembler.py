@@ -1,28 +1,29 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
 from skybluetech_scripts.skybluetech.common.events.machinery.template_assembler import (
     TemplateAssemblerUpdateRecipeEvent,
     TemplateAssemblerUpdateRecipeEvent2,
 )
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
     K_STORE_RF,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.template_assembler import (
-    recipes,
-    STORE_RF_MAX,
-    K_TEMPLATE_ITEMS,
+    K_TEMPLATE_ITEM_COUNT,
     K_TEMPLATE_ITEM_ID,
     K_TEMPLATE_ITEM_IS_TAG,
-    K_TEMPLATE_ITEM_COUNT,
+    K_TEMPLATE_ITEMS,
+    STORE_RF_MAX,
+    recipes,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
 from ..machinery_extra_pages import CableSettingsPageIndirectional
 from ..recipe_checker import AsRecipeCheckerBtn
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdateGenericProgressL2R, UpdatePowerBar
 
 PROGRESS_PATH = MAIN_PATH / "progress"

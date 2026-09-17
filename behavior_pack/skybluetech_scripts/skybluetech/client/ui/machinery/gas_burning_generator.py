@@ -1,21 +1,22 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF,
     FluidSlotClient,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.gas_burning_generator import (
-    recipes,
-    STORE_RF_MAX,
     MAX_INPUT_GAS_VOLUME,
     MAX_OUTPUT_GAS_VOLUME,
+    STORE_RF_MAX,
+    recipes,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
 from ..machinery_extra_pages import PipeSettingsPageIndirectional
 from ..recipe_checker import AsRecipeCheckerBtn
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
-from .utils import UpdatePowerBar, UpdateFlame, FluidDisplayer
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
+from .utils import FluidDisplayer, UpdateFlame, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 GAS_INPUT_PATH = MAIN_PATH / "gas_input"

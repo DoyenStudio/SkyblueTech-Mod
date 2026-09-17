@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.api.server import (
     GetBlockCardinalFacing,
@@ -8,15 +7,16 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetBlock,
     UpdateBlockStates,
 )
+from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events import (
     BlockNeighborChangedServerEvent,
     ServerEntityTryPlaceBlockEvent,
 )
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
 from ...common.define import flags
 from ...common.define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
-from ...common.define.id_enum import RESIN_COLLECTOR, RESIN
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import RESIN, RESIN_COLLECTOR, Machinery
 from .basic import (
     BaseMachine,
     ItemContainer,

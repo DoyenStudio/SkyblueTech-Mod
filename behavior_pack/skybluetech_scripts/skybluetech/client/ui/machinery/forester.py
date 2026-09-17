@@ -1,13 +1,14 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
 from skybluetech_scripts.skybluetech.common.machinery_def.forester import (
     STORE_RF_MAX,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
 from ..machinery_extra_pages import CableSettingsPageIndirectional
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"

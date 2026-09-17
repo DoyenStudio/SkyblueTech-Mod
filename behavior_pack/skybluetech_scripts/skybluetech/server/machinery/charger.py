@@ -13,6 +13,8 @@ from ...common.machinery_def.charger import (
     K_CHARGE_RF,
     K_CHARGE_RF_MAX,
     STORE_RF_MAX,
+)
+from ...common.machinery_def.charger import (
     recipes as Recipes,
 )
 from ...common.utils.block_sync import BlockSync

@@ -1,10 +1,11 @@
 # coding: utf-8
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
     CRAFTING_TEMPLATE,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum.machinery import Machinery
-from ..core import CategoryType
+
 from ..common import RegisterDescription
+from ..core import CategoryType
 
 content = (
     "自动合成台需要使用合成样板以设置合成配方。 "

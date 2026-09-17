@@ -1,7 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.ui import Binder, UBaseCtrl
-from ..machinery_extra_pages.base_page import PageBase, MainPage
-from .define import MachinePanelUIProxy, MAIN_PATH
+
+from ..machinery_extra_pages.base_page import MainPage, PageBase
+from .define import MAIN_PATH, MachinePanelUIProxy
 
 
 class MachinePanelUIProxyEx(MachinePanelUIProxy):

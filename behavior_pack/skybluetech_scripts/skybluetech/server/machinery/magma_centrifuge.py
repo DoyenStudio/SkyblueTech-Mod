@@ -1,11 +1,13 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from ...common.define.id_enum import Machinery
 
+from ...common.define.id_enum import Machinery
+from ...common.machinery_def.magma_centrifuge import (
+    FLUID_SLOT_MAX_VOLUMES,
+    STORE_RF_MAX,
+)
 from ...common.machinery_def.magma_centrifuge import (
     recipes as Recipes,
-    STORE_RF_MAX,
-    FLUID_SLOT_MAX_VOLUMES,
 )
 from .basic import MultiFluidContainer, Processor, RegisterMachine
 

@@ -1,12 +1,15 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from skybluetech_scripts.skybluetech.common.define import flags
+
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.precision_cutter import (
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
     CUTTER_LEVEL_MAPPING,
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
+from ...common.machinery_def.precision_cutter import (
     recipes as Recipes,
 )
 from ...common.mini_jei.machinery.precision_cutter import PrecisionCutterRecipe
@@ -52,7 +55,7 @@ class PrecisionCutter(MultiFluidContainer, Processor):
         # type: () -> tuple[int, PrecisionCutterRecipe | None]
         "在基类配方匹配的基础上, 额外要求槽位1的锯片等级满足配方最低等级。"
         recipe_idx, recipe = Processor.get_recipe(self)
-        if not isinstance(recipe, PrecisionCutterRecipe): # recipe is None
+        if not isinstance(recipe, PrecisionCutterRecipe):  # recipe is None
             return recipe_idx, None
         if not self.cutter_meets_requirement(recipe):
             return recipe_idx, None

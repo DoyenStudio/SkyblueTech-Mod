@@ -1,5 +1,15 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.skybluetech.common.events.machinery.machinery_workstation import (
+    MachineryWorkstationDoCraft,
+    MachineryWorkstationTransferRecipe,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.machinery_workstation import (
+    K_CRAFTING_PROGRESS,
+    K_NEED_TOOL,
+    K_OUTPUT_ITEM_ID,
+    MRecipe,
+    recipes,
+)
 from skybluetech_scripts.tooldelta.api.client import (
     GetBlockEntityData,
     GetItemHoverName,
@@ -7,25 +17,15 @@ from skybluetech_scripts.tooldelta.api.client import (
 from skybluetech_scripts.tooldelta.api.client.player import (
     GetLocalPlayerHotbarAndInvItems,
 )
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder, UBaseCtrl
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
-from skybluetech_scripts.skybluetech.common.events.machinery.machinery_workstation import (
-    MachineryWorkstationDoCraft,
-    MachineryWorkstationTransferRecipe,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.machinery_workstation import (
-    MRecipe,
-    recipes,
-    K_CRAFTING_PROGRESS,
-    K_OUTPUT_ITEM_ID,
-    K_NEED_TOOL,
-)
-from ..recipe_checker import AsRecipeCheckerBtn
-from .define import MachinePanelUIProxy, MAIN_PATH
-from .utils import UpdateGenericProgressL2R
 
+from ..recipe_checker import AsRecipeCheckerBtn
+from .define import MAIN_PATH, MachinePanelUIProxy
+from .utils import UpdateGenericProgressL2R
 
 WARNING_BAR_DISPLAY_THRESOLD = 0.8
 

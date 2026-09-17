@@ -1,5 +1,6 @@
 # coding=utf-8
 from mod.client.extraClientApi import GetMinecraftEnum
+
 from skybluetech_scripts.tooldelta.api.client.player import GetPlayerDimensionId
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events import CustomC2SEvent
@@ -7,8 +8,8 @@ from skybluetech_scripts.tooldelta.events.client import (
     ClientBlockUseEvent,
     OnKeyPressInGame,
 )
-from skybluetech_scripts.tooldelta.ui import SCREEN_BASE_PATH, ToolDeltaScreen
 from skybluetech_scripts.tooldelta.extensions.ui_sync import S2CSync
+from skybluetech_scripts.tooldelta.ui import SCREEN_BASE_PATH, ToolDeltaScreen
 
 KeyEnum = GetMinecraftEnum().KeyBoardType
 _ESCAPE = KeyEnum.KEY_ESCAPE

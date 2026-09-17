@@ -1,16 +1,17 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient
 from skybluetech_scripts.skybluetech.common.machinery_def.hydroponic_base import (
     FLUID_0_MAX_VOLUME,
     FLUID_1_MAX_VOLUME,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
+
 from ..machinery_extra_pages import (
     CableSettingsPageIndirectional,
     PipeSettingsPageIndirectional,
 )
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer
 
 FLUID_0_PATH = MAIN_PATH / "fluid0"

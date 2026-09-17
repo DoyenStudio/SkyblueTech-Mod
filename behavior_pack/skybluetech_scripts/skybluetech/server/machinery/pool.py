@@ -1,15 +1,16 @@
-from skybluetech_scripts.tooldelta.events.server.world import (
-    ChunkAcquireDiscardedServerEvent,
-    ChunkLoadedServerEvent,
-)
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockEntityData,
     GetBlockName,
 )
+from skybluetech_scripts.tooldelta.events.server.world import (
+    ChunkAcquireDiscardedServerEvent,
+    ChunkLoadedServerEvent,
+)
+
 from ...common.define.facing import DXYZ_FACING, FACING_DXYZ
 
 # TYPE_CHECKING
-if 0>1:
+if 0 > 1:
     from .basic.base_machine import BaseMachine
 # TYPE_CHECKING END
 
@@ -75,7 +76,6 @@ def InvalidateNearbyCaches(dim, x, y, z):
         m = cached_machines.get((dim, x + dx, y + dy, z + dz))
         if m is not None:
             m.OnInvalidateCaches()
-
 
 
 def PopMachine(dimension, x, y, z, machine_cls):

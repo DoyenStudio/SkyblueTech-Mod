@@ -1,31 +1,42 @@
 # coding=utf-8
 import random
+
 from mod.server.extraServerApi import GetMinecraftEnum
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
-from skybluetech_scripts.tooldelta.define import Item
+
 from skybluetech_scripts.tooldelta.api.server import (
-    SetCommand,
-    GetNameById,
     GetAllInventoryItems,
-    SetPlayerAllItems,
+    GetNameById,
     GiveItem,
+    SetCommand,
+    SetPlayerAllItems,
 )
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
+
+from ...common.define.id_enum import Machinery
 from ...common.events.machinery.machinery_workstation import (
     MachineryWorkstationDoCraft,
     MachineryWorkstationTransferRecipe,
 )
-from ...common.define.id_enum import Machinery
 from ...common.machinery_def.machinery_workstation import (
-    recipes as Recipes,
     K_CRAFTING_PROGRESS,
-    K_OUTPUT_ITEM_ID,
     K_NEED_TOOL,
+    K_OUTPUT_ITEM_ID,
     get_pincer_level,
     get_wrench_level,
 )
+from ...common.machinery_def.machinery_workstation import (
+    recipes as Recipes,
+)
 from ..machinery.utils.charge import ChargeEnough, GetCharge, GetPowerCost, UpdateCharge
 from ..tools.actions.utils import MakeItemUseless
-from .basic import BaseMachine, RegisterMachine, GUIControl, ItemContainer, OperationListener
+from .basic import (
+    BaseMachine,
+    GUIControl,
+    ItemContainer,
+    OperationListener,
+    RegisterMachine,
+)
 
 K_CRAFT_TIMES = "craft_times"
 ItemPosType = GetMinecraftEnum().ItemPosType
@@ -120,11 +131,10 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer, OperationList
 
     def _consume_tool_use(self, tool_item, craft_strength):
         # type: (Item, float) -> tuple[Item | None, bool]
-        """消耗一次工具使用(耐久或充能), 返回 (处理后物品, 是否可继续制造)。
+        # 消耗一次工具使用(耐久或充能), 返回 (处理后物品, 是否可继续制造)。
 
-        蔚蓝充能工具每次使用消耗 st:cost_rf 对应充能(默认 1000RF),
-        余量不足一次消耗时不可继续使用; 耗尽的充能工具转为 _useless 形态。
-        """
+        # 蔚蓝充能工具每次使用消耗 st:cost_rf 对应充能(默认 1000RF),
+        # 余量不足一次消耗时不可继续使用; 耗尽的充能工具转为 _useless 形态。
         ud = tool_item.userData
         if ud is not None and GetPowerCost(ud) > 0:
             if self._is_charged_tool_without_charge(tool_item):
@@ -141,7 +151,7 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer, OperationList
         if random.random() < craft_strength:
             tool_item.durability = max(0, orig_durability - 1)
             if tool_item.durability <= 0:
-                tool_item = None
+                return None, True
         return tool_item, True
 
     def on_craft(self, event):

@@ -1,23 +1,23 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
+    K_HEAT_VALUE,
+    FluidSlotClient,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.distillation_chamber import (
+    INPUT_MAX_VOLUME,
+    K_OUTPUT_RATE,
+    OUTPUT_MAX_VOLUME,
+    recipes,
+)
+from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    FluidSlotClient,
-    K_HEAT_VALUE,
-)
-from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
-from skybluetech_scripts.skybluetech.common.machinery_def.distillation_chamber import (
-    recipes,
-    INPUT_MAX_VOLUME,
-    OUTPUT_MAX_VOLUME,
-    K_OUTPUT_RATE,
-)
+
 from ..machinery_extra_pages import PipeSettingsPageIndirectional
 from ..recipe_checker import AsRecipeCheckerBtn
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
-from .utils import FormatKelvin, FormatFluidVolume, FluidDisplayer
-
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
+from .utils import FluidDisplayer, FormatFluidVolume, FormatKelvin
 
 TEMPERATURE_PATH = MAIN_PATH / "right_board/temp_disp"
 RATE_PATH = MAIN_PATH / "right_board/rate_disp"

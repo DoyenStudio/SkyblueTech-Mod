@@ -1,30 +1,19 @@
 # BatteryMatrixUI.battery_slot_nums
 # # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
-)
-from skybluetech_scripts.tooldelta.events.client import (
-    PlayerTryPutCustomContainerItemClientEvent,
-)
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.tooldelta.utils.py_comp import py2_long
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
-)
 from skybluetech_scripts.skybluetech.common.define.flags import (
-    DEACTIVE_FLAG_STRUCTURE_BROKEN,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
+    DEACTIVE_FLAG_STRUCTURE_BROKEN,
 )
 from skybluetech_scripts.skybluetech.common.events.machinery.battery_matrix import (
     BatteryMatrixActionRequest,
     BatteryMatrixCheckCoreBatterysRequest,
-    BatteryMatrixPopBatteryRequest,
-    BatteryMatrixStoreBatteryRequest,
     BatteryMatrixCoreStatusUpdate,
+    BatteryMatrixPopBatteryRequest,
     BatteryMatrixStatesUpdate,
+    BatteryMatrixStoreBatteryRequest,
+)
+from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
+    MultiBlockStructureCheckRequest,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_DESTROY_FLAG,
@@ -32,16 +21,28 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
 from skybluetech_scripts.skybluetech.common.machinery_def.battery_matrix import (
     K_INPUT_POWER,
     K_OUTPUT_POWER,
-    K_STORE_RF,
     K_RF_MAX,
+    K_STORE_RF,
 )
-from .define import MachinePanelUIProxy, MAIN_PATH
+from skybluetech_scripts.tooldelta.api.client import (
+    GetBlockEntityData,
+    GetItemHoverName,
+)
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.events.client import (
+    PlayerTryPutCustomContainerItemClientEvent,
+)
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+from skybluetech_scripts.tooldelta.utils.py_comp import py2_long
+
+from .define import MAIN_PATH, MachinePanelUIProxy
 from .utils import (
-    UpdateGenericProgressL2R,
     FormatRF,
-    GetStructureLackedBlocks,
-    GetStructureLackedBlockPoses,
     FormatStructureLackedBlockPoses,
+    GetStructureLackedBlockPoses,
+    GetStructureLackedBlocks,
+    UpdateGenericProgressL2R,
 )
 
 ENERGY_LABEL_PATH = MAIN_PATH / "battery_icon/energy_label"

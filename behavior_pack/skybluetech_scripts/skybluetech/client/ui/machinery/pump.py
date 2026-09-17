@@ -1,19 +1,20 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
+    K_FLUID_ID,
+    K_FLUID_VOLUME,
+    K_STORE_RF,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.pump import (
+    MAX_FLUID_VOLUME,
+    STORE_RF_MAX,
+)
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_STORE_RF,
-    K_FLUID_ID,
-    K_FLUID_VOLUME,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.pump import (
-    STORE_RF_MAX,
-    MAX_FLUID_VOLUME,
-)
+
 from ..machinery_extra_pages import PipeSettingsPage
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
-from .utils import UpdatePowerBar, FluidDisplayer
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
+from .utils import FluidDisplayer, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 FLUID_PATH = MAIN_PATH / "fluid_display"

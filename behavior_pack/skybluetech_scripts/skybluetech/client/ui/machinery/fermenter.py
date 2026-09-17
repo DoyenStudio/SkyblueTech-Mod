@@ -1,67 +1,64 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import UICtrlPosData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
+from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
+    DEACTIVE_FLAG_STRUCTURE_BROKEN,
+)
+from skybluetech_scripts.skybluetech.common.events.machinery.fermenter import (
+    FermenterSeMaxVolumeEvent,
+    FermenterSetTemperatureEvent,
+)
+from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
+    MultiBlockStructureCheckRequest,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
+    K_DESTROY_FLAG,
+    K_STORE_RF,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.fermenter import (
+    K_CELL_HUNGER,
+    K_EXPECTED_TEMPERTURE,
+    K_EXPECTED_WATER_MAX_VOLUME,
+    K_FLUID_PRODUCE_SPEED,
+    K_GAS_PRODUCE_SPEED,
+    K_INOCULATE_TIME,
+    K_INOCULATING_RECIPE,
+    K_MUD_THICKNESS,
+    K_MUD_VITALITY,
+    K_MUD_VOLUME,
+    K_OUTPUT_FLUID_ID,
+    K_OUTPUT_FLUID_MAX_VOLUME,
+    K_OUTPUT_FLUID_VOLUME,
+    K_OUTPUT_GAS_ID,
+    K_OUTPUT_GAS_MAX_VOLUME,
+    K_OUTPUT_GAS_VOLUME,
+    K_RECIPE,
+    K_TEMPERATURE,
+    K_TOTAL_VOLUME,
+    K_WATER_VOLUME,
+    POOL_MAX_VOLUME,
+    STORE_RF_MAX,
+    TEMPERATURE_MAX,
+    TEMPERATURE_MIN,
+    FermenterRecipe,
+    spec_recipes,
+)
 from skybluetech_scripts.tooldelta.api.client import (
     GetBlockEntityData,
     GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.define import UICtrlPosData
+from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
-)
-from skybluetech_scripts.skybluetech.common.events.machinery.fermenter import (
-    FermenterSetTemperatureEvent,
-    FermenterSeMaxVolumeEvent,
-)
-from skybluetech_scripts.skybluetech.common.define.flags import (
-    DEACTIVE_FLAG_STRUCTURE_BROKEN,
-    DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_STORE_RF,
-    K_DESTROY_FLAG,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.fermenter import (
-    spec_recipes,
-    TEMPERATURE_MIN,
-    TEMPERATURE_MAX,
-    POOL_MAX_VOLUME,
-)
-from skybluetech_scripts.skybluetech.common.machinery_def.fermenter import (
-    K_TEMPERATURE,
-    K_EXPECTED_TEMPERTURE,
-    K_EXPECTED_WATER_MAX_VOLUME,
-    K_MUD_VOLUME,
-    K_WATER_VOLUME,
-    K_MUD_VITALITY,
-    K_TOTAL_VOLUME,
-    K_RECIPE,
-    K_CELL_HUNGER,
-    K_INOCULATING_RECIPE,
-    K_INOCULATE_TIME,
-    K_OUTPUT_GAS_ID,
-    K_OUTPUT_GAS_VOLUME,
-    K_OUTPUT_GAS_MAX_VOLUME,
-    K_OUTPUT_FLUID_ID,
-    K_OUTPUT_FLUID_VOLUME,
-    K_OUTPUT_FLUID_MAX_VOLUME,
-    K_GAS_PRODUCE_SPEED,
-    K_FLUID_PRODUCE_SPEED,
-    K_MUD_THICKNESS,
-    STORE_RF_MAX,
-    POOL_MAX_VOLUME,
-    spec_recipes,
-    FermenterRecipe,
-)
-from .define import MachinePanelUIProxy, MAIN_PATH
+
+from .define import MAIN_PATH, MachinePanelUIProxy
 from .utils import (
-    UpdatePowerBar,
-    UpdateImageTransformColor,
     FluidDisplayer,
-    GetStructureLackedBlocks,
-    GetStructureLackedBlockPoses,
     FormatStructureLackedBlockPoses,
+    GetStructureLackedBlockPoses,
+    GetStructureLackedBlocks,
+    UpdateImageTransformColor,
+    UpdatePowerBar,
 )
 
 FLAG_OK = 0

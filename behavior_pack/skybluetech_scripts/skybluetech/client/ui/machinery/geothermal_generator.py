@@ -1,24 +1,25 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF,
     FluidSlotClient,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.geothermal_generator import (
     K_BURN_TICKS_LEFT,
-    STORE_RF_MAX,
     MAX_LAVA_VOLUME,
     MAX_WATER_VOLUME,
     ONCE_BURNING_TICKS,
+    STORE_RF_MAX,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
 from ..machinery_extra_pages import (
     CableSettingsPageIndirectional,
     PipeSettingsPageIndirectional,
 )
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
-from .utils import UpdatePowerBar, UpdateFlame, FluidDisplayer
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
+from .utils import FluidDisplayer, UpdateFlame, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 FLUID_LAVA_PATH = MAIN_PATH / "lava_display"

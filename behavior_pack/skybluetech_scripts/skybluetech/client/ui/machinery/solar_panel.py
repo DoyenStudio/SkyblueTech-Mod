@@ -1,15 +1,16 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
 from skybluetech_scripts.skybluetech.common.machinery_def.solar_panel import (
     K_LIGHT_LEVEL,
     K_OUTPUT_POWER,
     STORE_RF_MAX,
 )
-from .define import MachinePanelUIProxy, MAIN_PATH
-from .utils import UpdatePowerBar, UpdateGenericProgressT2B
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
+from .define import MAIN_PATH, MachinePanelUIProxy
+from .utils import UpdateGenericProgressT2B, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 SUN_PATH = MAIN_PATH / "progress"

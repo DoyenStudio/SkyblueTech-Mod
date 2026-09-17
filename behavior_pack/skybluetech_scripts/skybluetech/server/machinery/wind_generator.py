@@ -38,7 +38,6 @@ from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
 from .pool import GetMachineStrict
 from .utils.transmitter_conn import TransmitterConn
 
-
 TCON = TransmitterConn(wire=True)
 
 block_sync = BlockSync(Machinery.WIND_GENERATOR, side=BlockSync.SIDE_SERVER)

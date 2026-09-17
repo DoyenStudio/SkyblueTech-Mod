@@ -1,11 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl
 from skybluetech_scripts.skybluetech.common.events.machinery.electric_crafter import (
     ElectricCrafterUpdateRecipe,
 )
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
     K_STORE_RF,
@@ -13,8 +9,13 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
 from skybluetech_scripts.skybluetech.common.machinery_def.electric_crafter import (
     STORE_RF_MAX,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
+
 from ..machinery_extra_pages import CableSettingsPageIndirectional
-from .define_ex import MachinePanelUIProxyEx, MAIN_PATH
+from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdateGenericProgressL2R, UpdatePowerBar
 
 PROGRESS_PATH = MAIN_PATH / "progress"

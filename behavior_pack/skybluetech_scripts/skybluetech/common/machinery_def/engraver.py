@@ -11,10 +11,10 @@ recipes = RecipesCollection(
     id_enum.Machinery.ENGRAVER,
     EngraverRecipe(
         {
-            0: Input("minecraft:gold_ingot"),
+            0: Input("minecraft:gold_ingot", count=2),
             1: Input(id_enum.ControlCircuit.BASIC),
             2: Input(id_enum.ROUGH_RUBBER),
-            3: Input("minecraft:copper_ingot"),
+            3: Input("minecraft:copper_ingot", count=4),
         },
         fluid_input=Input(id_enum.CommonLiquid.DISTILLED_WATER, 200),
         output_item_id=id_enum.ControlCircuit.ADVANCED,
@@ -28,7 +28,7 @@ recipes = RecipesCollection(
             0: Input(id_enum.POLISHED_DIAMOND),
             1: Input(id_enum.ControlCircuit.ADVANCED),
             2: Input(id_enum.ROUGH_RUBBER),
-            3: Input(id_enum.Ingots.PLATINUM),
+            3: Input(id_enum.Ingots.PLATINUM, count=2),
         },
         fluid_input=Input(id_enum.CommonGas.NITROGEN, 420),
         output_item_id=id_enum.ControlCircuit.PROFESSIONAL,

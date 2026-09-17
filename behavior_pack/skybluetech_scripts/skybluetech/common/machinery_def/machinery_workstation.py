@@ -513,23 +513,23 @@ recipes = RecipesCollection(
         8,
     ),
     # lexical transmuter
-        MRecipe(
-            {
-                0: Input(tag_enum.PlateTag.TIN, is_tag=True),
-                1: Input("minecraft:enchanting_table"),
-                2: Input(tag_enum.PlateTag.TIN, is_tag=True),
-                3: Input(id_enum.Cable.STEEL),
-                4: Input(id_enum.MACHINERY_FRAME),
-                5: Input(id_enum.Cable.STEEL),
-                6: Input("minecraft:redstone_block"),
-                7: Input(id_enum.SKYBLUE_CORE),
-                8: Input("minecraft:lapis_block"),
-            },
-            id_enum.Machinery.LEXICAL_TRANSMUTER,
-            MRecipe.LEVEL_IRON,
-            MRecipe.LEVEL_IRON,
-            8,
-        ),
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            1: Input("minecraft:enchanting_table"),
+            2: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            3: Input(id_enum.Cable.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.Cable.STEEL),
+            6: Input("minecraft:redstone_block"),
+            7: Input(id_enum.SKYBLUE_CORE),
+            8: Input("minecraft:lapis_block"),
+        },
+        id_enum.Machinery.LEXICAL_TRANSMUTER,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # macerator
     MRecipe(
         {
@@ -796,6 +796,74 @@ recipes = RecipesCollection(
         id_enum.Machinery.THERMAL_GENERATOR,
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
+        8,
+    ),
+    # vacuum freezer structure
+    MRecipe(
+        {
+            0: Input(id_enum.Tank.STEEL),
+            1: Input(id_enum.AIR_COMPRESS_UNIT),
+            2: Input(id_enum.Tank.STEEL),
+            3: Input(id_enum.HEAT_EXCHANGER),
+            4: Input(id_enum.VacuumFreezer.FRAME),
+            5: Input(id_enum.HEAT_EXCHANGER),
+            6: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+        },
+        id_enum.VacuumFreezer.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
+    ),
+    MRecipe(
+        {
+            1: Input(id_enum.Pipe.BRONZE),
+            4: Input(id_enum.VacuumFreezer.FRAME),
+        },
+        id_enum.VacuumFreezer.IO_FLUID1,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            4: Input(id_enum.VacuumFreezer.FRAME),
+            7: Input(id_enum.Pipe.BRONZE),
+        },
+        id_enum.VacuumFreezer.IO_FLUID2,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            1: Input(id_enum.Cable.STEEL),
+            4: Input(id_enum.VacuumFreezer.FRAME),
+        },
+        id_enum.VacuumFreezer.IO_ITEM1,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            4: Input(id_enum.VacuumFreezer.FRAME),
+            7: Input(id_enum.Cable.STEEL),
+        },
+        id_enum.VacuumFreezer.IO_ITEM2,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            1: Input(id_enum.Wire.SILVER_INSULATED),
+            4: Input(id_enum.VacuumFreezer.FRAME),
+        },
+        id_enum.VacuumFreezer.IO_ENERGY,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
         8,
     ),
     # wind generator

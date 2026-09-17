@@ -61,7 +61,18 @@ all_researchings = RecipesCollection(
         24,
         id_enum.Upgraders.GENERIC_EXPANSION_UPGRADER,
     ),
-    #
+    IndustrialResearchingRecipe(
+        [
+            Input("minecraft:redstone", 32),
+            Input("minecraft:phantom_membrane", 8),
+            Input(id_enum.Sticks.STEEL, 24),
+            Input(id_enum.Sticks.PLATINUM, 2),
+            Input(id_enum.Sticks.COPPER, 2),
+            Input(id_enum.ControlCircuit.BASIC, 2),
+        ],
+        0,
+        id_enum.Upgraders.SPEC_NITROGEN_EXTRACTION,
+    ),
     IndustrialResearchingRecipe(
         [
             Input("minecraft:quartz", 45),

@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:vacuum_freezer_frame_craft"
+        },
+        "key": {
+            "C": {
+                "item": "skybluetech:aluminum_plate"
+            },
+            "E": {
+                "item": "skybluetech:light_skyblue_ingot"
+            }
+        },
+        "pattern": [
+            "ECE",
+            "C C",
+            "ECE"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:vacuum_freezer_frame"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

@@ -89,7 +89,18 @@ recipes = TemplateAssemblerRecipesCollection(
         power_cost=60,
         tick_duration=120,
     ),
-    #
+    TemplateAssemblerRecipe(
+        {
+            0: Input(id_enum.Upgraders.EMPTY, 1),
+            1: Input("minecraft:quartz_slab", 4),
+            2: Input("minecraft:phantom_membrane", 2),
+            3: Input(tag_enum.StickTag.STEEL, 8, is_tag=True),
+            4: Input("minecraft:lapis_lazuli", 4),
+        },
+        id_enum.Upgraders.SPEC_NITROGEN_EXTRACTION,
+        power_cost=60,
+        tick_duration=640,
+    ),
     TemplateAssemblerRecipe(
         {
             0: Input(id_enum.ObjectUpgraders.PLATE_COMMON, 1),
@@ -185,9 +196,7 @@ def _init_cached_graphs(world_seed):
     # 反查表只收录成型机有配方的目标；GetTemplateGraph 自身会保证这些图案
     # 已经和所有注册模板目标避让过碰撞。
     for template_item_id in recipes.recipes_mapping:
-        graphs[tuple(GetTemplateGraph(template_item_id, world_seed))] = (
-            template_item_id
-        )
+        graphs[tuple(GetTemplateGraph(template_item_id, world_seed))] = template_item_id
     _cached_graphs[world_seed] = graphs
 
 

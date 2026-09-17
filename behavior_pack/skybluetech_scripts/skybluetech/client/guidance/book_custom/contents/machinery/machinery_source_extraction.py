@@ -1,21 +1,23 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.client.ui.recipe_checker import CheckRecipe
 from skybluetech_scripts.skybluetech.common.define import id_enum
 from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill import (
     STRUCTURE_PALETTE,
 )
-from skybluetech_scripts.skybluetech.client.ui.recipe_checker import CheckRecipe
+
 from ...define import (
-    TextPage,
     MachineryWorkstationRecipePage,
     MultiBlockStructureRenderPage,
     PageGroup,
+    TextPage,
+    UnfinishedItemName,
 )
 
 air_compressor = PageGroup(
     "air_compressor_description",
     [
         TextPage(
-            "空气压缩机",
+            UnfinishedItemName(id_enum.Machinery.AIR_COMPRESSOR),
             '空气压缩机可以吸收并压缩<text color="§2" t="本维度的空气">。\n\n目前仅能在主世界收集<text color="§9" t="压缩空气">。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.AIR_COMPRESSOR),
@@ -53,7 +55,7 @@ digger = PageGroup(
     "digger_description",
     [
         TextPage(
-            "电力挖掘钻",
+            UnfinishedItemName(id_enum.Machinery.DIGGER),
             '电力挖掘钻可消耗能量挖掘其钻尖所指向的方块。\n\n建议从侧面输入能量， 背对钻头的一面提取物品。\n\n<text color="§8" t="将两个面对面的钻头通电试试看？">',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.DIGGER),
@@ -64,7 +66,7 @@ farming_station = PageGroup(
     "farming_station_description",
     [
         TextPage(
-            "种植站",
+            UnfinishedItemName(id_enum.Machinery.FARMING_STATION),
             '种植站可<text color="§2" t="自动收获并补种">其上方 5x5 范围内耕地上的作物， 你需要把种植站放在耕地泥土方块的下方。\n支持我的世界原版、 棱花农夫乐事以及 MI4C 神秘农业等的作物。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.FARMING_STATION),
@@ -75,7 +77,7 @@ forester = PageGroup(
     "forester_description",
     [
         TextPage(
-            "伐木机",
+            UnfinishedItemName(id_enum.Machinery.FORESTER),  
             '伐木机可以<text color="§2" t="自动砍伐">上方 17x17 范围内的树木且<text color="§2" t="自动补种树苗">。兼容绝大部分模组的树木。\n\n你可以在伐木机上方 5x1x5 的范围内填满泥土后再往上一格种满树苗， 然后给伐木机通电以等待收成。\n\n如果安装了<text color="§5" t="强化： 范围扩增">， 砍伐范围会迅速提升至 41x41！',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.FORESTER),
@@ -86,7 +88,7 @@ mini_miner = PageGroup(
     "mini_miner_description",
     [
         TextPage(
-            "迷你采矿机",
+            UnfinishedItemName(id_enum.Machinery.MINI_MINER),
             '迷你采矿机是最简单的<text color="§3" t="采矿机">， 不需要搭建多方块结构，只需要输入能量和润滑油即可开始采矿。\n\n它可以对下方 <text color="§9" t="16x64x16"> 的范围进行采矿。 对应地， 它无法进行更高级的采矿设置， 如接受时运或精准采集设置。',
         ),
         TextPage(
@@ -101,7 +103,7 @@ pump = PageGroup(
     "pump_description",
     [
         TextPage(
-            "电动泵",
+            UnfinishedItemName(id_enum.Machinery.PUMP),
             '电动泵消耗能量<text color="§9" t="抽取">其下方的流体方块的流体源， 可以使用流体管道导出。\n\n泵会寻找 16 格以内的的<text color="§3" t="流体源">； 如果安装了<text color="§5" t="强化： 范围扩增">， 搜寻范围会变为原来的 4 倍！',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.PUMP),

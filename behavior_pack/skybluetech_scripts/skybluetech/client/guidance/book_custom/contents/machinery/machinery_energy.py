@@ -3,11 +3,13 @@ from skybluetech_scripts.skybluetech.common.define import id_enum
 from skybluetech_scripts.skybluetech.common.machinery_def.battery_matrix import (
     STRUCTURE_PALETTE,
 )
+
 from ...define import (
-    TextPage,
     MachineryWorkstationRecipePage,
     MultiBlockStructureRenderPage,
     PageGroup,
+    TextPage,
+    UnfinishedItemName,
 )
 
 battery_matrix = PageGroup(
@@ -32,7 +34,7 @@ charger = PageGroup(
     "charger_description",
     [
         TextPage(
-            "充能台",
+            UnfinishedItemName(id_enum.Machinery.CHARGER),
             '将需要充能的储能物品如<text color="§2" t="电池">和<text color="§9" t="装备">放入接入了电源的充能台内， 可以为其充能。 充能完成的道具会直接弹出到右边的输出槽中。\n\n储能装备需要充能后才可使用。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.CHARGER),
@@ -43,7 +45,7 @@ creative_power_acceptor = PageGroup(
     "creative_power_acceptor_description",
     [
         TextPage(
-            "虚空放电器",
+            UnfinishedItemName(id_enum.Machinery.CREATIVE_POWER_ACCEPTOR),
             '<text color="§c" t="本物品仅存于创造模式。">\n虚空放电器会将输入的能量<text color="§4" t="全部排入虚空">， 同时也会显示实时输入功率。 你可以借此在创造模式下探查某个发电机的输出功率。 \n\n<text color="§4" t="注意："> 因为其具有无限的输入功率， 所以与其他机器并联接入电网时请调低虚空放电器的优先级， 以避免其他机器无法获得能源。',
         )
     ],
@@ -54,7 +56,7 @@ rf_repeater_plant = PageGroup(
     "rf_repeater_plant_description",
     [
         TextPage(
-            "能源中继塔",
+            UnfinishedItemName(id_enum.Machinery.RF_REPEATER_PLANT),
             "要进行远距离传输能源， 能源中继塔是个不错的选择。\n\n能源中继塔可自动连接摆放在其基座旁边的能量线缆。",
         ),
         TextPage(

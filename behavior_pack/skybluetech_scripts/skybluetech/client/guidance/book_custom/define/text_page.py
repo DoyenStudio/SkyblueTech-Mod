@@ -1,10 +1,12 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.tooldelta.extensions.richer_text import (
     RicherTextCtrl,
     RicherTextOpt,
 )
+from skybluetech_scripts.tooldelta.ui import UBaseCtrl
+
 from .base_page import BasePage
+from .utils import UnfinishedItemName, finish_name
 
 if 0>1:
     import typing
@@ -14,7 +16,7 @@ class TextPage(BasePage):
     ctrl_def_name = "GuidanceLib.text_page"
 
     def __init__(self, title, content, hyperlink_cbs=None):
-        # type: (str, str, dict[str, typing.Callable[[dict], typing.Any]] | None) -> None
+        # type: (str | UnfinishedItemName, str, dict[str, typing.Callable[[dict], typing.Any]] | None) -> None
         BasePage.__init__(self)
         self.title = title
         self.content = content
@@ -24,7 +26,7 @@ class TextPage(BasePage):
     def RenderInit(self, ctrl):
         # type: (UBaseCtrl) -> None
         BasePage.RenderInit(self, ctrl)
-        ctrl["title_label"].asLabel().SetText(self.title)
+        ctrl["title_label"].asLabel().SetText(finish_name(self.title))
         async_load = False
         content_ctrl = ctrl["text_scroll"].asScrollView().GetContent()["content"]
         if not async_load:

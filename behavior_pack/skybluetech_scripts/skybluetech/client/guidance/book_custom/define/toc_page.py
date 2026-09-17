@@ -1,19 +1,28 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from .base_page import BasePage
 
-if 0>1:
+from .base_page import BasePage
+from .utils import UnfinishedItemName, finish_name
+
+if 0 > 1:
     import typing
+
     from .page_group import PageGroup
+
+
 
 
 class TOCPageSection(object):
     def __init__(self, icon_item_id, icon_item_aux, title, link_to, link_page_index=0):
-        # type: (str, int, str, PageGroup | typing.Callable[[], PageGroup], int) -> None
+        # type: (str, int, str | None, PageGroup | typing.Callable[[], PageGroup], int) -> None
         self.icon_item_id = icon_item_id
         self.icon_item_aux = icon_item_aux
-        self.title = title
+        self.title = (
+            title
+            if title is not None
+            else UnfinishedItemName(icon_item_id)
+        )
         self.link_to = link_to
         self.link_page_index = link_page_index
 
@@ -58,7 +67,7 @@ class TOCPage(BasePage):
                 e["icon_item_renderer"].asItemRenderer().SetUiItem(
                     Item(section.icon_item_id, section.icon_item_aux)
                 )
-                e["label"].asLabel().SetText(section.title)
+                e["label"].asLabel().SetText(finish_name(section.title))
                 e["click_btn"].asButton().SetCallback(get_handler(i))
 
         grid.SetDimensionAndCall((1, len(self.sections)), after)

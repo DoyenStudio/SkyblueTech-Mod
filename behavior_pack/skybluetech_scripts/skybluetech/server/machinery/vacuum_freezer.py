@@ -285,13 +285,14 @@ class VacuumFreezer(
         recipe = self.current_recipe
         if not isinstance(recipe, VacuumFreezerRecipe):
             return False
-        t_range = recipe.max_temperature - recipe.fit_temperature
-        if self.kelvin > recipe.max_temperature:
-            kelvin_over = self.kelvin - recipe.max_temperature
-            reduce = kelvin_over * 1.0 / t_range
-            self.ticks_left = min(recipe.max_tick_duration, self.ticks_left + reduce)
+        # 速率是带符号的: 温度高于配方的 `max_temperature` 时为负, 此时进度倒退, 配方也不
+        # 放热(没在推进, 就没有液化热要制冷机搬)。倒退与推进共用同一条温度曲线, 所以温度越
+        # 贴近 `max_temperature` 退得越慢, 不会像"超出即清零"那样抖一下就损失整份进度 ——
+        # 见 `VacuumFreezerRecipe.GetSignedRateAtKelvin`。
+        reduce = recipe.GetSignedRateAtKelvin(self.kelvin)
+        if reduce < 0:
+            self.ticks_left = min(recipe.max_tick_duration, self.ticks_left - reduce)
         else:
-            reduce = recipe.GetRateAtKelvin(self.kelvin)
             self.ticks_left = max(0, self.ticks_left - reduce)
             self.heat_value += recipe.tick_heat_value_add * reduce
         if self.ticks_left <= 0:

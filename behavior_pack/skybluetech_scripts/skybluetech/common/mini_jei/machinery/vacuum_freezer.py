@@ -9,9 +9,9 @@ class VacuumFreezerRecipe(MachineRecipe):
 
     # 这类配方比普通机器配方多两个概念, 都是"温度"带来的:
 
-    #     - 温度窗口: 高于 `max_temperature` 时配方完全不推进(进度还会被顶回去),
-    #       相当于"还没冷到能液化"; 低于 `fit_temperature` 时按最快速度推进, 中间
-    #       则按比例线性变慢。
+    #     - 温度窗口: 高于 `max_temperature` 时配方不但不推进, 进度还会按同一条温度
+    #       曲线倒退(温度越高退得越快, 最快 1 tick 退掉 1 tick 的进度), 相当于"还没冷
+    #       到能液化"; 低于 `fit_temperature` 时按最快速度推进, 中间则按比例线性变慢。
     #     - 自身放热: 每推进一点就往机器热值里加 `tick_heat_value_add`(按推进速率
     #       折扣), 这份热量不是白给的, 由机器的制冷机搬走, 温度越低搬走它越费电。
 
@@ -62,17 +62,30 @@ class VacuumFreezerRecipe(MachineRecipe):
         # 返回本配方在温度 `kelvin`(K) 下的推进速率, 取值 0~1, 含义是"每 tick 能推进多少个
         # tick 的进度":
 
-        #     - 高于 `max_temperature`: 0, 完全不推进
+        #     - 高于 `max_temperature`: 0, 完全不推进(进度此时是倒退的, 见 `GetSignedRateAtKelvin`)
         #     - 低于 `fit_temperature`: 1, 按 `max_tick_duration` 的最快速度推进
         #     - 中间按温度线性插值, 温度每高 1K 就慢一点
 
-        # 机器端 `ProcessOnce` 按它推进进度, 客户端 UI 的"配方效率"读数也用它, 两处共用同一
-        # 个公式, 免得界面数字和实际推进速度对不上。
-        if kelvin > self.max_temperature:
-            return 0.0
-        return (self.max_temperature - max(kelvin, self.fit_temperature)) / (
+        # 客户端 UI 的"配方效率"读数用它, 那个读数问的是"离最适温度有多近", 负速率没法显示,
+        # 所以这里只截取温度曲线的正半轴; 机器端推进进度用的是带符号的原曲线。
+        return max(0.0, self.GetSignedRateAtKelvin(kelvin))
+
+    def GetSignedRateAtKelvin(self, kelvin):
+        # type: (float) -> float
+        # 带符号的推进速率, 取值 -1~1, 正反向共用同一条直线:
+
+        #     - 低于 `fit_temperature`: 1, 按 `max_tick_duration` 的最快速度推进
+        #     - 等于 `max_temperature`: 0, 停在原地
+        #     - 高于 `max_temperature`: 负值, 进度以该速率倒退
+
+        # 两个方向都在满速处截断: 超出窗口边界的部分按窗口宽度 `t_range` 线性外推, 推满一个
+        # 窗口宽度就是满速, 再往外不再变快。所以倒退最坏也只是"1 tick 退 1 tick 的进度",
+        # 清空一份进度至少要 `max_tick_duration` 个 tick; 温度越贴近 `max_temperature` 退得越慢,
+        # 不会像"超出即清零"那样抖一下就损失整份进度。
+        rate = (self.max_temperature - kelvin) / (
             self.max_temperature - self.fit_temperature
         )
+        return min(max(rate, -1.0), 1.0)
 
     def Marshal(self):
         return {

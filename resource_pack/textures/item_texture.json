@@ -274,6 +274,9 @@
         "skybluetech:lapis_dust": {
             "textures": "textures/items/dusts/lapis_dust"
         },
+        "skybluetech:laser_probe": {
+            "textures": "textures/items/laser_probe"
+        },
         "skybluetech:lead_dust": {
             "textures": "textures/items/dusts/lead_dust"
         },

@@ -1,0 +1,33 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:laser_probe_craft"
+        },
+        "key": {
+            "A": {
+                "item": "skybluetech:copper_stick"
+            },
+            "B": {
+                "item": "skybluetech:bronze_plate"
+            },
+            "C": {
+                "item": "skybluetech:redstoneflux_core"
+            },
+            "D": {
+                "item": "minecraft:glass_pane"
+            }
+        },
+        "pattern": [
+            "ABB",
+            "BCD",
+            "ABB"
+        ],
+        "result": {
+            "item": "skybluetech:laser_probe"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

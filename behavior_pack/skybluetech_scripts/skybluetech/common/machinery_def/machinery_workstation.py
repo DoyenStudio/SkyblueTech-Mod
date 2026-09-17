@@ -301,6 +301,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         8,
     ),
+    # engraver
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            1: Input(id_enum.LASER_PROBE),
+            2: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            3: Input(id_enum.LASER_PROBE),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.LASER_PROBE),
+            6: Input(id_enum.Coils.COPPER),
+            7: Input(id_enum.REDSTONEFLUX_CORE),
+            8: Input(id_enum.ControlCircuit.BASIC),
+        },
+        id_enum.Machinery.ENGRAVER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
     # farming station
     MRecipe(
         {

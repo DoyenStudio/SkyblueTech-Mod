@@ -90,6 +90,9 @@ class RecipesCollection(Generic[RT]):
             }
         return self._recipes_mapping.get(collection_key)
 
+    def copy(self):
+        return RecipesCollection(self.collection_name, *self._recipes)
+
     @classmethod
     def get_collection(cls, collection_name):
         # type: (str) -> RecipesCollection[RecipeBase]

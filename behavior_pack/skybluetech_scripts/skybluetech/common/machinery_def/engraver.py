@@ -31,7 +31,7 @@ recipes = RecipesCollection(
             3: Input(id_enum.Ingots.PLATINUM),
         },
         fluid_input=Input(id_enum.CommonGas.NITROGEN, 420),
-        output_item_id=id_enum.ControlCircuit.ADVANCED,
+        output_item_id=id_enum.ControlCircuit.PROFESSIONAL,
         output_count=1,
         power_cost=120,
         tick_duration=320,

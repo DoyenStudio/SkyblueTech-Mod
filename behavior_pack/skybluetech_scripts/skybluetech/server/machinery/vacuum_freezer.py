@@ -4,6 +4,7 @@ import math
 from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Upgraders
 from ...common.define.id_enum import VacuumFreezer as ids
 from ...common.events.machinery.vacuum_freezer import VacuumFreezerSubmitModifiesEvent
 from ...common.machinery_def.vacuum_freezer import (
@@ -103,12 +104,19 @@ class VacuumFreezer(
     heat_capacity = CHAMBER_HEAT_CAPACITY
     # 本机热容远大于默认值, 所以搬运同样的温区要耗多得多的电, 见 CHAMBER_HEAT_CAPACITY
     recipes = Recipes  # pyright: ignore[reportAssignmentType]
-    allow_upgraders = Processor.allow_upgraders | frozenset(
-        upgrader for upgrader, _ in RECIPES_NEED_UPGRADERS
-    )
+    allow_upgraders = (
+        Processor.allow_upgraders - {Upgraders.BASIC_SPEED_UPGRADER}
+    ) | frozenset(upgrader for upgrader, _ in RECIPES_NEED_UPGRADERS)
     # 只有配方表里真的标了 `extra_upgrader_id` 的升级卡才允许插进来。现在
-    # `RECIPES_NEED_UPGRADERS` 是空的, 所以与基类等价; 以后哪条配方标了卡, 那张卡就
-    # 自动可以插, 不用再回来改这里。
+    # `RECIPES_NEED_UPGRADERS` 是空的, 所以等价于"基础升级卡里去掉速度卡"。
+
+    # 不收速度卡: 本机的推进速率完全由配方自带的温度曲线给出(`ProcessOnce` 不经过
+    # `UpgradeControl` 的 `reduce_ticks`), 速度卡一点加速都给不了; 但它同时命中
+    # `POWER_POSITIVE`, 会把 `_power_cost_relative` 抬到 1.7, 也就是制冷电费多付 70%。
+    # 插进去纯亏, 与其让玩家踩这个坑, 不如不收。
+
+    # 能量卡照收: 制冷机的电费走 `UpgradeControl.ReducePower`, 会被 `_power_cost_relative`
+    # 缩放, 所以能量卡确实压得低本机的制冷单价。
     process_item = True
     process_fluid = True
     input_slots = (0,)

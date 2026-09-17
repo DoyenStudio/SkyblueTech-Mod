@@ -59,6 +59,12 @@ machinery_production_toc = PageGroup(
                     machinery_production.electric_heater,
                 ),
                 TOCPageSection(
+                    id_enum.Machinery.ENGRAVER,
+                    0,
+                    "蚀刻机",
+                    machinery_production.engraver,
+                ),
+                TOCPageSection(
                     id_enum.Machinery.FLUID_CONDENSER,
                     0,
                     "流体冷却机",
@@ -312,6 +318,12 @@ machinery_misc_toc = PageGroup(
                     "悬浮文本投影器",
                     machinery_misc.hover_text_displayer,
                 ),
+                TOCPageSection(
+                    id_enum.Machinery.LEXICAL_TRANSMUTER,
+                    0,
+                    "矿词转换机",
+                    machinery_misc.lexical_transmuter,
+                ),
             ],
         ),
     ],
@@ -363,6 +375,12 @@ machinery_logistics_toc = PageGroup(
                     0,
                     "分流器",
                     machinery_logistics.fluid_splitter,
+                ),
+                TOCPageSection(
+                    id_enum.Machinery.ITEM_SPREADER,
+                    0,
+                    "物品分发机",
+                    machinery_logistics.item_spreader,
                 ),
             ],
         ),

@@ -31,3 +31,14 @@ hover_text_displayer = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.HOVER_TEXT_DISPLAYER),
     ],
 )
+
+lexical_transmuter = PageGroup(
+    "lexical_transmuter_description",
+    [
+        TextPage(
+            "矿词转换机",
+            '矿词转换机使不同模组间相同物品名或 ID 的物品得以相互转换， 例如本模组和其他科技模组的锡锭。\n将目标物品放入模版物品槽（右上角）， 再将需要转换的物品放入输入槽（左下角）， 即可瞬间转换为目标物品。 整个过程<text color="§2" t="无需任何能量供应">。\n\n<text color="§c" t="不支持转换带 NBT 的物品，"> 如工具和武器类物品。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.LEXICAL_TRANSMUTER),
+    ],
+)

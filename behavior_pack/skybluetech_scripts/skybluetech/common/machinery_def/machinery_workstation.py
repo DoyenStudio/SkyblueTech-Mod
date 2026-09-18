@@ -676,6 +676,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # precision cutter
+        MRecipe(
+            {
+                0: Input(tag_enum.PlateTag.TIN, is_tag=True),
+                1: Input(id_enum.REDSTONEFLUX_CORE),
+                2: Input(tag_enum.PlateTag.TIN, is_tag=True),
+                3: Input(id_enum.ELECTRIC_MOTOR),
+                4: Input(id_enum.MACHINERY_FRAME),
+                5: Input(id_enum.ELECTRIC_MOTOR),
+                6: Input(id_enum.Coils.COPPER),
+                7: Input(id_enum.ControlCircuit.BASIC),
+                8: Input(id_enum.Coils.COPPER),
+            },
+            id_enum.Machinery.PRECISION_CUTTER,
+            MRecipe.LEVEL_IRON,
+            MRecipe.LEVEL_IRON,
+            16,
+        ),
     # pump
     MRecipe(
         {

@@ -1,27 +1,29 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType
+from skybluetech_scripts.tooldelta.api.client import (
+    GetItemFormattedHoverText,
+    GetItemHoverName,
+)
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.events.client import (
+    MouseWheelClientEvent,
+    OnKeyPressInGame,
+    ScreenSizeChangedClientEvent,
+)
+from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetAllItems
 from skybluetech_scripts.tooldelta.ui import (
     Binder,
     RegistToolDeltaScreen,
     ToolDeltaScreen,
     UIPath,
 )
-from skybluetech_scripts.tooldelta.events.client import (
-    MouseWheelClientEvent,
-    OnKeyPressInGame,
-    ScreenSizeChangedClientEvent,
-)
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.client import (
-    GetItemFormattedHoverText,
-    GetItemHoverName,
-)
-from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetAllItems
-from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType
-from .recipe_checker_ui import RecipeCheckerUI
 
-if 0>1:
-    from typing import Callable
+from .recipe_checker_ui import RecipeCheckerUI
+from .utils import RecipeCategoriesData, RecipePageData
+
+if 0 > 1:
+    import typing
 
 MAIN_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
@@ -121,7 +123,7 @@ class MiniJEIItemListUI(ToolDeltaScreen):
         self.item_id_aux_cache = ITEM_ID_AUX_CACHE
 
     def update_grid_capacity(self, after=None):
-        # type: (Callable[[], None] | None) -> None
+        # type: (typing.Callable[[], None] | None) -> None
         columns, _ = self.jei_items_grid.GetGridDimension()
         grid_panel_size_y = self.grid_panel.GetSize()[1]
         columns = max(1, int(columns))
@@ -198,14 +200,8 @@ class MiniJEIItemListUI(ToolDeltaScreen):
         return item_id_aux
 
     def PushRecipes(self, recipes, update=True):
-        # type: (dict[tuple[str, str], list], bool) -> RecipeCheckerUI | None
-        if not recipes:
-            return None
-        grouped_recipes = [
-            (recipe_icon_id, recipe_name, recipe_list)
-            for (recipe_icon_id, recipe_name), recipe_list in recipes.items()
-        ]
-        return RecipeCheckerUI.PushUI({"recipes": grouped_recipes})
+        # type: (RecipeCategoriesData, bool) -> RecipeCheckerUI | None
+        return RecipeCheckerUI.Display(recipes)
 
     def onClose(self, params):
         # type: (dict) -> None

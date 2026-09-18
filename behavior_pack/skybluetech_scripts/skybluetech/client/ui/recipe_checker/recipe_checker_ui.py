@@ -1,26 +1,30 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.ui import (
-    ToolDeltaScreen,
-    RegistToolDeltaScreen,
-    UIPath,
-    Binder,
-    UBaseCtrl,
+import math
+
+from skybluetech_scripts.skybluetech.client.mini_jei import RecipeRenderer
+from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType, RecipeBase
+from skybluetech_scripts.tooldelta.api.client import (
+    GetItemFormattedHoverText,
+    GetScreenSize,
 )
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import (
     MouseWheelClientEvent,
     OnKeyPressInGame,
     ScreenSizeChangedClientEvent,
 )
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.client import (
-    GetItemFormattedHoverText,
-    GetScreenSize,
+from skybluetech_scripts.tooldelta.ui import (
+    Binder,
+    RegistToolDeltaScreen,
+    ToolDeltaScreen,
+    UBaseCtrl,
+    UIPath,
 )
-from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType, RecipeBase
-from skybluetech_scripts.skybluetech.client.mini_jei import RecipeRenderer
+
 from .favourite_items import GetFavourites, favourite_items_idauxs
 from .render_utils import CreateDescBoard
+from .utils import RecipeCategoriesData, RecipePageData
 
 MAIN_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
@@ -36,12 +40,12 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.looking_category_index = 0
         self.inited = False
         self.recipe_ctrls = {}  # type: dict[UBaseCtrl, RecipeRenderer]
-        self.recipes_chain = [params["recipes"]] if params.get("recipes") else []  # type: list[list[tuple[str, str, list[RecipeBase]]]]
         self.update_ticks = 0
         self.current_page = 0
         self.category_index_start = 0
         self.recipes_per_page = 0
         self.total_pages_num = 0
+        self.recipes_chain = params.get("recipes") or []  # type: list[RecipeCategoriesData]
 
     def OnCreate(self):
         self.left_sections_grid = self.GetElement(
@@ -97,16 +101,12 @@ class RecipeCheckerUI(ToolDeltaScreen):
                 rcp.RenderUpdate(ctrl, self.update_ticks)
 
     def PushRecipes(self, recipes, update=True):
-        # type: (dict[tuple[str, str], list[RecipeBase]], bool) -> None
-        r = [
-            (recipe_icon_id, recipe_name, recipe)
-            for (recipe_icon_id, recipe_name), recipe in recipes.items()
-        ]
+        # type: (RecipeCategoriesData, bool) -> None
         if len(self.recipes_chain) > 64:
+            # <=64 pages
             self.recipes_chain.pop(4)
-        self.recipes_chain.append(r)
+        self.recipes_chain.append(recipes)
         if update:
-            self.recipes_per_page = 0
             self.update_all()
 
     def update_left_content_size(self):
@@ -133,45 +133,53 @@ class RecipeCheckerUI(ToolDeltaScreen):
 
     def update_recipe_categories(self):
         def after():
-            for i, (rcp_icon_id, _, _) in enumerate(
-                self.recipes_chain[-1][
+            for i, page_data in enumerate(
+                self.recipes_chain[-1].categories_data[
                     self.category_index_start : self.category_index_start + 8
                 ]
             ):
                 category_panel = self.left_sections_grid.GetGridItem(0, i)
                 category_panel["item_renderer"].asItemRenderer().SetUiItem(
-                    Item(rcp_icon_id)
+                    Item(page_data.icon_id)
                 )
                 if i + self.category_index_start == self.looking_category_index:
                     category_panel.SetLayer(3)
                 else:
                     category_panel.SetLayer(0)
 
-        if self.looking_category_index >= len(self.recipes_chain[-1]):
-            self.looking_category_index = 0
-        if self.category_index_start + 8 > len(self.recipes_chain[-1]):
-            self.category_index_start = 0
+        categories_data = self.recipes_chain[-1]
+        if categories_data.looking_category_index >= categories_data.categories_num():
+            categories_data.looking_category_index = 0
+        if categories_data.category_index_start + 8 > categories_data.categories_num():
+            categories_data.category_index_start = 0
+        self.looking_category_index = categories_data.looking_category_index
+        self.category_index_start = categories_data.category_index_start
         self.left_sections_grid.SetDimensionAndCall(
-            (1, min(8, len(self.recipes_chain[-1]))), after
+            (1, min(8, categories_data.categories_num())), after
         )
-        self.current_page = 0
-        self.total_pages_num = 0
-        self.recipes_per_page = 0
-        if len(self.recipes_chain) > 0:
-            self.category_prev_btn.SetVisible(self.category_index_start > 0)
-            self.category_next_btn.SetVisible(
-                self.category_index_start + 8 < len(self.recipes_chain[-1])
-            )
+        self.category_prev_btn.SetVisible(self.category_index_start > 0)
+        self.category_next_btn.SetVisible(
+            self.category_index_start + 8 < categories_data.categories_num()
+        )
+
+    def current_page_data(self):
+        # type: () -> RecipePageData
+        return self.recipes_chain[-1].categories_data[self.looking_category_index]
 
     def update_current_recipe_page(self):
-        _, rcp_title, rcps = self.recipes_chain[-1][self.looking_category_index]
+        page_data = self.current_page_data()
+        self.current_page = page_data.get_page()
+        self.total_pages_num = page_data.total_pages_num
+        self.recipes_per_page = page_data.recipes_per_page
         for ctrl, recipe_renderer in self.recipe_ctrls.items():
             recipe_renderer.DeRender(ctrl)
             ctrl.Remove()
         self.recipe_ctrls.clear()
         display_max_sizey = self.recipes_display.GetSize()[1]
         i = -1
-        for i, rcp in enumerate(rcps[self.current_page * self.recipes_per_page :]):
+        for i, rcp in enumerate(
+            page_data.recipes[self.current_page * self.recipes_per_page :]
+        ):
             rcp_renderer_cls = rcp.GetRenderer()
             if rcp_renderer_cls is None:
                 continue
@@ -187,12 +195,18 @@ class RecipeCheckerUI(ToolDeltaScreen):
             self.recipe_ctrls[elem] = rcp_renderer
             if size_y * (i + 2) > display_max_sizey:
                 break
-        if self.total_pages_num == 0:
-            self.total_pages_num = int(round(float(len(rcps)) / (i + 1)))
         if self.recipes_per_page == 0:
             self.recipes_per_page = i + 1
+            page_data.recipes_per_page = self.recipes_per_page
+        if self.total_pages_num == 0:
+            per_page = max(1, self.recipes_per_page)
+            self.total_pages_num = int(
+                math.ceil(float(len(page_data.recipes)) / per_page)
+            )
+            page_data.total_pages_num = self.total_pages_num
         self.title.SetText(
-            "%s§f %d/%d" % (rcp_title, self.current_page + 1, self.total_pages_num)
+            "%s§f %d/%d"
+            % (page_data.recipe_title, self.current_page + 1, self.total_pages_num)
         )
 
     def onClose(self, params=None):
@@ -203,30 +217,43 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.update_all()
 
     def onPrevPage(self, params=None):
-        if self.total_pages_num <= 1:
+        page_data = self.current_page_data()
+        if page_data.total_pages_num <= 1:
             return
-        self.current_page = (self.current_page - 1) % self.total_pages_num
+        page_data.set_page((page_data.get_page() - 1) % page_data.total_pages_num)
         self.update_current_recipe_page()
 
     def onNextPage(self, params=None):
-        if self.total_pages_num <= 1:
+        page_data = self.current_page_data()
+        if page_data.total_pages_num <= 1:
             return
-        self.current_page = (self.current_page + 1) % self.total_pages_num
+        page_data.set_page((page_data.get_page() + 1) % page_data.total_pages_num)
         self.update_current_recipe_page()
 
     def onCategoryPrev(self, params=None):
-        categories = len(self.recipes_chain[-1])
-        self.category_index_start = (self.category_index_start - 1) % categories
-        if self.category_index_start + 8 > categories:
-            self.category_index_start = max(0, categories - 8)
+        categories_data = self.recipes_chain[-1]
+        categories = categories_data.categories_num()
+        index_start = (categories_data.category_index_start - 1) % categories
+        if index_start + 8 > categories:
+            index_start = max(0, categories - 8)
+        categories_data.category_index_start = index_start
         self.update_recipe_categories()
 
     def onCategoryNext(self, params=None):
-        categories = len(self.recipes_chain[-1])
-        self.category_index_start = (self.category_index_start + 1) % categories
-        if self.category_index_start + 8 > categories:
-            self.category_index_start = max(0, categories - 8)
+        categories_data = self.recipes_chain[-1]
+        categories = categories_data.categories_num()
+        index_start = (categories_data.category_index_start + 1) % categories
+        if index_start + 8 > categories:
+            index_start = max(0, categories - 8)
+        categories_data.category_index_start = index_start
         self.update_recipe_categories()
+
+    @classmethod
+    def Display(
+        cls,
+        recipes,  # type: RecipeCategoriesData
+    ):
+        return cls.PushUI(params={"recipes": [recipes]})
 
     @ToolDeltaScreen.Listen(OnKeyPressInGame)
     def onKeyPress(self, event):
@@ -253,8 +280,9 @@ class RecipeCheckerUI(ToolDeltaScreen):
         if not self._activated or params["TouchEvent"] != 0:
             return
         click_index = params["#collection_index"] + self.category_index_start
-        if self.looking_category_index != click_index:
-            self.looking_category_index = click_index
+        categories_data = self.recipes_chain[-1]
+        if categories_data.looking_category_index != click_index:
+            categories_data.looking_category_index = click_index
             self.update_all()
         else:
             x, y = griditem.GetRootPos()
@@ -292,7 +320,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
         return favourite_items_idauxs[idx]
 
     @Binder.binding(
-        Binder.BF_ButtonClickUp,
+        Binder.BF_ButtonClick,
         "#RecipeCheckerUI.favourite_item_select",
     )
     def onSelectFavouriteItem(self, params):

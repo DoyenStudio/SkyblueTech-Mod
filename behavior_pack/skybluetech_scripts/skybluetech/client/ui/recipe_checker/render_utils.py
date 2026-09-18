@@ -1,16 +1,16 @@
 # coding=utf-8
-import time
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from skybluetech_scripts.tooldelta.api.client.item import (
-    GetItemFormattedHoverText,
-    GetItemHoverName,
-)
 from skybluetech_scripts.skybluetech.common.mini_jei.core.define import (
     CategoryType,
     RecipeBase,
 )
+from skybluetech_scripts.tooldelta.api.client.item import (
+    GetItemFormattedHoverText,
+    GetItemHoverName,
+)
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
+from .utils import RecipeCategoriesData, RecipePageData
 
 DESC_BOARD_KEY = "jei_desc_board"
 
@@ -144,11 +144,21 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
         ).append(recipe)
 
     def on_check_src(_):
-        ui_node.PushRecipes(item_src_recipes)
+        ui_node.PushRecipes(
+            RecipeCategoriesData([
+                RecipePageData(icon_id, title, recipes)
+                for (icon_id, title), recipes in item_src_recipes.items()
+            ])
+        )
         ui_node._vars.pop(DESC_BOARD_KEY).Remove()
 
     def on_check_usage(_):
-        ui_node.PushRecipes(item_usage_recipes)
+        ui_node.PushRecipes(
+            RecipeCategoriesData([
+                RecipePageData(icon_id, title, recipes)
+                for (icon_id, title), recipes in item_usage_recipes.items()
+            ])
+        )
         ui_node._vars.pop(DESC_BOARD_KEY).Remove()
 
     def on_close(_):

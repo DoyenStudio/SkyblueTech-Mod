@@ -1,18 +1,20 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.ui.elem_comp import UButton
-from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from skybluetech_scripts.skybluetech.common.mini_jei import (
-    RecipesCollection,
-    RecipeBase,
     CategoryType,
     GetRecipesByInput,
     GetRecipesByOutput,
+    RecipeBase,
+    RecipesCollection,
 )
+from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
+from skybluetech_scripts.tooldelta.ui.elem_comp import UButton
+
 from .recipe_checker_ui import RecipeCheckerUI
+from .utils import RecipeCategoriesData, RecipePageData
 
 
 def _GroupRecipesByRenderer(recipes):
-    # type: (list[RecipeBase]) -> list[tuple[str, str, list[RecipeBase]]]
+    # type: (list[RecipeBase]) -> RecipeCategoriesData
     grouped_recipes = {}
     grouped_recipe_keys = []
     for recipe in recipes:
@@ -30,10 +32,14 @@ def _GroupRecipesByRenderer(recipes):
             grouped_recipes[key] = []
             grouped_recipe_keys.append(key)
         grouped_recipes[key].append(recipe)
-    return [
-        (recipe_icon_id, recipe_title, grouped_recipes[(recipe_icon_id, recipe_title)])
+    return RecipeCategoriesData([
+        RecipePageData(
+            recipe_icon_id,
+            recipe_title,
+            grouped_recipes[(recipe_icon_id, recipe_title)],
+        )
         for recipe_icon_id, recipe_title in grouped_recipe_keys
-    ]
+    ])
 
 
 def CheckRecipe(item_id, category=CategoryType.ITEM):
@@ -67,8 +73,7 @@ def PushRecipeCheckerUI(recipes):
     if len(recipes) == 0:
         raise ValueError("Can't push an empty recipe list")
     recipe_list = recipes.list() if isinstance(recipes, RecipesCollection) else recipes
-    uiNode = RecipeCheckerUI.PushUI({"recipes": _GroupRecipesByRenderer(recipe_list)})
-    return uiNode
+    return RecipeCheckerUI.Display(_GroupRecipesByRenderer(recipe_list))
 
 
 def AsRecipeCheckerBtn(

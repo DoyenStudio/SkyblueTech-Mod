@@ -14,6 +14,72 @@
             "100%c+0px"
         ]
     },
+    "crafting_preview_visual": {
+        "type": "panel",
+        "size": [
+            18.0,
+            18.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "item_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "property_bag": {
+                        "#item_id_aux": 131072
+                    },
+                    "bindings": [
+                        {
+                            "binding_name_override": "#visible",
+                            "binding_collection_name": "netease_container",
+                            "binding_condition": "always",
+                            "binding_type": "collection",
+                            "binding_name": "#ElectricCrafterUI.crafting_preview_item_visible"
+                        },
+                        {
+                            "binding_name_override": "#item_id_aux",
+                            "binding_collection_name": "netease_container",
+                            "binding_condition": "always",
+                            "binding_type": "collection",
+                            "binding_name": "#ElectricCrafterUI.crafting_preview_item_id_aux"
+                        }
+                    ]
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 2,
+                    "alpha": 0.5,
+                    "color": [
+                        0.5450980392156862,
+                        0.5450980392156862,
+                        0.5450980392156862
+                    ],
+                    "texture": "textures/ui/white",
+                    "bindings": [
+                        {
+                            "binding_name_override": "#color",
+                            "binding_collection_name": "netease_container",
+                            "binding_condition": "always",
+                            "binding_type": "collection",
+                            "binding_name": "#ElectricCrafterUI.crafting_preview_mask_color"
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "crafting_template_slot_img": {
         "type": "image",
         "size": [
@@ -142,7 +208,7 @@
                                                             3,
                                                             3
                                                         ],
-                                                        "grid_item_template": "ElectricCrafterUI.item_slot_with_void_item",
+                                                        "grid_item_template": "ElectricCrafterUI.item_slot_with_preview",
                                                         "offset": [
                                                             34,
                                                             33
@@ -237,52 +303,11 @@
             }
         ]
     },
-    "item_slot_with_void_item@netease_container.custom_grid_item": {
-        "$cell_overlay_ref|default": "ElectricCrafterUI.void_item"
+    "item_slot_with_preview@netease_container.custom_grid_item": {
+        "$cell_overlay_ref|default": "ElectricCrafterUI.crafting_preview_visual"
     },
     "main@common.inventory_screen_common": {
         "$screen_content": "ElectricCrafterUI.electric_crafter_ui"
     },
-    "namespace": "ElectricCrafterUI",
-    "void_item": {
-        "type": "panel",
-        "size": [
-            18.0,
-            18.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "item_renderer": {
-                    "type": "custom",
-                    "renderer": "inventory_item_renderer",
-                    "size": [
-                        "100%+-2px",
-                        "100%+-2px"
-                    ],
-                    "layer": 1,
-                    "property_bag": {
-                        "#item_id_aux": 131072
-                    }
-                }
-            },
-            {
-                "mask": {
-                    "type": "image",
-                    "size": [
-                        "100%+-2px",
-                        "100%+-2px"
-                    ],
-                    "layer": 2,
-                    "alpha": 0.5,
-                    "color": [
-                        0.5450980392156862,
-                        0.5450980392156862,
-                        0.5450980392156862
-                    ],
-                    "texture": "textures/ui/white"
-                }
-            }
-        ]
-    }
+    "namespace": "ElectricCrafterUI"
 }

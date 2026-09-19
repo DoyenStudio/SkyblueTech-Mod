@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     CraftingRecipeRes,
@@ -13,10 +12,10 @@ from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 
 from ...common.define import flags
 from ...common.define.id_enum import CRAFTING_TEMPLATE, Machinery, Upgraders
-from ...common.events.machinery.electric_crafter import (
-    ElectricCrafterUpdateRecipe,
+from ...common.machinery_def.electric_crafter import (
+    K_RECIPE_PREVIEW,
+    STORE_RF_MAX,
 )
-from ...common.machinery_def.electric_crafter import STORE_RF_MAX
 from .basic import GUIControl, RegisterMachine, UpgradeControl
 
 TEMPLATE_SLOT = 12
@@ -41,6 +40,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
         self.try_update_template()
+        self.update_crafting_preview()
 
     def OnTicking(self):
         while self.IsActive():
@@ -49,10 +49,6 @@ class ElectricCrafter(GUIControl, UpgradeControl):
                 self.detect_next()
             else:
                 break
-
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
-        ExecLater(0.1, self.notify_crafting_update)
 
     @SuperExecutorMeta.execute_super
     def OnUnload(self):
@@ -72,7 +68,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         # type: (int) -> None
         if slot == TEMPLATE_SLOT:
             self.try_update_template()
-            self.notify_crafting_update()
+            self.update_crafting_preview()
         elif slot < 9:
             self.separate_items()
             self.detect_next()
@@ -171,15 +167,19 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         for slot, (item, _) in slotitems.items():
             self.SetSlotItem(slot, item)
 
-    def notify_crafting_update(self):
-        if self.rcp_items is not None:
-            ElectricCrafterUpdateRecipe([
-                (i.item_ids[0], i.aux_value) if i else None for i in self.rcp_items
-            ]).sendMulti(self.ui_sync.GetPlayersInSync())
-        else:
-            ElectricCrafterUpdateRecipe([None] * 9).sendMulti(
-                self.ui_sync.GetPlayersInSync()
-            )
+    def update_crafting_preview(self):
+        """把样板要求的物品写进方块实体数据, 客户端每帧读取渲染。
+
+        不走 S2C 同步通道: 该通道要等客户端激活成功后才能送达, 开界面瞬间的推送会丢。
+        格式为 "物品id|aux" 共 9 段以 ";" 相连, 空段表示该槽不需要物品。
+        """
+        if self.rcp_items is None:
+            self.bdata[K_RECIPE_PREVIEW] = ""
+            return
+        self.bdata[K_RECIPE_PREVIEW] = ";".join(
+            "%s|%d" % (item.item_ids[0], int(item.aux_value or 0)) if item else ""
+            for item in self.rcp_items
+        )
 
 
 def get_slot_items_by_recipe(

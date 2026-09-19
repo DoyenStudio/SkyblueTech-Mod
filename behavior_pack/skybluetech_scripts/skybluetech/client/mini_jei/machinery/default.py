@@ -2,7 +2,6 @@
 from skybluetech_scripts.skybluetech.common.define.id_enum import machinery
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     alloy_furnace,
-    charger,
     compressor,
     engraver,
     fluid_condenser,
@@ -16,9 +15,9 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     reacting_thermal_generator,
     redstone_generator,
     sawmill,
-    template_assembler,
 )
-from .define import MachineRecipeRenderer, GeneratorRecipeRenderer
+
+from .define import GeneratorRecipeRenderer, MachineRecipeRenderer
 
 alloy_furnace.AlloyFurnaceRecipe.SetRenderer(
     type(
@@ -27,16 +26,6 @@ alloy_furnace.AlloyFurnaceRecipe.SetRenderer(
         {
             "render_ui_def_name": "RecipeCheckerLib.alloy_furnace_recipes",
             "recipe_icon_id": machinery.Machinery.ALLOY_FURNACE,
-        },
-    )
-)
-charger.ChargerRecipe.SetRenderer(
-    type(
-        "ChargerRecipeRenderer",
-        (MachineRecipeRenderer,),
-        {
-            "render_ui_def_name": "RecipeCheckerLib.charger_recipes",
-            "recipe_icon_id": machinery.Machinery.CHARGER,
         },
     )
 )

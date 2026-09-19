@@ -67,6 +67,12 @@ class ElectricMachineryWorkstationUI(MachinePanelUIProxyEx):
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(), recipes
         )
+        # 开界面时先取一次方块实体数据, 让首帧渲染就有正确状态
+        data = GetBlockEntityData(*self.pos[1:])
+        if data is not None:
+            self.selected_recipe_id = GetValue(
+                data["exData"], K_SELECTED_RECIPE, None
+            )
         self.refresh_visible_recipes()
         self.update_recipe_preview()
 

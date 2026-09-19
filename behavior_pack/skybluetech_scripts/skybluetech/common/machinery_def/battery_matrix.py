@@ -37,6 +37,8 @@ STRUCTURE_PATTERN = {
         "FfF",
     ],
 }
+# 这里是"不少于"而不是"恰好": 输入/输出接口在 'f' 位上想放几个就放几个, 放得越多
+# 电池仓的充放电吞吐越高(每个接口各自独立走一遍 BatteryMatrix.AddPower / TakeoutPower)。
 STRUCTURE_REQUIRE_BLOCKS = {
     IO_ENERGY_INPUT: 1,
     IO_ENERGY_OUTPUT: 1,

@@ -17,7 +17,7 @@ battery_matrix = PageGroup(
     [
         TextPage(
             "电池仓",
-            '电池仓是一种<text color="§b" t="多方块结构机器">， 可以存入电池以用作<text color="§c" t="存储能源">。\n\n电池仓本身并没有储能容量， 它的储能能力完全由放置在其中的<text color="§5" t="电池">决定。\n\n电池仓目前<text color="§c" t="最多">只能拥有 1 个能量输入口和 1 个能量输出口。',
+            '电池仓是一种<text color="§b" t="多方块结构机器">， 可以存入电池以用作<text color="§c" t="存储能源">。\n\n电池仓本身并没有储能容量， 它的储能能力完全由放置在其中的<text color="§5" t="电池">决定。\n\n电池仓可通过<text color="§c" t="多个输入输出口">同时进行能量输入或输出。',
         ),
         TextPage(
             "",

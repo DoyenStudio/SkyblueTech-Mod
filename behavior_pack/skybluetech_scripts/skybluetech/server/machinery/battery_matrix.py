@@ -60,8 +60,8 @@ class BatteryMatrix(
         self._sum_input = 0
         self._sum_output = 0
         self._sum_power_t = 0
-        self._energy_in = None
-        self._energy_out = None
+        self._energy_in_ios = []  # type: list[EnergyInputInterface]
+        self._energy_out_ios = []  # type: list[EnergyOutputInterface]
 
     def OnTicking(self):
         active = self.IsActive() and self.StructureFinished()
@@ -108,13 +108,9 @@ class BatteryMatrix(
 
     def OnStructureChanged(self, ok):
         # type: (bool) -> None
+        self.clean()
         if ok:
-            self._energy_in = self.get_energy_in_io()
-            self._energy_out = self.get_energy_out_io()
-            self._energy_in.SetMachineRef(self)
-            self._energy_out.SetMachineRef(self)
-        else:
-            self.clean()
+            self.connect_ios()
         self.CallSync()
 
     def IsValidInput(self, slot, item):
@@ -148,14 +144,28 @@ class BatteryMatrix(
         # type: () -> None
         self.clean()
 
+    def connect_ios(self):
+        # type: () -> None
+        "绑定结构里所有的能量输入/输出接口; 每种接口的数量不限, 多放几个就多几路吞吐。"
+        self._energy_in_ios = self.GetAllMachines(
+            EnergyInputInterface, IO_ENERGY_INPUT
+        )
+        self._energy_out_ios = self.GetAllMachines(
+            EnergyOutputInterface, IO_ENERGY_OUTPUT
+        )
+        for io in self._energy_in_ios:
+            io.SetMachineRef(self)
+        for io in self._energy_out_ios:
+            io.SetMachineRef(self)
+
     def clean(self):
         # type: () -> None
-        if self._energy_in is not None:
-            self._energy_in.UnsetMachineRef()
-            self._energy_in = None
-        if self._energy_out is not None:
-            self._energy_out.UnsetMachineRef()
-            self._energy_out = None
+        for io in self._energy_in_ios:
+            io.UnsetMachineRef()
+        for io in self._energy_out_ios:
+            io.UnsetMachineRef()
+        self._energy_in_ios = []
+        self._energy_out_ios = []
 
     def push_batteries_to_core(self):
         if self.GetStructureDestroyFlag() != 0:
@@ -208,16 +218,13 @@ class BatteryMatrix(
         if self.GetStructureDestroyFlag() != 0:
             return
         self.get_core().add_energy(rf, from_overflow=True)
+        # 多个输出口各走各的 TakeoutPower/GivebackPower 配对, 用后即清, 免得把上一次的
+        # 取电量算到这一次的统计里。
         self._last_output += self._last_rf_provided - rf
+        self._last_rf_provided = 0
 
     def get_core(self):
         return self.GetMachine(BatteryMatrixCore, None)
-
-    def get_energy_in_io(self):
-        return self.GetMachine(EnergyInputInterface, IO_ENERGY_INPUT)
-
-    def get_energy_out_io(self):
-        return self.GetMachine(EnergyOutputInterface, IO_ENERGY_OUTPUT)
 
     def set_enable_input(self, value):
         if not isinstance(value, bool):

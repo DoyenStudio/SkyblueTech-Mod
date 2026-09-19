@@ -60,7 +60,7 @@ class LexicalTransmuter(GUIControl, UpgradeControl):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
-        elif slot == 1:
+        elif slot == 2:
             return item.userData is None
         return slot == 0
 

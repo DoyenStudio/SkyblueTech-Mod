@@ -326,6 +326,13 @@
         "skybluetech:lexical_transmuter_front": {
             "textures": "textures/blocks/machinery/lexical_transmuter_front"
         },
+        "skybluetech:liquid_resin_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/liquid_resin_flowing"
+        },
+        "skybluetech:liquid_resin_static": {
+            "textures": "textures/fluid/liquid_resin_static"
+        },
         "skybluetech:macerator_front": {
             "textures": "textures/blocks/machinery/macerator_front"
         },

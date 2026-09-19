@@ -273,6 +273,14 @@
         "blockshape": "water",
         "textures": "skybluetech:basic_fluid"
     },
+    "skybluetech:flowing_liquid_resin": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:liquid_resin_static",
+            "side": "skybluetech:liquid_resin_flowing",
+            "up": "skybluetech:liquid_resin_flowing"
+        }
+    },
     "skybluetech:flowing_liquid_soldering_tin": {
         "blockshape": "water",
         "textures": {
@@ -573,6 +581,14 @@
     "skybluetech:liquid_air": {
         "blockshape": "water",
         "textures": "skybluetech:basic_fluid"
+    },
+    "skybluetech:liquid_resin": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:liquid_resin_static",
+            "side": "skybluetech:liquid_resin_flowing",
+            "up": "skybluetech:liquid_resin_static"
+        }
     },
     "skybluetech:liquid_soldering_tin": {
         "blockshape": "water",

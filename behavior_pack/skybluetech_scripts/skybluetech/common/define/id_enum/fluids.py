@@ -61,6 +61,7 @@ class CommonLiquid(Common):
     "对流体管道无特殊要求的液体"
 
     LIQUID_AIR = "skybluetech:liquid_air"
+    LIQUID_RESIN = "skybluetech:liquid_resin"
     WATER = Vanilla.WATER
     DISTILLED_WATER = "skybluetech:distilled_water"
     METHANE_MUD = "skybluetech:methane_mud"

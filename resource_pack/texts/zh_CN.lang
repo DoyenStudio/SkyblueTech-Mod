@@ -443,3 +443,6 @@ tile.skybluetech:flowing_liquid_air.name=流动液态空气
 item.skybluetech:liquid_air_bucket.name=液态空气桶
 item.skybluetech:upgrader_spec_nitrogen_ext.name=特化升级： 氮膜分离
 item.skybluetech:laser_probe.name=激光探头
+tile.skybluetech:liquid_resin.name=液态生树脂
+tile.skybluetech:flowing_liquid_resin.name=流动液态生树脂
+item.skybluetech:liquid_resin_bucket.name=液态生树脂桶

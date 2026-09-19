@@ -1,0 +1,21 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "bucket_name": "skybluetech:liquid_resin_bucket",
+                "liquid_color": [
+                    255,
+                    255,
+                    255,
+                    255
+                ]
+            }
+        },
+        "description": {
+            "base_block": "liquid",
+            "category": "none",
+            "identifier": "skybluetech:liquid_resin"
+        }
+    }
+}

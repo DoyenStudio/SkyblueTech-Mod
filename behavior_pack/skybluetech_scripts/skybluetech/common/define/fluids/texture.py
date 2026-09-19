@@ -11,6 +11,7 @@ VANILLA_LAVA = BasicFluidTexture("textures/fluid/lava_static", 20, 16)
 DEEPSLATE_LAVA = BasicFluidTexture("textures/fluid/deepslate_lava_static", 20, 5)
 METHANE_MUD = BasicFluidTexture("textures/fluid/methane_mud", 1)
 BASIC_FLUID = BasicFluidTexture("textures/fluid/basic_fluid", 1)
+LIQUID_RESIN_STATIC = BasicFluidTexture("textures/fluid/liquid_resin_static", 39, 2)
 
 BASIC_FLUID_TEXTURE = FluidTexture((255, 255, 255), 255, BASIC_FLUID)
 
@@ -47,6 +48,7 @@ FLUID_COLORS_AND_TEXTURES = {
     fluids.DeepLava.DEEPSLATE_LAVA: FluidTexture((255, 255, 255), 255, DEEPSLATE_LAVA),
     fluids.CommonLiquid.METHANE_MUD: FluidTexture((255, 255, 255), 255, METHANE_MUD),
     fluids.CommonLiquid.LIQUID_AIR: FluidTexture((205, 218, 238), 128, BASIC_FLUID),
+    fluids.CommonLiquid.LIQUID_RESIN: FluidTexture((255, 255, 255), 255, LIQUID_RESIN_STATIC),
 }
 
 

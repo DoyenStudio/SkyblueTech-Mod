@@ -44,6 +44,17 @@
         "ticks_per_frame": 5
     },
     {
+        "flipbook_texture": "textures/fluid/liquid_resin_flowing",
+        "atlas_tile": "skybluetech:liquid_resin_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/liquid_resin_static",
+        "atlas_tile": "skybluetech:liquid_resin_static",
+        "ticks_per_frame": 2
+    },
+    {
         "flipbook_texture": "textures/blocks/machinery/flipbook_textures/compressor_front_active",
         "atlas_tile": "skybluetech:compressor_front_active",
         "ticks_per_frame": 4,

@@ -4,7 +4,7 @@
         "components": {
             "minecraft:max_stack_size": 1,
             "netease:customtips": {
-                "value": "\n§7使用它点击§f管道或线缆§7可查看官网中设备的连接情况。"
+                "value": "\n§7使用它点击§f管道或线缆§7可查看管网中设备的连接情况。"
             }
         },
         "description": {

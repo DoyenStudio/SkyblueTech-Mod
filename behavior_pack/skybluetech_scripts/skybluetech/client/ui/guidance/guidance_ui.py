@@ -127,10 +127,11 @@ class GuidanceUI(ToolDeltaScreen):
 
     def load_new_pages(self, pages, index=0):
         # type: (PageGroup, int) -> None
-        if pages is self.current_page_group:
+        expect_page_index = int(index // 2 * 2)
+        if pages is self.current_page_group and self.page_index == expect_page_index:
             return
         self.current_page_group = pages
-        self.page_index = int(index // 2 * 2)
+        self.page_index = expect_page_index
         self.render_page()
 
     @classmethod

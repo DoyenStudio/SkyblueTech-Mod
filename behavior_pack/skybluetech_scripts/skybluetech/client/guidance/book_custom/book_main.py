@@ -72,6 +72,12 @@ main_pages = PageGroup(
                     "更新日志",
                     contents.update_log.update_log_desc,
                 ),
+                MainTOCPageSection(
+                    "minecraft:gold_ingot",
+                    0,
+                    "鸣谢",
+                    contents.credits.credits,
+                ),
             ],
             "skybluetech_guidance_main_toc"
         ),

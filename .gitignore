@@ -14,5 +14,7 @@ dev*
 TODO
 AGENTS.md
 CLAUDE.md
+world_behavior_packs.json
+world_resource_packs.json
 
 *.cmd

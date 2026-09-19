@@ -45,3 +45,16 @@ item_splitter = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.ITEM_SPLITTER),
     ],
 )
+
+item_spreader = PageGroup(
+    "item_spreader_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.ITEM_SPREADER),
+            '普通的物品管道无法将物品均摊给各个容器， 物流分发机解决了这个问题。\n\n从物流分发机引出物品管道（即设置为抽取模式）， 然后连接需要进行物品分摊的容器（例如十几个<item id="{therm_generator}">火力发电机）， 为物流分发机提供能量， 它就可以自动将内含物品分发给各个容器了。'.format(
+                therm_generator=id_enum.Machinery.THERMAL_GENERATOR
+            ),
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ITEM_SPREADER),
+    ],
+)

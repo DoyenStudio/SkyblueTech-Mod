@@ -144,6 +144,17 @@ machinery_production_toc = PageGroup(
             ],
             identifier="machinery_production_toc_2",
         ),
+        TOCPage(
+            [
+                TOCPageSection(
+                    id_enum.Machinery.VACUUM_FREEZER,
+                    0,
+                    "真空冷却仓",
+                    machinery_production.vacuum_freezer,
+                ),
+            ],
+            identifier="machinery_production_toc_3",
+        ),
     ],
 )
 
@@ -165,7 +176,7 @@ machinery_source_extraction_toc = PageGroup(
                 TOCPageSection(
                     id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER,
                     0,
-                    None,
+                    "基岩熔岩钻",
                     machinery_source_extraction.bedrock_lava_drill,
                 ),
                 TOCPageSection(
@@ -271,7 +282,7 @@ machinery_energy_toc = PageGroup(
                 TOCPageSection(
                     id_enum.Machinery.BATTERY_MATRIX_CONTROLLER,
                     0,
-                    None,
+                    "电池仓",
                     machinery_energy.battery_matrix,
                 ),
                 TOCPageSection(
@@ -302,7 +313,7 @@ machinery_misc_toc = PageGroup(
     [
         TextPage(
             "机器-杂项",
-            "本章展示一些不能被简单被归类到分组里的机器， 这些设备功能繁杂。",
+            "本章展示主各种分组以外的设备。",
         ),
         TOCPage(
             [
@@ -349,6 +360,12 @@ machinery_crafting_toc = PageGroup(
                     0,
                     None,
                     machinery_crafting.machinery_workstation,
+                ),
+                TOCPageSection(
+                    id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION,
+                    0,
+                    None,
+                    machinery_crafting.electric_machinery_workstation,
                 ),
             ],
         ),

@@ -20,6 +20,21 @@ assembler = PageGroup(
     ],
 )
 
+electric_machinery_workstation = PageGroup(
+    "electric_machinery_workstation_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION),
+            '电动机件加工台会自动完成机件加工台的配方。 在右侧<text color="§5" t="配方栏">按提示放入配方材料，并在焊锡槽放入<item id="{solder}">焊锡锭后给予能量即可工作。\n\n每完成一份配方消耗<text color="§2" t="1 个焊锡锭">， <text color="§4" t="无需">放入工具扳手或工具钳。'.format(
+                solder=id_enum.Ingots.SOLDERING,
+            ),
+        ),
+        MachineryWorkstationRecipePage(
+            id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION
+        ),
+    ],
+)
+
 machinery_workstation = PageGroup(
     "machinery_workstation_description",
     [
@@ -46,7 +61,9 @@ machinery_workstation = PageGroup(
                 template_assembler=id_enum.Machinery.TEMPLATE_ASSEMBLER,
             ),
             hyperlink_cbs={
-                "template_assembler": lambda _: CheckRecipe(id_enum.Machinery.TEMPLATE_ASSEMBLER),
+                "template_assembler": lambda _: CheckRecipe(
+                    id_enum.Machinery.TEMPLATE_ASSEMBLER
+                ),
                 "inscribing_template": lambda _: CheckRecipe(
                     id_enum.INSCRIBING_TEMPLATE
                 ),

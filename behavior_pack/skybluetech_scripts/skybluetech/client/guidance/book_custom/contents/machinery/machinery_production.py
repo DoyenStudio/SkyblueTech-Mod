@@ -1,9 +1,13 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.client.ui.recipe_checker import CheckRecipe
 from skybluetech_scripts.skybluetech.common.define import id_enum
+from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import (
+    STRUCTURE_PALETTE as VACUUM_FREEZER_SP,
+)
 
 from ...define import (
     MachineryWorkstationRecipePage,
+    MultiBlockStructureRenderPage,
     PageGroup,
     TextPage,
     UnfinishedItemName,
@@ -75,6 +79,17 @@ electric_heater = PageGroup(
             '通电后可按照设置的温度向上前后左右五个铜盘面输出<text color="§c" t="热能">， 供一些需热机器使用。\n\n适当调节输入功率和最大温度可以让其达到合适的产热温度。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.ELECTRIC_HEATER),
+    ],
+)
+
+engraver = PageGroup(
+    "engraver_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.ENGRAVER),
+            "蚀刻机可以使用一种或两种蚀刻液， 使用不同波长的激光对原料进行较精密的蚀刻， 制造诸如高级电路板这类精密构件。",
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ENGRAVER),
     ],
 )
 
@@ -221,5 +236,22 @@ redstone_furnace = PageGroup(
             '红石炉将红石能这种能源作为燃料， 和熔炉<item id="minecraft:furnace">一样<text color="§c" t="烧制物品">。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.REDSTONE_FURNACE),
+    ],
+)
+
+vacuum_freezer = PageGroup(
+    "vacuum_freezer_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.VACUUM_FREEZER),
+            '真空冷却仓是一种<text color="§b" t="多方块结构机器">， 可以消耗能量提供低温或超低温环境对气体<item id="{compressed_air}">进行液化<item id="{liquid_air}">或者对液体<item id="{water}">进行固化<item id="{ice}">的处理。\n\n<text color="§c" t="注意， ">冷却仓进行超低温冷却需要消耗大量电力， 一旦提供的输入功率不足， 不仅会使配方减速， 甚至会使得配方运行进度倒流！'.format(
+                compressed_air=id_enum.CommonGas.COMPRESSED_AIR,
+                liquid_air=id_enum.CommonLiquid.LIQUID_AIR,
+                water=id_enum.Vanilla.WATER,
+                ice="minecraft:ice",
+            ),
+        ),
+        MultiBlockStructureRenderPage(id_enum.VacuumFreezer.CONTROLLER, VACUUM_FREEZER_SP),
+        MachineryWorkstationRecipePage(id_enum.Machinery.VACUUM_FREEZER),
     ],
 )

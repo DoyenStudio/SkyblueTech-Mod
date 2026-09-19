@@ -35,7 +35,7 @@ charger = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.CHARGER),
-            '将需要充能的储能物品如<text color="§2" t="电池">和<text color="§9" t="装备">放入接入了电源的充能台内， 可以为其充能。 充能完成的道具会直接弹出到右边的输出槽中。\n\n储能装备需要充能后才可使用。',
+            '将需要充能的储能物品如<text color="§2" t="电池">和<text color="§9" t="装备">放入接入了电源的充能台内， 可以为其充能。 充能完成的道具会直接弹出到右边的输出槽中。\n\n储能装备需要充能后才可使用。\n\n充能台也可以为部分材料进行充能处理， 如将惰性红石还原为红石粉。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.CHARGER),
     ],

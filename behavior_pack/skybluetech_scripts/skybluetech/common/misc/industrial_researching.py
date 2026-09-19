@@ -40,6 +40,11 @@ all_researchings = RecipesCollection(
         id_enum.Upgraders.GENERIC_SPLIT,
     ),
     IndustrialResearchingRecipe(
+        [Input("minecraft:piston", 2), Input("minecraft:dropper", 2)],
+        0,
+        id_enum.Upgraders.GENERIC_AUTO_EJECTION,
+    ),
+    IndustrialResearchingRecipe(
         [
             Input(id_enum.Coils.COPPER, 24),
             Input(id_enum.Sticks.COPPER, 20),

@@ -79,6 +79,16 @@ recipes = TemplateAssemblerRecipesCollection(
     ),
     TemplateAssemblerRecipe(
         {
+            0: Input(id_enum.ObjectUpgraders.PLATE_COMMON, 1),
+            1: Input(id_enum.ControlCircuit.BASIC, 1),
+            2: Input("minecraft:dropper", 1),
+        },
+        id_enum.Upgraders.GENERIC_AUTO_EJECTION,
+        power_cost=60,
+        tick_duration=120,
+    ),
+    TemplateAssemblerRecipe(
+        {
             0: Input(id_enum.Upgraders.EMPTY, 1),
             1: Input(id_enum.HEAT_PLATE, 4),
             2: Input(tag_enum.StickTag.COPPER, 4, is_tag=True),

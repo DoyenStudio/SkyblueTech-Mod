@@ -1,17 +1,18 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import id_enum
-from ..define import (
-    TextPage,
-    PageGroup,
-)
 
+from ..define import (
+    PageGroup,
+    TextPage,
+)
 
 update_log_desc = PageGroup(
     "update_log_desc",
     [
         TextPage(
             "更新日志",
-            '在这里可以查看<text color="§9" t="《蔚蓝科技》">的更新日志。\n\n<text color="§2" t="PC 端可以滚动鼠标滚轮下翻页面； 手机端则可以直接向上划动屏幕。">',
+            '在这里可以查看<text color="§9" t="《蔚蓝科技》">的更新日志。\n\n<text color="§2" t="PC 端可以滚动鼠标滚轮下翻页面； 手机端则可以直接向上划动屏幕。">\n\n<link id="newest" text="点我快速跳转到最新日志">',
+            hyperlink_cbs={"newest": lambda _: update_log_desc.FastJump(len(update_log_desc.pages)-1)}
         ),
         TextPage(
             "",
@@ -48,6 +49,13 @@ update_log_desc = PageGroup(
         TextPage(
             "",
             '08/02/2026\n\n<text color="§c" t="修复以下问题：">\n1. 固液搅拌机在生产混凝土时只产出1个混凝土后立刻停止\n2. 电力加热仓被误识别为物品容器导致物品管道会连接加热仓\n3. 金属锤工作音效全服玩家都会听见\n4. 白铜粉不能重新熔炼为白铜锭\n4. 迷你采矿机和部分机器 UI 渲染流体液高错误\n\n<text color="§9" t="功能优化：">\n1. 调整铝矿石生成密度\n2. 现在多方块结构会提示缺失方块的位置了\n3. 伐木机默认更大的伐木范围， 对参天大树支持更好\n4. 熔岩炉可熔化深板岩\n5. 优化重构混凝土产线部分流程， 支持生产上色混凝土',
+        ),
+        TextPage(
+            "",
+            "09/20/2026"
+            '\n\n<text color="§c" t="修复以下问题：">\n1. 物品管道在大箱子间传输物品存在严重 bug\n2. 部分机器存在边缘透视问题\n3. 合金炉部分配方存在事实性错误\n4. 玩家可在其他维度看到主世界等维度的电力线和悬浮文本'
+            '\n\n<text color="§a" t="新内容加入：">\n1. 蚀刻机、 矿词转换机、 锯木机、 精密切割机、 真空冷却仓、 物流分发机等新机器\n3. 自动弹出等新机器升级\n4. 充能台新增“为材料充能”配方表'
+            '\n\n<text color="§9" t="功能优化：">\n1. 大幅优化物品管道性能\n2. 大幅优化火力发电机性能\n3. 电池仓已支持多输入/输出口\n4. 物品管道目前已兼容<text color="§d" t="大部分含标准容器的模组">',
         ),
     ],
 )

@@ -1,18 +1,18 @@
 # coding=utf-8
-#
-from skybluetech_scripts.tooldelta.api.common import Repeat
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.events.client import (
-    ModBlockEntityLoadedClientEvent,
-    ModBlockEntityRemoveClientEvent,
-)
-from skybluetech_scripts.tooldelta.utils.nbt import GetValue
 from skybluetech_scripts.skybluetech.common.define.id_enum import Tank
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.fluid_container import (
     K_FLUID_ID,
     K_FLUID_VOLUME,
     K_MAX_VOLUME,
 )
+from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
+from skybluetech_scripts.tooldelta.api.common import Repeat
+from skybluetech_scripts.tooldelta.events.client import (
+    ModBlockEntityLoadedClientEvent,
+    ModBlockEntityRemoveClientEvent,
+)
+from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
+
 from ...utils.fluid_model import FluidModel
 
 INFINITY = float("inf")
@@ -84,13 +84,13 @@ def getFluidDataFromBlock(block_entity_data):
         # None
         return (
             None,
-            GetValue(ex_data, K_FLUID_VOLUME),
-            GetValue(ex_data, K_MAX_VOLUME),
+            GetValueWithDefault(ex_data, K_FLUID_VOLUME, 0),
+            GetValueWithDefault(ex_data, K_MAX_VOLUME, 1),
         )
     return (
-        GetValue(ex_data, K_FLUID_ID),
-        GetValue(ex_data, K_FLUID_VOLUME),
-        GetValue(ex_data, K_MAX_VOLUME),
+        GetValueWithDefault(ex_data, K_FLUID_ID, None),
+        GetValueWithDefault(ex_data, K_FLUID_VOLUME, 0),
+        GetValueWithDefault(ex_data, K_MAX_VOLUME, 1),
     )
 
 

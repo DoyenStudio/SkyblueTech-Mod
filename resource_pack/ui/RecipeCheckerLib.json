@@ -256,17 +256,21 @@
             },
             {
                 "slot0@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
                     "offset": [
-                        -30,
+                        12,
                         0
                     ]
                 }
             },
             {
                 "slot1@SkybluePanelLib.item_displayer": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
                     "layer": 1,
                     "offset": [
-                        30,
+                        62,
                         0
                     ]
                 }
@@ -275,14 +279,36 @@
                 "progress@SkybluePanelLib.ProgressBar": {
                     "$bg_image": "textures/ui/arrow_img",
                     "$mask_image": "textures/ui/arrow_mask",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
                     "offset": [
-                        0,
+                        27,
                         0
                     ],
                     "size": [
                         40,
                         20
                     ]
+                }
+            },
+            {
+                "energy_cost": {
+                    "type": "label",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "size": [
+                        82.0,
+                        "default"
+                    ],
+                    "layer": 1,
+                    "color": [
+                        1.0,
+                        0.0,
+                        0.0
+                    ],
+                    "font_type": "default",
+                    "shadow": true,
+                    "text": "000 RF\n000 RF/t"
                 }
             }
         ]

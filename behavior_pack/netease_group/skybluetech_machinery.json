@@ -5,6 +5,7 @@
             "icon": "skybluetech:machinery_workstation",
             "list": [
                 "skybluetech:assembler",
+                "skybluetech:electric_machinery_workstation",
                 "skybluetech:machinery_workstation"
             ]
         },

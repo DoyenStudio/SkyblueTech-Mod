@@ -63,7 +63,7 @@ def isContainer(blockName, dim=None, xyz=None):
         size = GetContainerSize(xyz, dim)
         if size is not None and size > 0:
             return True
-    return blockName in COMMON_CONTAINERS or BlockHasTag(
+    return BlockHasTag(
         blockName, "skybluetech_container"
     )
 

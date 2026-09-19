@@ -637,7 +637,7 @@ recipes = RecipesCollection(
             1: Input(id_enum.ELECTRIC_MOTOR),
             2: Input(id_enum.Coils.COPPER),
             3: Input("minecraft:flint"),
-            4: Input(id_enum.MACHINERY_FRAME),
+            4: Input(id_enum.Machinery.MACERATOR),
             5: Input("minecraft:flint"),
             6: Input(id_enum.Sticks.STEEL),
             7: Input(id_enum.ControlCircuit.ADVANCED),

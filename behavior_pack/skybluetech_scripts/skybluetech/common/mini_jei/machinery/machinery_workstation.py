@@ -10,9 +10,16 @@ from ..core import (
     MarshalInputs,
     UnmarshalInputs,
 )
+from .define import MachineRecipe
 
 
-class MachineryWorkstationRecipe(Recipe):
+class MachineryWorkstationRecipe(MachineRecipe):
+    """
+    机件加工台的配方: 九宫格原料 + 产物 + 所需扳手/钳等级 + 加工次数。
+    本机是手动合成, 用不到 MachineRecipe 的加工时长与耗能, 故留 0;
+    需要它们的机器(电动机件加工台)会在机器侧按 craft_times 换算后写回配方对象。
+    """
+
     recipe_icon_id = machinery.Machinery.MACHINERY_WORKSTATION
 
     LEVEL_IRON = 1
@@ -26,10 +33,12 @@ class MachineryWorkstationRecipe(Recipe):
         self, input_items, output_item_id, wrench_level, pincer_level, craft_times
     ):
         # type: (dict[int, Input], str, int, int, int) -> None
-        Recipe.__init__(
+        MachineRecipe.__init__(
             self,
             {CategoryType.ITEM: input_items},
             {CategoryType.ITEM: {0: Output(output_item_id)}},
+            0,
+            0,
         )
         self.input_items = input_items
         self.output_item_id = output_item_id

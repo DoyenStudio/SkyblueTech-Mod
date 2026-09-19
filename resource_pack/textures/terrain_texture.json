@@ -332,6 +332,9 @@
         "skybluetech:macerator_front_active": {
             "textures": "textures/blocks/machinery/flipbook_textures/macerator_front_active"
         },
+        "skybluetech:electric_machinery_workstation": {
+            "textures": "textures/models/electric_machinery_workstation_texture"
+        },
         "skybluetech:machinery_workstation": {
             "textures": "textures/models/machinery_workstation_texture"
         },

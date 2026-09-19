@@ -608,6 +608,7 @@
             "up": "skybluetech:frame_top"
         }
     },
+    "skybluetech:electric_machinery_workstation": {"sound": "iron"},
     "skybluetech:machinery_workstation": {
         "sound": "iron"
     },

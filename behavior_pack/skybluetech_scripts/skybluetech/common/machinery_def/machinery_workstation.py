@@ -71,6 +71,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         16,
     ),
+    # electric machinery workstation
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            1: Input(id_enum.ControlCircuit.ADVANCED),
+            2: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            3: Input(id_enum.Wrench.SKYBLUE),
+            4: Input(id_enum.Machinery.MACHINERY_WORKSTATION),
+            5: Input(id_enum.Pincer.SKYBLUE),
+            6: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            7: Input(id_enum.MACHINERY_FRAME),
+            8: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+        },
+        id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # battery matrix structure
     MRecipe(
         {

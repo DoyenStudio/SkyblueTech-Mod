@@ -40,6 +40,7 @@ class Machinery(SimpleEnum):
     MACERATOR = "skybluetech:macerator"
     MACHINERY_BASE_LIGHT = "skybluetech:machinery_base_light"
     MACHINERY_WORKSTATION = "skybluetech:machinery_workstation"
+    ELECTRIC_MACHINERY_WORKSTATION = "skybluetech:electric_machinery_workstation"
     MAGMA_CENTRIFUGE = "skybluetech:magma_centrifuge"
     MAGMA_FURNACE = "skybluetech:magma_furnace"
     METAL_PRESS = "skybluetech:metal_press"

@@ -33,6 +33,7 @@ from .item_spreader import ItemSpreaderUI
 from .lexical_transmuter import LexicalTransmuterUI
 from .macerator import MaceratorUI
 from .machinery_workstation import MachineryWorkstationUI
+from .electric_machinery_workstation import ElectricMachineryWorkstationUI
 from .magma_centrifuge import MagmaCentrifugeUI
 from .magma_furnace import MagmaFurnaceUI
 from .metal_press import MetalPressUI

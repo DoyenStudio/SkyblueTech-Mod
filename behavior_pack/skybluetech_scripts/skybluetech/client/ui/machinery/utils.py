@@ -34,6 +34,9 @@ FLUID_SMOOTH_FACTOR = 0.05
 FLUID_SMOOTH_EPSILON = 0.001
 FLUID_FRAME_SIZE = 16
 
+PREVIEW_MASK_GRAY = 0x8F * 1.0 / 0xFF
+PREVIEW_MASK_EMPTY_FACTOR = 0.5
+
 
 def FormatNum(n, fmt="%.2f %s"):
     # type: (float, str) -> str
@@ -111,6 +114,15 @@ def UpdateGenericProgressT2B(ui, percent):  # -> Any:
 def UpdateGenericProgressB2T(ui, percent):
     # type: (UBaseCtrl, float) -> None
     ui["mask"].asImage().SetSpriteClipRatio("fromBottomToTop", 1 - percent)
+
+
+def GetPreviewMaskColor(id_aux):
+    # type: (int | None) -> tuple[float, float, float]
+    "槽位虚影遮罩的灰度: 有虚影物品时亮, 缺物品时压暗。"
+    gray = PREVIEW_MASK_GRAY * (
+        1.0 if id_aux is not None else PREVIEW_MASK_EMPTY_FACTOR
+    )
+    return (gray, gray, gray)
 
 
 def GetStructureLackedBlocks(data):

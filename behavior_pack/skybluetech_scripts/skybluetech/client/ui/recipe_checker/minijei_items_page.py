@@ -1,4 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.common.export import (
+    MOD_NAMESPACE,
+    GetCategoryOptions,
+)
 from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType
 from skybluetech_scripts.tooldelta.api.client import (
     GetItemFormattedHoverText,
@@ -12,6 +16,7 @@ from skybluetech_scripts.tooldelta.events.client import (
     ScreenSizeChangedClientEvent,
 )
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetAllItems
+from skybluetech_scripts.tooldelta.extensions.dropdown import Dropdown
 from skybluetech_scripts.tooldelta.ui import (
     Binder,
     RegistToolDeltaScreen,
@@ -20,7 +25,7 @@ from skybluetech_scripts.tooldelta.ui import (
 )
 
 from .recipe_checker_ui import RecipeCheckerUI
-from .utils import RecipeCategoriesData, RecipePageData
+from .utils import RecipeCategoriesData
 
 if 0 > 1:
     import typing
@@ -32,13 +37,14 @@ CONTENT_PATH = MAIN_PATH
 BG_PATH = CONTENT_PATH / "bg"
 GRID_PANEL_PATH = BG_PATH / "grid_panel"
 ITEMS_GRID_PATH = GRID_PANEL_PATH / "jei_items_grid"
-FOCUS_SKYBLUETECH_SWITCH_PATH = BG_PATH / "focus_skybluetech_switch"
+CATEGORY_COMBO_PATH = BG_PATH / "category_combo"
 PAGE_LABEL_PATH = BG_PATH / "page_label"
 PREV_PAGE_BTN_PATH = BG_PATH / "prev_page_btn"
 NEXT_PAGE_BTN_PATH = BG_PATH / "next_page_btn"
 CLOSE_BTN_PATH = BG_PATH / "close_btn"
 
 ITEMS_COLLECTION = "minijei_item_list_grid"
+MOD_CATEGORY_PREFIX = MOD_NAMESPACE + ":"
 EMPTY_ITEM_ID_AUX = 131072
 GRID_ITEM_SIZE_Y = 20.0
 MAX_ITEMS_PER_PAGE = 200
@@ -95,24 +101,36 @@ class MiniJEIItemListUI(ToolDeltaScreen):
         self.current_page = 0
         self.total_pages_num = 1
         self.items_per_page = 1
-        self.focus_skybluetech = True
+        self.category_options = []  # type: list[tuple[str, str]]
+        self.category_combo = None  # type: Dropdown | None
+        self.category_prefix = ""
         self.search_text = ""
 
     def OnCreate(self):
         self.grid_panel = self.GetElement(GRID_PANEL_PATH)
         self.jei_items_grid = self.GetElement(ITEMS_GRID_PATH).asGrid()
-        self.focus_skybluetech_switch = self.GetElement(
-            FOCUS_SKYBLUETECH_SWITCH_PATH
-        ).asSwitch()
+        self.category_combo = Dropdown(
+            self.GetElement(CATEGORY_COMBO_PATH),
+            placeholder="全部",
+            max_visible_options=6,
+            row_height=20,
+        )
         self.page_label = self.GetElement(PAGE_LABEL_PATH).asLabel()
         self.GetElement(PREV_PAGE_BTN_PATH).asButton().SetCallback(self.onPrevPage)
         self.GetElement(NEXT_PAGE_BTN_PATH).asButton().SetCallback(self.onNextPage)
         self.GetElement(CLOSE_BTN_PATH).asButton().SetCallback(self.onClose)
         self.load_items()
-        self.focus_skybluetech_switch.SetState(True)
-        self.focus_skybluetech = True
+        self.setup_category_combo()
         self.update_grid_capacity(self.render_current_page)
         ExecLater(0, lambda: self.update_grid_capacity(self.render_current_page))
+
+    def OnDeactive(self):
+        if self.category_combo is not None:
+            self.category_combo.Close()
+
+    def OnDestroy(self):
+        if self.category_combo is not None:
+            self.category_combo.Dispose(screen_destroyed=True)
 
     def load_items(self):
         # type: () -> None
@@ -136,12 +154,34 @@ class MiniJEIItemListUI(ToolDeltaScreen):
             after()
             ExecLater(0, after)
 
+    def setup_category_combo(self):
+        # type: () -> None
+        self.category_options = GetCategoryOptions()
+        combo = self.category_combo
+        if combo is None:
+            return
+        combo.Clear()
+        for label, prefix in self.category_options:
+            combo.AddOption(label, prefix)
+        default_index = 0
+        for index, (_, prefix) in enumerate(self.category_options):
+            if prefix == MOD_CATEGORY_PREFIX:
+                default_index = index
+                break
+        self.category_prefix = ""
+        if self.category_options:
+            self.category_prefix = self.category_options[default_index][1]
+            combo.SetSelectedOption(default_index)
+        combo.RegisterSelectItemCallback(self.onSelectCategory)
+
     def get_filtered_item_ids(self):
         # type: () -> list[str]
         item_ids = self.all_item_ids
-        if self.focus_skybluetech:
+        if self.category_prefix:
             item_ids = [
-                item_id for item_id in item_ids if item_id.startswith("skybluetech:")
+                item_id
+                for item_id in item_ids
+                if item_id.startswith(self.category_prefix)
             ]
         query = self.search_text.strip()
         if not query:
@@ -274,13 +314,9 @@ class MiniJEIItemListUI(ToolDeltaScreen):
             GetItemFormattedHoverText(item_id) or item_id,
         )
 
-    @Binder.binding(
-        Binder.BF_ToggleChanged,
-        "#MiniJEIItemListUI.focus_skybluetech_switch",
-    )
-    def onFocusSkyblueTechToggled(self, params):
-        # type: (dict) -> None
-        self.focus_skybluetech = params["state"]
+    def onSelectCategory(self, index, show_name, user_data):
+        # type: (int, str, typing.Any) -> None
+        self.category_prefix = user_data or ""
         self.current_page = 0
         self.render_current_page()
 
@@ -298,11 +334,16 @@ class MiniJEIItemListUI(ToolDeltaScreen):
     def onKeyPress(self, event):
         # type: (OnKeyPressInGame) -> None
         if event.key == event.KeyBoardType.KEY_ESCAPE and event.isDown:
+            if self.category_combo is not None and self.category_combo.IsOpen():
+                self.category_combo.Close()
+                return
             self.RemoveUI()
 
     @ToolDeltaScreen.Listen(MouseWheelClientEvent)
     def onMouseWheel(self, event):
         # type: (MouseWheelClientEvent) -> None
+        if self.category_combo is not None and self.category_combo.IsOpen():
+            return
         if event.direction == 1:
             self.onPrevPage({})
         else:
@@ -310,4 +351,6 @@ class MiniJEIItemListUI(ToolDeltaScreen):
 
     @ToolDeltaScreen.Listen(ScreenSizeChangedClientEvent)
     def onScreenSizeChanged(self, _):
+        if self.category_combo is not None:
+            self.category_combo.Close()
         ExecLater(0, lambda: self.update_grid_capacity(self.render_current_page))

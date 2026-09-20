@@ -285,42 +285,48 @@
                             }
                         },
                         {
-                            "focus_skybluetech_switch@common_toggles.switch_toggle_collection": {
-                                "type": "panel",
-                                "$default_texture": "textures/ui/toggle_off",
-                                "$hover_texture": "textures/ui/toggle_on",
-                                "$pressed_no_hover_texture": "textures/ui/toggle_on_hover",
-                                "$pressed_texture": "textures/ui/toggle_off_hover",
-                                "$toggle_name": "#MiniJEIItemListUI.focus_skybluetech_switch",
-                                "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
+                            "category_combo@tooldelta_lib.combo_box": {
+                                "$dropdown_background_alpha": 0,
+                                "$dropdown_background_texture|default": "textures/ui/gray_alpha_mask",
+                                "$option_default_texture|default": "textures/ui/gray_alpha_mask",
+                                "$option_hover_texture|default": "textures/ui/gray_alpha_mask",
+                                "$option_label_color|default": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$option_pressed_texture|default": "textures/ui/gray_alpha_mask",
+                                "$toggle_default_texture|default": "textures/ui/gray_alpha_mask",
+                                "$toggle_hover_texture|default": "textures/ui/gray_alpha_mask",
+                                "$toggle_label_color|default": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$toggle_label_font_scale_factor": 1,
+                                "$toggle_label_font_scale_factor|default": 1,
+                                "$toggle_pressed_texture|default": "textures/ui/gray_alpha_mask",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
+                                "layer": 100,
                                 "offset": [
-                                    4.0,
-                                    3.0
+                                    28,
+                                    4
                                 ],
                                 "size": [
-                                    24.0,
-                                    14.0
-                                ],
-                                "layer": 1,
-                                "bindings": [
-                                    {
-                                        "binding_type": "collection_details",
-                                        "binding_collection_name": "",
-                                        "binding_condition": "always_when_visible"
-                                    }
+                                    110,
+                                    16
                                 ]
                             }
                         },
                         {
-                            "focus_skybluetech_tip": {
+                            "category_label": {
                                 "type": "label",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
-                                    28.0,
-                                    5.0
+                                    6.0,
+                                    6.0
                                 ],
                                 "color": [
                                     0.7803921568627451,
@@ -328,7 +334,7 @@
                                     0.7803921568627451
                                 ],
                                 "font_type": "default",
-                                "text": "只看蔚蓝科技"
+                                "text": "分类"
                             }
                         },
                         {

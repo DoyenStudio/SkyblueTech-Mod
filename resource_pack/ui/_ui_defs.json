@@ -75,6 +75,7 @@
         "ui/TemplateAssemblerUI.json",
         "ui/TeslaPlantUI.json",
         "ui/ThermalGeneratorUI.json",
+        "ui/tooldelta_lib.json",
         "ui/TransmitterSettingsUI.json",
         "ui/VacuumFreezerUI.json",
         "ui/WindGeneratorUI.json"

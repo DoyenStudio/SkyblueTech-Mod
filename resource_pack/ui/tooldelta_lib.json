@@ -1,0 +1,441 @@
+{
+    "combo_box": {
+        "type": "panel",
+        "$dropdown_background_alpha|default": 1.0,
+        "$dropdown_background_texture|default": "textures/ui/panel_bg_rect_slim",
+        "$option_default_texture|default": "textures/ui/button_default",
+        "$option_hover_texture|default": "textures/ui/button_hovered",
+        "$option_label_color|default": [
+            0.2588235294117647,
+            0.2588235294117647,
+            0.2588235294117647
+        ],
+        "$option_label_font_scale_factor|default": 1.0,
+        "$option_label_font_size|default": "normal",
+        "$option_pressed_texture|default": "textures/ui/button_pressed",
+        "$toggle_default_texture|default": "textures/ui/button_default",
+        "$toggle_hover_texture|default": "textures/ui/button_hovered",
+        "$toggle_label_color|default": [
+            0.2588235294117647,
+            0.2588235294117647,
+            0.2588235294117647
+        ],
+        "$toggle_label_font_scale_factor|default": 1.4,
+        "$toggle_label_font_size|default": "normal",
+        "$toggle_pressed_texture|default": "textures/ui/button_pressed",
+        "size": [
+            100.0,
+            25.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "dismiss_button": {
+                    "type": "button",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1,
+                    "visible": false,
+                    "button_mappings": []
+                }
+            },
+            {
+                "toggle_button@tooldelta_lib.dropdown_button": {}
+            },
+            {
+                "dropdown_panel": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        25
+                    ],
+                    "size": [
+                        "100%",
+                        154
+                    ],
+                    "layer": 22,
+                    "visible": false,
+                    "controls": [
+                        {
+                            "background": {
+                                "type": "image",
+                                "alpha": "$dropdown_background_alpha",
+                                "layer": 1,
+                                "nineslice_size": [
+                                    2,
+                                    2,
+                                    2,
+                                    2
+                                ],
+                                "texture": "$dropdown_background_texture"
+                            }
+                        },
+                        {
+                            "options_scroll@common.scrolling_panel": {
+                                "$allow_scrolling_even_when_content_fits": false,
+                                "$background_nine_slice_buttom": 0,
+                                "$background_nine_slice_left": 0,
+                                "$background_nine_slice_right": 0,
+                                "$background_nine_slice_top": 0,
+                                "$background_nineslice_size": [
+                                    1,
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$box_nine_slice_buttom": 0,
+                                "$box_nine_slice_left": 0,
+                                "$box_nine_slice_right": 0,
+                                "$box_nine_slice_top": 0,
+                                "$box_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$is_background_nine_slice": false,
+                                "$is_box_nine_slice": false,
+                                "$is_track_nine_slice": false,
+                                "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                                "$scroll_background_texture": "textures/ui/frame_empty_slim",
+                                "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                                "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                                "$scroll_track_texture": "textures/ui/ScrollRail",
+                                "$scrolling_content": "tooldelta_lib.dropdown_content",
+                                "$show_background": false,
+                                "$track_nine_slice_buttom": 0,
+                                "$track_nine_slice_left": 0,
+                                "$track_nine_slice_right": 0,
+                                "$track_nine_slice_top": 0,
+                                "$track_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 2,
+                                "offset": [
+                                    0,
+                                    0
+                                ],
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "dropdown_button@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "$toggle_default_texture",
+        "$hover_texture": "$toggle_hover_texture",
+        "$is_new_nine_slice": false,
+        "$label_color": "$toggle_label_color",
+        "$label_font_scale_factor": "$toggle_label_font_scale_factor",
+        "$label_font_size": "$toggle_label_font_size",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "下拉框",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            1.0,
+            1.0,
+            1.0,
+            1.0
+        ],
+        "$pressed_texture": "$toggle_pressed_texture",
+        "$texture_layer": 2,
+        "size": [
+            "100%+0px",
+            "100%+0px"
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "is_handle_button_move_event": true,
+        "pressed_control": "pressed",
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {}
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {}
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {}
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {
+                    "offset": [
+                        -5,
+                        0
+                    ],
+                    "size": [
+                        "100%-22px",
+                        "default"
+                    ],
+                    "text_alignment": "left"
+                }
+            },
+            {
+                "arrow": {
+                    "type": "image",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -8,
+                        0
+                    ],
+                    "size": [
+                        8,
+                        5
+                    ],
+                    "layer": 10,
+                    "clip_direction": "left",
+                    "clip_ratio": 0.0,
+                    "texture": "textures/ui/down_triangle"
+                }
+            }
+        ]
+    },
+    "dropdown_content": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            "100%",
+            1
+        ],
+        "controls": [
+            {"row_0@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_1@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_2@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_3@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_4@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_5@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_6@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_7@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_8@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_9@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_10@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_11@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_12@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_13@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_14@tooldelta_lib.dropdown_option": {"visible": false}},
+            {"row_15@tooldelta_lib.dropdown_option": {"visible": false}}
+        ]
+    },
+    "dropdown_option@tooldelta_lib.dropdown_button": {
+        "$default_texture": "$option_default_texture",
+        "$hover_texture": "$option_hover_texture",
+        "$label_color": "$option_label_color",
+        "$label_font_scale_factor": "$option_label_font_scale_factor",
+        "$label_font_size": "$option_label_font_size",
+        "$label_layer": 4,
+        "$label_text": "",
+        "$pressed_texture": "$option_pressed_texture",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {}
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {}
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {}
+            },
+            {
+                "selected_marker": {
+                    "type": "image",
+                    "layer": 3,
+                    "alpha": 0.5,
+                    "visible": false,
+                    "nineslice_size": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "texture": "$option_pressed_texture"
+                }
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {
+                    "size": [
+                        "100%-10px",
+                        "default"
+                    ],
+                    "text_alignment": "left"
+                }
+            }
+        ],
+        "layer": 1,
+        "size": [
+            "100%",
+            25
+        ]
+    },
+    "dropdown_option_standalone@tooldelta_lib.dropdown_option": {
+        "$default_texture": "textures/ui/button_default",
+        "$hover_texture": "textures/ui/button_hovered",
+        "$label_color": [
+            0.2588235294117647,
+            0.2588235294117647,
+            0.2588235294117647
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "normal",
+        "$option_pressed_texture|default": "textures/ui/button_pressed",
+        "$pressed_texture": "textures/ui/button_pressed"
+    },
+    "main": {
+        "type": "screen",
+        "controls": [
+            {
+                "combo_box@tooldelta_lib.combo_box": {
+                    "type": "panel",
+                    "size": [
+                        100.0,
+                        25.0
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "dismiss_button": {
+                                "type": "button",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "size": [
+                                    0,
+                                    0
+                                ],
+                                "layer": 1,
+                                "visible": false,
+                                "button_mappings": []
+                            }
+                        },
+                        {
+                            "toggle_button@tooldelta_lib.dropdown_button": {}
+                        },
+                        {
+                            "dropdown_panel": {
+                                "type": "panel",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    0,
+                                    25
+                                ],
+                                "size": [
+                                    "100%",
+                                    154
+                                ],
+                                "layer": 22,
+                                "visible": false,
+                                "controls": [
+                                    {
+                                        "background": {
+                                            "type": "image",
+                                            "alpha": "$dropdown_background_alpha",
+                                            "layer": 1,
+                                            "nineslice_size": [
+                                                2,
+                                                2,
+                                                2,
+                                                2
+                                            ],
+                                            "texture": "$dropdown_background_texture"
+                                        }
+                                    },
+                                    {
+                                        "options_scroll@common.scrolling_panel": {
+                                            "$allow_scrolling_even_when_content_fits": false,
+                                            "$background_nine_slice_buttom": 0,
+                                            "$background_nine_slice_left": 0,
+                                            "$background_nine_slice_right": 0,
+                                            "$background_nine_slice_top": 0,
+                                            "$background_nineslice_size": [
+                                                1,
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "$box_nine_slice_buttom": 0,
+                                            "$box_nine_slice_left": 0,
+                                            "$box_nine_slice_right": 0,
+                                            "$box_nine_slice_top": 0,
+                                            "$box_nineslice_size": [
+                                                0,
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$is_background_nine_slice": false,
+                                            "$is_box_nine_slice": false,
+                                            "$is_track_nine_slice": false,
+                                            "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                                            "$scroll_background_texture": "textures/ui/frame_empty_slim",
+                                            "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                            "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                                            "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                            "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                                            "$scroll_track_texture": "textures/ui/ScrollRail",
+                                            "$scrolling_content": "tooldelta_lib.dropdown_content",
+                                            "$show_background": false,
+                                            "$track_nine_slice_buttom": 0,
+                                            "$track_nine_slice_left": 0,
+                                            "$track_nine_slice_right": 0,
+                                            "$track_nine_slice_top": 0,
+                                            "$track_nineslice_size": [
+                                                0,
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": 2,
+                                            "offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "size": [
+                                                "100%",
+                                                "100%"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "namespace": "tooldelta_lib"
+}

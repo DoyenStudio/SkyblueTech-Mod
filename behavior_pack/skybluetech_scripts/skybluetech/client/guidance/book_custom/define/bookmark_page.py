@@ -1,11 +1,14 @@
 # coding=utf-8
 import time
+
 from skybluetech_scripts.tooldelta.api.client import GetConfigData, SetConfigData
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
+
 from .base_page import BasePage
-from .text_page import TextPage
-from .page_group import PageGroup
 from .book_mark import BookMark, BookMarkMgr
+from .page_group import PageGroup
+from .text_page import TextPage
+from .utils import finish_name
 
 
 class BookMarkSection(object):
@@ -57,7 +60,7 @@ class BookMarkPage(BasePage):
                         return lambda _: on_remove_bookmark(section.book_mark)
 
                     e = grid.GetGridItem(0, i)
-                    e["label"].asLabel().SetText(section.title)
+                    e["label"].asLabel().SetText(finish_name(section.title))
                     e["goto_btn"].asButton().SetCallback(get_goto_handler(section))
                     e["remove_btn"].asButton().SetCallback(get_remove_handler(section))
 

@@ -25,7 +25,7 @@ class BasePage(object):
 
     def GetGroup(self):
         # type: () -> PageGroup | None
-        return None
+        return self.page_group
 
     def SetGroup(self, group):
         # type: (PageGroup) -> None

@@ -427,6 +427,9 @@
         "skybluetech:platinum_plate": {
             "textures": "textures/items/plates/platinum_plate"
         },
+        "skybluetech:titanium_plate": {
+            "textures": "textures/items/plates/titanium_plate"
+        },
         "skybluetech:platinum_stick": {
             "textures": "textures/items/sticks/platinum_stick"
         },

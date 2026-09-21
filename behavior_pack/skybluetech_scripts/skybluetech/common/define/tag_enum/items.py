@@ -73,6 +73,7 @@ class PlateTag:
     NICKEL = "plates/nickel"
     SILVER = "plates/silver"
     PLATINUM = "plates/platinum"
+    TITANIUM = "plates/titanium"
 
     BRONZE = "plates/bronze"
     STEEL = "plates/steel"

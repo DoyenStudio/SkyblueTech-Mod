@@ -33,6 +33,7 @@ recipes = RecipesCollection(
     preset_tagged(IngotTag.LEAD, Plates.LEAD),
     preset_tagged(IngotTag.SILVER, Plates.SILVER),
     preset_tagged(IngotTag.PLATINUM, Plates.PLATINUM),
+    preset_tagged(IngotTag.TITANIUM, Plates.TITANIUM),
     preset_tagged(IngotTag.NICKEL, Plates.NICKEL),
     preset_tagged(IngotTag.BRONZE, Plates.BRONZE),
     preset_tagged(IngotTag.ALUMITE, Plates.ALUMITE),

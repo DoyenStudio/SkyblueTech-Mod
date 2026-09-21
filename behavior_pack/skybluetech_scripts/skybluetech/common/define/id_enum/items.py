@@ -132,6 +132,7 @@ class Plates(SimpleEnum):
     SILVER = "skybluetech:silver_plate"
     NICKEL = "skybluetech:nickel_plate"
     PLATINUM = "skybluetech:platinum_plate"
+    TITANIUM = "skybluetech:titanium_plate"
 
     BRONZE = "skybluetech:bronze_plate"
     INVAR = "skybluetech:invar_plate"

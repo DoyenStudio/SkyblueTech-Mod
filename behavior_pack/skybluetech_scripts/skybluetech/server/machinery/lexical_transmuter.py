@@ -11,10 +11,12 @@ from .basic import (
 
 
 class TransInfo:
-    def __init__(self, id, name):
-        # type: (str, str) -> None
+    def __init__(self, id, name, aux, damage):
+        # type: (str, str, int, int) -> None
         self.c_id = id.split(":")[1]
         self.c_name = self._process_name(name)
+        self.c_aux = aux
+        self.c_damage = damage
 
     @staticmethod
     def _process_name(name):
@@ -28,7 +30,9 @@ class TransInfo:
     def like(self, other):
         if not isinstance(other, TransInfo):
             return False
-        return self.c_id == other.c_id or self.c_name == other.c_name
+        return (self.c_id == other.c_id or self.c_name == other.c_name) and (
+            self.c_aux == other.c_aux and self.c_damage == other.c_damage
+        )
 
 
 @RegisterMachine
@@ -83,7 +87,10 @@ class LexicalTransmuter(GUIControl, UpgradeControl):
             if output_item.StackFull():
                 return
         input_item_trans_data = TransInfo(
-            input_item.id, input_item.GetBasicInfo().itemName
+            input_item.id,
+            input_item.GetBasicInfo().itemName,
+            input_item.newAuxValue,
+            input_item.durability or 0,
         )
         template_item_basic_info = self.template_item.GetBasicInfo()
         if not input_item_trans_data.like(self.template_item_trans_info):
@@ -112,6 +119,9 @@ class LexicalTransmuter(GUIControl, UpgradeControl):
             self.template_item = None
             return
         self.template_item_trans_info = TransInfo(
-            template_item.id, template_item.GetBasicInfo().itemName
+            template_item.id,
+            template_item.GetBasicInfo().itemName,
+            template_item.newAuxValue,
+            template_item.durability or 0,
         )
         self.template_item = template_item

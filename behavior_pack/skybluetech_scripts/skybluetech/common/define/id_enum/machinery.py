@@ -22,6 +22,7 @@ class Machinery(SimpleEnum):
     ENERGY_CUBE_JUNIOR = "skybluetech:energy_cube_junior"
     ENGRAVER = "skybluetech:engraver"
     FARMING_STATION = "skybluetech:farming_station"
+    FEEDING_TROUGH = "skybluetech:feeding_trough"
     FERMENTER = "skybluetech:fermenter_controller"
     FLUID_CONDENSER = "skybluetech:fluid_condenser"
     FLUID_SPLITTER = "skybluetech:fluid_splitter"
@@ -67,6 +68,7 @@ class Machinery(SimpleEnum):
     VACUUM_FREEZER = "skybluetech:vacuum_freezer_controller"
     WIND_GENERATOR = "skybluetech:wind_generator"
     WIRELESS_RF_TRANSPORTER = "skybluetech:wireless_rf_transporter"
+
 
 class TransmitBelt(SimpleEnum):
     BELT = "skybluetech:transmit_belt"

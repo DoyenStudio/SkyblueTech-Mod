@@ -18,6 +18,7 @@ from .electric_crafter import ElectricCrafter
 from .energy_cube import EnergyCubeJunior
 from .engraver import Engraver
 from .farming_station import FarmingStation
+from .feeding_trough import FeedingTrough
 from .fermenter import Fermenter
 from .forester import Forester
 from .freezer import Freezer

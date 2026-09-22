@@ -1,0 +1,13 @@
+{
+    "description": "commands.skybluetech.ban_machine.description",
+    "format_version": "0.0.1",
+    "name": "skybluetech:ban_machine",
+    "permission_level": "game_directors",
+    "requires_cheats": false,
+    "args": [
+        {
+            "name": "machineId",
+            "type": "item"
+        }
+    ]
+}

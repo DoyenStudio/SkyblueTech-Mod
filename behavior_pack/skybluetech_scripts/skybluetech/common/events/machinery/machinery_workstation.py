@@ -1,11 +1,10 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
 from .basic import MachineryOperationC2S
 
 
 class MachineryWorkstationDoCraft(MachineryOperationC2S):
     name = "st:MWDC"
-    extra_attrs = ("crafting_strength",)
+    extra_attrs = ("craft_strength",)
 
     def __init__(self, x, y, z, craft_strength, player_id=""):
         # type: (int, int, int, float, str) -> None

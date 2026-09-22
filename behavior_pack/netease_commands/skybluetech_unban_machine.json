@@ -1,0 +1,13 @@
+{
+    "description": "commands.skybluetech.unban_machine.description",
+    "format_version": "0.0.1",
+    "name": "skybluetech:unban_machine",
+    "permission_level": "game_directors",
+    "requires_cheats": false,
+    "args": [
+        {
+            "name": "machineId",
+            "type": "item"
+        }
+    ]
+}

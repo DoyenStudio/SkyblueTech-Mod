@@ -8,6 +8,7 @@ from skybluetech_scripts.tooldelta.events.server.world import (
 )
 
 from ...common.define.facing import DXYZ_FACING, FACING_DXYZ
+from .basic.register import machine_classes
 
 # TYPE_CHECKING
 if 0 > 1:
@@ -15,7 +16,6 @@ if 0 > 1:
 # TYPE_CHECKING END
 
 
-machine_classes = {}  # type: dict[str, type[BaseMachine]]
 cached_machines = {}  # type: dict[tuple[int, int, int, int], BaseMachine]
 
 

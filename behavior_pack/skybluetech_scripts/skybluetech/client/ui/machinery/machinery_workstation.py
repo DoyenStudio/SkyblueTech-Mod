@@ -24,6 +24,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 
 from ..recipe_checker import AsRecipeCheckerBtn
+from ...machinery.bans import is_machine_banned
 from .define import MAIN_PATH, MachinePanelUIProxy
 from .utils import UpdateGenericProgressL2R
 
@@ -67,6 +68,7 @@ WARNING_BAR_PATH = MAIN_PATH / "warning_bar"
 PRGS_PATH = MAIN_PATH / "progress"
 RESEARCHING_BTN_PATH = MAIN_PATH / "researching_btn"
 RESULT_LABEL_PATH = MAIN_PATH / "result_item_label"
+EXTRA_MSG_PATH = MAIN_PATH / "extra_msg"
 OUTPUT_ITEM_PREVIEWER_PATH = (
     MAIN_PATH / "output_slot/slot/item_cell_overlay_ref/item_renderer"
 )
@@ -78,6 +80,9 @@ craft_hi_freq_limiter = PlayerRateLimiter(0.1)
 class MachineryWorkstationUI(MachinePanelUIProxy):
     def OnCreate(self):
         self.craft_strength = 0.0
+        self.ban_check_item_id = None
+        self.last_output_item_id = None
+        self.ban_message = ""
         self.warning_bar_shown = False
         self.warning_bar_display_time = 0
         self.search_text = ""
@@ -103,6 +108,8 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         ).asItemRenderer()
         self.progress_bar = self.GetElement(PRGS_PATH)
         self.result_item_label = self.GetElement(RESULT_LABEL_PATH).asLabel()
+        self.extra_msg = self.GetElement(EXTRA_MSG_PATH).asLabel()
+        self.extra_msg.SetText("")
         self.warning_bar.SetVisible(False)
         self.output_item_previewer.SetVisible(False)
         AsRecipeCheckerBtn(
@@ -114,6 +121,15 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         )
         self.refresh_visible_recipes()
 
+    def update_recipe_ban_message(self):
+        # type: () -> bool
+        banned = is_machine_banned(self.ban_check_item_id)
+        message = "§c管理员已禁用此配方" if banned else ""
+        if message != self.ban_message:
+            self.extra_msg.SetText(message)
+            self.ban_message = message
+        return banned
+
     def onClickCraftBtn(self, _):
         _, x, y, z = self.pos
         if not craft_hi_freq_limiter.record():
@@ -122,6 +138,9 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         if data is None:
             return
         output_item_id = GetValue(data["exData"], K_OUTPUT_ITEM_ID, None)
+        self.ban_check_item_id = output_item_id
+        if self.update_recipe_ban_message():
+            return
         if output_item_id is None:
             return
         self.craft_strength = min(1.0, self.craft_strength + 0.3)
@@ -139,6 +158,11 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
             return
         data = data["exData"]
         output_item_id = GetValue(data, K_OUTPUT_ITEM_ID, None)
+        if output_item_id != self.last_output_item_id:
+            self.last_output_item_id = output_item_id
+            self.ban_check_item_id = output_item_id
+        # 名单更新后, 已打开界面的提示也随下一帧刷新。
+        self.update_recipe_ban_message()
         need_tool = GetValue(data, K_NEED_TOOL, False)
         progress = GetValue(data, K_CRAFTING_PROGRESS, 0.0)
         self.craft_strength = max(0.0, self.craft_strength - 0.01)
@@ -293,6 +317,9 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         if index >= len(self.visible_recipes):
             return
         recipe = self.visible_recipes[index]
+        self.ban_check_item_id = recipe["output_item_id"]
+        if self.update_recipe_ban_message():
+            return
         self.incomplete_preview = None if recipe["complete"] else recipe["output_item_id"]
         _, x, y, z = self.pos
         MachineryWorkstationTransferRecipe(x, y, z, recipe["output_item_id"]).send()

@@ -555,6 +555,28 @@
                                                                         }
                                                                     ]
                                                                 }
+                                                            },
+                                                            {
+                                                                "extra_msg": {
+                                                                    "type": "label",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        -78.0
+                                                                    ],
+                                                                    "size": [
+                                                                        100,
+                                                                        "default"
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "color": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "shadow": true,
+                                                                    "text_alignment": "center"
+                                                                }
                                                             }
                                                         ]
                                                     }

@@ -5,6 +5,7 @@ from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecuto
 
 from ....common.events.machinery.basic import MachineryOperationC2S
 from ..pool import GetMachineStrict
+from ..utils.bans import reject_banned_machine
 from .multi_block_structure import MultiBlockStructure
 
 if 0 > 1:
@@ -41,6 +42,8 @@ class OperationListener(object):
                         GetPlayerDimensionId(event.player_id), event.x, event.y, event.z
                     )
                     if not isinstance(machine, cls):
+                        return
+                    if reject_banned_machine(event.player_id, machine.block_name):
                         return
                     if isinstance(machine, MultiBlockStructure) and not machine.StructureFinished():
                         return

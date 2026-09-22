@@ -17,7 +17,7 @@ from skybluetech_scripts.tooldelta.events.server import (
 )
 from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId, IsSneaking
 from skybluetech_scripts.tooldelta.api.common import Delay
-from .. import pool
+from ..utils.bans import reject_banned_machine
 from .base_clicker import BaseClicker
 from .base_machine import BaseMachine
 from .fluid_container import FluidContainer
@@ -26,11 +26,13 @@ from .item_container import ItemContainer
 from .gui_ctrl import GUIControl
 
 # TYPE_CHECKING
-if 0>1:
+if 0 > 1:
     import typing
 
     MT = typing.TypeVar("MT", bound=BaseMachine)
 # TYPE_CHECKING END
+
+machine_classes = {} # type: dict[str, type[BaseMachine]]
 
 
 def RegisterMachine(machine_cls):
@@ -39,16 +41,18 @@ def RegisterMachine(machine_cls):
     注册机器。所有机器类都必须使用此 `@RegisterMachine` 标注器标注。
     """
     if machine_cls.block_name:
-        pool.machine_classes[machine_cls.block_name] = machine_cls
+        machine_classes[machine_cls.block_name] = machine_cls
     for interface_cls, extra_block_names in machine_cls._extra_block_names.items():
         for extra_block_name in extra_block_names:
-            pool.machine_classes[extra_block_name] = interface_cls
+            machine_classes[extra_block_name] = interface_cls
     return machine_cls
 
 
 @BlockNeighborChangedServerEvent.Listen()
 def onNeighborChanged(event):
     # type: (BlockNeighborChangedServerEvent) -> None
+    from .. import pool
+
     m = pool.GetMachineStrict(event.dimensionId, event.posX, event.posY, event.posZ)
     if m:
         m.OnNeighborChanged(event)
@@ -58,6 +62,8 @@ def onNeighborChanged(event):
 @BlockStrengthChangedServerEvent.Listen()
 def onBlockStrengthChanged(event):
     # type: (BlockStrengthChangedServerEvent) -> None
+    from .. import pool
+
     m = pool.GetMachineStrict(event.dimensionId, event.posX, event.posY, event.posZ)
     if m:
         m.OnBlockRedstoneStrengthChanged(event)
@@ -66,6 +72,8 @@ def onBlockStrengthChanged(event):
 @ServerBlockEntityTickEvent.Listen()
 def onTicking(event):
     # type: (ServerBlockEntityTickEvent) -> None
+    from .. import pool
+
     m = pool.GetMachineStrict(event.dimension, event.posX, event.posY, event.posZ)
     if m:
         m.OnTicking()
@@ -74,6 +82,8 @@ def onTicking(event):
 @BlockRandomTickServerEvent.Listen()
 def onBlockRandomTick(event):
     # type: (BlockRandomTickServerEvent) -> None
+    from .. import pool
+
     m = pool.GetMachineStrict(event.dimensionId, event.posX, event.posY, event.posZ)
     if m:
         m.OnBlockRandomTick(event)
@@ -82,6 +92,11 @@ def onBlockRandomTick(event):
 @ServerBlockUseEvent.Listen()
 def onClick(event):
     # type: (ServerBlockUseEvent) -> None
+    from .. import pool
+
+    if reject_banned_machine(event.playerId, event.blockName):
+        event.cancel()
+        return
     m = pool.GetMachineStrict(event.dimensionId, event.x, event.y, event.z)
     if (
         isinstance(m, (FluidContainer, MultiFluidContainer))
@@ -101,6 +116,11 @@ def onClick(event):
 @ServerItemUseOnEvent.Listen()
 def onUseItem(event):
     # type: (ServerItemUseOnEvent) -> None
+    from .. import pool
+
+    if reject_banned_machine(event.entityId, event.blockName):
+        event.cancel()
+        return
     m = pool.GetMachineStrict(event.dimensionId, event.x, event.y, event.z)
     if (
         isinstance(m, (FluidContainer, MultiFluidContainer))
@@ -115,6 +135,11 @@ def onUseItem(event):
 @ServerEntityTryPlaceBlockEvent.Listen()
 def onTryPlace(event):
     # type: (ServerEntityTryPlaceBlockEvent) -> None
+    from .. import pool
+
+    if reject_banned_machine(event.entityId, event.fullName):
+        event.cancel()
+        return
     m = pool.TryGetMachineCls(event.fullName)
     if m:
         m.OnPrePlaced(event)
@@ -123,6 +148,8 @@ def onTryPlace(event):
 @ServerPlaceBlockEntityEvent.Listen()
 def onPlaced(event):
     # type: (ServerPlaceBlockEntityEvent) -> None
+    from .. import pool
+
     m = pool.GetMachineWithoutCls(
         event.dimension, event.posX, event.posY, event.posZ, event.blockName
     )
@@ -134,6 +161,8 @@ def onPlaced(event):
 @BlockRemoveServerEvent.Listen()
 def OnUnload(event):
     # type: (BlockRemoveServerEvent) -> None
+    from .. import pool
+
     m = pool.PopMachineStrict(event.dimension, event.x, event.y, event.z)
     if m is not None:
         m.OnDestroy()
@@ -144,6 +173,7 @@ def OnUnload(event):
 @PlayerTryPutCustomContainerItemServerEvent.ListenWithUserData()
 def onCustomContainerPutItem(event):
     # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
+    from .. import pool
     from ..interfaces import FluidInputInterface, FluidOutputInterface
 
     dimensionId = GetPlayerDimensionId(event.playerId)
@@ -158,6 +188,7 @@ def onCustomContainerPutItem(event):
 @ItemPushInCustomContainerServerEvent.Listen()
 def onItemPushIn(event):
     # type: (ItemPushInCustomContainerServerEvent) -> None
+    from .. import pool
     from ..interfaces import FluidInputInterface, FluidOutputInterface
 
     m = pool.GetMachineStrict(event.dimension, event.x, event.y, event.z)
@@ -176,6 +207,8 @@ def onItemPushIn(event):
 @ItemPullOutCustomContainerServerEvent.Listen()
 def onItemPullOut(event):
     # type: (ItemPullOutCustomContainerServerEvent) -> None
+    from .. import pool
+
     m = pool.GetMachineStrict(event.dimension, event.x, event.y, event.z)
     if not isinstance(m, ItemContainer):
         return
@@ -187,6 +220,8 @@ def onItemPullOut(event):
 @Delay(0)
 def onSlotUpdate(event):
     # type: (ContainerItemChangedServerEvent) -> None
+    from .. import pool
+
     pos = event.pos
     if pos is None:
         return

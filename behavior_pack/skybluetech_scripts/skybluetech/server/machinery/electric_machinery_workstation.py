@@ -23,6 +23,7 @@ from ...common.machinery_def.electric_machinery_workstation import (
 )
 from ...common.mini_jei import Input
 from .basic import OperationListener, Processor, RegisterMachine, UpgradeControl
+from .utils.bans import is_machine_banned, reject_banned_machine
 
 
 def _same_input(a, b):
@@ -46,6 +47,10 @@ class ElectricMachineryWorkstation(OperationListener, Processor):
 
     @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        # 父类已加载存档配方, 清除被禁用的选择并重置加工状态。
+        if is_machine_banned(self.bdata[K_SELECTED_RECIPE]):
+            self.bdata[K_SELECTED_RECIPE] = None
+            self.recheck_recipe()
         self.CallSync()
 
     def get_recipe(self):
@@ -188,4 +193,6 @@ class ElectricMachineryWorkstation(OperationListener, Processor):
 @ElectricMachineryWorkstation.ForOperation(ElectricMachineryWorkstationSelectRecipe)
 def on_select_recipe(event, machine):
     # type: (ElectricMachineryWorkstationSelectRecipe, ElectricMachineryWorkstation) -> None
+    if reject_banned_machine(event.player_id, event.output_item_id):
+        return
     machine.select_recipe(event.output_item_id)

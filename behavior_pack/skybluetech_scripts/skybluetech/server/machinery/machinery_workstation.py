@@ -30,6 +30,7 @@ from ...common.machinery_def.machinery_workstation import (
 )
 from ..machinery.utils.charge import ChargeEnough, GetCharge, GetPowerCost, UpdateCharge
 from ..tools.actions.utils import MakeItemUseless
+from .utils.bans import is_machine_banned
 from .basic import (
     BaseMachine,
     GUIControl,
@@ -159,6 +160,8 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer, OperationList
         recipe = self.current_recipe
         if recipe is None:
             return
+        if is_machine_banned(recipe.output_item_id):
+            return
         slotitems = self.GetInputSlotItems()
         pincer_item = slotitems.get(10)
         wrench_item = slotitems.get(9)
@@ -234,6 +237,8 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer, OperationList
         # type: (str, str) -> None
         """点击配方: 先把合成格现有物品(以及不满足需求的工具)归还玩家背包,
         再从背包填充合成格, 并自动放入等级足够的扳手/钳。物品不足时只放入已有的部分。"""
+        if is_machine_banned(output_item_id):
+            return
         recipe = None
         for rcp in Recipes:
             if rcp.output_item_id == output_item_id:

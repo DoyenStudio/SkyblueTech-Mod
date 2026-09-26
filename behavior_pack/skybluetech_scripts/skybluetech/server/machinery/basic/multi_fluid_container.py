@@ -146,8 +146,9 @@ class MultiFluidContainer(object):
                     return False
                 fluid_id = item.newItemName.replace("_bucket", "")
                 if ItemExists(fluid_id) and self.CanAddFluid(fluid_id):
-                    last_idx = len(self.fluid_input_slots) - 1
-                    for i, slot in enumerate(self.fluid_input_slots):
+                    # 一桶只倒进一个槽位: 找到第一个装得下整桶的输入槽后立刻停止,
+                    # 否则每个还装得下的槽位都会各加一桶, 凭空多出流体。
+                    for slot in sorted(self.fluid_input_slots):
                         fluid = self.fluids[slot]
                         if not self.IsValidFluidInput(slot, fluid_id):
                             continue
@@ -164,9 +165,10 @@ class MultiFluidContainer(object):
                         SpawnItemToPlayerCarried(
                             player_id, Item("minecraft:bucket", count=1)
                         )
-                        self._on_added_fluid(
-                            slot, fluid_id, BUCKET_VOLUME, i == last_idx
-                        )
+                        # 这里就是本次操作的最后一个槽位更新, 必须让 is_final 为真,
+                        # `Processor.OnAddedFluid` 才会去重查配方(输入槽空着时挂上的停机旗靠它唤醒)。
+                        self._on_added_fluid(slot, fluid_id, BUCKET_VOLUME, True)
+                        break
             if isinstance(self, GUIControl):
                 self.CallSync()
             return True

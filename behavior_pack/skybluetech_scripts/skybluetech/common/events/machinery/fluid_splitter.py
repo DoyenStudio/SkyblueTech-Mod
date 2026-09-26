@@ -8,9 +8,8 @@ class FluidSplitterSettingsSetLabel(MachineryOperationC2S):
     name = "st:FSSSL"
     extra_attrs = ("setting_index", "label")
 
-    def __init__(self, dim, x, y, z, setting_index, label, player_id=""):
+    def __init__(self, x, y, z, setting_index, label, player_id=""):
         # type : (int, int, int, int, int, str) -> None
-        self.dim = dim
         self.x = x
         self.y = y
         self.z = z

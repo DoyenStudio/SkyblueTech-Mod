@@ -72,7 +72,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
                 Item(fluid_id + "_bucket")
             )
 
-    def create_label_selector(self, x, y):  
+    def create_label_selector(self, x, y):
         # type: (float, float) -> UBaseCtrl
         self.selected_setting_index
         if self.label_selector_window is not None:
@@ -193,10 +193,8 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
             )
             return
         self.close_label_selector()
-        dim, x, y, z = self.pos
-        FluidSplitterSettingsSetLabel(
-            dim, x, y, z, self.selected_setting_index, idx
-        ).send()
+        _, x, y, z = self.pos
+        FluidSplitterSettingsSetLabel(x, y, z, self.selected_setting_index, idx).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#FluidSplitterUI.fluid_selected")
     def onSelectFluid(self, params):
@@ -248,13 +246,13 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
 
     @Binder.binding(Binder.BF_ButtonClick, "#FluidSplitterUI.fluid_selected_confirm")
     def onConfirmFluid(self, params):
-        dim, x, y, z = self.pos
+        _, x, y, z = self.pos
         fluid_id = self.current_selected_fluid_id
         if fluid_id is None:
             return
         self.current_selected_fluid_id = None
         FluidSplitterSettingsSetFluid(
-            dim, x, y, z, self.selected_setting_index, fluid_id
+            x, y, z, self.selected_setting_index, fluid_id
         ).send()
         self.close_fluid_selector()
 
@@ -280,7 +278,8 @@ def fuzzySearch(text, sections):
 def _get_all_fluid_names():
     if _get_all_fluid_names.cache is None:
         SEARCHABLE_FLUIDS = {
-            GetItemHoverName(fluid_id).replace("§f", ""): fluid_id for fluid_id in Fluids.all_sub()
+            GetItemHoverName(fluid_id).replace("§f", ""): fluid_id
+            for fluid_id in Fluids.all_sub()
         }
         SEARCHABLE_FLUIDS.update({fluid_id: fluid_id for fluid_id in Fluids.all_sub()})
         _get_all_fluid_names.cache = SEARCHABLE_FLUIDS

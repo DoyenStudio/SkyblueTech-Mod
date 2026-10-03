@@ -106,7 +106,7 @@ class ItemSpreader(GUIControl, OperationListener, UpgradeControl):
         if rest is None:
             new_count = item.count - 1
         else:
-            new_count = item_new.count - rest.count
+            new_count = item.count - (item_new.count - rest.count)
         if new_count != item.count:
             item.count = new_count
             self.SetSlotItem(0, item)

@@ -12,6 +12,8 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     ContainerItemChangedServerEvent,
+    ItemPullOutCustomContainerServerEvent,
+    ItemPushInCustomContainerServerEvent,
 )
 from skybluetech_scripts.tooldelta.utils.nbt import (
     Byte,
@@ -22,8 +24,6 @@ from skybluetech_scripts.tooldelta.utils.nbt import (
 )
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_xrange
 
-from ...machinery.basic.item_container import ItemContainer
-from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
 from ..base.logic import LogicModule
 from ..constants import CHEST_CONTAINERS, COMMON_CONTAINERS
 from .define import CableAccessPoint, CableNetwork
@@ -45,6 +45,13 @@ if 0 > 1:
 
 # 输入型网络: 网络向此容器输入物品
 # 输出型网络: 网络向此容器提取物品
+#
+# 读取容器内容走方块实体 NBT 批量读(箱子走容器 API) + 跨 tick 缓存, 不区分机器与普通
+# 容器; 只在真正写入某个槽位时构造 ItemPushInCustomContainerServerEvent /
+# ItemPullOutCustomContainerServerEvent 广播一次来验证这一次取出 / 存入:
+# 机器在 machinery/basic/register.py 里按 input_slots / output_slots / IsValidInput
+# 否决(容器里不属于机器物品槽位的格子因此不会被塞东西), 附属模组同样可以否决。
+# 被否决的槽位直接跳过, 不产生任何写入。
 
 # todo: 后续优化:
 #       1. 添加物品过滤功能
@@ -65,6 +72,58 @@ def isContainer(blockName, dim=None, xyz=None):
             return True
     return BlockHasTag(
         blockName, "skybluetech_container"
+    )
+
+
+def _broadcast_push_in(dim, pos, slot, item, block_name):
+    # type: (int, PosData, int, Item, str) -> bool
+    "广播存入事件, 返回监听者是否允许把物品写入该槽位。"
+    event = ItemPushInCustomContainerServerEvent(
+        item=item,
+        collectionName=block_name,
+        collectionIndex=slot,
+        x=pos[0],
+        y=pos[1],
+        z=pos[2],
+        dimension=dim,
+        _orig={},
+    )
+    return not event.broadcast()._orig.get("cancel", False)
+
+
+def _broadcast_pull_out(dim, pos, slot, item, block_name):
+    # type: (int, PosData, int, Item, str) -> bool
+    "广播取出事件, 返回监听者是否允许从该槽位取出物品。"
+    event = ItemPullOutCustomContainerServerEvent(
+        item=item,
+        collectionName=block_name,
+        collectionIndex=slot,
+        x=pos[0],
+        y=pos[1],
+        z=pos[2],
+        dimension=dim,
+        _orig={},
+    )
+    return not event.broadcast()._orig.get("cancel", False)
+
+
+def _set_slot_item(dim, pos, slot, item):
+    # type: (int, PosData, int, Item | None) -> None
+    "写入槽位; 物品为空或数量为 0 时清空该槽位。"
+    if item is None or item.count <= 0:
+        item = Item("minecraft:air", count=0)
+    SetContainerItem(dim, pos, slot, item)
+
+
+def _calc_move_count(source_item, target_item):
+    # type: (Item, Item | None) -> int
+    "目标槽位本次能接纳的物品数量, 0 表示放不进去。"
+    if target_item is None:
+        return min(source_item.count, source_item.GetBasicInfo().maxStackSize)
+    if target_item.StackFull() or not target_item.CanMerge(source_item):
+        return 0
+    return min(
+        source_item.count, target_item.GetBasicInfo().maxStackSize - target_item.count
     )
 
 
@@ -93,88 +152,57 @@ def PostItemIntoNetworks(dim, xyz, item, networks):
     return item
 
 
+def _push_item_to_container(dim, xyz, item, limit_count=None):
+    # type: (int, tuple[int, int, int], Item, int | None) -> Item | None
+    """
+    把物品放满容器的各个槽位, 返回剩余物品 (全部放入则返回 None)。
+
+    不区分机器与普通容器: 逐个槽位读出物品, 能放下的槽位先广播存入事件, 被否决就跳过;
+    只放入 limit_count 个物品, 超出 limit_count 的部分与没放下的部分一并作为剩余物品返回。
+    """
+    rest = item.copy()
+    if limit_count is not None:
+        rest.count = min(rest.count, limit_count)
+    overflow_count = item.count - rest.count
+    container_size = GetContainerSize(xyz, dim)
+    if container_size is None or container_size <= 0:
+        return item
+    block_name = GetBlockName(dim, xyz) or ""
+    for slot_pos in py2_xrange(container_size):
+        if rest.count <= 0:
+            break
+        orig_item = GetContainerItem(dim, xyz, slot_pos, getUserData=True)
+        move_count = _calc_move_count(rest, orig_item)
+        if move_count <= 0:
+            continue
+        piece = rest.copy()
+        piece.count = move_count
+        if not _broadcast_push_in(dim, xyz, slot_pos, piece, block_name):
+            continue
+        if orig_item is None:
+            _set_slot_item(dim, xyz, slot_pos, piece)
+        else:
+            orig_item.count += move_count
+            _set_slot_item(dim, xyz, slot_pos, orig_item)
+        rest.count -= move_count
+    if rest.count <= 0 and overflow_count <= 0:
+        return None
+    rest.count += overflow_count
+    return rest
+
+
 def PushItemToGenericContainer(ap, item, limit_count=None):
     # type: (CableAccessPoint, Item, int | None) -> Item | None
-    cxyz = ap.target_pos
-    send_item = item.copy()
-    if limit_count is not None:
-        send_item.count = min(send_item.count, limit_count)
-    overflow_count = item.count - send_item.count
-    m = GetMachineWithoutCls(ap.dim, *cxyz)
-    if m is not None and isinstance(m, ItemContainer):
-        # 是物品容器机器: 按机器槽位逻辑投递
-        res = m.PushItem(send_item)
-    else:
-        # 非机器或未声明物品槽位的机器: 一律按普通容器逻辑
-        container_size = GetContainerSize(cxyz, ap.dim)
-        if container_size is None or container_size <= 0:
-            return item
-        res = PushItemToOrigContainer(ap.dim, cxyz, send_item, container_size)
-    if res is None:
-        if overflow_count <= 0:
-            return None
-        else:
-            send_item.count = overflow_count
-    else:
-        send_item.count += overflow_count
-    return send_item
+    "把物品投入接入点所对的容器, 返回剩余物品。"
+    return PushItemToGenericContainerEasy(
+        ap.dim, ap.target_pos, ap.access_facing, item, limit_count
+    )
+
 
 def PushItemToGenericContainerEasy(dim, xyz, face, item, limit_count=None):
     # type: (int, tuple[int, int, int], int, Item, int | None) -> Item | None
-    send_item = item.copy()
-    if limit_count is not None:
-        send_item.count = min(send_item.count, limit_count)
-    overflow_count = item.count - send_item.count
-    m = GetMachineWithoutCls(dim, *xyz)
-    if m is not None and isinstance(m, ItemContainer):
-        res = m.PushItem(send_item)
-    else:
-        container_size = GetContainerSize(xyz, dim)
-        if container_size is None or container_size <= 0:
-            return item
-        res = PushItemToOrigContainer(dim, xyz, send_item, container_size)
-    if res is None:
-        if overflow_count <= 0:
-            return None
-        else:
-            send_item.count = overflow_count
-    else:
-        send_item.count += overflow_count
-    return send_item
-
-
-def PushItemToOrigContainer(dim, xyz, item, container_size):
-    # type: (int, tuple[int, int, int], Item, int) -> Item | None
-    for slot_pos in range(container_size):
-        orig_item = GetContainerItem(dim, xyz, slot_pos, getUserData=True)
-        if orig_item is None:
-            max_stack = item.GetBasicInfo().maxStackSize
-            if item.count <= max_stack:
-                res = SetContainerItem(dim, xyz, slot_pos, item)
-                if res:
-                    return None
-                else:
-                    continue
-            item_new = item.copy()
-            item_new.count = max_stack
-            res = SetContainerItem(dim, xyz, slot_pos, item_new)
-            if not res:
-                continue
-            item.count -= max_stack
-        elif not orig_item.CanMerge(item) or orig_item.StackFull():
-            continue
-        else:
-            require_count = min(
-                orig_item.GetBasicInfo().maxStackSize - orig_item.count, item.count
-            )
-            orig_item.count += require_count
-            item.count -= require_count
-            res = SetContainerItem(dim, xyz, slot_pos, orig_item)
-            if not res:
-                continue
-            if item.count == 0:
-                return None
-    return item
+    "把物品投入指定坐标的容器, 返回剩余物品。"
+    return _push_item_to_container(dim, xyz, item, limit_count)
 
 
 def onMachineryPlacedLater(dim, x, y, z):
@@ -189,7 +217,8 @@ def onNetworkTick(network):
     inputs = network.get_input_access_points()
     outputs = network.get_output_access_points()
 
-    if tick_capacity <= 0 or not outputs:
+    if tick_capacity <= 0 or not outputs or not inputs:
+        # 没有输出端或没有输入端时不会发生任何搬运, 也就不必广播验证事件
         return
 
     # 输出端轮询游标: 每次 tick 从下一个接入点开始扫描, 避免单个输出端长期独占容量
@@ -237,6 +266,16 @@ def onNetworkTick(network):
             send_item = output_item.copy()
             send_item.count = count_to_send
 
+            # 取出验证: 监听者可以否决从该槽位抽出物品
+            if not _broadcast_pull_out(
+                network.dim,
+                output_pos,
+                output_slot,
+                send_item,
+                _get_block_name(network, output_pos),
+            ):
+                continue
+
             for input_ap in inputs:
                 input_pos = input_ap.target_pos
 
@@ -268,34 +307,29 @@ def onNetworkTick(network):
                             continue
                         scanned_in_chest_pairs.add(ipair_key)
 
-                m = GetMachineStrict(network.dim, *input_pos)
-
                 break_flag2 = False
                 input_slotposes = _get_container_input_slots(network, input_pos)
+                input_name = _get_block_name(network, input_pos)
                 for input_slot in input_slotposes:
-                    if isinstance(m, ItemContainer):
-                        if not m.IsValidInput(input_slot, send_item):
-                            continue
                     input_item = _get_container_item(network, input_pos, input_slot)
-                    if input_item is None:
-                        move_count = min(
-                            send_item.count, send_item.GetBasicInfo().maxStackSize
-                        )
-                        input_item = send_item.copy()
-                        input_item.count = move_count
-                        network._cache_slotitems[input_pos][input_slot] = input_item
-                        send_item.count -= move_count
-                    elif input_item.CanMerge(send_item) and not input_item.StackFull():
-                        # print "Slot", input_slot, input_item.marshal()
-                        before_count = send_item.count
-                        input_item.MergeFrom(send_item)
-                        move_count = before_count - send_item.count
-                        if move_count <= 0:
-                            continue
-                        network._cache_slotitems[input_pos][input_slot] = input_item
-                    else:
+                    move_count = _calc_move_count(send_item, input_item)
+                    if move_count <= 0:
                         continue
 
+                    # 存入验证: 监听者可以否决把这一份物品写进该槽位
+                    piece = send_item.copy()
+                    piece.count = move_count
+                    if not _broadcast_push_in(
+                        network.dim, input_pos, input_slot, piece, input_name
+                    ):
+                        continue
+
+                    if input_item is None:
+                        network._cache_slotitems[input_pos][input_slot] = piece
+                    else:
+                        input_item.count += move_count
+                        network._cache_slotitems[input_pos][input_slot] = input_item
+                    send_item.count -= move_count
                     output_item.count -= move_count
                     tick_capacity -= move_count
 
@@ -407,16 +441,13 @@ def _get_container_slotposes(network, xyz):
     cached = network._cache_slotposes.get(xyz, MISSING)
     if cached is not MISSING:
         return cached
-    m = GetMachineStrict(network.dim, *xyz)
-    if isinstance(m, ItemContainer):
-        res = (m.input_slots, m.output_slots)
+    # 不区分机器与普通容器: 所有槽位都是候选, 该不该收 / 该不该放由事件监听者判定
+    size = GetContainerSize(xyz, network.dim)
+    if size is None or size <= 0:
+        res = ((), ())
     else:
-        size = GetContainerSize(xyz, network.dim)
-        if size is None:
-            res = ((), ())
-        else:
-            slot_range = tuple(py2_xrange(size))
-            res = (slot_range, slot_range)
+        slot_range = tuple(py2_xrange(size))
+        res = (slot_range, slot_range)
     network._cache_slotposes[xyz] = res
     return res
 

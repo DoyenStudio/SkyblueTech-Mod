@@ -3,7 +3,7 @@
     "format_version": "1.14.0",
     "sound_definitions": {
         "music.skybluetech.famicom_1": {
-            "category": "music",
+            "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
@@ -14,7 +14,7 @@
             ]
         },
         "music.skybluetech.famicom_2": {
-            "category": "music",
+            "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
@@ -25,7 +25,7 @@
             ]
         },
         "music.skybluetech.famicom_3": {
-            "category": "music",
+            "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
@@ -36,7 +36,7 @@
             ]
         },
         "music.skybluetech.famicom_4": {
-            "category": "music",
+            "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,

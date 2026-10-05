@@ -81,7 +81,10 @@ def onUseItemOn(event):
         (x, y, z),
         {K_CARTIDGE_TYPE_STATE: state},
     )
-    SetCommand("/playsound %s @a[r=30] %d %d %d" % (song, x, y, z))
+    SetCommand(
+        "/execute positioned %d %d %d run playsound %s @a[r=30]" % (x, y, z, song),
+        event.entityId,
+    )
     SpawnItemToPlayerCarried(event.entityId, Item("minecraft:air"))
 
 

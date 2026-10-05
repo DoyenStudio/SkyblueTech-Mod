@@ -11,7 +11,7 @@ K_OUTPUT_POWER = "st:output_power"
 
 MAX_INPUT_POWER = 400
 MAX_OUTPUT_POWER = 400
-STORE_RF_MAX = 200000
+STORE_RF_MAX = 400000
 
 
 class IOModes(object):

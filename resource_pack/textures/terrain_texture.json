@@ -86,6 +86,9 @@
         "skybluetech:cartidge_4_model": {
             "textures": "textures/models/cartidges/cartidge_red"
         },
+        "skybluetech:cartidge_5_model": {
+            "textures": "textures/models/cartidges/cartidge_cyan"
+        },
         "skybluetech:charger": {
             "textures": "textures/models/charger_texture"
         },

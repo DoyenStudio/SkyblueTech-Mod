@@ -41,7 +41,8 @@
                     1,
                     2,
                     3,
-                    4
+                    4,
+                    5
                 ]
             },
             "traits": {
@@ -150,6 +151,19 @@
                         },
                         "cartidge": {
                             "texture": "skybluetech:cartidge_4_model"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:fc_rom_type') == 5",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "skybluetech:famicom"
+                        },
+                        "cartidge": {
+                            "texture": "skybluetech:cartidge_5_model"
                         }
                     }
                 }

@@ -52,6 +52,7 @@ class FamicomCartidges(SimpleEnum):
     PURPLE = "skybluetech:famicom_cartidge_2"
     BLUE = "skybluetech:famicom_cartidge_3"
     RED = "skybluetech:famicom_cartidge_4"
+    CYAN = "skybluetech:famicom_cartidge_5"
 
 
 class Icons(SimpleEnum):

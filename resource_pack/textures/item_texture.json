@@ -79,6 +79,9 @@
         "skybluetech:cartidge_4_model": {
             "textures": "textures/models/cartidges/cartidge_red"
         },
+        "skybluetech:cartidge_5_model": {
+            "textures": "textures/models/cartidges/cartidge_cyan"
+        },
         "skybluetech:circuit_base_plate": {
             "textures": "textures/items/circuit_base_plate"
         },
@@ -198,6 +201,9 @@
         },
         "skybluetech:famicom_cartidge_4": {
             "textures": "textures/items/cartidges/famicom_cartidge_4"
+        },
+        "skybluetech:famicom_cartidge_5": {
+            "textures": "textures/items/cartidges/famicom_cartidge_5"
         },
         "skybluetech:fan_blade": {
             "textures": "textures/items/fan_blade"

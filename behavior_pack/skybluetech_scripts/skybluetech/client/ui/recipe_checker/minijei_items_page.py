@@ -4,6 +4,9 @@ from skybluetech_scripts.skybluetech.common.export import (
     GetCategoryOptions,
 )
 from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType
+from skybluetech_scripts.skybluetech.client.ui.recipe_checker.favourite_items import (
+    GetFavourites,
+)
 from skybluetech_scripts.tooldelta.api.client import (
     GetItemFormattedHoverText,
     GetItemHoverName,
@@ -34,7 +37,8 @@ MAIN_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
 )
 CONTENT_PATH = MAIN_PATH
-BG_PATH = CONTENT_PATH / "bg"
+BG_PATH = CONTENT_PATH / "bg1"
+FAVOURITES_BG_PATH = CONTENT_PATH / "bg2"
 GRID_PANEL_PATH = BG_PATH / "grid_panel"
 ITEMS_GRID_PATH = GRID_PANEL_PATH / "jei_items_grid"
 CATEGORY_COMBO_PATH = BG_PATH / "category_combo"
@@ -44,6 +48,7 @@ NEXT_PAGE_BTN_PATH = BG_PATH / "next_page_btn"
 CLOSE_BTN_PATH = BG_PATH / "close_btn"
 
 ITEMS_COLLECTION = "minijei_item_list_grid"
+FAVOURITES_COLLECTION = "minijei_favourites_grid"
 MOD_CATEGORY_PREFIX = MOD_NAMESPACE + ":"
 EMPTY_ITEM_ID_AUX = 131072
 GRID_ITEM_SIZE_Y = 20.0
@@ -105,6 +110,11 @@ class MiniJEIItemListUI(ToolDeltaScreen):
         self.category_combo = None  # type: Dropdown | None
         self.category_prefix = ""
         self.search_text = ""
+        self.current_page_favourites = []  # type: list[tuple[str, str, str]]
+        self.favourites_current_page = 0
+        self.favourites_total_pages_num = 1
+        self.favourites_per_page = 1
+        self.favourites_search_text = ""
 
     def OnCreate(self):
         self.grid_panel = self.GetElement(GRID_PANEL_PATH)
@@ -119,10 +129,26 @@ class MiniJEIItemListUI(ToolDeltaScreen):
         self.GetElement(PREV_PAGE_BTN_PATH).asButton().SetCallback(self.onPrevPage)
         self.GetElement(NEXT_PAGE_BTN_PATH).asButton().SetCallback(self.onNextPage)
         self.GetElement(CLOSE_BTN_PATH).asButton().SetCallback(self.onClose)
+        self.favourites_grid_panel = self.GetElement(FAVOURITES_BG_PATH / "grid_panel")
+        self.favourites_grid = self.GetElement(
+            FAVOURITES_BG_PATH / "grid_panel/jei_items_grid"
+        ).asGrid()
+        self.favourites_page_label = self.GetElement(
+            FAVOURITES_BG_PATH / "page_label"
+        ).asLabel()
+        self.GetElement(FAVOURITES_BG_PATH / "prev_page_btn").asButton().SetCallback(
+            self.onPrevFavouritesPage
+        )
+        self.GetElement(FAVOURITES_BG_PATH / "next_page_btn").asButton().SetCallback(
+            self.onNextFavouritesPage
+        )
         self.load_items()
         self.setup_category_combo()
         self.update_grid_capacity(self.render_current_page)
         ExecLater(0, lambda: self.update_grid_capacity(self.render_current_page))
+
+    def OnActive(self):
+        self.render_favourites_page()
 
     def OnDeactive(self):
         if self.category_combo is not None:
@@ -150,6 +176,16 @@ class MiniJEIItemListUI(ToolDeltaScreen):
         else:
             rows = max(1, int(grid_panel_size_y / GRID_ITEM_SIZE_Y))
         self.items_per_page = min(columns * rows, MAX_ITEMS_PER_PAGE)
+        favourites_columns, favourites_rows = self.favourites_grid.GetGridDimension()
+        favourites_panel_size_y = self.favourites_grid_panel.GetSize()[1]
+        if favourites_panel_size_y > 0:
+            favourites_rows = int(favourites_panel_size_y / GRID_ITEM_SIZE_Y)
+        self.favourites_per_page = min(
+            max(1, int(favourites_columns)) * max(1, int(favourites_rows)),
+            MAX_ITEMS_PER_PAGE,
+        )
+        self.render_favourites_page()
+        ExecLater(0, self.render_favourites_page)
         if after:
             after()
             ExecLater(0, after)
@@ -230,6 +266,52 @@ class MiniJEIItemListUI(ToolDeltaScreen):
             return None
         return self.current_page_item_ids[index]
 
+    def render_favourites_page(self):
+        # type: () -> None
+        # Ignore incomplete saved records without modifying the favourite config.
+        favourites = [
+            favourite
+            for favourite in GetFavourites()
+            if isinstance(favourite, (tuple, list)) and len(favourite) == 3
+        ]
+        keywords = self.favourites_search_text.lower().split()
+        if keywords:
+            favourites = [
+                favourite
+                for favourite in favourites
+                if all(
+                    keyword
+                    in (
+                        favourite[1].lower()
+                        + " "
+                        + favourite[2].lower()
+                        + " "
+                        + _get_search_text(
+                            ITEM_NAME_CACHE.get(favourite[2], favourite[2])
+                        )
+                    )
+                    for keyword in keywords
+                )
+            ]
+        self.favourites_total_pages_num = max(
+            1,
+            (len(favourites) + self.favourites_per_page - 1)
+            // self.favourites_per_page,
+        )
+        self.favourites_current_page = min(
+            self.favourites_current_page, self.favourites_total_pages_num - 1
+        )
+        start = self.favourites_current_page * self.favourites_per_page
+        self.current_page_favourites = favourites[start : start + self.favourites_per_page]
+        self.favourites_grid.SetPropertyBag({
+            "#maximum_grid_items": len(self.current_page_favourites)
+        })
+        self.favourites_grid.SetVisible(bool(self.current_page_favourites), True)
+        self.favourites_page_label.SetText(
+            "第 %d / %d 页"
+            % (self.favourites_current_page + 1, self.favourites_total_pages_num)
+        )
+
     def get_item_id_aux(self, item_id):
         # type: (str) -> int
         cached = self.item_id_aux_cache.get(item_id)
@@ -260,6 +342,68 @@ class MiniJEIItemListUI(ToolDeltaScreen):
             return
         self.current_page = (self.current_page + 1) % self.total_pages_num
         self.render_current_page()
+
+    def onPrevFavouritesPage(self, params):
+        # type: (dict) -> None
+        self.favourites_current_page = (
+            self.favourites_current_page - 1
+        ) % self.favourites_total_pages_num
+        self.render_favourites_page()
+
+    def onNextFavouritesPage(self, params):
+        # type: (dict) -> None
+        self.favourites_current_page = (
+            self.favourites_current_page + 1
+        ) % self.favourites_total_pages_num
+        self.render_favourites_page()
+
+    @Binder.binding_collection(
+        Binder.BF_BindInt,
+        FAVOURITES_COLLECTION,
+        "#MiniJEIItemListUI.favourite_item_nums",
+    )
+    def get_favourite_item_nums(self, _index):
+        # type: (int) -> int
+        return len(self.current_page_favourites)
+
+    @Binder.binding_collection(
+        Binder.BF_BindInt,
+        FAVOURITES_COLLECTION,
+        "#MiniJEIItemListUI.favourite_item_id_aux",
+    )
+    def get_favourite_item_id_aux_binding(self, index):
+        # type: (int) -> int
+        if not 0 <= index < len(self.current_page_favourites):
+            return EMPTY_ITEM_ID_AUX
+        return self.get_item_id_aux(self.current_page_favourites[index][2])
+
+    @Binder.binding(
+        Binder.BF_ButtonClickUp,
+        "#MiniJEIItemListUI.favourite_item_select",
+    )
+    def onSelectFavouriteItem(self, params):
+        # type: (dict) -> None
+        index = params["#collection_index"]
+        if not 0 <= index < len(self.current_page_favourites):
+            return
+        category, item_id, display_item_id = self.current_page_favourites[index]
+        button_path = params["ButtonPath"]
+        if button_path.startswith("main/"):
+            button_path = button_path[len("main/") :]
+        button = self.GetElement(button_path)
+        x, y = button.GetRootPos()
+        from skybluetech_scripts.skybluetech.client.ui.recipe_checker.render_utils import (
+            CreateDescBoard,
+        )
+
+        CreateDescBoard(
+            button._parent,
+            (x + 20, min(y, self.favourites_grid_panel.GetSize()[1] - 40)),
+            category,
+            item_id,
+            display_item_id,
+            GetItemFormattedHoverText(display_item_id) or display_item_id,
+        )
 
     @Binder.binding_collection(
         Binder.BF_BindInt,
@@ -329,6 +473,16 @@ class MiniJEIItemListUI(ToolDeltaScreen):
         self.search_text = params["Text"].strip()
         self.current_page = 0
         self.render_current_page()
+
+    @Binder.binding(
+        Binder.BF_EditChanged,
+        "#MiniJEIItemListUI.search_favourites",
+    )
+    def onSearchFavouritesFinished(self, params):
+        # type: (dict) -> None
+        self.favourites_search_text = params["Text"].strip()
+        self.favourites_current_page = 0
+        self.render_favourites_page()
 
     @ToolDeltaScreen.Listen(OnKeyPressInGame)
     def onKeyPress(self, event):

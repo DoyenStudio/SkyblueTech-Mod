@@ -176,6 +176,8 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
                 print("[Warning] Failed to add favourite item.")
         fav_img.SetVisible(IsFavourite(category, item_id, display_item_id))
         ui_node._vars.pop(DESC_BOARD_KEY).Remove()
+        if isinstance(ui_node, MiniJEIItemListUI):
+            ui_node.render_favourites_page()
 
     check_src_btn.SetCallback(on_check_src)
     check_usage_btn.SetCallback(on_check_usage)

@@ -631,15 +631,7 @@
                 "result_item": {
                     "type": "custom",
                     "renderer": "inventory_item_renderer",
-                    "property_bag": {
-                        "#item_id_aux": 131072
-                    },
                     "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "recipe_check_ui_favourite_items",
-                            "binding_condition": "always_when_visible"
-                        },
                         {
                             "binding_name_override": "#item_id_aux",
                             "binding_collection_name": "recipe_check_ui_favourite_items",

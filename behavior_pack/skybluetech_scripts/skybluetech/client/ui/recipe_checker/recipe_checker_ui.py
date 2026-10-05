@@ -22,7 +22,7 @@ from skybluetech_scripts.tooldelta.ui import (
     UIPath,
 )
 
-from .favourite_items import GetFavourites, favourite_items_idauxs
+from .favourite_items import GetFavourites, favourite_items_idauxs, update
 from .render_utils import CreateDescBoard
 from .utils import RecipeCategoriesData, RecipePageData
 

@@ -40,7 +40,7 @@ def GetFavourites():
     global favourite_items
     if favourite_items is None:
         cfg = GetConfigData(CFG_KEY)
-        _favourite_items = cfg.get("favourites", [])
+        _favourite_items = _clean_fav_data(cfg.get("favourites", []))
         favourite_items = _favourite_items
         update()
         return _favourite_items
@@ -54,10 +54,21 @@ def IsFavourite(category, item_id, display_item_id):
 
 
 def update():
-    global favourite_items_idauxs
-    try:
-        favourite_items_idauxs[:] = [
-            Item(id).GetBasicInfo().id_aux for _, _, id in GetFavourites()
-        ]
-    except ValueError:
-        favourite_items_idauxs[:] = []
+    favourite_items_idauxs[:] = []
+    for args in GetFavourites():
+        try:
+            _, _, id = args
+            favourite_items_idauxs.append(Item(id).GetBasicInfo().id_aux)
+        except ValueError:
+            continue
+
+
+def _clean_fav_data(data):
+    return [
+        d
+        for d in data
+        if len(d) == 3
+        and isinstance(d[0], str)
+        and isinstance(d[1], str)
+        and isinstance(d[2], str)
+    ]

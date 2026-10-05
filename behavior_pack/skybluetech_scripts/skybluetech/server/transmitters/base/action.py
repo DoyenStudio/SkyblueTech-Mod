@@ -424,6 +424,21 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             event.pid,
         )
 
+    def invalidate_ap_network_machines(self, dim, ap):
+        # type: (int, _APT) -> None
+        """
+        接入点设置变化后, 让所在网络的机器丢弃按网络缓存的数据。
+
+        取活网络只用缓存查表, 不能用 `ap.get_bounded_network()`: 后者可能是已经被
+        网络重建淘汰掉的孤儿对象; 也不能允许回退重建, 否则改一次设置就会凭空 BFS
+        出一条重复网络。
+        """
+        network = self.logic_module.GetNetworkByTransmitter(
+            dim, ap.x, ap.y, ap.z, force_use_cached=True
+        )
+        if network is not None:
+            self.logic_module.invalidate_network_machines(network)
+
     @EventListenerService.Listen(TransmitterSetLabel)
     def onSetLabel(self, event):
         # type: (TransmitterSetLabel) -> None
@@ -431,8 +446,9 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             return
         if not isinstance(event.label, int) or event.label < 0 or event.label > 100000:
             return
+        dim = GetPlayerDimensionId(event.pid)
         ap = self.logic_module.access_points_pool.get((
-            GetPlayerDimensionId(event.pid),
+            dim,
             event.x,
             event.y,
             event.z,
@@ -441,6 +457,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         if ap is None:
             return
         ap.set_label(event.label)
+        self.invalidate_ap_network_machines(dim, ap)
 
     @EventListenerService.Listen(TransmitterSetPriority)
     def onSetPriority(self, event):
@@ -453,8 +470,9 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             or event.priority > 100000
         ):
             return
+        dim = GetPlayerDimensionId(event.pid)
         ap = self.logic_module.access_points_pool.get((
-            GetPlayerDimensionId(event.pid),
+            dim,
             event.x,
             event.y,
             event.z,
@@ -463,3 +481,4 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         if ap is None:
             return
         ap.set_priority(event.priority)
+        self.invalidate_ap_network_machines(dim, ap)

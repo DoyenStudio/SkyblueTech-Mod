@@ -1,3 +1,5 @@
+# coding=utf-8
+from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server.block import (
     GetBlockEntityData,
     GetBlockName,
@@ -17,6 +19,40 @@ if 0 > 1:
 
 
 cached_machines = {}  # type: dict[tuple[int, int, int, int], BaseMachine]
+
+_invalidated_positions = set()  # type: set[tuple[int, int, int, int]]
+"本 tick 内被请求失效的机器坐标, tick 末统一派发。"
+_flush_scheduled = False
+"是否已经排好一次派发, 避免同一 tick 内重复排队。"
+
+
+def InvalidateMachineCachesLater(dim, positions):
+    # type: (int, typing.Iterable[tuple[int, int, int]]) -> None
+    """
+    把一批坐标上机器的缓存失效请求排到本 tick 结束后统一派发。
+
+    管网重建会在一次事件里连续拆建多条网络, 同一台机器可能被反复命中;
+    合并成 tick 末一次派发, 既避免重复回调, 也避免机器代码在管网拆到
+    一半时被同步唤起。
+    """
+    global _flush_scheduled
+    _invalidated_positions.update((dim, x, y, z) for x, y, z in positions)
+    if not _flush_scheduled:
+        _flush_scheduled = True
+        ExecLater(0, _flush_invalidated_machine_caches)
+
+
+def _flush_invalidated_machine_caches():
+    # type: () -> None
+    "派发本 tick 内积攒的失效请求; 期间已被卸载的机器直接跳过。"
+    global _flush_scheduled
+    _flush_scheduled = False
+    positions = list(_invalidated_positions)
+    _invalidated_positions.clear()
+    for pos in positions:
+        m = cached_machines.get(pos)
+        if m is not None:
+            m.OnInvalidateCaches()
 
 
 def GetMachine(dimension, x, y, z, machine_cls):

@@ -243,3 +243,15 @@ def OnNeighborChanged(self, event: BlockNeighborChangedServerEvent)
 def OnDeactiveFlagsChanged(self)
 ```
 可被覆写，机器激活状态更改时调用。
+
+---
+
+```python
+def OnInvalidateCaches(self)
+```
+可被覆写，机器缓存的按位置 / 邻居 / 管网推导出的数据失效时调用。
+
+子类若缓存了这类数据，应重写此方法，并在其中**只打脏标记或清空缓存**，实际重建留到下一 tick 惰性完成。
+不要在钩子里同步读取管网数据或触发其他系统的副作用 —— 它可能在管网拆到一半时被调用。
+
+触发时机：邻近方块变化、邻居方块放置 / 移除、区块装卸，以及管网网络重建或接入点设置变化。

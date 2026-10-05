@@ -176,6 +176,15 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         network = access_point.get_bounded_network()
         if not isinstance(network, self.network_cls):
             return False
+        if io_mode not in (AP_MODE_INPUT, AP_MODE_OUTPUT):
+            return False
+        # 集合真的变了才通知机器: EnergyCube / RFRepeaterPlant 会每 tick 幂等地
+        # 重设同一个模式, 不加这个判断会让相关机器每 tick 失效一次
+        changed = (
+            access_point in network.group_outputs
+            if io_mode == AP_MODE_INPUT
+            else access_point in network.group_inputs
+        )
         cnode = self.GetContainerNode(network.dim, *access_point.target_pos)
         if io_mode == AP_MODE_INPUT:
             cnode.set_face(
@@ -186,7 +195,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             cnode.set_face(
                 OPPOSITE_FACING[access_point.access_facing], AP_MODE_INPUT, network
             )
-        elif io_mode == AP_MODE_OUTPUT:
+        else:
             cnode.set_face(
                 OPPOSITE_FACING[access_point.access_facing], AP_MODE_INPUT, None
             )
@@ -195,8 +204,6 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             cnode.set_face(
                 OPPOSITE_FACING[access_point.access_facing], AP_MODE_OUTPUT, network
             )
-        else:
-            return False
         self.access_points_pool[
             (
                 network.dim,
@@ -206,6 +213,8 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 access_point.access_facing,
             )
         ] = access_point
+        if changed:
+            self.invalidate_network_machines(network)
         return True
 
     def transmitter_can_connect(self, block_name, other_block_name):
@@ -392,6 +401,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 if bound_network is not None:
                     bound_network.group_inputs.discard(ap)
                     bound_network.group_outputs.discard(ap)
+                    self.invalidate_network_machines(bound_network)
                 else:
                     print(
                         "[ERROR] Transmitter access point {} bound network None".format((
@@ -403,12 +413,29 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                         ))
                     )
 
+    def invalidate_network_machines(self, network):
+        # type: (_NT) -> None
+        """
+        网络拓扑或接入点发生变化后, 让其接入的所有机器丢弃缓存数据。
+
+        网络重建会换掉全部接入点对象, 但机器只收到邻居方块级别的失效, 感知不到
+        这些变化, 因此这里主动通知。请求会合并到本 tick 结束后统一派发, 且只打
+        脏标记, 实际重建由机器下一 tick 惰性完成。
+        """
+        from ...machinery.pool import InvalidateMachineCachesLater
+
+        InvalidateMachineCachesLater(
+            network.dim,
+            (ap.target_pos for ap in network.group_inputs | network.group_outputs),
+        )
+
     def delete_network(self, network):
         # type: (_NT) -> None
         "完全清除一个网络。"
         save_network_data = getattr(network, "save_network_data", None)
         if save_network_data is not None:
             save_network_data()
+        self.invalidate_network_machines(network)
         all_aps = network.group_inputs | network.group_outputs  # type: set[_APT]
         for ap in all_aps:
             res = self.access_points_pool.pop(

@@ -1,9 +1,9 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server import GetSeed
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.utils import nbt
 
+from .basic.item_container import ItemContainer
 from ...common.define.id_enum import (
     INSCRIBING_TEMPLATE,
     Machinery,
@@ -27,11 +27,12 @@ from ...common.machinery_def.template_assembler import (
     recipes as Recipes,
 )
 from ...common.misc.inscribing_template import K_UD_TEMPLATE_GRAPH
-from .basic import MultiFluidContainer, Processor, RegisterMachine
+from .basic import MultiFluidContainer, Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class TemplateAssembler(MultiFluidContainer, Processor):
+class TemplateAssembler(Processor, MultiFluidContainer):
     block_name = Machinery.TEMPLATE_ASSEMBLER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
@@ -42,29 +43,31 @@ class TemplateAssembler(MultiFluidContainer, Processor):
     upgrade_slot_start = 12
     upgrade_slots = 4
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(TemplateAssembler, self).__init__(dim, x, y, z, block_entity_data)
         self.update_template_slot()
         self.sync_recipe()
         self.recheck_recipe()
+        self.handler.SubscribeOnSlotUpdate(self._template_assembler_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._template_assembler_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _template_assembler_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if slot == TEMPLATE_SLOT_INDEX:
             return item.id == INSCRIBING_TEMPLATE
         else:
             return Processor.IsValidInput(self, slot, item)
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _template_assembler_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if slot_pos != TEMPLATE_SLOT_INDEX:
             return

@@ -8,13 +8,14 @@ from skybluetech_scripts.tooldelta.api.server import (
     GetSelectedSlot,
     SetInventorySlotItemCount,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define.global_config import BUCKET_VOLUME
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotServer
 from .gui_ctrl import GUIControl
 
+from .base_machine import BaseMachine
 
-class MultiFluidContainer(object):
+
+class MultiFluidContainer(BaseMachine):
     """
     可存储多种流体的机器基类。
 
@@ -41,6 +42,7 @@ class MultiFluidContainer(object):
     allow_player_use_bucket_pull = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(MultiFluidContainer, self).__init__(dim, x, y, z, block_entity_data)
         self.dim = dim
         self.xyz = (x, y, z)
         self.bdata = block_entity_data
@@ -166,7 +168,7 @@ class MultiFluidContainer(object):
                             player_id, Item("minecraft:bucket", count=1)
                         )
                         # 这里就是本次操作的最后一个槽位更新, 必须让 is_final 为真,
-                        # `Processor.OnAddedFluid` 才会去重查配方(输入槽空着时挂上的停机旗靠它唤醒)。
+                        # `Processor._processor_on_added_fluid` 才会去重查配方(输入槽空着时挂上的停机旗靠它唤醒)。
                         self._on_added_fluid(slot, fluid_id, BUCKET_VOLUME, True)
                         break
             if isinstance(self, GUIControl):
@@ -229,31 +231,17 @@ class MultiFluidContainer(object):
             ApplyTubeContent(player_id, item, tube_fluid_id, tube_volume)
         return True
 
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, added_fluid_volume, is_final):
-        # type: (int, str, float, bool) -> None
-        "容器内流体体积已经增加时调用。"
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        # type: (int, str, float, bool) -> None
-        "容器内流体体积已经减少时调用。"
-
-    @SuperExecutorMeta.execute_super
-    def OnFluidSlotUpdate(self, slot_pos, is_final):
-        # type: (int, bool) -> None
-        "子类覆写在流体槽位发生更新时执行的回调。"
 
     def _on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
-        self.OnAddedFluid(slot, fluid_id, fluid_volume, is_final)
+        self.handler.CallOnAddedFluidHandlers(slot, fluid_id, fluid_volume, is_final)
         self._on_fluid_slot_update(slot, is_final)
         if isinstance(self, GUIControl):
             self.CallSync()
 
     def _on_reduced_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
-        self.OnReducedFluid(slot, fluid_id, fluid_volume, is_final)
+        self.handler.CallOnReducedFluidHandlers(slot, fluid_id, fluid_volume, is_final)
         self._on_fluid_slot_update(slot, is_final)
         if isinstance(self, GUIControl):
             self.CallSync()
@@ -261,4 +249,4 @@ class MultiFluidContainer(object):
     def _on_fluid_slot_update(self, slot_pos, is_final):
         # type: (int, bool) -> None
         "子类覆写在流体槽位发生更新时执行的回调。"
-        self.OnFluidSlotUpdate(slot_pos, is_final)
+        self.handler.CallOnFluidSlotUpdateHandlers(slot_pos, is_final)

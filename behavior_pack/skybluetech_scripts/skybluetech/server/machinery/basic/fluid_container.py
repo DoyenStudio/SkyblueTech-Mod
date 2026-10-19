@@ -14,6 +14,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic.fluid_container 
     K_FLUID_VOLUME,
     K_MAX_VOLUME,
 )
+from .base_machine import BaseMachine
 from .gui_ctrl import GUIControl
 
 # 浮点传输（管道/机器分量产出）可能留下极小残留体积, 低于该阈值视为空,
@@ -21,7 +22,8 @@ from .gui_ctrl import GUIControl
 FLUID_VOLUME_EPSILON = 1e-6
 
 
-class FluidContainer(object):
+
+class FluidContainer(BaseMachine):
     """
     可存储单种流体的机器基类。
 
@@ -43,6 +45,7 @@ class FluidContainer(object):
     allow_player_use_bucket_pull = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(FluidContainer, self).__init__(dim, x, y, z, block_entity_data)
         self.dim = dim
         self.xyz = (x, y, z)
         # if self.fluid_io_fix_mode == 1:
@@ -134,19 +137,6 @@ class FluidContainer(object):
             fluid_id == self.fluid_id and self.fluid_volume < self.max_fluid_volume
         )
 
-    def OnFluidSlotUpdate(self):
-        "流体内容更新时调用。"
-        pass
-
-    def OnAddedFluid(self, fluid_id, added_fluid_volume):
-        # type: (str, float) -> None
-        "容器内流体体积已经增加时调用。"
-        pass
-
-    def OnReducedFluid(self, fluid_id, reduced_fluid_volume):
-        # type: (str, float) -> None
-        "容器内流体体积已经减少时调用。"
-        pass
 
     def on_player_interact_with_bucket(self, player_id, test=False):
         # type: (str, bool) -> bool
@@ -253,14 +243,14 @@ class FluidContainer(object):
 
     def _on_added_fluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> None
-        self.OnAddedFluid(fluid_id, fluid_volume)
+        self.handler.CallOnSingleAddedFluidHandlers(fluid_id, fluid_volume)
         self._on_fluid_slot_update()
         if isinstance(self, GUIControl):
             self.CallSync()
 
     def _on_reduced_fluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> None
-        self.OnReducedFluid(fluid_id, fluid_volume)
+        self.handler.CallOnSingleReducedFluidHandlers(fluid_id, fluid_volume)
         self._on_fluid_slot_update()
         if isinstance(self, GUIControl):
             self.CallSync()
@@ -268,7 +258,7 @@ class FluidContainer(object):
     def _on_fluid_slot_update(self):
         # type: () -> None
         # self._reset_send_fluid_retries()
-        self.OnFluidSlotUpdate()
+        self.handler.CallOnSingleFluidSlotUpdateHandlers()
 
     @property
     def fluid_id(self):

@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
@@ -15,9 +14,9 @@ from .basic import (
     BaseGenerator,
     GUIControl,
     ItemContainer,
-    RegisterMachine,
     WorkRenderer,
 )
+from .core import RegisterMachine
 
 SECOND_PER_TICK = 0.05
 
@@ -25,14 +24,14 @@ BURN_SYNC_TICKS = 20  # 燃烧余量 bdata 同步间隔(1秒); 燃料耗尽/重�
 
 
 @RegisterMachine
-class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
+class ThermalGenerator(WorkRenderer, GUIControl, ItemContainer, BaseGenerator):
     block_name = Machinery.THERMAL_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     input_slots = (0,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ThermalGenerator, self).__init__(dim, x, y, z, block_entity_data)
         self._burn_sync_tick = 0
         self._burn_seconds_left_mem = self.bdata[K_BURN_SEC_LEFT] or 0
         self.is_burning = self.burn_seconds_left > 0
@@ -40,13 +39,11 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
             self.SetOutputPower(TICK_POWER)
         else:
             self.SetOutputPower(0)
+        self.handler.SubscribeOnTicking(self._thermal_generator_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._thermal_generator_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _thermal_generator_on_ticking(self):
         if self.IsActive():
             if self.burn_seconds_left <= 0:
                 self.is_burning = self.next_burn()
@@ -55,22 +52,22 @@ class ThermalGenerator(BaseGenerator, ItemContainer, GUIControl, WorkRenderer):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            self._thermal_generator_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _thermal_generator_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         return item.newItemName != "minecraft:lava_bucket" and (
             item.id in FUEL_SECONDS_MAP or item.GetBasicInfo().fuelDuration > 0
         )
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _thermal_generator_on_slot_update(self, slot_pos):
         # type: (int) -> None
         self.next_burn()
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def UnsetDeactiveFlag(self, flag, flush=True):
-        pass
 
     def next_burn(self):
         if self.is_burning:

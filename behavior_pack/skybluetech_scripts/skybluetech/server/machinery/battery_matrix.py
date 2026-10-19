@@ -3,7 +3,6 @@ from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.define.tag_enum import BatteryTag
@@ -31,9 +30,9 @@ from .basic import (
     ItemContainer,
     MultiBlockStructure,
     OperationListener,
-    RegisterMachine,
     WorkRenderer,
 )
+from .core import RegisterMachine
 from .battery_matrix_core import BatteryMatrixCore
 from .interfaces import EnergyInputInterface, EnergyOutputInterface
 
@@ -43,7 +42,11 @@ EnergyOutputInterface.AddExtraMachineId(IO_ENERGY_OUTPUT)
 
 @RegisterMachine
 class BatteryMatrix(
-    GUIControl, ItemContainer, MultiBlockStructure, OperationListener, WorkRenderer
+    WorkRenderer,
+    OperationListener,
+    MultiBlockStructure,
+    ItemContainer,
+    GUIControl,
 ):
     block_name = Machinery.BATTERY_MATRIX_CONTROLLER
     store_rf_max = 100000
@@ -52,8 +55,8 @@ class BatteryMatrix(
     structure_palette = STRUCTURE_PALETTE
     functional_block_ids = set(STRUCTURE_REQUIRE_BLOCKS)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(BatteryMatrix, self).__init__(dim, x, y, z, block_entity_data)
         self._last_rf_provided = 0
         self._last_input = 0
         self._last_output = 0
@@ -62,8 +65,14 @@ class BatteryMatrix(
         self._sum_power_t = 0
         self._energy_in_ios = []  # type: list[EnergyInputInterface]
         self._energy_out_ios = []  # type: list[EnergyOutputInterface]
+        self.handler.SubscribeOnTicking(self._battery_matrix_on_ticking)
+        self.handler.SubscribeOnClick(self._battery_matrix_on_click)
+        self.handler.SubscribeOnSync(self._battery_matrix_on_sync)
+        self.handler.SubscribeOnStructureChanged(self._battery_matrix_on_structure_changed)
+        self.handler.SubscribeOnUnload(self._battery_matrix_on_unload)
+        self.CallSync()
 
-    def OnTicking(self):
+    def _battery_matrix_on_ticking(self):
         active = self.IsActive() and self.StructureFinished()
         if active:
             self.get_core().core_tick()
@@ -80,8 +89,7 @@ class BatteryMatrix(
                 )
             self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
+    def _battery_matrix_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         ExecLater(
             0.1,
@@ -90,7 +98,7 @@ class BatteryMatrix(
             ).send(event.playerId),
         )
 
-    def OnSync(self):
+    def _battery_matrix_on_sync(self):
         if self.StructureFinished():
             # long 数据无法直接写入 BlockEntityData
             self.bdata[K_STORE_RF] = float(self.get_core().calculate_core_store_rf())
@@ -101,12 +109,8 @@ class BatteryMatrix(
         self.bdata[K_INPUT_POWER] = self._sum_input * 1.0 / 20
         self.bdata[K_OUTPUT_POWER] = self._sum_output * 1.0 / 20
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
-        # type: (int) -> None
-        pass
 
-    def OnStructureChanged(self, ok):
+    def _battery_matrix_on_structure_changed(self, ok):
         # type: (bool) -> None
         self.clean()
         if ok:
@@ -114,6 +118,14 @@ class BatteryMatrix(
         self.CallSync()
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            self._battery_matrix_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _battery_matrix_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         return BatteryTag.COMMON in item.GetBasicInfo().tags
 
@@ -139,8 +151,7 @@ class BatteryMatrix(
         # type: (int) -> None
         self.recv_energy_return(rf)
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _battery_matrix_on_unload(self):
         # type: () -> None
         self.clean()
 
@@ -224,7 +235,7 @@ class BatteryMatrix(
         self._last_rf_provided = 0
 
     def get_core(self):
-        return self.GetMachine(BatteryMatrixCore, None)
+        return self.GetLoadedMachine(BatteryMatrixCore, None)
 
     def set_enable_input(self, value):
         if not isinstance(value, bool):

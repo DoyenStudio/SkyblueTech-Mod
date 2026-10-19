@@ -11,7 +11,6 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.farming_station import (
@@ -23,7 +22,8 @@ from ...common.machinery_def.farming_station import (
     isBlockCrop,
     isCommonCrop,
 )
-from .basic import GUIControl, ItemContainer, RegisterMachine, SPControl
+from .basic import GUIControl, ItemContainer, SPControl
+from .core import RegisterMachine
 
 DX = 2
 DZ = 2
@@ -31,7 +31,7 @@ Y_OFFSET = 2
 
 
 @RegisterMachine
-class FarmingStation(GUIControl, ItemContainer, SPControl):
+class FarmingStation(SPControl, ItemContainer, GUIControl):
     block_name = Machinery.FARMING_STATION
     dump_progress_to_block_entity_data = True
     store_rf_max = STORE_RF_MAX
@@ -40,11 +40,11 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
     input_slots = ()
     output_slots = tuple(range(24))
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(FarmingStation, self).__init__(dim, x, y, z, block_entity_data)
+        self.handler.SubscribeOnTicking(self._farming_station_on_ticking)
 
-    def OnTicking(self):
+    def _farming_station_on_ticking(self):
         # 1t 内如果处理多次任务会导致卡顿
         # 直接忽略 1t 内任务的多次处理
         if self.ProcessOnce():
@@ -104,10 +104,6 @@ class FarmingStation(GUIControl, ItemContainer, SPControl):
             and not output_slot_item.StackFull()
         )
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
-
 
 def isRipedCrop(block_name, block_states):
     # type: (str, dict) -> bool
@@ -130,4 +126,3 @@ def _breakBlock(dim, xyz):
 def _breakAndResetBlock(dim, xyz, block_name):
     # type: (int, tuple[int, int, int], str) -> None
     SetBlock(dim, xyz, block_name, old_block_handing=1)
-

@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
 from ...common.define.id_enum.multi_block_structure import Fermenter as FERMENTER_IDENUM
@@ -46,10 +46,10 @@ from .basic import (
     GUIControl,
     MultiBlockStructure,
     OperationListener,
-    RegisterMachine,
     UpgradeControl,
     WorkRenderer,
 )
+from .core import RegisterMachine
 from .interfaces import (
     EnergyInputInterface,
     FluidInputInterface,
@@ -65,7 +65,13 @@ ItemInputInterface.AddExtraMachineId(FERMENTER_IDENUM.IO_ITEM)
 
 
 @RegisterMachine
-class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, OperationListener):
+class Fermenter(
+    OperationListener,
+    WorkRenderer,
+    UpgradeControl,
+    MultiBlockStructure,
+    GUIControl,
+):
     block_name = Machinery.FERMENTER
     store_rf_max = STORE_RF_MAX
     origin_process_ticks = 1
@@ -87,16 +93,22 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
         FERMENTER_IDENUM.IO_GAS,
     }
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(Fermenter, self).__init__(dim, x, y, z, block_entity_data)
         self.t = 0
         self._energy_in = None
         self._item_in = None
         self._water_in = None
         self._fluid_out = None
         self._gas_out = None
+        self.handler.SubscribeOnTicking(self._fermenter_on_ticking)
+        self.handler.SubscribeOnStructureChanged(self._fermenter_on_structure_changed)
+        self.handler.SubscribeOnUnload(self._fermenter_on_unload)
+        self.handler.SubscribeOnSync(self._fermenter_on_sync)
+        self.handler.SubscribeOnSlotUpdate(self._fermenter_on_slot_update)
+        self.CallSync()
 
-    def OnTicking(self):
+    def _fermenter_on_ticking(self):
         self.t += 1
         if self.t >= self.work_ticks_delay:
             self.t = 0
@@ -114,7 +126,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
                 self.lifeCycle(recipe)
                 self.CallSync()
 
-    def OnStructureChanged(self, ok):
+    def _fermenter_on_structure_changed(self, ok):
         # type: (bool) -> None
         if ok:
             self._energy_in = self.getEnergyInIO()
@@ -127,16 +139,15 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
             self._water_in.SetMachineRef(self)
             self._fluid_out.SetMachineRef(self)
             self._gas_out.SetMachineRef(self)
-            self._item_in.SetOnSlotUpdateCallback(self.OnOtherSlotUpdate)
+            self._item_in.SetOnSlotUpdateCallback(self.on_other_slot_update)
         else:
             self.clean()
         self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _fermenter_on_unload(self):
         self.clean()
 
-    def OnSync(self):
+    def _fermenter_on_sync(self):
         self.bdata[K_MUD_THICKNESS] = self.getThickness()
         if self.StructureFinished():
             self.bdata[K_TOTAL_VOLUME] = float(self.getVolume()) / POOL_MAX_VOLUME
@@ -170,8 +181,7 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
             self.bdata[K_GAS_PRODUCE_SPEED] = 0.0
             self.bdata[K_FLUID_PRODUCE_SPEED] = 0.0
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _fermenter_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if slot_pos == 0:
             # 接种槽
@@ -206,9 +216,9 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
         elif slot_pos == 1:
             if self.IsActive():
                 for i in range(5):
-                    self.OnOtherSlotUpdate(i)
+                    self.on_other_slot_update(i)
 
-    def OnOtherSlotUpdate(self, slot_pos):
+    def on_other_slot_update(self, slot_pos):
         # type: (int) -> None
         item = self.getItemInIO().GetSlotItem(slot_pos)
         if item is None:
@@ -218,6 +228,15 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
             self.getItemInIO().SetSlotItem(slot_pos, None)
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._fermenter_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _fermenter_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
@@ -237,9 +256,6 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
         else:
             return False
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
 
     def clean(self):
         if self._energy_in is not None:
@@ -476,19 +492,19 @@ class Fermenter(GUIControl, MultiBlockStructure, UpgradeControl, WorkRenderer, O
         return float(self.mud_volume) / (self.getVolume() or 1)
 
     def getItemInIO(self):
-        return self.GetMachine(ItemInputInterface, FERMENTER_IDENUM.IO_ITEM)
+        return self.GetLoadedMachine(ItemInputInterface, FERMENTER_IDENUM.IO_ITEM)
 
     def getEnergyInIO(self):
-        return self.GetMachine(EnergyInputInterface, FERMENTER_IDENUM.IO_ENERGY)
+        return self.GetLoadedMachine(EnergyInputInterface, FERMENTER_IDENUM.IO_ENERGY)
 
     def getWaterInIO(self):
-        return self.GetMachine(FluidInputInterface, FERMENTER_IDENUM.IO_FLUID1)
+        return self.GetLoadedMachine(FluidInputInterface, FERMENTER_IDENUM.IO_FLUID1)
 
     def getFluidOutIO(self):
-        return self.GetMachine(FluidOutputInterface, FERMENTER_IDENUM.IO_FLUID2)
+        return self.GetLoadedMachine(FluidOutputInterface, FERMENTER_IDENUM.IO_FLUID2)
 
     def getGasOutIO(self):
-        return self.GetMachine(FluidOutputInterface, FERMENTER_IDENUM.IO_GAS)
+        return self.GetLoadedMachine(FluidOutputInterface, FERMENTER_IDENUM.IO_GAS)
 
     @property
     def mud_vitality(self):

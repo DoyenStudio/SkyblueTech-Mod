@@ -1,7 +1,6 @@
 # coding=utf-8
 #
 from skybluetech_scripts.tooldelta.api.server.block import UpdateBlockStates
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from .base_machine import BaseMachine
 
 
@@ -12,60 +11,23 @@ class WorkRenderer(BaseMachine):
 
     派生自: `BaseMachine`
 
-    覆写:
-        - `SetDeactiveFlag`
-        - `UnsetDeactiveFlag`
-        - `ResetDeactiveFlags`
-        - `FlushDeactiveFlags`
+    订阅停机状态变化, 并在外观发生变化后派发工作状态更新事件。
     """
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(WorkRenderer, self).__init__(dim, x, y, z, block_entity_data)
         self._last_work_status = False
+        self.handler.SubscribeOnDeactiveFlagsChanged(self._update_work_status)
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag, flush=True):
-        # type: (int, bool) -> None
-        """
-        Args:
-            flag (int): flag
-            flush (bool, optional): 是否更新机器的工作状态, 即改变 skybluetech:active state
-        """
-        if flush:
-            self._update_work_status()
 
-    @SuperExecutorMeta.execute_super
-    def UnsetDeactiveFlag(self, flag, flush=True):
-        # type: (int, bool) -> None
-        """
-        Args:
-            flag (int): flag
-            flush (bool, optional): 是否更新机器的工作状态, 即改变 skybluetech:active state
-        """
-        if flush:
-            self._update_work_status()
-
-    @SuperExecutorMeta.execute_super
-    def ResetDeactiveFlags(self):
-        self._update_work_status()
-
-    @SuperExecutorMeta.execute_super
-    def FlushDeactiveFlags(self):
-        # type: () -> None
-        self._update_work_status()
-
-    def OnWorkStatusUpdated(self):
-        """
-        子类方法覆写当状态改变时执行的操作。
-        例如, 改变机器的外观, 播放音效等。
-        """
-
-    def _update_work_status(self):
-        # type: () -> None
+    def _update_work_status(self, flush=True):
+        # type: (bool) -> None
+        if not flush:
+            return
         active = self.deactive_flags == 0
         if active != self._last_work_status:
             UpdateBlockStates(
                 self.dim, (self.x, self.y, self.z), {"skybluetech:active": active}
             )
             self._last_work_status = active
-            self.OnWorkStatusUpdated()
+            self.handler.CallOnWorkStatusUpdatedHandlers()

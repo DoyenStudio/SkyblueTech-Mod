@@ -5,7 +5,6 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     CraftingRecipeRes,
     GetCraftingRecipe,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
@@ -14,17 +13,17 @@ from .basic import (
     BaseMachine,
     GUIControl,
     ItemContainer,
-    RegisterMachine,
     SPControl,
     WorkRenderer,
 )
+from .core import RegisterMachine
 
 split_recipes = {}  # type: dict[str, str]
 cant_split_recipes = set()  # type: set[str]
 
 
 @RegisterMachine
-class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
+class Splitter(WorkRenderer, SPControl, ItemContainer, GUIControl):
     block_name = Machinery.SPLITTER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
@@ -33,12 +32,13 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
     input_slots = (0,)
     output_slots = (1,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(Splitter, self).__init__(dim, x, y, z, block_entity_data)
         self.TryStartNext()
+        self.handler.SubscribeOnTicking(self._splitter_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._splitter_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _splitter_on_ticking(self):
         while self.IsActive():
             if self.ProcessOnce():
                 self.run_once()
@@ -61,7 +61,7 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
 
-    def OnSlotUpdate(self, slot_pos):
+    def _splitter_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if slot_pos == 1:
             return
@@ -84,13 +84,6 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     def run_once(self):
         input_item = self.GetSlotItem(0)
@@ -124,6 +117,14 @@ class Splitter(GUIControl, ItemContainer, SPControl, WorkRenderer):
         )
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            self._splitter_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _splitter_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         return True
 

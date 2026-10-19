@@ -1,17 +1,13 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.server.block import (
-    ServerPlaceBlockEntityEvent,
-    BlockNeighborChangedServerEvent,
-    BlockStrengthChangedServerEvent,
-    ServerEntityTryPlaceBlockEvent,
-    BlockRandomTickServerEvent,
-)
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.base_machine import (
-    K_STORE_RF,
     K_DEACTIVE_FLAGS,
+    K_STORE_RF,
 )
-from .gui_ctrl import GUIControl
+from skybluetech_scripts.tooldelta.events.server.block import (
+    ServerEntityTryPlaceBlockEvent,
+)
+
+from ..core.event_dispatcher import MachineEventDispatcher
 
 
 class BaseMachine(object):
@@ -30,15 +26,16 @@ class BaseMachine(object):
     _extra_block_names = {}  # type: dict[type[BaseMachine], list[str]]
     "额外可绑定的方块 ID"
 
-    __metaclass__ = SuperExecutorMeta
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        "超类主要用于获取方块实体数据, 设置 bdata(BlockEntityData) 和获取能量属性; 执行 OnLoad()。"
+        "初始化机器坐标、方块实体数据和事件 handler。"
         self.bdata = block_entity_data
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
+        self.xyz = (x, y, z)
+        self.handler = MachineEventDispatcher()
         self._cached_deactive_flags = None
 
     @classmethod
@@ -53,59 +50,6 @@ class BaseMachine(object):
         "事件方法, 机器被放置前调用, 可 cancel()"
         pass
 
-    def OnPlaced(self, event):
-        # type: (ServerPlaceBlockEntityEvent) -> None
-        "事件方法, 机器被放置后调用。"
-        pass
-
-    def OnTicking(self):
-        # type: () -> None
-        "事件方法, 方块实体 tick 调用。"
-        return None
-
-    # def OnFakeTicking(self):
-    #     # type: () -> bool
-    #     "事件方法, 超类方法什么也不做。"
-    #     return False
-
-    def OnBlockRedstoneStrengthChanged(self, event):
-        # type: (BlockStrengthChangedServerEvent) -> None
-        "事件方法, 方块红石信号强度变化时调用。"
-        pass
-
-    def OnUnload(self):
-        # type: () -> None
-        "事件方法, 方块实体被卸载时调用。"
-        pass
-
-    def OnDestroy(self):
-        # type: () -> None
-        "事件方法, 方块被破坏时调用。"
-
-    def OnNeighborChanged(self, event):
-        # type: (BlockNeighborChangedServerEvent) -> None
-        "事件方法, 邻近方块变化时调用。"
-
-    def OnBlockRandomTick(self, event):
-        # type: (BlockRandomTickServerEvent) -> None
-        "事件方法, 方块收到随机 tick 时调用。需方块开启 netease:random_tick。"
-
-    def OnDeactiveFlagsChanged(self):
-        "机器激活状态更改时调用。"
-        pass
-
-    def OnInvalidateCaches(self):
-        """
-        缓存失效钩子。
-
-        子类若缓存了按位置 / 邻居 / 管网推导出的数据, 重写此方法并在其中只打脏
-        标记 (或清空缓存), 实际重建留到下一 tick 惰性完成。
-
-        触发时机: 邻近方块变化, 邻居方块放置 / 移除, 区块装卸, 以及管网网络重建
-        或接入点设置变化。调用可能发生在管网拆除过程中, 因此不要在这里同步读取
-        管网数据或触发其他系统的副作用。
-        """
-        pass
 
     # ==== API ====
 
@@ -120,6 +64,8 @@ class BaseMachine(object):
         Returns:
             tuple[bool, int]: 数值是否变动, 溢出的能量
         """
+        from .gui_ctrl import GUIControl
+
         store_rf = self.store_rf
         if store_rf >= self.store_rf_max:
             return False, rf
@@ -177,30 +123,21 @@ class BaseMachine(object):
         """
         self.store_rf += rf
 
-    def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        """
-        设置机器的停机状态。
-
-        Args:
-            flag (int): 标志位
-        """
+    def SetDeactiveFlag(self, flag, flush=True):
+        # type: (int, bool) -> None
+        "设置停机标志; flush 控制是否立即刷新机器工作外观。"
         self.deactive_flags |= flag
-        self.OnDeactiveFlagsChanged()
+        self.handler.CallOnSetDeactiveFlagHandlers(flag, flush)
+        self.handler.CallOnDeactiveFlagsChangedHandlers(flush)
 
     def UnsetDeactiveFlag(self, flag, flush=True):
         # type: (int, bool) -> None
-        """
-        取消机器的停机状态。
-
-        Args:
-            flag (int): 标志位
-            flush (bool, optional): 是否刷新停机标志。 Defaults to True.
-        """
+        "取消停机标志; flush 控制是否立即刷新机器工作外观。"
         if not self.HasDeactiveFlag(flag):
             return
         self.deactive_flags &= ~flag
-        self.OnDeactiveFlagsChanged()
+        self.handler.CallOnUnsetDeactiveFlagHandlers(flag, flush)
+        self.handler.CallOnDeactiveFlagsChangedHandlers(flush)
 
     def HasDeactiveFlag(self, flag):
         # type: (int) -> bool
@@ -217,10 +154,8 @@ class BaseMachine(object):
 
     def FlushDeactiveFlags(self):
         # type: () -> None
-        """
-        刷新所有停机标志。
-        """
-        pass
+        "刷新所有订阅停机状态的组件。"
+        self.handler.CallOnDeactiveFlagsChangedHandlers(True)
 
     def IsActive(self):
         # type: () -> bool
@@ -251,7 +186,7 @@ class BaseMachine(object):
         重置所有停机标志, 即将机器设置为工作模式。
         """
         self.deactive_flags = 0
-        self.OnDeactiveFlagsChanged()
+        self.handler.CallOnDeactiveFlagsChangedHandlers()
 
     @property
     def deactive_flags(self):

@@ -11,7 +11,6 @@ from skybluetech_scripts.tooldelta.api.server import (
     SetPlayerAllItems,
 )
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.machinery_workstation import (
@@ -36,31 +35,31 @@ from .basic import (
     GUIControl,
     ItemContainer,
     OperationListener,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 K_CRAFT_TIMES = "craft_times"
 ItemPosType = GetMinecraftEnum().ItemPosType
 
 
 @RegisterMachine
-class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer, OperationListener):
+class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
     block_name = Machinery.MACHINERY_WORKSTATION
     input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     output_slots = (11,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(MachineryWorkstation, self).__init__(dim, x, y, z, block_entity_data)
         self.current_recipe = None
         self.need_tool = False
         self.load_recipe(init=True)
         self.CallSync()
+        self.handler.SubscribeOnSync(self._machinery_workstation_on_sync)
+        self.handler.SubscribeOnSlotUpdate(self._machinery_workstation_on_slot_update)
+        self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
-    def OnSync(self):
+    def _machinery_workstation_on_sync(self):
         self.bdata[K_CRAFTING_PROGRESS] = (
             float(self.craft_times) / self.current_recipe.craft_times
             if self.current_recipe
@@ -71,7 +70,7 @@ class MachineryWorkstation(BaseMachine, GUIControl, ItemContainer, OperationList
         )
         self.bdata[K_NEED_TOOL] = self.need_tool
 
-    def OnSlotUpdate(self, slot_pos):
+    def _machinery_workstation_on_slot_update(self, slot_pos):
         # type: (int) -> None
         self.load_recipe()
         self.CallSync()

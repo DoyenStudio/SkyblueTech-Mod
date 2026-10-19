@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.charger import (
@@ -21,9 +21,9 @@ from ...common.utils.block_sync import BlockSync
 from .basic import (
     OperationListener,
     Processor,
-    RegisterMachine,
     UpgradeControl,
 )
+from .core import RegisterMachine
 from .utils.charge import (
     ChargeItem,
     GetCharge,
@@ -43,7 +43,7 @@ def IsChargeableItem(item):
 
 
 @RegisterMachine
-class Charger(OperationListener, Processor):
+class Charger(Processor, OperationListener):
     """
     充电台, 双模式机器:
 
@@ -61,23 +61,24 @@ class Charger(OperationListener, Processor):
     process_item = True
     recipes = Recipes
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(Charger, self).__init__(dim, x, y, z, block_entity_data)
         self.t = 0
         self.charging = False
         self.RefreshMode()
+        self.handler.UnsubscribeOnTicking(self._processor_on_ticking)
+        self.handler.UnsubscribeOnSlotUpdate(self._processor_on_slot_update)
+        self.handler.SubscribeOnUnload(self._charger_on_unload)
+        self.handler.SubscribeOnTicking(self._charger_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._charger_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _charger_on_unload(self):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
-    def OnTicking(self):
+    def _charger_on_ticking(self):
         if not self.charging:
-            Processor.OnTicking(self)
+            Processor._processor_on_ticking(self)
             return
         if self.IsActive():
             self.t += 1
@@ -120,23 +121,30 @@ class Charger(OperationListener, Processor):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._charger_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _charger_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
         if IsChargeableItem(item):
             return slot == 0
         return Processor.IsValidInput(self, slot, item)
 
-    @SuperExecutorMeta.execute_super_with_blacklist(Processor)
-    def OnSlotUpdate(self, slot_pos):
+    def _charger_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):
-            UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if slot_pos == 0:
             self.RefreshMode()
             return
         if not self.charging:
-            Processor.OnSlotUpdate(self, slot_pos)
+            Processor._processor_on_slot_update(self, slot_pos)
             return
         if self.GetSlotItem(1) is None:
             # 可能可以输出充能完成的物品了
@@ -151,10 +159,9 @@ class Charger(OperationListener, Processor):
             1.0, float(self.charge_rf) / max(1, self.charge_rf_max)
         )
 
-    def _update_work_status(self):
+    def _update_work_status(self, flush=True):
         # 充电台方块是单贴图模型方块, 未声明 skybluetech:active, 不能写这个方块状态。
-        # WorkRenderer 的三个停机旗方法都会调到这里, 覆写成空实现即可屏蔽;
-        # 用 execute_super_with_blacklist(WorkRenderer) 是屏蔽不掉的 (见 super_executor.py:93)。
+        # 保留空的状态订阅回调, 避免 WorkRenderer 写入这个不存在的状态。
         pass
 
     def charge_once(self):

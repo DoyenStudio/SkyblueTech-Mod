@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
@@ -23,15 +22,19 @@ from .basic import (
     GUIControl,
     ItemContainer,
     PowerControl,
-    RegisterMachine,
     WorkRenderer,
 )
-from .pool import GetMachineStrict
+from .core import RegisterMachine
+from .core.pool import GetLoadedMachine
 
 
 @RegisterMachine
 class HydroponicBedSand(
-    BaseSpeedControl, ItemContainer, GUIControl, PowerControl, WorkRenderer
+    WorkRenderer,
+    PowerControl,
+    GUIControl,
+    ItemContainer,
+    BaseSpeedControl,
 ):
     block_name = Machinery.HYDROPONIC_BED_SAND
     store_rf_max = STORE_RF_MAX
@@ -39,8 +42,8 @@ class HydroponicBedSand(
     running_power = POWER_COST
     original_speed = WORK_TICK_DELAY
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(HydroponicBedSand, self).__init__(dim, x, y, z, block_entity_data)
         seed_item = self.GetSlotItem(0)
         self.crop_id = (
             seed_item.id
@@ -52,13 +55,11 @@ class HydroponicBedSand(
             if self.crop_id is not None
             else None
         )
+        self.handler.SubscribeOnTicking(self._hydroponic_bed_sand_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._hydroponic_bed_sand_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        # type: () -> None
-        pass
 
-    def OnTicking(self):
+    def _hydroponic_bed_sand_on_ticking(self):
         # type: () -> None
         if self.IsActive():
             if BaseSpeedControl.ProcessOnce(self):
@@ -70,10 +71,17 @@ class HydroponicBedSand(
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            self._hydroponic_bed_sand_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _hydroponic_bed_sand_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         return item.id in Recipes.recipes_mapping
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _hydroponic_bed_sand_on_slot_update(self, slot_pos):
         # type: (int) -> None
         seed_item = self.GetSlotItem(0)
         self.crop_id = (
@@ -92,9 +100,6 @@ class HydroponicBedSand(
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
 
     def work_once(self):
         if self.crop_id is not None:
@@ -109,7 +114,7 @@ class HydroponicBedSand(
         if self.water_store < MAX_WATER_STORE / 2:
             from .hydroponic_base import HydroponicBase
 
-            m = GetMachineStrict(self.dim, self.x, self.y - 1, self.z)
+            m = GetLoadedMachine(self.dim, self.x, self.y - 1, self.z)
             if isinstance(m, HydroponicBase):
                 vol = m.GetWaterVolume()
                 req_water = min(vol, MAX_WATER_STORE - self.water_store)
@@ -126,7 +131,7 @@ class HydroponicBedSand(
         # type: (HydroponicBedSandRecipe) -> None
         from .hydroponic_base import HydroponicBase
 
-        m = GetMachineStrict(self.dim, self.x, self.y - 1, self.z)
+        m = GetLoadedMachine(self.dim, self.x, self.y - 1, self.z)
         if isinstance(m, HydroponicBase):
             for out_crop in recipe.harvest_outputs:
                 m.OutputItem(Item(out_crop.id, count=int(out_crop.count)))

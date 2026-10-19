@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.server import ServerPlaceBlockEntityEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.air_compressor import (
@@ -12,11 +11,12 @@ from ...common.machinery_def.air_compressor import (
 from ...common.machinery_def.air_compressor import (
     recipes as Recipes,
 )
-from .basic import MultiFluidContainer, Processor, RegisterMachine
+from .basic import MultiFluidContainer, Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class AirCompressor(MultiFluidContainer, Processor):
+class AirCompressor(Processor, MultiFluidContainer):
     block_name = Machinery.AIR_COMPRESSOR
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
@@ -31,12 +31,11 @@ class AirCompressor(MultiFluidContainer, Processor):
     upgrade_slots = 4
     allow_player_use_bucket_push = False
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(AirCompressor, self).__init__(dim, x, y, z, block_entity_data)
+        self.handler.SubscribeOnPlaced(self._air_compressor_on_placed)
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, event):
+    def _air_compressor_on_placed(self, event):
         # type: (ServerPlaceBlockEntityEvent) -> None
         self.bdata[K_PLACED_DIMENSION] = event.dimension
         self.recheck_recipe()
@@ -48,13 +47,6 @@ class AirCompressor(MultiFluidContainer, Processor):
             return 0, None
         return 0, recipe
 
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass
 
     @property
     def placed_dimension(self):

@@ -1,7 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.fluid_splitter import (
@@ -21,9 +20,9 @@ from .basic import (
     GUIControl,
     MultiFluidContainer,
     OperationListener,
-    RegisterMachine,
     UpgradeControl,
 )
+from .core import RegisterMachine
 
 K_RECORD_LABELS = "record_settings"
 K_SETTINGS_LIMIT = "settings_limit"
@@ -32,7 +31,7 @@ DEFAULT_SETTINGS_LIMIT = 3
 
 
 @RegisterMachine
-class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationListener):
+class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIControl):
     block_name = Machinery.FLUID_SPLITTER
     fluid_io_fix_mode = -1
     fluid_input_slots = {0}
@@ -43,13 +42,16 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationLi
         Upgraders.GENERIC_SPLIT,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(FluidSplitter, self).__init__(dim, x, y, z, block_entity_data)
         self._cached_recorded_settings = None
         self._sending_fluid = True
         self._ticking_t = 0
+        self.handler.SubscribeOnTicking(self._fluid_splitter_on_ticking)
+        self.handler.SubscribeOnAddedFluid(self._fluid_splitter_on_added_fluid)
+        self.handler.SubscribeOnClick(self._fluid_splitter_on_click)
 
-    def OnTicking(self):
+    def _fluid_splitter_on_ticking(self):
         if self._sending_fluid and self._ticking_t % 5 == 0:
             self.ready_try_post_fluid()
             all_empty = all(i.volume <= 0 for i in self.fluids)
@@ -57,7 +59,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationLi
                 self._sending_fluid = False
         self._ticking_t += 1
 
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+    def _fluid_splitter_on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         self._sending_fluid = True
 
@@ -78,8 +80,7 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationLi
                 fluid.fluid_id = None
         return ok
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
+    def _fluid_splitter_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         ExecLater(
             0.1,
@@ -88,9 +89,6 @@ class FluidSplitter(GUIControl, MultiFluidContainer, UpgradeControl, OperationLi
             ),
         )
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     def try_post_fluid_by_label(self, fluid_id, fluid_volume):
         # type: (str, float) -> float

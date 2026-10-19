@@ -129,7 +129,7 @@ class Machine(BaseMachine):
 ---
 
 ```python
-def SetDeactiveFlag(self, flag: int) -> None
+def SetDeactiveFlag(self, flag: int, flush: bool = True) -> None
 ```
 设置机器的停机状态。
 
@@ -183,75 +183,60 @@ def ResetDeactiveFlags(self) -> None
 重置所有停机标志, 即将机器设置为工作模式。
 不要随意使用，除非你确定机器已经没有任何停机可能， 完全可以转变为工作状态。
 
-## 基类覆写方法
+## 放置前检查
+
+`OnPrePlaced` 保留为类方法, 在机器实例创建前调用, 可以取消放置。
+
 ```python
 @classmethod
-def OnPrePlaced(cls, event: ServerEntityTryPlaceBlockEvent)
+def OnPrePlaced(cls, event):
+    pass
 ```
-可被覆写，在机器被放置之前调用，可在这时候对事件进行 `cancel()`。
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| event | ServerEntityTryPlaceBlockEvent | 放置事件 |
+## 实例事件订阅
 
----
+所有机器组件最终继承 `BaseMachine`, 由它创建唯一的 `MachineEventDispatcher` 实例,
+保存在 `self.handler` 中。
+构造器调用 `super(当前类, self).__init__(dim, x, y, z, block_entity_data)` 后,
+完成自身字段初始化, 再通过 `self.handler.SubscribeOnXXX(self.callback)` 订阅事件。
+不再使用 `@SuperExecutorMeta.execute_super` 或重声明空方法。
 
-```python
-def OnPlaced(self, event: ServerPlaceBlockEntityEvent)
-```
-可被覆写，机器被放置后调用。
+| 订阅方法 | 回调参数 |
+| --- | --- |
+| `SubscribeOnPlaced` | `event` |
+| `SubscribeOnTicking` | 无 |
+| `SubscribeOnUnload` | 无 |
+| `SubscribeOnDestroy` | 无 |
+| `SubscribeOnNeighborChanged` | `event` |
+| `SubscribeOnBlockRedstoneStrengthChanged` | `event` |
+| `SubscribeOnBlockRandomTick` | `event` |
+| `SubscribeOnSetDeactiveFlag` | `flag, flush` |
+| `SubscribeOnUnsetDeactiveFlag` | `flag, flush` |
+| `SubscribeOnDeactiveFlagsChanged` | `flush` |
+| `SubscribeOnInvalidateCaches` | 无 |
 
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| event | ServerPlaceBlockEntityEvent | 放置事件 |
+`SetDeactiveFlag(flag, flush=True)` 和 `UnsetDeactiveFlag(flag, flush=True)` 先更新标志,
+再派发对应操作事件和状态通知。`flush=False` 仍处理停机逻辑, 但跳过工作外观刷新;
+需要刷新时调用 `FlushDeactiveFlags()`。重置标志也会派发状态通知。
 
----
+缓存失效回调只打脏标记或清空缓存, 实际重建留到下一 tick 惰性完成。
+不要在回调中同步读取正在拆建的管网或触发其他系统的副作用。
 
-```python
-def OnTicking(self)
-```
-可被覆写，方块实体 tick 调用。
+对于替换父组件行为的分支, 显式取消对应订阅后注册自己的回调。
+`MachineEventDispatcher.Unsubscribe(topic_name, callback)` 提供通用取消接口;
+tick、槽位及点击事件还提供 `UnsubscribeOnTicking`、`UnsubscribeOnSlotUpdate` 和 `UnsubscribeOnClick`。
 
----
+`IsValidInput` / `IsValidFluidInput` 保持同步返回布尔值。按组件职责收集父类约束和本机判定后做 `all(results)`;
+组件对不属于自己职责的槽位保持中立, 防止普通输入槽与升级槽相互否决。
 
-```python
-def OnUnload(self)
-```
-可被覆写，方块实体被卸载时调用。
+## 框架模块分工
 
----
+- `basic/` 只放机器基类和可继承的组件基类。
+- `core/event_dispatcher.py` 定义实例事件分发器及事件常量。
+- `core/registry.py` 提供 `RegisterMachine`、`GetMachineCls` 和 `TryGetMachineCls`, 管理方块 ID 到机器类的映射。
+- `core/pool.py` 管理机器实例的创建、查询、移除及缓存失效。`GetLoadedMachine` 只查询已有实例;
+  `GetMachineWithoutCls` 可在缓存缺失时创建实例; `LoadMachine` 用于从方块实体数据创建并登记实例, 会替换原位置缓存。
+- `listeners/event_listener.py` 接收游戏事件, 包括区块加载与卸载, 再调用实例池及机器的事件分发器。
 
-```python
-def OnDestroy(self)
-```
-可被覆写，方块被破坏时调用。
-
----
-
-```python
-def OnNeighborChanged(self, event: BlockNeighborChangedServerEvent)
-```
-可被覆写，邻近方块变化时调用。
-
-| 参数 | 类型 | 说明 |
-| --- | --- | --- |
-| event | BlockNeighborChangedServerEvent | 邻近方块变化事件 |
-
----
-
-```python
-def OnDeactiveFlagsChanged(self)
-```
-可被覆写，机器激活状态更改时调用。
-
----
-
-```python
-def OnInvalidateCaches(self)
-```
-可被覆写，机器缓存的按位置 / 邻居 / 管网推导出的数据失效时调用。
-
-子类若缓存了这类数据，应重写此方法，并在其中**只打脏标记或清空缓存**，实际重建留到下一 tick 惰性完成。
-不要在钩子里同步读取管网数据或触发其他系统的副作用 —— 它可能在管网拆到一半时被调用。
-
-触发时机：邻近方块变化、邻居方块放置 / 移除、区块装卸，以及管网网络重建或接入点设置变化。
+注册装饰器从 `core` 或 `core.registry` 导入。`core` 不主动导入监听模块;
+`machinery/__init__.py` 在所有具体机器、接口和储罐导入完成后统一导入 `listeners`, 注册游戏事件监听。

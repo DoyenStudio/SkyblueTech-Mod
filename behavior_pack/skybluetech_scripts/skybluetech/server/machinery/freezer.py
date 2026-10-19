@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.freezer import FreezerModeChangedEvent
@@ -12,11 +11,12 @@ from ...common.machinery_def.freezer import (
     recipes as Recipes,
 )
 from ...common.mini_jei.core import RecipesCollection
-from .basic import MultiFluidContainer, OperationListener, Processor, RegisterMachine
+from .basic import MultiFluidContainer, OperationListener, Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class Freezer(MultiFluidContainer, Processor, OperationListener):
+class Freezer(OperationListener, Processor, MultiFluidContainer):
     block_name = Machinery.FREEZER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
@@ -30,17 +30,10 @@ class Freezer(MultiFluidContainer, Processor, OperationListener):
     upgrade_slot_start = 1
     upgrade_slots = 4
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(Freezer, self).__init__(dim, x, y, z, block_entity_data)
         self.set_mode(self.recipe_mode)
 
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass
 
     def set_mode(self, new_mode):
         # type: (int) -> None

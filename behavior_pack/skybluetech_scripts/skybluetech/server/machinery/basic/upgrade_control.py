@@ -13,14 +13,13 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server.item import (
     PlayerTryPutCustomContainerItemServerEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from .base_machine import BaseMachine
 from .item_container import ItemContainer
+from .base_machine import BaseMachine
 from .sp_control import SPControl
 
 
-class UpgradeControl(ItemContainer, SPControl):
+class UpgradeControl(SPControl, ItemContainer):
     """
     代表可接受升级卡的机器基类。
 
@@ -46,11 +45,13 @@ class UpgradeControl(ItemContainer, SPControl):
     upgrade_slots = 4  # type: int
     allow_upgraders = frozenset()  # type: set[str] | frozenset[str]
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(UpgradeControl, self).__init__(dim, x, y, z, block_entity_data)
         self._basic_max_rf_store = self.store_rf_max
         self._power_cost_relative = 1.0
         self.UpdateUpgraders(self.GetAllUpgraders())
+        self.handler.SubscribeOnCustomCotainerPutItem(self._upgrade_control_on_custom_cotainer_put_item)
+        self.handler.SubscribeOnSlotUpdate(self._upgrade_control_on_slot_update)
 
     def InUpgradeSlot(self, slot):
         # type: (int) -> bool
@@ -61,18 +62,20 @@ class UpgradeControl(ItemContainer, SPControl):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        return (
-            slot >= self.upgrade_slot_start
-            and slot < self.upgrade_slot_start + self.upgrade_slots
-            and self._item_is_valid_upgrader(item)
-            and not self._other_slot_has_same_upgrader(slot, item.id)
+        if not self.InUpgradeSlot(slot):
+            return ItemContainer.IsValidInput(self, slot, item)
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            self._item_is_valid_upgrader(item),
+            not self._other_slot_has_same_upgrader(slot, item.id),
         )
+        return all(results)
 
-    def OnCustomCotainerPutItem(self, event):
+    def _upgrade_control_on_custom_cotainer_put_item(self, event):
         # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
         "超类方法, 处理玩家向升级槽放入物品的事件。"
         if not self.InUpgradeSlot(event.collectionIndex):
-            return ItemContainer.OnCustomCotainerPutItem(self, event)
+            return
         if not self._item_is_valid_upgrader(event.item):
             event.cancel()
             return
@@ -109,7 +112,7 @@ class UpgradeControl(ItemContainer, SPControl):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         return res
 
-    def OnSlotUpdate(self, slot):
+    def _upgrade_control_on_slot_update(self, slot):
         # type: (int) -> None
         "超类方法更新升级槽数据。"
         if (

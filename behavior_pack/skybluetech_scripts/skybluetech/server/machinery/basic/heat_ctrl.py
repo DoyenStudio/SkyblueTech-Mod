@@ -5,7 +5,6 @@ from skybluetech_scripts.skybluetech.common.define.facing import (
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_HEAT_VALUE
 from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from .base_machine import BaseMachine
 
@@ -74,8 +73,8 @@ class HeatCtrl(BaseMachine):
     系数。覆写它可以只把这一台机器改得更省电或更费电(例如高效电热机)。
     """
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(HeatCtrl, self).__init__(dim, x, y, z, block_entity_data)
         heat_value = block_entity_data[K_HEAT_VALUE]
         # 缺省(新放置的机器)为环境温度
         if heat_value is None:
@@ -87,9 +86,9 @@ class HeatCtrl(BaseMachine):
         self.t = 0
         self.neighbor_heaters = [None] * len(FACING_DXYZ)  # type: list[HeatCtrl | None]
         self._update_neighbor_heaters()
+        self.handler.SubscribeOnTicking(self._heat_ctrl_on_ticking)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _heat_ctrl_on_ticking(self):
         self.t += 1
         if self.t % self.WORK_INTERVAL == 0:
             self.t = 0
@@ -99,15 +98,6 @@ class HeatCtrl(BaseMachine):
         # type: (float) -> None
         self.heat_power = power
 
-    def OnHeatWork(self):
-        # type: () -> None
-        """
-        热力结算前的回调, 每 `WORK_INTERVAL` tick 调用一次。
-
-        子类可覆写以按本周期的实际耗能调整 `heat_power`(例如 `ElectricHeater`: 停机、到温、
-        电量不足时置 0, 否则按 `electric_per_heat` 把设定功率换算成产热功率, 并按设定功率
-        全额扣电)。本方法在产热/热扩散之前执行, 所以本周期设置的热功率本周期即生效。
-        """
 
     def HeatFromElectric(self, rf):
         # type: (float) -> float
@@ -120,17 +110,17 @@ class HeatCtrl(BaseMachine):
         return Thermal.ElectricCostOfHeat(heat, self.electric_per_heat)
 
     def _heat_ctrl_work_once(self):
-        self.OnHeatWork()
+        self.handler.CallOnHeatWorkHandlers()
         self._update_heat_value()
         self._exchange_with_env()
         if self.spread_heat:
             self.share_heat()
 
     def _update_neighbor_heaters(self):
-        from ..pool import GetMachineStrict
+        from ..core.pool import GetLoadedMachine
 
         for face, (dx, dy, dz) in enumerate(FACING_DXYZ):
-            m = GetMachineStrict(self.dim, self.x + dx, self.y + dy, self.z + dz)
+            m = GetLoadedMachine(self.dim, self.x + dx, self.y + dy, self.z + dz)
             if isinstance(m, HeatCtrl):
                 self.neighbor_heaters[face] = m
                 m.set_neighbor_heater(OPPOSITE_FACING[face], self)

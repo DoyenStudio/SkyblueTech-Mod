@@ -4,7 +4,6 @@ from skybluetech_scripts.tooldelta.api.server import (
     ItemExists,
 )
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define.global_config import BUCKET_VOLUME
 from ..basic import BaseMachine, FluidContainer, ItemContainer, GUIControl
 from ..utils.transmitter_conn import TransmitterConn
@@ -17,7 +16,7 @@ registered_tanks = {}  # type: dict[str, type[BasicTank]]
 FIRST_TANK_LOADED = False
 
 
-class BasicTank(BaseMachine, FluidContainer, ItemContainer, GUIControl):
+class BasicTank(GUIControl, ItemContainer, FluidContainer):
     is_non_energy_machine = True
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
     fluid_io_fix_mode = 0
@@ -25,19 +24,20 @@ class BasicTank(BaseMachine, FluidContainer, ItemContainer, GUIControl):
     input_slots = (0,)
     output_slots = (1,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(BasicTank, self).__init__(dim, x, y, z, block_entity_data)
+        self.handler.SubscribeOnPlaced(self._basic_tank_on_placed)
+        self.handler.SubscribeOnNeighborChanged(self._basic_tank_on_neighbor_changed)
+        self.handler.SubscribeOnSlotUpdate(self._basic_tank_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _basic_tank_on_placed(self, _):
         TCON.block_placed(self)
 
-    def OnNeighborChanged(self, event):
+    def _basic_tank_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         TCON.neighbor_block_changed(self, event)
 
-    def OnSlotUpdate(self, slot_pos):
+    def _basic_tank_on_slot_update(self, slot_pos):
         # type: (int) -> None
         item0 = self.GetSlotItem(0)
         item1 = self.GetSlotItem(1)

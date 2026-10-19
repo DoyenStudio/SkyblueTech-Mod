@@ -1,8 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.precision_cutter import (
     CUTTER_LEVEL_MAPPING,
@@ -13,11 +13,12 @@ from ...common.machinery_def.precision_cutter import (
     recipes as Recipes,
 )
 from ...common.mini_jei.machinery.precision_cutter import PrecisionCutterRecipe
-from .basic import MultiFluidContainer, Processor, RegisterMachine
+from .basic import MultiFluidContainer, Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class PrecisionCutter(MultiFluidContainer, Processor):
+class PrecisionCutter(Processor, MultiFluidContainer):
     """精密切割机: 1 流体槽 + 5 物品槽(2 输入 / 3 输出) + 4 升级槽。
 
     槽位1为锯片槽, 只接受 cutter 表中的锯片; 运行配方要求锯片等级不低于
@@ -41,11 +42,19 @@ class PrecisionCutter(MultiFluidContainer, Processor):
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(PrecisionCutter, self).__init__(dim, x, y, z, block_entity_data)
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._precision_cutter_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _precision_cutter_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if slot == self.cutter_slot:
             return item.id in CUTTER_LEVEL_MAPPING
@@ -102,11 +111,3 @@ class PrecisionCutter(MultiFluidContainer, Processor):
         else:
             cutter.durability = durability
             self.SetSlotItem(self.cutter_slot, cutter)
-
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass

@@ -6,7 +6,6 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.solar_panel import (
@@ -14,27 +13,30 @@ from ...common.machinery_def.solar_panel import (
     K_OUTPUT_POWER,
     STORE_RF_MAX,
 )
-from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
+from .basic import BaseGenerator, GUIControl, ItemContainer
+from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
 TCON = TransmitterConn(wire=True)
 
 
 @RegisterMachine
-class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
+class SolarPanel(GUIControl, ItemContainer, BaseGenerator):
     block_name = Machinery.SOLAR_PANEL
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(SolarPanel, self).__init__(dim, x, y, z, block_entity_data)
         self.t = 0
         self._power_output = 0
         self._light_level = 0
         self.update()
+        self.handler.SubscribeOnTicking(self._solar_panel_on_ticking)
+        self.handler.SubscribeOnPlaced(self._solar_panel_on_placed)
+        self.handler.SubscribeOnNeighborChanged(self._solar_panel_on_neighbor_changed)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _solar_panel_on_ticking(self):
         self.t += 1
         if self.t >= 20:
             self.t = 0
@@ -42,11 +44,10 @@ class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
         if self.t % 5 == 0 and self.IsActive():
             self.GeneratePower(self.power_output * 5)
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _solar_panel_on_placed(self, _):
         TCON.block_placed(self)
 
-    def OnNeighborChanged(self, event):
+    def _solar_panel_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         TCON.neighbor_block_changed(self, event)
 
@@ -62,9 +63,6 @@ class SolarPanel(BaseGenerator, ItemContainer, GUIControl):
         else:
             self.power_output = 0
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     @property
     def light_level(self):

@@ -12,7 +12,6 @@ from skybluetech_scripts.tooldelta.events import (
     BlockNeighborChangedServerEvent,
     ServerEntityTryPlaceBlockEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
@@ -20,23 +19,26 @@ from ...common.define.id_enum import RESIN, RESIN_COLLECTOR, Machinery
 from .basic import (
     BaseMachine,
     ItemContainer,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
 TCON = TransmitterConn(cable=True)
 
 
 @RegisterMachine
-class ResinCollectorOutputer(BaseMachine, ItemContainer):
+class ResinCollectorOutputer(ItemContainer):
     block_name = Machinery.RESIN_COLLECTOR_OUTPUTER
     is_non_energy_machine = True
     output_slots = (0,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ResinCollectorOutputer, self).__init__(dim, x, y, z, block_entity_data)
         self.flush_resin_collector_pos()
         self.last_resin_storage = None
+        self.handler.SubscribeOnPlaced(self._resin_collector_outputer_on_placed)
+        self.handler.SubscribeOnBlockRandomTick(self._resin_collector_outputer_on_block_random_tick)
+        self.handler.SubscribeOnNeighborChanged(self._resin_collector_outputer_on_neighbor_changed)
 
     @classmethod
     def OnPrePlaced(cls, event):
@@ -56,7 +58,7 @@ class ResinCollectorOutputer(BaseMachine, ItemContainer):
                     return
         event.cancel()
 
-    def OnPlaced(self, _):
+    def _resin_collector_outputer_on_placed(self, _):
         TCON.block_placed(self)
         for facing, (dx, dz) in enumerate(FACING_DXZ):
             block_id, _ = GetBlockNameAndAux(
@@ -68,7 +70,7 @@ class ResinCollectorOutputer(BaseMachine, ItemContainer):
             self._set_facing(facing)
             break
 
-    def OnBlockRandomTick(self, event):
+    def _resin_collector_outputer_on_block_random_tick(self, event):
         block_id, aux = GetBlockNameAndAux(self.dim, self.linked_resin_collector_pos)
         if block_id is None:
             return
@@ -88,7 +90,7 @@ class ResinCollectorOutputer(BaseMachine, ItemContainer):
                 {"skybluetech:resin_storage": resin_storage - 1},
             )
 
-    def OnNeighborChanged(self, event):
+    def _resin_collector_outputer_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         TCON.neighbor_block_changed(self, event)
         if (

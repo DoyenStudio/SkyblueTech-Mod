@@ -1,8 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.item_spreader import (
     K_NUM_CONTAINERS,
@@ -21,13 +21,13 @@ from .basic import (
     BaseSpeedControl,
     GUIControl,
     OperationListener,
-    RegisterMachine,
     UpgradeControl,
 )
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class ItemSpreader(GUIControl, OperationListener, UpgradeControl):
+class ItemSpreader(UpgradeControl, OperationListener, GUIControl):
     block_name = Machinery.ITEM_SPREADER
     input_slots = (0,)
     output_slots = ()
@@ -41,14 +41,17 @@ class ItemSpreader(GUIControl, OperationListener, UpgradeControl):
         Upgraders.BASIC_ENERGY_UPGRADER,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ItemSpreader, self).__init__(dim, x, y, z, block_entity_data)
         self._all_input_access_points = []
         self._working = False
         self._dirty = True
         self._empty = False
+        self.handler.SubscribeOnTicking(self._item_spreader_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._item_spreader_on_slot_update)
+        self.handler.SubscribeOnInvalidateCaches(self._item_spreader_on_invalidate_caches)
 
-    def OnTicking(self):
+    def _item_spreader_on_ticking(self):
         if self._dirty:
             self.update_acceess_points()
             self._dirty = False
@@ -57,16 +60,23 @@ class ItemSpreader(GUIControl, OperationListener, UpgradeControl):
         if BaseSpeedControl.ProcessOnce(self) and self.store_rf >= self.running_power:
             self.spread()
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot):
+    def _item_spreader_on_slot_update(self, slot):
         if slot == 0:
             self._empty = self.GetSlotItem(0) is None
 
-    @SuperExecutorMeta.execute_super
-    def OnInvalidateCaches(self):
+    def _item_spreader_on_invalidate_caches(self):
         self._dirty = True
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._item_spreader_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _item_spreader_is_valid_input(self, slot, item):
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
         return slot == 0

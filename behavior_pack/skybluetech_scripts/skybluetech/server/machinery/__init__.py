@@ -62,3 +62,6 @@ from .wind_generator import WindGenerator
 # collections
 from .interfaces import *
 from .tanks import *
+
+# Register engine event listeners after all machine components are available.
+from . import listeners as _machine_listeners

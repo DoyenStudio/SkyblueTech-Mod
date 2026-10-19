@@ -38,31 +38,22 @@
 | fluid_output_slots | set\[int] | 可用的流体输出槽位 | set() |
 | fluid_slot_max_volumes | tuple\[float] | 每个流体槽位最大容量 | () |
 
-## 提示
+## 初始化与事件订阅
 
-当与任意机器基类组合时，你需要额外添加 `__init__` 空方法， 防止两个父类同名方法冲突：
+组合多流体容器时使用 `class FluidCondenser(Processor, MultiFluidContainer)`。
+`super()` 按 MRO 串联初始化, 流体容器须在配方检查前创建 `self.fluids`。
+
 ```python
 @RegisterMachine
-class FluidCondenser(MultiFluidContainer, Processor):
-    ...
-
-    @SuperExecutorMeta.execute_super
-    # 会使得在执行 __init__ 时先行执行两个父类的 __init__ 方法
+class FluidCondenser(Processor, MultiFluidContainer):
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(FluidCondenser, self).__init__(dim, x, y, z, block_entity_data)
+        self.handler.SubscribeOnPlaced(self.on_placed)
+
+    def on_placed(self, event):
+        self.recheck_recipe()
 ```
 
-当与 `MultiFluidContainer` 组合时，你需要额外添加两个空方法：
-```python
-@RegisterMachine
-class FluidCondenser(MultiFluidContainer, Processor):
-    ...
-
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass
-```
+`Processor` 会自行订阅 tick、物品槽位及多流体增减事件, 不再需要空的 `OnXXX` 方法或装饰器。
+新增组件构造器均须调用一次 `super(当前类, self).__init__(...)`, 不要手动逐个调用父类构造器。
+订阅回调使用组件各自的名称, 防止继承覆写意外替换其他组件的回调。

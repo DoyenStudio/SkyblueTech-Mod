@@ -9,7 +9,6 @@ from skybluetech_scripts.tooldelta.api.server import (
 from skybluetech_scripts.tooldelta.events.server.block import (
     ServerBlockUseEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags
 from ...common.events.machinery.tesla_plant import (
     TeslaPlantSettingsUpload,
@@ -22,9 +21,9 @@ from .basic import (
     GUIControl,
     UpgradeControl,
     WorkRenderer,
-    RegisterMachine,
 )
-from .utils.action_commit import SafeGetMachine
+from .core import RegisterMachine
+from .utils.action_commit import SafeGetLoadedMachine
 
 K_SETTING_ATTACK_MONSTER = "st:do_attack_monster"
 K_SETTING_ATTACK_MOB = "st:do_attack_mob"
@@ -38,33 +37,23 @@ AttrType = GetMinecraftEnum().AttrType
 
 
 @RegisterMachine
-class TeslaPlant(GUIControl, UpgradeControl, WorkRenderer):
+class TeslaPlant(WorkRenderer, UpgradeControl, GUIControl):
     block_name = MACHINE_ID
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(TeslaPlant, self).__init__(dim, x, y, z, block_entity_data)
         self._cached_setting_do_attack_mob = None
         self._cached_setting_do_attack_player = None
         self._cached_setting_do_attack_monster = None
         self._cached_work_range = None
         self.shock_damage = 0
+        self.handler.SubscribeOnTicking(self._tesla_plant_on_ticking)
 
-    def OnTicking(self):
+    def _tesla_plant_on_ticking(self):
         while self.IsActive():
             if BaseSpeedControl.ProcessOnce(self):
                 self.work_once()
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
 
     def work_once(self):
         range = self.work_range
@@ -171,7 +160,7 @@ class TeslaPlant(GUIControl, UpgradeControl, WorkRenderer):
 @TeslaPlantSettingsUpload.Listen()
 def onUpload(event):
     # type: (TeslaPlantSettingsUpload) -> None
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
+    m = SafeGetLoadedMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, TeslaPlant):
         return
     m.update_settings(

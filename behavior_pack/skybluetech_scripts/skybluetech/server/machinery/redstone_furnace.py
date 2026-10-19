@@ -2,7 +2,6 @@
 from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Machinery, Upgraders
@@ -10,14 +9,14 @@ from ...common.machinery_def.redstone_furnace import STORE_RF_MAX, TICK_POWER
 from .basic import (
     GUIControl,
     ItemContainer,
-    RegisterMachine,
     UpgradeControl,
     WorkRenderer,
 )
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
+class RedstoneFurnace(WorkRenderer, UpgradeControl, GUIControl):
     block_name = Machinery.REDSTONE_FURNACE
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
@@ -32,12 +31,13 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
         Upgraders.GENERIC_AUTO_EJECTION,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(RedstoneFurnace, self).__init__(dim, x, y, z, block_entity_data)
         self.try_start_next()
+        self.handler.SubscribeOnTicking(self._redstone_furnace_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._redstone_furnace_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _redstone_furnace_on_ticking(self):
         while self.IsActive():
             if self.ProcessOnce():
                 self.run_once()
@@ -84,12 +84,20 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._redstone_furnace_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _redstone_furnace_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
         return ItemContainer.IsValidInput(self, slot, item)
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _redstone_furnace_on_slot_update(self, slot_pos):
         # type: (int) -> None
         input_item = self.GetSlotItem(0)
         if input_item is None:
@@ -108,14 +116,6 @@ class RedstoneFurnace(GUIControl, UpgradeControl, WorkRenderer):
             return
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
-
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
 
 def get_furnace_output_by_input(item_id, aux_value=0):

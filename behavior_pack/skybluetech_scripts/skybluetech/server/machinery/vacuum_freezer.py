@@ -1,7 +1,6 @@
 # coding=utf-8
 import math
 
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.define.id_enum import Upgraders
@@ -41,8 +40,8 @@ from .basic import (
     MultiFluidContainer,
     OperationListener,
     Processor,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 from .interfaces import (
     EnergyInputInterface,
     FluidInputInterface,
@@ -60,11 +59,11 @@ ItemOutputInterface.AddExtraMachineId(ids.IO_ITEM2)
 
 @RegisterMachine
 class VacuumFreezer(
-    HeatCtrl,
-    MultiBlockStructure,
-    MultiFluidContainer,
-    Processor,
     OperationListener,
+    Processor,
+    MultiFluidContainer,
+    MultiBlockStructure,
+    HeatCtrl,
 ):
     # 玩家设定目标温度(`expected_kelvin`, K)与最大功率(`max_power`, RF/t), 机器每个
     # 热力结算周期(`HeatCtrl.WORK_INTERVAL` tick)以卡诺制冷机
@@ -133,8 +132,8 @@ class VacuumFreezer(
         ids.IO_ITEM2,
     }
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(VacuumFreezer, self).__init__(dim, x, y, z, block_entity_data)
         # 流体吞吐的重入保护标志, 见 transmit_fluids
         self._fluid_io_busy = False
         self._energy_in_ios = []  # type: list[EnergyInputInterface]
@@ -142,14 +141,14 @@ class VacuumFreezer(
         self._fluid_out_ios = []  # type: list[FluidOutputInterface]
         self._item_in_ios = []  # type: list[ItemInputInterface]
         self._item_out_ios = []  # type: list[ItemOutputInterface]
+        self.handler.SubscribeOnSlotUpdate(self._vacuum_freezer_on_slot_update)
+        self.handler.SubscribeOnFluidSlotUpdate(self._vacuum_freezer_on_fluid_slot_update)
+        self.handler.SubscribeOnStructureChanged(self._vacuum_freezer_on_structure_changed)
+        self.handler.SubscribeOnUnload(self._vacuum_freezer_on_unload)
+        self.handler.SubscribeOnHeatWork(self._vacuum_freezer_on_heat_work)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
-        # type: () -> None
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _vacuum_freezer_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if slot_pos in self.output_slots:
             self.try_output_items()
@@ -157,8 +156,7 @@ class VacuumFreezer(
             # 输入槽腾出空间后, 物品输入口里没抽完的东西可以再抽一次
             self.try_take_in_items()
 
-    @SuperExecutorMeta.execute_super
-    def OnFluidSlotUpdate(self, slot_pos, is_final):
+    def _vacuum_freezer_on_fluid_slot_update(self, slot_pos, is_final):
         # type: (int, bool) -> None
         if slot_pos in self.fluid_input_slots or slot_pos in self.fluid_output_slots:
             self.transmit_fluids()
@@ -195,49 +193,31 @@ class VacuumFreezer(
         self.bdata[K_RECIPE] = index
         return idx, recipe
 
-    def OnItemInputSlotUpdate(self, slot_pos):
+    def on_item_input_slot_update(self, slot_pos):
         # type: (int) -> None
         self.try_take_in_items()
 
-    def OnItemOutputSlotUpdate(self, slot_pos):
+    def on_item_output_slot_update(self, slot_pos):
         # type: (int) -> None
         self.try_output_items()
 
-    def OnFluidInputSlotUpdate(self):
+    def on_fluid_input_slot_update(self):
         # type: () -> None
         self.transmit_fluids()
 
-    def OnFluidOutputSlotUpdate(self):
+    def on_fluid_output_slot_update(self):
         # type: () -> None
         self.transmit_fluids()
 
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        # type: (int, str, float, bool) -> None
-        # 本机不在这里做额外处理, 保留覆写只是为了把父类实现接进调用链。
-        # `Processor.OnAddedFluid` 里"流体到货就重查配方"的逻辑必须真的被执行到: 没有它,
-        # 机器一旦因为在输入槽还空着的时候挂上 `DEACTIVE_FLAG_NO_RECIPE`, 之后灌进来的流体
-        # 就再也唤不醒它了(见 `OnTicking`: 停机旗挂着时配方循环整个不跑), 而界面搬运又是
-        # 被动的, 输入槽灌满后不会再有任何流体变动回调, 于是永久卡死。
-        # 之所以不能只靠 `MultiFluidContainer.OnAddedFluid`, 是因为它自己也带着
-        # `execute_super`, 按 MRO 排在 `Processor` 前面, 会把 `Processor` 的实现整个挡掉;
-        # 所以具体机器必须像 `AirCompressor` / `FluidCondenser` 那样把这两个钩子重声明一遍。
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        # type: (int, str, float, bool) -> None
-        pass
-
-    def OnStructureChanged(self, ok):
+    def _vacuum_freezer_on_structure_changed(self, ok):
         # type: (bool) -> None
         self.clean()
         if ok:
             self.connect_ios()
         self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _vacuum_freezer_on_unload(self):
         self.clean()
 
     def connect_ios(self):
@@ -250,13 +230,13 @@ class VacuumFreezer(
         for machine in self.iter_ios():
             machine.SetMachineRef(self)
         for io in self._item_in_ios:
-            io.SetOnSlotUpdateCallback(self.OnItemInputSlotUpdate)
+            io.SetOnSlotUpdateCallback(self.on_item_input_slot_update)
         for io in self._item_out_ios:
-            io.SetOnSlotUpdateCallback(self.OnItemOutputSlotUpdate)
+            io.SetOnSlotUpdateCallback(self.on_item_output_slot_update)
         for io in self._fluid_in_ios:
-            io.SetOnFluidSlotUpdateCallback(self.OnFluidInputSlotUpdate)
+            io.SetOnFluidSlotUpdateCallback(self.on_fluid_input_slot_update)
         for io in self._fluid_out_ios:
-            io.SetOnFluidSlotUpdateCallback(self.OnFluidOutputSlotUpdate)
+            io.SetOnFluidSlotUpdateCallback(self.on_fluid_output_slot_update)
         self.try_take_in_items()
         self.try_output_items()
         self.transmit_fluids()
@@ -285,7 +265,7 @@ class VacuumFreezer(
         self._item_in_ios = []
         self._item_out_ios = []
 
-    def OnHeatWork(self):
+    def _vacuum_freezer_on_heat_work(self):
         # type: () -> None
         self.freeze()
 
@@ -482,5 +462,3 @@ def onSetModifies(event, machine):
         return
     machine.set_power(power)
     machine.set_expected_kelvin(kelvin)
-
-

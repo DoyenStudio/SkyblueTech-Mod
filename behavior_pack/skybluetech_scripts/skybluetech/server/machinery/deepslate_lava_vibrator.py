@@ -16,7 +16,6 @@ from skybluetech_scripts.tooldelta.events.server import (
 from skybluetech_scripts.tooldelta.events.server.block import (
     ServerPlaceBlockEntityEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.deepslate_lava_vibrator import (
@@ -24,7 +23,8 @@ from ...common.machinery_def.deepslate_lava_vibrator import (
     K_PREDICT_PROGRESS,
     STORE_RF_MAX,
 )
-from .basic import RegisterMachine, SPControl
+from .basic import SPControl
+from .core import RegisterMachine
 from .bedrock_lava_drill.lava_storage import get_available_lava_storage
 
 K_REAL_STORAGE = "st:real_storage"
@@ -38,8 +38,8 @@ class DeepslateLavaVibrator(SPControl):
     origin_process_ticks = 20
     store_rf_max = STORE_RF_MAX
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(DeepslateLavaVibrator, self).__init__(dim, x, y, z, block_entity_data)
         states = GetBlockStates(self.dim, (self.x, self.y, self.z))
         if states is None:
             raise ValueError("WindGenerator BlockState None")
@@ -51,8 +51,11 @@ class DeepslateLavaVibrator(SPControl):
             self.is_non_energy_machine = True
         if self.predict_progress == 1.0:
             self.SetPower(0)
+        self.handler.SubscribeOnTicking(self._deepslate_lava_vibrator_on_ticking)
+        self.handler.SubscribeOnPlaced(self._deepslate_lava_vibrator_on_placed)
+        self.handler.SubscribeOnUnload(self._deepslate_lava_vibrator_on_unload)
 
-    def OnTicking(self):
+    def _deepslate_lava_vibrator_on_ticking(self):
         while self.IsActive():
             if self.ProcessOnce():
                 self.work_once()
@@ -71,8 +74,7 @@ class DeepslateLavaVibrator(SPControl):
         if not MayPlace(block_id, (x, y + 1, z), facing, dim):
             event.cancel()
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, event):
+    def _deepslate_lava_vibrator_on_placed(self, event):
         if not self.is_base_block:
             return
         SetBlock(
@@ -83,8 +85,7 @@ class DeepslateLavaVibrator(SPControl):
         )
         self.set_predict_value(0)
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _deepslate_lava_vibrator_on_unload(self):
         base_y = self.y - self.layer
         for i in range(2):
             block_id = GetBlockName(self.dim, (self.x, base_y + i, self.z))

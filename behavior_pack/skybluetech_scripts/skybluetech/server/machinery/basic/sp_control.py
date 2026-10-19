@@ -4,7 +4,7 @@ from .base_speed_control import BaseSpeedControl
 from .power_control import PowerControl
 
 
-class SPControl(BaseSpeedControl, PowerControl):
+class SPControl(PowerControl, BaseSpeedControl):
     """
     速度和能量控制基类合并, 并覆写一个更方便合理的 `ProcessOnce()` 方法。
 

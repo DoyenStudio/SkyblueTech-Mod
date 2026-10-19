@@ -1,10 +1,10 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId
 from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .base_machine import BaseMachine
 from ....common.events.machinery.basic import MachineryOperationC2S
-from ..pool import GetMachineStrict
+from ..core.pool import GetLoadedMachine
 from ..utils.bans import reject_banned_machine
 from .multi_block_structure import MultiBlockStructure
 
@@ -14,17 +14,17 @@ if 0 > 1:
     EventT = typing.TypeVar("EventT", bound=MachineryOperationC2S)
 
 
-class OperationListener(object):
+
+class OperationListener(BaseMachine):
     """
     表示一个需要接受玩家端设置的机器。
 
     机器类继承此基类后, 可使用 @Machinery.ForOperation(MachineryOperationC2S)
     来监听玩家端对机器的操作, 做进一步处理。
     """
-    __metaclass__ = SuperExecutorMeta
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(OperationListener, self).__init__(dim, x, y, z, block_entity_data)
 
     @classmethod
     def ForOperation(
@@ -38,7 +38,7 @@ class OperationListener(object):
             def get_listener():
                 def listener(event):
                     # type: (EventT) -> None
-                    machine = GetMachineStrict(
+                    machine = GetLoadedMachine(
                         GetPlayerDimensionId(event.player_id), event.x, event.y, event.z
                     )
                     if not isinstance(machine, cls):
@@ -59,7 +59,7 @@ class OperationListener(object):
 #     # type: (int, int, int, str) -> BaseMachine | None
 #     if not all(abs(a - b) < 10 for a, b in zip(GetPos(player_id), (x, y, z))):
 #         return None
-#     m = GetMachineStrict(GetPlayerDimensionId(player_id), x, y, z)
+#     m = GetLoadedMachine(GetPlayerDimensionId(player_id), x, y, z)
 #     if not isinstance(m, GUIControl) or not m.ui_sync.PlayerInSync(player_id):
 #         return None
 #     return m

@@ -22,10 +22,10 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerBlockUseEvent,
     ServerEntityTryPlaceBlockEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
-from ..basic import BaseClicker, BaseMachine, GUIControl, RegisterMachine
-from ..pool import GetMachineStrict
+from ..basic import BaseClicker, BaseMachine, GUIControl
+from ..core import RegisterMachine
+from ..core.pool import GetLoadedMachine
 from ..utils.transmitter_conn import TransmitterConn
 from .node import (
     NetworkData,
@@ -46,14 +46,14 @@ block_sync = BlockSync(Machinery.RF_REPEATER_PLANT, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
-class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
+class RFRepeaterPlant(GUIControl, BaseClicker):
     bound_ui = RF_REPEATER_PLANT_UI
     block_name = Machinery.RF_REPEATER_PLANT
     store_rf_max = 120000
     energy_io_mode = (0, 0, 0, 0, 0, 0)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(RFRepeaterPlant, self).__init__(dim, x, y, z, block_entity_data)
         states = GetBlockStates(self.dim, (self.x, self.y, self.z))
         if states is None:
             raise ValueError("RFRepeaterPlant BlockState None")
@@ -62,6 +62,12 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
         if not self.is_base_block:
             self.energy_io_mode = (2, 2, 2, 2, 2, 2)
         self.flush_data()
+        self.handler.UnsubscribeOnClick(self._gui_control_on_click)
+        self.handler.SubscribeOnClick(self._rf_repeater_plant_on_click)
+        self.handler.SubscribeOnPlaced(self._rf_repeater_plant_on_placed)
+        self.handler.SubscribeOnNeighborChanged(self._rf_repeater_plant_on_neighbor_changed)
+        self.handler.SubscribeOnDestroy(self._rf_repeater_plant_on_destroy)
+        self.handler.SubscribeOnUnload(self._rf_repeater_plant_on_unload)
 
     @classmethod
     def OnPrePlaced(cls, event):
@@ -76,7 +82,7 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
         ):
             event.cancel()
 
-    def OnClick(self, event, extra_datas=None):
+    def _rf_repeater_plant_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         if not self.is_base_block:
             event.cancel()
@@ -92,7 +98,7 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
         network_prof_data = sum_network_data(
             node.bound_network_uuid if node is not None else None
         )
-        GUIControl.OnClick(
+        GUIControl._gui_control_on_click(
             self,
             event,
             {
@@ -113,7 +119,7 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
             },
         )
 
-    def OnPlaced(self, event):
+    def _rf_repeater_plant_on_placed(self, event):
         if not self.is_base_block:
             return
         TCON.block_placed(self)
@@ -126,13 +132,13 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
             )
         add_single_node(self.dim, (self.x, self.y, self.z))
 
-    def OnNeighborChanged(self, event):
+    def _rf_repeater_plant_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         if not self.is_base_block:
             return
         TCON.neighbor_block_changed(self, event)
 
-    def OnDestroy(self):
+    def _rf_repeater_plant_on_destroy(self):
         remove_node_and_flush(self.dim, (self.x, self.y, self.z))
         base_y = self.y - self.layer
         for i in range(3):
@@ -141,16 +147,14 @@ class RFRepeaterPlant(BaseMachine, BaseClicker, GUIControl):
                 if GetBlockName(self.dim, pos) == self.block_name:
                     SetBlock(self.dim, (self.x, base_y + i, self.z), "minecraft:air")
 
-    def OnUnload(self):
-        BaseMachine.OnUnload(self)
-        GUIControl.OnUnload(self)
+    def _rf_repeater_plant_on_unload(self):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def AddPower(self, rf):
         # type: (int) -> tuple[bool, int]
         ok = False
         for node_pos, io_mode in self.nodes_in_network.items():
-            plant = GetMachineStrict(self.dim, *node_pos)
+            plant = GetLoadedMachine(self.dim, *node_pos)
             if not isinstance(plant, RFRepeaterPlant):
                 continue
             if io_mode == MODE_OUTPUT:

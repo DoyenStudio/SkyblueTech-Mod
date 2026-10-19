@@ -2,8 +2,8 @@
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
@@ -17,7 +17,8 @@ from ..transmitters.cable.logic import (
 from ..transmitters.cable.logic import (
     logic_module as cable_logic,
 )
-from .basic import GUIControl, OperationListener, RegisterMachine, UpgradeControl
+from .basic import GUIControl, OperationListener, UpgradeControl
+from .core import RegisterMachine
 
 K_RECORD_LABELS = "record_settings"
 K_SETTINGS_LIMIT = "settings_limit"
@@ -26,7 +27,7 @@ DEFAULT_SETTINGS_LIMIT = 6
 
 
 @RegisterMachine
-class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
+class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     block_name = Machinery.ITEM_SPLITTER
     input_slots = (0, 1, 2)
     upgrade_slot_start = 3
@@ -34,13 +35,16 @@ class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
         Upgraders.GENERIC_SPLIT,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ItemSplitter, self).__init__(dim, x, y, z, block_entity_data)
         self._cached_recorded_settings = None
         self._sending_items = True
         self._ticking_t = 0
+        self.handler.SubscribeOnTicking(self._item_splitter_on_ticking)
+        self.handler.SubscribeOnClick(self._item_splitter_on_click)
+        self.handler.SubscribeOnSlotUpdate(self._item_splitter_on_slot_update)
 
-    def OnTicking(self):
+    def _item_splitter_on_ticking(self):
         if self._sending_items and self._ticking_t % 5 == 0:
             has_item = False
             for slot in self.input_slots:
@@ -59,12 +63,20 @@ class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._item_splitter_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _item_splitter_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
         return True
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
+    def _item_splitter_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         ExecLater(
             0.1,
@@ -73,16 +85,12 @@ class ItemSplitter(GUIControl, UpgradeControl, OperationListener):
             ),
         )
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot):
+    def _item_splitter_on_slot_update(self, slot):
         if not self.InUpgradeSlot(slot):
             self._sending_items = True
         else:
-            UpgradeControl.OnSlotUpdate(self, slot)
+            return
 
     def try_post_item_by_label(self, item):
         # type: (Item) -> Item | None

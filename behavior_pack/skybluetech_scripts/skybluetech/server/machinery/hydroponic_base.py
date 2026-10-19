@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.hydroponic_base import (
@@ -11,8 +10,8 @@ from .basic import (
     GUIControl,
     ItemContainer,
     MultiFluidContainer,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 K_GROW_STAGE = "grow_stage"
 K_STAGE_GROW_TICKS = "stage_grow_ticks"
@@ -21,7 +20,7 @@ POWER_COST = 4
 
 
 @RegisterMachine
-class HydroponicBase(BaseMachine, ItemContainer, MultiFluidContainer, GUIControl):
+class HydroponicBase(GUIControl, MultiFluidContainer, ItemContainer):
     block_name = Machinery.HYDROPONIC_BASE
     is_non_energy_machine = True
     input_slots = ()
@@ -32,15 +31,19 @@ class HydroponicBase(BaseMachine, ItemContainer, MultiFluidContainer, GUIControl
     fluid_io_fix_mode = -1
     running_power = POWER_COST
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(HydroponicBase, self).__init__(dim, x, y, z, block_entity_data)
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     def IsValidFluidInput(self, slot, fluid_id):
+        # type: (int, str) -> bool
+        results = (
+            MultiFluidContainer.IsValidFluidInput(self, slot, fluid_id),
+            self._hydroponic_base_is_valid_fluid_input(slot, fluid_id),
+        )
+        return all(results)
+
+    def _hydroponic_base_is_valid_fluid_input(self, slot, fluid_id):
         # type: (int, str) -> bool
         if slot == 0:
             return fluid_id == "minecraft:water"

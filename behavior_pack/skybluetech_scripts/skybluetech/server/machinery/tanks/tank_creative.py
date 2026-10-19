@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import ItemExists
 from skybluetech_scripts.skybluetech.common.define.id_enum import Tank
 from skybluetech_scripts.skybluetech.common.machinery_def.tank import TANK_MAX_VOLUMES
-from ..basic import RegisterMachine
+from ..core import RegisterMachine
 from .base_tank import BasicTank, FluidContainer, RegisterTank
 
 INFINITY = float("inf")
@@ -16,11 +16,13 @@ class CreativeTank(BasicTank):
     max_fluid_volume = TANK_MAX_VOLUMES[Tank.CREATIVE]
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        BasicTank.__init__(self, dim, x, y, z, block_entity_data)
+        super(CreativeTank, self).__init__(dim, x, y, z, block_entity_data)
         # 无限体积无法可靠地持久化到方块实体数据, 重载时按存有流体的事实重置为
         # INFINITY, 即使存档中的数值被损坏也能自愈。
         if self.fluid_id is not None:
             self.fluid_volume = INFINITY
+        self.handler.UnsubscribeOnSlotUpdate(self._basic_tank_on_slot_update)
+        self.handler.SubscribeOnSlotUpdate(self._creative_tank_on_slot_update)
 
     def AddFluid(self, fluid_id, fluid_volume, depth=0):
         # type: (str, float, int) -> tuple[bool, float]
@@ -37,7 +39,7 @@ class CreativeTank(BasicTank):
         self.CallSync()
         return res
 
-    def OnSlotUpdate(self, slot_pos):
+    def _creative_tank_on_slot_update(self, slot_pos):
         # type: (int) -> None
         item0 = self.GetSlotItem(0)
         item1 = self.GetSlotItem(1)

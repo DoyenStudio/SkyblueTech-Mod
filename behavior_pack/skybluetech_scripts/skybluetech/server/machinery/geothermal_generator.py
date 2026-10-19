@@ -2,7 +2,6 @@
 import random
 
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Dusts, Machinery
@@ -25,14 +24,18 @@ from .basic import (
     GUIControl,
     ItemContainer,
     MultiFluidContainer,
-    RegisterMachine,
     WorkRenderer,
 )
+from .core import RegisterMachine
 
 
 @RegisterMachine
 class GeoThermalGenerator(
-    BaseGenerator, GUIControl, ItemContainer, MultiFluidContainer, WorkRenderer
+    WorkRenderer,
+    MultiFluidContainer,
+    ItemContainer,
+    GUIControl,
+    BaseGenerator,
 ):
     block_name = Machinery.GEO_THERMAL_GENERATOR
     store_rf_max = STORE_RF_MAX
@@ -42,13 +45,15 @@ class GeoThermalGenerator(
     fluid_slot_max_volumes = (MAX_LAVA_VOLUME, MAX_WATER_VOLUME)
     output_slots = (0,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(GeoThermalGenerator, self).__init__(dim, x, y, z, block_entity_data)
         if self.burn_ticks > 0:
             self.SetOutputPower(self.bdata[K_OUTPUT_POWER] or ORIGIN_GENERATED_POWER)
+        self.handler.SubscribeOnTicking(self._geo_thermal_generator_on_ticking)
+        self.handler.SubscribeOnAddedFluid(self._geo_thermal_generator_on_added_fluid)
+        self.handler.SubscribeOnSlotUpdate(self._geo_thermal_generator_on_slot_update)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _geo_thermal_generator_on_ticking(self):
         if self.IsActive():
             self.burn_ticks -= 1
             if self.burn_ticks <= 0:
@@ -58,16 +63,21 @@ class GeoThermalGenerator(
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
+        results = (
+            MultiFluidContainer.IsValidFluidInput(self, slot, fluid_id),
+            self._geo_thermal_generator_is_valid_fluid_input(slot, fluid_id),
+        )
+        return all(results)
+
+    def _geo_thermal_generator_is_valid_fluid_input(self, slot, fluid_id):
+        # type: (int, str) -> bool
         return fluid_id == {
             0: LAVA_ID,
             1: WATER_ID,
         }.get(slot)
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+    def _geo_thermal_generator_on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if slot != 0:
             return
@@ -76,8 +86,7 @@ class GeoThermalGenerator(
             if ok:
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _geo_thermal_generator_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if slot_pos == 0 and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
             slotitem = self.GetSlotItem(0)
@@ -86,9 +95,6 @@ class GeoThermalGenerator(
             ):
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
 
     def next_burn(self):
         self.SetOutputPower(0)

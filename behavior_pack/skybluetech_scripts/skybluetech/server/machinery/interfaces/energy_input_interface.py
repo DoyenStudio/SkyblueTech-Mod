@@ -1,5 +1,5 @@
 # coding=utf-8
-from ..basic import RegisterMachine
+from ..core import RegisterMachine
 from .base_interface import BaseInterface
 
 

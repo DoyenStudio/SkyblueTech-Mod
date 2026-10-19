@@ -1,13 +1,13 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define.id_enum import Machinery
 from .basic import (
     GUIControl,
-    RegisterMachine,
     UpgradeControl,
 )
+from .core import RegisterMachine
 
 
 class TransInfo:
@@ -36,7 +36,7 @@ class TransInfo:
 
 
 @RegisterMachine
-class LexicalTransmuter(GUIControl, UpgradeControl):
+class LexicalTransmuter(UpgradeControl, GUIControl):
     block_name = Machinery.LEXICAL_TRANSMUTER
     input_slots = (0,)
     output_slots = (1,)
@@ -44,23 +44,32 @@ class LexicalTransmuter(GUIControl, UpgradeControl):
     upgrade_slot_start = 3
     is_non_energy_machine = True
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(LexicalTransmuter, self).__init__(dim, x, y, z, block_entity_data)
         self.template_item_trans_info = None
         self.template_item = None
         self.make_dirty()
+        self.handler.SubscribeOnSlotUpdate(self._lexical_transmuter_on_slot_update)
+        self.handler.SubscribeOnInvalidateCaches(self._lexical_transmuter_on_invalidate_caches)
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot):
+    def _lexical_transmuter_on_slot_update(self, slot):
         if slot == 0:
             self._empty = self.GetSlotItem(0) is None
         self.make_dirty(slot)
 
-    @SuperExecutorMeta.execute_super
-    def OnInvalidateCaches(self):
+    def _lexical_transmuter_on_invalidate_caches(self):
         self.make_dirty()
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._lexical_transmuter_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _lexical_transmuter_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)

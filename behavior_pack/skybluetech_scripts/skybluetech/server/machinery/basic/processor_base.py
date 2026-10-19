@@ -9,7 +9,6 @@ from skybluetech_scripts.skybluetech.common.mini_jei.core import (
 )
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import MachineRecipeBase
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from .gui_ctrl import GUIControl
 from .multi_fluid_container import MultiFluidContainer
@@ -17,7 +16,7 @@ from .upgrade_control import UpgradeControl
 from .work_renderer import WorkRenderer
 
 
-class ProcessorBase(GUIControl, UpgradeControl, WorkRenderer):
+class ProcessorBase(WorkRenderer, UpgradeControl, GUIControl):
     """
     配方处理器基类。
     """
@@ -30,8 +29,8 @@ class ProcessorBase(GUIControl, UpgradeControl, WorkRenderer):
     recipes = RecipesCollection("???")  # type: RecipesCollection[MachineRecipeBase]
     "机器配方, 改变配方表时记得重置工作进度"
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ProcessorBase, self).__init__(dim, x, y, z, block_entity_data)
         _, self.current_recipe = self.get_recipe()
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -40,24 +39,16 @@ class ProcessorBase(GUIControl, UpgradeControl, WorkRenderer):
             # 构造时既然已经匹配到配方, 就顺手把它清掉, 否则机器重进世界后再也醒不过来
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def UnsetDeactiveFlag(self, flag, flush=True):
-        pass
-
-    @SuperExecutorMeta.execute_super
     def IsValidFluidInput(self, slot, fluid_id):
+        # type: (int, str) -> bool
+        results = (
+            MultiFluidContainer.IsValidFluidInput(self, slot, fluid_id),
+            self._processor_base_is_valid_fluid_input(slot, fluid_id),
+        )
+        return all(results)
+
+    def _processor_base_is_valid_fluid_input(self, slot, fluid_id):
         # type: (int, str) -> bool
         for recipe in self.recipes:
             slot_input = recipe.inputs.get("fluid", {}).get(slot)

@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 
 from ...common.define.id_enum import Machinery
@@ -15,27 +14,31 @@ from .basic import (
     GUIControl,
     OperationListener,
     PowerControl,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 block_sync = BlockSync(Machinery.HOVER_TEXT_DISPLAYER, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
-class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl, OperationListener):
+class HoverTextDisplayer(OperationListener, PowerControl, GUIControl, BaseClicker):
     block_name = Machinery.HOVER_TEXT_DISPLAYER
     bound_ui = HOVER_TEXT_DISPLAYER_UI
     store_rf_max = STORE_RF_MAX
     running_power = 1
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(HoverTextDisplayer, self).__init__(dim, x, y, z, block_entity_data)
         self.set_text()
         self.can_display = self.PowerEnough()
         self._last_can_display = self.can_display
+        self.handler.UnsubscribeOnClick(self._gui_control_on_click)
+        self.handler.SubscribeOnClick(self._hover_text_displayer_on_click)
+        self.handler.SubscribeOnTicking(self._hover_text_displayer_on_ticking)
+        self.handler.SubscribeOnUnload(self._hover_text_displayer_on_unload)
 
-    def OnClick(self, event, extra_datas=None):
-        GUIControl.OnClick(
+    def _hover_text_displayer_on_click(self, event, extra_datas=None):
+        GUIControl._gui_control_on_click(
             self,
             event,
             {
@@ -45,13 +48,12 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl, OperationListene
             },
         )
 
-    def OnTicking(self):
+    def _hover_text_displayer_on_ticking(self):
         if self.PowerEnough():
             self.ReducePower()
         self.update_display_stat()
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _hover_text_displayer_on_unload(self):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def set_text(self, text=None):
@@ -83,15 +85,6 @@ class HoverTextDisplayer(BaseClicker, GUIControl, PowerControl, OperationListene
                 self.x, self.y, self.z, "", self.running_power
             ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def UnsetDeactiveFlag(self, flag, flush=True):
-        # type: (int, bool) -> None
-        pass
 
     def calcuate_power_cost(self):
         cost = len(self.text) * 0.2 * (1.5 if "搂" in self.text else 1)

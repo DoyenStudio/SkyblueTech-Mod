@@ -5,7 +5,6 @@ from skybluetech_scripts.tooldelta.events.server.block import (
     BlockStrengthChangedServerEvent,
     ServerBlockUseEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.define.ui_keys import REDSTONEFLUX_BRAKE_UI
@@ -24,17 +23,17 @@ from .basic import (
     BasePowerProvider,
     GUIControl,
     OperationListener,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class RedstonefluxBrake(BaseClicker, BasePowerProvider, GUIControl, OperationListener):
+class RedstonefluxBrake(OperationListener, GUIControl, BasePowerProvider, BaseClicker):
     bound_ui = REDSTONEFLUX_BRAKE_UI
     block_name = Machinery.REDSTONEFLUX_BRAKE
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(RedstonefluxBrake, self).__init__(dim, x, y, z, block_entity_data)
         self._invert_redstone = self.bdata[K_INVERT_REDSTONE] or False
         self.power_avg = self.bdata[K_POWER_AVG] or 0
         self._redstone_strength = self.bdata[K_REDSTONE_STRENGTH] or 0
@@ -45,8 +44,13 @@ class RedstonefluxBrake(BaseClicker, BasePowerProvider, GUIControl, OperationLis
             self.bdata[K_POWER_AVG] = 0
         self.t = 0
         ExecLater(0, self.update_stat)
+        self.handler.UnsubscribeOnClick(self._gui_control_on_click)
+        self.handler.SubscribeOnTicking(self._redstoneflux_brake_on_ticking)
+        self.handler.SubscribeOnClick(self._redstoneflux_brake_on_click)
+        self.handler.SubscribeOnNeighborChanged(self._redstoneflux_brake_on_neighbor_changed)
+        self.handler.SubscribeOnBlockRedstoneStrengthChanged(self._redstoneflux_brake_on_block_redstone_strength_changed)
 
-    def OnTicking(self):
+    def _redstoneflux_brake_on_ticking(self):
         self.t += 1
         if self.t >= 20:
             self.t = 0
@@ -56,15 +60,15 @@ class RedstonefluxBrake(BaseClicker, BasePowerProvider, GUIControl, OperationLis
                 self.power_avg = 0
             self.bdata[K_POWER_AVG] = self.power_avg
 
-    def OnClick(self, event, extra_datas=None):
+    def _redstoneflux_brake_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
-        GUIControl.OnClick(self, event)
+        GUIControl._gui_control_on_click(self, event)
 
-    def OnNeighborChanged(self, event):
+    def _redstoneflux_brake_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         self.update_stat()
 
-    def OnBlockRedstoneStrengthChanged(self, event):
+    def _redstoneflux_brake_on_block_redstone_strength_changed(self, event):
         # type: (BlockStrengthChangedServerEvent) -> None
         self.redstone_strength = event.newStrength
         self.update_enabled_by_redstone()

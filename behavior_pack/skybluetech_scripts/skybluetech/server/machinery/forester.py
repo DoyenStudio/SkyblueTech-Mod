@@ -9,16 +9,16 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
     SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.forester import STORE_RF_MAX, ForesterUtils
 from .basic import (
     BaseSpeedControl,
     GUIControl,
-    RegisterMachine,
     UpgradeControl,
 )
+from .core import RegisterMachine
 
 DX = 8
 DY = 32
@@ -38,7 +38,7 @@ ALL_NEIGHBOUR_BLOCKS_ENUM = [
 
 
 @RegisterMachine
-class Forester(GUIControl, UpgradeControl):
+class Forester(UpgradeControl, GUIControl):
     block_name = Machinery.FORESTER
     store_rf_max = STORE_RF_MAX
     running_power = 80
@@ -52,17 +52,26 @@ class Forester(GUIControl, UpgradeControl):
         Upgraders.GENERIC_AUTO_EJECTION, 
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(Forester, self).__init__(dim, x, y, z, block_entity_data)
+        self.handler.SubscribeOnTicking(self._forester_on_ticking)
 
-    def OnTicking(self):
+    def _forester_on_ticking(self):
         # 1t 内如果处理多次任务会导致卡顿
         # 直接忽略 1t 内任务的多次处理
         if BaseSpeedControl.ProcessOnce(self):
             self.run_once()
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._forester_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _forester_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
@@ -80,9 +89,6 @@ class Forester(GUIControl, UpgradeControl):
             return DY_EXPANDED
         return DY
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     def run_once(self):
         ok = self.collect_tree()

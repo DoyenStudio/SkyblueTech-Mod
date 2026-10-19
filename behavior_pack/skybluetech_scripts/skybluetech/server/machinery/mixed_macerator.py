@@ -2,7 +2,8 @@
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.mixed_macerator import STORE_RF_MAX
 from ...common.machinery_def.mixed_macerator import recipes as Recipes
-from .basic import Processor, RegisterMachine
+from .basic import Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine

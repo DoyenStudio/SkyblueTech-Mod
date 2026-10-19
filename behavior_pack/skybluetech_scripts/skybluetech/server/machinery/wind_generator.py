@@ -16,7 +16,6 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerBlockUseEvent,
     ServerEntityTryPlaceBlockEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
@@ -34,8 +33,9 @@ from ...common.machinery_def.wind_generator import (
     item2paddle,
 )
 from ...common.utils.block_sync import BlockSync
-from .basic import BaseGenerator, GUIControl, ItemContainer, RegisterMachine
-from .pool import GetMachineStrict
+from .basic import BaseGenerator, GUIControl, ItemContainer
+from .core import RegisterMachine
+from .core.pool import GetLoadedMachine
 from .utils.transmitter_conn import TransmitterConn
 
 TCON = TransmitterConn(wire=True)
@@ -44,15 +44,15 @@ block_sync = BlockSync(Machinery.WIND_GENERATOR, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
-class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
+class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
     block_name = Machinery.WIND_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     input_slots = (0,)
     output_slots = ()
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(WindGenerator, self).__init__(dim, x, y, z, block_entity_data)
         self.t = 0
         states = GetBlockStates(self.dim, (self.x, self.y, self.z))
         if states is None:
@@ -69,17 +69,24 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
             self.energy_io_mode = (2, 2, 2, 2, 2, 2)
         else:
             self.update_power()
+        self.handler.UnsubscribeOnClick(self._gui_control_on_click)
+        self.handler.SubscribeOnClick(self._wind_generator_on_click)
+        self.handler.SubscribeOnTicking(self._wind_generator_on_ticking)
+        self.handler.SubscribeOnPlaced(self._wind_generator_on_placed)
+        self.handler.SubscribeOnNeighborChanged(self._wind_generator_on_neighbor_changed)
+        self.handler.SubscribeOnDestroy(self._wind_generator_on_destroy)
+        self.handler.SubscribeOnUnload(self._wind_generator_on_unload)
+        self.handler.SubscribeOnSlotUpdate(self._wind_generator_on_slot_update)
 
-    def OnClick(self, event, extra_datas=None):
+    def _wind_generator_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         if self.is_base_block:
-            GUIControl.OnClick(self, event)
+            GUIControl._gui_control_on_click(self, event)
         else:
             event.cancel()
             PlayerUseItemToPos(event.playerId, (self.x, self.y - self.layer, self.z), 2)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _wind_generator_on_ticking(self):
         if not self.is_base_block:
             return
         self.t += 1
@@ -101,8 +108,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
         ):
             event.cancel()
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _wind_generator_on_placed(self, _):
         if not self.is_base_block:
             return
         TCON.block_placed(self)
@@ -114,7 +120,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
                 GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": i}),
             )
 
-    def OnNeighborChanged(self, event):
+    def _wind_generator_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         if not self.is_base_block:
             return
@@ -126,11 +132,11 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
             ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z))),
         )
 
-    def OnDestroy(self):
+    def _wind_generator_on_destroy(self):
         base_y = self.y - self.layer
         for i in range(3):
             if i == 0:
-                m = GetMachineStrict(self.dim, self.x, base_y + i, self.z)
+                m = GetLoadedMachine(self.dim, self.x, base_y + i, self.z)
                 if isinstance(m, ItemContainer):
                     m.DropAllItems()
             if i != self.layer:
@@ -138,12 +144,10 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
                 if GetBlockName(self.dim, pos) == self.block_name:
                     SetBlock(self.dim, pos, "minecraft:air")
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _wind_generator_on_unload(self):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _wind_generator_on_slot_update(self, slot_pos):
         if slot_pos == 0:
             self._cached_paddle_type = None
         if self.paddle_type != WindGeneratorStatesUpdate.PADDLE_EMPTY:
@@ -158,6 +162,14 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
         )
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            self._wind_generator_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _wind_generator_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         return "skybluetech:wind_generator_paddle" in item.GetBasicInfo().tags
 
@@ -240,7 +252,7 @@ class WindGenerator(BaseGenerator, ItemContainer, GUIControl):
 @WindGeneratorStatesRequest.Listen()
 def onRecvRequest(event):
     # type: (WindGeneratorStatesRequest) -> None
-    m = GetMachineStrict(
+    m = GetLoadedMachine(
         GetPlayerDimensionId(event.player_id), event.x, event.y, event.z
     )
     if not isinstance(m, WindGenerator) or not m.is_base_block:

@@ -12,8 +12,8 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     MachineRecipeBase,
 )
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .item_container import ItemContainer
 from .multi_fluid_container import MultiFluidContainer
 from .processor_base import ProcessorBase
 from .upgrade_control import UpgradeControl
@@ -21,7 +21,8 @@ from .upgrade_control import UpgradeControl
 
 class Processor(ProcessorBase):
     """
-    配方处理器机器基类; 继承时需要把 Processor 放在最后以免 __init__ 顺序出问题
+    配方处理器机器基类; 依赖的流体容器应放在 Processor 后面,
+    使其在 super() 返回、开始匹配配方前完成初始化。
 
     目前支持处理 (记得把对应的 process_xxx 设为 True):
         - 物品
@@ -38,14 +39,18 @@ class Processor(ProcessorBase):
         Upgraders.GENERIC_AUTO_EJECTION,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(Processor, self).__init__(dim, x, y, z, block_entity_data)
         if self.current_recipe is not None:
             self.SetProcessTicks(self.current_recipe.tick_duration)
             self.SetPower(self.current_recipe.power_cost)
             self.update_gui()
+        self.handler.SubscribeOnTicking(self._processor_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._processor_on_slot_update)
+        self.handler.SubscribeOnAddedFluid(self._processor_on_added_fluid)
+        self.handler.SubscribeOnReducedFluid(self._processor_on_reduced_fluid)
 
-    def OnTicking(self):
+    def _processor_on_ticking(self):
         while self.IsActive():
             if self.current_recipe is None:
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -59,9 +64,6 @@ class Processor(ProcessorBase):
                 self.CallSync()
                 break
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     def GetProgressPercent(self):
         r = self.current_recipe
@@ -70,10 +72,9 @@ class Processor(ProcessorBase):
         return 1 - float(self.ticks_left) / r.tick_duration
 
     # === item processor special ===
-    def OnSlotUpdate(self, slot_pos):
+    def _processor_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):
-            UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if self.process_item:
             if slot_pos in self.output_slots and self.HasDeactiveFlag(
@@ -85,6 +86,15 @@ class Processor(ProcessorBase):
                 self.recheck_recipe()
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._processor_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _processor_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
@@ -99,8 +109,7 @@ class Processor(ProcessorBase):
         return False
 
     # === fluid processor special ===
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+    def _processor_on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if not is_final or not isinstance(self, MultiFluidContainer):
             return
@@ -109,8 +118,7 @@ class Processor(ProcessorBase):
         ):
             self.recheck_recipe()
 
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
+    def _processor_on_reduced_fluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if not is_final or not isinstance(self, MultiFluidContainer):
             return

@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.distillation_chamber import (
@@ -16,8 +15,8 @@ from .basic import (
     GUIControl,
     HeatCtrl,
     MultiFluidContainer,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 from .basic.multi_fluid_container import FluidSlotServer
 
 TICKS_PER_SECOND = 20
@@ -28,7 +27,7 @@ for recipe in Recipes:
 
 
 @RegisterMachine
-class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
+class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.DISTILLATION_CHAMBER
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
@@ -38,19 +37,18 @@ class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
     fluid_output_slots = {1}
     fluid_slot_max_volumes = (INPUT_MAX_VOLUME, OUTPUT_MAX_VOLUME)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(DistillationChamber, self).__init__(dim, x, y, z, block_entity_data)
         self.locked_recipe_idx = None
         self.output_rate = 0
         self._produce_accum = 0.0
         self._tick_counter = 0
+        self.handler.SubscribeOnTicking(self._distillation_chamber_on_ticking)
+        self.handler.SubscribeOnSync(self._distillation_chamber_on_sync)
+        self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _distillation_chamber_on_ticking(self):
         self.work_once()
         self._tick_counter += 1
         if self._tick_counter >= TICKS_PER_SECOND:
@@ -59,11 +57,19 @@ class DistillationChamber(HeatCtrl, MultiFluidContainer, GUIControl):
             self._tick_counter = 0
             self.CallSync()
 
-    def OnSync(self):
+    def _distillation_chamber_on_sync(self):
         # type: () -> None
         self.bdata[K_OUTPUT_RATE] = self.output_rate
 
     def IsValidFluidInput(self, slot, fluid_id):
+        # type: (int, str) -> bool
+        results = (
+            MultiFluidContainer.IsValidFluidInput(self, slot, fluid_id),
+            self._distillation_chamber_is_valid_fluid_input(slot, fluid_id),
+        )
+        return all(results)
+
+    def _distillation_chamber_is_valid_fluid_input(self, slot, fluid_id):
         # type: (int, str) -> bool
         return fluid_id in recipes_collection
 

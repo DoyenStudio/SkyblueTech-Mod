@@ -8,7 +8,7 @@
 | 属性名 | 类型 | 说明 |
 | --- | --- | --- |
 | structure_palette | StructureBlockPalette \| None | 用于进行多方块完整性检测的多方块结构调色板 |
-| functional_block_ids | set[str] | 多方块结构中功能性方块的 ID 列表。GetMachine() 获取的机器方块 ID 都需要包含在其中; 这些方块只有放在调色板允许的位置上才算数, 藏进结构内部会让结构判破损 |
+| functional_block_ids | set[str] | 多方块结构中功能性方块的 ID 列表。GetLoadedMachine() 获取的机器方块 ID 都需要包含在其中; 这些方块只有放在调色板允许的位置上才算数, 藏进结构内部会让结构判破损 |
 
 ## 实例属性
 | 属性名 | 类型 | 说明 |
@@ -17,9 +17,9 @@
 | lacked_blocks | (property) dict[str, int] | 结构要求的方块还差多少, 键为方块 ID, 值为还差的数量 |
 | lacked_block_poses | (property) list[dict] | 结构破损时记录的位置列表, 每条包含 x/y/z/expected/actual; 也包括"多放东西"的位置: 空腔被填时 expected 是空气, 接口放错位置时 expected 是该位置允许放的方块 |
 
-## 基类覆写方法
+## 事件订阅
 ```python
-def OnStructureChanged(self, structure_finished: bool) -> None
+self.handler.SubscribeOnStructureChanged(self.on_structure_changed)
 ```
 结构变更（完成或破损）时的回调。
 
@@ -40,7 +40,7 @@ def GetFunctionalBlockPoses(self) -> dict[str, list[tuple[int, int, int]]]
 ---
 
 ```python
-def GetMachine(self, cls: type[BaseMachine], block_id: str | None = None, index: int = 0) -> BaseMachine
+def GetLoadedMachine(self, cls: type[BaseMachine], block_id: str | None = None, index: int = 0) -> BaseMachine
 ```
 获取多方块结构中某一类型的机器（多用于多方块结构接口的获取）。
 其 ID 需要被包含在类属性 `functional_block_ids` 中。
@@ -62,7 +62,7 @@ def GetMachine(self, cls: type[BaseMachine], block_id: str | None = None, index:
 ---
 
 ```python
-def TryGetMachine(self, cls: type[BaseMachine], block_id: str | None = None, index: int = 0) -> BaseMachine | None
+def TryGetLoadedMachine(self, cls: type[BaseMachine], block_id: str | None = None, index: int = 0) -> BaseMachine | None
 ```
 GetMachine 的可空返回版本, 获取不到对应机器则返回 None。
 
@@ -117,4 +117,4 @@ STRUCTURE_PALETTE = GenerateSimpleStructureTemplate(
 - 检测只要求"期望位置被填上", 多出来的方块不影响匹配; 想把位置钉死到具体方块, 用
   `require_blocks_count`, 它只统计**落在允许该方块的位置上**的数量。
 - 功能性方块(接口)只能放在调色板允许的位置上: 藏进结构内部空腔的接口不会出现在
-  `GetFunctionalBlockPoses()` 里, `GetMachine()` 取不到, 而且结构会被判定为破损。
+  `GetFunctionalBlockPoses()` 里, `GetLoadedMachine()` 取不到, 而且结构会被判定为破损。

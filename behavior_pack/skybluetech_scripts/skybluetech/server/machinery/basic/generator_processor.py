@@ -11,8 +11,8 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     MachineRecipeBase,
 )
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .item_container import ItemContainer
 from .base_generator import BaseGenerator
 from .base_speed_control import BaseSpeedControl
 from .multi_fluid_container import MultiFluidContainer
@@ -23,7 +23,7 @@ K_OUTPUT_POWER = "st:output_power"
 K_RECIPE_INDEX = "st:recipe_index"
 
 
-class GeneratorProcessor(BaseGenerator, ProcessorBase):
+class GeneratorProcessor(ProcessorBase, BaseGenerator):
     """
     按给定配方运行的发电机基类。
 
@@ -38,14 +38,17 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
     energy_io_mode = (1, 1, 1, 1, 1, 1)
     allow_upgraders = frozenset()
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(GeneratorProcessor, self).__init__(dim, x, y, z, block_entity_data)
         self.SetOutputPower(self.generator_output_power)
         if self.recipe_index is not None:
             self.origin_process_ticks = self.recipes[self.recipe_index].tick_duration
+        self.handler.SubscribeOnTicking(self._generator_processor_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._generator_processor_on_slot_update)
+        self.handler.SubscribeOnAddedFluid(self._generator_processor_on_added_fluid)
+        self.handler.SubscribeOnReducedFluid(self._generator_processor_on_reduced_fluid)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _generator_processor_on_ticking(self):
         while self.IsActive():
             if self.current_recipe is None:
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -59,15 +62,11 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
                 self.CallSync()
                 break
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     # === item processor special ===
-    def OnSlotUpdate(self, slot_pos):
+    def _generator_processor_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if self.InUpgradeSlot(slot_pos):
-            UpgradeControl.OnSlotUpdate(self, slot_pos)
             return
         if self.process_item:
             if slot_pos in self.output_slots and self.HasDeactiveFlag(
@@ -82,6 +81,15 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._generator_processor_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _generator_processor_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
         elif slot in self.output_slots:
@@ -95,8 +103,7 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
         return False
 
     # === fluid processor special ===
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
+    def _generator_processor_on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if not is_final or not isinstance(self, MultiFluidContainer):
             return
@@ -105,8 +112,7 @@ class GeneratorProcessor(BaseGenerator, ProcessorBase):
         ):
             self.recheck_recipe()
 
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
+    def _generator_processor_on_reduced_fluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if not is_final or not isinstance(self, MultiFluidContainer):
             return

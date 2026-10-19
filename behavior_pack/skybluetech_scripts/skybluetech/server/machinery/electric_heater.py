@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.electric_heater import ElectricHeaterSubmitModifiesEvent
@@ -18,12 +17,12 @@ from .basic import (
     HeatCtrl,
     OperationListener,
     PowerControl,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class ElectricHeater(HeatCtrl, GUIControl, PowerControl, OperationListener):
+class ElectricHeater(OperationListener, PowerControl, GUIControl, HeatCtrl):
     """
     电力加热仓。
 
@@ -45,21 +44,15 @@ class ElectricHeater(HeatCtrl, GUIControl, PowerControl, OperationListener):
     max_heat_value = MAX_HEAT_VALUE
     spread_heat = True
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ElectricHeater, self).__init__(dim, x, y, z, block_entity_data)
         self._cached_max_power = self.bdata[K_MAX_POWER] or 0
         self.running_power = self._cached_max_power * self.WORK_INTERVAL
         self.bdata[K_CURRENT_POWER] = 0
+        self.handler.SubscribeOnHeatWork(self._electric_heater_on_heat_work)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
-
-    def OnHeatWork(self):
+    def _electric_heater_on_heat_work(self):
         # type: () -> None
         """
         按玩家设定的功率产热, 并按设定功率全额结算电费。

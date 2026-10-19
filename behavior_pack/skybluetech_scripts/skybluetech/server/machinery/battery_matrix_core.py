@@ -6,14 +6,13 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions import item_nbt
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.battery_matrix import BatteryMatrixCoreStatusUpdate
 from .basic import (
     BaseMachine,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 from .utils.charge import GetCharge, GetIOPower, UpdateCharge, UpdateChargeNBT
 
 K_ITEMS = "st:items"
@@ -26,13 +25,14 @@ class BatteryMatrixCore(BaseMachine):
     slots_num = 27
     is_non_energy_machine = True  # 以防被直接接入电网
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(BatteryMatrixCore, self).__init__(dim, x, y, z, block_entity_data)
         self.slots = []  # type: list[BatterySlotAbstract]
         self.update_core_data()
         self._is_cleaning_slot = False
+        self.handler.SubscribeOnDestroy(self._battery_matrix_core_on_destroy)
 
-    def OnDestroy(self):
+    def _battery_matrix_core_on_destroy(self):
         self.save_core_data()
         blocknbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
         if blocknbt is None:

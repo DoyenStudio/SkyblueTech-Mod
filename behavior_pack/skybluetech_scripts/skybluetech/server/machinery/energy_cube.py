@@ -2,7 +2,6 @@
 
 from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.facing import FACING_DXYZ, OPPOSITE_FACING
 from ...common.define.id_enum import Machinery
@@ -28,19 +27,19 @@ from .basic import (
     BasePowerProvider,
     GUIControl,
     OperationListener,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class EnergyCubeJunior(BaseClicker, BasePowerProvider, GUIControl, OperationListener):
+class EnergyCubeJunior(OperationListener, GUIControl, BasePowerProvider, BaseClicker):
     block_name = Machinery.ENERGY_CUBE_JUNIOR
     bound_ui = ENERGY_CUBE_UI
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (0, 0, 0, 0, 0, 0)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(EnergyCubeJunior, self).__init__(dim, x, y, z, block_entity_data)
         self.io_modes = IOModes(block_entity_data)
         self.energy_io_mode = self.io_modes.modes()
         self._refresh_output_faces()
@@ -50,9 +49,11 @@ class EnergyCubeJunior(BaseClicker, BasePowerProvider, GUIControl, OperationList
         self._power_sample_ticks = 0
         self.bdata[K_INPUT_POWER] = 0.0
         self.bdata[K_OUTPUT_POWER] = 0.0
+        self.handler.SubscribeOnTicking(self._energy_cube_junior_on_ticking)
+        self.handler.SubscribeOnClick(self._energy_cube_junior_on_click)
+        self.handler.SubscribeOnPlaced(self._energy_cube_junior_on_placed)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _energy_cube_junior_on_ticking(self):
         if (
             self.enable_output
             and self.store_rf > 0
@@ -75,8 +76,7 @@ class EnergyCubeJunior(BaseClicker, BasePowerProvider, GUIControl, OperationList
         self._power_sample_ticks = 0
         self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
+    def _energy_cube_junior_on_click(self, event, extra_datas=None):
         ExecLater(
             0.1,
             lambda: EnergyCubeStatesUpdate(
@@ -84,12 +84,9 @@ class EnergyCubeJunior(BaseClicker, BasePowerProvider, GUIControl, OperationList
             ).send(event.playerId),
         )
 
-    def OnPlaced(self, event):
+    def _energy_cube_junior_on_placed(self, event):
         UpdateBlockStates(self.dim, (self.x, self.y, self.z), self.io_modes.states())
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     def AddPower(self, rf):
         if not self.enable_input:
@@ -112,8 +109,6 @@ class EnergyCubeJunior(BaseClicker, BasePowerProvider, GUIControl, OperationList
         self._output_sum += self._last_rf_provided - rf
         self._last_rf_provided = 0
 
-    def OnDestroy(self):
-        pass
 
     def set_io_mode(self, face, io_mode):
         # type: (int, int) -> None

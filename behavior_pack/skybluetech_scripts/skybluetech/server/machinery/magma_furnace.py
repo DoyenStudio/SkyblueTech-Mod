@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.magma_furnace import (
@@ -12,11 +11,12 @@ from ...common.machinery_def.magma_furnace import (
 from ...common.machinery_def.magma_furnace import (
     recipes as Recipes,
 )
-from .basic import MultiFluidContainer, Processor, RegisterMachine
+from .basic import MultiFluidContainer, Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class MagmaFurnace(MultiFluidContainer, Processor):
+class MagmaFurnace(Processor, MultiFluidContainer):
     block_name = Machinery.MAGMA_FURNACE
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
@@ -34,9 +34,8 @@ class MagmaFurnace(MultiFluidContainer, Processor):
         Upgraders.SPEC_MAGMA_FACTORY,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(MagmaFurnace, self).__init__(dim, x, y, z, block_entity_data)
 
     def UpdateUpgraders(self, upgraders):
         # type: (dict[str, int]) -> None
@@ -48,11 +47,3 @@ class MagmaFurnace(MultiFluidContainer, Processor):
         )
         if hasattr(self, "current_recipe"):
             self.recheck_recipe()
-
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass

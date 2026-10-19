@@ -8,7 +8,7 @@ from .utils import generate_simple_arg_mapping
 @RegisterCommand("skybluetech:reset_deactive_flags")
 def onCommand(event):
     # type: (CustomCommandTriggerServerEvent) -> None
-    from ..machinery.pool import GetMachineStrict
+    from ..machinery.core.pool import GetLoadedMachine
 
     args = generate_simple_arg_mapping(event.args)
     x, y, z = args["position"]
@@ -19,7 +19,7 @@ def onCommand(event):
     x = int(x)
     y = int(y)
     z = int(z)
-    m = GetMachineStrict(event.origin["dimension"], x, y, z)
+    m = GetLoadedMachine(event.origin["dimension"], x, y, z)
     if m is None:
         event.SetReturnMsg("Not machine at %d %d %d" % (x, y, z))
         event.SetReturnFailed()

@@ -153,7 +153,7 @@ def OutputItem(self, item: Item) -> Item | None
 | --- | --- |
 | Item \| None | 剩余物品, 当没有剩余物时返回 None |
 
-## 基类覆写方法
+## 事件订阅
 ```python
 def IsValidInput(self, slot: int, item: Item) -> bool
 ```
@@ -171,7 +171,7 @@ def IsValidInput(self, slot: int, item: Item) -> bool
 ---
 
 ```python
-def OnSlotUpdate(self, slot_pos: int) -> None
+self.handler.SubscribeOnSlotUpdate(self.on_slot_update)
 ```
 机器物品槽位更新的回调。
 

@@ -18,7 +18,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.rf_repeater_plant impo
     MODE_INPUT,
     MODE_OUTPUT,
 )
-from ..pool import GetMachineStrict
+from ..core.pool import GetLoadedMachine
 
 
 K_GLOBAL_NETWORK_DATAS = "st:global_rf_repeater_network_datas"
@@ -139,7 +139,7 @@ class SummariedNetworkData:
         for (x, y, z), io_mode in network.nodes.items():
             self.total_input_count += io_mode == MODE_INPUT
             self.total_output_count += io_mode == MODE_OUTPUT
-            if isinstance(GetMachineStrict(network.dim, x, y, z), RFRepeaterPlant):
+            if isinstance(GetLoadedMachine(network.dim, x, y, z), RFRepeaterPlant):
                 self.network_plant_online_count += 1
                 self.total_input_active_count += io_mode == MODE_INPUT
                 self.total_output_active_count += io_mode == MODE_OUTPUT
@@ -224,7 +224,7 @@ def change_node_mode(dim, x, y, z, new_mode):
     from ...transmitters.wire.logic import logic_module
     from . import RFRepeaterPlant
 
-    m = GetMachineStrict(dim, x, y, z)
+    m = GetLoadedMachine(dim, x, y, z)
     if not isinstance(m, RFRepeaterPlant):
         return
     network_uuid = m.bdata[NodeData.K_BOUND_NETWORK_UUID]
@@ -281,7 +281,7 @@ def change_node_mode(dim, x, y, z, new_mode):
         )
         if not res:
             print("[Error] set node io mode failed")
-    plant = GetMachineStrict(dim, *node.pos)
+    plant = GetLoadedMachine(dim, *node.pos)
     if isinstance(plant, RFRepeaterPlant):
         plant.flush_data(network)
 
@@ -324,7 +324,7 @@ def _init_network_from_one_node(
     _dfs_init_network(dim, pos, nodes_data, network, nodes_inited)
     network.save_to_global_dict(networks_data)
     for node_pos in nodes_inited:
-        plant = GetMachineStrict(dim, *node_pos)
+        plant = GetLoadedMachine(dim, *node_pos)
         if isinstance(plant, RFRepeaterPlant):
             plant.flush_data(network)
 
@@ -367,7 +367,7 @@ def _add_node_to_network(dim, pos, network_uuid=None):
     NodeData.new(dim, pos, network_uuid).save_to_global_dict(nodes_data)
     save_networks_data(networks_data)
     save_nodes_data(nodes_data)
-    plant = GetMachineStrict(dim, *pos)
+    plant = GetLoadedMachine(dim, *pos)
     if isinstance(plant, RFRepeaterPlant):
         plant.flush_data(network)
     return network_uuid

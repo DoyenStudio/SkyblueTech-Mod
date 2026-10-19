@@ -11,7 +11,6 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
@@ -27,9 +26,9 @@ from .basic import (
     BaseSpeedControl,
     FluidContainer,
     GUIControl,
-    RegisterMachine,
     UpgradeControl,
 )
+from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
 # TODO: 会使领地模组失效
@@ -40,7 +39,7 @@ TCON = TransmitterConn(cable=True, pipe=True)
 
 
 @RegisterMachine
-class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
+class MiniMiner(UpgradeControl, GUIControl, FluidContainer):
     block_name = Machinery.MINI_MINER
     max_fluid_volume = 2000
     fluid_io_fix_mode = 0
@@ -50,8 +49,8 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
     upgrade_slot_start = 8
     origin_process_ticks = 20
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(MiniMiner, self).__init__(dim, x, y, z, block_entity_data)
         self.size_x = 15
         self.size_y = 64
         self.size_z = 15
@@ -67,34 +66,37 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
             self.mine_pos_iterator = None
             self.bdata[K_WORK_MODE] = WorkMode.FINISHED
         self.init_flags()
+        self.handler.SubscribeOnPlaced(self._mini_miner_on_placed)
+        self.handler.SubscribeOnNeighborChanged(self._mini_miner_on_neighbor_changed)
+        self.handler.SubscribeOnSlotUpdate(self._mini_miner_on_slot_update)
+        self.handler.SubscribeOnSingleFluidSlotUpdate(self._mini_miner_on_fluid_slot_update)
+        self.handler.SubscribeOnClick(self._mini_miner_on_click)
+        self.handler.SubscribeOnTicking(self._mini_miner_on_ticking)
+        self.handler.SubscribeOnDeactiveFlagsChanged(self._mini_miner_on_deactive_flags_changed)
+        self.update_work_mode()
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _mini_miner_on_placed(self, _):
         TCON.block_placed(self)
 
-    @SuperExecutorMeta.execute_super
-    def OnNeighborChanged(self, event):
+    def _mini_miner_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         TCON.neighbor_block_changed(self, event)
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot):
+    def _mini_miner_on_slot_update(self, slot):
         if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
             if self.OutputItem(Item("minecraft:air")) is None:
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
-    def OnFluidSlotUpdate(self):
+    def _mini_miner_on_fluid_slot_update(self):
         if self.fluid_id != USE_FLUID or self.fluid_volume < VOLUME_COST_ONCE:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
+    def _mini_miner_on_click(self, event, extra_datas=None):
         self.update_work_mode()
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _mini_miner_on_ticking(self):
         # 获取下一个需要挖掘的方块位置
         # 无法获取: return
         # 如果本位置需要 fast skip: fast skip 并 return
@@ -125,12 +127,8 @@ class MiniMiner(FluidContainer, GUIControl, UpgradeControl):
                 self.run_once()
                 self._need_go_next = True
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnDeactiveFlagsChanged(self):
+    def _mini_miner_on_deactive_flags_changed(self, flush=True):
         self.update_work_mode()
 
     def init_flags(self):

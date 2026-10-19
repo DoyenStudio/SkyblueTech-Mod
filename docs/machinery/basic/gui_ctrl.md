@@ -7,9 +7,9 @@
 | --- | --- | --- |
 | bound_ui | str \| None | 绑定的 UI key, 如果为自定义容器, 此处设置为 None |
 
-## 基类覆写方法
+## 事件订阅
 ```python
-def OnClick(self, event: ServerBlockUseEvent, extra_datas: dict | None = None) -> None
+self.handler.SubscribeOnClick(self.on_click)
 ```
 用于通知玩家打开 GUI。
 
@@ -21,13 +21,13 @@ def OnClick(self, event: ServerBlockUseEvent, extra_datas: dict | None = None) -
 ---
 
 ```python
-def OnUnload(self) -> None
+self.handler.SubscribeOnUnload(self.on_unload)
 ```
 用于通知玩家关闭 GUI 和将同步项关闭。
 
 ---
 
 ```python
-def OnSync(self) -> None
+self.handler.SubscribeOnSync(self.on_sync)
 ```
 用于将机器数据同步到客户端 UI。

@@ -7,7 +7,7 @@ from ..basic import BaseMachine
 
 class BaseInterface(BaseMachine):
     def __init__(self, dim, x, y, z, block_entity_data):
-        BaseMachine.__init__(self, dim, x, y, z, block_entity_data)
+        super(BaseInterface, self).__init__(dim, x, y, z, block_entity_data)
         self.machine_ref = None  # type: ref[BaseMachine] | None
 
     def getMachineRef(self):

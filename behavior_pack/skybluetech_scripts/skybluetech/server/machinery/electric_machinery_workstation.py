@@ -3,8 +3,8 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery.machinery_worksta
     MachineryWorkstationRecipe,
 )
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.electric_machinery_workstation import (
     ElectricMachineryWorkstationSelectRecipe,
@@ -22,7 +22,8 @@ from ...common.machinery_def.electric_machinery_workstation import (
     recipes,
 )
 from ...common.mini_jei import Input
-from .basic import OperationListener, Processor, RegisterMachine, UpgradeControl
+from .basic import OperationListener, Processor, UpgradeControl
+from .core import RegisterMachine
 from .utils.bans import is_machine_banned, reject_banned_machine
 
 
@@ -33,7 +34,7 @@ def _same_input(a, b):
 
 
 @RegisterMachine
-class ElectricMachineryWorkstation(OperationListener, Processor):
+class ElectricMachineryWorkstation(Processor, OperationListener):
     block_name = Machinery.ELECTRIC_MACHINERY_WORKSTATION
     store_rf_max = STORE_RF_MAX
     running_power = DEFAULT_POWER
@@ -45,12 +46,16 @@ class ElectricMachineryWorkstation(OperationListener, Processor):
     upgrade_slot_start = 11
     upgrade_slots = 4
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ElectricMachineryWorkstation, self).__init__(dim, x, y, z, block_entity_data)
         # 父类已加载存档配方, 清除被禁用的选择并重置加工状态。
         if is_machine_banned(self.bdata[K_SELECTED_RECIPE]):
             self.bdata[K_SELECTED_RECIPE] = None
             self.recheck_recipe()
+        self.CallSync()
+        self.handler.UnsubscribeOnSlotUpdate(self._processor_on_slot_update)
+        self.handler.SubscribeOnSlotUpdate(self._electric_machinery_workstation_on_slot_update)
+        self.handler.SubscribeOnSync(self._electric_machinery_workstation_on_sync)
         self.CallSync()
 
     def get_recipe(self):
@@ -107,6 +112,15 @@ class ElectricMachineryWorkstation(OperationListener, Processor):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._electric_machinery_workstation_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _electric_machinery_workstation_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         """只认配方列表中选中的那个配方在该槽位要求的物品, 未选中配方时拒绝一切输入。"""
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
@@ -148,14 +162,13 @@ class ElectricMachineryWorkstation(OperationListener, Processor):
                 self.SetSlotItem(slot, moved)
                 break
 
-    def OnSlotUpdate(self, slot_pos):
+    def _electric_machinery_workstation_on_slot_update(self, slot_pos):
         if slot_pos in self.input_slots:
             self.separate_items()
-        Processor.OnSlotUpdate(self, slot_pos)
+        Processor._processor_on_slot_update(self, slot_pos)
         self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnSync(self):
+    def _electric_machinery_workstation_on_sync(self):
         self.bdata[K_OUTPUT_ITEM_ID] = (
             self.current_recipe.output_item_id
             if isinstance(self.current_recipe, MachineryWorkstationRecipe)

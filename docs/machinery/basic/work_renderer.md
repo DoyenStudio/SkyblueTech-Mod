@@ -5,15 +5,11 @@
 
 派生自 `BaseMachine` 基类。
 
-- 你需要额外创建以下空方法并加上 `@SuperExecutorMeta.execute_super` 装饰器：
-    - `SetDeactiveFlag`
-    - `UnsetDeactiveFlag`
-    - `ResetDeactiveFlags`
-    - `FlushDeactiveFlags`
+基类会在构造时直接向 `self.handler` 订阅所需事件, 无需重声明空方法。
 
-## 基类覆写方法
+## 事件订阅
 ```python
-def OnWorkStatusUpdated(self) -> None
+self.handler.SubscribeOnWorkStatusUpdated(self.on_work_status_updated)
 ```
 当机器工作状态改变时执行的操作。
 例如, 改变机器的外观, 播放音效等。

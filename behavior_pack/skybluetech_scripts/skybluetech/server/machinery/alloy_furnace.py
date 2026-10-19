@@ -2,7 +2,8 @@
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.alloy_furnace import RF_MAX
 from ...common.machinery_def.alloy_furnace import recipes as Recipes
-from .basic import Processor, RegisterMachine
+from .basic import Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine

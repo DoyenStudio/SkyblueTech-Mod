@@ -4,8 +4,7 @@
 
 派生自 `BaseMachine` 基类。
 
-- 你需要额外创建以下空方法并加上 `@SuperExecutorMeta.execute_super` 装饰器：
-    - `OnTicking`
+基类会在构造时直接向 `self.handler` 订阅所需事件, 无需重声明空方法。
 
 ## 单位约定
 
@@ -77,7 +76,7 @@ def ElectricCostOf(self, heat: float) -> float
 按本机单价把热量(RF)换算成电费(RF)。
 
 ```python
-def OnHeatWork(self) -> None
+self.handler.SubscribeOnHeatWork(self.on_heat_work)
 ```
 热力结算前的钩子, 每 `WORK_INTERVAL` tick 调用一次, 基类实现为空。
 
@@ -89,7 +88,7 @@ def OnHeatWork(self) -> None
 否则按 `electric_per_heat` 把设定功率换算成本周期的产热功率, 并在**钳位之前**按设定
 功率全额扣电 —— 温差不够时进不来的那部分热量就是白烧, 这是有意的设计。
 
-> 覆写 `OnHeatWork` 时注意: 机器停机(`IsActive()` 为 False)期间本方法**仍然会被调用**。
+> 订阅 `SubscribeOnHeatWork` 时注意: 机器停机(`IsActive()` 为 False)期间本方法**仍然会被调用**。
 > 若子类只在活跃时检查电量, "能量不足"停机旗就没有机会解除(解旗的唯一时机会只剩充电那一瞬间),
 > 机器会永远醒不过来。
 

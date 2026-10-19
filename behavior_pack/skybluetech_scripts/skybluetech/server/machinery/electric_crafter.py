@@ -7,22 +7,23 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     RecipeOutput,
     UnorderedCraftingRecipeRes,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 
+from .basic.item_container import ItemContainer
 from ...common.define import flags
 from ...common.define.id_enum import CRAFTING_TEMPLATE, Machinery, Upgraders
 from ...common.machinery_def.electric_crafter import (
     K_RECIPE_PREVIEW,
     STORE_RF_MAX,
 )
-from .basic import GUIControl, RegisterMachine, UpgradeControl
+from .basic import GUIControl, UpgradeControl
+from .core import RegisterMachine
 
 TEMPLATE_SLOT = 12
 
 
 @RegisterMachine
-class ElectricCrafter(GUIControl, UpgradeControl):
+class ElectricCrafter(UpgradeControl, GUIControl):
     block_name = Machinery.ELECTRIC_CRAFTER
     origin_process_ticks = 60
     dump_progress_to_block_entity_data = True
@@ -37,12 +38,14 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         Upgraders.BASIC_ENERGY_UPGRADER,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ElectricCrafter, self).__init__(dim, x, y, z, block_entity_data)
         self.try_update_template()
         self.update_crafting_preview()
+        self.handler.SubscribeOnTicking(self._electric_crafter_on_ticking)
+        self.handler.SubscribeOnSlotUpdate(self._electric_crafter_on_slot_update)
 
-    def OnTicking(self):
+    def _electric_crafter_on_ticking(self):
         while self.IsActive():
             if self.ProcessOnce():
                 self.run_once()
@@ -50,11 +53,17 @@ class ElectricCrafter(GUIControl, UpgradeControl):
             else:
                 break
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._electric_crafter_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _electric_crafter_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
@@ -63,8 +72,7 @@ class ElectricCrafter(GUIControl, UpgradeControl):
         else:
             return self.check_crafting_input_valid(slot, item)
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot):
+    def _electric_crafter_on_slot_update(self, slot):
         # type: (int) -> None
         if slot == TEMPLATE_SLOT:
             self.try_update_template()

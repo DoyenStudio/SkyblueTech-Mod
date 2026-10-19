@@ -14,7 +14,6 @@ from skybluetech_scripts.tooldelta.api.server.entity import (
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define import flags
 from ...common.define.id_enum import Machinery, Upgraders
@@ -30,17 +29,17 @@ from ...common.machinery_def.digger import (
 from ...common.utils.block_sync import BlockSync
 from .basic import (
     GUIControl,
-    RegisterMachine,
     UpgradeControl,
     WorkRenderer,
 )
+from .core import RegisterMachine
 
 TICKS_PER_SECOND = 20
 block_sync = BlockSync(Machinery.DIGGER, side=BlockSync.SIDE_SERVER)
 
 
 @RegisterMachine
-class Digger(GUIControl, UpgradeControl, WorkRenderer):
+class Digger(WorkRenderer, UpgradeControl, GUIControl):
     block_name = Machinery.DIGGER
     dump_progress_to_block_entity_data = True
     input_slots = ()
@@ -54,8 +53,8 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
         Upgraders.BASIC_ENERGY_UPGRADER,
     })
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(Digger, self).__init__(dim, x, y, z, block_entity_data)
         self.dx, self.dy, self.dz = GetOppositeDirFromFacing(
             GetBlockFacingDir(self.dim, (x, y, z))
         )
@@ -63,13 +62,17 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
             self.dim, (x + self.dx, y + self.dy, z + self.dz)
         )  # block is None?
         self.prev_crack_stage = 0
+        self.handler.SubscribeOnPlaced(self._digger_on_placed)
+        self.handler.SubscribeOnTicking(self._digger_on_ticking)
+        self.handler.SubscribeOnNeighborChanged(self._digger_on_neighbor_changed)
+        self.handler.SubscribeOnUnload(self._digger_on_unload)
+        self.handler.SubscribeOnWorkStatusUpdated(self._digger_on_work_status_updated)
         # NOTE: 我们假设方块之后的朝向直到方块被销毁前都不会变化
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _digger_on_placed(self, _):
         self.start_next()
 
-    def OnTicking(self):
+    def _digger_on_ticking(self):
         while self.IsActive():
             if self.ProcessOnce():
                 self.run_once()
@@ -81,7 +84,7 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
                     self.update_crack_frame_to_client()
                 break
 
-    def OnNeighborChanged(self, event):
+    def _digger_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         if (
             event.neighborPosX - self.x == self.dx
@@ -90,17 +93,12 @@ class Digger(GUIControl, UpgradeControl, WorkRenderer):
         ):
             self.start_next((event.toBlockName, event.toAuxValue))
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _digger_on_unload(self):
         # type: () -> None
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
-    @SuperExecutorMeta.execute_super
-    def SetDeactiveFlag(self, flag):
-        # type: (int) -> None
-        pass
 
-    def OnWorkStatusUpdated(self):
+    def _digger_on_work_status_updated(self):
         DiggerWorkModeUpdatedEvent(self.x, self.y, self.z, self.IsActive()).sendMulti(
             block_sync.get_players((self.dim, self.x, self.y, self.z))
         )

@@ -13,8 +13,10 @@ from skybluetech_scripts.tooldelta.api.server import (
 )
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
+from .base_machine import BaseMachine
 
-class ItemContainer(object):
+
+class ItemContainer(BaseMachine):
     """
     可存储物品的机器基类。
 
@@ -30,13 +32,17 @@ class ItemContainer(object):
     output_slots = ()  # type: tuple[int, ...]
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(ItemContainer, self).__init__(dim, x, y, z, block_entity_data)
         self.dim = dim
         self.xyz = (x, y, z)
+        self.handler.SubscribeOnCustomCotainerPutItem(self._item_container_on_custom_cotainer_put_item)
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        "子类覆写方法, 判定槽位物品是否为合法输入。超类防止物品输入到输出口。"
-        return slot in self.input_slots
+        "只约束本组件声明的槽位, 其他槽位交给对应组件校验。"
+        if slot in self.input_slots:
+            return True
+        return slot not in self.output_slots
 
     def GetSlotItem(self, slot_pos, get_user_data=True):
         # type: (int, bool) -> Item | None
@@ -171,11 +177,8 @@ class ItemContainer(object):
                 return None
         return item
 
-    def OnSlotUpdate(self, slot_pos):
-        # type: (int) -> None
-        "覆写方法用于作为机器物品槽位更新的回调。"
 
-    def OnCustomCotainerPutItem(self, event):
+    def _item_container_on_custom_cotainer_put_item(self, event):
         # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
         if not self.IsValidInput(event.collectionIndex, event.item):
             event.cancel()

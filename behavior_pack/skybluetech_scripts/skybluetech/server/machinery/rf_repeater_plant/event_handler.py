@@ -12,7 +12,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.rf_repeater_plant impo
     MODE_INPUT,
     MODE_OUTPUT,
 )
-from ..pool import GetMachineStrict
+from ..core.pool import GetLoadedMachine
 from .node import change_node_mode, build_connection
 from .utils import hypot
 
@@ -31,7 +31,7 @@ def onEstablishConn(event):
         )
         return
     dim = GetPlayerDimensionId(event.player_id)
-    start_m = GetMachineStrict(dim, event.x, event.y, event.z)
+    start_m = GetLoadedMachine(dim, event.x, event.y, event.z)
     if not isinstance(start_m, RFRepeaterPlant):
         RFRepeaterPlantBuildResponse(
             RFRepeaterPlantBuildResponse.STATUS_INVALID_START, sub_status_code=0
@@ -52,7 +52,7 @@ def onEstablishConn(event):
             )
         )
         return
-    end_m = GetMachineStrict(dim, event.to_x, event.to_y, event.to_z)
+    end_m = GetLoadedMachine(dim, event.to_x, event.to_y, event.to_z)
     if not isinstance(end_m, RFRepeaterPlant):
         RFRepeaterPlantBuildResponse(
             RFRepeaterPlantBuildResponse.STATUS_INVALID_END, sub_status_code=0
@@ -154,7 +154,7 @@ def onSettingUpload(event):
     from . import RFRepeaterPlant
 
     dim = GetPlayerDimensionId(event.player_id)
-    m = GetMachineStrict(dim, event.x, event.y, event.z)
+    m = GetLoadedMachine(dim, event.x, event.y, event.z)
     if not isinstance(m, RFRepeaterPlant):
         return
     if not m.is_base_block:

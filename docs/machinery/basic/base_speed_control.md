@@ -4,8 +4,7 @@
 
 派生自 `BaseMachine` 基类。
 
-- 你需要额外创建以下空方法并加上 `@SuperExecutorMeta.execute_super` 装饰器：
-    - `SetDeactiveFlag`
+基类会在构造时直接向 `self.handler` 订阅所需事件, 无需重声明空方法。
 
 
 ## 需要定义的类属性

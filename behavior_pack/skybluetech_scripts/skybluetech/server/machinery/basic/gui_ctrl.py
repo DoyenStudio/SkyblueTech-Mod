@@ -15,28 +15,32 @@ from skybluetech_scripts.tooldelta.extensions.ui_sync import (
     GetAllPlayersInSync,
 )
 
+from .base_machine import BaseMachine
 
 rate_limiter = PlayerRateLimiter(0.4)
 
 
-class GUIControl(object):
+class GUIControl(BaseMachine):
     """
     带有 GUI 的机器基类。
 
     覆写:
         - `__init__`
-        - `OnUnload`
+        - 向 handler 订阅点击和卸载事件
     """
 
     bound_ui = None  # type: str | None
     "绑定的 UI key, 如果为自定义容器, 此处设置为 None"
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(GUIControl, self).__init__(dim, x, y, z, block_entity_data)
         self.ui_sync = S2CSync.NewServer(
             "machine_%d_%d_%d_%d" % (dim, x, y, z)
         ).Activate()
+        self.handler.SubscribeOnClick(self._gui_control_on_click)
+        self.handler.SubscribeOnUnload(self._gui_control_on_unload)
 
-    def OnClick(self, event, extra_datas=None):
+    def _gui_control_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         "超类方法用于通知玩家打开 GUI。"
         if not rate_limiter.record(event.playerId):
@@ -58,16 +62,12 @@ class GUIControl(object):
                 ),
             )
 
-    def OnUnload(self):
+    def _gui_control_on_unload(self):
         "超类方法用于通知玩家关闭 GUI 和将同步项关闭。"
         if self.bound_ui is not None:
             tIDs = GetAllPlayersInSync(self.ui_sync.sync_id)
             NotifyToClients(tIDs, ForceRemoveUIRequest(self.bound_ui))
         self.ui_sync.Deactivate()
 
-    def OnSync(self):
-        # type: () -> None
-        "覆写方法用于将机器数据同步到客户端 UI。"
-
     def CallSync(self):
-        self.OnSync()
+        self.handler.CallOnSyncHandlers()

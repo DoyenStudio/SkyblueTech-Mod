@@ -4,8 +4,8 @@ from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
     ServerBlockUseEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from .basic.item_container import ItemContainer
 from ...common.define import flags
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.assembler import (
@@ -16,7 +16,8 @@ from ...common.events.machinery.assembler import (
 )
 from ...common.machinery_def.assembler import *
 from ..tools.upgraders.register import UpdateObjectData
-from .basic import GUIControl, OperationListener, RegisterMachine, UpgradeControl
+from .basic import GUIControl, OperationListener, UpgradeControl
+from .core import RegisterMachine
 from .utils.lore import GetLorePos, SetLoreAtPos
 from .utils.transmitter_conn import TransmitterConn
 
@@ -29,17 +30,21 @@ TCON = TransmitterConn(wire=True)
 
 
 @RegisterMachine
-class Assembler(GUIControl, OperationListener, UpgradeControl):
+class Assembler(UpgradeControl, OperationListener, GUIControl):
     block_name = Machinery.ASSEMBLER
     store_rf_max = RF_MAX
     energy_io_mode = (0, 0, 0, 0, 0, 0)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(Assembler, self).__init__(dim, x, y, z, block_entity_data)
         self.power = 0
         self.delay = 20
         self.lis = []  # type: list[tuple[str, str, int]]
         self.update_list()
+        self.handler.SubscribeOnPlaced(self._assembler_on_placed)
+        self.handler.SubscribeOnNeighborChanged(self._assembler_on_neighbor_changed)
+        self.handler.SubscribeOnClick(self._assembler_on_click)
+        self.handler.SubscribeOnSlotUpdate(self._assembler_on_slot_update)
 
     def AddPower(self, rf):
         res = UpgradeControl.AddPower(self, rf)
@@ -47,31 +52,33 @@ class Assembler(GUIControl, OperationListener, UpgradeControl):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
         return res
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _assembler_on_placed(self, _):
         TCON.block_placed(self)
 
-    def OnNeighborChanged(self, event):
+    def _assembler_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         TCON.neighbor_block_changed(self, event)
 
-    @SuperExecutorMeta.execute_super
-    def OnClick(self, event, extra_datas=None):
+    def _assembler_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
         AssemblerUpgradersUpdate(self.lis).send(event.playerId)
 
-    @SuperExecutorMeta.execute_super
-    def OnSlotUpdate(self, slot_pos):
+    def _assembler_on_slot_update(self, slot_pos):
         # type: (int) -> None
         self.update_list()
         AssemblerUpgradersUpdate(self.lis).sendMulti(self.ui_sync.GetPlayersInSync())
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        # type: () -> None
-        pass
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._assembler_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _assembler_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)

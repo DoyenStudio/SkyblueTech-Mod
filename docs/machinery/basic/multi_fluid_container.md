@@ -5,10 +5,7 @@
 与物品槽类似，流体容器的流体槽也依靠数字 ID 区分槽位。
 流体槽 ID 需要从 0 开始连续递增。
 
-- 你需要额外创建以下空方法并加上 `@SuperExecutorMeta.execute_super` 装饰器：
-    - `OnAddedFluid`
-    - `OnReducedFluid`
-    - `OnFluidSlotUpdate`
+基类会在构造时直接向 `self.handler` 订阅所需事件, 无需重声明空方法。
 
 ## 类属性
 | 属性名 | 类型 | 说明 |
@@ -98,9 +95,9 @@ def CanAddFluid(self, fluid_id: str) -> bool
 | --- | --- |
 | bool | 如题 |
 
-## 基类覆写方法
+## 事件订阅
 ```python
-def OnAddedFluid(self, slot: int, fluid_id: str, added_fluid_volume: float, is_final: bool) -> None
+self.handler.SubscribeOnAddedFluid(self.on_added_fluid)
 ```
 容器内流体体积已经增加时调用。
 
@@ -114,7 +111,7 @@ def OnAddedFluid(self, slot: int, fluid_id: str, added_fluid_volume: float, is_f
 ---
 
 ```python
-def OnReducedFluid(self, slot: int, fluid_id: str, reduced_fluid_volume: float, is_final: bool) -> None
+self.handler.SubscribeOnReducedFluid(self.on_reduced_fluid)
 ```
 容器内流体体积已经减少时调用。
 
@@ -128,7 +125,7 @@ def OnReducedFluid(self, slot: int, fluid_id: str, reduced_fluid_volume: float, 
 ---
 
 ```python
-def OnFluidSlotUpdate(self, slot_pos: int, is_final: bool) -> None
+self.handler.SubscribeOnFluidSlotUpdate(self.on_fluid_slot_update)
 ```
 流体槽位发生更新时执行的回调。
 

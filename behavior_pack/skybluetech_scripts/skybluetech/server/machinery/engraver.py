@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.engraver import (
@@ -9,11 +8,12 @@ from ...common.machinery_def.engraver import (
 from ...common.machinery_def.engraver import (
     recipes as Recipes,
 )
-from .basic import MultiFluidContainer, Processor, RegisterMachine
+from .basic import MultiFluidContainer, Processor
+from .core import RegisterMachine
 
 
 @RegisterMachine
-class Engraver(MultiFluidContainer, Processor):
+class Engraver(Processor, MultiFluidContainer):
     """蚀刻机: 4 物品输入槽 + 1 物品输出槽 + 4 升级槽, 2 个流体槽均为输入。"""
 
     block_name = Machinery.ENGRAVER
@@ -30,14 +30,5 @@ class Engraver(MultiFluidContainer, Processor):
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass
+        super(Engraver, self).__init__(dim, x, y, z, block_entity_data)

@@ -40,17 +40,15 @@ from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
     CreateBlankModel,
     GeometryModel,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.tooldelta.general import (
     ServerInitCallback,
     ServerUninitCallback,
 )
 
-from .base_machine import BaseMachine, GUIControl
+from .base_machine import BaseMachine
 
-if 0>1:
+if 0 > 1:
     import typing
-    from .base_machine import BaseMachine
 
     MT = typing.TypeVar("MT", bound=BaseMachine)
     BLOCK_PAT_INDEX = int
@@ -293,7 +291,7 @@ class DetectArea(object):
         记录功能性方块的世界坐标。
 
         只登记落在调色板允许位置上的方块: 藏在结构内部(比如空腔里)的接口不算数,
-        于是 `GetMachine()` / `GetAllMachines()` 也拿不到它。
+        于是 `GetLoadedMachine()` / `GetAllMachines()` 也拿不到它。
         """
         allowed_pose_sets = self.rotated_palette.get_allowed_pose_sets()
         functional_block_poses = {}  # type: dict[str, list[tuple[int, int, int]]]
@@ -303,11 +301,13 @@ class DetectArea(object):
             if allowed_poses:
                 for x, y, z in palette.GetLocalPosListOfBlocks(block_id):
                     if (x - co_x, y - co_y, z - co_z) in allowed_poses:
-                        poses.append((
-                            x - co_x + self.center_x,
-                            y - co_y + self.center_y,
-                            z - co_z + self.center_z,
-                        ))
+                        poses.append(
+                            (
+                                x - co_x + self.center_x,
+                                y - co_y + self.center_y,
+                                z - co_z + self.center_z,
+                            )
+                        )
             functional_block_poses[block_id] = poses
         self.functional_block_poses = functional_block_poses
 
@@ -434,14 +434,16 @@ class DetectArea(object):
         return not self.chunks_not_loaded
 
     def __hash__(self):
-        return hash((
-            self.min_x,
-            self.min_y,
-            self.min_z,
-            self.max_x,
-            self.max_y,
-            self.max_z,
-        ))
+        return hash(
+            (
+                self.min_x,
+                self.min_y,
+                self.min_z,
+                self.max_x,
+                self.max_y,
+                self.max_z,
+            )
+        )
 
 
 class MultiBlockStructure(BaseMachine):
@@ -456,7 +458,7 @@ class MultiBlockStructure(BaseMachine):
 
     Class Attributes:
         structure_palette (StructureBlockPalette | None): 检测多方块结构完整性的结构调色板
-        functional_block_ids (set[str]): 多方块结构中功能性方块的列表。GetMachine() 获取的机器方块 id 都需要被包含在其中。
+        functional_block_ids (set[str]): 多方块结构中功能性方块的列表。GetLoadedMachine() 获取的机器方块 id 都需要被包含在其中。
     """
 
     structure_palette = None  # type: StructureBlockPalette | None
@@ -469,8 +471,8 @@ class MultiBlockStructure(BaseMachine):
     `GetFunctionalBlockPoses()`, 而且会让结构直接判定为破损。
     """
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(MultiBlockStructure, self).__init__(dim, x, y, z, block_entity_data)
         if self.structure_palette is None:
             raise ValueError("StructureBlockPalette: structure_palette is None")
         self._last_destroy_flag = DEACTIVE_FLAG_STRUCTURE_BROKEN
@@ -482,16 +484,15 @@ class MultiBlockStructure(BaseMachine):
         self.z = z
         self.area = DetectArea(self.dim, self.x, self.y, self.z, self)
         add_detect_area(self.dim, self.area)
+        self.handler.SubscribeOnUnload(self._multi_block_structure_on_unload)
 
-    def OnStructureChanged(self, structure_finished):
-        # type: (bool) -> None
-        "覆写方法用于结构变更的回调。"
-
-    def OnUnload(self):
+    def _multi_block_structure_on_unload(self):
         remove_detect_area(self.dim, self.area)
 
     def SetStructureDestroyed(self, flag):
         # type: (int) -> None
+        from .gui_ctrl import GUIControl
+
         if self.deactive_flags & STRUCTURE_DEACTIVE_FLAGS:
             self.deactive_flags &= ~STRUCTURE_DEACTIVE_FLAGS
         self.last_destroy_flag = flag
@@ -499,23 +500,25 @@ class MultiBlockStructure(BaseMachine):
         if flag != DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
             self.lacked_blocks = {}
         self.SetDeactiveFlag(flag)
-        self.OnStructureChanged(False)
+        self.handler.CallOnStructureChangedHandlers(False)
         if isinstance(self, GUIControl):
             self.CallSync()
 
     def UnsetStructureDestroyed(self):
+        from .gui_ctrl import GUIControl
+
         if (
             self.last_destroy_flag != FLAG_OK
             or self.deactive_flags & STRUCTURE_DEACTIVE_FLAGS
         ):
             if self.deactive_flags & STRUCTURE_DEACTIVE_FLAGS:
                 self.deactive_flags &= ~STRUCTURE_DEACTIVE_FLAGS
-                self.OnDeactiveFlagsChanged()
+                self.handler.CallOnDeactiveFlagsChangedHandlers()
             self.last_destroy_flag = FLAG_OK
             self.lacked_blocks = {}
             self.lacked_block_poses = []
             self.FlushDeactiveFlags()
-            self.OnStructureChanged(True)
+            self.handler.CallOnStructureChangedHandlers(True)
             if isinstance(self, GUIControl):
                 self.CallSync()
 
@@ -547,13 +550,13 @@ class MultiBlockStructure(BaseMachine):
 
     def GetAllMachines(self, cls, block_id=None):
         # type: (type[MT], str | None) -> list[MT]
-        from ..pool import GetMachineStrict
+        from ..core.pool import GetLoadedMachine
 
         block_id = block_id or cls.block_name
         poses = self.GetFunctionalBlockPoses().get(block_id, [])
         machines = []
         for pos in poses:
-            m = GetMachineStrict(self.dim, *pos)
+            m = GetLoadedMachine(self.dim, *pos)
             if isinstance(m, cls):
                 machines.append(m)
         return machines
@@ -561,7 +564,7 @@ class MultiBlockStructure(BaseMachine):
     def _find_machine(self, cls, block_id, index):
         # type: (type[MT], str, int) -> tuple[MT | None, str]
         "查找功能性方块上的机器, 返回 (机器, 失败原因); 成功时失败原因为空字符串。"
-        from ..pool import GetMachineStrict
+        from ..core.pool import GetLoadedMachine
 
         poses = self.GetFunctionalBlockPoses().get(block_id)
         if not poses:
@@ -573,14 +576,14 @@ class MultiBlockStructure(BaseMachine):
                 len(poses),
             )
         x, y, z = poses[index]
-        machine = GetMachineStrict(self.dim, x, y, z)
+        machine = GetLoadedMachine(self.dim, x, y, z)
         if not isinstance(machine, cls):
             return None, "({}, {}, {}): {} is not a {}".format(
                 x, y, z, type(machine).__name__, cls.__name__
             )
         return machine, ""
 
-    def GetMachine(self, cls, block_id=None, index=0):
+    def GetLoadedMachine(self, cls, block_id=None, index=0):
         # type: (type[MT], str | None, int) -> MT
         """
         获取多方块结构中某一类型的机器(多用于多方块结构接口的获取)。
@@ -602,7 +605,7 @@ class MultiBlockStructure(BaseMachine):
             raise ValueError(error)
         return machine
 
-    def TryGetMachine(self, cls, block_id=None, index=0):
+    def TryGetLoadedMachine(self, cls, block_id=None, index=0):
         # type: (type[MT], str | None, int) -> MT | None
         """
         `GetMachine` 的可空返回版本: 方块位置缺失 / 索引越界 / 机器未加载 / 类型不符时返回 None,
@@ -758,9 +761,9 @@ def onChunkDiscarded(event):
 @MultiBlockStructureCheckRequest.Listen()
 def onCheckRequest(event):
     # type: (MultiBlockStructureCheckRequest) -> None
-    from ..utils.action_commit import SafeGetMachine
+    from ..utils.action_commit import SafeGetLoadedMachine
 
-    m = SafeGetMachine(event.x, event.y, event.z, event.player_id)
+    m = SafeGetLoadedMachine(event.x, event.y, event.z, event.player_id)
     if not isinstance(m, MultiBlockStructure):
         return
     posblock_data, palette = m.GetExpectedStructure()
@@ -772,7 +775,6 @@ def onCheckRequest(event):
 # CLIENT PART
 if False:
     multi_block_model_displaying = False
-
 
     @MultiBlockStructureCheckResponse.Listen()
     def onRecvResponse(event):
@@ -788,7 +790,9 @@ if False:
         max_y = -1 << 31
         min_z = 1 << 31
         max_z = -1 << 31
-        for x, y, z in ((_x, _y, _z) for v in posblock_data.values() for _x, _y, _z in v):
+        for x, y, z in (
+            (_x, _y, _z) for v in posblock_data.values() for _x, _y, _z in v
+        ):
             if x < min_x:
                 min_x = x
             if x > max_x:
@@ -820,19 +824,20 @@ if False:
                     (y - min_y) * size_x * size_z + (x - min_x) * size_z + (z - min_z)
                 )
         pal = GetBlankBlockPalette()
-        pal.DeserializeBlockPalette({
-            "extra": {},
-            "void": False,
-            "actor": {},
-            "volume": (size_x, size_y, size_z),
-            "common": pal_dict,
-            "eliminateAir": True,
-        })
+        pal.DeserializeBlockPalette(
+            {
+                "extra": {},
+                "void": False,
+                "actor": {},
+                "volume": (size_x, size_y, size_z),
+                "common": pal_dict,
+                "eliminateAir": True,
+            }
+        )
         multi_block_model_displaying = True
         geo_model = CreateBlankModel((min_x, min_y, min_z))
         geo_model.SetBlockPaletteModel(pal, "skybluetech_multi_block_model_display")
         remove_get_model_later(geo_model)
-
 
     @Delay(4)
     def remove_get_model_later(geo_model):
@@ -840,7 +845,6 @@ if False:
         global multi_block_model_displaying
         geo_model.Destroy()
         multi_block_model_displaying = False
-
 
     def debug_show_diff(
         dim,  # type: int
@@ -853,7 +857,9 @@ if False:
     ):
         print("====== Structure not equal ======")
         print("Expected blocks: {}".format(expected_block_ids))
-        print("No equal poses ({} < {}) :".format(len(actual & expected), len(expected)))
+        print(
+            "No equal poses ({} < {}) :".format(len(actual & expected), len(expected))
+        )
         for _x, _y, _z in expected.difference(actual):
             print(
                 " ({} {} {}) : {}".format(

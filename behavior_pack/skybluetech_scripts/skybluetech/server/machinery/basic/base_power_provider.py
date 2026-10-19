@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.skybluetech.common.define.facing import OPPOSITE_FACING
 from .base_machine import BaseMachine
@@ -14,18 +13,19 @@ class BasePowerProvider(BaseMachine):
 
     """
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(BasePowerProvider, self).__init__(dim, x, y, z, block_entity_data)
         self._power_output_faces = tuple(
             i for i, n in enumerate(self.energy_io_mode) if n == 1
         )
         self._output_neighbors_cache = None
+        self.handler.SubscribeOnInvalidateCaches(self._base_power_provider_on_invalidate_caches)
 
     def PowerFull(self):
         "能量是否已满。"
         return self.store_rf >= self.store_rf_max
 
-    def OnInvalidateCaches(self):
+    def _base_power_provider_on_invalidate_caches(self):
         "邻居机缓存失效: 邻居方块放置/移除/变化后调用, 下一个 tick 惰性重建。"
         self._output_neighbors_cache = None
 
@@ -33,7 +33,7 @@ class BasePowerProvider(BaseMachine):
         "输出方向的邻居机列表(含朝向), 结构固定时缓存, 仅邻居变化时重建。"
         cache = self._output_neighbors_cache
         if cache is None:
-            from .. import pool
+            from ..core import pool
 
             cache = self._output_neighbors_cache = list(
                 pool.GetNearbyMachines(

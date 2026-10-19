@@ -422,7 +422,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         这些变化, 因此这里主动通知。请求会合并到本 tick 结束后统一派发, 且只打
         脏标记, 实际重建由机器下一 tick 惰性完成。
         """
-        from ...machinery.pool import InvalidateMachineCachesLater
+        from ...machinery.core.pool import InvalidateMachineCachesLater
 
         InvalidateMachineCachesLater(
             network.dim,

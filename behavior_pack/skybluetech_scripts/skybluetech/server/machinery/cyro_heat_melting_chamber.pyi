@@ -1,7 +1,7 @@
 # coding=utf-8
+from .basic.multi_fluid_container import MultiFluidContainer
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define.id_enum.machinery import CYRO_HEAT_MELTING_CHAMBER as MACHINE_ID
 from ...common.machinery_def.cyro_heat_melting_chamber import (
     recipes as Recipes,
@@ -15,8 +15,8 @@ from .basic import (
     FluidContainer,
     GUIControl,
     ItemContainer,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 from .utils.production import OutputRecipe, FlushRecipeStat
 
 K_WORKING_TICKS = "st:working_ticks"
@@ -25,14 +25,14 @@ K_CURRENT_FIT_TEMPERATURE = "st:current_fit_temperature"
 K_CURRENT_MAX_TEMPERATURE = "st:current_max_temperature"
 
 @RegisterMachine
-class CyroHeatMeltingChamber(HeatCtrl, FluidContainer, GUIControl, ItemContainer):
+class CyroHeatMeltingChamber(ItemContainer, GUIControl, FluidContainer, HeatCtrl):
     block_name = MACHINE_ID
     is_non_energy_machine = True
     fluid_io_fix_mode = 0
     max_fluid_volume = 1000
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(CyroHeatMeltingChamber, self).__init__(dim, x, y, z, block_entity_data)
         self.sync = CyroHeatMeltingChamberUISync.NewServer(self).Activate()
         self.t = 0
         self.produce_speed = 0
@@ -40,19 +40,19 @@ class CyroHeatMeltingChamber(HeatCtrl, FluidContainer, GUIControl, ItemContainer
         self.current_recipe = None
         self._working_ticks = block_entity_data[K_WORKING_TICKS]
         self.flush_recipe()
+        self.handler.SubscribeOnTicking(self._cyro_heat_melting_chamber_on_ticking)
+        self.handler.SubscribeOnSync(self._cyro_heat_melting_chamber_on_sync)
+        self.handler.SubscribeOnSlotUpdate(self._cyro_heat_melting_chamber_on_slot_update)
+        self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
-        pass
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _cyro_heat_melting_chamber_on_ticking(self):
         if self.IsActive():
             self.flush_produce_speed()
             self.work_once()
             self.CallSync()
 
-    def OnSync(self):
+    def _cyro_heat_melting_chamber_on_sync(self):
         # type: () -> None
         self.sync.current_temperature = self.kelvin
         self.sync.produce_speed = self.produce_speed
@@ -61,15 +61,31 @@ class CyroHeatMeltingChamber(HeatCtrl, FluidContainer, GUIControl, ItemContainer
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
+        results = (
+            MultiFluidContainer.IsValidFluidInput(self, slot, fluid_id),
+            self._cyro_heat_melting_chamber_is_valid_fluid_input(slot, fluid_id),
+        )
+        return all(results)
+
+    def _cyro_heat_melting_chamber_is_valid_fluid_input(self, slot, fluid_id):
+        # type: (int, str) -> bool
         return fluid_id in Recipes.recipes_mapping
 
-    def OnSlotUpdate(self, slot_pos):
+    def _cyro_heat_melting_chamber_on_slot_update(self, slot_pos):
         # type: (int) -> None
         if slot_pos != 0:
             return
         self.flush_recipe()
 
     def IsValidInput(self, slot, item):
+        # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            self._cyro_heat_melting_chamber_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _cyro_heat_melting_chamber_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         return slot == 0 and item.id in Recipes.recipes_mapping
 

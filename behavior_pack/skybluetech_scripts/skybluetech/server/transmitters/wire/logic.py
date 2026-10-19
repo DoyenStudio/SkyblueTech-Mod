@@ -8,7 +8,7 @@ from skybluetech_scripts.tooldelta.api.server import (
 from skybluetech_scripts.tooldelta.events.server import (
     OnEntityInsideBlockServerEvent,
 )
-from ...machinery.pool import GetMachineStrict, GetMachineWithoutCls
+from ...machinery.core.pool import GetLoadedMachine, GetMachineWithoutCls
 
 from ..base import LogicModule
 from .define import WireNetwork, WireAccessPoint, TRANSFER_SPEED_MAPPING
@@ -78,7 +78,7 @@ def onNetworkTick(network):
     outputs = network.get_output_access_points()
     transfered_rf = 0
     for output in outputs:
-        om = GetMachineStrict(network.dim, *output.target_pos)
+        om = GetLoadedMachine(network.dim, *output.target_pos)
         if om is None:
             continue
         rf_output = om.TakeoutPower(tick_capacity)
@@ -87,7 +87,7 @@ def onNetworkTick(network):
         rf_taken = rf_output
         while inputs:
             input = inputs[0]
-            im = GetMachineStrict(network.dim, *input.target_pos)
+            im = GetLoadedMachine(network.dim, *input.target_pos)
             if im is None:
                 inputs.popleft()
                 continue

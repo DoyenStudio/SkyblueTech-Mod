@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.gas_burning_generator import (
@@ -14,15 +13,15 @@ from ...common.machinery_def.gas_burning_generator import (
 from .basic import (
     GeneratorProcessor,
     MultiFluidContainer,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
 TCON = TransmitterConn(pipe=True)
 
 
 @RegisterMachine
-class GasBurningGenerator(MultiFluidContainer, GeneratorProcessor):
+class GasBurningGenerator(GeneratorProcessor, MultiFluidContainer):
     block_name = Machinery.GAS_BURNING_GENERATOR
     store_rf_max = STORE_RF_MAX
     process_fluid = True
@@ -31,22 +30,14 @@ class GasBurningGenerator(MultiFluidContainer, GeneratorProcessor):
     fluid_output_slots = {1}
     fluid_slot_max_volumes = (MAX_INPUT_GAS_VOLUME, MAX_OUTPUT_GAS_VOLUME)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(GasBurningGenerator, self).__init__(dim, x, y, z, block_entity_data)
+        self.handler.SubscribeOnPlaced(self._gas_burning_generator_on_placed)
+        self.handler.SubscribeOnNeighborChanged(self._gas_burning_generator_on_neighbor_changed)
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _gas_burning_generator_on_placed(self, _):
         TCON.block_placed(self)
 
-    def OnNeighborChanged(self, event):
+    def _gas_burning_generator_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
         TCON.neighbor_block_changed(self, event)
-
-    @SuperExecutorMeta.execute_super
-    def OnAddedFluid(self, slot, fluid_id, fluid_volume, is_final):
-        pass
-
-    @SuperExecutorMeta.execute_super
-    def OnReducedFluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
-        pass

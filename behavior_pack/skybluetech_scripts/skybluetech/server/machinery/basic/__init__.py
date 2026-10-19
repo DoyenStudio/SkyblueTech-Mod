@@ -14,7 +14,6 @@ from .operation_listener import OperationListener
 from .power_control import PowerControl
 from .processor import Processor
 from .processor_base import ProcessorBase
-from .register import RegisterMachine
 from .sp_control import SPControl
 from .upgrade_control import UpgradeControl
 from .work_renderer import WorkRenderer

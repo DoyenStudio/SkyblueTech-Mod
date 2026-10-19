@@ -12,13 +12,12 @@ from skybluetech_scripts.tooldelta.events import (
     BlockNeighborChangedServerEvent,
     ServerEntityTryPlaceBlockEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 from ...common.define import flags, id_enum
 from .basic import (
     BaseMachine,
     ItemContainer,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 ALLOWED_FOODS = frozenset([
     "minecraft:carrot",
@@ -28,16 +27,13 @@ ALLOWED_FOODS = frozenset([
 
 
 @RegisterMachine
-class FeedingTrough(BaseMachine, ItemContainer):
+class FeedingTrough(ItemContainer):
     block_name = id_enum.Machinery.FEEDING_TROUGH
     is_non_energy_machine = True
     input_slots = (0,)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
-        pass
+        super(FeedingTrough, self).__init__(dim, x, y, z, block_entity_data)
 
     def IsValidInput(self, slot, item):
         return slot == 0 and item.id in ALLOWED_FOODS
-
-

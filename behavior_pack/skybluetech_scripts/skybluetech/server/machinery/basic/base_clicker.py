@@ -2,11 +2,13 @@
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 
+from .base_machine import BaseMachine
 
-class BaseClicker(object):
+
+class BaseClicker(BaseMachine):
     """
     不具有自定义容器属性但是可被方块点击响应的机器类。
-    继承了此类的机器可获得更好的 OnClick() 方法,
+    继承了此类的机器可订阅经点击限流处理的 handler 事件,
     例如, 玩家手持方块点击机器时不再会同时放下方块。
 
     覆写:
@@ -16,21 +18,9 @@ class BaseClicker(object):
     onclick_delay = 0.25
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(BaseClicker, self).__init__(dim, x, y, z, block_entity_data)
         self.rate_limiter = PlayerRateLimiter(self.onclick_delay)
 
-    def _revOnClick(self, event):
-        # type: (ServerBlockUseEvent) -> None
-        if not self.rate_limiter.record(event.playerId):
-            return
-        self.OnClick(event)
-
-    def OnClick(self, event, extra_datas=None):
-        # type: (ServerBlockUseEvent, dict | None) -> None
-        """
-        子类覆写该方法。机器被玩家点击时调用。
-
-        参数:
-            event (ServerBlockUseEvent): 玩家点击事件
-            extra_datas (dict | None, optional): 额外数据。默认为 None。
-        """
-        pass
+    def _can_click(self, event):
+        # type: (ServerBlockUseEvent) -> bool
+        return self.rate_limiter.record(event.playerId)

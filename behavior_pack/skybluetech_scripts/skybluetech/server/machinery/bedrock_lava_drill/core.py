@@ -20,15 +20,15 @@ from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill imp
 )
 from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.extensions.super_executor import SuperExecutorMeta
 
+from ..basic.item_container import ItemContainer
 from ..basic import (
     GUIControl,
     MultiBlockStructure,
-    RegisterMachine,
     UpgradeControl,
 )
 from ..interfaces import EnergyInputInterface, FluidOutputInterface
+from ..core import RegisterMachine
 from .lava_storage import (
     get_available_lava_storage,
     get_chunk_drill_time,
@@ -40,7 +40,7 @@ FluidOutputInterface.AddExtraMachineId(IO_FLUID1)
 
 
 @RegisterMachine
-class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
+class BedrockLavaDrill(UpgradeControl, MultiBlockStructure, GUIControl):
     block_name = Machinery.BEDROCK_LAVA_DRILL_CONTROLLER
     store_rf_max = STORE_RF_MAX
     pump_speed = 400
@@ -49,8 +49,8 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
     structure_palette = STRUCTURE_PALETTE
     functional_block_ids = set(STRUCTURE_REQUIRE_BLOCKS)
 
-    @SuperExecutorMeta.execute_super
     def __init__(self, dim, x, y, z, block_entity_data):
+        super(BedrockLavaDrill, self).__init__(dim, x, y, z, block_entity_data)
         self._pos_ok = None
         self._current_drill_times = None
         self._total_drill_times = None
@@ -59,9 +59,15 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
         self._power_changed = False
         self._energy_in = None
         self._fluid_out = None
+        self.handler.SubscribeOnUnload(self._bedrock_lava_drill_on_unload)
+        self.handler.SubscribeOnPlaced(self._bedrock_lava_drill_on_placed)
+        self.handler.SubscribeOnTicking(self._bedrock_lava_drill_on_ticking)
+        self.handler.SubscribeOnSync(self._bedrock_lava_drill_on_sync)
+        self.handler.SubscribeOnStructureChanged(self._bedrock_lava_drill_on_structure_changed)
+        self.handler.SubscribeOnSlotUpdate(self._bedrock_lava_drill_on_slot_update)
+        self.CallSync()
 
-    @SuperExecutorMeta.execute_super
-    def OnUnload(self):
+    def _bedrock_lava_drill_on_unload(self):
         self.clean()
 
     def clean(self):
@@ -73,13 +79,11 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
             self._fluid_out.UnsetMachineRef()
             self._fluid_out = None
 
-    @SuperExecutorMeta.execute_super
-    def OnPlaced(self, _):
+    def _bedrock_lava_drill_on_placed(self, _):
         self.pos_ok = self.detect_block()
         self.total_drill_times = get_chunk_drill_time(self.x, self.z)
 
-    @SuperExecutorMeta.execute_super
-    def OnTicking(self):
+    def _bedrock_lava_drill_on_ticking(self):
         if not self.pos_ok or not self.StructureFinished():
             return
         if self._power_changed:
@@ -93,7 +97,7 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
                 self.work_once()
                 self.CallSync()
 
-    def OnSync(self):
+    def _bedrock_lava_drill_on_sync(self):
         if self.StructureFinished():
             self.bdata[K_DRILL_PROGRESS] = float(self.current_drill_times) / (
                 self.total_drill_times or 1
@@ -108,7 +112,7 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
             self.bdata[K_FLUID_VOLUME] = self.get_fluid_output_io().fluid_volume
             self.bdata[K_MAX_FLUID_VOLUME] = self.get_fluid_output_io().max_fluid_volume
 
-    def OnStructureChanged(self, structure_finished):
+    def _bedrock_lava_drill_on_structure_changed(self, structure_finished):
         if structure_finished:
             self._energy_in = self.get_energy_input_io()
             self._fluid_out = self.get_fluid_output_io()
@@ -120,6 +124,15 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
+        results = (
+            ItemContainer.IsValidInput(self, slot, item),
+            UpgradeControl.IsValidInput(self, slot, item),
+            self._bedrock_lava_drill_is_valid_input(slot, item),
+        )
+        return all(results)
+
+    def _bedrock_lava_drill_is_valid_input(self, slot, item):
+        # type: (int, Item) -> bool
         if slot == 0:
             return (
                 "skybluetech:bedrock_lava_drill_acceptable" in item.GetBasicInfo().tags
@@ -129,7 +142,7 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
         else:
             return False
 
-    def OnSlotUpdate(self, slot):
+    def _bedrock_lava_drill_on_slot_update(self, slot):
         self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
 
     def on_reduced_fluid(self, _, volume):
@@ -181,10 +194,10 @@ class BedrockLavaDrill(GUIControl, MultiBlockStructure, UpgradeControl):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
     def get_energy_input_io(self):
-        return self.GetMachine(EnergyInputInterface, IO_ENERGY)
+        return self.GetLoadedMachine(EnergyInputInterface, IO_ENERGY)
 
     def get_fluid_output_io(self):
-        return self.GetMachine(FluidOutputInterface, IO_FLUID1)
+        return self.GetLoadedMachine(FluidOutputInterface, IO_FLUID1)
 
     def drill_finished(self):
         return self.current_drill_times >= self.total_drill_times

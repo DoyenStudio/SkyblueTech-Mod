@@ -4,8 +4,8 @@ from ...common.machinery_def.redstone_generator import STORE_RF_MAX
 from ...common.machinery_def.redstone_generator import recipes as Recipes
 from .basic import (
     GeneratorProcessor,
-    RegisterMachine,
 )
+from .core import RegisterMachine
 
 
 @RegisterMachine

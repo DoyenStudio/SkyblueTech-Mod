@@ -63,16 +63,16 @@ def CanAddFluid(self, fluid_id: str) -> bool
 | --- | --- |
 | bool | 如题 |
 
-## 基类覆写方法
+## 事件订阅
 ```python
-def OnFluidSlotUpdate(self) -> None
+self.handler.SubscribeOnSingleFluidSlotUpdate(self.on_fluid_slot_update)
 ```
 流体内容更新时调用。
 
 ---
 
 ```python
-def OnAddedFluid(self, fluid_id: str, added_fluid_volume: float) -> None
+self.handler.SubscribeOnSingleAddedFluid(self.on_added_fluid)
 ```
 容器内流体体积已经增加时调用。
 
@@ -84,7 +84,7 @@ def OnAddedFluid(self, fluid_id: str, added_fluid_volume: float) -> None
 ---
 
 ```python
-def OnReducedFluid(self, fluid_id: str, reduced_fluid_volume: float) -> None
+self.handler.SubscribeOnSingleReducedFluid(self.on_reduced_fluid)
 ```
 容器内流体体积已经减少时调用。
 

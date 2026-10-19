@@ -3,7 +3,7 @@
 from skybluetech_scripts.tooldelta.api.server.block import BlockHasTag
 from ...machinery.basic.fluid_container import FluidContainer
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
-from ...machinery.pool import GetMachineStrict
+from ...machinery.core.pool import GetLoadedMachine
 from ..base import LogicModule
 from .define import PipeNetwork, PipeAccessPoint, PIPE_CAN_TRANSMIT_FLUID_MAPPING
 
@@ -74,7 +74,7 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
     if fluid_id is None or fluid_volume is None or fluid_volume <= 0:
         return False, fluid_volume
     cxyz = ap.target_pos
-    m = GetMachineStrict(ap.dim, *cxyz)
+    m = GetLoadedMachine(ap.dim, *cxyz)
     if not isinstance(m, (FluidContainer, MultiFluidContainer)):
         return False, fluid_volume
     ok, rest_fluid_volume = m.AddFluid(fluid_id, fluid_volume)
@@ -111,7 +111,7 @@ def onNetworkTick(network):
     for output in network.get_output_access_points():
         if out_capacity <= 0:
             break
-        om = GetMachineStrict(output.dim, *output.target_pos)
+        om = GetLoadedMachine(output.dim, *output.target_pos)
         if isinstance(om, FluidContainer):
             om_fluid_id = om.fluid_id
             om_fluid_vol = om.fluid_volume

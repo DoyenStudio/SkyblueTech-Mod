@@ -23,7 +23,6 @@ from skybluetech_scripts.tooldelta.events.server.world import (
 )
 
 from ..basic.base_clicker import BaseClicker
-from ..basic.fluid_container import FluidContainer
 from ..basic.gui_ctrl import GUIControl
 from ..basic.item_container import ItemContainer
 from ..basic.multi_fluid_container import MultiFluidContainer
@@ -74,7 +73,7 @@ def on_click(event):
         return
     m = pool.GetLoadedMachine(event.dimensionId, event.x, event.y, event.z)
     if (
-        isinstance(m, (FluidContainer, MultiFluidContainer))
+        isinstance(m, MultiFluidContainer)
         and not IsSneaking(event.playerId)
         and m.on_player_interact_with_bucket(event.playerId)
     ):
@@ -99,7 +98,7 @@ def on_use_item(event):
         return
     m = pool.GetLoadedMachine(event.dimensionId, event.x, event.y, event.z)
     if (
-        isinstance(m, (FluidContainer, MultiFluidContainer))
+        isinstance(m, MultiFluidContainer)
         and not IsSneaking(event.entityId)
         and m.on_player_interact_with_bucket(event.entityId, test=True)
     ):

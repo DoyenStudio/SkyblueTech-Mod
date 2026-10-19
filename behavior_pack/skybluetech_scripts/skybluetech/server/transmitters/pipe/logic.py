@@ -1,7 +1,6 @@
 # coding=utf-8
 
 from skybluetech_scripts.tooldelta.api.server.block import BlockHasTag
-from ...machinery.basic.fluid_container import FluidContainer
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.core.pool import GetLoadedMachine
 from ..base import LogicModule
@@ -75,7 +74,7 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
         return False, fluid_volume
     cxyz = ap.target_pos
     m = GetLoadedMachine(ap.dim, *cxyz)
-    if not isinstance(m, (FluidContainer, MultiFluidContainer)):
+    if not isinstance(m, MultiFluidContainer):
         return False, fluid_volume
     ok, rest_fluid_volume = m.AddFluid(fluid_id, fluid_volume)
     return ok, rest_fluid_volume
@@ -112,33 +111,7 @@ def onNetworkTick(network):
         if out_capacity <= 0:
             break
         om = GetLoadedMachine(output.dim, *output.target_pos)
-        if isinstance(om, FluidContainer):
-            om_fluid_id = om.fluid_id
-            om_fluid_vol = om.fluid_volume
-            if om_fluid_id is not None and om_fluid_vol <= 0:
-                om.fluid_volume = 0.0
-                om_fluid_id = None
-                om_fluid_vol = 0.0
-            if (
-                om_fluid_id is None
-                or om_fluid_vol <= 0
-                or (pipe_fluid_id is not None and om_fluid_id != pipe_fluid_id)
-                or not pipe_can_transfer_fluid(network.transmitter_id, om_fluid_id)
-            ):
-                continue
-            vol_takeout = min(out_capacity, om_fluid_vol)
-            om_fluid_vol -= vol_takeout
-            om.fluid_volume = om_fluid_vol
-            if om_fluid_vol <= 0:
-                om.fluid_id = None
-            om._on_reduced_fluid(om_fluid_id, vol_takeout)
-            pipe_fluid_volume += vol_takeout
-            out_capacity -= vol_takeout
-            if pipe_fluid_id is None:
-                pipe_fluid_id = om_fluid_id
-            if out_capacity <= 0:
-                break
-        elif isinstance(om, MultiFluidContainer):
+        if isinstance(om, MultiFluidContainer):
             do_break = False
             for slot in om.fluid_output_slots:
                 fluid = om.fluids[slot]
@@ -163,7 +136,7 @@ def onNetworkTick(network):
                     pipe_fluid_id = fluid_id
                 om._on_reduced_fluid(
                     slot, fluid_id, vol_takeout, is_final=True
-                )  # TODO: fix is_final
+                )  # 每次扣液作为一次完整的槽位操作通知。
                 if out_capacity <= 0:
                     do_break = True
                     break

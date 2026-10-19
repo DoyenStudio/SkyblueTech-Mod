@@ -151,14 +151,14 @@ class Fermenter(
         self.bdata[K_MUD_THICKNESS] = self.getThickness()
         if self.StructureFinished():
             self.bdata[K_TOTAL_VOLUME] = float(self.getVolume()) / POOL_MAX_VOLUME
-            self.bdata[K_OUTPUT_GAS_ID] = self.getGasOutIO().fluid_id
-            self.bdata[K_OUTPUT_GAS_VOLUME] = self.getGasOutIO().fluid_volume
-            self.bdata[K_OUTPUT_GAS_MAX_VOLUME] = self.getGasOutIO().max_fluid_volume
-            self.bdata[K_OUTPUT_FLUID_ID] = self.getFluidOutIO().fluid_id
-            self.bdata[K_OUTPUT_FLUID_VOLUME] = self.getFluidOutIO().fluid_volume
-            self.bdata[K_OUTPUT_FLUID_MAX_VOLUME] = (
-                self.getFluidOutIO().max_fluid_volume
-            )
+            gas = self.getGasOutIO().fluids[0]
+            fluid = self.getFluidOutIO().fluids[0]
+            self.bdata[K_OUTPUT_GAS_ID] = gas.fluid_id
+            self.bdata[K_OUTPUT_GAS_VOLUME] = gas.volume
+            self.bdata[K_OUTPUT_GAS_MAX_VOLUME] = gas.max_volume
+            self.bdata[K_OUTPUT_FLUID_ID] = fluid.fluid_id
+            self.bdata[K_OUTPUT_FLUID_VOLUME] = fluid.volume
+            self.bdata[K_OUTPUT_FLUID_MAX_VOLUME] = fluid.max_volume
             if self.recipe_id > 0:
                 recipe = spec_recipes[self.recipe_id]
                 self.bdata[K_GAS_PRODUCE_SPEED] = self.getGasProduceRate(recipe) * (
@@ -326,11 +326,14 @@ class Fermenter(
         if deficit <= 0:
             return
         water_in = self.getWaterInIO()
-        if water_in.fluid_volume <= 0:
+        fluid = water_in.fluids[0]
+        if fluid.volume <= 0:
             return
-        add_amount = min(deficit, water_in.fluid_volume)
-        water_in.fluid_volume -= add_amount
+        fluid_id = fluid.fluid_id
+        add_amount = min(deficit, fluid.volume)
+        fluid.volume -= add_amount
         self.water_volume += add_amount
+        water_in._on_reduced_fluid(0, fluid_id, add_amount, True)
 
     def tryEat(self, recipe):
         # type: (FermenterRecipe) -> None
@@ -396,14 +399,8 @@ class Fermenter(
         )
         gas_io = self.getGasOutIO()
         fluid_io = self.getFluidOutIO()
-        if gas_io.fluid_id is None:
-            gas_io.fluid_id = recipe.out_gas_id
-        if fluid_io.fluid_id is None:
-            fluid_io.fluid_id = recipe.out_fluid_id
-        if gas_io.fluid_id == recipe.out_gas_id:
-            gas_io.AddFluid(recipe.out_gas_id, self.getGasProduceRate(recipe))
-        if fluid_io.fluid_id == recipe.out_fluid_id:
-            fluid_io.AddFluid(recipe.out_fluid_id, self.getFluidProduceRate(recipe))
+        gas_io.OutputFluid(recipe.out_gas_id, self.getGasProduceRate(recipe), 0, True)
+        fluid_io.OutputFluid(recipe.out_fluid_id, self.getFluidProduceRate(recipe), 0, True)
 
     def updateVitality(self, recipe):
         # type: (FermenterRecipe) -> None

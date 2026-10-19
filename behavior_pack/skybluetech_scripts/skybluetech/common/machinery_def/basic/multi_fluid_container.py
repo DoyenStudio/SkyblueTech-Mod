@@ -3,6 +3,8 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 
 _K_FLUID_ID = "fluid_id"
 _K_FLUID_VOLUME = "fluid_vol"
+FLUID_VOLUME_EPSILON = 1e-6
+INFINITY = float("inf")
 
 
 class FluidSlotServer(object):
@@ -18,10 +20,11 @@ class FluidSlotServer(object):
         self.k_id = _K_FLUID_ID + str(index)
         self.k_vol = _K_FLUID_VOLUME + str(index)
         self._cached_fluid_id = block_entity_data[self.k_id]
-        self._cached_volume = block_entity_data[self.k_vol] or 0.0
-        if self._cached_fluid_id is None or self._cached_volume <= 0:
-            self._cached_fluid_id = self.bdata[self.k_id] = None
-            self._cached_volume = self.bdata[self.k_vol] = 0.0
+        # 无限槽只持久化有限标记。液体类型存在即可在重载后恢复无限供应。
+        if self.max_volume == INFINITY and self._cached_fluid_id is not None:
+            self.volume = 1.0
+        else:
+            self.volume = block_entity_data[self.k_vol] or 0.0
 
     @property
     def fluid_id(self):
@@ -43,11 +46,22 @@ class FluidSlotServer(object):
     @volume.setter
     def volume(self, value):
         # type: (float) -> None
-        if value is None or value <= 0:
+        if (
+            self._cached_fluid_id is None
+            or value is None
+            or value <= FLUID_VOLUME_EPSILON
+            or value != value
+        ):
             value = 0.0
             if self._cached_fluid_id is not None:
                 self.fluid_id = None
-        self._cached_volume = self.bdata[self.k_vol] = value
+        elif self.max_volume == INFINITY:
+            self._cached_volume = INFINITY
+            self.bdata[self.k_vol] = 1.0
+            return
+        else:
+            value = min(float(value), self.max_volume)
+        self._cached_volume = self.bdata[self.k_vol] = float(value)
 
     def isFull(self):
         return self.volume >= self.max_volume
@@ -66,10 +80,11 @@ class FluidSlotServer(object):
 
 
 class FluidSlotClient(object):
-    def __init__(self, block_entity_data_ex, index=0):
+    def __init__(self, block_entity_data_ex, index=0, max_volume=None):
         self.data = block_entity_data_ex
         self.k_id = _K_FLUID_ID + str(index)
         self.k_vol = _K_FLUID_VOLUME + str(index)
+        self.max_volume = max_volume
 
     @property
     def fluid_id(self):
@@ -79,4 +94,6 @@ class FluidSlotClient(object):
     @property
     def volume(self):
         # type: () -> float
+        if self.max_volume == INFINITY and self.fluid_id is not None:
+            return INFINITY
         return GetValue(self.data, self.k_vol, 0.0)

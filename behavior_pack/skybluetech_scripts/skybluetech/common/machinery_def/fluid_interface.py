@@ -1,0 +1,2 @@
+# coding=utf-8
+FLUID_INTERFACE_MAX_VOLUME = 8000

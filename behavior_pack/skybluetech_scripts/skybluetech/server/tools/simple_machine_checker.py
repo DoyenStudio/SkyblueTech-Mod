@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.server.block import (
 )
 from skybluetech_scripts.tooldelta.api.server.player import GetPlayerMainhandItem
 from skybluetech_scripts.tooldelta.api.server.tips import SetOnePopupNotice
-from ..machinery.basic import GUIControl, MultiFluidContainer, FluidContainer
+from ..machinery.basic import GUIControl, MultiFluidContainer
 from ..machinery.core.pool import GetLoadedMachine
 
 
@@ -43,10 +43,8 @@ def onBlockUse(event):
             )
         event.cancel()
         # extras
-        if isinstance(m, FluidContainer):
-            m._on_fluid_slot_update()
-        elif isinstance(m, MultiFluidContainer):
-            all_slots = list(m.fluid_output_slots | {0})
+        if isinstance(m, MultiFluidContainer):
+            all_slots = list(range(len(m.fluids)))
             last_idx = len(all_slots) - 1
             for i, slot in enumerate(all_slots):
                 m._on_fluid_slot_update(slot, i == last_idx)

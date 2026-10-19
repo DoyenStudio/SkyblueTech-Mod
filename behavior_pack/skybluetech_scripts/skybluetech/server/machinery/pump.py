@@ -16,7 +16,7 @@ from ...common.machinery_def.pump import (
     STORE_RF_MAX,
 )
 from .basic import (
-    FluidContainer,
+    MultiFluidContainer,
     GUIControl,
     UpgradeControl,
 )
@@ -24,14 +24,17 @@ from .core import RegisterMachine
 
 
 @RegisterMachine
-class Pump(UpgradeControl, GUIControl, FluidContainer):
+class Pump(UpgradeControl, GUIControl, MultiFluidContainer):
     block_name = Machinery.PUMP
     store_rf_max = STORE_RF_MAX
     running_power = 20
     input_slots = (0,)
     output_slots = (1,)
     fluid_io_mode = (2, 1, 2, 2, 2, 2)
-    max_fluid_volume = MAX_FLUID_VOLUME
+    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
+    fluid_input_slots = set()
+    fluid_output_slots = {0}
+    migrate_legacy_fluid_data = True
     origin_process_ticks = 5
     upgrade_slot_start = 0
     allow_player_use_bucket_push = False
@@ -52,25 +55,23 @@ class Pump(UpgradeControl, GUIControl, FluidContainer):
 
 
     def work_once(self):
-        if self.cached_volume >= BUCKET_VOLUME * 0.2:
+        fluid = self.fluids[0]
+        if self.cached_volume > 0:
             if self.cached_fluid_id is None:
                 self.cached_volume = 0.0
                 return
-            if self.fluid_id is None:
-                self.fluid_id = self.cached_fluid_id
-            self.fluid_volume += BUCKET_VOLUME * 0.2
-            self.cached_volume -= BUCKET_VOLUME * 0.2
-            if self.cached_volume <= 0.0:
-                self.cached_fluid_id = None
+            volume = min(self.cached_volume, BUCKET_VOLUME * 0.2)
+            _, remaining = self.OutputFluid(self.cached_fluid_id, volume, 0, True)
+            self.cached_volume -= volume - remaining
         else:
             if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
                 max_dfs_depth = 64
             else:
                 max_dfs_depth = 16
-            if self.fluid_volume > self.max_fluid_volume - BUCKET_VOLUME:
+            if fluid.volume > fluid.max_volume - BUCKET_VOLUME:
                 return
             res = find_source_block(
-                self.dim, self.x, self.y - 1, self.z, self.fluid_id, max_dfs_depth
+                self.dim, self.x, self.y - 1, self.z, fluid.fluid_id, max_dfs_depth
             )
             if res is None:
                 return
@@ -81,10 +82,10 @@ class Pump(UpgradeControl, GUIControl, FluidContainer):
             else:
                 SetBlock(self.dim, src_pos, fluid_id, 1)
             self.cached_fluid_id = fluid_id
-            self.cached_volume += BUCKET_VOLUME * 0.8
-            self.fluid_volume += BUCKET_VOLUME * 0.2
-            if self.fluid_id is None:
-                self.fluid_id = fluid_id
+            self.cached_volume = BUCKET_VOLUME
+            volume = BUCKET_VOLUME * 0.2
+            _, remaining = self.OutputFluid(fluid_id, volume, 0, True)
+            self.cached_volume -= volume - remaining
 
     @property
     def cached_volume(self):

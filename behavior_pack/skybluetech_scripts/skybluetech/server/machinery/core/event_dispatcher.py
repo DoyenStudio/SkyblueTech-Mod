@@ -211,30 +211,6 @@ class MachineEventDispatcher(object):
         # type: (int, bool) -> None
         self.CallHandlers(HandlerEnum.ON_UNSET_DEACTIVE_FLAG, flag, flush)
 
-    def SubscribeOnSingleAddedFluid(self, handler):
-        # type: (typing.Callable[[str, float], None]) -> None
-        self.Subscribe(HandlerEnum.ON_SINGLE_ADDED_FLUID, handler)
-
-    def CallOnSingleAddedFluidHandlers(self, fluid_id, added_fluid_volume):
-        # type: (str, float) -> None
-        self.CallHandlers(HandlerEnum.ON_SINGLE_ADDED_FLUID, fluid_id, added_fluid_volume)
-
-    def SubscribeOnSingleReducedFluid(self, handler):
-        # type: (typing.Callable[[str, float], None]) -> None
-        self.Subscribe(HandlerEnum.ON_SINGLE_REDUCED_FLUID, handler)
-
-    def CallOnSingleReducedFluidHandlers(self, fluid_id, reduced_fluid_volume):
-        # type: (str, float) -> None
-        self.CallHandlers(HandlerEnum.ON_SINGLE_REDUCED_FLUID, fluid_id, reduced_fluid_volume)
-
-    def SubscribeOnSingleFluidSlotUpdate(self, handler):
-        # type: (typing.Callable[[], None]) -> None
-        self.Subscribe(HandlerEnum.ON_SINGLE_FLUID_SLOT_UPDATE, handler)
-
-    def CallOnSingleFluidSlotUpdateHandlers(self):
-        # type: () -> None
-        self.CallHandlers(HandlerEnum.ON_SINGLE_FLUID_SLOT_UPDATE)
-
     def UnsubscribeOnTicking(self, handler):
         # type: (typing.Callable) -> None
         self.Unsubscribe(HandlerEnum.ON_TICKING, handler)
@@ -270,6 +246,3 @@ class HandlerEnum:
     ON_HEAT_WORK = "on_heat_work"
     ON_SET_DEACTIVE_FLAG = "on_set_deactive_flag"
     ON_UNSET_DEACTIVE_FLAG = "on_unset_deactive_flag"
-    ON_SINGLE_ADDED_FLUID = "on_single_added_fluid"
-    ON_SINGLE_REDUCED_FLUID = "on_single_reduced_fluid"
-    ON_SINGLE_FLUID_SLOT_UPDATE = "on_single_fluid_slot_update"

@@ -12,7 +12,6 @@ from ...common.ui_sync.machinery.cyro_heat_melting_chamber import (
 )
 from .basic import (
     HeatCtrl,
-    FluidContainer,
     GUIControl,
     ItemContainer,
 )
@@ -25,11 +24,14 @@ K_CURRENT_FIT_TEMPERATURE = "st:current_fit_temperature"
 K_CURRENT_MAX_TEMPERATURE = "st:current_max_temperature"
 
 @RegisterMachine
-class CyroHeatMeltingChamber(ItemContainer, GUIControl, FluidContainer, HeatCtrl):
+class CyroHeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCtrl):
     block_name = MACHINE_ID
     is_non_energy_machine = True
     fluid_io_fix_mode = 0
-    max_fluid_volume = 1000
+    fluid_slot_max_volumes = (1000,)
+    fluid_input_slots = {0}
+    fluid_output_slots = {0}
+    migrate_legacy_fluid_data = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(CyroHeatMeltingChamber, self).__init__(dim, x, y, z, block_entity_data)

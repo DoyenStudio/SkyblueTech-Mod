@@ -1,12 +1,10 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_FLUID_ID,
-    K_FLUID_VOLUME,
+    FluidSlotClient,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.tank import TANK_MAX_VOLUMES
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData, GetBlockName
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
 from ..machinery_extra_pages import PipeSettingsPageIndirectional
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
@@ -30,7 +28,6 @@ class GeneralTankUI(MachinePanelUIProxyEx):
         if data is None:
             return
         data = data["exData"]
-        fluid_id = GetValue(data, K_FLUID_ID, None)
-        fluid_volume = GetValue(data, K_FLUID_VOLUME, 0)
-        max_fluid_volume = TANK_MAX_VOLUMES.get(block_id, 1.0)
-        self.fluid_displayer.update(fluid_id, fluid_volume, max_fluid_volume)
+        max_volume = TANK_MAX_VOLUMES.get(block_id, 1.0)
+        fluid = FluidSlotClient(data, 0, max_volume)
+        self.fluid_displayer.update(fluid.fluid_id, fluid.volume, max_volume)

@@ -1,17 +1,13 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define.id_enum import Tank
-from skybluetech_scripts.skybluetech.common.machinery_def.basic.fluid_container import (
-    K_FLUID_ID,
-    K_FLUID_VOLUME,
-    K_MAX_VOLUME,
-)
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient
+from skybluetech_scripts.skybluetech.common.machinery_def.tank import TANK_MAX_VOLUMES
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.api.common import Repeat
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
 )
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 
 from ...utils.fluid_model import FluidModel
 
@@ -35,7 +31,8 @@ def onModBlockEntityLoadedClientEvent(event):
     blockEntityData = GetBlockEntityData(x, y, z)
     if blockEntityData is None:
         return
-    fluid_id, _, max_volume = getFluidDataFromBlock(blockEntityData)
+    max_volume = TANK_MAX_VOLUMES[event.blockName]
+    fluid_id, _, _ = getFluidDataFromBlock(blockEntityData, max_volume)
     client_tank_datas[(x, y, z)] = (None, -1, max_volume)
     if fluid_id is not None:
         loadModel(
@@ -74,24 +71,10 @@ def loadModel(x, y, z, prevent_duplicated=False):
     return model
 
 
-def getFluidDataFromBlock(block_entity_data):
-    # type: (dict) -> tuple[str | None, float, float]
-    ex_data = block_entity_data["exData"]
-    if K_FLUID_ID not in ex_data:
-        return None, 0, 1
-    fluid_id_datas = ex_data[K_FLUID_ID]
-    if fluid_id_datas["__type__"] == 1:
-        # None
-        return (
-            None,
-            GetValueWithDefault(ex_data, K_FLUID_VOLUME, 0),
-            GetValueWithDefault(ex_data, K_MAX_VOLUME, 1),
-        )
-    return (
-        GetValueWithDefault(ex_data, K_FLUID_ID, None),
-        GetValueWithDefault(ex_data, K_FLUID_VOLUME, 0),
-        GetValueWithDefault(ex_data, K_MAX_VOLUME, 1),
-    )
+def getFluidDataFromBlock(block_entity_data, max_volume):
+    # type: (dict, float) -> tuple[str | None, float, float]
+    fluid = FluidSlotClient(block_entity_data["exData"], 0, max_volume)
+    return fluid.fluid_id, fluid.volume, max_volume
 
 
 def getModelScaleRel(fluid_volume, max_volume):
@@ -113,14 +96,14 @@ def updateClientTanksOnce():
     for (x, y, z), (
         old_fluid_id,
         old_fluid_volume,
-        _,
+        max_volume,
     ) in client_tank_datas.copy().items():
         blockdata = GetBlockEntityData(x, y, z)
         if blockdata is None:
             # TODO: BUG: 切换维度不触发
             # print("[ERROR] Tank: BlockEntityData is None")
             continue
-        fluid_id, fluid_volume, max_volume = getFluidDataFromBlock(blockdata)
+        fluid_id, fluid_volume, max_volume = getFluidDataFromBlock(blockdata, max_volume)
         vol_pc = getModelScaleRel(fluid_volume, max_volume)
         # sync_modify 表示"本次涉及的模型操作均未失败", 初值为 True;
         # 仅当某次贴图/液面设置失败(模型尚未就绪)时置 False, 不更新缓存以便下次重试。

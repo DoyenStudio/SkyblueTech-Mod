@@ -108,9 +108,10 @@ class BedrockLavaDrill(UpgradeControl, MultiBlockStructure, GUIControl):
                 )
             else:
                 self.bdata[K_VOLUME_LEFT_PERCENT] = 0
-            self.bdata[K_FLUID_ID] = self.get_fluid_output_io().fluid_id
-            self.bdata[K_FLUID_VOLUME] = self.get_fluid_output_io().fluid_volume
-            self.bdata[K_MAX_FLUID_VOLUME] = self.get_fluid_output_io().max_fluid_volume
+            fluid = self.get_fluid_output_io().fluids[0]
+            self.bdata[K_FLUID_ID] = fluid.fluid_id
+            self.bdata[K_FLUID_VOLUME] = fluid.volume
+            self.bdata[K_MAX_FLUID_VOLUME] = fluid.max_volume
 
     def _bedrock_lava_drill_on_structure_changed(self, structure_finished):
         if structure_finished:
@@ -185,11 +186,15 @@ class BedrockLavaDrill(UpgradeControl, MultiBlockStructure, GUIControl):
 
     def pump_once(self):
         fluid_output = self.get_fluid_output_io()
-        space = int(fluid_output.max_fluid_volume - fluid_output.fluid_volume)
+        fluid = fluid_output.fluids[0]
+        if fluid.fluid_id is not None and fluid.fluid_id != DeepLava.DEEPSLATE_LAVA:
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+            return
+        space = max(0, int(fluid.max_volume - fluid.volume))
         rest_vol = self.rest_volume
         vol = pump_deepslate_lava(self.x, self.z, min(space, self.pump_speed))
         self.rest_volume = rest_vol - vol
-        fluid_output.AddFluid(DeepLava.DEEPSLATE_LAVA, vol)
+        fluid_output.OutputFluid(DeepLava.DEEPSLATE_LAVA, vol, 0, True)
         if space - vol <= 0:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 

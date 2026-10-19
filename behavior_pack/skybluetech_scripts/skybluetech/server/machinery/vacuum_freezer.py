@@ -385,16 +385,17 @@ class VacuumFreezer(
     def try_take_in_fluids(self):
         # type: () -> None
         for io in self._fluid_in_ios:
-            fluid_id = io.fluid_id
-            fluid_volume = io.fluid_volume
+            fluid = io.fluids[0]
+            fluid_id = fluid.fluid_id
+            fluid_volume = fluid.volume
             if fluid_id is None or fluid_volume <= 0:
                 continue
             _, rest_volume = self.AddFluid(fluid_id, fluid_volume)
             moved_volume = fluid_volume - rest_volume
             if moved_volume <= 0:
                 continue
-            io.fluid_volume = rest_volume
-            io._on_reduced_fluid(fluid_id, moved_volume)
+            fluid.volume = rest_volume
+            io._on_reduced_fluid(0, fluid_id, moved_volume, True)
 
     def try_take_in_items(self):
         # type: () -> None
@@ -422,10 +423,8 @@ class VacuumFreezer(
             for io in self._fluid_out_ios:
                 if fluid.volume <= 0:
                     break
-                if not io.CanAddFluid(fluid_id):
-                    continue
                 fluid_volume = fluid.volume
-                _, rest_volume = io.AddFluid(fluid_id, fluid_volume)
+                _, rest_volume = io.OutputFluid(fluid_id, fluid_volume, 0, True)
                 moved_volume = fluid_volume - rest_volume
                 if moved_volume <= 0:
                     continue

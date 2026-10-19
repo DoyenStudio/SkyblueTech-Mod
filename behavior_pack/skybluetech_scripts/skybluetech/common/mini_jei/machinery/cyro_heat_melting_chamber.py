@@ -21,7 +21,7 @@ class CyroHeatMeltingChamberRecipe(MachineRecipe):
         MachineRecipe.__init__(
             self,
             {CategoryType.ITEM: {0: Input(input_item_id, 1)}},
-            {CategoryType.FLUID: {1: Output(output_fluid, output_volume)}},
+            {CategoryType.FLUID: {0: Output(output_fluid, output_volume)}},
             0,
             tick_duration=tick_duration,
         )

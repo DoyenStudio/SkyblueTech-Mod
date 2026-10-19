@@ -1,7 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_FLUID_ID,
-    K_FLUID_VOLUME,
+    FluidSlotClient,
     K_STORE_RF,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.pump import (
@@ -34,7 +33,6 @@ class PumpUI(MachinePanelUIProxyEx):
             return
         data = data["exData"]
         store_rf = GetValue(data, K_STORE_RF, 0)
-        fluid_id = GetValue(data, K_FLUID_ID, None)
-        fluid_volume = GetValue(data, K_FLUID_VOLUME, 0)
+        fluid = FluidSlotClient(data, 0)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        self.fluid_displayer.update(fluid_id, fluid_volume, MAX_FLUID_VOLUME)
+        self.fluid_displayer.update(fluid.fluid_id, fluid.volume, MAX_FLUID_VOLUME)

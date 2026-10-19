@@ -9,4 +9,4 @@ from .base_tank import BasicTank, RegisterTank
 @RegisterTank
 class InvarTank(BasicTank):
     block_name = Tank.INVAR
-    max_fluid_volume = TANK_MAX_VOLUMES[Tank.INVAR]
+    fluid_slot_max_volumes = (TANK_MAX_VOLUMES[Tank.INVAR],)

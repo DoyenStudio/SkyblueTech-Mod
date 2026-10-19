@@ -3,7 +3,6 @@ from .base_generator import BaseGenerator
 from .base_machine import BaseMachine
 from .base_power_provider import BasePowerProvider
 from .base_speed_control import BaseSpeedControl
-from .fluid_container import FluidContainer
 from .generator_processor import GeneratorProcessor
 from .gui_ctrl import GUIControl
 from .heat_ctrl import HeatCtrl

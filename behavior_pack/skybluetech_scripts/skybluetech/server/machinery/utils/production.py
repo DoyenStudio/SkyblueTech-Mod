@@ -24,7 +24,7 @@ def MachineIsMatchInput(machine, recipe, cached_slotitems=None):
     Returns:
         bool: 是否匹配输入
     """
-    from ..basic import ItemContainer, FluidContainer, MultiFluidContainer
+    from ..basic import ItemContainer, MultiFluidContainer
 
     if isinstance(machine, ItemContainer):
         input_items = recipe.GetMachineInputs().get(CategoryType.ITEM, {})
@@ -43,15 +43,6 @@ def MachineIsMatchInput(machine, recipe, cached_slotitems=None):
                 item_input.count
             ):
                 return False
-    if isinstance(machine, FluidContainer):
-        input_fluid = recipe.GetMachineInputs().get(CategoryType.FLUID, {}).get(0)
-        if input_fluid is None:
-            return False
-        if (
-            machine.fluid_id != input_fluid.id
-            or machine.fluid_volume < input_fluid.count
-        ):
-            return False
     if isinstance(machine, MultiFluidContainer):
         input_fluids = recipe.GetMachineInputs().get(CategoryType.FLUID, {})
         for slot, input_fluid in input_fluids.items():
@@ -75,7 +66,7 @@ def MachineRecipeCanOutput(machine, recipe):
     Returns:
         bool: 是否可以输出
     """
-    from ..basic import ItemContainer, FluidContainer, MultiFluidContainer
+    from ..basic import ItemContainer, MultiFluidContainer
 
     if isinstance(machine, ItemContainer):
         output_items = recipe.GetMachineOutputs().get(CategoryType.ITEM, {})
@@ -90,22 +81,13 @@ def MachineRecipeCanOutput(machine, recipe):
                 > machine_slot.GetBasicInfo().maxStackSize
             ):
                 return False
-    if isinstance(machine, FluidContainer):
-        output_fluid = recipe.GetMachineOutputs().get(CategoryType.FLUID, {}).get(0)
-        if output_fluid is None:
-            return False
-        if (
-            machine.fluid_id is not None and machine.fluid_id != output_fluid.id
-        ) or machine.fluid_volume + output_fluid.count > machine.max_fluid_volume:
-            return False
-    elif isinstance(machine, MultiFluidContainer):
+    if isinstance(machine, MultiFluidContainer):
         output_fluids = recipe.GetMachineOutputs().get(CategoryType.FLUID, {})
         for slot, fluid in output_fluids.items():
+            target = machine.fluids[slot]
             if (
-                fluid.id is not None and fluid.id != machine.fluids[slot].fluid_id
-            ) or machine.fluids[slot].volume + fluid.count > machine.fluids[
-                slot
-            ].max_volume:
+                target.fluid_id is not None and fluid.id != target.fluid_id
+            ) or target.volume + fluid.count > target.max_volume:
                 return False
     return True
 
@@ -122,7 +104,6 @@ def OutputRecipe(machine, recipe):
         recipe (MachineRecipeBase): 机器配方基类
     """
     from ..basic import (
-        FluidContainer,
         ItemContainer,
         MultiFluidContainer,
         UpgradeControl,
@@ -139,14 +120,9 @@ def OutputRecipe(machine, recipe):
                 machine.SetSlotItem(slot, machine_slot)
         if isinstance(machine, UpgradeControl):
             machine.FlushOutputSlots(list(output_items.keys()))
-    if isinstance(machine, FluidContainer):
-        output_fluid = recipe.GetMachineOutputs().get(CategoryType.FLUID, {}).get(0)
-        if output_fluid is None:
-            return
-        machine.OutputFluid(output_fluid.id, output_fluid.count)
-    elif isinstance(machine, MultiFluidContainer):
+    if isinstance(machine, MultiFluidContainer):
         output_fluids = recipe.GetMachineOutputs().get(CategoryType.FLUID, {})
-        slots_and_fluids = output_fluids.items()
+        slots_and_fluids = sorted(output_fluids.items())
         last_index = len(slots_and_fluids) - 1
         for i, (slot, fluid) in enumerate(slots_and_fluids):
             if i == last_index:

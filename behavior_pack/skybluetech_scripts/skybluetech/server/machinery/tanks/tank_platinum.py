@@ -9,4 +9,4 @@ from .base_tank import BasicTank, RegisterTank
 @RegisterTank
 class PlatinumTank(BasicTank):
     block_name = Tank.PLATINUM
-    max_fluid_volume = TANK_MAX_VOLUMES[Tank.PLATINUM]
+    fluid_slot_max_volumes = (TANK_MAX_VOLUMES[Tank.PLATINUM],)

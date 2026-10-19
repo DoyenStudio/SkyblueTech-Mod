@@ -18,13 +18,14 @@ from ...common.machinery_def.mini_miner import (
     BLOCK_CAN_MINE,
     K_DIGGING_POS,
     K_WORK_MODE,
+    MAX_FLUID_VOLUME,
     USE_FLUID,
     VOLUME_COST_ONCE,
     WorkMode,
 )
 from .basic import (
     BaseSpeedControl,
-    FluidContainer,
+    MultiFluidContainer,
     GUIControl,
     UpgradeControl,
 )
@@ -39,9 +40,12 @@ TCON = TransmitterConn(cable=True, pipe=True)
 
 
 @RegisterMachine
-class MiniMiner(UpgradeControl, GUIControl, FluidContainer):
+class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
     block_name = Machinery.MINI_MINER
-    max_fluid_volume = 2000
+    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
+    fluid_input_slots = {0}
+    fluid_output_slots = set()
+    migrate_legacy_fluid_data = True
     fluid_io_fix_mode = 0
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
     output_slots = (0, 1, 2, 3, 4, 5, 6, 7)
@@ -69,7 +73,7 @@ class MiniMiner(UpgradeControl, GUIControl, FluidContainer):
         self.handler.SubscribeOnPlaced(self._mini_miner_on_placed)
         self.handler.SubscribeOnNeighborChanged(self._mini_miner_on_neighbor_changed)
         self.handler.SubscribeOnSlotUpdate(self._mini_miner_on_slot_update)
-        self.handler.SubscribeOnSingleFluidSlotUpdate(self._mini_miner_on_fluid_slot_update)
+        self.handler.SubscribeOnFluidSlotUpdate(self._mini_miner_on_fluid_slot_update)
         self.handler.SubscribeOnClick(self._mini_miner_on_click)
         self.handler.SubscribeOnTicking(self._mini_miner_on_ticking)
         self.handler.SubscribeOnDeactiveFlagsChanged(self._mini_miner_on_deactive_flags_changed)
@@ -87,8 +91,8 @@ class MiniMiner(UpgradeControl, GUIControl, FluidContainer):
             if self.OutputItem(Item("minecraft:air")) is None:
                 self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
-    def _mini_miner_on_fluid_slot_update(self):
-        if self.fluid_id != USE_FLUID or self.fluid_volume < VOLUME_COST_ONCE:
+    def _mini_miner_on_fluid_slot_update(self, slot, is_final):
+        if self.fluids[0].fluid_id != USE_FLUID or self.fluids[0].volume < VOLUME_COST_ONCE:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
         else:
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
@@ -132,7 +136,7 @@ class MiniMiner(UpgradeControl, GUIControl, FluidContainer):
         self.update_work_mode()
 
     def init_flags(self):
-        if self.fluid_id != USE_FLUID or self.fluid_volume < VOLUME_COST_ONCE:
+        if self.fluids[0].fluid_id != USE_FLUID or self.fluids[0].volume < VOLUME_COST_ONCE:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
         if self.OutputItem(Item("minecraft:air")):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
@@ -213,11 +217,8 @@ class MiniMiner(UpgradeControl, GUIControl, FluidContainer):
 
     def run_once(self):
         x, y, z = self._next_pos
-        self.fluid_volume -= VOLUME_COST_ONCE
-        if self.fluid_volume <= 0:
-            self.fluid_id = None
-        if self.fluid_volume < VOLUME_COST_ONCE:
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
+        self.fluids[0].volume -= VOLUME_COST_ONCE
+        self._on_reduced_fluid(0, USE_FLUID, VOLUME_COST_ONCE, True)
         block_id = GetBlockName(self.dim, (x, y, z))
         if block_id is None or not self.can_mine_block(block_id):
             self._fast_skiped = False

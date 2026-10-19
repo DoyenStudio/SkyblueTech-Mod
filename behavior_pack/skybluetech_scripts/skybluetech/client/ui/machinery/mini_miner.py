@@ -1,7 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
-    K_FLUID_ID,
-    K_FLUID_VOLUME,
+    FluidSlotClient,
     K_STORE_RF,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.mini_miner import (
@@ -49,12 +48,11 @@ class MiniMinerUI(MachinePanelUIProxyEx):
         if data is None:
             return
         data = data["exData"]
-        fluid_id = GetValue(data, K_FLUID_ID, None)
-        fluid_volume = GetValue(data, K_FLUID_VOLUME, 0)
+        fluid = FluidSlotClient(data, 0)
         store_rf = GetValue(data, K_STORE_RF, 0)
         work_mode = GetValue(data, K_WORK_MODE, 0)
         digging_pos = GetValue(data, K_DIGGING_POS, [0, 0, 0])
-        self.fluid_displayer.update(fluid_id, fluid_volume, MAX_FLUID_VOLUME)
+        self.fluid_displayer.update(fluid.fluid_id, fluid.volume, MAX_FLUID_VOLUME)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
         dx, dy, dz = digging_pos
         dx = ValueOf(dx)

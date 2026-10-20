@@ -8,4 +8,7 @@ from . import guidance, machinery, mini_jei, misc, tools, ui
 @LoadClientAddonScriptsAfter.Listen()
 def onLoadClientAddonScriptsAfter(_):
     # type: (LoadClientAddonScriptsAfter) -> None
+    from ..common.export import events
+
+    events._client_loaded = True
     SkyblueTechClientLoaded().broadcast()

@@ -1,5 +1,12 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent, CustomC2SEvent
+from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
+
+
+def _to_unicode(text):
+    if isinstance(text, py2_unicode):
+        return text
+    return text.decode("utf-8")
 
 
 class TransmitterVisualCheckerCheckRequest(CustomC2SEvent):
@@ -7,6 +14,7 @@ class TransmitterVisualCheckerCheckRequest(CustomC2SEvent):
 
     MODE_GET_BY_TRANSMITTER = 0
     MODE_GET_BY_MACHINE = 1
+    MODE_AUTO = 2
 
     def __init__(self, x=0, y=0, z=0, mode=0, player_id=""):
         # type: (int, int, int, int, str) -> None
@@ -33,29 +41,34 @@ class TransmitterVisualCheckerCheckRequest(CustomC2SEvent):
 class TransmitterVisualCheckerCheckResponse(CustomS2CEvent):
     name = "st:TmVCR"
 
-    TYPE_WIRE = 0
-    TYPE_ITEM_PIPE = 1
-    TYPE_FLUID_PIPE = 2
-
     def __init__(
         self,
-        nodes=[], # type: list[tuple[int, int, int]]
-        inputs=[], # type: list[tuple[int, int, int]]
-        outputs=[], # type: list[tuple[int, int, int]]
-        type=0
+        nodes=None,  # type: list[tuple[int, int, int]] | None
+        inputs=None,  # type: list[tuple[int, int, int]] | None
+        outputs=None,  # type: list[tuple[int, int, int]] | None
+        type_id="",  # type: str
+        display_name="",  # type: str
+        input_label="输入",  # type: str
+        output_label="抽取",  # type: str
     ):
         # type: (...) -> None
-        self.nodes = nodes
-        self.inputs = inputs
-        self.outputs = outputs
-        self.type = type
+        self.nodes = [tuple(pos) for pos in nodes] if nodes is not None else []
+        self.inputs = [tuple(pos) for pos in inputs] if inputs is not None else []
+        self.outputs = [tuple(pos) for pos in outputs] if outputs is not None else []
+        self.type_id = type_id
+        self.display_name = _to_unicode(display_name)
+        self.input_label = _to_unicode(input_label)
+        self.output_label = _to_unicode(output_label)
 
     def marshal(self):
         return {
             "nodes": self.nodes,
             "inputs": self.inputs,
             "outputs": self.outputs,
-            "type": self.type
+            "type_id": self.type_id,
+            "display_name": self.display_name,
+            "input_label": self.input_label,
+            "output_label": self.output_label,
         }
 
     @classmethod
@@ -64,31 +77,33 @@ class TransmitterVisualCheckerCheckResponse(CustomS2CEvent):
             nodes=data["nodes"],
             inputs=data["inputs"],
             outputs=data["outputs"],
-            type=data["type"],
+            type_id=data["type_id"],
+            display_name=data["display_name"],
+            input_label=data["input_label"],
+            output_label=data["output_label"],
         )
 
 
 class TransmitterVisualCheckerCheckMultiResponse(CustomS2CEvent):
     name = "st:TmVCMR"
 
-    TYPE_ITEM_PIPE = 0
-    TYPE_FLUID_PIPE = 1
-    TYPE_WIRE = 2
-
     def __init__(
         self,
-        reses=[] # type: list[tuple[list[tuple[int, int, int]], list[tuple[int, int, int]], list[tuple[int, int, int]], int]]
+        reses=None,  # type: list[TransmitterVisualCheckerCheckResponse] | None
     ):
         # type: (...) -> None
-        self.reses = reses
+        self.reses = list(reses) if reses is not None else []
 
     def marshal(self):
         return {
-            "reses": self.reses
+            "reses": [response.marshal() for response in self.reses]
         }
 
     @classmethod
     def unmarshal(cls, data):
         return cls(
-            reses=data["reses"],
+            reses=[
+                TransmitterVisualCheckerCheckResponse.unmarshal(response)
+                for response in data["reses"]
+            ],
         )

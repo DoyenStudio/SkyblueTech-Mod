@@ -4,7 +4,7 @@ from mod_log import logger
 from ..guidance.book_custom import define as pages_define
 
 """
-使用: `ImportModule("skybluetech_scripts.skybluetech.client.export")`
+使用: `ImportModule("skybluetech_scripts.skybluetech.client.export.guidance")`
 """
 
 
@@ -45,4 +45,4 @@ additions_toc = pages_define.PageGroup(
     ],
 )
 
-__all__ = ["AddAddition", "pages_define"] 
+__all__ = ["AddAddition", "pages_define"]

@@ -4,13 +4,11 @@ from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
 from skybluetech_scripts.tooldelta.api.client import (
     GetLocalPlayerMainhandItem,
     GetLocalPlayerId,
-    GetBlockName as CGetBlockName,
 )
 from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
-from skybluetech_scripts.skybluetech.common.define.id_enum import ItemPipe, FluidPipe, Wire
 from ...common.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckRequest,
     TransmitterVisualCheckerCheckResponse,
@@ -19,7 +17,6 @@ from ...common.events.misc.transmitter_visual_checker import (
 
 CF = GetEngineCompFactory()
 RATE_LIMIT = 0.5
-TRANSMITTER_BLOCK_IDS = ItemPipe.all() | FluidPipe.all() | Wire.all()
 
 
 # CLIENT PART
@@ -27,11 +24,6 @@ TRANSMITTER_BLOCK_IDS = ItemPipe.all() | FluidPipe.all() | Wire.all()
 client_limiter = PlayerRateLimiter(RATE_LIMIT)
 g_shapes = []
 g_multi_shapes = []
-NETWORK_TYPE_ZHCN = (
-    "物品",
-    "流体",
-    "能量",
-)
 
 
 @ClientBlockUseEvent.Listen()
@@ -43,38 +35,13 @@ def onClientBlockUseEvent(event):
     ok = client_limiter.record(GetLocalPlayerId())
     if not ok:
         return
-    bname = CGetBlockName((event.x, event.y, event.z))
-    if bname is None:
-        return
-    if bname in TRANSMITTER_BLOCK_IDS:
-        TransmitterVisualCheckerCheckRequest(
-            event.x,
-            event.y,
-            event.z,
-            TransmitterVisualCheckerCheckRequest.MODE_GET_BY_TRANSMITTER,
-        ).send()
-    else:
-        TransmitterVisualCheckerCheckRequest(
-            event.x,
-            event.y,
-            event.z,
-            TransmitterVisualCheckerCheckRequest.MODE_GET_BY_MACHINE,
-        ).send()
+    TransmitterVisualCheckerCheckRequest(
+        event.x,
+        event.y,
+        event.z,
+        TransmitterVisualCheckerCheckRequest.MODE_AUTO,
+    ).send()
     event.cancel()
-
-
-# @PlayerTryDestroyBlockClientEvent.Listen()
-# def onClientBlockDestroyEvent(event):
-#     # type: (PlayerTryDestroyBlockClientEvent) -> None
-#     mh_item = GetLocalPlayerMainhandItem()
-#     if mh_item is None or mh_item.id != "skybluetech:transmitter_visual_checker":
-#         return
-#     TransmitterVisualCheckerCheckRequest(
-#         event.x, event.y, event.z,
-#         TransmitterVisualCheckerCheckRequest.MODE_GET_BY_MACHINE,
-#     ).send()
-#     event.cancel()
-#     print("Canceled")
 
 
 @TransmitterVisualCheckerCheckResponse.Listen()
@@ -123,18 +90,16 @@ def displayModel(event):
                 shapes.append(box)
     text_map = {} # type: dict[tuple[int, int, int], list[tuple[str, tuple]]]
     for input_node in event.inputs:
-        label = "用电器" if event.type == event.TYPE_WIRE else "输入"
-        text_map.setdefault(input_node, []).append((label, (0, 1, 0)))
+        text_map.setdefault(input_node, []).append((event.input_label, (0, 1, 0)))
     for output_node in event.outputs:
-        label = "能量源" if event.type == event.TYPE_WIRE else "抽取"
-        text_map.setdefault(output_node, []).append((label, (1, 0, 0)))
+        text_map.setdefault(output_node, []).append((event.output_label, (1, 0, 0)))
     for coord, labels in text_map.items():
         x, y, z = coord
         if len(labels) == 1:
             text, color = labels[0]
-            text = ("§a" if color == (0, 1, 0) else "§c") + text
+            text = (u"§a" if color == (0, 1, 0) else u"§c") + text
         else:
-            text = "\n".join(("§a" if c == (0, 1, 0) else "§c") + t for t, c in labels)
+            text = u"\n".join((u"§a" if c == (0, 1, 0) else u"§c") + t for t, c in labels)
         shape = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
             text,
@@ -169,7 +134,8 @@ def displayMultiModel(event):
     draw_comp = CF.CreateDrawing(GetLevelId())
     _DXYZ_FACING = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
     text_map = {}
-    for inputs, outputs, nodes, network_type in event.reses:
+    for response in event.reses:
+        inputs, outputs, nodes = response.inputs, response.outputs, response.nodes
         box_color = (random(), random(), random())
         all_nodes = set(nodes) | set(inputs + outputs)
         for nx, ny, nz in all_nodes:
@@ -188,10 +154,10 @@ def displayMultiModel(event):
                     )
                     shapes.append(box)
         for input_node in inputs:
-            label = NETWORK_TYPE_ZHCN[network_type] + "： 输入"
+            label = response.display_name + u"： " + response.input_label
             text_map.setdefault(input_node, []).append((label, (0, 1, 0)))
         for output_node in outputs:
-            label = NETWORK_TYPE_ZHCN[network_type] + "： 抽取"
+            label = response.display_name + u"： " + response.output_label
             text_map.setdefault(output_node, []).append((label, (1, 0, 0)))
     for coord, labels in text_map.items():
         x, y, z = coord
@@ -205,9 +171,9 @@ def displayMultiModel(event):
                 unique_labels.append((label, color))
         if len(unique_labels) == 1:
             text, color = unique_labels[0]
-            text = ("§a" if color == (0, 1, 0) else "§c") + text
+            text = (u"§a" if color == (0, 1, 0) else u"§c") + text
         else:
-            text = "\n".join(("§a" if c == (0, 1, 0) else "§c") + t for t, c in unique_labels)
+            text = u"\n".join((u"§a" if c == (0, 1, 0) else u"§c") + t for t, c in unique_labels)
             color = (1, 1, 1)
         shape = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),

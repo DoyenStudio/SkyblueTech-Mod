@@ -7,7 +7,7 @@ class TransmitterSwitchAccessMode(CustomC2SEvent):
     name = "st:TmSAM"
 
     def __init__(self, x, y, z, transmitter_type, facing, pid=""):
-        # type: (int, int, int, int, int, str) -> None
+        # type: (int, int, int, int | str, int, str) -> None
         self.x = x
         self.y = y
         self.z = z

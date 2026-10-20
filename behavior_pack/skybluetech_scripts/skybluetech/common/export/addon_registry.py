@@ -55,3 +55,10 @@ def GetNamespacePrefixes():
     # type: () -> tuple[str, ...]
     """本模组与全部已注册附属模组的命名空间前缀, 可直接用于 str.startswith。"""
     return tuple(prefix for _, prefix in GetCategoryOptions() if prefix)
+
+
+__all__ = [
+    "MOD_NAMESPACE", "MOD_DISPLAY_NAME", "ALL_DISPLAY_NAME",
+    "RegisterAddonNamespace", "GetAddonNamespaces", "GetCategoryOptions",
+    "GetNamespacePrefixes",
+]

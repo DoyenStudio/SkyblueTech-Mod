@@ -81,7 +81,9 @@ def onNetworkTick(network):
         om = GetLoadedMachine(network.dim, *output.target_pos)
         if om is None:
             continue
-        rf_output = om.TakeoutPower(tick_capacity)
+        # 大预算在 Python 2 中可能为 long；预算降到 int 范围后及时归一化，
+        # 避免一次小额提取把机器的原生整数存档污染成 long。
+        rf_output = om.TakeoutPower(int(tick_capacity))
         if rf_output <= 0:
             continue
         rf_taken = rf_output
@@ -93,7 +95,8 @@ def onNetworkTick(network):
                 continue
             ok, rf_rest = im.AddPower(rf_output)
             transfered_rf += rf_output - rf_rest
-            rf_output = rf_rest
+            # AddPower 的中间加法也可能溢出为 long；余量不超过原提取量。
+            rf_output = int(rf_rest)
             if not ok:
                 inputs.popleft()
             elif rf_output == 0:

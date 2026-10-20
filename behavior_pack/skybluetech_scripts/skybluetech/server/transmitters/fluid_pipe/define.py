@@ -42,7 +42,7 @@ class FluidPipeNetwork(BaseNetwork["FluidPipeAccessPoint"]):
         super(FluidPipeNetwork, self).__init__(
             dim, group_inputs, group_outputs, nodes, transmitter_id
         )
-        self.capacity = 1000
+        self.capacity = self.calc_capacity(transmitter_id)
         self.load_network_data()
 
     @classmethod

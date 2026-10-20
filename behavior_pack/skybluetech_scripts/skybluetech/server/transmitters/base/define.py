@@ -21,7 +21,7 @@ class BaseNetwork(Generic[_APT]):
     # 网络表示一条管网, 所有可以直接连通的管道方块共属于一个网络。
 
     network_type = TransmitterType.UNKNOWN
-    "类属性, 传输管网类型"
+    "类属性, 内置数字类型或附属 namespace:name 字符串；与检查器显示 ID 独立。"
 
     def __init__(self, dim, group_inputs, group_outputs, nodes, transmitter_id):
         # type: (int, set[_APT], set[_APT], set[tuple[int, int, int]], str) -> None

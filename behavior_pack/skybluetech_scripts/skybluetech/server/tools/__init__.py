@@ -9,6 +9,7 @@ from . import (
     skyblue_armors,
     skyblue_tools,
     transmitter_visual_checker,
+    transmitter_registry,
     upgraders,
 )
 
@@ -23,5 +24,6 @@ __all__ = [
     "skyblue_armors",
     "skyblue_tools",
     "transmitter_visual_checker",
+    "transmitter_registry",
     "upgraders",
 ]

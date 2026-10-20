@@ -8,4 +8,7 @@ from . import commands, machinery, misc, player, tools, transmitters, world_loot
 @LoadServerAddonScriptsAfter.Listen()
 def onLoadServerAddonScriptsAfter(_):
     # type: (LoadServerAddonScriptsAfter) -> None
+    from ..common.export import events
+
+    events._server_loaded = True
     SkyblueTechServerLoaded().broadcast()

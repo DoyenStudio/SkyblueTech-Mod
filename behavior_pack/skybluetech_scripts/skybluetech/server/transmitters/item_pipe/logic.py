@@ -162,7 +162,7 @@ def _push_item_to_container(dim, xyz, item, limit_count=None):
     """
     rest = item.copy()
     if limit_count is not None:
-        rest.count = min(rest.count, limit_count)
+        rest.count = int(min(rest.count, limit_count))
     overflow_count = item.count - rest.count
     container_size = GetContainerSize(xyz, dim)
     if container_size is None or container_size <= 0:
@@ -260,7 +260,8 @@ def onNetworkTick(network):
             if output_item is None:
                 continue
 
-            count_to_send = min(tick_capacity, output_item.count)
+            # 实际搬运数受源堆叠限制；不要把 long 周期预算传入物品/NBT。
+            count_to_send = int(min(tick_capacity, output_item.count))
             if count_to_send <= 0:
                 break
             send_item = output_item.copy()

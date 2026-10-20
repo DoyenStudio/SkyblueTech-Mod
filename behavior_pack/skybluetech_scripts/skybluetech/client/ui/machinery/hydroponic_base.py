@@ -8,8 +8,8 @@ from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 
 from ..machinery_extra_pages import (
-    CableSettingsPageIndirectional,
-    PipeSettingsPageIndirectional,
+    ItemPipeSettingsPageIndirectional,
+    FluidPipeSettingsPageIndirectional,
 )
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer
@@ -21,8 +21,8 @@ FLUID_1_PATH = MAIN_PATH / "fluid1"
 @RegistToolDeltaScreen("HydroponicBaseUI.main", is_proxy=True)
 class HydroponicBaseUI(MachinePanelUIProxyEx):
     available_extra_pages = (
-        CableSettingsPageIndirectional,
-        PipeSettingsPageIndirectional,
+        ItemPipeSettingsPageIndirectional,
+        FluidPipeSettingsPageIndirectional,
     )
 
     def OnCreate(self):

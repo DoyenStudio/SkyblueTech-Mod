@@ -8,34 +8,34 @@ from ...define import (
     PageGroup,
 )
 
-pipes_description = PageGroup(
-    "pipes_description",
+fluid_pipes_description = PageGroup(
+    "fluid_pipes_description",
     [
         TextPage(
             "青铜流体管道",
             '最常见的流体管道， 没有任何特殊功能。\n\n可以用于输送大部分常见流体， 无法输送低温或者高温流体。\n\n<style color="§6"><link id="a" text="查看配方">',
-            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.Pipe.BRONZE)},
+            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.FluidPipe.BRONZE)},
         ),
         TextPage(
             "白铜流体管道",
             '对比普通的流体管道， 白铜流体管道支持<text color="§c" t="熔岩">的运送。\n\n<style color="§6"><link id="a" text="查看配方">',
-            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.Pipe.CUPRONICKEL)},
+            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.FluidPipe.CUPRONICKEL)},
         ),
         TextPage(
             "耐热流体管道",
             '在白铜管道的基础上支持了<text color="§c" t="深层熔岩、 轻、 中、 重熔岩">的运送。\n\n<style color="§6"><link id="a" text="查看配方">',
-            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.Pipe.ULTRAHEATINUM)},
+            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.FluidPipe.ULTRAHEATINUM)},
         ),
         TextPage(
             "耐酸流体管道",
             '不易被酸腐蚀的管道， 可以运输液酸或其它酸性流体。\n\n<style color="§6"><link id="a" text="查看配方">',
-            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.Pipe.ACIDPROOF)},
+            hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.FluidPipe.ACIDPROOF)},
         ),
     ],
 )
 
-pipe_entry = PageGroup(
-    "pipe_entry",
+fluid_pipe_entry = PageGroup(
+    "fluid_pipe_entry",
     [
         TextPage(
             "流体管道",
@@ -43,16 +43,16 @@ pipe_entry = PageGroup(
         ),
         TOCPage([
             TOCPageSection(
-                id_enum.Pipe.BRONZE, 0, "青铜流体管道", pipes_description, 0
+                id_enum.FluidPipe.BRONZE, 0, "青铜流体管道", fluid_pipes_description, 0
             ),
             TOCPageSection(
-                id_enum.Pipe.CUPRONICKEL, 0, "白铜流体管道", pipes_description, 1
+                id_enum.FluidPipe.CUPRONICKEL, 0, "白铜流体管道", fluid_pipes_description, 1
             ),
             TOCPageSection(
-                id_enum.Pipe.ULTRAHEATINUM, 0, "耐热流体管道", pipes_description, 2
+                id_enum.FluidPipe.ULTRAHEATINUM, 0, "耐热流体管道", fluid_pipes_description, 2
             ),
             TOCPageSection(
-                id_enum.Pipe.ACIDPROOF, 0, "耐酸流体管道", pipes_description, 3
+                id_enum.FluidPipe.ACIDPROOF, 0, "耐酸流体管道", fluid_pipes_description, 3
             ),
         ]),
     ],

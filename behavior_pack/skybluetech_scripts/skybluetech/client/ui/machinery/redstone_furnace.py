@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPage
+from ..machinery_extra_pages import ItemPipeSettingsPage
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdateFlame, UpdateGenericProgressL2R, UpdatePowerBar
 
@@ -21,7 +21,7 @@ FLAME_PATH = MAIN_PATH / "flame"
 
 @RegistToolDeltaScreen("RedstoneFurnaceUI.main", is_proxy=True)
 class RedstoneFurnaceUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPage,)
+    available_extra_pages = (ItemPipeSettingsPage,)
 
     def OnCreate(self):
         dim, x, y, z = self.pos

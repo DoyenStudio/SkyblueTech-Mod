@@ -1,6 +1,8 @@
 import time
+from skybluetech_scripts.skybluetech.common.define.id_enum import ItemPipe, FluidPipe
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 
+PIPE_BLOCK_IDS = ItemPipe.all() | FluidPipe.all()
 last_x = 0
 last_y = 0
 last_z = 0
@@ -11,10 +13,7 @@ last_click_time = 0
 def onClientBlockUseEvent(event):
     # type: (ClientBlockUseEvent) -> None
     global last_x, last_y, last_z, last_click_time
-    if event.blockName.startswith("skybluetech:") and (
-        "cable" in event.blockName
-        or "pipe" in event.blockName 
-    ):
+    if event.blockName in PIPE_BLOCK_IDS:
         nowtime = time.time()
         if last_x == event.x and last_y == event.y and last_z == event.z and nowtime - last_click_time < 0.1:
             event.cancel()

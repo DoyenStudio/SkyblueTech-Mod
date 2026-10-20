@@ -11,10 +11,10 @@ from ...common.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckRequest,
     TransmitterVisualCheckerCheckResponse,
 )
-from ..transmitters.cable.logic import isCable
-from ..transmitters.cable.logic import logic_module as cable_logic
-from ..transmitters.pipe.logic import isPipe
-from ..transmitters.pipe.logic import logic_module as pipe_logic
+from ..transmitters.item_pipe.logic import is_item_pipe
+from ..transmitters.item_pipe.logic import logic_module as item_pipe_logic
+from ..transmitters.fluid_pipe.logic import is_fluid_pipe
+from ..transmitters.fluid_pipe.logic import logic_module as fluid_pipe_logic
 from ..transmitters.wire.logic import isWire
 from ..transmitters.wire.logic import logic_module as wire_logic
 
@@ -38,20 +38,20 @@ def onRecvRequest(event):
         SetOnePopupNotice(event.player_id, "§6未找到网络")
         return
     if event.mode == event.MODE_GET_BY_TRANSMITTER:
-        if isCable(bname):
-            network = cable_logic.GetNetworkByTransmitter(
+        if is_item_pipe(bname):
+            network = item_pipe_logic.GetNetworkByTransmitter(
                 dim, event.x, event.y, event.z
             )
             if network is None:
                 SetOnePopupNotice(event.player_id, "§6未找到网络")
                 return
-            network_type = TransmitterVisualCheckerCheckResponse.TYPE_CABLE
-        elif isPipe(bname):
-            network = pipe_logic.GetNetworkByTransmitter(dim, event.x, event.y, event.z)
+            network_type = TransmitterVisualCheckerCheckResponse.TYPE_ITEM_PIPE
+        elif is_fluid_pipe(bname):
+            network = fluid_pipe_logic.GetNetworkByTransmitter(dim, event.x, event.y, event.z)
             if network is None:
                 SetOnePopupNotice(event.player_id, "§6未找到网络")
                 return
-            network_type = TransmitterVisualCheckerCheckResponse.TYPE_PIPE
+            network_type = TransmitterVisualCheckerCheckResponse.TYPE_FLUID_PIPE
         elif isWire(bname):
             network = wire_logic.GetNetworkByTransmitter(dim, event.x, event.y, event.z)
             if network is None:
@@ -78,12 +78,12 @@ def onRecvRequest(event):
             )
             for cnode, network_type in (
                 (
-                    cable_logic.GetContainerNode(dim, event.x, event.y, event.z),
-                    T.TYPE_CABLE,
+                    item_pipe_logic.GetContainerNode(dim, event.x, event.y, event.z),
+                    T.TYPE_ITEM_PIPE,
                 ),
                 (
-                    pipe_logic.GetContainerNode(dim, event.x, event.y, event.z),
-                    T.TYPE_PIPE,
+                    fluid_pipe_logic.GetContainerNode(dim, event.x, event.y, event.z),
+                    T.TYPE_FLUID_PIPE,
                 ),
                 (
                     wire_logic.GetContainerNode(dim, event.x, event.y, event.z),

@@ -10,11 +10,11 @@ from ...common.events.machinery.fluid_splitter import (
     FluidSplitterSimpleAction,
 )
 from ...common.machinery_def.fluid_splitter import MAX_FLUID_VOLUME
-from ..transmitters.pipe.logic import (
+from ..transmitters.fluid_pipe.logic import (
     PushFluidToFluidContainer,
 )
-from ..transmitters.pipe.logic import (
-    logic_module as pipe_logic,
+from ..transmitters.fluid_pipe.logic import (
+    logic_module as fluid_pipe_logic,
 )
 from .basic import (
     GUIControl,
@@ -96,7 +96,7 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
             return fluid_volume
         matched_label = self.get_label_by_fluid(fluid_id)
         networks = (
-            pipe_logic
+            fluid_pipe_logic
             .GetContainerNode(self.dim, self.x, self.y, self.z, enable_cache=True)
             .get_outputs()
             .values()

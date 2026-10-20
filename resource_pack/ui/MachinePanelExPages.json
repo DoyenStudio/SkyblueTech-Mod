@@ -1,5 +1,5 @@
 {
-    "cable_settings": {
+    "item_pipe_settings": {
         "type": "panel",
         "anchor_from": "top_middle",
         "anchor_to": "top_middle",
@@ -651,7 +651,7 @@
             }
         ]
     },
-    "cable_settings_indirectional": {
+    "item_pipe_settings_indirectional": {
         "type": "panel",
         "anchor_from": "top_middle",
         "anchor_to": "top_middle",
@@ -1307,12 +1307,12 @@
         "type": "screen",
         "controls": [
             {
-                "panel@MachinePanelExPages.cable_settings": {}
+                "panel@MachinePanelExPages.item_pipe_settings": {}
             }
         ]
     },
     "namespace": "MachinePanelExPages",
-    "pipe_settings": {
+    "fluid_pipe_settings": {
         "type": "panel",
         "anchor_from": "top_middle",
         "anchor_to": "top_middle",
@@ -1964,7 +1964,7 @@
             }
         ]
     },
-    "pipe_settings_indirectional": {
+    "fluid_pipe_settings_indirectional": {
         "type": "panel",
         "anchor_from": "top_middle",
         "anchor_to": "top_middle",

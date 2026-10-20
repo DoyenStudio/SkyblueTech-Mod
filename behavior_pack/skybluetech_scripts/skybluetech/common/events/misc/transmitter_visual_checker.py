@@ -34,8 +34,8 @@ class TransmitterVisualCheckerCheckResponse(CustomS2CEvent):
     name = "st:TmVCR"
 
     TYPE_WIRE = 0
-    TYPE_CABLE = 1
-    TYPE_PIPE = 2
+    TYPE_ITEM_PIPE = 1
+    TYPE_FLUID_PIPE = 2
 
     def __init__(
         self,
@@ -71,8 +71,8 @@ class TransmitterVisualCheckerCheckResponse(CustomS2CEvent):
 class TransmitterVisualCheckerCheckMultiResponse(CustomS2CEvent):
     name = "st:TmVCMR"
 
-    TYPE_CABLE = 0
-    TYPE_PIPE = 1
+    TYPE_ITEM_PIPE = 0
+    TYPE_FLUID_PIPE = 1
     TYPE_WIRE = 2
 
     def __init__(

@@ -1,5 +1,5 @@
 # coding=utf-8
-from .cable_settings import CableSettingsPage
-from .cable_settings_indirectional import CableSettingsPageIndirectional
-from .pipe_settings import PipeSettingsPage
-from .pipe_settings_indirectional import PipeSettingsPageIndirectional
+from .item_pipe_settings import ItemPipeSettingsPage
+from .item_pipe_settings_indirectional import ItemPipeSettingsPageIndirectional
+from .fluid_pipe_settings import FluidPipeSettingsPage
+from .fluid_pipe_settings_indirectional import FluidPipeSettingsPageIndirectional

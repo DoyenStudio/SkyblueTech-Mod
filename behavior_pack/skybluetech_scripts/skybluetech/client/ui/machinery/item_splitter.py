@@ -12,7 +12,7 @@ from skybluetech_scripts.tooldelta.api.client import (
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
 
-from ..machinery_extra_pages import CableSettingsPageIndirectional
+from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from ..misc.transmitter_settings_ui import get_opposite_color, rand_rgb_by_index
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 
@@ -22,7 +22,7 @@ ADD_BTN_PATH = MAIN_PATH / "add_btn"
 
 @RegistToolDeltaScreen("ItemSplitterUI.main", is_proxy=True)
 class ItemSplitterUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPageIndirectional,)
+    available_extra_pages = (ItemPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         dim, x, y, z = self.pos

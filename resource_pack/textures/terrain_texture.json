@@ -318,7 +318,7 @@
             "textures": "textures/blocks/machinery/item_spreader_top"
         },
         "skybluetech:item_transport_cable_steel": {
-            "textures": "textures/transmitters/item_transport_cable_steel_texture"
+            "textures": "textures/transmitters/item_pipe_steel_texture"
         },
         "skybluetech:lead_block": {
             "textures": "textures/blocks/metal_block/lead_block"
@@ -394,16 +394,16 @@
             "textures": "textures/blocks/machinery/flipbook_textures/oil_extractor_front_active"
         },
         "skybluetech:pipe_acidproof": {
-            "textures": "textures/transmitters/pipe_acidproof_texture"
+            "textures": "textures/transmitters/fluid_pipe_acidproof_texture"
         },
         "skybluetech:pipe_bronze": {
-            "textures": "textures/transmitters/pipe_bronze_texture"
+            "textures": "textures/transmitters/fluid_pipe_bronze_texture"
         },
         "skybluetech:pipe_cupronickel": {
-            "textures": "textures/transmitters/pipe_cupronickel_texture"
+            "textures": "textures/transmitters/fluid_pipe_cupronickel_texture"
         },
         "skybluetech:pipe_ultraheatinum": {
-            "textures": "textures/transmitters/pipe_ultraheatinum_texture"
+            "textures": "textures/transmitters/fluid_pipe_ultraheatinum_texture"
         },
         "skybluetech:platinum_block": {
             "textures": "textures/blocks/metal_block/platinum_block"

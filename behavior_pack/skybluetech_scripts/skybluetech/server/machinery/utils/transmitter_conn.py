@@ -11,14 +11,15 @@ from skybluetech_scripts.skybluetech.common.define.facing import (
     FACING_EN,
     OPPOSITE_FACING,
 )
-from ...transmitters.cable.logic import isCable
-from ...transmitters.pipe.logic import isPipe
+from ...transmitters.item_pipe.logic import is_item_pipe
+from ...transmitters.fluid_pipe.logic import is_fluid_pipe
 from ...transmitters.wire.logic import isWire
 from ..basic import BaseMachine
 
+# Keep saved block-state suffixes compatible with existing worlds.
 TRANSMITTER_TYPES = (
-    ("cable", isCable),
-    ("pipe", isPipe),
+    ("cable", is_item_pipe),
+    ("pipe", is_fluid_pipe),
     ("wire", isWire),
 )
 
@@ -28,7 +29,7 @@ def is_transmitter(block_name):
     "方块是否为传输管线 (物品管道 / 流体管道 / 电线)。"
     if not block_name:
         return False
-    return bool(isCable(block_name) or isPipe(block_name) or isWire(block_name))
+    return bool(is_item_pipe(block_name) or is_fluid_pipe(block_name) or isWire(block_name))
 
 
 def get_connection_state_key(facing):
@@ -138,28 +139,28 @@ def refresh_machine_socket(dim, machine_pos, neighbor_pos):
 
 
 class TransmitterConn(object):
-    def __init__(self, cable=False, pipe=False, wire=False):
+    def __init__(self, item_pipe=False, fluid_pipe=False, wire=False):
         # type: (bool, bool, bool) -> None
         """
         为传输管线渲染提供的便捷类。
 
         Args:
-            cable: 是否渲染物品管道连接
-            pipe: 是否渲染管道连接
+            item_pipe: 是否渲染物品管道连接
+            fluid_pipe: 是否渲染流体管道连接
             wire: 是否渲染电缆连接
 
         Methods:
             block_placed: 当机器放置时调用, 渲染连接
             neighbor_block_changed: 当相邻块改变时调用, 更新连接
         """
-        self.cable = cable
-        self.pipe = pipe
+        self.item_pipe = item_pipe
+        self.fluid_pipe = fluid_pipe
         self.wire = wire
         self.transmitter_types = tuple(
             (type_name, checker)
             for type_name, checker, enabled in (
-                ("cable", isCable, cable),
-                ("pipe", isPipe, pipe),
+                ("cable", is_item_pipe, item_pipe),
+                ("pipe", is_fluid_pipe, fluid_pipe),
                 ("wire", isWire, wire),
             )
             if enabled

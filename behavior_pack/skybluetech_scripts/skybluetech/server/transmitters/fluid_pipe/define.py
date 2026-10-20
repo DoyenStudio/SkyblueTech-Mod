@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.api.server import GetBlockEntityData
-from skybluetech_scripts.skybluetech.common.define.id_enum import Pipe, fluids
+from skybluetech_scripts.skybluetech.common.define.id_enum import FluidPipe, fluids
 from skybluetech_scripts.skybluetech.common.misc.transmitter import TransmitterType
 from ..base.define import BaseNetwork, BaseAccessPoint
 
@@ -8,26 +8,26 @@ INT32 = 1 << 32
 
 # TRANSFER_SPEED_MAPPING = (None, 100, 400, 1600, 6400, 14000)
 TRANSFER_SPEED_MAPPING = {
-    Pipe.ACIDPROOF: 100,
-    Pipe.BRONZE: 100,
-    Pipe.CUPRONICKEL: 60,
-    Pipe.ULTRAHEATINUM: 100,
+    FluidPipe.ACIDPROOF: 100,
+    FluidPipe.BRONZE: 100,
+    FluidPipe.CUPRONICKEL: 60,
+    FluidPipe.ULTRAHEATINUM: 100,
 }
 CAPACITY_MAPPING = {
-    Pipe.ACIDPROOF: 1000,
-    Pipe.BRONZE: 1000,
-    Pipe.CUPRONICKEL: 1000,
-    Pipe.ULTRAHEATINUM: 1000,
+    FluidPipe.ACIDPROOF: 1000,
+    FluidPipe.BRONZE: 1000,
+    FluidPipe.CUPRONICKEL: 1000,
+    FluidPipe.ULTRAHEATINUM: 1000,
 }
-PIPE_CAN_TRANSMIT_FLUID_MAPPING = {
-    Pipe.ACIDPROOF: lambda f: (
+FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING = {
+    FluidPipe.ACIDPROOF: lambda f: (
         f in fluids.Common.all_sub() or f in fluids.Acid.all_sub()
     ),
-    Pipe.BRONZE: lambda f: f in fluids.Common.all_sub(),
-    Pipe.CUPRONICKEL: lambda f: (
+    FluidPipe.BRONZE: lambda f: f in fluids.Common.all_sub(),
+    FluidPipe.CUPRONICKEL: lambda f: (
         f in fluids.Common.all_sub() or f in fluids.HotFluid.all_sub()
     ),
-    Pipe.ULTRAHEATINUM: lambda f: (
+    FluidPipe.ULTRAHEATINUM: lambda f: (
         f in fluids.Common.all_sub()
         or f in fluids.HotFluid.all_sub()
         or f in fluids.ExtremeHotFluid.all_sub()
@@ -35,11 +35,11 @@ PIPE_CAN_TRANSMIT_FLUID_MAPPING = {
 }
 
 
-class PipeNetwork(BaseNetwork["PipeAccessPoint"]):
-    network_type = TransmitterType.PIPE
+class FluidPipeNetwork(BaseNetwork["FluidPipeAccessPoint"]):
+    network_type = TransmitterType.FLUID_PIPE
 
     def __init__(self, dim, group_inputs, group_outputs, nodes, transmitter_id):
-        super(PipeNetwork, self).__init__(
+        super(FluidPipeNetwork, self).__init__(
             dim, group_inputs, group_outputs, nodes, transmitter_id
         )
         self.capacity = 1000
@@ -77,13 +77,13 @@ class PipeNetwork(BaseNetwork["PipeAccessPoint"]):
             b["fluid_volume"] = self.fluid_volume
 
     def __repr__(self):
-        return "PipeNetwork({}, {}, {})".format(
+        return "FluidPipeNetwork({}, {}, {})".format(
             self.dim, self.group_inputs, self.group_outputs
         )
 
 
-class PipeAccessPoint(BaseAccessPoint["PipeNetwork"]):
+class FluidPipeAccessPoint(BaseAccessPoint["FluidPipeNetwork"]):
     def __repr__(self):
-        return "PipeAP({}, {}, {}, {}, {})".format(
+        return "FluidPipeAP({}, {}, {}, {}, {})".format(
             self.dim, self.x, self.y, self.z, self.access_facing
         )

@@ -18,7 +18,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPage
+from ..machinery_extra_pages import ItemPipeSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdateGenericProgressL2R, UpdatePowerBar
@@ -31,7 +31,7 @@ MODE_CHANGE_BTN_PATH = MAIN_PATH / "mode_change"
 
 @RegistToolDeltaScreen("FreezerUI.main", is_proxy=True)
 class FreezerUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPage,)
+    available_extra_pages = (ItemPipeSettingsPage,)
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

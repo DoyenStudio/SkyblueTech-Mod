@@ -21,7 +21,7 @@ from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByT
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPageIndirectional
+from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdateGenericProgressL2R, UpdatePowerBar
@@ -38,7 +38,7 @@ COLOR_GRAY = 0x8B * 1.0 / 0xFF
 
 @RegistToolDeltaScreen("TemplateAssemblerUI.main", is_proxy=True)
 class TemplateAssemblerUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPageIndirectional,)
+    available_extra_pages = (ItemPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         self.power = self.GetElement(POWER_PATH)

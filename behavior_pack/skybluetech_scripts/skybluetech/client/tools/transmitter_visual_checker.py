@@ -10,6 +10,7 @@ from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
+from skybluetech_scripts.skybluetech.common.define.id_enum import ItemPipe, FluidPipe, Wire
 from ...common.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckRequest,
     TransmitterVisualCheckerCheckResponse,
@@ -18,6 +19,7 @@ from ...common.events.misc.transmitter_visual_checker import (
 
 CF = GetEngineCompFactory()
 RATE_LIMIT = 0.5
+TRANSMITTER_BLOCK_IDS = ItemPipe.all() | FluidPipe.all() | Wire.all()
 
 
 # CLIENT PART
@@ -44,7 +46,7 @@ def onClientBlockUseEvent(event):
     bname = CGetBlockName((event.x, event.y, event.z))
     if bname is None:
         return
-    if "cable" in bname or "pipe" in bname or "wire" in bname:
+    if bname in TRANSMITTER_BLOCK_IDS:
         TransmitterVisualCheckerCheckRequest(
             event.x,
             event.y,

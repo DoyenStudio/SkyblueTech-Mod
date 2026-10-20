@@ -18,7 +18,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
 
-from ..machinery_extra_pages import PipeSettingsPageIndirectional
+from ..machinery_extra_pages import FluidPipeSettingsPageIndirectional
 from ..misc.transmitter_settings_ui import get_opposite_color, rand_rgb_by_index
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer
@@ -30,7 +30,7 @@ FLUID_DISP_PATH = MAIN_PATH / "fluid_display"
 
 @RegistToolDeltaScreen("FluidSplitterUI.main", is_proxy=True)
 class FluidSplitterUI(MachinePanelUIProxyEx):
-    available_extra_pages = (PipeSettingsPageIndirectional,)
+    available_extra_pages = (FluidPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         self.settings_view = self.GetElement(SETTINGS_VIEW_PATH).asScrollView()

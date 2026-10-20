@@ -12,7 +12,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPageIndirectional
+from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .machinery_workstation import EMPTY_ITEM_ID_AUX
 from .utils import GetPreviewMaskColor, UpdateGenericProgressL2R, UpdatePowerBar
@@ -26,7 +26,7 @@ PREVIEW_SLOT_COUNT = 9
 
 @RegistToolDeltaScreen("ElectricCrafterUI.main", is_proxy=True)
 class ElectricCrafterUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPageIndirectional,)
+    available_extra_pages = (ItemPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         self.power = self.GetElement(POWER_PATH)

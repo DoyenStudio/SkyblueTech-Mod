@@ -144,7 +144,7 @@
 					]
 				},
 				{
-					"name": "north_pipe_conn",
+					"name": "north_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"cubes": [
@@ -162,7 +162,7 @@
 					]
 				},
 				{
-					"name": "west_pipe_conn",
+					"name": "west_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"rotation": [0, -90, 0],
@@ -181,7 +181,7 @@
 					]
 				},
 				{
-					"name": "south_pipe_conn",
+					"name": "south_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"rotation": [0, 180, 0],
@@ -200,7 +200,7 @@
 					]
 				},
 				{
-					"name": "east_pipe_conn",
+					"name": "east_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"rotation": [0, 90, 0],
@@ -219,7 +219,7 @@
 					]
 				},
 				{
-					"name": "north_cable_conn",
+					"name": "north_item_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"cubes": [
@@ -236,7 +236,7 @@
 					]
 				},
 				{
-					"name": "west_cable_conn",
+					"name": "west_item_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"rotation": [0, -90, 0],
@@ -254,7 +254,7 @@
 					]
 				},
 				{
-					"name": "south_cable_conn",
+					"name": "south_item_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"rotation": [0, 180, 0],
@@ -272,7 +272,7 @@
 					]
 				},
 				{
-					"name": "east_cable_conn",
+					"name": "east_item_pipe_conn",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"rotation": [0, 90, 0],

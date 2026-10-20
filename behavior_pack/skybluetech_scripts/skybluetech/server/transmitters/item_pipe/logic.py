@@ -26,7 +26,7 @@ from skybluetech_scripts.tooldelta.utils.py_comp import py2_xrange
 
 from ..base.logic import LogicModule
 from ..constants import CHEST_CONTAINERS, COMMON_CONTAINERS
-from .define import CableAccessPoint, CableNetwork
+from .define import ItemPipeAccessPoint, ItemPipeNetwork
 from .nbt_utils import (
     MISSING,
     _find_slot_entry,
@@ -58,9 +58,9 @@ if 0 > 1:
 #       2. 如果找到了可投递的容器, 下次优先向此容器进行投递, 提高命中率
 
 
-def isCable(blockName):
+def is_item_pipe(blockName):
     # type: (str) -> bool
-    return BlockHasTag(blockName, "skybluetech_cable")
+    return BlockHasTag(blockName, "skybluetech_item_pipe")
 
 
 def isContainer(blockName, dim=None, xyz=None):
@@ -128,7 +128,7 @@ def _calc_move_count(source_item, target_item):
 
 
 def PostItemIntoNetworks(dim, xyz, item, networks):
-    # type: (int, tuple[int, int, int], Item, set[CableNetwork] | None) -> None | Item
+    # type: (int, tuple[int, int, int], Item, set[ItemPipeNetwork] | None) -> None | Item
     "向网络发送物品, 返回剩余物品"
     item = item.copy()
     if networks is None:
@@ -192,7 +192,7 @@ def _push_item_to_container(dim, xyz, item, limit_count=None):
 
 
 def PushItemToGenericContainer(ap, item, limit_count=None):
-    # type: (CableAccessPoint, Item, int | None) -> Item | None
+    # type: (ItemPipeAccessPoint, Item, int | None) -> Item | None
     "把物品投入接入点所对的容器, 返回剩余物品。"
     return PushItemToGenericContainerEasy(
         ap.dim, ap.target_pos, ap.access_facing, item, limit_count
@@ -211,7 +211,7 @@ def onMachineryPlacedLater(dim, x, y, z):
 
 
 def onNetworkTick(network):
-    # type: (CableNetwork) -> None
+    # type: (ItemPipeNetwork) -> None
     tick_capacity = network.transfer_speed
     slotitem_changed = {}  # type: dict[tuple[int, int, int], set[int]]
     inputs = network.get_input_access_points()
@@ -411,7 +411,7 @@ def onNetworkTick(network):
 
 
 def _get_container_item(network, xyz, slot):
-    # type: (CableNetwork, tuple[int, int, int], int) -> Item | None
+    # type: (ItemPipeNetwork, tuple[int, int, int], int) -> Item | None
     cache = network._cache_slotitems.get(xyz)
     if cache is None:
         cache = network._cache_slotitems[xyz] = {}
@@ -436,7 +436,7 @@ def _get_container_item(network, xyz, slot):
 
 
 def _get_container_slotposes(network, xyz):
-    # type: (CableNetwork, tuple[int, int, int]) -> tuple[tuple[int, ...], tuple[int, ...]]
+    # type: (ItemPipeNetwork, tuple[int, int, int]) -> tuple[tuple[int, ...], tuple[int, ...]]
     "获取容器的 (输入槽位, 输出槽位), 跨 tick 缓存到网络上"
     cached = network._cache_slotposes.get(xyz, MISSING)
     if cached is not MISSING:
@@ -453,17 +453,17 @@ def _get_container_slotposes(network, xyz):
 
 
 def _get_container_input_slots(network, xyz):
-    # type: (CableNetwork, tuple[int, int, int]) -> tuple[int, ...]
+    # type: (ItemPipeNetwork, tuple[int, int, int]) -> tuple[int, ...]
     return _get_container_slotposes(network, xyz)[0]
 
 
 def _get_container_output_slots(network, xyz):
-    # type: (CableNetwork, tuple[int, int, int]) -> tuple[int, ...]
+    # type: (ItemPipeNetwork, tuple[int, int, int]) -> tuple[int, ...]
     return _get_container_slotposes(network, xyz)[1]
 
 
 def _get_block_name(network, xyz):
-    # type: (CableNetwork, tuple[int, int, int]) -> str
+    # type: (ItemPipeNetwork, tuple[int, int, int]) -> str
     res = network._cache_block_names.get(xyz, MISSING)
     if res is MISSING:
         res = network._cache_block_names[xyz] = GetBlockName(network.dim, xyz) or ""
@@ -471,13 +471,13 @@ def _get_block_name(network, xyz):
 
 
 def _is_chest(network, xyz):
-    # type: (CableNetwork, tuple[int, int, int]) -> bool
+    # type: (ItemPipeNetwork, tuple[int, int, int]) -> bool
     "箱子、陷阱箱和铜箱子变种可组成大箱子, 每半的方块实体 NBT 只含本地 0-26 槽, 需走容器 API"
     return _get_block_name(network, xyz) in CHEST_CONTAINERS
 
 
 def _invalidate_container(network, xyz):
-    # type: (CableNetwork, tuple[int, int, int]) -> None
+    # type: (ItemPipeNetwork, tuple[int, int, int]) -> None
     "容器内容/方块变化后使该容器的缓存失效, 下次 tick 重新读取"
     network._cache_datas.pop(xyz, None)
     network._cache_block_names.pop(xyz, None)
@@ -498,9 +498,9 @@ def _invalidate_container(network, xyz):
 
 
 logic_module = LogicModule(
-    CableNetwork,
-    CableAccessPoint,
-    transmitter_check_func=isCable,
+    ItemPipeNetwork,
+    ItemPipeAccessPoint,
+    transmitter_check_func=is_item_pipe,
     transmittable_block_check_func=isContainer,
     on_transmittable_block_placed_later=onMachineryPlacedLater,
     on_network_tick=onNetworkTick,
@@ -527,7 +527,7 @@ def onContainerItemChanged(event):
             pair_pos = (pair_x, pos[1], pair_z)
             if pair_pos != pos:
                 positions.append(pair_pos)
-    invalidated_networks = set()  # type: set[CableNetwork]
+    invalidated_networks = set()  # type: set[ItemPipeNetwork]
     for p in positions:
         cnode = logic_module.container_nodes_pool.get((dim, (p[0], p[1], p[2])))
         if cnode is None:

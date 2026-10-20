@@ -23,7 +23,7 @@ from .basic import (
 from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
-TCON = TransmitterConn(cable=True)
+TCON = TransmitterConn(item_pipe=True)
 
 
 @RegisterMachine

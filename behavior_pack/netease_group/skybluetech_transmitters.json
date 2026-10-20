@@ -17,7 +17,7 @@
             ]
         },
         {
-            "group_name": "itemGroup.skybluetech.pipe",
+            "group_name": "itemGroup.skybluetech.fluid_pipe",
             "icon": "skybluetech:pipe_bronze",
             "list": [
                 "skybluetech:pipe_bronze",

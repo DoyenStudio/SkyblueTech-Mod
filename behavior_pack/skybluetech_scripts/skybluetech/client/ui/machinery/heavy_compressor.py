@@ -10,7 +10,7 @@ from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPage
+from ..machinery_extra_pages import ItemPipeSettingsPage
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdateGenericProgressL2R, UpdatePowerBar
 
@@ -20,7 +20,7 @@ PRGS_PATH = MAIN_PATH / "progress"
 
 @RegistToolDeltaScreen("HeavyCompressorUI.main", is_proxy=True)
 class HeavyCompressorUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPage,)
+    available_extra_pages = (ItemPipeSettingsPage,)
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

@@ -21,7 +21,7 @@ from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByT
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPage
+from ..machinery_extra_pages import ItemPipeSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .machinery_workstation import (
@@ -43,7 +43,7 @@ SELECTED_BG_COLOR = (85 / 255.0, 170 / 255.0, 1.0)
 
 @RegistToolDeltaScreen("ElectricMachineryWorkstationUI.main", is_proxy=True)
 class ElectricMachineryWorkstationUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPage,)
+    available_extra_pages = (ItemPipeSettingsPage,)
 
     def OnCreate(self):
         self.search_text = ""

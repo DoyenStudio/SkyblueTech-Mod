@@ -2,11 +2,11 @@
     "format_version": "1.20.10",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "skybluetech:pipe_bronze_craft"
+            "identifier": "skybluetech:fluid_pipe_ultraheatinum_craft"
         },
         "key": {
             "A": {
-                "item": "skybluetech:bronze_plate"
+                "item": "skybluetech:ultraheatinum_plate"
             }
         },
         "pattern": [
@@ -17,7 +17,7 @@
         "result": {
             "count": 2,
             "data": 0,
-            "item": "skybluetech:pipe_bronze"
+            "item": "skybluetech:pipe_ultraheatinum"
         },
         "tags": [
             "crafting_table"

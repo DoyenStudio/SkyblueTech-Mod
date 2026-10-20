@@ -6,7 +6,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.tank import TANK_MAX_V
 from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData, GetBlockName
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 
-from ..machinery_extra_pages import PipeSettingsPageIndirectional
+from ..machinery_extra_pages import FluidPipeSettingsPageIndirectional
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer
 
@@ -15,7 +15,7 @@ FLUID_PATH = MAIN_PATH / "fluid_display"
 
 @RegistToolDeltaScreen("GeneralTankUI.main", is_proxy=True)
 class GeneralTankUI(MachinePanelUIProxyEx):
-    available_extra_pages = (PipeSettingsPageIndirectional,)
+    available_extra_pages = (FluidPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         self.fluid_displayer = FluidDisplayer(self.GetElement(FLUID_PATH))

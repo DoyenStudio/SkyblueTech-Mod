@@ -14,8 +14,8 @@ from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
 from ..machinery_extra_pages import (
-    CableSettingsPage,
-    PipeSettingsPage,
+    ItemPipeSettingsPage,
+    FluidPipeSettingsPage,
 )
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
@@ -29,8 +29,8 @@ FLUID_PATH = MAIN_PATH / "fluid_display"
 @RegistToolDeltaScreen("MixerUI.main", is_proxy=True)
 class MixerUI(MachinePanelUIProxyEx):
     available_extra_pages = (
-        CableSettingsPage,
-        PipeSettingsPage,
+        ItemPipeSettingsPage,
+        FluidPipeSettingsPage,
     )
 
     def OnCreate(self):

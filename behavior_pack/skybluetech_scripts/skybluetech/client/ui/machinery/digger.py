@@ -16,7 +16,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPageIndirectional
+from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdateGenericProgressL2R, UpdatePowerBar
 
@@ -28,7 +28,7 @@ WORK_STATUS_PATH = MAIN_PATH / "work_status"
 
 @RegistToolDeltaScreen("DiggerUI.main", is_proxy=True)
 class DiggerUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPageIndirectional,)
+    available_extra_pages = (ItemPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

@@ -2,25 +2,22 @@
     "format_version": "1.20.10",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "skybluetech:item_transport_cable_steel_craft"
+            "identifier": "skybluetech:fluid_pipe_acidproof_craft"
         },
         "key": {
             "A": {
-                "item": "skybluetech:steel_plate"
-            },
-            "B": {
-                "item": "minecraft:dropper"
+                "item": "skybluetech:alumite_plate"
             }
         },
         "pattern": [
             " A ",
-            "ABA",
+            "A A",
             " A "
         ],
         "result": {
             "count": 2,
             "data": 0,
-            "item": "skybluetech:item_transport_cable_steel"
+            "item": "skybluetech:pipe_acidproof"
         },
         "tags": [
             "crafting_table"

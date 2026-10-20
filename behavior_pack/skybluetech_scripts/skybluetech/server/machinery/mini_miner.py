@@ -36,7 +36,7 @@ from .utils.transmitter_conn import TransmitterConn
 K_MINING_FINISHED = "mining_finished"
 K_LAST_SCANNED_Y = "last_scanned_y"
 
-TCON = TransmitterConn(cable=True, pipe=True)
+TCON = TransmitterConn(item_pipe=True, fluid_pipe=True)
 
 
 @RegisterMachine

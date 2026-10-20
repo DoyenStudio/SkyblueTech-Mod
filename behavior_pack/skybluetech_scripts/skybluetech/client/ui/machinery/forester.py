@@ -7,7 +7,7 @@ from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import CableSettingsPageIndirectional
+from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import UpdatePowerBar
 
@@ -16,7 +16,7 @@ POWER_PATH = MAIN_PATH / "power_bar"
 
 @RegistToolDeltaScreen("ForesterUI.main", is_proxy=True)
 class ForesterUI(MachinePanelUIProxyEx):
-    available_extra_pages = (CableSettingsPageIndirectional,)
+    available_extra_pages = (ItemPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

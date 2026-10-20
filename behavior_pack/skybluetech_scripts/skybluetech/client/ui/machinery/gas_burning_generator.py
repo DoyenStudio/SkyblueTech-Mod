@@ -13,7 +13,7 @@ from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import PipeSettingsPageIndirectional
+from ..machinery_extra_pages import FluidPipeSettingsPageIndirectional
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdateFlame, UpdatePowerBar
@@ -26,7 +26,7 @@ FLAME_PATH = MAIN_PATH / "flame"
 
 @RegistToolDeltaScreen("GasBurningGeneratorUI.main", is_proxy=True)
 class GasBurningGeneratorUI(MachinePanelUIProxyEx):
-    available_extra_pages = (PipeSettingsPageIndirectional,)
+    available_extra_pages = (FluidPipeSettingsPageIndirectional,)
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

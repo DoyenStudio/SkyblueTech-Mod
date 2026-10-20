@@ -20,8 +20,8 @@ from skybluetech_scripts.tooldelta.utils.nbt import (
 )
 
 from ..machinery_extra_pages import (
-    CableSettingsPageIndirectional,
-    PipeSettingsPageIndirectional,
+    ItemPipeSettingsPageIndirectional,
+    FluidPipeSettingsPageIndirectional,
 )
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdatePowerBar
@@ -34,8 +34,8 @@ INFO_LABEL_PATH = MAIN_PATH / "panel_bg/info_label"
 @RegistToolDeltaScreen("MiniMinerUI.main", is_proxy=True)
 class MiniMinerUI(MachinePanelUIProxyEx):
     available_extra_pages = (
-        CableSettingsPageIndirectional,
-        PipeSettingsPageIndirectional,
+        ItemPipeSettingsPageIndirectional,
+        FluidPipeSettingsPageIndirectional,
     )
 
     def OnCreate(self):

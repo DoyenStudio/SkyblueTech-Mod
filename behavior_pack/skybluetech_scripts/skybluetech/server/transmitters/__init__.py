@@ -1,4 +1,4 @@
-from . import cable, pipe, wire
+from . import item_pipe, fluid_pipe, wire
 
 # # this module's implementation for transmitter is really a shit
 # # plugged by SuperScript

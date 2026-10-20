@@ -15,8 +15,8 @@ from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
 from ..machinery_extra_pages import (
-    CableSettingsPageIndirectional,
-    PipeSettingsPageIndirectional,
+    ItemPipeSettingsPageIndirectional,
+    FluidPipeSettingsPageIndirectional,
 )
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdateFlame, UpdatePowerBar
@@ -30,8 +30,8 @@ FLAME_PATH = MAIN_PATH / "flame"
 @RegistToolDeltaScreen("GeoThermalGeneratorUI.main", is_proxy=True)
 class GeoThermalGeneratorUI(MachinePanelUIProxyEx):
     available_extra_pages = (
-        CableSettingsPageIndirectional,
-        PipeSettingsPageIndirectional,
+        ItemPipeSettingsPageIndirectional,
+        FluidPipeSettingsPageIndirectional,
     )
 
     def OnCreate(self):

@@ -326,7 +326,7 @@
 					]
 				},
 				{
-					"name": "south_pipe_conn",
+					"name": "south_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [-1, 6, 7],
 					"rotation": [0, 180, 0],
@@ -344,7 +344,7 @@
 					]
 				},
 				{
-					"name": "north_pipe_conn",
+					"name": "north_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [1, 6, -7],
 					"cubes": [
@@ -361,7 +361,7 @@
 					]
 				},
 				{
-					"name": "west_pipe_conn",
+					"name": "west_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [7, 6, 1],
 					"rotation": [0, -90, 0],
@@ -379,7 +379,7 @@
 					]
 				},
 				{
-					"name": "east_pipe_conn",
+					"name": "east_fluid_pipe_conn",
 					"parent": "root",
 					"pivot": [-7, 6, -1],
 					"rotation": [0, 90, 0],

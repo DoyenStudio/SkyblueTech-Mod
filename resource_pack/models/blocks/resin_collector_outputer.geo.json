@@ -189,7 +189,7 @@
 					]
 				},
 				{
-					"name": "cable",
+					"name": "item_pipe",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"cubes": [

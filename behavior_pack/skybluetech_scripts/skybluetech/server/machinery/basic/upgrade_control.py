@@ -210,7 +210,7 @@ class UpgradeControl(SPControl, ItemContainer):
     def _auto_eject_item(self, slots):
         # type: (list[int]) -> None
         """尝试把指定输出槽中的物品送入六面相邻容器。"""
-        from ...transmitters.cable.logic import PushItemToGenericContainerEasy
+        from ...transmitters.item_pipe.logic import PushItemToGenericContainerEasy
 
         for slot in slots:
             if slot not in self.output_slots:

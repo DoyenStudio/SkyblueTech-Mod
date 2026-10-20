@@ -13,7 +13,7 @@ from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import PipeSettingsPage
+from ..machinery_extra_pages import FluidPipeSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdateGenericProgressL2R, UpdatePowerBar
@@ -26,7 +26,7 @@ RIGHT_FLUID = MAIN_PATH / "right_fluid"
 
 @RegistToolDeltaScreen("MagmaCentrifugeUI.main", is_proxy=True)
 class MagmaCentrifugeUI(MachinePanelUIProxyEx):
-    available_extra_pages = (PipeSettingsPage,)
+    available_extra_pages = (FluidPipeSettingsPage,)
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

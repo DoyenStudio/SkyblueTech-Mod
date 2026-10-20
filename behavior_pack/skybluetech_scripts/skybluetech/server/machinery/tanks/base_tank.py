@@ -9,7 +9,7 @@ from ..basic import MultiFluidContainer, ItemContainer, GUIControl
 from ..utils.transmitter_conn import TransmitterConn
 
 
-TCON = TransmitterConn(pipe=True)
+TCON = TransmitterConn(fluid_pipe=True)
 
 registered_tanks = {}  # type: dict[str, type[BasicTank]]
 FIRST_TANK_LOADED = False

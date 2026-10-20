@@ -4,12 +4,12 @@ from skybluetech_scripts.tooldelta.api.server.block import BlockHasTag
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.core.pool import GetLoadedMachine
 from ..base import LogicModule
-from .define import PipeNetwork, PipeAccessPoint, PIPE_CAN_TRANSMIT_FLUID_MAPPING
+from .define import FluidPipeNetwork, FluidPipeAccessPoint, FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING
 
 
-def isPipe(blockName):
+def is_fluid_pipe(blockName):
     # type: (str) -> bool
-    return BlockHasTag(blockName, "skybluetech_pipe")
+    return BlockHasTag(blockName, "skybluetech_fluid_pipe")
 
 
 def isFluidContainer(blockName, dim=None, xyz=None):
@@ -18,7 +18,7 @@ def isFluidContainer(blockName, dim=None, xyz=None):
 
 
 def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
-    # type: (int, tuple[int, int, int], str, float, list[PipeNetwork] | None) -> tuple[bool, float]
+    # type: (int, tuple[int, int, int], str, float, list[FluidPipeNetwork] | None) -> tuple[bool, float]
     """
     向网络发送流体, 返回是否添加成功和剩余流体体积
 
@@ -28,7 +28,7 @@ def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
         xyz (tuple[int, int, int]): 坐标
         fluid_id (str): 流体 ID
         fluid_volume (float): 流体体积
-        networks (list[PipeNetwork] | None): 网络列表, 为 None 则为自动获取容器周围的流体管道网络
+        networks (list[FluidPipeNetwork] | None): 网络列表, 为 None 则为自动获取容器周围的流体管道网络
         depth (int): 递归深度
 
     Returns:
@@ -68,7 +68,7 @@ def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
 
 
 def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
-    # type: (PipeAccessPoint, str, float) -> tuple[bool, float]
+    # type: (FluidPipeAccessPoint, str, float) -> tuple[bool, float]
     "向容器内装流体, 返回是否添加成功和剩余流体体积"
     if fluid_id is None or fluid_volume is None or fluid_volume <= 0:
         return False, fluid_volume
@@ -88,25 +88,25 @@ def onMachineryPlacedLater(dim, x, y, z):
 
 
 def onNetworkTick(network):
-    # type: (PipeNetwork) -> None
+    # type: (FluidPipeNetwork) -> None
     transfer_speed = network.transfer_speed
-    pipe_fluid_id = network.fluid_id
-    pipe_fluid_volume = network.fluid_volume
+    fluid_pipe_fluid_id = network.fluid_id
+    fluid_pipe_fluid_volume = network.fluid_volume
     capacity = network.capacity
-    if pipe_fluid_id is None or pipe_fluid_volume <= 0:
-        pipe_fluid_id = None
-        pipe_fluid_volume = 0.0
-    if pipe_fluid_id is not None and pipe_fluid_volume > 0:
-        volume_output = min(transfer_speed, pipe_fluid_volume)
-        pipe_fluid_volume -= volume_output
+    if fluid_pipe_fluid_id is None or fluid_pipe_fluid_volume <= 0:
+        fluid_pipe_fluid_id = None
+        fluid_pipe_fluid_volume = 0.0
+    if fluid_pipe_fluid_id is not None and fluid_pipe_fluid_volume > 0:
+        volume_output = min(transfer_speed, fluid_pipe_fluid_volume)
+        fluid_pipe_fluid_volume -= volume_output
         for input in network.get_input_access_points():
             ok, volume_output = PushFluidToFluidContainer(
-                input, pipe_fluid_id, volume_output
+                input, fluid_pipe_fluid_id, volume_output
             )
             if volume_output <= 0:
                 break
-        pipe_fluid_volume += volume_output
-    out_capacity = max(0, min(transfer_speed, capacity - pipe_fluid_volume))
+        fluid_pipe_fluid_volume += volume_output
+    out_capacity = max(0, min(transfer_speed, capacity - fluid_pipe_fluid_volume))
     for output in network.get_output_access_points():
         if out_capacity <= 0:
             break
@@ -121,8 +121,8 @@ def onNetworkTick(network):
                     fluid_id = None
                 if (
                     fluid_id is None
-                    or (pipe_fluid_id is not None and fluid_id != pipe_fluid_id)
-                    or not pipe_can_transfer_fluid(network.transmitter_id, fluid_id)
+                    or (fluid_pipe_fluid_id is not None and fluid_id != fluid_pipe_fluid_id)
+                    or not fluid_pipe_can_transfer_fluid(network.transmitter_id, fluid_id)
                     or fluid.volume <= 0
                 ):
                     continue
@@ -130,10 +130,10 @@ def onNetworkTick(network):
                 fluid.volume -= vol_takeout
                 if fluid.volume <= 0:
                     fluid.fluid_id = None
-                pipe_fluid_volume += vol_takeout
+                fluid_pipe_fluid_volume += vol_takeout
                 out_capacity -= vol_takeout
-                if pipe_fluid_id is None:
-                    pipe_fluid_id = fluid_id
+                if fluid_pipe_fluid_id is None:
+                    fluid_pipe_fluid_id = fluid_id
                 om._on_reduced_fluid(
                     slot, fluid_id, vol_takeout, is_final=True
                 )  # 每次扣液作为一次完整的槽位操作通知。
@@ -142,23 +142,23 @@ def onNetworkTick(network):
                     break
             if do_break:
                 break
-    network.fluid_volume = pipe_fluid_volume
-    if pipe_fluid_volume <= 0:
+    network.fluid_volume = fluid_pipe_fluid_volume
+    if fluid_pipe_fluid_volume <= 0:
         network.fluid_id = None
     else:
-        network.fluid_id = pipe_fluid_id
+        network.fluid_id = fluid_pipe_fluid_id
     network.save_network_data()
 
 
-def pipe_can_transfer_fluid(pipe_id, fluid_id):
+def fluid_pipe_can_transfer_fluid(fluid_pipe_id, fluid_id):
     # type: (str, str) -> bool
-    return PIPE_CAN_TRANSMIT_FLUID_MAPPING.get(pipe_id, lambda _: True)(fluid_id)
+    return FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING.get(fluid_pipe_id, lambda _: True)(fluid_id)
 
 
 logic_module = LogicModule(
-    PipeNetwork,
-    PipeAccessPoint,
-    transmitter_check_func=isPipe,
+    FluidPipeNetwork,
+    FluidPipeAccessPoint,
+    transmitter_check_func=is_fluid_pipe,
     on_transmittable_block_placed_later=onMachineryPlacedLater,
     transmittable_block_check_func=isFluidContainer,
     on_network_tick=onNetworkTick,

@@ -12,10 +12,10 @@
             },
             "minecraft:geometry": {
                 "bone_visibility": {
-                    "south_pipe_conn": "q.block_state('skybluetech:south_pipe_connection')",
-                    "north_pipe_conn": "q.block_state('skybluetech:north_pipe_connection')",
-                    "east_pipe_conn": "q.block_state('skybluetech:east_pipe_connection')",
-                    "west_pipe_conn": "q.block_state('skybluetech:west_pipe_connection')"
+                    "south_fluid_pipe_conn": "q.block_state('skybluetech:south_pipe_connection')",
+                    "north_fluid_pipe_conn": "q.block_state('skybluetech:north_pipe_connection')",
+                    "east_fluid_pipe_conn": "q.block_state('skybluetech:east_pipe_connection')",
+                    "west_fluid_pipe_conn": "q.block_state('skybluetech:west_pipe_connection')"
                 },
                 "identifier": "geometry.skybluetech.gas_burning_generator"
             },

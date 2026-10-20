@@ -1,0 +1,16 @@
+{
+    "node_ID": "skybluetech:craft_cable",
+    "parent_node": "skybluetech:craft_alloy_furnace",
+    "title": "封闭式物流",
+    "unfinished_icon": "textures/icon/item_pipe_steel_icon",
+    "finished_icon": "textures/icon/item_pipe_steel_icon",
+    "goal_details": {
+        "item_dict": {
+            "newItemName": "skybluetech:item_transport_cable_steel"
+        },
+        "goal_type": "default_get"
+    },
+    "goal_number": 1,
+    "depend_parent": true,
+    "node_description": "合成钢制物品管道， 在容器间运送物品。 别忘了调整管道的输入输出模式！\n\n§8§o物品管道里封装了小型传送带， 不然根本说不通为什么物品能通过物品管道垂直向上运输。"
+}

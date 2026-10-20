@@ -17,7 +17,7 @@ from .basic import (
 from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
 
-TCON = TransmitterConn(pipe=True)
+TCON = TransmitterConn(fluid_pipe=True)
 
 
 @RegisterMachine

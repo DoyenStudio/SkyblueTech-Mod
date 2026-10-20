@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_pipe",
     "parent_node": "skybluetech:craft_alloy_furnace",
     "title": "小顽皮爱洗澡",
-    "unfinished_icon": "textures/icon/pipe_bronze_icon",
-    "finished_icon": "textures/icon/pipe_bronze_icon",
+    "unfinished_icon": "textures/icon/fluid_pipe_bronze_icon",
+    "finished_icon": "textures/icon/fluid_pipe_bronze_icon",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:pipe_bronze"

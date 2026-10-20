@@ -7,7 +7,7 @@ from ...define import (
     PageGroup,
 )
 
-from . import cable, general_settings, pipe
+from . import item_pipe, general_settings, fluid_pipe
 
 transmitters_toc = PageGroup(
     "transmitters",
@@ -25,16 +25,16 @@ transmitters_toc = PageGroup(
                     general_settings.general_settings,
                 ),
                 TOCPageSection(
-                    id_enum.Cable.STEEL,
+                    id_enum.ItemPipe.STEEL,
                     0,
                     "物品管道",
-                    cable.cable_entry,
+                    item_pipe.item_pipe_entry,
                 ),
                 TOCPageSection(
-                    id_enum.Pipe.BRONZE,
+                    id_enum.FluidPipe.BRONZE,
                     0,
                     "流体管道",
-                    pipe.pipe_entry,
+                    fluid_pipe.fluid_pipe_entry,
                 ),
             ],
         ),

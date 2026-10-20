@@ -36,7 +36,7 @@ logistics_item = PageGroup(
         TextPage(
             "",
             '对着物品管道<item id="%s">与容器的连接处使用<link text="管道扳手" id="t"><item id="%s">可以改变管道对该容器的存取模式， 默认为输入（存入物品）， 如果调整到输出模式， 管道接入容器的的一面会略微变粗一圈， 表示从这个容器中取出物品。'
-            % (id_enum.Cable.STEEL, id_enum.TRANSMITTER_WRENCH),
+            % (id_enum.ItemPipe.STEEL, id_enum.TRANSMITTER_WRENCH),
             hyperlink_cbs={"t": lambda _: CheckRecipe(id_enum.TRANSMITTER_WRENCH)},
         ),
         TextPage(
@@ -60,7 +60,7 @@ logistics_fluid = PageGroup(
         TextPage(
             "",
             '对着流体管道<item id="%s">与容器的连接处使用<link text="管道扳手" id="t"><item id="%s">可以改变管道对该容器的存取模式， 默认为输入（存入物品）， 如果调整到输出模式， 管道接入容器的的一面会略微变粗一圈， 表示从这个容器中取出流体。'
-            % (id_enum.Pipe.BRONZE, id_enum.TRANSMITTER_WRENCH),
+            % (id_enum.FluidPipe.BRONZE, id_enum.TRANSMITTER_WRENCH),
             hyperlink_cbs={"t": lambda _: CheckRecipe(id_enum.TRANSMITTER_WRENCH)},
         ),
     ],
@@ -76,8 +76,8 @@ logistics_toc = PageGroup(
         ),
         MainTOCPage(
             [
-                MainTOCPageSection(id_enum.Cable.STEEL, 0, "物品物流", logistics_item),
-                MainTOCPageSection(id_enum.Pipe.BRONZE, 0, "流体物流", logistics_fluid),
+                MainTOCPageSection(id_enum.ItemPipe.STEEL, 0, "物品物流", logistics_item),
+                MainTOCPageSection(id_enum.FluidPipe.BRONZE, 0, "流体物流", logistics_fluid),
             ],
         ),
     ],

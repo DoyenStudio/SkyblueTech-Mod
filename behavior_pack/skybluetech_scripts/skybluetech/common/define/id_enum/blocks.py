@@ -2,12 +2,13 @@
 from .utils import SimpleEnum
 
 
-class Cable(SimpleEnum):
+# 方块 ID 保留旧值，兼容现有存档。
+class ItemPipe(SimpleEnum):
     STEEL = "skybluetech:item_transport_cable_steel"
     INVAR = "skybluetech:item_transport_cable_invar"
 
 
-class Pipe(SimpleEnum):
+class FluidPipe(SimpleEnum):
     ACIDPROOF = "skybluetech:pipe_acidproof"
     BRONZE = "skybluetech:pipe_bronze"
     CUPRONICKEL = "skybluetech:pipe_cupronickel"

@@ -7,7 +7,7 @@
             },
             "minecraft:geometry": {
                 "bone_visibility": {
-                    "cable": "q.block_state('skybluetech:down_cable_connection')",
+                    "item_pipe": "q.block_state('skybluetech:down_cable_connection')",
                     "resin_level_1": "q.block_state('skybluetech:resin_storage') == 1",
                     "resin_level_2": "q.block_state('skybluetech:resin_storage') == 2",
                     "resin_level_3": "q.block_state('skybluetech:resin_storage') == 3",

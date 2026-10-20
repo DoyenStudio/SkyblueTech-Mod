@@ -11,11 +11,11 @@ from ...common.events.machinery.item_splitter import (
     ItemSplitterSettingsSetLabel,
     ItemSplitterSimpleAction,
 )
-from ..transmitters.cable.logic import (
+from ..transmitters.item_pipe.logic import (
     PushItemToGenericContainer,
 )
-from ..transmitters.cable.logic import (
-    logic_module as cable_logic,
+from ..transmitters.item_pipe.logic import (
+    logic_module as item_pipe_logic,
 )
 from .basic import GUIControl, OperationListener, UpgradeControl
 from .core import RegisterMachine
@@ -96,7 +96,7 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
         # type: (Item) -> Item | None
         matched_label = self.get_label_by_item(item.id)
         networks = (
-            cable_logic
+            item_pipe_logic
             .GetContainerNode(self.dim, self.x, self.y, self.z, enable_cache=True)
             .get_outputs()
             .values()

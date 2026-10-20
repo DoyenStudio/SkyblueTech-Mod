@@ -2,7 +2,7 @@
     "format_version": "1.20.10",
     "minecraft:recipe_shaped": {
         "description": {
-            "identifier": "skybluetech:pipe_cupronickel_craft"
+            "identifier": "skybluetech:fluid_pipe_cupronickel_craft"
         },
         "key": {
             "A": {

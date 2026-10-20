@@ -11,7 +11,7 @@ from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
-from ..machinery_extra_pages import PipeSettingsPage
+from ..machinery_extra_pages import FluidPipeSettingsPage
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdatePowerBar
 
@@ -21,7 +21,7 @@ FLUID_PATH = MAIN_PATH / "fluid_display"
 
 @RegistToolDeltaScreen("PumpUI.main", is_proxy=True)
 class PumpUI(MachinePanelUIProxyEx):
-    available_extra_pages = (PipeSettingsPage,)
+    available_extra_pages = (FluidPipeSettingsPage,)
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

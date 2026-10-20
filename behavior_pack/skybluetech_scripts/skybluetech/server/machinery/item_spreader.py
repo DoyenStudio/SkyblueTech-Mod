@@ -11,11 +11,11 @@ from ...common.machinery_def.item_spreader import (
     STORE_RF_MAX,
     TICK_DURATION,
 )
-from ..transmitters.cable.logic import (
+from ..transmitters.item_pipe.logic import (
     PushItemToGenericContainer,
 )
-from ..transmitters.cable.logic import (
-    logic_module as cable_logic,
+from ..transmitters.item_pipe.logic import (
+    logic_module as item_pipe_logic,
 )
 from .basic import (
     BaseSpeedControl,
@@ -83,7 +83,7 @@ class ItemSpreader(UpgradeControl, OperationListener, GUIControl):
 
     def update_acceess_points(self):
         output_networks = (
-            cable_logic
+            item_pipe_logic
             .GetContainerNode(self.dim, self.x, self.y, self.z)
             .get_outputs()
             .values()

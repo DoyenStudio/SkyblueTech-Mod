@@ -231,8 +231,8 @@ class Recipe(RecipeBase):
         from .marshal_utils import UnmarshalInputs, UnmarshalOutputs
 
         return cls(
-            UnmarshalInputs(dct["inputs"].items()),
-            UnmarshalOutputs(dct["outputs"].items()),
+            UnmarshalInputs(dct["inputs"]),
+            UnmarshalOutputs(dct["outputs"]),
         )
 
     def __hash__(self):

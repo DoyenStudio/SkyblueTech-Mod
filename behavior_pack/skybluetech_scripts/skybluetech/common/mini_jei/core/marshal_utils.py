@@ -13,6 +13,8 @@ def MarshalInputs(inputs):
 
 def UnmarshalInputs(inputs):
     # type: (dict) -> dict[str, dict[int, Input]]
+    from .define import Input
+
     return {
         category: {slot: Input.from_dict(input) for slot, input in inputs.items()}
         for category, inputs in inputs.items()
@@ -29,6 +31,8 @@ def MarshalOutputs(outputs):
 
 def UnmarshalOutputs(outputs):
     # type: (dict) -> dict[str, dict[int, Output]]
+    from .define import Output
+
     return {
         category: {slot: Output.from_dict(output) for slot, output in outputs.items()}
         for category, outputs in outputs.items()

@@ -28,9 +28,9 @@ class CyroHeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, Hea
     block_name = MACHINE_ID
     is_non_energy_machine = True
     fluid_io_fix_mode = 0
-    fluid_slot_max_volumes = (1000,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: 1000}
+    fluid_input_slots = (0,)
+    fluid_output_slots = (0,)
     migrate_legacy_fluid_data = True
 
     def __init__(self, dim, x, y, z, block_entity_data):

@@ -2,7 +2,7 @@
 
 [基类索引](README.md) · [生命周期](../lifecycle.md)
 
-按连续编号维护一个或多个流体槽，负责输入过滤与变化通知。
+按槽位编号维护一个或多个流体槽，负责输入过滤与变化通知。
 
 直接继承：`BaseMachine`。服务端正式入口：`skybluetech_scripts.skybluetech.server.export.machinery.MultiFluidContainer`（先 ImportModule 取模块，再访问类）。
 
@@ -29,7 +29,7 @@ AddFluid(id,volume)、OutputFluid(id,volume,slot_pos,is_final) 均返回 (是否
 所有流体容器统一使用本基类。只需存储一种流体的机器声明一个槽位即可。
 
 与物品槽类似，流体容器的流体槽也依靠数字 ID 区分槽位。
-流体槽 ID 需要从 0 开始连续递增。
+流体槽 ID 无需连续，使用 `fluid_slot_max_volumes` 字典显式配置槽位编号及容量。
 
 增减流体后，基类通过 `self.handler` 分发对应事件和槽位更新事件，并为带 GUI 的机器同步数据。
 
@@ -37,10 +37,10 @@ AddFluid(id,volume)、OutputFluid(id,volume,slot_pos,is_final) 均返回 (是否
 | 属性名 | 类型 | 说明 |
 | --- | --- | --- |
 | fluid_io_mode | tuple[int, int, int, int, int, int] | 每个面的流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无 |
-| fluid_input_slots | set[int] | 可接受输入的流体槽位 |
-| fluid_output_slots | set[int] | 可输出的流体槽位 |
+| fluid_input_slots | tuple[int, ...] | 可接受输入的流体槽位 |
+| fluid_output_slots | tuple[int, ...] | 可输出的流体槽位 |
 | player_fluid_input_slots | set[int] \| None | 桶和试管可倒入的槽位；None 时使用 fluid_input_slots |
-| fluid_slot_max_volumes | tuple[float, ...] | 每个流体槽最多可存储流体容量 |
+| fluid_slot_max_volumes | dict[int, float] | 流体槽位编号到最大容量的映射 |
 | allow_player_use_bucket_interact | bool | 是否允许玩家直接使用桶交互 |
 | allow_player_use_bucket_push | bool | 是否允许玩家直接使用桶装填流体 |
 | allow_player_use_bucket_pull | bool | 是否允许玩家直接使用桶取出流体 |
@@ -49,7 +49,7 @@ AddFluid(id,volume)、OutputFluid(id,volume,slot_pos,is_final) 均返回 (是否
 ## 实例属性
 | 属性名 | 类型 | 说明 |
 | --- | --- | --- |
-| fluids | list\[FluidSlotServer] | 机器的流体槽位 |
+| fluids | dict[int, FluidSlotServer] | 槽位编号到流体槽对象的映射 |
 
 **FluidSlotServer 定义**
 | 属性名 | 类型 | 说明 | 默认值 |
@@ -168,9 +168,9 @@ self.handler.SubscribeOnFluidSlotUpdate(self.on_fluid_slot_update)
 
 ```python
 class ExampleTank(MultiFluidContainer):
-    fluid_slot_max_volumes = (32000,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: 32000}
+    fluid_input_slots = (0,)
+    fluid_output_slots = (0,)
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
 ```
 

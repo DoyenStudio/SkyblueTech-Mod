@@ -37,8 +37,8 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
     store_rf_max = STORE_RF_MAX
     running_power = 30
     origin_process_ticks = 20 * 5
-    input_slots = ()
-    output_slots = tuple(range(24))
+    item_input_slots = ()
+    item_output_slots = tuple(range(24))
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(FarmingStation, self).__init__(dim, x, y, z, block_entity_data)

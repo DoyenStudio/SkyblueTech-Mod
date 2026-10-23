@@ -100,9 +100,9 @@ class ProcessorBase(WorkRenderer, UpgradeControl, GUIControl):
         # type: (MachineRecipeBase) -> bool
         outputs = recipe.outputs
         if self.process_item:
-            output_slots = self.GetOutputSlotItems()
+            item_output_slots = self.GetOutputSlotItems()
             for slot_pos, output in outputs.get(CategoryType.ITEM, {}).items():
-                item = output_slots.get(slot_pos, None)
+                item = item_output_slots.get(slot_pos, None)
                 if item is None:
                     # TODO: 假设输出不可能超过物品最大堆叠数
                     item_count = output.count

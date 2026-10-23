@@ -38,8 +38,8 @@ class TransInfo:
 @RegisterMachine
 class LexicalTransmuter(UpgradeControl, GUIControl):
     block_name = Machinery.LEXICAL_TRANSMUTER
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
     template_slot = 2
     upgrade_slot_start = 3
     is_non_energy_machine = True

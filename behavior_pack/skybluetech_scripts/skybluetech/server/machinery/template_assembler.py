@@ -38,8 +38,8 @@ class TemplateAssembler(Processor, MultiFluidContainer):
     dump_progress_to_block_entity_data = True
     process_item = True
     recipes = TemplateAssemblerRecipesCollection()  # type: TemplateAssemblerRecipesCollection
-    input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    output_slots = (11,)
+    item_input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    item_output_slots = (11,)
     upgrade_slot_start = 12
     upgrade_slots = 4
 

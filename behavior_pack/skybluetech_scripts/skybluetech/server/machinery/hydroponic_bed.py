@@ -31,7 +31,7 @@ from .core.pool import GetLoadedMachine
 @RegisterMachine
 class HydroponicBed(WorkRenderer, PowerControl, GUIControl, ItemContainer):
     block_name = Machinery.HYDROPONIC_BED
-    input_slots = (0,)
+    item_input_slots = (0,)
     running_power = POWER_COST
     store_rf_max = STORE_RF_MAX
 

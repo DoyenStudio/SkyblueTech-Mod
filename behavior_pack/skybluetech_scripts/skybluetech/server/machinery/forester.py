@@ -43,8 +43,8 @@ class Forester(UpgradeControl, GUIControl):
     store_rf_max = STORE_RF_MAX
     running_power = 80
     origin_process_ticks = 20 * 5
-    input_slots = ()
-    output_slots = tuple(range(24))
+    item_input_slots = ()
+    item_output_slots = tuple(range(24))
     upgrade_slot_start = 24
     upgrade_slots = 4
     allow_upgraders = frozenset({

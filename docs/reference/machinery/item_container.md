@@ -8,7 +8,7 @@
 
 ## 配置与常用接口
 
-input_slots=()；output_slots=()；槽号必须与 JSON 容器大小、UI collection_index 一致。
+item_input_slots=()；item_output_slots=()；槽号必须与 JSON 容器大小、UI collection_index 一致。
 
 GetSlotItem(slot_pos)、SetSlotItem(slot_pos,item)、GetInputSlotItems()、GetOutputSlotItems()、DropAllItems()、IsValidInput(slot,item)。
 

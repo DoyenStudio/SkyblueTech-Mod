@@ -50,8 +50,8 @@ class BatteryMatrix(
 ):
     block_name = Machinery.BATTERY_MATRIX_CONTROLLER
     store_rf_max = 100000
-    input_slots = (0, 1, 2, 3, 4, 5, 6)
-    output_slots = (0, 1, 2, 3, 4, 5, 6)
+    item_input_slots = (0, 1, 2, 3, 4, 5, 6)
+    item_output_slots = (0, 1, 2, 3, 4, 5, 6)
     structure_palette = STRUCTURE_PALETTE
     functional_block_ids = set(STRUCTURE_REQUIRE_BLOCKS)
 
@@ -200,7 +200,7 @@ class BatteryMatrix(
         if self.GetStructureDestroyFlag() != 0:
             return
         slotitems = self.GetInputSlotItems(get_user_data=False)
-        if not any(slotitems.get(i) is None for i in self.input_slots):
+        if not any(slotitems.get(i) is None for i in self.item_input_slots):
             return
         core = self.get_core()
         if index >= len(core.slots) or index < 0:

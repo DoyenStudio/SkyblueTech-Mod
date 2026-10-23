@@ -77,11 +77,11 @@ class Fermenter(
     origin_process_ticks = 1
     running_power = 5
     structure_palette = STRUCTURE_PALETTE
-    input_slots = (0, 1)
+    item_input_slots = (0, 1)
     fluid_io_mode = (2, 2, 2, 2, 2, 2)
-    fluid_input_slots = {0}
-    fluid_output_slots = {1, 2}
-    fluid_slot_max_volumes = (1000, 1000, 1000)
+    fluid_input_slots = (0,)
+    fluid_output_slots = (1, 2)
+    fluid_slot_max_volumes = {0: 1000, 1: 1000, 2: 1000}
     work_ticks_delay = 5
     upgrade_slot_start = 2
     allow_upgraders = frozenset()

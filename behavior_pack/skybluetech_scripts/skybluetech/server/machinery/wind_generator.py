@@ -48,8 +48,8 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
     block_name = Machinery.WIND_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
-    input_slots = (0,)
-    output_slots = ()
+    item_input_slots = (0,)
+    item_output_slots = ()
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(WindGenerator, self).__init__(dim, x, y, z, block_entity_data)

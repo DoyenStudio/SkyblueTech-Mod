@@ -19,12 +19,12 @@ class BasicTank(GUIControl, ItemContainer, MultiFluidContainer):
     is_non_energy_machine = True
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
     fluid_io_fix_mode = 0
-    fluid_slot_max_volumes = (0,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: 0}
+    fluid_input_slots = (0,)
+    fluid_output_slots = (0,)
     migrate_legacy_fluid_data = True
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(BasicTank, self).__init__(dim, x, y, z, block_entity_data)

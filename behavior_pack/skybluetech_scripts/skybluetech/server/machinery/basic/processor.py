@@ -77,12 +77,12 @@ class Processor(ProcessorBase):
         if self.InUpgradeSlot(slot_pos):
             return
         if self.process_item:
-            if slot_pos in self.output_slots and self.HasDeactiveFlag(
+            if slot_pos in self.item_output_slots and self.HasDeactiveFlag(
                 flags.DEACTIVE_FLAG_OUTPUT_FULL
             ):
                 self.start_next()
                 return
-            elif slot_pos in self.input_slots:
+            elif slot_pos in self.item_input_slots:
                 self.recheck_recipe()
 
     def IsValidInput(self, slot, item):
@@ -98,7 +98,7 @@ class Processor(ProcessorBase):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
-        elif slot in self.output_slots:
+        elif slot in self.item_output_slots:
             return False
         for recipe in self.recipes:
             slot_input = recipe.inputs.get(CategoryType.ITEM, {}).get(slot)

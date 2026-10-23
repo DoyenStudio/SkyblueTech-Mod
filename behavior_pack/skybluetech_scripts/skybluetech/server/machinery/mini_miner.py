@@ -42,13 +42,13 @@ TCON = TransmitterConn(item_pipe=True, fluid_pipe=True)
 @RegisterMachine
 class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
     block_name = Machinery.MINI_MINER
-    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
-    fluid_input_slots = {0}
-    fluid_output_slots = set()
+    fluid_slot_max_volumes = {0: MAX_FLUID_VOLUME}
+    fluid_input_slots = (0,)
+    fluid_output_slots = ()
     migrate_legacy_fluid_data = True
     fluid_io_fix_mode = 0
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
-    output_slots = (0, 1, 2, 3, 4, 5, 6, 7)
+    item_output_slots = (0, 1, 2, 3, 4, 5, 6, 7)
     running_power = 200
     upgrade_slot_start = 8
     origin_process_ticks = 20

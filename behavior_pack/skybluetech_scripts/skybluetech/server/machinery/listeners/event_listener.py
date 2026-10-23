@@ -168,7 +168,7 @@ def on_item_push_in(event):
         return
     if (
         not m.IsValidInput(event.collectionIndex, event.item)
-        or event.collectionIndex not in m.input_slots
+        or event.collectionIndex not in m.item_input_slots
     ):
         event.cancel()
 
@@ -179,7 +179,7 @@ def on_item_pull_out(event):
     m = pool.GetLoadedMachine(event.dimension, event.x, event.y, event.z)
     if not isinstance(m, ItemContainer):
         return
-    if event.collectionIndex not in m.output_slots:
+    if event.collectionIndex not in m.item_output_slots:
         event.cancel()
 
 

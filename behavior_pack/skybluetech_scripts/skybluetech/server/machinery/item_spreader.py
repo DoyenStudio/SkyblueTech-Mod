@@ -29,8 +29,8 @@ from .core import RegisterMachine
 @RegisterMachine
 class ItemSpreader(UpgradeControl, OperationListener, GUIControl):
     block_name = Machinery.ITEM_SPREADER
-    input_slots = (0,)
-    output_slots = ()
+    item_input_slots = (0,)
+    item_output_slots = ()
     store_rf_max = STORE_RF_MAX
     running_power = POWER_COST_ONCE
     origin_process_ticks = TICK_DURATION

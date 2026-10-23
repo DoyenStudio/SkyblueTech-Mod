@@ -12,6 +12,6 @@ class AlloyFurnace(Processor):
     store_rf_max = RF_MAX
     process_item = True
     recipes = Recipes
-    input_slots = (0, 1, 2, 3)
-    output_slots = (4, 5)
+    item_input_slots = (0, 1, 2, 3)
+    item_output_slots = (4, 5)
     upgrade_slot_start = 6

@@ -7,7 +7,7 @@ from ..mini_jei.machinery.reacting_thermal_generator import (
 )
 
 STORE_RF_MAX = 14400
-MAX_FLUID_VOLUMES = (1000, 1000)
+MAX_FLUID_VOLUMES = {0: 1000, 1: 1000}
 
 recipes = RecipesCollection(
     Machinery.REACTING_THERMAL_GENERATOR,

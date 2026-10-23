@@ -11,8 +11,8 @@ if 0>1:
 @RegisterMachine
 class ItemInputInterface(ItemContainer, BaseInterface):
     is_non_energy_machine = True
-    input_slots = (0, 1, 2, 3, 4)
-    output_slots = ()
+    item_input_slots = (0, 1, 2, 3, 4)
+    item_output_slots = ()
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ItemInputInterface, self).__init__(dim, x, y, z, block_entity_data)

@@ -49,7 +49,7 @@ if 0 > 1:
 # 读取容器内容走方块实体 NBT 批量读(箱子走容器 API) + 跨 tick 缓存, 不区分机器与普通
 # 容器; 只在真正写入某个槽位时构造 ItemPushInCustomContainerServerEvent /
 # ItemPullOutCustomContainerServerEvent 广播一次来验证这一次取出 / 存入:
-# 机器在 machinery/basic/register.py 里按 input_slots / output_slots / IsValidInput
+# 机器在 machinery/basic/register.py 里按 item_input_slots / item_output_slots / IsValidInput
 # 否决(容器里不属于机器物品槽位的格子因此不会被塞东西), 附属模组同样可以否决。
 # 被否决的槽位直接跳过, 不产生任何写入。
 

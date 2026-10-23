@@ -28,7 +28,7 @@ class ThermalGenerator(WorkRenderer, GUIControl, ItemContainer, BaseGenerator):
     block_name = Machinery.THERMAL_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
-    input_slots = (0,)
+    item_input_slots = (0,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ThermalGenerator, self).__init__(dim, x, y, z, block_entity_data)

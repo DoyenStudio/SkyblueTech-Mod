@@ -161,7 +161,7 @@ class UpgradeControl(SPControl, ItemContainer):
     def OutputItem(self, item):
         # type: (Item) -> Item | None
         rest = ItemContainer.OutputItem(self, item)
-        self.FlushOutputSlots(list(self.output_slots))
+        self.FlushOutputSlots(list(self.item_output_slots))
         return rest
 
     def UpdateUpgraders(self, upgraders):
@@ -213,7 +213,7 @@ class UpgradeControl(SPControl, ItemContainer):
         from ...transmitters.item_pipe.logic import PushItemToGenericContainerEasy
 
         for slot in slots:
-            if slot not in self.output_slots:
+            if slot not in self.item_output_slots:
                 continue
             item = self.GetSlotItem(slot, get_user_data=True)
             if item is None:

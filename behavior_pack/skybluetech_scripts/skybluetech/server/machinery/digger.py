@@ -42,8 +42,8 @@ block_sync = BlockSync(Machinery.DIGGER, side=BlockSync.SIDE_SERVER)
 class Digger(WorkRenderer, UpgradeControl, GUIControl):
     block_name = Machinery.DIGGER
     dump_progress_to_block_entity_data = True
-    input_slots = ()
-    output_slots = (0,)
+    item_input_slots = ()
+    item_output_slots = (0,)
     store_rf_max = STORE_RF_MAX
     running_power = 40
     upgrade_slot_start = 1

@@ -45,8 +45,8 @@ ItemPosType = GetMinecraftEnum().ItemPosType
 @RegisterMachine
 class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
     block_name = Machinery.MACHINERY_WORKSTATION
-    input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
-    output_slots = (11,)
+    item_input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
+    item_output_slots = (11,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(MachineryWorkstation, self).__init__(dim, x, y, z, block_entity_data)

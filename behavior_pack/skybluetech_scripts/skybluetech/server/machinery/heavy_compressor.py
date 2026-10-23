@@ -29,8 +29,8 @@ class HeavyCompressor(WorkRenderer, SPControl, ItemContainer, GUIControl):
     dump_progress_to_block_entity_data = True
     origin_process_ticks = 20 * 5  # 8s
     running_power = 30
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
     upgrade_slot_start = 2
     upgrade_slots = 4
 

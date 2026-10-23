@@ -112,9 +112,9 @@ class STDBPressurePump(m.BaseClicker, m.MultiFluidContainer, m.PowerControl):
     block_name = PUMP_ID
     store_rf_max = 10000
     running_power = 80
-    fluid_slot_max_volumes = (10000,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: 10000}
+    fluid_input_slots = (0,)
+    fluid_output_slots = (0,)
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
 
     def __init__(self, dim, x, y, z, block_entity_data):

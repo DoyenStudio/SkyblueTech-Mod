@@ -12,7 +12,7 @@ from ..mini_jei.machinery.magma_centrifuge import (
 )
 
 STORE_RF_MAX = 8800
-FLUID_SLOT_MAX_VOLUMES = (2000, 500, 500, 500, 500, 500, 500)
+FLUID_SLOT_MAX_VOLUMES = {0: 2000, 1: 500, 2: 500, 3: 500, 4: 500, 5: 500, 6: 500}
 
 recipes = RecipesCollection(
     Machinery.MAGMA_CENTRIFUGE,

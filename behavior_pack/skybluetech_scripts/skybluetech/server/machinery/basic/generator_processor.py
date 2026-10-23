@@ -69,12 +69,12 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
         if self.InUpgradeSlot(slot_pos):
             return
         if self.process_item:
-            if slot_pos in self.output_slots and self.HasDeactiveFlag(
+            if slot_pos in self.item_output_slots and self.HasDeactiveFlag(
                 flags.DEACTIVE_FLAG_OUTPUT_FULL
             ):
                 self.start_next()
                 return
-            elif slot_pos in self.input_slots and self.recipe_index is None:
+            elif slot_pos in self.item_input_slots and self.recipe_index is None:
                 # 只有在没开始运行配方时才重新检查配方
                 # 在配方开始运行后就不检查了
                 self.recheck_recipe()
@@ -92,7 +92,7 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
         # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
-        elif slot in self.output_slots:
+        elif slot in self.item_output_slots:
             return False
         for recipe in self.recipes:
             slot_input = recipe.inputs.get(CategoryType.ITEM, {}).get(slot)

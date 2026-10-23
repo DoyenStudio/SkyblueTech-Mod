@@ -31,16 +31,16 @@ class PrecisionCutter(Processor, MultiFluidContainer):
     process_item = True
     process_fluid = True
     recipes = Recipes
-    input_slots = (0, 1)
-    output_slots = (2, 3, 4)
+    item_input_slots = (0, 1)
+    item_output_slots = (2, 3, 4)
     cutter_slot = 1
     # 5 个物品槽用作输入/输出, 另外 4 个槽位(5-8)作为升级槽
     upgrade_slot_start = 5
     upgrade_slots = 4
-    fluid_slot_start = 5
-    fluid_input_slots = {5}
+    fluid_slot_start = 0
+    fluid_input_slots = (0,)
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
-    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
+    fluid_slot_max_volumes = {0: MAX_FLUID_VOLUME}
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(PrecisionCutter, self).__init__(dim, x, y, z, block_entity_data)

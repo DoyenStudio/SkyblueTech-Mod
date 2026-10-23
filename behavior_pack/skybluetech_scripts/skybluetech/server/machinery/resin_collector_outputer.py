@@ -30,7 +30,7 @@ TCON = TransmitterConn(item_pipe=True)
 class ResinCollectorOutputer(ItemContainer):
     block_name = Machinery.RESIN_COLLECTOR_OUTPUTER
     is_non_energy_machine = True
-    output_slots = (0,)
+    item_output_slots = (0,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ResinCollectorOutputer, self).__init__(dim, x, y, z, block_entity_data)

@@ -28,12 +28,12 @@ class Pump(UpgradeControl, GUIControl, MultiFluidContainer):
     block_name = Machinery.PUMP
     store_rf_max = STORE_RF_MAX
     running_power = 20
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
     fluid_io_mode = (2, 1, 2, 2, 2, 2)
-    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
-    fluid_input_slots = set()
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: MAX_FLUID_VOLUME}
+    fluid_input_slots = ()
+    fluid_output_slots = (0,)
     migrate_legacy_fluid_data = True
     origin_process_ticks = 5
     upgrade_slot_start = 0

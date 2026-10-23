@@ -118,10 +118,10 @@ class VacuumFreezer(
     # 缩放, 所以能量卡确实压得低本机的制冷单价。
     process_item = True
     process_fluid = True
-    input_slots = (0,)
-    output_slots = (1,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {1}
+    item_input_slots = (0,)
+    item_output_slots = (1,)
+    fluid_input_slots = (0,)
+    fluid_output_slots = (1,)
     fluid_slot_max_volumes = MAX_FLUID_VOLUMES
     structure_palette = STRUCTURE_PALETTE
     functional_block_ids = {
@@ -150,9 +150,9 @@ class VacuumFreezer(
 
     def _vacuum_freezer_on_slot_update(self, slot_pos):
         # type: (int) -> None
-        if slot_pos in self.output_slots:
+        if slot_pos in self.item_output_slots:
             self.try_output_items()
-        elif slot_pos in self.input_slots:
+        elif slot_pos in self.item_input_slots:
             # 输入槽腾出空间后, 物品输入口里没抽完的东西可以再抽一次
             self.try_take_in_items()
 
@@ -400,7 +400,7 @@ class VacuumFreezer(
     def try_take_in_items(self):
         # type: () -> None
         for io in self._item_in_ios:
-            for slot in io.input_slots:
+            for slot in io.item_input_slots:
                 item = io.GetSlotItem(slot)
                 if item is None:
                     continue
@@ -435,7 +435,7 @@ class VacuumFreezer(
         # type: () -> None
         if not self._item_out_ios:
             return
-        for slot in self.output_slots:
+        for slot in self.item_output_slots:
             item = self.GetSlotItem(slot)
             if item is None:
                 continue

@@ -22,11 +22,11 @@ class Engraver(Processor, MultiFluidContainer):
     process_item = True
     process_fluid = True
     recipes = Recipes
-    input_slots = (0, 1, 2, 3)
-    output_slots = (4,)
+    item_input_slots = (0, 1, 2, 3)
+    item_output_slots = (4,)
     upgrade_slot_start = 5
     upgrade_slots = 4
-    fluid_input_slots = {0, 1}
+    fluid_input_slots = (0, 1)
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES
 

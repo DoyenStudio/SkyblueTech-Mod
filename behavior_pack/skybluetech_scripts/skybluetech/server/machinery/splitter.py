@@ -29,8 +29,8 @@ class Splitter(WorkRenderer, SPControl, ItemContainer, GUIControl):
     dump_progress_to_block_entity_data = True
     origin_process_ticks = 20 * 8
     running_power = 30
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(Splitter, self).__init__(dim, x, y, z, block_entity_data)

@@ -21,15 +21,15 @@ class ItemContainer(BaseMachine):
     可存储物品的机器基类。
 
     类属性:
-        input_slots (tuple[int, ...]): 可用输入槽位
-        output_slots (tuple[int, ...]): 可用输出槽位
+        item_input_slots (tuple[int, ...]): 可用输入槽位
+        item_output_slots (tuple[int, ...]): 可用输出槽位
 
     覆写:
         - `__init__`
     """
 
-    input_slots = ()  # type: tuple[int, ...]
-    output_slots = ()  # type: tuple[int, ...]
+    item_input_slots = ()  # type: tuple[int, ...]
+    item_output_slots = ()  # type: tuple[int, ...]
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ItemContainer, self).__init__(dim, x, y, z, block_entity_data)
@@ -40,9 +40,9 @@ class ItemContainer(BaseMachine):
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
         "只约束本组件声明的槽位, 其他槽位交给对应组件校验。"
-        if slot in self.input_slots:
+        if slot in self.item_input_slots:
             return True
-        return slot not in self.output_slots
+        return slot not in self.item_output_slots
 
     def GetSlotItem(self, slot_pos, get_user_data=True):
         # type: (int, bool) -> Item | None
@@ -75,7 +75,7 @@ class ItemContainer(BaseMachine):
         )
 
     def DropAllItems(self):
-        for slot in self.input_slots + self.output_slots:
+        for slot in self.item_input_slots + self.item_output_slots:
             item = self.GetSlotItem(slot)
             if item is not None:
                 SpawnDroppedItem(self.dim, self.xyz, item)
@@ -93,7 +93,7 @@ class ItemContainer(BaseMachine):
         Returns:
             int
         """
-        return len(self.input_slots) + len(self.output_slots)
+        return len(self.item_input_slots) + len(self.item_output_slots)
 
     def GetInputSlotItems(self, get_user_data=True):
         # type: (bool) -> dict[int, Item]
@@ -104,7 +104,7 @@ class ItemContainer(BaseMachine):
             dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
         """
         res = {}  # type: dict[int, Item]
-        for slot_pos in self.input_slots:
+        for slot_pos in self.item_input_slots:
             item = self.GetSlotItem(slot_pos, get_user_data=get_user_data)
             if item is not None:
                 res[slot_pos] = item
@@ -119,7 +119,7 @@ class ItemContainer(BaseMachine):
             dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
         """
         res = {}  # type: dict[int, Item]
-        for slot_pos in self.output_slots:
+        for slot_pos in self.item_output_slots:
             item = self.GetSlotItem(slot_pos)
             if item is not None:
                 res[slot_pos] = item
@@ -147,7 +147,7 @@ class ItemContainer(BaseMachine):
         Returns:
             Item (optional): 如有剩余物品则返回物品实例
         """
-        for slot_pos in self.input_slots:
+        for slot_pos in self.item_input_slots:
             orig_item = self.GetSlotItem(slot_pos, get_user_data=True)
             if orig_item is None:
                 if not self.IsValidInput(slot_pos, item):
@@ -196,11 +196,11 @@ class ItemContainer(BaseMachine):
         """
         _c = [
             self.GetSlotItem(slot_pos, get_user_data=True)
-            for slot_pos in self.output_slots
+            for slot_pos in self.item_output_slots
         ]
         current_items = [i for i in _c if i is not None]
         items_sorted = SortItems(items + current_items)
-        return len(items_sorted) <= len(self.output_slots)
+        return len(items_sorted) <= len(self.item_output_slots)
 
     def OutputItem(self, item):
         # type: (Item) -> Item | None
@@ -211,7 +211,7 @@ class ItemContainer(BaseMachine):
         #     return None
         """
         输出产出的物品。
-        需要机器设置了 output_slots
+        需要机器设置了 item_output_slots
 
         Args:
             item (Item): 产出物
@@ -219,4 +219,4 @@ class ItemContainer(BaseMachine):
         Returns:
             Item: 剩余物品, 当没有剩余物时返回 None
         """
-        return PutItemIntoContainer(self.dim, self.xyz, item, self.output_slots)
+        return PutItemIntoContainer(self.dim, self.xyz, item, self.item_output_slots)

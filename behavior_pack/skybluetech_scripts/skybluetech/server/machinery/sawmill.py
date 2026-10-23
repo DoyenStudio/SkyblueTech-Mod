@@ -15,7 +15,7 @@ class Sawmill(Processor):
     store_rf_max = STORE_RF_MAX
     process_item = True
     recipes = Recipes
-    input_slots = (0,)
-    output_slots = (1, 2, 3)
+    item_input_slots = (0,)
+    item_output_slots = (1, 2, 3)
     upgrade_slot_start = 4
     upgrade_slots = 4

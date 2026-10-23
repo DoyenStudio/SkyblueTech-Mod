@@ -30,7 +30,7 @@ ALLOWED_FOODS = frozenset([
 class FeedingTrough(ItemContainer):
     block_name = id_enum.Machinery.FEEDING_TROUGH
     is_non_energy_machine = True
-    input_slots = (0,)
+    item_input_slots = (0,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(FeedingTrough, self).__init__(dim, x, y, z, block_entity_data)

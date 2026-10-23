@@ -20,11 +20,11 @@ class OilExtractor(Processor, MultiFluidContainer):
     process_item = True
     process_fluid = True
     recipes = Recipes
-    input_slots = (0,)
-    output_slots = ()
+    item_input_slots = (0,)
+    item_output_slots = ()
     fluid_io_mode = (1, 1, 1, 1, 1, 1)
-    fluid_output_slots = {0}
-    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
+    fluid_output_slots = (0,)
+    fluid_slot_max_volumes = {0: MAX_FLUID_VOLUME}
     upgrade_slot_start = 1
 
     def __init__(self, dim, x, y, z, block_entity_data):

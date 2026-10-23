@@ -1,4 +1,5 @@
 # coding=utf-8
+from copy import deepcopy
 
 from skybluetech_scripts.tooldelta.api.server import (
     BlockHasTag,
@@ -18,7 +19,6 @@ from skybluetech_scripts.tooldelta.events.server import (
 from skybluetech_scripts.tooldelta.utils.nbt import (
     Byte,
     GetValueWithDefault,
-    Py2NBT,
     Short,
     String,
 )
@@ -401,7 +401,7 @@ def onNetworkTick(network):
                 old_entry["Name"] = String(item.newItemName)
                 old_entry["Damage"] = Short(item.newAuxValue)
                 if item.userData is not None:
-                    old_entry["tag"] = Py2NBT(item.userData)
+                    old_entry["tag"] = deepcopy(item.userData)
                 else:
                     old_entry.pop("tag", None)
             else:

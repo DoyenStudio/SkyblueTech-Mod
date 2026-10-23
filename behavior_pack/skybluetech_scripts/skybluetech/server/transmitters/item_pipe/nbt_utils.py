@@ -1,10 +1,10 @@
 # coding=utf-8
+from copy import deepcopy
+
 from skybluetech_scripts.tooldelta.api.server import GetBlockEntityDataDict
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.utils.nbt import (
     Byte,
-    NBT2Py,
-    Py2NBT,
     Short,
     String,
     GetValueWithDefault,
@@ -40,7 +40,8 @@ def _nbt_entry_to_item(entry):
     )
     tag = entry.get("tag")
     if tag:
-        item.userData = NBT2Py(tag)
+        # Item.userData 和容器 tag 都是带类型的 NBT, 必须保留 Long 等类型。
+        item.userData = deepcopy(tag)
     return item
 
 
@@ -55,7 +56,7 @@ def _item_to_nbt_entry(slot, item):
         "WasPickedUp": Byte(0),
     }
     if item.userData is not None:
-        entry["tag"] = Py2NBT(item.userData)
+        entry["tag"] = deepcopy(item.userData)
     return entry
 
 

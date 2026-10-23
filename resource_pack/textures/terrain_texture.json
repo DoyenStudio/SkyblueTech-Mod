@@ -16,6 +16,230 @@
         "skybluetech:assembler": {
             "textures": "textures/models/assembler_texture"
         },
+        "skybluetech:baked_compressed_air_static": {
+            "textures": "textures/fluid/baked/skybluetech.compressed_air/static"
+        },
+        "skybluetech:baked_concentrated_sulfuric_acid_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.concentrated_sulfuric_acid/flowing"
+        },
+        "skybluetech:baked_concentrated_sulfuric_acid_static": {
+            "textures": "textures/fluid/baked/skybluetech.concentrated_sulfuric_acid/static"
+        },
+        "skybluetech:baked_deepslate_lava_flowing": {
+            "quad": 2,
+            "textures": "textures/fluid/baked/skybluetech.deepslate_lava/flowing"
+        },
+        "skybluetech:baked_deepslate_lava_flowing_block_flowing": {
+            "quad": 2,
+            "textures": "textures/fluid/baked/skybluetech.deepslate_lava/flowing_block_flowing"
+        },
+        "skybluetech:baked_deepslate_lava_flowing_block_static": {
+            "textures": "textures/fluid/baked/skybluetech.deepslate_lava/flowing_block_static"
+        },
+        "skybluetech:baked_deepslate_lava_static": {
+            "textures": "textures/fluid/baked/skybluetech.deepslate_lava/static"
+        },
+        "skybluetech:baked_distilled_water_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.distilled_water/flowing"
+        },
+        "skybluetech:baked_distilled_water_static": {
+            "textures": "textures/fluid/baked/skybluetech.distilled_water/static"
+        },
+        "skybluetech:baked_heavy_lava_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.heavy_lava/flowing"
+        },
+        "skybluetech:baked_heavy_lava_static": {
+            "textures": "textures/fluid/baked/skybluetech.heavy_lava/static"
+        },
+        "skybluetech:baked_hydrogen_static": {
+            "textures": "textures/fluid/baked/skybluetech.hydrogen/static"
+        },
+        "skybluetech:baked_light_lava_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.light_lava/flowing"
+        },
+        "skybluetech:baked_light_lava_flowing_block_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.light_lava/flowing_block_flowing"
+        },
+        "skybluetech:baked_light_lava_flowing_block_static": {
+            "textures": "textures/fluid/baked/skybluetech.light_lava/flowing_block_static"
+        },
+        "skybluetech:baked_light_lava_static": {
+            "textures": "textures/fluid/baked/skybluetech.light_lava/static"
+        },
+        "skybluetech:baked_liquid_air_static": {
+            "textures": "textures/fluid/baked/skybluetech.liquid_air/static"
+        },
+        "skybluetech:baked_liquid_resin_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.liquid_resin/flowing"
+        },
+        "skybluetech:baked_liquid_resin_static": {
+            "textures": "textures/fluid/baked/skybluetech.liquid_resin/static"
+        },
+        "skybluetech:baked_liquid_soldering_tin_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.liquid_soldering_tin/flowing"
+        },
+        "skybluetech:baked_liquid_soldering_tin_static": {
+            "textures": "textures/fluid/baked/skybluetech.liquid_soldering_tin/static"
+        },
+        "skybluetech:baked_lubricant_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.lubricant/flowing"
+        },
+        "skybluetech:baked_lubricant_flowing_block_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.lubricant/flowing_block_flowing"
+        },
+        "skybluetech:baked_lubricant_flowing_block_static": {
+            "textures": "textures/fluid/baked/skybluetech.lubricant/flowing_block_static"
+        },
+        "skybluetech:baked_lubricant_static": {
+            "textures": "textures/fluid/baked/skybluetech.lubricant/static"
+        },
+        "skybluetech:baked_methane_mud_static": {
+            "textures": "textures/fluid/baked/skybluetech.methane_mud/static"
+        },
+        "skybluetech:baked_methane_static": {
+            "textures": "textures/fluid/baked/skybluetech.methane/static"
+        },
+        "skybluetech:baked_mid_lava_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.mid_lava/flowing"
+        },
+        "skybluetech:baked_mid_lava_flowing_block_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.mid_lava/flowing_block_flowing"
+        },
+        "skybluetech:baked_mid_lava_flowing_block_static": {
+            "textures": "textures/fluid/baked/skybluetech.mid_lava/flowing_block_static"
+        },
+        "skybluetech:baked_mid_lava_static": {
+            "textures": "textures/fluid/baked/skybluetech.mid_lava/static"
+        },
+        "skybluetech:baked_molten_copper_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_copper/flowing"
+        },
+        "skybluetech:baked_molten_copper_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_copper/static"
+        },
+        "skybluetech:baked_molten_earth_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_earth/flowing"
+        },
+        "skybluetech:baked_molten_earth_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_earth/static"
+        },
+        "skybluetech:baked_molten_gold_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_gold/flowing"
+        },
+        "skybluetech:baked_molten_gold_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_gold/static"
+        },
+        "skybluetech:baked_molten_impurity_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_impurity/flowing"
+        },
+        "skybluetech:baked_molten_impurity_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_impurity/static"
+        },
+        "skybluetech:baked_molten_iron_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_iron/flowing"
+        },
+        "skybluetech:baked_molten_iron_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_iron/static"
+        },
+        "skybluetech:baked_molten_lead_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_lead/flowing"
+        },
+        "skybluetech:baked_molten_lead_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_lead/static"
+        },
+        "skybluetech:baked_molten_nickel_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_nickel/flowing"
+        },
+        "skybluetech:baked_molten_nickel_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_nickel/static"
+        },
+        "skybluetech:baked_molten_platinum_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_platinum/flowing"
+        },
+        "skybluetech:baked_molten_platinum_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_platinum/static"
+        },
+        "skybluetech:baked_molten_rosin_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_rosin/flowing"
+        },
+        "skybluetech:baked_molten_rosin_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_rosin/static"
+        },
+        "skybluetech:baked_molten_silver_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_silver/flowing"
+        },
+        "skybluetech:baked_molten_silver_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_silver/static"
+        },
+        "skybluetech:baked_molten_tin_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_tin/flowing"
+        },
+        "skybluetech:baked_molten_tin_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_tin/static"
+        },
+        "skybluetech:baked_nitrogen_static": {
+            "textures": "textures/fluid/baked/skybluetech.nitrogen/static"
+        },
+        "skybluetech:baked_raw_oil_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.raw_oil/flowing"
+        },
+        "skybluetech:baked_raw_oil_static": {
+            "textures": "textures/fluid/baked/skybluetech.raw_oil/static"
+        },
+        "skybluetech:baked_so3_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.so3/flowing"
+        },
+        "skybluetech:baked_so3_static": {
+            "textures": "textures/fluid/baked/skybluetech.so3/static"
+        },
+        "skybluetech:baked_sulfuric_acid_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.sulfuric_acid/flowing"
+        },
+        "skybluetech:baked_sulfuric_acid_flowing_block_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.sulfuric_acid/flowing_block_flowing"
+        },
+        "skybluetech:baked_sulfuric_acid_flowing_block_static": {
+            "textures": "textures/fluid/baked/skybluetech.sulfuric_acid/flowing_block_static"
+        },
+        "skybluetech:baked_sulfuric_acid_static": {
+            "textures": "textures/fluid/baked/skybluetech.sulfuric_acid/static"
+        },
+        "skybluetech:baked_vegetable_oil_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.vegetable_oil/flowing"
+        },
+        "skybluetech:baked_vegetable_oil_static": {
+            "textures": "textures/fluid/baked/skybluetech.vegetable_oil/static"
+        },
+        "skybluetech:baked_water_vapor_static": {
+            "textures": "textures/fluid/baked/skybluetech.water_vapor/static"
+        },
         "skybluetech:basic_fluid": {
             "textures": "textures/fluid/basic_fluid"
         },

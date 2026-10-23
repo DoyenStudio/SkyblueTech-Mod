@@ -3,13 +3,7 @@
     "minecraft:block": {
         "components": {
             "netease:liquid": {
-                "bucket_name": "skybluetech:molten_nickel_bucket",
-                "liquid_color": [
-                    197,
-                    197,
-                    145,
-                    255
-                ]
+                "bucket_name": "skybluetech:molten_nickel_bucket"
             }
         },
         "description": {

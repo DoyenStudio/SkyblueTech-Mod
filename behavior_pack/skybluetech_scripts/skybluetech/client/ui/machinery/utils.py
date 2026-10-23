@@ -317,11 +317,8 @@ class FluidDisplayer(object):
             return
 
         texture = fluid_texture.GetFluidTexture(rendered_fluid_id)
-        fluid_img.SetSprite(texture.basic_texture.texture_path)
-        r, g, b = texture.rgb
-        fluid_img.SetSpriteColor((float(r) / 255, float(g) / 255, float(b) / 255))
-        fluid_img.SetAlpha(float(texture.alpha) / 255)
-        self._update_flipbook(fluid_img, texture.basic_texture)
+        fluid_img.SetSprite(texture.texture_path)
+        self._update_flipbook(fluid_img, texture)
 
         if rendered_fluid_id in Gas.all_sub():
             fluid_img.SetAnchorFrom("top_middle")

@@ -4,12 +4,6 @@
         "components": {
             "netease:liquid": {
                 "bucket_name": "skybluetech:liquid_resin_bucket",
-                "liquid_color": [
-                    255,
-                    255,
-                    255,
-                    255
-                ],
                 "spread_delay": 5,
                 "spread_range": 8
             }

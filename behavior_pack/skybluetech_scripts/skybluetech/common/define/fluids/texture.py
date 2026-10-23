@@ -1,5 +1,5 @@
 from ..id_enum import fluids
-from .define import BasicFluidTexture, FluidTexture
+from .define import BasicFluidTexture
 
 AIR = BasicFluidTexture("textures/fluid/gas_static", 32, 2)
 WATER = BasicFluidTexture("textures/fluid/basic_water_static", 32, 2)
@@ -13,50 +13,48 @@ METHANE_MUD = BasicFluidTexture("textures/fluid/methane_mud", 1)
 BASIC_FLUID = BasicFluidTexture("textures/fluid/basic_fluid", 1)
 LIQUID_RESIN_STATIC = BasicFluidTexture("textures/fluid/liquid_resin_static", 39, 2)
 
-BASIC_FLUID_TEXTURE = FluidTexture((255, 255, 255), 255, BASIC_FLUID)
-
-FLUID_COLORS_AND_TEXTURES = {
-    fluids.CommonLiquid.DISTILLED_WATER: FluidTexture((0, 229, 255), 128, WATER),
-    fluids.CommonGas.COMPRESSED_AIR: FluidTexture((240, 240, 240), 64, AIR),
-    fluids.CommonGas.HYDROGEN: FluidTexture((220, 240, 255), 64, AIR),
-    fluids.CommonGas.NITROGEN: FluidTexture((240, 255, 240), 64, AIR),
-    fluids.CommonGas.METHANE: FluidTexture((255, 240, 200), 64, AIR),
-    fluids.CommonGas.WATER_VAPOR: FluidTexture((240, 240, 255), 64, WATER_VAPOR),
-    fluids.CommonOil.LUBRICANT: FluidTexture((255, 207, 0), 192, WATER),
-    fluids.CommonOil.RAW_OIL: FluidTexture((44, 39, 28), 255, WATER),
-    fluids.CommonOil.VEGETABLE_OIL: FluidTexture((170, 255, 0), 192, WATER),
-    fluids.Acid.SULFURIC_ACID: FluidTexture((255, 216, 216), 128, WATER),
-    fluids.Acid.CONCENTRATED_SULFURIC_ACID: FluidTexture((255, 216, 216), 128, WATER),
-    fluids.Acid.SO3: FluidTexture((255, 216, 216), 128, WATER),
-    fluids.DeepLava.HEAVY_LAVA: FluidTexture((168, 36, 36), 255, LAVA),
-    fluids.DeepLava.LIGHT_LAVA: FluidTexture((255, 60, 0), 255, LAVA),
-    fluids.DeepLava.MID_LAVA: FluidTexture((255, 0, 0), 255, LAVA),
-    fluids.Molten.COPPER: FluidTexture((231, 124, 86), 255, MOLTEN_METAL),
-    fluids.Molten.EARTH: FluidTexture((127, 54, 0), 255, LAVA),
-    fluids.Molten.GOLD: FluidTexture((255, 255, 0), 255, MOLTEN_METAL),
-    fluids.Molten.IMPURITY: FluidTexture((74, 47, 21), 255, LAVA),
-    fluids.Molten.IRON: FluidTexture((200, 200, 200), 255, MOLTEN_METAL),
-    fluids.Molten.LEAD: FluidTexture((163, 153, 229), 255, MOLTEN_METAL),
-    fluids.Molten.NICKEL: FluidTexture((197, 197, 145), 255, MOLTEN_METAL),
-    fluids.Molten.PLATINUM: FluidTexture((158, 235, 255), 255, MOLTEN_METAL),
-    fluids.Molten.SILVER: FluidTexture((239, 248, 249), 255, MOLTEN_METAL),
-    fluids.Molten.TIN: FluidTexture((233, 233, 233), 255, MOLTEN_METAL),
+FLUID_TEXTURES = {
+    fluids.CommonLiquid.DISTILLED_WATER: BasicFluidTexture("textures/fluid/baked/skybluetech.distilled_water/static", 32, 2),
+    fluids.CommonGas.COMPRESSED_AIR: BasicFluidTexture("textures/fluid/baked/skybluetech.compressed_air/ui", 32, 2),
+    fluids.CommonGas.HYDROGEN: BasicFluidTexture("textures/fluid/baked/skybluetech.hydrogen/ui", 32, 2),
+    fluids.CommonGas.NITROGEN: BasicFluidTexture("textures/fluid/baked/skybluetech.nitrogen/ui", 32, 2),
+    fluids.CommonGas.METHANE: BasicFluidTexture("textures/fluid/baked/skybluetech.methane/ui", 32, 2),
+    fluids.CommonGas.WATER_VAPOR: BasicFluidTexture("textures/fluid/baked/skybluetech.water_vapor/static", 1, 1),
+    fluids.CommonOil.LUBRICANT: BasicFluidTexture("textures/fluid/baked/skybluetech.lubricant/static", 32, 2),
+    fluids.CommonOil.RAW_OIL: BasicFluidTexture("textures/fluid/baked/skybluetech.raw_oil/static", 32, 2),
+    fluids.CommonOil.VEGETABLE_OIL: BasicFluidTexture("textures/fluid/baked/skybluetech.vegetable_oil/static", 32, 2),
+    fluids.Acid.SULFURIC_ACID: BasicFluidTexture("textures/fluid/baked/skybluetech.sulfuric_acid/static", 32, 2),
+    fluids.Acid.CONCENTRATED_SULFURIC_ACID: BasicFluidTexture("textures/fluid/baked/skybluetech.concentrated_sulfuric_acid/static", 32, 2),
+    fluids.Acid.SO3: BasicFluidTexture("textures/fluid/baked/skybluetech.so3/static", 32, 2),
+    fluids.DeepLava.HEAVY_LAVA: BasicFluidTexture("textures/fluid/baked/skybluetech.heavy_lava/static", 20, 5),
+    fluids.DeepLava.LIGHT_LAVA: BasicFluidTexture("textures/fluid/baked/skybluetech.light_lava/static", 20, 5),
+    fluids.DeepLava.MID_LAVA: BasicFluidTexture("textures/fluid/baked/skybluetech.mid_lava/static", 20, 5),
+    fluids.Molten.COPPER: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_copper/static", 49, 5),
+    fluids.Molten.EARTH: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_earth/static", 20, 5),
+    fluids.Molten.GOLD: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_gold/static", 49, 5),
+    fluids.Molten.IMPURITY: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_impurity/static", 20, 5),
+    fluids.Molten.IRON: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_iron/static", 49, 5),
+    fluids.Molten.LEAD: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_lead/static", 49, 5),
+    fluids.Molten.NICKEL: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_nickel/static", 49, 5),
+    fluids.Molten.PLATINUM: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_platinum/static", 49, 5),
+    fluids.Molten.SILVER: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_silver/static", 49, 5),
+    fluids.Molten.TIN: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_tin/static", 49, 5),
     # Vanilla
-    fluids.Vanilla.WATER: FluidTexture((255, 255, 255), 128, VANILLA_WATER),
-    fluids.Vanilla.LAVA: FluidTexture((255, 255, 255), 255, VANILLA_LAVA),
+    fluids.Vanilla.WATER: BasicFluidTexture("textures/fluid/baked/minecraft.water/ui", 32, 2),
+    fluids.Vanilla.LAVA: BasicFluidTexture("textures/fluid/baked/minecraft.lava/ui", 20, 16),
     # color-special
-    fluids.DeepLava.DEEPSLATE_LAVA: FluidTexture((255, 255, 255), 255, DEEPSLATE_LAVA),
-    fluids.CommonLiquid.METHANE_MUD: FluidTexture((255, 255, 255), 255, METHANE_MUD),
-    fluids.CommonLiquid.LIQUID_AIR: FluidTexture((205, 218, 238), 128, BASIC_FLUID),
-    fluids.CommonLiquid.LIQUID_RESIN: FluidTexture((255, 255, 255), 255, LIQUID_RESIN_STATIC),
+    fluids.DeepLava.DEEPSLATE_LAVA: BasicFluidTexture("textures/fluid/baked/skybluetech.deepslate_lava/flowing_block_static", 20, 5),
+    fluids.CommonLiquid.METHANE_MUD: BasicFluidTexture("textures/fluid/baked/skybluetech.methane_mud/static", 1, 1),
+    fluids.CommonLiquid.LIQUID_AIR: BasicFluidTexture("textures/fluid/baked/skybluetech.liquid_air/static", 1, 1),
+    fluids.CommonLiquid.LIQUID_RESIN: BasicFluidTexture("textures/fluid/baked/skybluetech.liquid_resin/static", 39, 2),
 }
 
 
 def GetFluidTexture(fluid_id):
-    # type: (str) -> FluidTexture
-    return FLUID_COLORS_AND_TEXTURES.get(fluid_id, BASIC_FLUID_TEXTURE)
+    # type: (str) -> BasicFluidTexture
+    return FLUID_TEXTURES.get(fluid_id, BASIC_FLUID)
 
 
-def RegisterFluidTexture(fluid_id, basic_texture, rgb=(255, 255, 255), alpha=255):
-    # type: (str, BasicFluidTexture, tuple[int, int, int], int) -> None
-    FLUID_COLORS_AND_TEXTURES[fluid_id] = FluidTexture(rgb, alpha, basic_texture)
+def RegisterFluidTexture(fluid_id, basic_texture):
+    # type: (str, BasicFluidTexture) -> None
+    FLUID_TEXTURES[fluid_id] = basic_texture

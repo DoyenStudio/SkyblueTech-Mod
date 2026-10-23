@@ -3,12 +3,6 @@
     "minecraft:block": {
         "components": {
             "netease:liquid": {
-                "liquid_color": [
-                    255,
-                    216,
-                    216,
-                    64
-                ],
                 "spread_delay": 5,
                 "spread_range": 10
             }

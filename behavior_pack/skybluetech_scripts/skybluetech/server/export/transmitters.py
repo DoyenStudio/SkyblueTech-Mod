@@ -99,22 +99,35 @@ def _register(kind, block_id, transfer_speed, capacity, predicate, replace):
 
 
 def RegisterItemPipe(block_id, transfer_speed, replace=False):
-    """注册物品管道，transfer_speed 为正整数物品数/t。"""
+    """注册物品管道, transfer_speed 为正整数物品数/t。"""
     _register("item_pipe", block_id, transfer_speed, None, None, replace)
 
 
 def RegisterFluidPipe(
     block_id, transfer_speed, capacity, can_transmit_fluid=None, replace=False
 ):
-    """注册流体管道；速率 mB/t、全网容量 mB，None 过滤器表示允许所有流体。"""
+    """注册流体管道: 速率 mB/t、全网容量 mB, None 过滤器表示允许所有流体。"""
     _register(
         "fluid_pipe", block_id, transfer_speed, capacity, can_transmit_fluid, replace
     )
 
 
 def RegisterWire(block_id, transfer_speed, replace=False):
-    """注册电缆，transfer_speed 为正整数 RF/t。"""
+    """注册电缆, transfer_speed 为正整数 RF/t。"""
     _register("wire", block_id, transfer_speed, None, None, replace)
 
 
-__all__ = ["RegisterItemPipe", "RegisterFluidPipe", "RegisterWire"]
+
+def RefreshPowerConnections(dim, x, y, z):
+    """Refresh cached wire endpoints after a machine changes its RF face modes.
+
+    Existing wire connection switches remain unchanged. Wire networks contain
+    no material buffer; fluid and item networks are deliberately untouched.
+    Call on structural/configuration changes, never every machine tick.
+    """
+    from ..transmitters.wire.logic import logic_module
+
+    logic_module.clean_container_networks(dim, x, y, z)
+
+
+__all__ = ["RegisterItemPipe", "RegisterFluidPipe", "RegisterWire", "RefreshPowerConnections"]

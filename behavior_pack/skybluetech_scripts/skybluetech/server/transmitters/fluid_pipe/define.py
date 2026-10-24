@@ -10,12 +10,14 @@ INT32 = 1 << 32
 TRANSFER_SPEED_MAPPING = {
     FluidPipe.ACIDPROOF: 100,
     FluidPipe.BRONZE: 100,
+    FluidPipe.CHEMICAL: 100,
     FluidPipe.CUPRONICKEL: 60,
     FluidPipe.ULTRAHEATINUM: 100,
 }
 CAPACITY_MAPPING = {
     FluidPipe.ACIDPROOF: 1000,
     FluidPipe.BRONZE: 1000,
+    FluidPipe.CHEMICAL: 1000,
     FluidPipe.CUPRONICKEL: 1000,
     FluidPipe.ULTRAHEATINUM: 1000,
 }
@@ -24,6 +26,12 @@ FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING = {
         f in fluids.Common.all_sub() or f in fluids.Acid.all_sub()
     ),
     FluidPipe.BRONZE: lambda f: f in fluids.Common.all_sub(),
+    FluidPipe.CHEMICAL: lambda f: (
+        f in fluids.Common.all_sub()
+        or f in fluids.Acid.all_sub()
+        or f in fluids.Alkali.all_sub()
+        or f in fluids.Chemical.all_sub()
+    ),
     FluidPipe.CUPRONICKEL: lambda f: (
         f in fluids.Common.all_sub() or f in fluids.HotFluid.all_sub()
     ),

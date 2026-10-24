@@ -820,6 +820,9 @@
     "skybluetech:pipe_bronze": {
         "sound": "copper"
     },
+    "skybluetech:pipe_chemical": {
+        "sound": "iron"
+    },
     "skybluetech:pipe_cupronickel": {
         "sound": "copper"
     },

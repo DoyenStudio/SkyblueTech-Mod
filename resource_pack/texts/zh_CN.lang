@@ -175,6 +175,7 @@ tile.skybluetech:aluminum_ore.name=铝矿石
 tile.skybluetech:assembler.name=装配站
 tile.skybluetech:pipe_acidproof.name=耐酸流体管道
 tile.skybluetech:pipe_bronze.name=青铜流体管道
+tile.skybluetech:pipe_chemical.name=化学品管道
 tile.skybluetech:pipe_cupronickel.name=白铜流体管道
 tile.skybluetech:pipe_ultraheatinum.name=耐热流体管道
 tile.skybluetech:charger.name=充能台

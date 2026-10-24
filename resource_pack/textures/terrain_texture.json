@@ -623,6 +623,9 @@
         "skybluetech:pipe_bronze": {
             "textures": "textures/transmitters/fluid_pipe_bronze_texture"
         },
+        "skybluetech:pipe_chemical": {
+            "textures": "textures/transmitters/fluid_pipe_chemical_texture"
+        },
         "skybluetech:pipe_cupronickel": {
             "textures": "textures/transmitters/fluid_pipe_cupronickel_texture"
         },

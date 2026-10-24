@@ -14,6 +14,18 @@ class Acid(Fluids):
     SO3 = "skybluetech:so3"
 
 
+class Alkali(Fluids):
+    "碱性流体"
+
+    pass
+
+
+class Chemical(Acid, Alkali):
+    "化学品流体"
+
+    pass
+
+
 class Gas(Fluids):
     "气体"
 

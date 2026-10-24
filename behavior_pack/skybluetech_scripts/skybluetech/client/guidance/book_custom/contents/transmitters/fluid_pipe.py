@@ -31,6 +31,10 @@ fluid_pipes_description = PageGroup(
             '不易被酸腐蚀的管道， 可以运输液酸或其它酸性流体。\n\n<style color="§6"><link id="a" text="查看配方">',
             hyperlink_cbs={"a": lambda _: CheckRecipe(id_enum.FluidPipe.ACIDPROOF)},
         ),
+        TextPage(
+            "化学品管道",
+            "传输速率和容量与耐酸流体管道相同， 可以运输常规流体、 酸性流体和碱性流体。",
+        ),
     ],
 )
 
@@ -53,6 +57,9 @@ fluid_pipe_entry = PageGroup(
             ),
             TOCPageSection(
                 id_enum.FluidPipe.ACIDPROOF, 0, "耐酸流体管道", fluid_pipes_description, 3
+            ),
+            TOCPageSection(
+                id_enum.FluidPipe.CHEMICAL, 0, "化学品管道", fluid_pipes_description, 4
             ),
         ]),
     ],

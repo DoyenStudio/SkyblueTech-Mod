@@ -1,0 +1,15 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "bucket_name": "skybluetech:chlorine_bucket"
+            }
+        },
+        "description": {
+            "base_block": "liquid",
+            "category": "none",
+            "identifier": "skybluetech:chlorine"
+        }
+    }
+}

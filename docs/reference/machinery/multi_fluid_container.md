@@ -12,6 +12,29 @@ fluid_slot_max_volumes；fluid_input_slots、fluid_output_slots；fluid_io_mode 
 
 AddFluid(id,volume)、OutputFluid(id,volume,slot_pos,is_final) 均返回 (是否接收, 未接收量)；CanAddFluid(id)；IsValidFluidInput(slot,id)。
 
+## 管道分面槽位
+
+`fluid_input_slots_by_face`、`fluid_output_slots_by_face` 均为 `dict[str, tuple[int, ...]] | None`，默认 `None`。规则与[物品容器的分面槽位](item_container.md#管道分面槽位)相同：空映射禁止所有面，缺失面或空元组禁止该面，白名单只缩小对应的输入/输出槽范围，不改变槽位优先级。
+
+```python
+from skybluetech_scripts.tooldelta.extensions.facing_utils import RelativeFacingStrEnum
+
+# 在声明 fluid_input_slots = (0,)、fluid_output_slots = (1, 2) 的机器类上：
+fluid_input_slots_by_face = {
+    RelativeFacingStrEnum.TOP: (0,),
+}
+fluid_output_slots_by_face = {
+    RelativeFacingStrEnum.LEFT: (1,),
+    RelativeFacingStrEnum.RIGHT: (2,),
+}
+```
+
+`GetFluidInputSlotsForFace(relative_face)`、`GetFluidOutputSlotsForFace(relative_face)` 返回允许的槽位元组。管道输入调用 `AddFluidFromFace(fluid_id, fluid_volume, relative_face)`，返回 `(是否接收, 未接收量)`，保留容量、流体兼容性、`IsValidFluidInput` 和变化通知；输入依然按原有槽号排序。无配置时管道继续调用原有 `AddFluid`。
+
+`fluid_io_mode` 和管道接口模式仍决定能否连接与传输，分面槽位不改变连接外观。玩家桶/试管、内部 `AddFluid`、`OutputFluid` 与 `CanAddFluid` 仍按原有规则工作；配置不写入存档。
+
+游戏内除上述朝向与配置边界检查外，还需验证两个输出槽连接不同面、多个面接同一网络、同种与不同种流体、满槽和空槽、输入过滤拒绝、部分接收及旋转后的传输。核对机器与管网总流体量守恒，确认最终更新通知、配方唤醒和 UI 同步正常。
+
 ## 事件与组合
 
 变更方法分发 Added/Reduced/FluidSlotUpdate 事件，带 GUI 时同步；仅直接改 fluids 槽值不会自动通知。

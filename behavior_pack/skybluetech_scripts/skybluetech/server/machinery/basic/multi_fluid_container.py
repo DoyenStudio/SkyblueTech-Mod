@@ -23,6 +23,8 @@ class MultiFluidContainer(BaseMachine):
         fluid_io_mode (tuple[int, int, int, int, int, int]): 每个面的流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无
         fluid_input_slots (tuple[int, ...]): 可接受输入的流体槽位
         fluid_output_slots (tuple[int, ...]): 可输出的流体槽位
+        fluid_input_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面输入白名单
+        fluid_output_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面抽取白名单
         fluid_slot_max_volumes (dict[int, float]): 流体槽位到最大容量的映射
         player_fluid_input_slots (set[int] | None): 桶和试管可倒入的槽位, None 时跟随输入槽
         migrate_legacy_fluid_data (bool): 是否将旧单流体存档迁移到 0 号槽
@@ -37,6 +39,9 @@ class MultiFluidContainer(BaseMachine):
     fluid_io_mode = (2, 2, 2, 2, 2, 2)  # type: tuple[int, int, int, int, int, int]
     fluid_input_slots = ()  # type: tuple[int, ...]
     fluid_output_slots = ()  # type: tuple[int, ...]
+    # 键为 RelativeFacingStrEnum；None 不限制，空映射/缺失面/空元组禁止。
+    fluid_input_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
+    fluid_output_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
     player_fluid_input_slots = None  # type: set[int] | None
     fluid_slot_max_volumes = {0: 4000, 1: 4000}  # type: dict[int, float]
     allow_player_use_bucket_interact = True
@@ -102,6 +107,25 @@ class MultiFluidContainer(BaseMachine):
     def AddFluid(self, fluid_id, fluid_volume):
         # type: (str, float) -> tuple[bool, float]
         return self._add_fluid_to_slots(fluid_id, fluid_volume, self.fluid_input_slots)
+
+    def GetFluidInputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.fluid_input_slots, self.fluid_input_slots_by_face, relative_face
+        )
+
+    def GetFluidOutputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.fluid_output_slots, self.fluid_output_slots_by_face, relative_face
+        )
+
+    def AddFluidFromFace(self, fluid_id, fluid_volume, relative_face):
+        # type: (str, float, str | None) -> tuple[bool, float]
+        # 管道按相对面输入；内部产出和玩家交互继续使用原有接口。
+        return self._add_fluid_to_slots(
+            fluid_id, fluid_volume, self.GetFluidInputSlotsForFace(relative_face)
+        )
 
     def _add_fluid_to_slots(self, fluid_id, fluid_volume, slots):
         # type: (str, float, set[int] | tuple[int, ...]) -> tuple[bool, float]

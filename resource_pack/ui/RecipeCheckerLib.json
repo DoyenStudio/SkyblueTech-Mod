@@ -873,6 +873,128 @@
             }
         ]
     },
+    "electrolyzer_recipes": {
+        "type": "panel",
+        "size": [
+            180,
+            90
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2,
+                        2,
+                        2,
+                        2
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        0,
+                        -10
+                    ],
+                    "size": [
+                        48,
+                        50
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        57,
+                        -23
+                    ],
+                    "size": [
+                        24,
+                        24
+                    ]
+                }
+            },
+            {
+                "fluid3@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        57,
+                        3
+                    ],
+                    "size": [
+                        24,
+                        24
+                    ]
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        -57,
+                        -10
+                    ],
+                    "size": [
+                        24,
+                        50
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "offset": [
+                        33,
+                        -10
+                    ],
+                    "size": [
+                        18,
+                        15
+                    ]
+                }
+            },
+            {
+                "progress_left@SkybluePanelLib.ProgressBar": {
+                    "offset": [
+                        -33,
+                        -10
+                    ],
+                    "size": [
+                        18,
+                        15
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        57,
+                        30
+                    ]
+                }
+            },
+            {
+                "slot5@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -66,
+                        30
+                    ]
+                }
+            },
+            {
+                "slot6@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -48,
+                        30
+                    ]
+                }
+            }
+        ]
+    },
     "fluid_condenser_recipes": {
         "type": "panel",
         "size": [

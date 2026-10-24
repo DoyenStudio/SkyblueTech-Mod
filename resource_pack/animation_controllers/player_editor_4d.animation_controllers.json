@@ -1,0 +1,29 @@
+{
+    "animation_controllers": {
+        "controller.animation.player_4d.editor": {
+            "initial_state": "default",
+            "states": {
+                "default": {
+                    "animations": [
+                        {
+                            "editor_empty": "1.0"
+                        }
+                    ],
+                    "transitions": [
+                        {
+                            "version_for_editor": "variable.editor_ani_jump_ctrl || (query.mod.editor_ani_is_loop && query.any_animation_finished)"
+                        }
+                    ]
+                },
+                "version_for_editor": {
+                    "transitions": [
+                        {
+                            "default": "variable.editor_ani_jump_ctrl = 0.0 ;return 2.0;"
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "format_version": "1.10.0"
+}

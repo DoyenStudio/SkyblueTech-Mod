@@ -16,6 +16,16 @@
         "skybluetech:assembler": {
             "textures": "textures/models/assembler_texture"
         },
+        "skybluetech:baked_brine_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.brine/flowing"
+        },
+        "skybluetech:baked_brine_static": {
+            "textures": "textures/fluid/baked/skybluetech.brine/static"
+        },
+        "skybluetech:baked_chlorine_static": {
+            "textures": "textures/fluid/baked/skybluetech.chlorine/static"
+        },
         "skybluetech:baked_compressed_air_static": {
             "textures": "textures/fluid/baked/skybluetech.compressed_air/static"
         },
@@ -202,6 +212,9 @@
         "skybluetech:baked_nitrogen_static": {
             "textures": "textures/fluid/baked/skybluetech.nitrogen/static"
         },
+        "skybluetech:baked_oxygen_static": {
+            "textures": "textures/fluid/baked/skybluetech.oxygen/static"
+        },
         "skybluetech:baked_raw_oil_flowing": {
             "quad": 1,
             "textures": "textures/fluid/baked/skybluetech.raw_oil/flowing"
@@ -209,12 +222,26 @@
         "skybluetech:baked_raw_oil_static": {
             "textures": "textures/fluid/baked/skybluetech.raw_oil/static"
         },
+        "skybluetech:baked_saturated_brine_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.saturated_brine/flowing"
+        },
+        "skybluetech:baked_saturated_brine_static": {
+            "textures": "textures/fluid/baked/skybluetech.saturated_brine/static"
+        },
         "skybluetech:baked_so3_flowing": {
             "quad": 1,
             "textures": "textures/fluid/baked/skybluetech.so3/flowing"
         },
         "skybluetech:baked_so3_static": {
             "textures": "textures/fluid/baked/skybluetech.so3/static"
+        },
+        "skybluetech:baked_sodium_hydroxide_solution_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/flowing"
+        },
+        "skybluetech:baked_sodium_hydroxide_solution_static": {
+            "textures": "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/static"
         },
         "skybluetech:baked_sulfuric_acid_flowing": {
             "quad": 1,
@@ -562,6 +589,12 @@
         },
         "skybluetech:macerator_front": {
             "textures": "textures/blocks/machinery/macerator_front"
+        },
+        "skybluetech:electrolyzer_front": {
+            "textures": "textures/blocks/machinery/electrolyzer_front"
+        },
+        "skybluetech:electrolyzer_front_active": {
+            "textures": "textures/blocks/machinery/electrolyzer_front_active"
         },
         "skybluetech:macerator_front_active": {
             "textures": "textures/blocks/machinery/flipbook_textures/macerator_front_active"

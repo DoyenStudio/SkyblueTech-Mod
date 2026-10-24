@@ -450,5 +450,53 @@
         "atlas_tile": "skybluetech:baked_sulfuric_acid_flowing",
         "replicate": 2,
         "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/gas_static",
+        "atlas_tile": "skybluetech:gas_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.oxygen/static",
+        "atlas_tile": "skybluetech:baked_oxygen_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.brine/static",
+        "atlas_tile": "skybluetech:baked_brine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.brine/flowing",
+        "atlas_tile": "skybluetech:baked_brine_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.saturated_brine/static",
+        "atlas_tile": "skybluetech:baked_saturated_brine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.saturated_brine/flowing",
+        "atlas_tile": "skybluetech:baked_saturated_brine_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.chlorine/static",
+        "atlas_tile": "skybluetech:baked_chlorine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/static",
+        "atlas_tile": "skybluetech:baked_sodium_hydroxide_solution_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/flowing",
+        "atlas_tile": "skybluetech:baked_sodium_hydroxide_solution_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
     }
 ]

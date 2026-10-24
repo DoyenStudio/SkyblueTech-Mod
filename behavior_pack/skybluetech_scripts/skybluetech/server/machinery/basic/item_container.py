@@ -23,6 +23,8 @@ class ItemContainer(BaseMachine):
     类属性:
         item_input_slots (tuple[int, ...]): 可用输入槽位
         item_output_slots (tuple[int, ...]): 可用输出槽位
+        item_input_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面输入白名单
+        item_output_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面抽取白名单
 
     覆写:
         - `__init__`
@@ -30,6 +32,21 @@ class ItemContainer(BaseMachine):
 
     item_input_slots = ()  # type: tuple[int, ...]
     item_output_slots = ()  # type: tuple[int, ...]
+    # 键为 RelativeFacingStrEnum；None 不限制，空映射/缺失面/空元组禁止。
+    item_input_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
+    item_output_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
+
+    def GetItemInputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.item_input_slots, self.item_input_slots_by_face, relative_face
+        )
+
+    def GetItemOutputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.item_output_slots, self.item_output_slots_by_face, relative_face
+        )
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ItemContainer, self).__init__(dim, x, y, z, block_entity_data)

@@ -1,4 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.api.server import GetBlockStates
+from skybluetech_scripts.tooldelta.extensions.facing_utils import (
+    get_relative_facing,
+    get_relative_facing_by_facing_direction,
+)
+from skybluetech_scripts.skybluetech.common.define.facing import FACING_EN, OPPOSITE_FACING
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.base_machine import (
     K_DEACTIVE_FLAGS,
     K_STORE_RF,
@@ -52,6 +58,39 @@ class BaseMachine(object):
 
 
     # ==== API ====
+
+    def GetRelativeFacing(self, absolute_face):
+        # type: (str) -> str | None
+        "将机器被接触的绝对面转为相对面；方向缺失或无效时返回 None。"
+        states = GetBlockStates(self.dim, self.xyz) or {}
+        try:
+            if "minecraft:facing_direction" in states:
+                return get_relative_facing_by_facing_direction(
+                    states["minecraft:facing_direction"], absolute_face
+                )
+            return get_relative_facing(
+                states.get("minecraft:cardinal_direction"), absolute_face
+            )
+        except (ValueError, TypeError):
+            return None
+
+    def GetRelativeFacingFromAccessFacing(self, access_facing):
+        # type: (int) -> str | None
+        "接入方向指向机器，先取反得到机器被接触的面。"
+        if access_facing not in FACING_EN:
+            return None
+        return self.GetRelativeFacing(FACING_EN[OPPOSITE_FACING[access_facing]])
+
+    @staticmethod
+    def _filter_slots_for_face(slots, slots_by_face, relative_face):
+        # type: (tuple[int, ...], dict[str, tuple[int, ...]] | None, str | None) -> tuple[int, ...]
+        "分面白名单只缩小原有槽位范围，保留原有顺序，不修改类属性。"
+        if slots_by_face is None:
+            return tuple(slots)
+        if relative_face is None:
+            return ()
+        allowed_slots = slots_by_face.get(relative_face, ())
+        return tuple(slot for slot in slots if slot in allowed_slots)
 
     def AddPower(self, rf):
         # type: (int) -> tuple[bool, int]

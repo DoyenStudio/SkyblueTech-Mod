@@ -4,6 +4,7 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     alloy_furnace,
     compressor,
     engraver,
+    electrolyzer,
     fluid_condenser,
     macerator,
     magma_centrifuge,
@@ -49,6 +50,33 @@ engraver.EngraverRecipe.SetRenderer(
         },
     )
 )
+
+
+class ElectrolyzerRecipeRenderer(MachineRecipeRenderer):
+    render_ui_def_name = "RecipeCheckerLib.electrolyzer_recipes"
+    recipe_icon_id = machinery.Machinery.ELECTROLYZER
+
+    def RenderInit(self, panel):
+        MachineRecipeRenderer.RenderInit(self, panel)
+        input_items = self.recipe.inputs.get("item", {})
+        output_items = self.recipe.outputs.get("item", {})
+        for slot in (4, 5, 6):
+            panel["slot%d" % slot].SetVisible(
+                slot in input_items or slot in output_items
+            )
+        panel["progress_left/bg"].asImage().Rotate(180)
+        panel["progress_left/mask"].asImage().Rotate(180)
+
+    def RenderUpdate(self, panel, render_ticks):
+        MachineRecipeRenderer.RenderUpdate(self, panel, render_ticks)
+        duration = self.recipe.tick_duration * 3
+        progress = (render_ticks * 2.0) % duration / duration
+        panel["progress_left/mask"].asImage().SetSpriteClipRatio(
+            "fromRightToLeft", 1 - progress
+        )
+
+
+electrolyzer.ElectrolyzerRecipe.SetRenderer(ElectrolyzerRecipeRenderer)
 fluid_condenser.FluidCondenserRecipe.SetRenderer(
     type(
         "FluidCondenserRecipeRenderer",

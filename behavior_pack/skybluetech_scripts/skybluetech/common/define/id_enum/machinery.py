@@ -19,6 +19,7 @@ class Machinery(SimpleEnum):
     DISTILLATION_CHAMBER = "skybluetech:distillation_chamber"
     ELECTRIC_HEATER = "skybluetech:electric_heater"
     ELECTRIC_CRAFTER = "skybluetech:electric_crafter"
+    ELECTROLYZER = "skybluetech:electrolyzer"
     ENERGY_CUBE_JUNIOR = "skybluetech:energy_cube_junior"
     ENGRAVER = "skybluetech:engraver"
     FARMING_STATION = "skybluetech:farming_station"

@@ -47,6 +47,11 @@ FLUID_TEXTURES = {
     fluids.CommonLiquid.METHANE_MUD: BasicFluidTexture("textures/fluid/baked/skybluetech.methane_mud/static", 1, 1),
     fluids.CommonLiquid.LIQUID_AIR: BasicFluidTexture("textures/fluid/baked/skybluetech.liquid_air/static", 1, 1),
     fluids.CommonLiquid.LIQUID_RESIN: BasicFluidTexture("textures/fluid/baked/skybluetech.liquid_resin/static", 39, 2),
+    fluids.CommonGas.OXYGEN: BasicFluidTexture("textures/fluid/baked/skybluetech.oxygen/static", 32, 2),
+    fluids.CommonLiquid.BRINE: BasicFluidTexture("textures/fluid/baked/skybluetech.brine/static", 32, 2),
+    fluids.CommonLiquid.SATURATED_BRINE: BasicFluidTexture("textures/fluid/baked/skybluetech.saturated_brine/static", 32, 2),
+    fluids.CommonGas.CHLORINE: BasicFluidTexture("textures/fluid/baked/skybluetech.chlorine/static", 32, 2),
+    fluids.Alkali.SODIUM_HYDROXIDE_SOLUTION: BasicFluidTexture("textures/fluid/baked/skybluetech.sodium_hydroxide_solution/static", 32, 2),
 }
 
 

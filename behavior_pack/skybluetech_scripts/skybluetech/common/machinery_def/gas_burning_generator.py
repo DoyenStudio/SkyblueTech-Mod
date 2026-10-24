@@ -14,4 +14,6 @@ STORE_RF_MAX = 28800
 recipes = RecipesCollection(
     Machinery.GAS_BURNING_GENERATOR,
     GasBurningGeneratorRecipe(fluids.CommonGas.METHANE, 4, 160),
+    # Electrolysis: 40 mB / 10 ticks at 480 RF/t; burn at 4x, recover 15/16.
+    GasBurningGeneratorRecipe(fluids.CommonGas.HYDROGEN, 16, 1800),
 )  # type: RecipesCollection[GeneratorRecipe]

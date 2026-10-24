@@ -76,7 +76,13 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
     m = GetLoadedMachine(ap.dim, *cxyz)
     if not isinstance(m, MultiFluidContainer):
         return False, fluid_volume
-    ok, rest_fluid_volume = m.AddFluid(fluid_id, fluid_volume)
+    if m.fluid_input_slots_by_face is None:
+        ok, rest_fluid_volume = m.AddFluid(fluid_id, fluid_volume)
+    else:
+        relative_face = m.GetRelativeFacingFromAccessFacing(ap.access_facing)
+        ok, rest_fluid_volume = m.AddFluidFromFace(
+            fluid_id, fluid_volume, relative_face
+        )
     return ok, rest_fluid_volume
 
 
@@ -113,7 +119,10 @@ def onNetworkTick(network):
         om = GetLoadedMachine(output.dim, *output.target_pos)
         if isinstance(om, MultiFluidContainer):
             do_break = False
-            for slot in om.fluid_output_slots:
+            relative_face = None
+            if om.fluid_output_slots_by_face is not None:
+                relative_face = om.GetRelativeFacingFromAccessFacing(output.access_facing)
+            for slot in om.GetFluidOutputSlotsForFace(relative_face):
                 fluid = om.fluids[slot]
                 fluid_id = fluid.fluid_id
                 if fluid_id is not None and fluid.volume <= 0:

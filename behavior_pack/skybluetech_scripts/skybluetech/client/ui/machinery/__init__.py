@@ -10,6 +10,7 @@ from .digger import DiggerUI
 from .distillation_chamber import DistillationChamberUI
 from .electric_crafter import ElectricCrafterUI
 from .electric_heater import ElectricHeaterUI
+from .electrolyzer import ElectrolyzerUI
 from .energy_cube import EnergyCubeUI
 from .engraver import EngraverUI
 from .farming_station import FarmingStationUI

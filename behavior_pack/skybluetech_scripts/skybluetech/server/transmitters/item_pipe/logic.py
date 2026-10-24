@@ -49,9 +49,10 @@ if 0 > 1:
 # 读取容器内容走方块实体 NBT 批量读(箱子走容器 API) + 跨 tick 缓存, 不区分机器与普通
 # 容器; 只在真正写入某个槽位时构造 ItemPushInCustomContainerServerEvent /
 # ItemPullOutCustomContainerServerEvent 广播一次来验证这一次取出 / 存入:
-# 机器在 machinery/basic/register.py 里按 item_input_slots / item_output_slots / IsValidInput
+# 机器在 machinery/listeners/event_listener.py 里按 item_input_slots / item_output_slots / IsValidInput
 # 否决(容器里不属于机器物品槽位的格子因此不会被塞东西), 附属模组同样可以否决。
 # 被否决的槽位直接跳过, 不产生任何写入。
+# 分面白名单在枚举候选槽位时按接入点筛选，不替代上述事件校验。
 
 # todo: 后续优化:
 #       1. 添加物品过滤功能
@@ -152,8 +153,8 @@ def PostItemIntoNetworks(dim, xyz, item, networks):
     return item
 
 
-def _push_item_to_container(dim, xyz, item, limit_count=None):
-    # type: (int, tuple[int, int, int], Item, int | None) -> Item | None
+def _push_item_to_container(dim, xyz, face, item, limit_count=None):
+    # type: (int, tuple[int, int, int], int, Item, int | None) -> Item | None
     """
     把物品放满容器的各个槽位, 返回剩余物品 (全部放入则返回 None)。
 
@@ -168,7 +169,10 @@ def _push_item_to_container(dim, xyz, item, limit_count=None):
     if container_size is None or container_size <= 0:
         return item
     block_name = GetBlockName(dim, xyz) or ""
-    for slot_pos in py2_xrange(container_size):
+    slots = _filter_machine_slots_for_access(
+        dim, xyz, face, tuple(py2_xrange(container_size)), True
+    )
+    for slot_pos in slots:
         if rest.count <= 0:
             break
         orig_item = GetContainerItem(dim, xyz, slot_pos, getUserData=True)
@@ -201,8 +205,8 @@ def PushItemToGenericContainer(ap, item, limit_count=None):
 
 def PushItemToGenericContainerEasy(dim, xyz, face, item, limit_count=None):
     # type: (int, tuple[int, int, int], int, Item, int | None) -> Item | None
-    "把物品投入指定坐标的容器, 返回剩余物品。"
-    return _push_item_to_container(dim, xyz, item, limit_count)
+    "把物品投入指定坐标的容器；face 从来源指向目标，返回剩余物品。"
+    return _push_item_to_container(dim, xyz, face, item, limit_count)
 
 
 def onMachineryPlacedLater(dim, x, y, z):
@@ -234,7 +238,7 @@ def onNetworkTick(network):
     for output_index in range(output_count):
         output_ap = outputs[(start + output_index) % output_count]
         output_pos = output_ap.target_pos
-        output_slotposes = _get_container_output_slots(network, output_pos)
+        output_slotposes = _get_container_output_slots(network, output_ap)
 
         pair_pos = None
         if _is_chest(network, output_pos):
@@ -309,7 +313,7 @@ def onNetworkTick(network):
                         scanned_in_chest_pairs.add(ipair_key)
 
                 break_flag2 = False
-                input_slotposes = _get_container_input_slots(network, input_pos)
+                input_slotposes = _get_container_input_slots(network, input_ap)
                 input_name = _get_block_name(network, input_pos)
                 for input_slot in input_slotposes:
                     input_item = _get_container_item(network, input_pos, input_slot)
@@ -453,14 +457,44 @@ def _get_container_slotposes(network, xyz):
     return res
 
 
-def _get_container_input_slots(network, xyz):
-    # type: (ItemPipeNetwork, tuple[int, int, int]) -> tuple[int, ...]
-    return _get_container_slotposes(network, xyz)[0]
+def _filter_machine_slots_for_access(dim, xyz, access_facing, slots, is_input):
+    # type: (int, tuple[int, int, int], int, tuple[int, ...], bool) -> tuple[int, ...]
+    "只筛选设置了对应分面白名单的机器；不缓存依赖朝向的结果。"
+    # 机器模块也会导入管道接口，延迟导入避免初始化时形成循环依赖。
+    from skybluetech_scripts.skybluetech.server.machinery.basic.item_container import ItemContainer
+    from skybluetech_scripts.skybluetech.server.machinery.core.pool import GetLoadedMachine
+
+    machine = GetLoadedMachine(dim, *xyz)
+    if not isinstance(machine, ItemContainer):
+        return slots
+    slots_by_face = (
+        machine.item_input_slots_by_face if is_input
+        else machine.item_output_slots_by_face
+    )
+    if slots_by_face is None:
+        return slots
+    relative_face = machine.GetRelativeFacingFromAccessFacing(access_facing)
+    allowed_slots = (
+        machine.GetItemInputSlotsForFace(relative_face) if is_input
+        else machine.GetItemOutputSlotsForFace(relative_face)
+    )
+    return tuple(slot for slot in slots if slot in allowed_slots)
 
 
-def _get_container_output_slots(network, xyz):
-    # type: (ItemPipeNetwork, tuple[int, int, int]) -> tuple[int, ...]
-    return _get_container_slotposes(network, xyz)[1]
+def _get_container_input_slots(network, ap):
+    # type: (ItemPipeNetwork, ItemPipeAccessPoint) -> tuple[int, ...]
+    return _filter_machine_slots_for_access(
+        network.dim, ap.target_pos, ap.access_facing,
+        _get_container_slotposes(network, ap.target_pos)[0], True
+    )
+
+
+def _get_container_output_slots(network, ap):
+    # type: (ItemPipeNetwork, ItemPipeAccessPoint) -> tuple[int, ...]
+    return _filter_machine_slots_for_access(
+        network.dim, ap.target_pos, ap.access_facing,
+        _get_container_slotposes(network, ap.target_pos)[1], False
+    )
 
 
 def _get_block_name(network, xyz):

@@ -73,6 +73,14 @@
     "skybluetech:bedrock_lava_drill_io_fluid": {
         "textures": "skybluetech:bedrock_lava_drill_io_fluid"
     },
+    "skybluetech:brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_brine_static",
+            "side": "skybluetech:baked_brine_flowing",
+            "up": "skybluetech:baked_brine_static"
+        }
+    },
     "skybluetech:bronze_block": {
         "sound": "copper",
         "textures": "skybluetech:bronze_block"
@@ -80,6 +88,10 @@
     "skybluetech:charger": {
         "client_entity": {},
         "sound": "iron"
+    },
+    "skybluetech:chlorine": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_chlorine_static"
     },
     "skybluetech:compressed_air": {
         "blockshape": "water",
@@ -220,6 +232,18 @@
     },
     "skybluetech:fermenter_io_item1": {
         "textures": "skybluetech:fermenter_item_interface"
+    },
+    "skybluetech:flowing_brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_brine_static",
+            "side": "skybluetech:baked_brine_flowing",
+            "up": "skybluetech:baked_brine_flowing"
+        }
+    },
+    "skybluetech:flowing_chlorine": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_chlorine_static"
     },
     "skybluetech:flowing_compressed_air": {
         "blockshape": "water",
@@ -405,6 +429,10 @@
         "blockshape": "water",
         "textures": "skybluetech:baked_nitrogen_static"
     },
+    "skybluetech:flowing_oxygen": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_oxygen_static"
+    },
     "skybluetech:flowing_raw_oil": {
         "blockshape": "water",
         "textures": {
@@ -413,12 +441,28 @@
             "up": "skybluetech:baked_raw_oil_flowing"
         }
     },
+    "skybluetech:flowing_saturated_brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_saturated_brine_static",
+            "side": "skybluetech:baked_saturated_brine_flowing",
+            "up": "skybluetech:baked_saturated_brine_flowing"
+        }
+    },
     "skybluetech:flowing_so3": {
         "blockshape": "water",
         "textures": {
             "down": "skybluetech:baked_so3_static",
             "side": "skybluetech:baked_so3_flowing",
             "up": "skybluetech:baked_so3_flowing"
+        }
+    },
+    "skybluetech:flowing_sodium_hydroxide_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_sodium_hydroxide_solution_static",
+            "side": "skybluetech:baked_sodium_hydroxide_solution_flowing",
+            "up": "skybluetech:baked_sodium_hydroxide_solution_flowing"
         }
     },
     "skybluetech:flowing_sulfuric_acid": {
@@ -604,6 +648,17 @@
             "down": "skybluetech:baked_lubricant_static",
             "side": "skybluetech:baked_lubricant_flowing",
             "up": "skybluetech:baked_lubricant_static"
+        }
+    },
+    "skybluetech:electrolyzer": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:electrolyzer_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
         }
     },
     "skybluetech:macerator": {
@@ -814,6 +869,10 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:oxygen": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_oxygen_static"
+    },
     "skybluetech:pipe_acidproof": {
         "sound": "iron"
     },
@@ -922,6 +981,14 @@
         "client_entity": {},
         "sound": "iron"
     },
+    "skybluetech:saturated_brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_saturated_brine_static",
+            "side": "skybluetech:baked_saturated_brine_flowing",
+            "up": "skybluetech:baked_saturated_brine_static"
+        }
+    },
     "skybluetech:sawmill": {
         "sound": "iron",
         "textures": {
@@ -945,6 +1012,14 @@
             "down": "skybluetech:baked_so3_static",
             "side": "skybluetech:baked_so3_flowing",
             "up": "skybluetech:baked_so3_static"
+        }
+    },
+    "skybluetech:sodium_hydroxide_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_sodium_hydroxide_solution_static",
+            "side": "skybluetech:baked_sodium_hydroxide_solution_flowing",
+            "up": "skybluetech:baked_sodium_hydroxide_solution_static"
         }
     },
     "skybluetech:solar_panel": {

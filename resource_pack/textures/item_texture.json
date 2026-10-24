@@ -34,6 +34,9 @@
         "skybluetech:bio_dust": {
             "textures": "textures/items/dusts/bio_dust"
         },
+        "skybluetech:brine_bucket": {
+            "textures": "textures/items/buckets/brine_bucket"
+        },
         "skybluetech:bronze_axe": {
             "textures": "textures/items/metal_tools/bronze_axe"
         },
@@ -81,6 +84,9 @@
         },
         "skybluetech:cartidge_5_model": {
             "textures": "textures/models/cartidges/cartidge_cyan"
+        },
+        "skybluetech:chlorine_bucket": {
+            "textures": "textures/items/buckets/chlorine_bucket"
         },
         "skybluetech:circuit_base_plate": {
             "textures": "textures/items/circuit_base_plate"
@@ -432,6 +438,12 @@
         },
         "skybluetech:platinum_plate": {
             "textures": "textures/items/plates/platinum_plate"
+        },
+        "skybluetech:saturated_brine_bucket": {
+            "textures": "textures/items/buckets/saturated_brine_bucket"
+        },
+        "skybluetech:sodium_hydroxide_solution_bucket": {
+            "textures": "textures/items/buckets/sodium_hydroxide_solution_bucket"
         },
         "skybluetech:titanium_plate": {
             "textures": "textures/items/plates/titanium_plate"

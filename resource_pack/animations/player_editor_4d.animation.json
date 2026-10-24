@@ -1,0 +1,18 @@
+{
+    "animations": {
+        "animation.player_4d.editor_empty": {
+            "animation_length": 0.05,
+            "bones": {
+                "root": {
+                    "rotation": [
+                        0,
+                        0,
+                        0
+                    ]
+                }
+            },
+            "loop": true
+        }
+    },
+    "format_version": "1.8.0"
+}

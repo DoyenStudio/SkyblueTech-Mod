@@ -3,6 +3,7 @@ from skybluetech_scripts.tooldelta.api.client import (
     AddTextureToOneActor,
     CreateClientEntity,
     DestroyClientEntity,
+    GetBlockTextures,
     SetEntityShadowShow,
     RebuildRenderForOneActor,
 )
@@ -11,8 +12,13 @@ from .client_molangs import Y_SCALE
 
 
 def GetFluidTexturePath(fluid_id):
-    # type: (str) -> str
-    return "textures/fluid_models/" + fluid_id.replace(":", ".")
+    # type: (str) -> str | None
+    texture_info = GetBlockTextures(fluid_id)
+    if not texture_info:
+        return None
+    # 使用源流体方块的顶面；多贴图变体取首个路径。
+    paths = texture_info.get("Up", {}).get("paths", [])
+    return paths[0] if paths else None
 
 
 class FluidModel:
@@ -57,9 +63,13 @@ class FluidModel:
 
     def SetTexture(self, fluid_id):
         # type: (str) -> bool
+        texture_path = GetFluidTexturePath(fluid_id)
+        if not texture_path:
+            print("[ST] Failed to get fluid block top texture: " + fluid_id)
+            return False
         self.fluid_id = fluid_id
         self._try_rebuild()
-        res = AddTextureToOneActor(self.ceid, "default", GetFluidTexturePath(fluid_id))
+        res = AddTextureToOneActor(self.ceid, "default", texture_path)
         if not res:
             print("[ST] Failed to add texture to fluid model")
             return False

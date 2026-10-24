@@ -458,8 +458,8 @@
         "skybluetech:freezer_front_active": {
             "textures": "textures/blocks/machinery/freezer_front_active"
         },
-        "skybluetech:gas": {
-            "textures": "textures/fluid/gas"
+        "skybluetech:gas_static": {
+            "textures": "textures/fluid/gas_static"
         },
         "skybluetech:gas_burning_generator": {
             "textures": "textures/models/gas_burning_generator_texture"

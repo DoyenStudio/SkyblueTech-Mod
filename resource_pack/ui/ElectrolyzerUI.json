@@ -41,10 +41,10 @@
                                 "controls": [
                                     {
                                         "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "$slot0": 0,
-                                            "$slot1": 1,
-                                            "$slot2": 2,
-                                            "$slot3": 3,
+                                            "$slot0": 3,
+                                            "$slot1": 4,
+                                            "$slot2": 5,
+                                            "$slot3": 6,
                                             "anchor_from": "top_right",
                                             "anchor_to": "top_left"
                                         }
@@ -216,7 +216,7 @@
                                                         "controls": [
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 4
+                                                                    "collection_index": 1
                                                                 }
                                                             }
                                                         ]
@@ -237,7 +237,7 @@
                                                         "controls": [
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 5
+                                                                    "collection_index": 0
                                                                 }
                                                             }
                                                         ]
@@ -258,7 +258,7 @@
                                                         "controls": [
                                                             {
                                                                 "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 6
+                                                                    "collection_index": 2
                                                                 }
                                                             }
                                                         ]

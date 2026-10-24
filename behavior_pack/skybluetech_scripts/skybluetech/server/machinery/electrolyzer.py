@@ -18,8 +18,8 @@ class Electrolyzer(Processor, MultiFluidContainer):
     process_item = True
     process_fluid = True
     recipes = recipes
-    item_input_slots = (5,)  # Anode.
-    item_output_slots = (4, 6)  # Cathode product, anode by-product.
+    item_input_slots = (0,)  # Anode.
+    item_output_slots = (1, 2)  # Cathode product, anode by-product.
     fluid_input_slots = (0,)
     fluid_output_slots = (1, 2, 3)
     fluid_output_slots_by_face = {
@@ -29,7 +29,7 @@ class Electrolyzer(Processor, MultiFluidContainer):
     }
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
-    upgrade_slot_start = 0
+    upgrade_slot_start = 3
     upgrade_slots = 4
 
     def _processor_on_ticking(self):

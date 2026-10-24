@@ -18,7 +18,11 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     sawmill,
 )
 
-from .define import GeneratorRecipeRenderer, MachineRecipeRenderer
+from .define import (
+    GeneratorRecipeRenderer,
+    MachineRecipeRenderer,
+    MachineRecipeRendererBase,
+)
 
 alloy_furnace.AlloyFurnaceRecipe.SetRenderer(
     type(
@@ -52,31 +56,31 @@ engraver.EngraverRecipe.SetRenderer(
 )
 
 
-class ElectrolyzerRecipeRenderer(MachineRecipeRenderer):
-    render_ui_def_name = "RecipeCheckerLib.electrolyzer_recipes"
-    recipe_icon_id = machinery.Machinery.ELECTROLYZER
+# class ElectrolyzerRecipeRenderer(MachineRecipeRendererBase):
+#     render_ui_def_name = "RecipeCheckerLib.electrolyzer_recipes"
+#     recipe_icon_id = machinery.Machinery.ELECTROLYZER
 
-    def RenderInit(self, panel):
-        MachineRecipeRenderer.RenderInit(self, panel)
-        input_items = self.recipe.inputs.get("item", {})
-        output_items = self.recipe.outputs.get("item", {})
-        for slot in (4, 5, 6):
-            panel["slot%d" % slot].SetVisible(
-                slot in input_items or slot in output_items
-            )
-        panel["progress_left/bg"].asImage().Rotate(180)
-        panel["progress_left/mask"].asImage().Rotate(180)
-
-    def RenderUpdate(self, panel, render_ticks):
-        MachineRecipeRenderer.RenderUpdate(self, panel, render_ticks)
-        duration = self.recipe.tick_duration * 3
-        progress = (render_ticks * 2.0) % duration / duration
-        panel["progress_left/mask"].asImage().SetSpriteClipRatio(
-            "fromRightToLeft", 1 - progress
-        )
+#     def RenderInit(self, panel):
+#         MachineRecipeRendererBase.RenderInit(self, panel)
+#         input_items = self.recipe.inputs.get("item", {})
+#         output_items = self.recipe.outputs.get("item", {})
+#         for slot in (0, 1, 2):
+#             panel["slot%d" % slot].SetVisible(
+#                 slot in input_items or slot in output_items
+#             )
 
 
-electrolyzer.ElectrolyzerRecipe.SetRenderer(ElectrolyzerRecipeRenderer)
+electrolyzer.ElectrolyzerRecipe.SetRenderer(
+    type(
+        "ElectrolyzerRecipeRenderer",
+        (MachineRecipeRenderer,),
+        {
+            "render_ui_def_name": "RecipeCheckerLib.electrolyzer_recipes",
+            "recipe_icon_id": machinery.Machinery.ELECTROLYZER,
+            "render_progress": False,
+        },
+    )
+)
 fluid_condenser.FluidCondenserRecipe.SetRenderer(
     type(
         "FluidCondenserRecipeRenderer",

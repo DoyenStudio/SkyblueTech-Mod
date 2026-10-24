@@ -36,12 +36,12 @@ class ElectrolyzerRecipe(MachineRecipe):
                 raise ValueError("output_volume3 must be positive when output_fluid3 is set")
             outputs[CategoryType.FLUID][3] = Output(output_fluid3, output_volume3)
         if input_item is not None:
-            inputs[CategoryType.ITEM] = {5: input_item}
+            inputs[CategoryType.ITEM] = {0: input_item}
         item_outputs = {}
         if output_item is not None:
-            item_outputs[4] = output_item
+            item_outputs[1] = output_item
         if byproduct is not None:
-            item_outputs[6] = byproduct
+            item_outputs[2] = byproduct
         if item_outputs:
             outputs[CategoryType.ITEM] = item_outputs
         MachineRecipe.__init__(

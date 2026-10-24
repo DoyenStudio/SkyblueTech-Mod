@@ -1,6 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF
 from mod_log import logger
-from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId
+
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantBuildRequest,
@@ -30,7 +31,7 @@ def onEstablishConn(event):
             event.player_id
         )
         return
-    dim = GetPlayerDimensionId(event.player_id)
+    dim = CF.CreateDimension(event.player_id).GetEntityDimensionId()
     start_m = GetLoadedMachine(dim, event.x, event.y, event.z)
     if not isinstance(start_m, RFRepeaterPlant):
         RFRepeaterPlantBuildResponse(
@@ -153,7 +154,7 @@ def onSettingUpload(event):
     # type: (RFRepeaterPlantSettingUpload) -> None
     from . import RFRepeaterPlant
 
-    dim = GetPlayerDimensionId(event.player_id)
+    dim = CF.CreateDimension(event.player_id).GetEntityDimensionId()
     m = GetLoadedMachine(dim, event.x, event.y, event.z)
     if not isinstance(m, RFRepeaterPlant):
         return

@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.ui_keys import (
     HOVER_TEXT_DISPLAYER_UI,
 )
@@ -10,7 +11,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_R
 from skybluetech_scripts.skybluetech.common.machinery_def.hover_text_displayer import (
     STORE_RF_MAX,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
@@ -41,7 +41,7 @@ class HoverTextDisplayerUI(MachinePanelUI):
     def OnTicking(self):
         if not self.inited:
             return
-        data = GetBlockEntityData(self.x, self.y, self.z)
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((self.x, self.y, self.z))
         if data is None:
             return
         data = data["exData"]

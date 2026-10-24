@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 
 from skybluetech_scripts.skybluetech.common.events.machinery.assembler import (
     ACTION_PULL_UPGRADER,
@@ -11,10 +12,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.assembler import (
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
@@ -48,7 +45,7 @@ class AssemblerUI(MachinePanelUIProxy):
         AssemblerActionRequest(x, y, z, ACTION_PUSH_UPGRADER, 0).send()
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -66,7 +63,7 @@ class AssemblerUI(MachinePanelUIProxy):
         # type: (list[tuple[str, str, int]]) -> None
         for i, (typ, text, count) in enumerate(lis):
             if count != -1:
-                text = GetItemHoverName(text)
+                text = CF.CreateItem(LEVEL_ID).GetItemHoverName(text)
             elem = self.upgraders_grid.GetGridItem(0, i)
             elem["text"].asLabel().SetText(text)
             elem["item"].asItemRenderer().SetUiItem(Item(typ))

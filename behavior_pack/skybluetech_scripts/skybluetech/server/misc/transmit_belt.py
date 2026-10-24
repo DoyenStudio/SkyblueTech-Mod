@@ -1,17 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.events.server import (
     OnEntityInsideBlockServerEvent,
     ServerPlaceBlockEntityEvent,
 )
-from skybluetech_scripts.tooldelta.api.server import (
-    GetEntityDimension,
-    GetBlockNameAndAux,
-    GetBlockCardinalFacing,
-    GetBlockStates,
-    GetFootPos,
-    UpdateBlockStates,
-    SetMotion,
-)
+
 from ...common.define.facing import CARDINAL_DIRECTION_TO_DXZ
 from ...common.define.id_enum import TransmitBelt
 
@@ -48,7 +41,7 @@ def get_motion_by_facing_str(cardinal_direction):
 
 def get_motion(dim, block_pos, entity_pos):
     # type: (int, tuple[int, int, int], tuple[float, float, float]) -> tuple[float, float, float]
-    blockstates = GetBlockStates(dim, block_pos)
+    blockstates = CF.CreateBlockState(LEVEL_ID).GetBlockStates(block_pos, dim)
     cardinal_direction = blockstates["minecraft:cardinal_direction"] # type: str
     belt_state = blockstates["skybluetech:transmit_belt_status"] # type: str
 
@@ -82,9 +75,10 @@ def onTransmitBeltPlaced(event):
     # type: (ServerPlaceBlockEntityEvent) -> None
     if event.blockName != TransmitBelt.BELT:
         return
-    cardinal_direction = GetBlockCardinalFacing(
-        event.dimension, (event.posX, event.posY, event.posZ)
-    )
+    cardinal_direction = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+        (event.posX, event.posY, event.posZ),
+        event.dimension,
+    )["minecraft:cardinal_direction"]
 
     state = BeltState.STRAIGHT
 
@@ -95,44 +89,56 @@ def onTransmitBeltPlaced(event):
 
     # 左边检测
     if (
-        GetBlockNameAndAux(
-            event.dimension, (event.posX + ldx, event.posY, event.posZ + ldz)
-        )[0]
+        (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            (event.posX + ldx, event.posY, event.posZ + ldz),
+            event.dimension,
+        ) or {}).get("name")
         == TransmitBelt.BELT
     ):
-        lcardinal_direction = GetBlockCardinalFacing(
-            event.dimension, (event.posX + ldx, event.posY, event.posZ + ldz)
-        )
+        lcardinal_direction = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            (event.posX + ldx, event.posY, event.posZ + ldz),
+            event.dimension,
+        )["minecraft:cardinal_direction"]
         if lcardinal_direction == right_dir:
             state = BeltState.CORNER_LEFT
 
     # 右边检测
     if (
-        GetBlockNameAndAux(
-            event.dimension, (event.posX + rdx, event.posY, event.posZ + rdz)
-        )[0]
+        (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            (event.posX + rdx, event.posY, event.posZ + rdz),
+            event.dimension,
+        ) or {}).get("name")
         == TransmitBelt.BELT
     ):
-        rcardinal_direction = GetBlockCardinalFacing(
-            event.dimension, (event.posX + rdx, event.posY, event.posZ + rdz)
-        )
+        rcardinal_direction = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            (event.posX + rdx, event.posY, event.posZ + rdz),
+            event.dimension,
+        )["minecraft:cardinal_direction"]
         if rcardinal_direction == left_dir:
             state = BeltState.CORNER_RIGHT
 
 
-    UpdateBlockStates(
-        event.dimension,
+    _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
         (event.posX, event.posY, event.posZ),
-        {"skybluetech:transmit_belt_status": state},
+        event.dimension,
     )
+    if _block_states is not None:
+        _block_states.update({"skybluetech:transmit_belt_status": state})
+        CF.CreateBlockState(LEVEL_ID).SetBlockStates(
+            (event.posX, event.posY, event.posZ),
+            _block_states,
+            event.dimension,
+        )
 
 @OnEntityInsideBlockServerEvent.Listen()
 def onEntityInsideBlock(event):
     # type: (OnEntityInsideBlockServerEvent) -> None
     if event.blockName != TransmitBelt.BELT:
         return
-    x, y, z = GetFootPos(event.entityId)
+    x, y, z = CF.CreatePos(event.entityId).GetFootPos()
     if y % 1.0 > 0.125:
         return
-    dim = GetEntityDimension(event.entityId)
-    SetMotion(event.entityId, get_motion(dim, (event.blockX, event.blockY, event.blockZ), (x, y, z)))
+    dim = CF.CreateDimension(event.entityId).GetEntityDimensionId()
+    CF.CreateActorMotion(event.entityId).SetMotion(
+        get_motion(dim, (event.blockX, event.blockY, event.blockZ), (x, y, z)),
+    )

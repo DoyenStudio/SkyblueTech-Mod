@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.internal import GetServer
 from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.skybluetech.common.define.facing import FACING_DXYZ
 from skybluetech_scripts.skybluetech.common.define.id_enum.items import Upgraders
@@ -8,7 +9,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.upgraders import (
     SPEED_NEGATIVE,
     SPEED_POSITIVE,
 )
-from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server.item import (
     PlayerTryPutCustomContainerItemServerEvent,
@@ -126,10 +127,10 @@ class UpgradeControl(SPControl, ItemContainer):
             extra_item = item.copy()
             extra_item.count = item.count - 1
             px, py, pz = self.xyz
-            SpawnDroppedItem(
+            GetServer().CreateEngineItemEntity(
+                extra_item.marshal(),
                 self.dim,
                 (px + 0.5, py + 0.5, pz + 0.5),
-                extra_item,
             )
             item.count = 1
             self.SetSlotItem(slot, item)

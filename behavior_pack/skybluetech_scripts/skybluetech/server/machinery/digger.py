@@ -1,16 +1,8 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server.block import (
-    GetBlockBasicInfo,
-    GetBlockFacingDir,
-    GetBlockNameAndAux,
-    SetBlock,
-)
-from skybluetech_scripts.tooldelta.api.server.entity import (
-    DestroyEntity,
-    GetDroppedItem,
-    GetEntitiesBySelector,
-    SpawnDroppedItem,
-)
+from skybluetech_scripts.tooldelta.define.item import Item
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
+from skybluetech_scripts.tooldelta.define.block import BlockBasicInfo
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
 )
@@ -36,6 +28,7 @@ from .core import RegisterMachine
 
 TICKS_PER_SECOND = 20
 block_sync = BlockSync(Machinery.DIGGER, side=BlockSync.SIDE_SERVER)
+block_basic_info_cache = {}  # type: dict[str, BlockBasicInfo]
 
 
 @RegisterMachine
@@ -56,11 +49,16 @@ class Digger(WorkRenderer, UpgradeControl, GUIControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         super(Digger, self).__init__(dim, x, y, z, block_entity_data)
         self.dx, self.dy, self.dz = GetOppositeDirFromFacing(
-            GetBlockFacingDir(self.dim, (x, y, z))
+            CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+                (x, y, z),
+                self.dim,
+            )["minecraft:facing_direction"]
         )
-        self._front_block, self._front_block_aux = GetBlockNameAndAux(
-            self.dim, (x + self.dx, y + self.dy, z + self.dz)
-        )  # block is None?
+        block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            (x + self.dx, y + self.dy, z + self.dz),
+            self.dim,
+        )
+        self._front_block, self._front_block_aux = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])  # block is None?
         self.prev_crack_stage = 0
         self.handler.SubscribeOnPlaced(self._digger_on_placed)
         self.handler.SubscribeOnTicking(self._digger_on_ticking)
@@ -105,15 +103,24 @@ class Digger(WorkRenderer, UpgradeControl, GUIControl):
 
     def start_next(self, new_block=None):
         # type: (tuple[str, int] | None) -> None
-        block_name, block_aux = new_block or GetBlockNameAndAux(
-            self.dim, (self.x + self.dx, self.y + self.dy, self.z + self.dz)
-        )
+        if new_block:
+            block_name, block_aux = new_block
+        else:
+            block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                (self.x + self.dx, self.y + self.dy, self.z + self.dz),
+                self.dim,
+            )
+            block_name, block_aux = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
         self.front_block = block_name
         self.front_block_aux = block_aux
         if block_name is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
-        basic = GetBlockBasicInfo(block_name)
+        basic = block_basic_info_cache.get(block_name)
+        if basic is None:
+            basic = block_basic_info_cache[block_name] = BlockBasicInfo.unmarshal(
+                CF.CreateBlockInfo(LEVEL_ID).GetBlockBasicInfo(block_name)
+            )
         if basic.destroyTime <= 0.0 or basic.destroyTime == 100.0:
             # 水 ~ = 100
             self.front_block = "minecraft:air"
@@ -126,31 +133,32 @@ class Digger(WorkRenderer, UpgradeControl, GUIControl):
         self.ResetProgress()
 
     def run_once(self):
-        SetBlock(
-            self.dim,
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
             (self.x + self.dx, self.y + self.dy, self.z + self.dz),
-            "minecraft:air",
-            old_block_handing=1,
+            {"name": "minecraft:air", "aux": 0},
+            1,
+            dimensionId=self.dim,
         )
         self.collect()
 
     def collect(self):
-        item_uqids = GetEntitiesBySelector(
-            "@e[type=item,x=%d,y=%d,z=%d,r=1.5]"
-            % (self.x + self.dx, self.y + self.dy, self.z + self.dz)
-        )
-        items = [GetDroppedItem(item_uqid, True) for item_uqid in item_uqids]
+        item_uqids = CF.CreateEntityComponent("").GetEntitiesBySelector("@e[type=item,x=%d,y=%d,z=%d,r=1.5]"
+            % (self.x + self.dx, self.y + self.dy, self.z + self.dz))
+        items = []
         for item_uqid in item_uqids:
-            DestroyEntity(item_uqid)
+            raw_item = CF.CreateItem(LEVEL_ID).GetDroppedItem(item_uqid, True)
+            items.append(Item.from_dict(raw_item) if raw_item is not None else None)
+        for item_uqid in item_uqids:
+            GetServer().DestroyEntity(item_uqid)
         for item in items:
             if item is None:
                 continue
             item_rest = self.OutputItem(item)
             if item_rest is not None:
-                SpawnDroppedItem(
+                GetServer().CreateEngineItemEntity(
+                    item_rest.marshal(),
                     self.dim,
                     (self.x - self.dx, self.y - self.dy, self.z - self.dz),
-                    item_rest,
                 )
 
     def update_crack_frame_to_client(self):

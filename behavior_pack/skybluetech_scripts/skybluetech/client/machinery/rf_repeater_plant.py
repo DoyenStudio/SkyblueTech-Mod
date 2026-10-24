@@ -1,10 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import (
-    CreateShapeFactory,
-    GetBlockNameAndAux,
-    GetBlockEntityData as CGetBlockEntityData,
-    GetPlayerDimensionId,
-)
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId
 from skybluetech_scripts.tooldelta.events.client import (
     ClientBlockUseEvent,
     DimensionChangeClientEvent,
@@ -32,7 +28,7 @@ class WireLaser:
         # type: (tuple[float, float, float], tuple[float, float, float]) -> None
         x1, y1, z1 = self.start_pos = start_pos
         x2, y2, z2 = self.end_pos = end_pos
-        self.shape = CreateShapeFactory().AddLineShape(
+        self.shape = CF.CreateDrawing(LEVEL_ID).AddLineShape(
             (x1 + 0.5, y1 + 2.8, z1 + 0.5),
             (x2 + 0.5, y2 + 2.8, z2 + 0.5),
             hex2rgb(0x00FFFF),
@@ -62,7 +58,7 @@ def hex2rgb(hex):
 
 def add_wire(xyz1, xyz2):
     # type: (tuple[int, int, int], tuple[int, int, int]) -> None
-    dim = GetPlayerDimensionId()
+    dim = CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
     laser = WireLaser(xyz1, xyz2)
     prev_laser = lasers.get(dim, {}).get(xyz1, {}).get(xyz2, None)
     if prev_laser:
@@ -76,7 +72,7 @@ def add_wire(xyz1, xyz2):
 
 def remove_wire_src(xyz):
     # type: (tuple[int, int, int]) -> None
-    dim = GetPlayerDimensionId()
+    dim = CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
     pos_lasers = lasers.get(dim, {}).pop(xyz, None)
     if pos_lasers is None:
         return
@@ -94,7 +90,7 @@ def remove_wire_src(xyz):
 @asModBlockLoadedListener(Machinery.RF_REPEATER_PLANT)
 def onPlantLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
-    block_entity_data = CGetBlockEntityData(event.posX, event.posY, event.posZ)
+    block_entity_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((event.posX, event.posY, event.posZ))
     if block_entity_data is None:
         return
     pydata = NBT2Py(block_entity_data["exData"])
@@ -114,7 +110,7 @@ def onClientBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
     if event.blockName != Machinery.RF_REPEATER_PLANT:
         return
-    _, aux = GetBlockNameAndAux((event.x, event.y, event.z))
+    _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((event.x, event.y, event.z)) or (None, 0)
     layer = (aux & 0b1100) >> 2
     if layer != 0:
         # 只改变 GUI 读取到的 xyz。。

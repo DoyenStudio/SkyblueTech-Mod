@@ -1,4 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.skybluetech.common.export import (
     MOD_NAMESPACE,
     GetCategoryOptions,
@@ -7,11 +9,6 @@ from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType
 from skybluetech_scripts.skybluetech.client.ui.recipe_checker.favourite_items import (
     GetFavourites,
 )
-from skybluetech_scripts.tooldelta.api.client import (
-    GetItemFormattedHoverText,
-    GetItemHoverName,
-)
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import (
     MouseWheelClientEvent,
@@ -88,7 +85,7 @@ def _scan_all_items():
         ITEM_ID_AUX_CACHE[item_id] = basic_info.id_aux
         if item_id not in ITEM_NAME_CACHE:
             try:
-                ITEM_NAME_CACHE[item_id] = GetItemHoverName(item_id) or item_id
+                ITEM_NAME_CACHE[item_id] = CF.CreateItem(LEVEL_ID).GetItemHoverName(item_id) or item_id
             except Exception:
                 ITEM_NAME_CACHE[item_id] = item_id
 
@@ -402,7 +399,7 @@ class MiniJEIItemListUI(ToolDeltaScreen):
             category,
             item_id,
             display_item_id,
-            GetItemFormattedHoverText(display_item_id) or display_item_id,
+            CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(display_item_id) or display_item_id,
         )
 
     @Binder.binding_collection(
@@ -455,7 +452,7 @@ class MiniJEIItemListUI(ToolDeltaScreen):
             CategoryType.ITEM,
             item_id,
             item_id,
-            GetItemFormattedHoverText(item_id) or item_id,
+            CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(item_id) or item_id,
         )
 
     def onSelectCategory(self, index, show_name, user_data):

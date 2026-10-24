@@ -1,8 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    ItemExists,
-)
+
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.skybluetech.common.define.global_config import BUCKET_VOLUME
 from ..basic import MultiFluidContainer, ItemContainer, GUIControl
@@ -54,7 +53,7 @@ class BasicTank(GUIControl, ItemContainer, MultiFluidContainer):
                     return
                 fluid_id = fluid.fluid_id
                 bucket_id = fluid_id + "_bucket"
-                if not ItemExists(bucket_id):
+                if not CF.CreateGame(LEVEL_ID).LookupItemByName(bucket_id):
                     return
                 # TODO: 我们只能假定桶 id 是液体 id + "_bucket"
                 fluid.volume -= BUCKET_VOLUME
@@ -72,7 +71,7 @@ class BasicTank(GUIControl, ItemContainer, MultiFluidContainer):
                     fluid.isFull()
                     or (fluid.fluid_id is not None and fluid.fluid_id != fluid_id)
                     or fluid.volume + BUCKET_VOLUME > fluid.max_volume
-                    or not ItemExists(fluid_id)
+                    or not CF.CreateGame(LEVEL_ID).LookupItemByName(fluid_id)
                 ):
                     return
                 if fluid.fluid_id is None:

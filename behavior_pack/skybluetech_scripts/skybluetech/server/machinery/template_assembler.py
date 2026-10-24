@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetSeed
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.utils import nbt
 
@@ -88,7 +89,7 @@ class TemplateAssembler(Processor, MultiFluidContainer):
             self.recipes = TemplateAssemblerRecipesCollection()  # no recipe
             return
         graph = [nbt.ValueOf(i) for i in graph]
-        result_item_id = GetResultByTemplateGraph(graph, GetSeed())
+        result_item_id = GetResultByTemplateGraph(graph, CF.CreateGame(LEVEL_ID).GetSeed())
         if result_item_id is None:
             self.recipes = TemplateAssemblerRecipesCollection()  # no recipe
         else:

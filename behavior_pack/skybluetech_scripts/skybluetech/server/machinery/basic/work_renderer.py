@@ -1,6 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 #
-from skybluetech_scripts.tooldelta.api.server.block import UpdateBlockStates
+
 from .base_machine import BaseMachine
 
 
@@ -26,8 +27,10 @@ class WorkRenderer(BaseMachine):
             return
         active = self.deactive_flags == 0
         if active != self._last_work_status:
-            UpdateBlockStates(
-                self.dim, (self.x, self.y, self.z), {"skybluetech:active": active}
-            )
+            block_state_comp = CF.CreateBlockState(LEVEL_ID)
+            block_states = block_state_comp.GetBlockStates((self.x, self.y, self.z), self.dim)
+            if block_states is not None:
+                block_states.update({"skybluetech:active": active})
+                block_state_comp.SetBlockStates((self.x, self.y, self.z), block_states, self.dim)
             self._last_work_status = active
             self.handler.CallOnWorkStatusUpdatedHandlers()

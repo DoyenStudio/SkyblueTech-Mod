@@ -1,11 +1,8 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import (
-    GetPlayerMainhandItem,
-    IsSneaking,
-    SpawnItemToPlayerCarried,
-    SetOnePopupNotice,
-)
-from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from mod.server.extraServerApi import GetMinecraftEnum
+
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import (
     PushUIRequest,
@@ -55,7 +52,7 @@ def _set_vein_blocks(player_id, item, vein_blocks):
     ud = item.userData or {}
     ud[K_UD_VEIN_BLOCKS] = nbt.Py2NBT(vein_blocks)
     item.userData = ud
-    SpawnItemToPlayerCarried(player_id, item)
+    CF.CreateItem(player_id).SpawnItemToPlayerCarried(item.marshal(), player_id)
 
 
 def _on_add_block_timeout(player_id, token):
@@ -63,18 +60,23 @@ def _on_add_block_timeout(player_id, token):
     if add_block_pending.get(player_id) != token:
         return
     add_block_pending.pop(player_id, None)
-    SetOnePopupNotice(player_id, "§c已超时", "§7[§6!§7] §6连锁采掘")
+    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c已超时", "§7[§6!§7] §6连锁采掘")
 
 
 def _start_add_block(player_id):
     # type: (str) -> None
     global add_block_token_seq
-    mainhand_item = GetPlayerMainhandItem(player_id)
+    mainhand_item = CF.CreateItem(player_id).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    mainhand_item = Item.from_dict(mainhand_item) if mainhand_item is not None else None
     if mainhand_item is None or mainhand_item.id != ObjectUpgraders.VEINMINER:
         return
     ud = mainhand_item.userData or {}
     if len(_unpack_vein_blocks(ud)) >= MAX_VEIN_BLOCKS:
-        SetOnePopupNotice(
+        CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
             player_id,
             "§c最多只能添加 256 个可连锁采掘方块",
             "§7[§6!§7] §6连锁采掘",
@@ -83,7 +85,7 @@ def _start_add_block(player_id):
     add_block_token_seq += 1
     token = add_block_token_seq
     add_block_pending[player_id] = token
-    SetOnePopupNotice(
+    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
         player_id,
         "§e请在 10 秒内点击需要连锁采掘的方块",
         "§7[§6!§7] §6连锁采掘",
@@ -97,9 +99,14 @@ def _try_add_clicked_block(event):
     if player_id not in add_block_pending:
         return False
     add_block_pending.pop(player_id, None)
-    mainhand_item = GetPlayerMainhandItem(player_id)
+    mainhand_item = CF.CreateItem(player_id).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    mainhand_item = Item.from_dict(mainhand_item) if mainhand_item is not None else None
     if mainhand_item is None or mainhand_item.id != ObjectUpgraders.VEINMINER:
-        SetOnePopupNotice(
+        CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
             player_id,
             "§c添加失败：请手持连锁采掘升级选择方块",
             "§7[§6!§7] §6连锁采掘",
@@ -109,14 +116,10 @@ def _try_add_clicked_block(event):
     vein_blocks = _unpack_vein_blocks(ud)
     block_id = str(event.blockName)
     if block_id in vein_blocks:
-        SetOnePopupNotice(
-            player_id,
-            "§e该方块已在连锁采掘列表中",
-            "§7[§6!§7] §6连锁采掘",
-        )
+        CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§e该方块已在连锁采掘列表中", "§7[§6!§7] §6连锁采掘")
         return True
     if len(vein_blocks) >= MAX_VEIN_BLOCKS:
-        SetOnePopupNotice(
+        CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
             player_id,
             "§c最多只能添加 256 个可连锁采掘方块",
             "§7[§6!§7] §6连锁采掘",
@@ -124,7 +127,7 @@ def _try_add_clicked_block(event):
         return True
     vein_blocks.append(block_id)
     _set_vein_blocks(player_id, mainhand_item, vein_blocks)
-    SetOnePopupNotice(
+    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
         player_id,
         "§a已添加： §f" + Item(block_id).GetBasicInfo().itemName,
         "§7[§a√§7] §a连锁采掘",
@@ -136,7 +139,7 @@ def _try_open_settings_ui(player_id, item):
     # type: (str, Item) -> bool
     if (
         item.id != ObjectUpgraders.VEINMINER
-        or not IsSneaking(player_id)
+        or not CF.CreatePlayer(player_id).isSneaking()
         or not limiter.record(player_id)
     ):
         return False
@@ -169,7 +172,12 @@ def on_item_use_on(event):
 @ObjUpVeinMinerSettingsUpload.Listen()
 def on_settings_upload(event):
     # type: (ObjUpVeinMinerSettingsUpload) -> None
-    mainhand_item = GetPlayerMainhandItem(event.player_id)
+    mainhand_item = CF.CreateItem(event.player_id).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    mainhand_item = Item.from_dict(mainhand_item) if mainhand_item is not None else None
     if mainhand_item is None or mainhand_item.id != ObjectUpgraders.VEINMINER:
         return
     new_blocks = event.vein_blocks

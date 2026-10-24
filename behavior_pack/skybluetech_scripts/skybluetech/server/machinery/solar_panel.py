@@ -1,9 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import (
-    GetLocalTime,
-    GetTopBlockHeight,
-    IsRaining,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 
@@ -52,9 +49,12 @@ class SolarPanel(GUIControl, ItemContainer, BaseGenerator):
         TCON.neighbor_block_changed(self, event)
 
     def update(self):
-        can_generate = GetTopBlockHeight((self.x, self.z), self.dim) == self.y
-        localtime = GetLocalTime(self.dim) % 24000
-        if IsRaining():
+        can_generate = CF.CreateBlockInfo(LEVEL_ID).GetTopBlockHeight(
+            (self.x, self.z),
+            self.dim,
+        ) == self.y
+        localtime = CF.CreateDimension(LEVEL_ID).GetLocalTime(self.dim) % 24000
+        if CF.CreateWeather(LEVEL_ID).IsRaining():
             self.light_level = GetSkylightLevelRain(localtime)
         else:
             self.light_level = GetSkylightLevelClear(localtime)

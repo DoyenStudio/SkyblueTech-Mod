@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.events.machinery.electric_heater import (
     ElectricHeaterSubmitModifiesEvent,
 )
@@ -16,7 +17,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.electric_heater import
     STORE_RF_MAX,
 )
 from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
@@ -47,7 +47,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         self.confirm_btn = (
             self.GetElement(CONFIRM_BTN_PATH).asButton().SetCallback(self.onSubmit)
         )
-        block_nbt = GetBlockEntityData(x, y, z)
+        block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((x, y, z))
         if block_nbt is None:
             return
         ex_data = block_nbt.get("exData")
@@ -63,7 +63,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
             self.kelvin_limit_input.SetText("")
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

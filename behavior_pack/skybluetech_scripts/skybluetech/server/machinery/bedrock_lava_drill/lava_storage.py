@@ -1,11 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 import time
 import random
-from mod.server.extraServerApi import GetLevelId, GetEngineCompFactory
-from skybluetech_scripts.tooldelta.api.server import GetExtraData, SetExtraData, GetSeed
 from skybluetech_scripts.tooldelta.general import ServerInitCallback
 
-CF = GetEngineCompFactory()
 last_save_time = 0
 
 # 和 MC 的区块概念不同,
@@ -53,7 +51,7 @@ def load_new_chunk(chunk_x, chunk_z, seed):
 def get_chunk_drill_time(x, z):
     # type: (int, int) -> int
     chunk_x, chunk_z = pos_to_chunk(x, z)
-    seed = CF.CreateGame(GetLevelId()).GetSeed()
+    seed = CF.CreateGame(LEVEL_ID).GetSeed()
     return calcuate_drill_time_from_seed(seed, chunk_x, chunk_z)
 
 
@@ -70,7 +68,7 @@ def get_chunk_lava_storage(chunk_x, chunk_z, seed):
 
 def get_nearby_lava_storage(chunk_x, chunk_z):
     # type: (int, int) -> int
-    seed = GetSeed()
+    seed = CF.CreateGame(LEVEL_ID).GetSeed()
     return sum(
         get_chunk_lava_storage(_x, _y, seed)
         for _x in range(chunk_x - 1, chunk_x + 2)
@@ -80,7 +78,7 @@ def get_nearby_lava_storage(chunk_x, chunk_z):
 
 def get_total_nearby_lava_storage(chunk_x, chunk_z):
     # type: (int, int) -> int
-    seed = GetSeed()
+    seed = CF.CreateGame(LEVEL_ID).GetSeed()
     return sum(
         calcuate_lava_volume_from_seed(_x, _y, seed)
         for _x in range(chunk_x - 1, chunk_x + 2)
@@ -93,13 +91,13 @@ def save_lava_storages():
     nowtime = time.time()
     if nowtime - last_save_time < 5:
         return
-    SetExtraData(GetLevelId(), K_LAVA_SOURCES, cached_lava_sources)
+    CF.CreateExtraData(LEVEL_ID).SetExtraData(K_LAVA_SOURCES, cached_lava_sources, True)
 
 
 @ServerInitCallback(0)
 def load_lava_storages():
-    s = GetExtraData(GetLevelId(), K_LAVA_SOURCES, {})
-    cached_lava_sources.update(s)
+    s = CF.CreateExtraData(LEVEL_ID).GetExtraData(K_LAVA_SOURCES)
+    cached_lava_sources.update(s if s is not None else {})
 
 
 def set_chunk_lava_storage(chunk_x, chunk_z, storage_vol):
@@ -116,7 +114,7 @@ def pump_deepslate_lava(x, z, max_pump_volume):
     # type: (int, int, int) -> int
     rest_volume = max_pump_volume
     chunk_x, chunk_z = pos_to_chunk(x, z)
-    seed = GetSeed()
+    seed = CF.CreateGame(LEVEL_ID).GetSeed()
     for _x in range(chunk_x - 1, chunk_x + 2):
         for _y in range(chunk_z - 1, chunk_z + 2):
             storage_vol = get_chunk_lava_storage(_x, _y, seed)

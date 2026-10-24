@@ -1,11 +1,6 @@
 # coding=utf-8
-from mod.server.extraServerApi import GetLevelId
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
-from skybluetech_scripts.tooldelta.api.server import (
-    GetExtraData,
-    SetExtraData,
-    SetOnePopupNotice,
-)
 from skybluetech_scripts.tooldelta.define import Item
 from ....common.events.machinery.bans import MachineBanListRequest, MachineBanListUpdate
 
@@ -14,18 +9,20 @@ K_BANNED_MACHINES = "skybluetech:banned_machines"
 
 def is_machine_banned(machine_id):
     # type: (str) -> bool
-    return machine_id in GetExtraData(GetLevelId(), K_BANNED_MACHINES, [])
+    machine_ids = CF.CreateExtraData(LEVEL_ID).GetExtraData(K_BANNED_MACHINES)
+    return machine_id in (machine_ids if machine_ids is not None else [])
 
 
 def set_machine_banned(machine_id, banned):
     # type: (str, bool) -> bool
-    machine_ids = set(GetExtraData(GetLevelId(), K_BANNED_MACHINES, []))
+    saved_ids = CF.CreateExtraData(LEVEL_ID).GetExtraData(K_BANNED_MACHINES)
+    machine_ids = set(saved_ids if saved_ids is not None else [])
     if banned:
         machine_ids.add(machine_id)
     else:
         machine_ids.discard(machine_id)
     machine_ids = sorted(machine_ids)
-    if not SetExtraData(GetLevelId(), K_BANNED_MACHINES, machine_ids):
+    if not CF.CreateExtraData(LEVEL_ID).SetExtraData(K_BANNED_MACHINES, machine_ids, True):
         return False
     MachineBanListUpdate(machine_ids).sendAll()
     return True
@@ -34,9 +31,8 @@ def set_machine_banned(machine_id, banned):
 @MachineBanListRequest.Listen()
 def on_machine_ban_list_request(event):
     # type: (MachineBanListRequest) -> None
-    MachineBanListUpdate(
-        GetExtraData(GetLevelId(), K_BANNED_MACHINES, [])
-    ).send(event.player_id)
+    machine_ids = CF.CreateExtraData(LEVEL_ID).GetExtraData(K_BANNED_MACHINES)
+    MachineBanListUpdate(machine_ids if machine_ids is not None else []).send(event.player_id)
 
 
 def reject_banned_machine(player_id, machine_id):
@@ -44,5 +40,9 @@ def reject_banned_machine(player_id, machine_id):
     if not is_machine_banned(machine_id):
         return False
     item = Item(machine_id)
-    SetOnePopupNotice(player_id, "§c该机器已被管理员禁用： %s" % item.GetBasicInfo().itemName)
+    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
+        player_id,
+        "§c该机器已被管理员禁用： %s" % item.GetBasicInfo().itemName,
+        "§6提示§f",
+    )
     return True

@@ -1,10 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from collections import deque
-from skybluetech_scripts.tooldelta.api.server import (
-    BlockHasTag,
-    GetBlockTags,
-    GetEntityDimension,
-)
+
 from skybluetech_scripts.tooldelta.events.server import (
     OnEntityInsideBlockServerEvent,
 )
@@ -20,6 +17,8 @@ if 0>1:
     PosData = typing.Tuple[int, int, int]  # x y z
 # TYPE_CHECKING END
 
+_block_tags_cache = {}  # type: dict[str, set[str]]
+
 
 def isNaN(x):
     return x != x
@@ -27,14 +26,22 @@ def isNaN(x):
 
 def isWire(blockName):
     # type: (str) -> bool
-    return BlockHasTag(blockName, "skybluetech_wire")
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "skybluetech_wire" in tags
 
 
 def isRFMachine(blockName, dim=None, xyz=None):
     # type: (str, int | None, tuple[int, int, int] | None) -> bool
-    return BlockHasTag(blockName, "redstoneflux_accepter") or BlockHasTag(
-        blockName, "redstoneflux_provider"
-    )
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "redstoneflux_accepter" in tags or "redstoneflux_provider" in tags
 
 
 def isSkyblueMachine(block_tags):
@@ -44,7 +51,11 @@ def isSkyblueMachine(block_tags):
 
 def isPowerProvider(block_name, dim, posdata):
     # type: (str, int, tuple[int, int, int, int]) -> bool
-    block_tags = GetBlockTags(block_name)
+    block_tags = _block_tags_cache.get(block_name)
+    if block_tags is None:
+        block_tags = _block_tags_cache[block_name] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(block_name)
+        )
     if isSkyblueMachine(block_tags):
         m = GetMachineWithoutCls(dim, *posdata[:3])
         if m is None:
@@ -56,7 +67,11 @@ def isPowerProvider(block_name, dim, posdata):
 
 def isPowerAccepter(block_name, dim, posdata):
     # type: (str, int, tuple[int, int, int, int]) -> bool
-    block_tags = GetBlockTags(block_name)
+    block_tags = _block_tags_cache.get(block_name)
+    if block_tags is None:
+        block_tags = _block_tags_cache[block_name] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(block_name)
+        )
     if isSkyblueMachine(block_tags):
         m = GetMachineWithoutCls(dim, *posdata[:3])
         if m is None:
@@ -131,7 +146,7 @@ def onEntityInsideBlock(event):
     # type: (OnEntityInsideBlockServerEvent) -> None
     if event.blockName not in TRANSFER_SPEED_MAPPING:
         return
-    dim = GetEntityDimension(event.entityId)
+    dim = CF.CreateDimension(event.entityId).GetEntityDimensionId()
     network = logic_module.GetNetworkByTransmitter(
         dim, event.blockX, event.blockY, event.blockZ, force_use_cached=True
     )

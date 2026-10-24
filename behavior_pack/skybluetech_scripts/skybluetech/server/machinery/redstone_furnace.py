@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import GetFurnaceRecipe
 
@@ -120,7 +121,7 @@ class RedstoneFurnace(WorkRenderer, UpgradeControl, GUIControl):
 
 def get_furnace_output_by_input(item_id, aux_value=0):
     # type: (str, int) -> str | None
-    res = GetRecipesByInput(item_id, "furnace", aux_value, maxResultNum=1)
+    res = CF.CreateRecipe(LEVEL_ID).GetRecipesByInput(item_id, "furnace", aux_value, maxResultNum=1)
     if len(res) < 1:
         return None
     else:

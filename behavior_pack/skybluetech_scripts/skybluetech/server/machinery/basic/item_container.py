@@ -1,15 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events import (
     PlayerTryPutCustomContainerItemClientEvent,
     PlayerTryPutCustomContainerItemServerEvent,
-)
-from skybluetech_scripts.tooldelta.api.server import (
-    GetContainerItem,
-    SetContainerItem,
-    PutItemIntoContainer,
-    SetChestBoxItemNum,
-    SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
@@ -73,7 +68,13 @@ class ItemContainer(BaseMachine):
         Returns:
             Item (optional): 槽位内物品实例, 如果为空则返回 None
         """
-        return GetContainerItem(self.dim, self.xyz, slot_pos, get_user_data)
+        raw_item = CF.CreateItem(LEVEL_ID).GetContainerItem(
+            self.xyz,
+            slot_pos,
+            self.dim,
+            get_user_data,
+        )
+        return Item.from_dict(raw_item) if raw_item is not None else None
 
     def SetSlotItem(self, slot_pos, item):
         # type: (int, Item | None) -> bool
@@ -87,21 +88,24 @@ class ItemContainer(BaseMachine):
         Returns:
             bool: 是否成功设置物品
         """
-        return SetContainerItem(
-            self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0)
+        return CF.CreateItem(LEVEL_ID).SpawnItemToContainer(
+            (item or Item("minecraft:air", count=0)).marshal(),
+            slot_pos,
+            self.xyz,
+            self.dim,
         )
 
     def DropAllItems(self):
         for slot in self.item_input_slots + self.item_output_slots:
             item = self.GetSlotItem(slot)
             if item is not None:
-                SpawnDroppedItem(self.dim, self.xyz, item)
+                GetServer().CreateEngineItemEntity(item.marshal(), self.dim, self.xyz)
                 self.SetSlotItem(slot, None)
 
     def SetSlotItemCount(self, slot_pos, count):
         # type: (int, int) -> None
         """WARNING: 此 api 对于自定义容器有 bug"""
-        SetChestBoxItemNum(None, self.xyz, slot_pos, count, self.dim)
+        CF.CreateChestBlock(LEVEL_ID).SetChestBoxItemNum(None, self.xyz, slot_pos, count, self.dim)
 
     def GetSlotSize(self):
         """
@@ -236,4 +240,20 @@ class ItemContainer(BaseMachine):
         Returns:
             Item: 剩余物品, 当没有剩余物时返回 None
         """
-        return PutItemIntoContainer(self.dim, self.xyz, item, self.item_output_slots)
+        for slot in self.item_output_slots:
+            slotitem = self.GetSlotItem(slot, get_user_data=False)
+            if slotitem is None:
+                self.SetSlotItem(slot, item)
+                return None
+            elif slotitem.StackFull():
+                continue
+            elif slotitem.CanMerge(item):
+                require_count = min(
+                    item.GetBasicInfo().maxStackSize - slotitem.count, item.count
+                )
+                slotitem.count += require_count
+                item.count -= require_count
+                self.SetSlotItem(slot, slotitem)
+                if item.count == 0:
+                    return None
+        return item

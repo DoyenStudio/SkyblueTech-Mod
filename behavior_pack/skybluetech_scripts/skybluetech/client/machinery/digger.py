@@ -1,13 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 #
-from skybluetech_scripts.tooldelta.api.client.block import (
-    GetBlockName,
-    SetBlockEntityMolangValue,
-    SetCrackFrame,
-)
-from skybluetech_scripts.tooldelta.api.client.block import (
-    GetBlockNameAndAux as CGetBlockNameAndAux,
-)
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     UiInitFinishedEvent,
@@ -36,8 +29,10 @@ ROTATION_VALUES = {
 @DiggerWorkModeUpdatedEvent.Listen()
 def clientOnDiggerWorkModeUpdated(event):
     # type: (DiggerWorkModeUpdatedEvent) -> None
-    SetBlockEntityMolangValue(
-        (event.x, event.y, event.z), "variable.working", event.active
+    CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityMolangValue(
+        (event.x, event.y, event.z),
+        'variable.working',
+        event.active,
     )
 
 
@@ -45,16 +40,16 @@ def clientOnDiggerWorkModeUpdated(event):
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     if event.blockName == Machinery.DIGGER:
-        _, aux = CGetBlockNameAndAux((event.posX, event.posY, event.posZ))
+        _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((event.posX, event.posY, event.posZ)) or (None, 0)
         rot_x, rot_z = ROTATION_VALUES[aux & 0b111]
-        SetBlockEntityMolangValue(
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityMolangValue(
             (event.posX, event.posY, event.posZ),
-            "variable.rotation_x",
+            'variable.rotation_x',
             rot_x,
         )
-        SetBlockEntityMolangValue(
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityMolangValue(
             (event.posX, event.posY, event.posZ),
-            "variable.rotation_z",
+            'variable.rotation_z',
             rot_z,
         )
 
@@ -74,8 +69,8 @@ def onUpdateCrack(event):
     # type: (DiggerUpdateCrack) -> None
     # WARNING: 调用不当将导致游戏强制中断
     global can_play_animation
-    if not GetBlockName((event.x, event.y, event.z)):
+    if not (CF.CreateBlockInfo(LEVEL_ID).GetBlock((event.x, event.y, event.z)) or (None, 0))[0]:
         # Digger crack was too early to set, may crash game
         return
     if can_play_animation:
-        SetCrackFrame(event.dim, (event.x, event.y, event.z), event.level)
+        CF.CreateBlockInfo(LEVEL_ID).SetCrackFrame(event.dim, (event.x, event.y, event.z), event.level)

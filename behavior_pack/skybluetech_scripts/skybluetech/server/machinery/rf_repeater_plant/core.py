@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.define.ui_keys import RF_REPEATER_PLANT_UI
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
@@ -9,14 +10,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.rf_repeater_plant impo
     MODE_OUTPUT,
 )
 from skybluetech_scripts.skybluetech.common.utils.block_sync import BlockSync
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockAuxValueFromStates,
-    GetBlockName,
-    GetBlockStates,
-    MayPlace,
-    PlayerUseItemToPos,
-    SetBlock,
-)
+
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
     ServerBlockUseEvent,
@@ -54,7 +48,7 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(RFRepeaterPlant, self).__init__(dim, x, y, z, block_entity_data)
-        states = GetBlockStates(self.dim, (self.x, self.y, self.z))
+        states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((self.x, self.y, self.z), self.dim)
         if states is None:
             raise ValueError("RFRepeaterPlant BlockState None")
         self.layer = states["skybluetech:layer"]  # type: int
@@ -77,8 +71,16 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
         x = event.x
         y = event.y
         z = event.z
-        if not MayPlace(block_id, (x, y + 1, z), 0, dim) or not MayPlace(
-            block_id, (x, y + 2, z), 0, dim
+        if not CF.CreateBlockInfo(LEVEL_ID).MayPlace(
+            block_id,
+            (x, y + 1, z),
+            0,
+            dim,
+        ) or not CF.CreateBlockInfo(LEVEL_ID).MayPlace(
+            block_id,
+            (x, y + 2, z),
+            0,
+            dim,
         ):
             event.cancel()
 
@@ -86,7 +88,10 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
         # type: (ServerBlockUseEvent, dict | None) -> None
         if not self.is_base_block:
             event.cancel()
-            PlayerUseItemToPos(event.playerId, (self.x, self.y - self.layer, self.z), 2)
+            CF.CreateBlockInfo(event.playerId).PlayerUseItemToPos(
+                (self.x, self.y - self.layer, self.z),
+                2,
+            )
             return
         node = get_node(self.dim, (self.x, self.y, self.z))
         if node is None:
@@ -124,11 +129,11 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
             return
         TCON.block_placed(self)
         for i in range(1, 3):
-            SetBlock(
-                self.dim,
+            CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
                 (self.x, self.y + i, self.z),
-                self.block_name,
-                GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": i}),
+                {"name": self.block_name, "aux": CF.CreateBlockState(LEVEL_ID).GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": i})},
+                0,
+                dimensionId=self.dim,
             )
         add_single_node(self.dim, (self.x, self.y, self.z))
 
@@ -144,8 +149,16 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
         for i in range(3):
             if i != self.layer:
                 pos = (self.x, base_y + i, self.z)
-                if GetBlockName(self.dim, pos) == self.block_name:
-                    SetBlock(self.dim, (self.x, base_y + i, self.z), "minecraft:air")
+                if (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                    pos,
+                    self.dim,
+                ) or {}).get("name") == self.block_name:
+                    CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                        (self.x, base_y + i, self.z),
+                        {"name": "minecraft:air", "aux": 0},
+                        0,
+                        dimensionId=self.dim,
+                    )
 
     def _rf_repeater_plant_on_unload(self):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))

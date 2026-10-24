@@ -1,10 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import (
-    CheckChunkState,
-    GetBlockName,
-    GetBlockStates,
-    UpdateBlockStates,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.skybluetech.common.define.facing import (
     DXYZ_FACING,
@@ -48,7 +43,7 @@ def get_neighbor_connection(dim, neighbor_pos, facing):
     Returns:
         bool | None: None 表示邻居所在区块暂时不可读, 调用方应保持原状态不修改
     """
-    states = GetBlockStates(dim, neighbor_pos)
+    states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(neighbor_pos, dim)
     if states is None:
         return None
     return bool(states.get(get_connection_state_key(OPPOSITE_FACING[facing]), False))
@@ -65,9 +60,9 @@ def get_face_connection(dim, neighbor_pos, facing):
     Returns:
         bool | None: None 表示邻居所在区块暂时不可读, 调用方应保持原状态不修改
     """
-    neighbor_name = GetBlockName(dim, neighbor_pos)
+    neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(neighbor_pos, dim) or {}).get("name")
     if neighbor_name is None:
-        if not CheckChunkState(dim, neighbor_pos):
+        if not CF.CreateChunkSource(LEVEL_ID).CheckChunkState(dim, neighbor_pos):
             # 邻居方块所在区块暂时不可读, 保持原状态
             return None
         # 位置可读却是空的: 邻居管线已经不存在
@@ -124,8 +119,8 @@ def refresh_machine_socket(dim, machine_pos, neighbor_pos):
     connected = get_face_connection(dim, neighbor_pos, facing)
     if connected is None:
         return False
-    neighbor_name = GetBlockName(dim, neighbor_pos)
-    machine_states = GetBlockStates(dim, machine_pos) or {}
+    neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(neighbor_pos, dim) or {}).get("name")
+    machine_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(machine_pos, dim) or {}
     states = {}  # type: dict[str, bool]
     for key, value in get_socket_states(
         machine_states, facing, neighbor_name, connected
@@ -134,7 +129,11 @@ def refresh_machine_socket(dim, machine_pos, neighbor_pos):
             states[key] = value
     if not states:
         return False
-    UpdateBlockStates(dim, machine_pos, states)
+    block_state_comp = CF.CreateBlockState(LEVEL_ID)
+    block_states = block_state_comp.GetBlockStates(machine_pos, dim)
+    if block_states is not None:
+        block_states.update(states)
+        block_state_comp.SetBlockStates(machine_pos, block_states, dim)
     return True
 
 
@@ -177,19 +176,29 @@ class TransmitterConn(object):
         # type: (BaseMachine) -> None
         "机器放置后, 按四周管线当前的连接状态渲染插座模型。"
         machine_pos = (machine.x, machine.y, machine.z)
-        machine_states = GetBlockStates(machine.dim, machine_pos) or {}
+        machine_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            machine_pos,
+            machine.dim,
+        ) or {}
         states = {}  # type: dict[str, bool]
         for (dx, dy, dz), facing in DXYZ_FACING.items():
             neighbor_pos = (machine.x + dx, machine.y + dy, machine.z + dz)
             connected = get_face_connection(machine.dim, neighbor_pos, facing)
             if connected is None:
                 continue
-            neighbor_name = GetBlockName(machine.dim, neighbor_pos)
+            neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                neighbor_pos,
+                machine.dim,
+            ) or {}).get("name")
             states.update(
                 self.get_states(machine_states, facing, neighbor_name, connected)
             )
         if states:
-            UpdateBlockStates(machine.dim, machine_pos, states)
+            block_state_comp = CF.CreateBlockState(LEVEL_ID)
+            block_states = block_state_comp.GetBlockStates(machine_pos, machine.dim)
+            if block_states is not None:
+                block_states.update(states)
+                block_state_comp.SetBlockStates(machine_pos, block_states, machine.dim)
 
     def neighbor_block_changed(self, machine, event):
         # type: (BaseMachine, BlockNeighborChangedServerEvent) -> None
@@ -205,9 +214,19 @@ class TransmitterConn(object):
         connected = get_face_connection(machine.dim, neighbor_pos, facing)
         if connected is None:
             return
-        neighbor_name = GetBlockName(machine.dim, neighbor_pos)
+        neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            neighbor_pos,
+            machine.dim,
+        ) or {}).get("name")
         machine_pos = (machine.x, machine.y, machine.z)
-        machine_states = GetBlockStates(machine.dim, machine_pos) or {}
+        machine_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            machine_pos,
+            machine.dim,
+        ) or {}
         states = self.get_states(machine_states, facing, neighbor_name, connected)
         if states:
-            UpdateBlockStates(machine.dim, machine_pos, states)
+            block_state_comp = CF.CreateBlockState(LEVEL_ID)
+            block_states = block_state_comp.GetBlockStates(machine_pos, machine.dim)
+            if block_states is not None:
+                block_states.update(states)
+                block_state_comp.SetBlockStates(machine_pos, block_states, machine.dim)

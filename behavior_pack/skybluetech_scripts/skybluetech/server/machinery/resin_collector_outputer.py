@@ -1,12 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import Delay
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockCardinalFacing,
-    GetBlockNameAndAux,
-    GetBlockStatesFromAuxValue,
-    SetBlock,
-    UpdateBlockStates,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events import (
     BlockNeighborChangedServerEvent,
@@ -45,13 +39,14 @@ class ResinCollectorOutputer(ItemContainer):
         # type: (ServerEntityTryPlaceBlockEvent) -> None
         for facing, (dx, dz) in enumerate(FACING_DXZ):
             target_pos = (event.x + dx, event.y, event.z + dz)
-            block_id, _ = GetBlockNameAndAux(
-                event.dimensionId,
-                target_pos,
-            )
+            block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(target_pos, event.dimensionId)
+            block_id, _ = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
             if block_id == RESIN_COLLECTOR:
                 its_facing = (
-                    FACING_EN2NUM[GetBlockCardinalFacing(event.dimensionId, target_pos)]
+                    FACING_EN2NUM[CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+                        target_pos,
+                        event.dimensionId,
+                    )["minecraft:cardinal_direction"]]
                     - 2
                 )
                 if its_facing == facing:
@@ -61,34 +56,39 @@ class ResinCollectorOutputer(ItemContainer):
     def _resin_collector_outputer_on_placed(self, _):
         TCON.block_placed(self)
         for facing, (dx, dz) in enumerate(FACING_DXZ):
-            block_id, _ = GetBlockNameAndAux(
-                self.dim,
+            block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
                 (self.x + dx, self.y, self.z + dz),
+                self.dim,
             )
+            block_id, _ = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
             if block_id != RESIN_COLLECTOR:
                 continue
             self._set_facing(facing)
             break
 
     def _resin_collector_outputer_on_block_random_tick(self, event):
-        block_id, aux = GetBlockNameAndAux(self.dim, self.linked_resin_collector_pos)
+        block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            self.linked_resin_collector_pos,
+            self.dim,
+        )
+        block_id, aux = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
         if block_id is None:
             return
         elif block_id != RESIN_COLLECTOR:
             self._destroy_self_later()
             return
-        resin_storage = GetBlockStatesFromAuxValue(block_id, aux).get(
+        resin_storage = CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(block_id, aux).get(
             "skybluetech:resin_storage", 0
         )
         if resin_storage == 0:
             return
         ok = self._try_add_resin()
         if ok:
-            UpdateBlockStates(
-                self.dim,
-                self.linked_resin_collector_pos,
-                {"skybluetech:resin_storage": resin_storage - 1},
-            )
+            block_state_comp = CF.CreateBlockState(LEVEL_ID)
+            block_states = block_state_comp.GetBlockStates(self.linked_resin_collector_pos, self.dim)
+            if block_states is not None:
+                block_states.update({"skybluetech:resin_storage": resin_storage - 1})
+                block_state_comp.SetBlockStates(self.linked_resin_collector_pos, block_states, self.dim)
 
     def _resin_collector_outputer_on_neighbor_changed(self, event):
         # type: (BlockNeighborChangedServerEvent) -> None
@@ -102,17 +102,21 @@ class ResinCollectorOutputer(ItemContainer):
         if event.toBlockName != RESIN_COLLECTOR:
             self._destroy_self_later()
             return
-        resin_storage = GetBlockStatesFromAuxValue(
-            RESIN_COLLECTOR, event.toAuxValue
-        ).get("skybluetech:resin_storage", 0)
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"skybluetech:resin_storage": resin_storage},
+        resin_storage = CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(RESIN_COLLECTOR, event.toAuxValue).get(
+            "skybluetech:resin_storage",
+            0,
         )
+        block_state_comp = CF.CreateBlockState(LEVEL_ID)
+        block_states = block_state_comp.GetBlockStates((self.x, self.y, self.z), self.dim)
+        if block_states is not None:
+            block_states.update({"skybluetech:resin_storage": resin_storage})
+            block_state_comp.SetBlockStates((self.x, self.y, self.z), block_states, self.dim)
 
     def flush_resin_collector_pos(self):
-        facing = GetBlockCardinalFacing(self.dim, (self.x, self.y, self.z))
+        facing = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            (self.x, self.y, self.z),
+            self.dim,
+        )["minecraft:cardinal_direction"]
         if facing == "north":
             self.linked_resin_collector_pos = (self.x, self.y, self.z - 1)
         elif facing == "south":
@@ -125,23 +129,26 @@ class ResinCollectorOutputer(ItemContainer):
             self.linked_resin_collector_pos = (self.x, self.y, self.z)
 
     def _destroy_self_later(self):
-        SetBlock(
-            self.dim, (self.x, self.y, self.z), "minecraft:air", old_block_handing=1
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+            (self.x, self.y, self.z),
+            {"name": "minecraft:air", "aux": 0},
+            1,
+            dimensionId=self.dim,
         )
 
     def _set_facing(self, facing):
         # type: (int) -> None
-        UpdateBlockStates(
-            self.dim,
-            (self.x, self.y, self.z),
-            {"minecraft:cardinal_direction": FACING_EN[facing + 2]},
-        )
+        block_state_comp = CF.CreateBlockState(LEVEL_ID)
+        block_states = block_state_comp.GetBlockStates((self.x, self.y, self.z), self.dim)
+        if block_states is not None:
+            block_states.update({"minecraft:cardinal_direction": FACING_EN[facing + 2]})
+            block_state_comp.SetBlockStates((self.x, self.y, self.z), block_states, self.dim)
         self.flush_resin_collector_pos()
-        UpdateBlockStates(
-            self.dim,
-            self.linked_resin_collector_pos,
-            {"skybluetech:is_connect_outputer": True},
-        )
+        block_state_comp = CF.CreateBlockState(LEVEL_ID)
+        block_states = block_state_comp.GetBlockStates(self.linked_resin_collector_pos, self.dim)
+        if block_states is not None:
+            block_states.update({"skybluetech:is_connect_outputer": True})
+            block_state_comp.SetBlockStates(self.linked_resin_collector_pos, block_states, self.dim)
 
     def _try_add_resin(self):
         res = self.OutputItem(Item(RESIN))

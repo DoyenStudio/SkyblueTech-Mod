@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
     K_STORE_RF,
@@ -9,7 +10,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.magma_furnace import (
     STORE_RF_MAX,
     recipes,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
@@ -39,7 +39,7 @@ class MagmaFurnaceUI(MachinePanelUIProxyEx):
         )
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

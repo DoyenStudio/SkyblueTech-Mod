@@ -1,11 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server.block import (
-    GetBlockNameAndAux,
-    GetBlockStatesFromAuxValue,
-    GetLiquidBlock,
-    SetBlock,
-    SetLiquidBlock,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
 from ...common.define.global_config import BUCKET_VOLUME
 from ...common.define.id_enum import Machinery, Upgraders
@@ -76,11 +70,21 @@ class Pump(UpgradeControl, GUIControl, MultiFluidContainer):
             if res is None:
                 return
             fluid_id, src_pos = res
-            src_block_id, _ = GetBlockNameAndAux(self.dim, src_pos)
+            block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(src_pos, self.dim)
+            src_block_id, _ = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
             if src_block_id != fluid_id:
-                SetLiquidBlock(self.dim, src_pos, fluid_id, 1)
+                CF.CreateBlockInfo(LEVEL_ID).SetLiquidBlock(
+                    src_pos,
+                    {"name": fluid_id, "aux": 1},
+                    dimensionId=self.dim,
+                )
             else:
-                SetBlock(self.dim, src_pos, fluid_id, 1)
+                CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                    src_pos,
+                    {"name": fluid_id, "aux": 1},
+                    0,
+                    dimensionId=self.dim,
+                )
             self.cached_fluid_id = fluid_id
             self.cached_volume = BUCKET_VOLUME
             volume = BUCKET_VOLUME * 0.2
@@ -113,13 +117,16 @@ class Pump(UpgradeControl, GUIControl, MultiFluidContainer):
 
 def find_source_block(dim, x, y, z, allowed_fluid, max_depth):
     # type: (int, int, int, int, str | None, int) -> tuple[str, tuple[int, int, int]] | None
-    block_id, aux = GetLiquidBlock(dim, (x, y, z))
+    block_data = CF.CreateBlockInfo(LEVEL_ID).GetLiquidBlock((x, y, z), dim)
+    block_id, aux = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
     if block_id is None:
         return None
     if allowed_fluid is not None:
         if block_id != allowed_fluid:
             return None
-    fluid_depth = GetBlockStatesFromAuxValue(block_id, aux).get("liquid_depth")
+    fluid_depth = CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(block_id, aux).get(
+        "liquid_depth",
+    )
     if fluid_depth is None:
         return None
     elif fluid_depth == 0:
@@ -160,10 +167,13 @@ def _dfs_find_source_block(
         if new_pos in walked:
             continue
         walked.add(new_pos)
-        block_id, aux = GetLiquidBlock(dim, new_pos)
+        block_data = CF.CreateBlockInfo(LEVEL_ID).GetLiquidBlock(new_pos, dim)
+        block_id, aux = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
         if block_id is None or block_id != fluid_id:
             continue
-        fluid_depth = GetBlockStatesFromAuxValue(block_id, aux).get("liquid_depth")
+        fluid_depth = CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(block_id, aux).get(
+            "liquid_depth",
+        )
         if fluid_depth is None:
             continue
         elif fluid_depth == 0:
@@ -223,10 +233,13 @@ def _vertical_find_source_block(
         if current_depth > max_depth:
             return None
         walked.add((x, current_y, z))
-        block_id, aux = GetLiquidBlock(dim, (x, current_y, z))
+        block_data = CF.CreateBlockInfo(LEVEL_ID).GetLiquidBlock((x, current_y, z), dim)
+        block_id, aux = (None, 0) if block_data is None else (block_data["name"], block_data["aux"])
         if block_id is None or block_id != fluid_id:
             return None
-        liquid_depth = GetBlockStatesFromAuxValue(block_id, aux).get("liquid_depth")
+        liquid_depth = CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(block_id, aux).get(
+            "liquid_depth",
+        )
         if liquid_depth is None:
             continue
         elif liquid_depth == 0:

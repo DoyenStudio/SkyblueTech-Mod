@@ -1,7 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from copy import deepcopy
 
-from skybluetech_scripts.tooldelta.api.server import GetBlockEntityDataDict
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.utils.nbt import (
     Byte,
@@ -65,7 +66,7 @@ def _get_container_nbt(dim, xyz, cache_datas):
     "读取容器的一整个 NBT, 缓存由调用方传入并在内容变化时负责失效; 返回 (data, Items 列表)"
     data = cache_datas.get(xyz, MISSING)
     if data is MISSING:
-        data = cache_datas[xyz] = GetBlockEntityDataDict(dim, xyz)
+        data = cache_datas[xyz] = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(dim, xyz)
     if data is None:
         return None, []
     items = data.get("Items")

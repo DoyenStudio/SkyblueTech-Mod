@@ -1,4 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.skybluetech.common.define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
@@ -42,11 +44,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.fermenter import (
     FermenterRecipe,
     spec_recipes,
 )
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
-)
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
@@ -103,7 +100,7 @@ class FermenterUI(MachinePanelUIProxy):
         self.output_fluid_displayer = FluidDisplayer(self.output_fluid_display)
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -186,7 +183,7 @@ class FermenterUI(MachinePanelUIProxy):
         elif structure_lacked_blocks and sstatus == DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
             fmt = "§l§4结构缺失必须组件：\n" + "\n".join(
                 "§9"
-                + GetItemHoverName(k).replace("§r", "").replace("§f", "")
+                + CF.CreateItem(LEVEL_ID).GetItemHoverName(k).replace("§r", "").replace("§f", "")
                 + " x"
                 + str(v)
                 for k, v in structure_lacked_blocks.items()
@@ -204,8 +201,8 @@ class FermenterUI(MachinePanelUIProxy):
                     + "\n"
                     + "§2将产出： §5%s§0、 §3%s"
                     % (
-                        GetItemHoverName(recipe.out_gas_id),
-                        GetItemHoverName(recipe.out_fluid_id),
+                        CF.CreateItem(LEVEL_ID).GetItemHoverName(recipe.out_gas_id),
+                        CF.CreateItem(LEVEL_ID).GetItemHoverName(recipe.out_fluid_id),
                     )
                     + "\n"
                     + (

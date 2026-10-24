@@ -1,9 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    SetItemTierSpeed,
-    SetAttackDamage,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.utils import nbt
 
 USELESS_SUFFIX = "_useless"
@@ -97,9 +95,15 @@ def MakeToolUseless(tool_item):
     ud = tool_item.userData or {}
     ud[K_ORIGIN_TIER_SPEED] = nbt.Float(origin_tier_speed)
     ud[K_ORIGIN_DAMAGE] = nbt.Int(origin_damage)
-    if not SetItemTierSpeed(tool_item, 0.0):
+    item_data = tool_item.marshal()
+    speed_updated = CF.CreateItem(LEVEL_ID).SetItemTierSpeed(item_data, 0.0)
+    tool_item.unmarshal(item_data)
+    if not speed_updated:
         print("[Error] failed to set item tier speed")
-    if not SetAttackDamage(tool_item, 0):
+    item_data = tool_item.marshal()
+    damage_updated = CF.CreateItem(LEVEL_ID).SetAttackDamage(item_data, 0)
+    tool_item.unmarshal(item_data)
+    if not damage_updated:
         print("[Error] failed to set attack damage")
 
 
@@ -127,11 +131,15 @@ def RecoverToolFromUseless(tool_item):
     if origin_tier_speed == -1:
         ud.pop("ModTierSpeed", None)
     elif origin_tier_speed is not None:
-        SetItemTierSpeed(tool_item, origin_tier_speed)
+        item_data = tool_item.marshal()
+        CF.CreateItem(LEVEL_ID).SetItemTierSpeed(item_data, origin_tier_speed)
+        tool_item.unmarshal(item_data)
     if origin_damage == -1:
         ud.pop("ModAttackDamage", None)
     elif origin_damage is not None:
-        SetAttackDamage(tool_item, origin_damage)
+        item_data = tool_item.marshal()
+        CF.CreateItem(LEVEL_ID).SetAttackDamage(item_data, origin_damage)
+        tool_item.unmarshal(item_data)
     ud = tool_item.userData or ud
     ud.pop(K_ORIGIN_TIER_SPEED, None)
     ud.pop(K_ORIGIN_DAMAGE, None)

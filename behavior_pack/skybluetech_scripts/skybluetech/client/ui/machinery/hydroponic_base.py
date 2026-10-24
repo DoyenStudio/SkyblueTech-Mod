@@ -1,10 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient
 from skybluetech_scripts.skybluetech.common.machinery_def.hydroponic_base import (
     FLUID_0_MAX_VOLUME,
     FLUID_1_MAX_VOLUME,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 
 from ..machinery_extra_pages import (
@@ -32,7 +32,7 @@ class HydroponicBaseUI(MachinePanelUIProxyEx):
         self.fluid_1_displayer = FluidDisplayer(self.fluid_1)
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

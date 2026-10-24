@@ -1,19 +1,13 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import (
-    AddTextureToOneActor,
-    CreateClientEntity,
-    DestroyClientEntity,
-    GetBlockTextures,
-    SetEntityShadowShow,
-    RebuildRenderForOneActor,
-)
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetClient
 from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Gas
 from .client_molangs import Y_SCALE
 
 
 def GetFluidTexturePath(fluid_id):
     # type: (str) -> str | None
-    texture_info = GetBlockTextures(fluid_id)
+    texture_info = CF.CreateBlockInfo(LEVEL_ID).GetBlockTextures(fluid_id)
     if not texture_info:
         return None
     # 使用源流体方块的顶面；多贴图变体取首个路径。
@@ -38,14 +32,14 @@ class FluidModel:
             if last_is_gas is not None:
                 self.Destroy()
             if now_is_gas:
-                ceid = CreateClientEntity(
-                    "skybluetech:gas_model_entity",
+                ceid = GetClient().CreateClientEntityByTypeStr(
+                    'skybluetech:gas_model_entity',
                     (self.x + 0.5, self.y, self.z + 0.5),
                     (0, 0),
                 )
             else:
-                ceid = CreateClientEntity(
-                    "skybluetech:fluid_model_entity",
+                ceid = GetClient().CreateClientEntityByTypeStr(
+                    'skybluetech:fluid_model_entity',
                     (self.x + 0.5, self.y, self.z + 0.5),
                     (0, 0),
                 )
@@ -53,12 +47,12 @@ class FluidModel:
                 raise Exception("[ST] Failed to create fluid model")
             self.ceid = ceid
             self._last_is_gas = now_is_gas
-            SetEntityShadowShow(self.ceid, False)
+            CF.CreateModel(self.ceid).SetEntityShadowShow(False)
 
     def Destroy(self):
         # type: () -> None
         if self.ceid:
-            DestroyClientEntity(self.ceid)
+            GetClient().DestroyClientEntity(self.ceid)
             self.ceid = ""
 
     def SetTexture(self, fluid_id):
@@ -69,11 +63,11 @@ class FluidModel:
             return False
         self.fluid_id = fluid_id
         self._try_rebuild()
-        res = AddTextureToOneActor(self.ceid, "default", texture_path)
+        res = CF.CreateActorRender(LEVEL_ID).AddTextureToOneActor(self.ceid, 'default', texture_path)
         if not res:
             print("[ST] Failed to add texture to fluid model")
             return False
-        return RebuildRenderForOneActor(self.ceid)
+        return CF.CreateActorRender(self.ceid).RebuildRenderForOneActor()
 
     def SetYScale(self, y_scale):
         # type: (float) -> bool

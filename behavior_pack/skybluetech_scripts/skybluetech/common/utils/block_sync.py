@@ -1,5 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId
 from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent
 from skybluetech_scripts.tooldelta.events.server import DelServerPlayerEvent
 from skybluetech_scripts.tooldelta.events.client import (
@@ -75,7 +74,9 @@ class BlockSync:
 
     def onServerSideRecvSyncEvent(self, event):
         # type: (BlockSyncC2S) -> None
-        dim = GetPlayerDimensionId(event.player_id)
+        from skybluetech_scripts.tooldelta.srv import CF
+
+        dim = CF.CreateDimension(event.player_id).GetEntityDimensionId()
         player_loaded_block_counts = player2syncs.setdefault(event.player_id, {})
         loaded_blocks = self.sync_pool.setdefault(event.player_id, set())
         if event.mode == BlockSyncC2S.MODE_BLOCK_LOADED:

@@ -1,11 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.events.server import ServerItemUseOnEvent
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockName,
-    GetBlockStates,
-    SetBlock,
-    SpawnItemToPlayerCarried,
-)
+
 from skybluetech_scripts.skybluetech.common.define.id_enum import ObjectUpgraders
 from ...machinery.farming_station import isRipedCrop
 from ...machinery.utils.charge import GetCharge, UpdateCharge
@@ -23,10 +19,10 @@ def getCropsRiped(dim, _x, _y, _z, radius):
     res = []  # type: list[tuple[int, int, int, int, str]]
     for x in range(_x - radius, _x + radius + 1):
         for z in range(_z - radius, _z + radius + 1):
-            block_id = GetBlockName(dim, (x, _y, z))
+            block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, _y, z), dim) or {}).get("name")
             if block_id is None:
                 continue
-            block_states = GetBlockStates(dim, (x, _y, z))
+            block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, _y, z), dim)
             if block_states is None:
                 continue
             if isRipedCrop(block_id, block_states):
@@ -52,9 +48,14 @@ def onHarvest(event, item_ud, upgrader_ud):
             return
         charge -= POWER_COST
         for dim, x, y, z, block_id in crops_riped:
-            SetBlock(dim, (x, y, z), block_id, aux_value=0, old_block_handing=1)
+            CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                (x, y, z),
+                {"name": block_id, "aux": 0},
+                1,
+                dimensionId=dim,
+            )
         UpdateCharge(item, charge)
-        SpawnItemToPlayerCarried(event.entityId, item)
+        CF.CreateItem(event.entityId).SpawnItemToPlayerCarried(item.marshal(), event.entityId)
 
 
 RegisterItemUseOnCallback(ObjectUpgraders.SPEC_FARMING, onHarvest)

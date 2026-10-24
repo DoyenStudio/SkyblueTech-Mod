@@ -1,11 +1,8 @@
 # coding=utf-8
-from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId
+from skybluetech_scripts.tooldelta.utils.timer import Repeat
 
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetPlayerDimensionId,
-)
-from skybluetech_scripts.tooldelta.api.common import Repeat
 from skybluetech_scripts.tooldelta.events.client import (
     DimensionChangeClientEvent,
     ModBlockEntityLoadedClientEvent,
@@ -24,7 +21,6 @@ from ...common.machinery_def.creative_power_acceptor import K_POWER
 if 0 > 1:
     from typing import Any
 
-CF = GetEngineCompFactory()
 
 
 texts = {}  # type: dict[int, dict[tuple[int, int, int], Any]]
@@ -39,7 +35,7 @@ def add_text(dim, pos, default_text=""):
     text = texts.get(dim, {}).pop(pos, None)
     if text is not None:
         text.Remove()
-    text = CF.CreateDrawing(GetLevelId()).AddTextShape((tx, ty, tz), default_text)
+    text = CF.CreateDrawing(LEVEL_ID).AddTextShape((tx, ty, tz), default_text)
     texts.setdefault(dim, {})[pos] = text
 
 
@@ -56,7 +52,7 @@ def update_text(text_shape, text):
 
 
 def get_power(x, y, z):
-    b = GetBlockEntityData(x, y, z)
+    b = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((x, y, z))
     if b is None:
         return None
     return GetValueWithDefault(b["exData"], K_POWER, -1)
@@ -85,7 +81,7 @@ def onModBlockRemoved(event):
 @ClientInitCallback()
 @Repeat(1)
 def onRepeat1s():
-    dim = GetPlayerDimensionId()
+    dim = CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
     for pos, text_shape in texts.get(dim, {}).copy().items():
         power = get_power(*pos)
         if power is None:

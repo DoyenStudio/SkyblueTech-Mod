@@ -1,4 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from mod.server.extraServerApi import GetMinecraftEnum
 #
 from mod.server import extraServerApi as serverApi
 from skybluetech_scripts.tooldelta.define.item import Item
@@ -9,15 +11,8 @@ from skybluetech_scripts.tooldelta.events.server import (
     CraftItemOutputChangeServerEvent,
     UIContainerItemChangedServerEvent,
 )
-from skybluetech_scripts.tooldelta.api.common import Delay
-from skybluetech_scripts.tooldelta.api.server import (
-    GetArmorSlotItems,
-    GetPlayerMainhandItem,
-    SetPlayerAllItems,
-    SpawnItemToPlayerCarried,
-    SetOneTipMessage,
-    SetPlayerUIItem,
-)
+from skybluetech_scripts.tooldelta.utils.timer import Delay
+
 from ...machinery.utils.charge import (
     ChargeEnough,
     GetCharge,
@@ -103,7 +98,12 @@ def onItemDurabilityChangedAfter(event):
     if tool_id not in tool_items:
         return
     mPlayerId = event.entityId
-    mainhand_item = GetPlayerMainhandItem(mPlayerId)
+    mainhand_item = CF.CreateItem(mPlayerId).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    mainhand_item = Item.from_dict(mainhand_item) if mainhand_item is not None else None
     if mainhand_item is None:
         return
     mainhand_tool_id = useless_tool_items.get(mainhand_item.id, mainhand_item.id)
@@ -125,8 +125,8 @@ def onItemDurabilityChangedAfter(event):
     UpdateCharge(mainhand_item, cur_charge)
     if useless:
         MakeToolUseless(mainhand_item)
-        SetOneTipMessage(mPlayerId, "工具能量已耗尽")
-    SpawnItemToPlayerCarried(mPlayerId, mainhand_item)
+        CF.CreateGame(LEVEL_ID).SetOneTipMessage(mPlayerId, "工具能量已耗尽")
+    CF.CreateItem(mPlayerId).SpawnItemToPlayerCarried(mainhand_item.marshal(), mPlayerId)
 
 
 @ItemDurabilityChangedServerEvent.ListenWithUserData()
@@ -153,7 +153,14 @@ def onArmorDurabilityChanged(event):
 @Delay(0)
 def onArmorDurabilityChangedAfter(player_id, item_id, slot, durability_cost):
     # type: (str, str, int, int) -> None
-    slot_item = GetArmorSlotItems(player_id, get_userdata=True).get(slot)
+    slot_item = {
+        slot: Item.from_dict(raw_item)
+        for slot, raw_item in enumerate(CF.CreateItem(player_id).GetPlayerAllItems(
+            GetMinecraftEnum().ItemPosType.ARMOR,
+            True,
+        ))
+        if raw_item is not None
+    }.get(slot)
     if slot_item is None or slot_item.id != item_id:
         return
     ud = slot_item.userData
@@ -168,8 +175,10 @@ def onArmorDurabilityChangedAfter(player_id, item_id, slot, durability_cost):
     if not ChargeEnough(ud):
         MakeItemUseless(slot_item)
         if charge > 0:
-            SetOneTipMessage(player_id, "护甲能量已耗尽")
-    SetPlayerAllItems(player_id, {(ItemPosType.ARMOR, slot): slot_item})
+            CF.CreateGame(LEVEL_ID).SetOneTipMessage(player_id, "护甲能量已耗尽")
+    CF.CreateItem(player_id).SetPlayerAllItems(
+        {key: item.marshal() for key, item in ({(ItemPosType.ARMOR, slot): slot_item}).items()},
+    )
 
 
 @CraftItemOutputChangeServerEvent.Listen()
@@ -194,7 +203,11 @@ def onUIItemChanged(event):
         event.slot in INVALID_INPUT_SLOTS
         and SKYBLUE_OBJECTS_TAG in event.newItem.GetBasicInfo().tags
     ):
-        SetPlayerUIItem(
-            event.playerId, event.slot, Item("minecraft:air"), need_back=True
+        CF.CreateItem(LEVEL_ID).SetPlayerUIItem(
+            event.playerId,
+            event.slot,
+            Item("minecraft:air").marshal(),
+            True,
+            False,
         )
-        SetOneTipMessage(event.playerId, "无法将该物品进行附魔/修补/合并等操作")
+        CF.CreateGame(LEVEL_ID).SetOneTipMessage(event.playerId, "无法将该物品进行附魔/修补/合并等操作")

@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
 from ...common.define.id_enum import Machinery, Upgraders

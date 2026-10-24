@@ -1,9 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import (
-    CreateShapeFactory,
-    GetBlockEntityData,
-    GetPlayerDimensionId,
-)
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId
 from skybluetech_scripts.tooldelta.events.client import (
     DimensionChangeClientEvent,
     ModBlockEntityLoadedClientEvent,
@@ -38,7 +35,7 @@ def add_text(dim, pos, default_text=""):
     tz = z + 0.5
     if pos in shapes:
         shapes.pop(pos).Remove()
-    shape = CreateShapeFactory().AddTextShape((tx, ty, tz), default_text)
+    shape = CF.CreateDrawing(LEVEL_ID).AddTextShape((tx, ty, tz), default_text)
     shapes.setdefault(dim, {})[pos] = shape
 
 
@@ -59,7 +56,7 @@ def update_text(dim, pos, text):
 def init_text(dim, pos):
     # type: (int, tuple[int, int, int]) -> None
     add_text(dim, pos)
-    block_nbt = GetBlockEntityData(*pos)
+    block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(pos))
     if block_nbt is None:
         return
     text = nbt.GetValueWithDefault(block_nbt["exData"], K_TEXT, None)
@@ -73,20 +70,24 @@ def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)
     if pos not in shapes:
-        init_text(GetPlayerDimensionId(), pos)
+        init_text(CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension(), pos)
 
 
 @asModBlockRemovedListener(Machinery.HOVER_TEXT_DISPLAYER)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     pos = (event.posX, event.posY, event.posZ)
-    remove_text(GetPlayerDimensionId(), pos)
+    remove_text(CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension(), pos)
 
 
 @HoverTextDisplayerContentUpdate.Listen()
 def onTextUpdated(event):
     # type: (HoverTextDisplayerContentUpdate) -> None
-    update_text(GetPlayerDimensionId(), (event.x, event.y, event.z), event.new_text)
+    update_text(
+        CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension(),
+        (event.x, event.y, event.z),
+        event.new_text,
+    )
 
 
 @DimensionChangeClientEvent.Listen()

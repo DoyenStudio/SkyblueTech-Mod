@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.fluids import (
     texture as fluid_texture,
 )
@@ -13,7 +14,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
 from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
     AIR_BLOCK_ID,
 )
-from skybluetech_scripts.tooldelta.api.client.item import GetItemHoverName
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl, UImage
 from skybluetech_scripts.tooldelta.utils.nbt import (
@@ -171,7 +171,8 @@ def FormatBlockName(block_id):
         return "未知方块"
     if block_id == AIR_BLOCK_ID:
         return "空气"
-    return (GetItemHoverName(block_id) or block_id).replace("§r", "").replace("§f", "")
+    item_name = CF.CreateItem(LEVEL_ID).GetItemHoverName(block_id) or block_id
+    return item_name.replace("§r", "").replace("§f", "")
 
 
 def FormatStructureLackedBlockPoses(poses):
@@ -354,7 +355,7 @@ class FluidDisplayer(object):
         (databoard / "image/label").asLabel().SetText(
             "§d流体类型： §f"
             + (
-                (GetItemHoverName(self.fluid_id) or self.fluid_id)
+                (CF.CreateItem(LEVEL_ID).GetItemHoverName(self.fluid_id) or self.fluid_id)
                 if self.fluid_id is not None
                 else ("未知" if self.max_volume is None else "空")
             )

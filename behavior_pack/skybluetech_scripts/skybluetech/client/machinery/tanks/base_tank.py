@@ -1,9 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.utils.timer import Repeat
 from skybluetech_scripts.skybluetech.common.define.id_enum import Tank
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient
 from skybluetech_scripts.skybluetech.common.machinery_def.tank import TANK_MAX_VOLUMES
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.api.common import Repeat
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
@@ -28,7 +28,7 @@ def onModBlockEntityLoadedClientEvent(event):
     x = event.posX
     y = event.posY
     z = event.posZ
-    blockEntityData = GetBlockEntityData(x, y, z)
+    blockEntityData = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((x, y, z))
     if blockEntityData is None:
         return
     max_volume = TANK_MAX_VOLUMES[event.blockName]
@@ -98,7 +98,7 @@ def updateClientTanksOnce():
         old_fluid_volume,
         max_volume,
     ) in client_tank_datas.copy().items():
-        blockdata = GetBlockEntityData(x, y, z)
+        blockdata = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((x, y, z))
         if blockdata is None:
             # TODO: BUG: 切换维度不触发
             # print("[ERROR] Tank: BlockEntityData is None")

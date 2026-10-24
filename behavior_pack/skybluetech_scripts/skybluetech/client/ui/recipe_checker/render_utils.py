@@ -1,11 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.mini_jei.core.define import (
     CategoryType,
     RecipeBase,
-)
-from skybluetech_scripts.tooldelta.api.client.item import (
-    GetItemFormattedHoverText,
-    GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
@@ -45,7 +42,7 @@ class ItemDisplayer(object):
             self.prob_label.SetText("%.1f%%%%" % (self.prob * 100))
 
     def onBtnReleased(self, _):
-        fmt = GetItemFormattedHoverText(self.item.id) or self.item.id
+        fmt = CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(self.item.id) or self.item.id
         if self.prob != 1.0:
             fmt += "\n§e产出概率： %.1f%%%%" % (self.prob * 100)
         if self.tag is not None:
@@ -128,7 +125,7 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
             (
                 recipe_renderer.recipe_icon_id,
                 recipe_renderer.minijei_title
-                or GetItemHoverName(recipe_renderer.recipe_icon_id),
+                or CF.CreateItem(LEVEL_ID).GetItemHoverName(recipe_renderer.recipe_icon_id),
             ),
             [],
         ).append(recipe)
@@ -138,7 +135,7 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
             (
                 recipe_renderer.recipe_icon_id,
                 recipe_renderer.minijei_title
-                or GetItemHoverName(recipe_renderer.recipe_icon_id),
+                or CF.CreateItem(LEVEL_ID).GetItemHoverName(recipe_renderer.recipe_icon_id),
             ),
             [],
         ).append(recipe)

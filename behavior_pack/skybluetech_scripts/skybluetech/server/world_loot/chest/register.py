@@ -1,7 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 import random
-from mod.server.extraServerApi import GetLevelId
-from skybluetech_scripts.tooldelta.api.server import GetExtraData, SetExtraData
+
 from skybluetech_scripts.tooldelta.events.server import (
     OnContainerFillLoottableServerEvent,
 )
@@ -36,7 +36,9 @@ class PlayerLootHistoryManager(object):
         player_id,  # type: str
     ):
         # type: (...) -> dict
-        data = GetExtraData(GetLevelId(), self._make_data_key(player_id), {})
+        data = CF.CreateExtraData(LEVEL_ID).GetExtraData(self._make_data_key(player_id))
+        if data is None:
+            data = {}
         if not isinstance(data, dict):
             return {}
         return data
@@ -70,12 +72,7 @@ class PlayerLootHistoryManager(object):
         # type: (...) -> None
         history = self._get_history(player_id)
         history[self._make_key(item_id, extra_id)] = True
-        SetExtraData(
-            GetLevelId(),
-            self._make_data_key(player_id),
-            history,
-            auto_save=True,
-        )
+        CF.CreateExtraData(LEVEL_ID).SetExtraData(self._make_data_key(player_id), history, True)
 
 
 def Register(

@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.events.machinery.freezer import (
     FreezerModeChangedEvent,
 )
@@ -13,7 +14,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.freezer import (
     STORE_RF_MAX,
     recipes,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
@@ -48,7 +48,7 @@ class FreezerUI(MachinePanelUIProxyEx):
         self.freezer_mode = None
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

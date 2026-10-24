@@ -1,16 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantBuildRequest,
     RFRepeaterPlantBuildResponse,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockNameAndAux,
-    GetControlMode,
-    GetControlModeEnum,
-    GetFootPos,
-    GetLocalPlayerId,
-    SetPopupNotice,
 )
 from skybluetech_scripts.tooldelta.events.client import (
     OnCustomGamepadPressInGame,
@@ -66,14 +60,14 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
         self.t += 1
         if self.t % 3 != 0:
             return
-        x, y, z = GetFootPos(GetLocalPlayerId())
+        x, y, z = CF.CreatePos(GetLocalPlayerId()).GetFootPos()
         distance = hypot(x - self.original_x, y - self.original_y, z - self.original_z)
         if distance < 58:
             color = "§a"
         elif distance <= 64:
             color = "§6"
         elif distance >= 84:
-            SetPopupNotice("§c布线距离过远， 已退出布线模式", "§7[§6!§7] §6警告")
+            CF.CreateGame(LEVEL_ID).SetPopupNotice('§c布线距离过远， 已退出布线模式', '§7[§6!§7] §6警告')
             self.RemoveUI()
             return
         else:
@@ -85,7 +79,7 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
         self.active = False
 
     def on_cancel_build(self, _):
-        SetPopupNotice("已退出布线模式")
+        CF.CreateGame(LEVEL_ID).SetPopupNotice('已退出布线模式', '§6提示§f')
         self.RemoveUI()
 
     def on_finish_build(self, _):
@@ -114,8 +108,8 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
             self.nearest_machine_pos = nearest
 
     def init_buttonmapping_tips(self):
-        CTRL = GetControlModeEnum()
-        ctrl_mode = GetControlMode()
+        CTRL = GetMinecraftEnum().InputMode
+        ctrl_mode = CF.CreatePlayerView(LEVEL_ID).GetToggleOption(GetMinecraftEnum().OptionId.INPUT_MODE)
         if ctrl_mode == CTRL.Touch or ctrl_mode == CTRL.Undefined:
             self.esc_btn["key_tip"].SetVisible(False)
             self.finish_btn["key_tip"].SetVisible(False)
@@ -144,12 +138,12 @@ class RFRepeaterPlantBuildUI(ToolDeltaScreen):
     def onRecvResponse(self, event):
         # type: (RFRepeaterPlantBuildResponse) -> None
         if event.status_code == event.STATUS_SUCC:
-            SetPopupNotice(
+            CF.CreateGame(LEVEL_ID).SetPopupNotice(
                 "已连接中继塔 {} 到 {}".format(
                     (self.original_x, self.original_y, self.original_z),
                     self.nearest_machine_pos,
                 ),
-                "§a成功",
+                '§a成功',
             )
             self.RemoveUI()
         else:
@@ -193,21 +187,21 @@ def onModBlockRemoved(event):
 def get_nearest_plant():
     if not loaded_client_machinerys:
         return []
-    x, y, z = GetFootPos(GetLocalPlayerId())
+    x, y, z = CF.CreatePos(GetLocalPlayerId()).GetFootPos()
     nx, ny, nz = min(
         loaded_client_machinerys,
         key=lambda pos: hypot(pos[0] - x, pos[1] - y, pos[2] - z),
     )
     if hypot(nx - x, ny - y, nz - z) > 4:
         return None
-    _, aux = GetBlockNameAndAux((nx, ny, nz))
+    _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((nx, ny, nz)) or (None, 0)
     layer = aux & 0b11
     return (nx, ny - layer, nz)
 
 
 def display_conn_fail(msg):
     # type: (str) -> None
-    SetPopupNotice("§6%s" % msg, "§7[§6!§7] §6失败")
+    CF.CreateGame(LEVEL_ID).SetPopupNotice('§6%s' % msg, '§7[§6!§7] §6失败')
 
 
 def hypot(*dis):

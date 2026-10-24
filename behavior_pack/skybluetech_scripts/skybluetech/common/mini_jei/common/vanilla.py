@@ -3,10 +3,6 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     GetCraftingRecipe,
     GetFurnaceRecipe,
 )
-from skybluetech_scripts.tooldelta.api.client.world import (
-    GetRecipesByInput,
-    GetRecipesByResult,
-)
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from ..core.register import RegisterRecipe
 from .common_recipe_cls import (
@@ -32,6 +28,9 @@ SPECIAL_ITEM_AUXES = {
 
 def LoadItemRecipes(item_id, get_input=False, get_output=False):
     # type: (str, bool, bool) -> None
+    from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+
+    recipes = CF.CreateRecipe(LEVEL_ID)
 
     # TODO: get_input 和 get_output 同时使用会出现重复配方
 
@@ -42,7 +41,7 @@ def LoadItemRecipes(item_id, get_input=False, get_output=False):
     #     import pprint
     #     pprint.pprint(from_reses)
     if get_input and item_id not in items_to_recipe_input_loaded:
-        for res in GetRecipesByInput(item_id, "crafting_table"):
+        for res in recipes.GetRecipesByInput(item_id, "crafting_table", 0, -1):
             if "reagent" in res:
                 # TODO: BUG: 接口会获取到酿造台配方
                 print(
@@ -53,18 +52,18 @@ def LoadItemRecipes(item_id, get_input=False, get_output=False):
                 continue
             RegisterRecipe(GenericCraftingTableRecipe(GetCraftingRecipe(res)))
         # 熔炉
-        for res in GetRecipesByInput(item_id, "furnace"):
+        for res in recipes.GetRecipesByInput(item_id, "furnace", 0, -1):
             RegisterRecipe(GenericFurnaceRecipe(GetFurnaceRecipe(res)))
         # 高炉
-        for res in GetRecipesByInput(item_id, "blast_furnace"):
+        for res in recipes.GetRecipesByInput(item_id, "blast_furnace", 0, -1):
             RegisterRecipe(GenericBlastFurnaceRecipe(GetFurnaceRecipe(res)))
         # 烟熏炉
-        for res in GetRecipesByInput(item_id, "smoker"):
+        for res in recipes.GetRecipesByInput(item_id, "smoker", 0, -1):
             RegisterRecipe(GenericSmokerRecipe(GetFurnaceRecipe(res)))
 
     if get_output and item_id not in items_to_recipe_output_loaded:
         spec_aux = SPECIAL_ITEM_AUXES.get(item_id, 0)
-        for res in GetRecipesByResult(item_id, "crafting_table", aux_value=spec_aux):
+        for res in recipes.GetRecipesByResult(item_id, "crafting_table", spec_aux, -1):
             if "reagent" in res:
                 # TODO: BUG: 接口会获取到酿造台配方
                 print(
@@ -74,9 +73,9 @@ def LoadItemRecipes(item_id, get_input=False, get_output=False):
                 )
                 continue
             RegisterRecipe(GenericCraftingTableRecipe(GetCraftingRecipe(res)))
-        for res in GetRecipesByResult(item_id, "furnace"):
+        for res in recipes.GetRecipesByResult(item_id, "furnace", 0, -1):
             RegisterRecipe(GenericFurnaceRecipe(GetFurnaceRecipe(res)))
-        for res in GetRecipesByResult(item_id, "blast_furnace"):
+        for res in recipes.GetRecipesByResult(item_id, "blast_furnace", 0, -1):
             RegisterRecipe(GenericBlastFurnaceRecipe(GetFurnaceRecipe(res)))
-        for res in GetRecipesByResult(item_id, "smoker"):
+        for res in recipes.GetRecipesByResult(item_id, "smoker", 0, -1):
             RegisterRecipe(GenericSmokerRecipe(GetFurnaceRecipe(res)))

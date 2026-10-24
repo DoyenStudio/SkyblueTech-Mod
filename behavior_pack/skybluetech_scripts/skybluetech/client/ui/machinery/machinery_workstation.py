@@ -1,4 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
 from skybluetech_scripts.skybluetech.common.events.machinery.machinery_workstation import (
     MachineryWorkstationDoCraft,
     MachineryWorkstationTransferRecipe,
@@ -9,13 +11,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.machinery_workstation 
     K_OUTPUT_ITEM_ID,
     MRecipe,
     recipes,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
-)
-from skybluetech_scripts.tooldelta.api.client.player import (
-    GetLocalPlayerHotbarAndInvItems,
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
@@ -46,7 +41,7 @@ def _get_output_display_name(output_item_id):
     # type: (str) -> str
     cached = _hover_name_cache.get(output_item_id)
     if cached is None:
-        cached = py2_unicode(GetItemHoverName(output_item_id) or output_item_id)
+        cached = py2_unicode(CF.CreateItem(LEVEL_ID).GetItemHoverName(output_item_id) or output_item_id)
         if cached.startswith("§f"):
             cached = cached[2:]
         _hover_name_cache[output_item_id] = cached
@@ -134,7 +129,7 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         _, x, y, z = self.pos
         if not craft_hi_freq_limiter.record():
             return
-        data = GetBlockEntityData(x, y, z)
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((x, y, z))
         if data is None:
             return
         output_item_id = GetValue(data["exData"], K_OUTPUT_ITEM_ID, None)
@@ -153,7 +148,7 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         self.recipe_refresh_ticks += 1
         if self.recipe_refresh_ticks % RECIPE_REFRESH_INTERVAL == 0:
             self.refresh_visible_recipes()
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -227,7 +222,12 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         """按玩家背包重算可见配方列表。所需物品一件都没有的配方不显示;
         物品不完全的配方标记为 incomplete(红底); 再按搜索词过滤结果物名。"""
         inv_counts = {}  # type: dict[str, int]
-        for item in GetLocalPlayerHotbarAndInvItems():
+        for item in [
+            Item.from_dict(it) if it is not None else None
+            for it in CF.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.INVENTORY, False
+            )
+        ]:
             if item is None or item.count <= 0:
                 continue
             inv_counts[item.id] = inv_counts.get(item.id, 0) + item.count

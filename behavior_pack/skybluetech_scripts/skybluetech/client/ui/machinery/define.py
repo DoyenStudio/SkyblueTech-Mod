@@ -1,8 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF
+from mod.client.extraClientApi import GetLocalPlayerId
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from mod.client.extraClientApi import GetMinecraftEnum
 
-from skybluetech_scripts.tooldelta.api.client.player import GetPlayerDimensionId
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events import CustomC2SEvent
 from skybluetech_scripts.tooldelta.events.client import (
     ClientBlockUseEvent,
@@ -125,6 +126,6 @@ class MachinePanelUIProxy(ToolDeltaScreen):
 @ClientBlockUseEvent.Listen()
 def onClisBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
-    dim = GetPlayerDimensionId()
+    dim = CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
     _RUNTIME.GPlayerId = event.playerId
     _RUNTIME.GPos = (dim, int(event.x), int(event.y), int(event.z))

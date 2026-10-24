@@ -1,7 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF
 "游戏事件入口: 查找机器、处理交互并派发实例事件。"
-from skybluetech_scripts.tooldelta.api.common import Delay
-from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId, IsSneaking
+from skybluetech_scripts.tooldelta.utils.timer import Delay
+
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
     BlockRandomTickServerEvent,
@@ -74,13 +75,13 @@ def on_click(event):
     m = pool.GetLoadedMachine(event.dimensionId, event.x, event.y, event.z)
     if (
         isinstance(m, MultiFluidContainer)
-        and not IsSneaking(event.playerId)
+        and not CF.CreatePlayer(event.playerId).isSneaking()
         and m.on_player_interact_with_bucket(event.playerId)
     ):
         event.cancel()
         return
     if isinstance(m, BaseClicker):
-        if not IsSneaking(event.playerId):
+        if not CF.CreatePlayer(event.playerId).isSneaking():
             if m._can_click(event):
                 m.handler.CallOnClickHandlers(event)
             event.cancel()
@@ -99,11 +100,11 @@ def on_use_item(event):
     m = pool.GetLoadedMachine(event.dimensionId, event.x, event.y, event.z)
     if (
         isinstance(m, MultiFluidContainer)
-        and not IsSneaking(event.entityId)
+        and not CF.CreatePlayer(event.entityId).isSneaking()
         and m.on_player_interact_with_bucket(event.entityId, test=True)
     ):
         event.cancel()
-    if isinstance(m, BaseClicker) and not IsSneaking(event.entityId):
+    if isinstance(m, BaseClicker) and not CF.CreatePlayer(event.entityId).isSneaking():
         event.cancel()
 
 
@@ -146,7 +147,7 @@ def on_custom_container_put_item(event):
     # type: (PlayerTryPutCustomContainerItemServerEvent) -> None
     from ..interfaces import FluidInputInterface, FluidOutputInterface
 
-    dimensionId = GetPlayerDimensionId(event.playerId)
+    dimensionId = CF.CreateDimension(event.playerId).GetEntityDimensionId()
     m = pool.GetLoadedMachine(dimensionId, event.x, event.y, event.z)
     if isinstance(m, (FluidInputInterface, FluidOutputInterface)):
         event.cancel()

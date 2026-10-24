@@ -1,13 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
 from collections import deque
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import DestroyBlockEvent
-from skybluetech_scripts.tooldelta.api.server import (
-    SpawnItemToPlayerCarried,
-    GetDroppedItem,
-    DestroyEntity,
-    SpawnDroppedItem,
-)
+
 from skybluetech_scripts.skybluetech.common.define.id_enum import ObjectUpgraders
 from skybluetech_scripts.skybluetech.common.machinery_def.redstone_furnace import (
     TICK_POWER,
@@ -23,7 +20,8 @@ def onAutoBurn(event, use_tool, item_ud, upgrader_ud):
     # type: (DestroyBlockEvent, Item, dict, dict) -> None
     charge, _ = GetCharge(item_ud)
     for item_eid in event.dropEntityIds:
-        it = GetDroppedItem(item_eid)
+        it = CF.CreateItem(LEVEL_ID).GetDroppedItem(item_eid, False)
+        it = Item.from_dict(it) if it is not None else None
         if it is None:
             continue
         res = get_furnace_output_by_input(it.id)
@@ -32,14 +30,10 @@ def onAutoBurn(event, use_tool, item_ud, upgrader_ud):
         if charge < BURN_POWER_SINGLE:
             break
         charge -= BURN_POWER_SINGLE
-        DestroyEntity(item_eid)
-        SpawnDroppedItem(
-            event.dimensionId,
-            (event.x + 0.5, event.y + 0.5, event.z + 0.5),
-            Item(res, count=it.count),
-        )
+        GetServer().DestroyEntity(item_eid)
+        GetServer().CreateEngineItemEntity(Item(res, count=it.count).marshal(), event.dimensionId, (event.x + 0.5, event.y + 0.5, event.z + 0.5))
     UpdateCharge(use_tool, charge)
-    SpawnItemToPlayerCarried(event.playerId, use_tool)
+    CF.CreateItem(event.playerId).SpawnItemToPlayerCarried(use_tool.marshal(), event.playerId)
 
 
 RegisterDestroyBlockCallback(ObjectUpgraders.AUTO_BURNING, onAutoBurn)

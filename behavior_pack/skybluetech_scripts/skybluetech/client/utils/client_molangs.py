@@ -1,19 +1,16 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import (
-    RegisterQueryMolang,
-    SetQueryMolang,
-)
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 
 
 class ClientMolang:
     def __init__(self, name, default_value=0.0):
         # type: (str, float) -> None
         self.name = name
-        RegisterQueryMolang(name, default_value)
+        CF.CreateQueryVariable(LEVEL_ID).Register(name, default_value)
 
     def set_to_entity(self, entity_id, value):
         # type: (str, float) -> bool
-        return SetQueryMolang(entity_id, self.name, value)
+        return CF.CreateQueryVariable(entity_id).Set(self.name, value)
 
 
 Y_SCALE = ClientMolang("query.mod.skybluetech_y_scale")

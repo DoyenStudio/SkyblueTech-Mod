@@ -1,20 +1,33 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
-from skybluetech_scripts.tooldelta.api.server.block import BlockHasTag
+
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.core.pool import GetLoadedMachine
 from ..base import LogicModule
 from .define import FluidPipeNetwork, FluidPipeAccessPoint, FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING
 
+_block_tags_cache = {}  # type: dict[str, set[str]]
+
 
 def is_fluid_pipe(blockName):
     # type: (str) -> bool
-    return BlockHasTag(blockName, "skybluetech_fluid_pipe")
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "skybluetech_fluid_pipe" in tags
 
 
 def isFluidContainer(blockName, dim=None, xyz=None):
     # type: (str, int | None, tuple[int, int, int] | None) -> bool
-    return BlockHasTag(blockName, "skybluetech_fluid_container")
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "skybluetech_fluid_container" in tags
 
 
 def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):

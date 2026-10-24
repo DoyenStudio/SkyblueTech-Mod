@@ -1,6 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+from skybluetech_scripts.tooldelta.internal import GetServer
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
@@ -212,7 +213,7 @@ class BatteryMatrix(
         res = self.OutputItem(battery_item)
         if res is not None:
             # cannot happen
-            SpawnDroppedItem(self.dim, (self.x, self.y, self.z), res)
+            GetServer().CreateEngineItemEntity(res.marshal(), self.dim, (self.x, self.y, self.z))
         core.update_core_data()
         self.CallSync()
         core.gen_update_event().sendMulti(self.ui_sync.GetPlayersInSync())

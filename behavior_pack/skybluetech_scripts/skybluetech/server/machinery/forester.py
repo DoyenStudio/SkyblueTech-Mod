@@ -1,13 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
 from collections import deque
 
-from skybluetech_scripts.tooldelta.api.server.block import GetBlockName, SetBlock
-from skybluetech_scripts.tooldelta.api.server.entity import (
-    DestroyEntity,
-    GetDroppedItem,
-    GetEntitiesBySelector,
-    SpawnDroppedItem,
-)
+
 from skybluetech_scripts.tooldelta.define.item import Item
 
 from .basic.item_container import ItemContainer
@@ -95,8 +91,7 @@ class Forester(UpgradeControl, GUIControl):
         if not ok:
             return False
         dx = self._scan_dx()
-        item_uqids = GetEntitiesBySelector(
-            "@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
+        item_uqids = CF.CreateEntityComponent("").GetEntitiesBySelector("@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
             % (
                 self.x - dx,
                 self.y + Y_OFFSET,
@@ -104,17 +99,23 @@ class Forester(UpgradeControl, GUIControl):
                 dx * 2 + 1,
                 self._scan_dy(),
                 dx * 2 + 1,
-            )
-        )
-        items = [GetDroppedItem(item_uqid, True) for item_uqid in item_uqids]
+            ))
+        items = []
         for item_uqid in item_uqids:
-            DestroyEntity(item_uqid)
+            raw_item = CF.CreateItem(LEVEL_ID).GetDroppedItem(item_uqid, True)
+            items.append(Item.from_dict(raw_item) if raw_item is not None else None)
+        for item_uqid in item_uqids:
+            GetServer().DestroyEntity(item_uqid)
         for item in items:
             if item is None:
                 continue
             item_rest = self.OutputItem(item)
             if item_rest is not None:
-                SpawnDroppedItem(self.dim, (self.x, self.y - 1, self.z), item_rest)
+                GetServer().CreateEngineItemEntity(
+                    item_rest.marshal(),
+                    self.dim,
+                    (self.x, self.y - 1, self.z),
+                )
         return True
 
     def collect_tree(self):
@@ -134,11 +135,26 @@ class Forester(UpgradeControl, GUIControl):
             if not self.PowerEnough():
                 return True
             self.ReducePower()
-            SetBlock(self.dim, (x, y, z), "minecraft:air", old_block_handing=1)
+            CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                (x, y, z),
+                {"name": "minecraft:air", "aux": 0},
+                1,
+                dimensionId=self.dim,
+            )
             if y == self.y + Y_OFFSET:
-                SetBlock(self.dim, (x, y, z), sapling_id)
+                CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                    (x, y, z),
+                    {"name": sapling_id, "aux": 0},
+                    0,
+                    dimensionId=self.dim,
+                )
         for x, y, z in leaves:
-            SetBlock(self.dim, (x, y, z), "minecraft:air", old_block_handing=1)
+            CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                (x, y, z),
+                {"name": "minecraft:air", "aux": 0},
+                1,
+                dimensionId=self.dim,
+            )
         return True
 
     def can_output(self, expected_output_item_id, output_slot_item):
@@ -179,7 +195,7 @@ def forester_bfs(dim, _x, _y, _z, rx, ry, rz):
             if next_pos in walked:
                 continue
             walked.add(next_pos)
-            block_id = GetBlockName(dim, next_pos)
+            block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(next_pos, dim) or {}).get("name")
             if block_id is None:
                 continue
             elif ForesterUtils.IsLog(block_id):

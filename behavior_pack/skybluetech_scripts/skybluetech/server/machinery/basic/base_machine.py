@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetBlockStates
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.extensions.facing_utils import (
     get_relative_facing,
     get_relative_facing_by_facing_direction,
@@ -62,7 +63,7 @@ class BaseMachine(object):
     def GetRelativeFacing(self, absolute_face):
         # type: (str) -> str | None
         "将机器被接触的绝对面转为相对面；方向缺失或无效时返回 None。"
-        states = GetBlockStates(self.dim, self.xyz) or {}
+        states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(self.xyz, self.dim) or {}
         try:
             if "minecraft:facing_direction" in states:
                 return get_relative_facing_by_facing_direction(

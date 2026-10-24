@@ -1,14 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import (
-    DestroyEntity,
-    GetBlockBasicInfo,
-    GetBlockName,
-    GetBlockPaletteBetweenPos,
-    GetDroppedItem,
-    GetEntitiesInSquareArea,
-    SetBlock,
-    SpawnDroppedItem,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
+from skybluetech_scripts.tooldelta.define.block import BlockBasicInfo
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 
@@ -31,6 +24,8 @@ from .basic import (
 )
 from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
+
+block_basic_info_cache = {}  # type: dict[str, BlockBasicInfo]
 
 # TODO: 会使领地模组失效
 K_MINING_FINISHED = "mining_finished"
@@ -158,7 +153,7 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
             # print "fast skip 1"
             return True
         x, y, z = self._next_pos
-        block_id = GetBlockName(self.dim, (x, y, z))
+        block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, y, z), self.dim) or {}).get("name")
         if block_id is None or not self.can_mine_block(block_id):
             return False
         else:
@@ -167,19 +162,15 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
 
     def layer_can_skip(self, layer):
         # type: (int) -> bool
-        area = GetBlockPaletteBetweenPos(
-            self.dim,
-            (
+        area = CF.CreateBlock(LEVEL_ID).GetBlockPaletteBetweenPos(self.dim, (
                 self.mining_min_x,
                 layer,
                 self.mining_min_z,
-            ),
-            (
+            ), (
                 self.mining_max_x,
                 layer,
                 self.mining_max_z,
-            ),
-        )
+            ))
         if area is None:
             return True
         ids_and_auxs = area.SerializeBlockPalette()["common"].keys()  # pyright: ignore[reportAttributeAccessIssue]
@@ -219,7 +210,7 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
         x, y, z = self._next_pos
         self.fluids[0].volume -= VOLUME_COST_ONCE
         self._on_reduced_fluid(0, USE_FLUID, VOLUME_COST_ONCE, True)
-        block_id = GetBlockName(self.dim, (x, y, z))
+        block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, y, z), self.dim) or {}).get("name")
         if block_id is None or not self.can_mine_block(block_id):
             self._fast_skiped = False
             return False
@@ -227,7 +218,11 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
         for item in items:
             rest = self.OutputItem(item)
             if rest is not None:
-                SpawnDroppedItem(self.dim, (self.x, self.y + 1, self.z), rest)
+                GetServer().CreateEngineItemEntity(
+                    rest.marshal(),
+                    self.dim,
+                    (self.x, self.y + 1, self.z),
+                )
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
         return True
 
@@ -246,24 +241,28 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
 
     def mine_and_collect(self, mx, my, mz):
         # type: (int, int, int) -> list[Item]
-        res = SetBlock(
-            self.dim,
+        res = CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
             (mx, my, mz),
-            "minecraft:air",
-            old_block_handing=1,
+            {"name": "minecraft:air", "aux": 0},
+            1,
+            dimensionId=self.dim,
         )
         if res is None:
             return []
-        entity_ids = GetEntitiesInSquareArea(
-            None, (mx, my, mz), (mx + 1, my + 1, mz + 1), self.dim
+        entity_ids = CF.CreateGame(LEVEL_ID).GetEntitiesInSquareArea(
+            None,
+            (mx, my, mz),
+            (mx + 1, my + 1, mz + 1),
+            self.dim,
         )
         items = []  # type: list[Item]
         for entity_id in entity_ids:
-            res = GetDroppedItem(entity_id, get_user_data=True)
+            raw_item = CF.CreateItem(LEVEL_ID).GetDroppedItem(entity_id, True)
+            res = Item.from_dict(raw_item) if raw_item is not None else None
             if res is None:
                 continue
             items.append(res)
-            DestroyEntity(entity_id)
+            GetServer().DestroyEntity(entity_id)
         return items
 
     def can_mine_block(self, block_id):
@@ -272,7 +271,12 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
             return True
         elif not block_id.endswith("_ore"):
             return False
-        destroy_time = GetBlockBasicInfo(block_id).destroyTime
+        basic_info = block_basic_info_cache.get(block_id)
+        if basic_info is None:
+            basic_info = block_basic_info_cache[block_id] = BlockBasicInfo.unmarshal(
+                CF.CreateBlockInfo(LEVEL_ID).GetBlockBasicInfo(block_id)
+            )
+        destroy_time = basic_info.destroyTime
         return destroy_time > 0 and destroy_time < 40
 
     def set_digging_pos(self, pos):

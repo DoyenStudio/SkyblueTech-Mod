@@ -1,13 +1,7 @@
 # coding=utf-8
+from mod.server.extraServerApi import GetMinecraftEnum
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    ItemExists,
-    GetPlayerMainhandItem,
-    SpawnItemToPlayerCarried,
-    GiveItem,
-    GetSelectedSlot,
-    SetInventorySlotItemCount,
-)
 from skybluetech_scripts.skybluetech.common.define.global_config import BUCKET_VOLUME
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotServer
 from .gui_ctrl import GUIControl
@@ -168,7 +162,12 @@ class MultiFluidContainer(BaseMachine):
         player_input_slots = self._get_player_fluid_input_slots()
         if not self.allow_player_use_bucket_interact:
             return False
-        item = GetPlayerMainhandItem(player_id)
+        raw_item = CF.CreateItem(player_id).GetPlayerItem(
+            GetMinecraftEnum().ItemPosType.CARRIED,
+            0,
+            True,
+        )
+        item = Item.from_dict(raw_item) if raw_item is not None else None
         if item is None:
             return False
         elif IsGlassTube(item):
@@ -188,15 +187,19 @@ class MultiFluidContainer(BaseMachine):
                     if fluid.fluid_id is None or fluid.volume < BUCKET_VOLUME:
                         continue
                     bucket_id = fluid.fluid_id + "_bucket"
-                    if ItemExists(bucket_id):
+                    if CF.CreateGame(LEVEL_ID).LookupItemByName(bucket_id):
                         fluid_id = fluid.fluid_id
                         fluid.volume -= BUCKET_VOLUME
                         if fluid.volume <= 0.0:
                             fluid.fluid_id = None
-                        SetInventorySlotItemCount(
-                            player_id, GetSelectedSlot(player_id), item.count - 1
+                        CF.CreateItem(player_id).SetInvItemNum(
+                            CF.CreateItem(player_id).GetSelectSlotId(),
+                            item.count - 1,
                         )
-                        GiveItem(player_id, Item(bucket_id, count=1))
+                        CF.CreateItem(player_id).SpawnItemToPlayerInv(
+                            Item(bucket_id, count=1).marshal(),
+                            player_id,
+                        )
                         self._on_reduced_fluid(
                             slot, fluid_id, BUCKET_VOLUME, True
                         )
@@ -207,7 +210,7 @@ class MultiFluidContainer(BaseMachine):
                 fluid_id = item.newItemName
                 if fluid_id.endswith("_bucket"):
                     fluid_id = fluid_id[:-len("_bucket")]
-                if ItemExists(fluid_id):
+                if CF.CreateGame(LEVEL_ID).LookupItemByName(fluid_id):
                     # 一桶只倒进一个槽位: 找到第一个装得下整桶的输入槽后立刻停止,
                     # 否则每个还装得下的槽位都会各加一桶, 凭空多出流体。
                     for slot in sorted(player_input_slots):
@@ -221,11 +224,13 @@ class MultiFluidContainer(BaseMachine):
                         elif fluid.fluid_id != fluid_id:
                             continue
                         fluid.volume += BUCKET_VOLUME
-                        SetInventorySlotItemCount(
-                            player_id, GetSelectedSlot(player_id), item.count - 1
+                        CF.CreateItem(player_id).SetInvItemNum(
+                            CF.CreateItem(player_id).GetSelectSlotId(),
+                            item.count - 1,
                         )
-                        SpawnItemToPlayerCarried(
-                            player_id, Item("minecraft:bucket", count=1)
+                        CF.CreateItem(player_id).SpawnItemToPlayerCarried(
+                            Item("minecraft:bucket", count=1).marshal(),
+                            player_id,
                         )
                         # 这里就是本次操作的最后一个槽位更新, 必须让 is_final 为真,
                         # `Processor._processor_on_added_fluid` 才会去重查配方(输入槽空着时挂上的停机旗靠它唤醒)。

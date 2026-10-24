@@ -1,11 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from mod.server.extraServerApi import GetMinecraftEnum
 from mod_log import logger
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    GetPlayerMainhandItem,
-    GetSeed,
-    SpawnItemToPlayerCarried,
-)
+
 from skybluetech_scripts.tooldelta.events.server import (
     ServerItemTryUseEvent,
     PushUIRequest,
@@ -28,7 +26,7 @@ limiter = PlayerRateLimiter()
 
 def GenerateInscribingTemplateByItemId(template_item_id):
     # type: (str) -> Item
-    graph = GetTemplateGraph(template_item_id, GetSeed())
+    graph = GetTemplateGraph(template_item_id, CF.CreateGame(LEVEL_ID).GetSeed())
     ud = {
         K_UD_TEMPLATE_GRAPH: [nbt.Int(i) for i in graph],
         "display": {
@@ -65,7 +63,12 @@ def onGraphUpload(event):
     if not check_list(graph):
         logger.error("Player upload invalid graph: %s" % event.player_id)
         return
-    mainhand_item = GetPlayerMainhandItem(event.player_id)
+    mainhand_item = CF.CreateItem(event.player_id).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    mainhand_item = Item.from_dict(mainhand_item) if mainhand_item is not None else None
     if mainhand_item is None or mainhand_item.id != INSCRIBING_TEMPLATE:
         logger.error("Player upload graph failed: %s" % event.player_id)
         return
@@ -77,7 +80,10 @@ def onGraphUpload(event):
         ud.setdefault("display", {}).setdefault("Lore", []).append(
             nbt.String("§r§6（被修改）")
         )
-    SpawnItemToPlayerCarried(event.player_id, mainhand_item)
+    CF.CreateItem(event.player_id).SpawnItemToPlayerCarried(
+        mainhand_item.marshal(),
+        event.player_id,
+    )
 
 
 def check_list(lst):

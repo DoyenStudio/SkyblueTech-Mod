@@ -1,7 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.utils.timer import Delay
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, Binder
-from skybluetech_scripts.tooldelta.api.client import CreateShapeFactory
-from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.skybluetech.common.events.machinery.tesla_plant import (
     TeslaPlantSettingsUpload,
     TeslaPlantSettingsUpdate,
@@ -131,7 +131,7 @@ def start_preview(x, y, z, range):
     global previewing_shape
     if previewing_shape is not None:
         return
-    previewing_shape = CreateShapeFactory().AddBoxShape(
+    previewing_shape = CF.CreateDrawing(LEVEL_ID).AddBoxShape(
         (x - range, y - range, z - range), (range * 2, range * 2, range * 2)
     )
     finish_preview()

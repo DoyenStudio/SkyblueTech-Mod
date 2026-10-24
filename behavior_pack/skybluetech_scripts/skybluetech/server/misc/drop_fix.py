@@ -1,11 +1,13 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
 from mod.server.extraServerApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import GetPlayerGameType
+
 from skybluetech_scripts.tooldelta.events.server import (
     ServerPlayerTryDestroyBlockEvent,
 )
-from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+
 from ...common.define import id_enum
 
 GameType = GetMinecraftEnum().GameType
@@ -18,11 +20,7 @@ def onTryDestroyBlock(event):
     # type: (ServerPlayerTryDestroyBlockEvent) -> None
     # TODO: BUG: 不需要正确的工具也能挖机器
     if event.fullName in CARDINAL_BLOCKS:
-        if GetPlayerGameType(event.playerId) == GameType.Creative:
+        if CF.CreateGame(LEVEL_ID).GetPlayerGameType(event.playerId) == GameType.Creative:
             return
         event.spawnResources = False
-        SpawnDroppedItem(
-            event.dimensionId,
-            (event.x + 0.5, event.y + 0.5, event.z + 0.5),
-            Item(event.fullName),
-        )
+        GetServer().CreateEngineItemEntity(Item(event.fullName).marshal(), event.dimensionId, (event.x + 0.5, event.y + 0.5, event.z + 0.5))

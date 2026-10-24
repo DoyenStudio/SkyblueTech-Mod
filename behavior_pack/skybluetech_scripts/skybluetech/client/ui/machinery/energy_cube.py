@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.ui_keys import ENERGY_CUBE_UI
 from skybluetech_scripts.skybluetech.common.events.machinery.energy_cube import (
     EnergyCubeActionRequest,
@@ -13,7 +14,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.energy_cube import (
     STORE_RF_MAX,
     IOModes,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
 from skybluetech_scripts.tooldelta.utils.nbt import (
     GetValueWithDefault as GetValue,
@@ -84,7 +84,7 @@ class EnergyCubeUI(MachinePanelUI):
     def OnTicking(self):
         if not self.inited:
             return
-        data = GetBlockEntityData(self.x, self.y, self.z)
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((self.x, self.y, self.z))
         if data is None:
             return
         data = data["exData"]
@@ -140,7 +140,7 @@ class EnergyCubeUI(MachinePanelUI):
     def refresh_io_mode_btns(self, data=None):
         # type: (dict | None) -> None
         if data is None:
-            raw = GetBlockEntityData(self.x, self.y, self.z)
+            raw = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((self.x, self.y, self.z))
             if raw is None:
                 self.update_all_io_mode_btns()
                 return

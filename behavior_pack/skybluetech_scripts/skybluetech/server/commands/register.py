@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetBlockName
+
 from skybluetech_scripts.tooldelta.events.server import CustomCommandTriggerServerEvent
 from .utils import generate_simple_arg_mapping
 

@@ -1,9 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockEntityDataDict,
-    SetBlockEntityData,
-    SpawnDroppedItem,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.extensions import item_nbt
 
@@ -34,20 +32,28 @@ class BatteryMatrixCore(BaseMachine):
 
     def _battery_matrix_core_on_destroy(self):
         self.save_core_data()
-        blocknbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
+        blocknbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+        )
         if blocknbt is None:
             return
         exData = blocknbt["exData"]
         items = exData.get(K_ITEMS, [])  # type: list[dict]
         for item_inbt in items:
-            SpawnDroppedItem(
-                self.dim, (self.x, self.y, self.z), item_nbt.INBT2Item(item_inbt)
+            GetServer().CreateEngineItemEntity(
+                item_nbt.INBT2Item(item_inbt).marshal(),
+                self.dim,
+                (self.x, self.y, self.z),
             )
 
     def add_battery(self, battery):
         # type: (Item) -> bool
         self.save_core_data()
-        blocknbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
+        blocknbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+        )
         if blocknbt is None:
             return False
         exData = blocknbt["exData"]
@@ -56,14 +62,21 @@ class BatteryMatrixCore(BaseMachine):
             return False
         items.append(item_nbt.Item2INBT(battery))
         exData[K_ITEMS] = items
-        SetBlockEntityData(self.dim, (self.x, self.y, self.z), blocknbt)
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+            blocknbt,
+        )
         self.update_core_data()
         return True
 
     def pop_battery(self, index):
         # type: (int) -> Item | None
         self.save_core_data()
-        blocknbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
+        blocknbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+        )
         if blocknbt is None:
             return None
         exData = blocknbt["exData"]
@@ -76,7 +89,11 @@ class BatteryMatrixCore(BaseMachine):
                 item, GetCharge(item.userData)[0]
             )  # 刷新取出电池的能量叠加贴图
         exData[K_ITEMS] = items
-        SetBlockEntityData(self.dim, (self.x, self.y, self.z), blocknbt)
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+            blocknbt,
+        )
         self.update_core_data()
         return item
 
@@ -98,7 +115,10 @@ class BatteryMatrixCore(BaseMachine):
 
     def update_core_data(self):
         self.slots = []
-        block_nbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
+        block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+        )
         if block_nbt is None:
             return
         exData = block_nbt["exData"]
@@ -112,7 +132,10 @@ class BatteryMatrixCore(BaseMachine):
             )
 
     def save_core_data(self):
-        block_nbt = GetBlockEntityDataDict(self.dim, (self.x, self.y, self.z))
+        block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+        )
         if block_nbt is None:
             return
         exData = block_nbt["exData"]
@@ -122,7 +145,11 @@ class BatteryMatrixCore(BaseMachine):
             if bs is None or not bs.is_changed():
                 continue
             bs.save_to_item_userdata(userdata)
-        SetBlockEntityData(self.dim, (self.x, self.y, self.z), block_nbt)
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+            block_nbt,
+        )
 
     def add_energy(self, rf, from_overflow=False):
         # type: (int, bool) -> int

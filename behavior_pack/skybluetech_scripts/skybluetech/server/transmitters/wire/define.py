@@ -1,6 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF
 from mod.server.extraServerApi import GetMinecraftEnum
-from skybluetech_scripts.tooldelta.api.server import Hurt, GetEntityTypeFamily
+
 from skybluetech_scripts.skybluetech.common.define.id_enum.blocks import Wire
 from skybluetech_scripts.skybluetech.common.misc.transmitter import TransmitterType
 from ..base.define import BaseNetwork, BaseAccessPoint
@@ -60,7 +61,7 @@ class WireNetwork(BaseNetwork["WireAccessPoint"]):
         if transfer_rf > 0 and self.entities_hit_wire:
             damage = min(2147483647, rf_to_damage(transfer_rf))
             for entity_id, hit_pos in self.entities_hit_wire.items():
-                Hurt(entity_id, damage, ShockHurt)
+                CF.CreateHurt(entity_id).Hurt(damage, ShockHurt, None, None, True, None)
         self.entities_hit_wire.clear()
 
 

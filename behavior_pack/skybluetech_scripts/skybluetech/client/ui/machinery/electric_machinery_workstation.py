@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.events.machinery.electric_machinery_workstation import (
     ElectricMachineryWorkstationSelectRecipe,
 )
@@ -15,7 +16,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.electric_machinery_wor
     STORE_RF_MAX,
     recipes,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
@@ -68,7 +68,7 @@ class ElectricMachineryWorkstationUI(MachinePanelUIProxyEx):
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(), recipes
         )
         # 开界面时先取一次方块实体数据, 让首帧渲染就有正确状态
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is not None:
             self.selected_recipe_id = GetValue(
                 data["exData"], K_SELECTED_RECIPE, None
@@ -77,7 +77,7 @@ class ElectricMachineryWorkstationUI(MachinePanelUIProxyEx):
         self.update_recipe_preview()
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     CraftingRecipeRes,
@@ -136,7 +137,9 @@ def GetSplitResult(item_id, aux_value=0):
         return res
     elif res in cant_split_recipes:
         return None
-    recipes = GetRecipesByInput(item_id, "crafting_table", aux_value)
+        recipes = CF.CreateRecipe(LEVEL_ID).GetRecipesByInput(
+            item_id, "crafting_table", aux_value, -1
+        )
     for recipe in recipes:
         recipe = GetCraftingRecipe(recipe)
         if isinstance(recipe, CraftingRecipeRes):

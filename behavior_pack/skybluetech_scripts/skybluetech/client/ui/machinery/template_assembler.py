@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.events.machinery.template_assembler import (
     TemplateAssemblerUpdateRecipeEvent,
     TemplateAssemblerUpdateRecipeEvent2,
@@ -15,7 +16,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.template_assembler imp
     STORE_RF_MAX,
     recipes,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
@@ -52,7 +52,7 @@ class TemplateAssemblerUI(MachinePanelUIProxyEx):
         )
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -67,7 +67,7 @@ class TemplateAssemblerUI(MachinePanelUIProxyEx):
         self.update_item_required()
 
     def update_item_required(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

@@ -1,3 +1,4 @@
 [submodule "behavior_pack/skybluetech_scripts/tooldelta"]
 	path = behavior_pack/skybluetech_scripts/tooldelta
 	url = https://ghfast.top/https://github.com/SuperScript-PRC/ToolDeltaMod
+	branch = skybluetech

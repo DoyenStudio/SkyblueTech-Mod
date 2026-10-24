@@ -1,10 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 import time
-from skybluetech_scripts.tooldelta.api.client import (
-    PlayCustomMusic,
-    StopCustomMusicById,
-    SetPopupNotice,
-)
 from skybluetech_scripts.tooldelta.events.client import (
     ClientBlockUseEvent,
 )
@@ -20,9 +16,9 @@ def onFamicomPlaySoundEvent(event):
     if event.stop:
         audio_id = client_music_ids.pop(event.sound_name, None)
         if audio_id is not None:
-            StopCustomMusicById(audio_id, 0)
+            CF.CreateCustomAudio(LEVEL_ID).StopCustomMusicById(audio_id, 0)
     else:
-        audio_id = PlayCustomMusic(
+        audio_id = CF.CreateCustomAudio(LEVEL_ID).PlayCustomMusic(
             event.sound_name,
             (event.x, event.y, event.z),
             1,
@@ -33,7 +29,7 @@ def onFamicomPlaySoundEvent(event):
         if isinstance(audio_id, str):
             client_music_ids[event.sound_name] = audio_id
         else:
-            SetPopupNotice("§c无法播放卡带音乐", "§c错误")
+            CF.CreateGame(LEVEL_ID).SetPopupNotice('§c无法播放卡带音乐', '§c错误')
 
 
 last_used_time = 0

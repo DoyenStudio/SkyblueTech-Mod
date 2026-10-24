@@ -1,13 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 import random
 
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockAuxValueFromStates,
-    GetBlockName,
-    GetBlockStates,
-    MayPlace,
-    SetBlock,
-)
+
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
     ServerBlockUseEvent,
@@ -40,7 +35,7 @@ class DeepslateLavaVibrator(SPControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(DeepslateLavaVibrator, self).__init__(dim, x, y, z, block_entity_data)
-        states = GetBlockStates(self.dim, (self.x, self.y, self.z))
+        states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((self.x, self.y, self.z), self.dim)
         if states is None:
             raise ValueError("WindGenerator BlockState None")
         self.layer = states["skybluetech:layer"]  # type: int
@@ -71,26 +66,34 @@ class DeepslateLavaVibrator(SPControl):
         y = event.y
         z = event.z
         facing = event.face
-        if not MayPlace(block_id, (x, y + 1, z), facing, dim):
+        if not CF.CreateBlockInfo(LEVEL_ID).MayPlace(block_id, (x, y + 1, z), facing, dim):
             event.cancel()
 
     def _deepslate_lava_vibrator_on_placed(self, event):
         if not self.is_base_block:
             return
-        SetBlock(
-            self.dim,
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
             (self.x, self.y + 1, self.z),
-            self.block_name,
-            GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": 1}),
+            {"name": self.block_name, "aux": CF.CreateBlockState(LEVEL_ID).GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": 1})},
+            0,
+            dimensionId=self.dim,
         )
         self.set_predict_value(0)
 
     def _deepslate_lava_vibrator_on_unload(self):
         base_y = self.y - self.layer
         for i in range(2):
-            block_id = GetBlockName(self.dim, (self.x, base_y + i, self.z))
+            block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                (self.x, base_y + i, self.z),
+                self.dim,
+            ) or {}).get("name")
             if block_id == self.block_name and i != self.layer:
-                SetBlock(self.dim, (self.x, base_y + i, self.z), "minecraft:air")
+                CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                    (self.x, base_y + i, self.z),
+                    {"name": "minecraft:air", "aux": 0},
+                    0,
+                    dimensionId=self.dim,
+                )
 
     def work_once(self):
         self.add_predict_precision()

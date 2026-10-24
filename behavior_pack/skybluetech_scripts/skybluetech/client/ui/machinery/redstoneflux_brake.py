@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.ui_keys import REDSTONEFLUX_BRAKE_UI
 from skybluetech_scripts.skybluetech.common.events.machinery.redstoneflux_brake import (
     RedstoneFluxBrakeModeSwitchRequest,
@@ -9,7 +10,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.redstoneflux_brake imp
     K_POWER_AVG,
     K_REDSTONE_STRENGTH,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import (
     SCREEN_BASE_PATH,
     Binder,
@@ -44,7 +44,7 @@ class RedstoneFluxBrakeUI(MachinePanelUI):
     def OnTicking(self):
         if not self.inited:
             return
-        data = GetBlockEntityData(self.x, self.y, self.z)
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((self.x, self.y, self.z))
         if data is None:
             return
         data = data["exData"]

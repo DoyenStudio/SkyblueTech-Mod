@@ -1,6 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF
+from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import InventoryItemChangedServerEvent
-from skybluetech_scripts.tooldelta.api.server import GetArmorSlotItems, SetPlayerAllItems
+
 from .base import PlayerService
 
 if 0>1:
@@ -177,12 +179,21 @@ class ArmorService(PlayerService):
             UpdateCharge(item, store - cost)
             changed[(armor_pos, slot)] = item
         if changed:
-            SetPlayerAllItems(self.player_id, changed)
+            CF.CreateItem(self.player_id).SetPlayerAllItems(
+                {key: item.marshal() for key, item in (changed).items()},
+            )
 
     def refresh(self):
         # type: () -> None
         """护甲变化时重算激活集合(处理穿/脱),不扣电。"""
-        items = GetArmorSlotItems(self.player_id, get_userdata=True)
+        items = {
+            slot: Item.from_dict(raw_item)
+            for slot, raw_item in enumerate(CF.CreateItem(self.player_id).GetPlayerAllItems(
+                _get_armor_pos(),
+                True,
+            ))
+            if raw_item is not None
+        }
         worn = self._worn(items)
         self._tick_needed = any(handler.needs_tick() for _, _, handler in worn)
         desired, _ = self._plan(items, worn)
@@ -192,7 +203,14 @@ class ArmorService(PlayerService):
         # type: () -> None
         if not self._tick_needed:
             return
-        items = GetArmorSlotItems(self.player_id, get_userdata=True)
+        items = {
+            slot: Item.from_dict(raw_item)
+            for slot, raw_item in enumerate(CF.CreateItem(self.player_id).GetPlayerAllItems(
+                _get_armor_pos(),
+                True,
+            ))
+            if raw_item is not None
+        }
         worn = self._worn(items)
         desired, drain = self._plan(items, worn)
         self._apply(desired, fire_periodic=True)

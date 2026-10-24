@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 import time
 
 from mod.server.extraServerApi import GetMinecraftEnum
@@ -18,16 +19,8 @@ from skybluetech_scripts.skybluetech.common.misc.inscribing_template import (
     K_UD_TEMPLATE_GRAPH,
     GetTemplateGraph,
 )
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.server import (
-    GetAllInventoryItems,
-    GetExtraData,
-    GetPlayerMainhandItem,
-    GetSeed,
-    SetExtraData,
-    SetOnePopupNotice,
-    SetPlayerAllItems,
-)
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
+
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
 from skybluetech_scripts.tooldelta.events.service import EventListenerService
@@ -109,11 +102,11 @@ class IndustrialResearchingPlayerMgr(object):
         Returns:
             dict[str, int]: 所有已研究的物品，键为 IndustrialResearchingRecipe 的 result_item_id，值为研究时间戳。
         """
-        return GetExtraData(player_id, self._DATA_KEY) or {}
+        return CF.CreateExtraData(player_id).GetExtraData(self._DATA_KEY) or {}
 
     def _save_player_researchings(self, player_id, researchings):
         # type: (str, dict[str, int]) -> None
-        SetExtraData(player_id, self._DATA_KEY, researchings)
+        CF.CreateExtraData(player_id).SetExtraData(self._DATA_KEY, researchings, True)
 
     @classmethod
     def instance(cls):
@@ -162,16 +155,16 @@ class IndustrialResearchingQueryHandler(EventListenerService):
         recipe = RESEARCHING_BY_ITEM_ID.get(item_id)
         if recipe is None:
             logger.error("Industrial researching submit invalid item: %s" % item_id)
-            SetOnePopupNotice(player_id, "§c研究失败")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c研究失败", "§6提示§f")
             return
         mgr = IndustrialResearchingPlayerMgr.instance()
         if mgr.has_researched(player_id, item_id):
-            SetOnePopupNotice(player_id, "§e已经研究过该物品")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§e已经研究过该物品", "§6提示§f")
         elif self.consume_researching_items(player_id, recipe):
             mgr.record_researching(player_id, item_id)
-            SetOnePopupNotice(player_id, "§a研究成功")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§a研究成功", "§6提示§f")
         else:
-            SetOnePopupNotice(player_id, "§c研究材料不足")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c研究材料不足", "§6提示§f")
             researched_items = mgr.get_player_researchings(player_id)
             self._schedule_submit_response(player_id, researched_items)
             return
@@ -182,7 +175,14 @@ class IndustrialResearchingQueryHandler(EventListenerService):
         # type: (str, IndustrialResearchingRecipe) -> bool
         inventory_items = {
             slot: item.copy()
-            for slot, item in GetAllInventoryItems(player_id, get_userdata=True).items()
+            for slot, item in {
+                slot: Item.from_dict(raw_item)
+                for slot, raw_item in enumerate(CF.CreateItem(player_id).GetPlayerAllItems(
+                    GetMinecraftEnum().ItemPosType.INVENTORY,
+                    True,
+                ))
+                if raw_item is not None
+            }.items()
         }
         new_items = {}  # type: dict[tuple[int, int], Item]
         for input_item in recipe.require_items:
@@ -200,7 +200,9 @@ class IndustrialResearchingQueryHandler(EventListenerService):
                 )
             if left_count > 0:
                 return False
-        SetPlayerAllItems(player_id, new_items)
+        CF.CreateItem(player_id).SetPlayerAllItems(
+            {key: item.marshal() for key, item in (new_items).items()},
+        )
         return True
 
     @EventListenerService.Listen(IndustrialResearchingInscribeRequest)
@@ -210,36 +212,41 @@ class IndustrialResearchingQueryHandler(EventListenerService):
         item_id = event.item_id
         if item_id not in VALID_RESEARCHING_ITEM_IDS:
             logger.error("Industrial researching inscribe invalid item: %s" % item_id)
-            SetOnePopupNotice(player_id, "§c刻印不成功")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c刻印不成功", "§6提示§f")
             return
         if not IndustrialResearchingPlayerMgr.instance().has_researched(
             player_id, item_id
         ):
-            SetOnePopupNotice(player_id, "§c尚未研究该物品，无法刻印")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c尚未研究该物品，无法刻印", "§6提示§f")
             return
-        mainhand = GetPlayerMainhandItem(player_id)
+        mainhand = CF.CreateItem(player_id).GetPlayerItem(
+            GetMinecraftEnum().ItemPosType.CARRIED,
+            0,
+            True,
+        )
+        mainhand = Item.from_dict(mainhand) if mainhand is not None else None
         if mainhand is None or mainhand.id != INSCRIBING_TEMPLATE:
-            SetOnePopupNotice(player_id, "§c主手物品不是刻印模版")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c主手物品不是刻印模版", "§6提示§f")
             return
         try:
             if self.inscribe_template(
                 player_id, item_id, mainhand, ignore_not_empty=True
             ):
-                SetOnePopupNotice(player_id, "§a刻印成功")
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§a刻印成功", "§6提示§f")
             else:
-                SetOnePopupNotice(player_id, "§c刻印不成功")
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c刻印不成功", "§6提示§f")
         except Exception as err:
             logger.error(
                 "Industrial researching inscribe failed: %s %s %s"
                 % (player_id, item_id, err)
             )
-            SetOnePopupNotice(player_id, "§c刻印不成功")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§c刻印不成功", "§6提示§f")
 
     def inscribe_template(self, player_id, item_id, mainhand, ignore_not_empty=False):
         # type: (str, str, Item, bool) -> bool
         if not ignore_not_empty and not self.is_empty_inscribing_template(mainhand):
             return False
-        graph = GetTemplateGraph(item_id, GetSeed())
+        graph = GetTemplateGraph(item_id, CF.CreateGame(LEVEL_ID).GetSeed())
         user_data = mainhand.userData or {}
         user_data[K_UD_TEMPLATE_GRAPH] = [nbt.Int(i) for i in graph]
         user_data["display"] = {
@@ -248,7 +255,9 @@ class IndustrialResearchingQueryHandler(EventListenerService):
             ]
         }
         mainhand.userData = user_data
-        SetPlayerAllItems(player_id, {(ItemPosType.CARRIED, 0): mainhand})
+        CF.CreateItem(player_id).SetPlayerAllItems(
+            {key: item.marshal() for key, item in ({(ItemPosType.CARRIED, 0): mainhand}).items()},
+        )
         return True
 
     def is_empty_inscribing_template(self, item):

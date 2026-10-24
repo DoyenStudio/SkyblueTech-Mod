@@ -1,9 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockName,
-    GetPlayerDimensionId,
-    SetOnePopupNotice,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
 
 from ...common.events.misc.transmitter_visual_checker import (
@@ -46,7 +43,7 @@ def onRecvRequest(event):
     # type: (TransmitterVisualCheckerCheckRequest) -> None
     ok = server_limiter.record(event.player_id)
     if not ok:
-        SetOnePopupNotice(event.player_id, "§c操作过快， 请稍后再试")
+        CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.player_id, "§c操作过快， 请稍后再试", "§6提示§f")
         return
     if event.mode not in (
         event.MODE_AUTO,
@@ -54,10 +51,13 @@ def onRecvRequest(event):
         event.MODE_GET_BY_MACHINE,
     ):
         return
-    dim = GetPlayerDimensionId(event.player_id)
-    bname = GetBlockName(dim, (event.x, event.y, event.z))
+    dim = CF.CreateDimension(event.player_id).GetEntityDimensionId()
+    bname = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+        (event.x, event.y, event.z),
+        dim,
+    ) or {}).get("name")
     if bname is None:
-        SetOnePopupNotice(event.player_id, "§6未找到网络")
+        CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.player_id, "§6未找到网络", "§6提示§f")
         return
     registrations = _get_transmitter_types()
     if event.mode != event.MODE_GET_BY_MACHINE:
@@ -67,12 +67,12 @@ def onRecvRequest(event):
                 continue
             network = logic.GetNetworkByTransmitter(dim, event.x, event.y, event.z)
             if network is None:
-                SetOnePopupNotice(event.player_id, "§6未找到网络")
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.player_id, "§6未找到网络", "§6提示§f")
             else:
                 _make_response(registration, network).send(event.player_id)
             return
         if event.mode == event.MODE_GET_BY_TRANSMITTER:
-            SetOnePopupNotice(event.player_id, "§6未识别到传输网络")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.player_id, "§6未识别到传输网络", "§6提示§f")
             return
     responses = []
     for registration in registrations:
@@ -87,4 +87,4 @@ def onRecvRequest(event):
             responses.append(_make_response(registration, network))
     TransmitterVisualCheckerCheckMultiResponse(responses).send(event.player_id)
     if not responses:
-        SetOnePopupNotice(event.player_id, "§6未找到网络")
+        CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.player_id, "§6未找到网络", "§6提示§f")

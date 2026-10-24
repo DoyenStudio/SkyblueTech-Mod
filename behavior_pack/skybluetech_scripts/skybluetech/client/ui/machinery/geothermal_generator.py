@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF,
     FluidSlotClient,
@@ -10,7 +11,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.geothermal_generator i
     ONCE_BURNING_TICKS,
     STORE_RF_MAX,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
@@ -43,7 +43,7 @@ class GeoThermalGeneratorUI(MachinePanelUIProxyEx):
         self.water_displayer = FluidDisplayer(self.water_display)
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

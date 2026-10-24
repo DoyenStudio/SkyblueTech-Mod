@@ -1,7 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 import time
 
-from skybluetech_scripts.tooldelta.api.client import GetConfigData, SetConfigData
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 
 from .base_page import BasePage
@@ -81,9 +81,9 @@ def AddBookMark(page_group, page_index):
 
 def _get_bookmarks():
     # type: () -> dict[str, int]
-    return GetConfigData("st:bookmarks") or {}
+    return CF.CreateConfigClient(LEVEL_ID).GetConfigData('st:bookmarks', False) or {}
 
 
 def _set_bookmarks(bookmarks):
     # type: (dict[str, int]) -> None
-    SetConfigData("st:bookmarks", bookmarks)
+    CF.CreateConfigClient(LEVEL_ID).SetConfigData('st:bookmarks', bookmarks, False)

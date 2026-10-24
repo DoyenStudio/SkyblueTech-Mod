@@ -1,11 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from mod.server.extraServerApi import GetMinecraftEnum
-from skybluetech_scripts.tooldelta.api.server import (
-    GetEntitiesInSquareArea,
-    GetEntityType,
-    GetEntityAttr,
-    Hurt,
-)
+
 from skybluetech_scripts.tooldelta.events.server.block import (
     ServerBlockUseEvent,
 )
@@ -57,7 +53,7 @@ class TeslaPlant(WorkRenderer, UpgradeControl, GUIControl):
 
     def work_once(self):
         range = self.work_range
-        entities = GetEntitiesInSquareArea(
+        entities = CF.CreateGame(LEVEL_ID).GetEntitiesInSquareArea(
             None,
             (self.x - range, self.y - range, self.z - range),
             (self.x + range, self.y + range, self.z + range),
@@ -68,7 +64,7 @@ class TeslaPlant(WorkRenderer, UpgradeControl, GUIControl):
     def attack_once(self, entities):
         # type: (list[str]) -> None
         for entity_id in entities:
-            entity_type = GetEntityType(entity_id)
+            entity_type = CF.CreateEngineType(entity_id).GetEngineType()
             if (
                 entity_type & EntityType.Player
                 and not self.do_attack_player
@@ -78,9 +74,11 @@ class TeslaPlant(WorkRenderer, UpgradeControl, GUIControl):
                 and not self.do_attack_mob
             ):
                 continue
-            max_hp = GetEntityAttr(entity_id, AttrType.HEALTH)
+            max_hp = CF.CreateAttr(entity_id).GetAttrValue(AttrType.HEALTH)
             damage = min(max_hp, self.store_rf_max / 100)
-            Hurt(entity_id, damage, ActorDamageCause.Lightning)
+            CF.CreateHurt(entity_id).Hurt(
+                damage, ActorDamageCause.Lightning, None, None, True, None
+            )
             self.ReducePower(int(damage * 100))
 
     def update_settings(

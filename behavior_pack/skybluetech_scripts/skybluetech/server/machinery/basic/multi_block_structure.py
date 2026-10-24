@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from weakref import ref
 
 from mod_log import logger
@@ -20,16 +21,9 @@ from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
     AIR_BLOCK_ID,
     StructureBlockPalette,
 )
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlankBlockPalette,
-)
-from skybluetech_scripts.tooldelta.api.common import Delay, ExecLater
-from skybluetech_scripts.tooldelta.api.server import (
-    AddBlocksToBlockRemoveListener,
-    GetBlockCardinalFacing,
-    GetBlockName,
-    GetBlockPaletteBetweenPos,
-)
+
+from skybluetech_scripts.tooldelta.utils.timer import Delay, ExecLater
+
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     ChunkAcquireDiscardedServerEvent,
@@ -158,9 +152,10 @@ class DetectArea(object):
         self.functional_block_poses = {}  # type: dict[str, list[tuple[int, int, int]]]
         # 朝向只在初始化时取一次: 下面的包围盒和 `_detect_structure()` 里的旋转都依赖它,
         # 两处用同一个值才能保证始终互相自洽
-        self.core_block_facing = GetBlockCardinalFacing(
-            self.dim, (self.center_x, self.center_y, self.center_z)
-        )
+        self.core_block_facing = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            (self.center_x, self.center_y, self.center_z),
+            self.dim,
+        )["minecraft:cardinal_direction"]
         self.rotation_times = ROT_TIMES_MAPPING[self.core_block_facing]
         self._rotated_palette = None  # type: StructureBlockPalette | None
         self._air_poses_in_world = None  # type: set[tuple[int, int, int]] | None
@@ -206,7 +201,9 @@ class DetectArea(object):
             else:
                 block_removed_listen_pool.update(block_id)
         if server_inited:
-            AddBlocksToBlockRemoveListener(block_removed_listen_pool)
+            block_info_comp = CF.CreateBlockInfo(LEVEL_ID)
+            for block_id in block_removed_listen_pool:
+                block_info_comp.ListenOnBlockRemoveEvent(block_id, True)
         if not self.chunks_not_loaded:
             mark_detect_area_dirty(self)
 
@@ -319,7 +316,7 @@ class DetectArea(object):
 
     def _detect_structure(self):
         spalette = self.rotated_palette
-        current_palette = GetBlockPaletteBetweenPos(
+        current_palette = CF.CreateBlock(LEVEL_ID).GetBlockPaletteBetweenPos(
             self.dim,
             (self.min_x, self.min_y, self.min_z),
             (self.max_x, self.max_y, self.max_z),
@@ -362,7 +359,10 @@ class DetectArea(object):
             "y": wy,
             "z": wz,
             "expected": expected_block_ids,
-            "actual": GetBlockName(self.dim, (wx, wy, wz)) or "",
+            "actual": (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                (wx, wy, wz),
+                self.dim,
+            ) or {}).get("name") or "",
         }
 
     def _find_mismatch_poses(self, spalette, actual_poses):
@@ -674,7 +674,9 @@ def get_not_loaded_chunk_poses_in_range(dim, startx, startz, endx, endz):
 @ServerInitCallback()
 def onServerInit():
     global server_inited
-    AddBlocksToBlockRemoveListener(block_removed_listen_pool)
+    block_info_comp = CF.CreateBlockInfo(LEVEL_ID)
+    for block_id in block_removed_listen_pool:
+        block_info_comp.ListenOnBlockRemoveEvent(block_id, True)
     server_inited = True
 
 
@@ -774,6 +776,8 @@ def onCheckRequest(event):
 
 # CLIENT PART
 if False:
+    from skybluetech_scripts.tooldelta.cli import CF as CLIENT_CF, LEVEL_ID as CLIENT_LEVEL_ID
+
     multi_block_model_displaying = False
 
     @MultiBlockStructureCheckResponse.Listen()
@@ -823,7 +827,7 @@ if False:
                 pal_dict.setdefault((palette_display[pal_index], 0), []).append(
                     (y - min_y) * size_x * size_z + (x - min_x) * size_z + (z - min_z)
                 )
-        pal = GetBlankBlockPalette()
+        pal = CLIENT_CF.CreateBlock(CLIENT_LEVEL_ID).GetBlankBlockPalette()
         pal.DeserializeBlockPalette(
             {
                 "extra": {},
@@ -863,7 +867,10 @@ if False:
         for _x, _y, _z in expected.difference(actual):
             print(
                 " ({} {} {}) : {}".format(
-                    x + _x, y + _y, z + _z, GetBlockName(dim, (x + _x, y + _y, z + _z))
+                    x + _x, y + _y, z + _z, (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                        (x + _x, y + _y, z + _z),
+                        dim,
+                    ) or {}).get("name")
                 )
             )
         print("====== Structure debug end ======")

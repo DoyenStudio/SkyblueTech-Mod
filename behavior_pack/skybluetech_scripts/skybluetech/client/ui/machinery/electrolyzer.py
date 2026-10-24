@@ -1,11 +1,11 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF, FluidSlotClient,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.electrolyzer import (
     FLUID_SLOT_MAX_VOLUMES, STORE_RF_MAX, recipes,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.client.ui.machinery_extra_pages import (
@@ -38,7 +38,7 @@ class ElectrolyzerUI(MachinePanelUIProxyEx):
             recipe_button.SetVisible(False)
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

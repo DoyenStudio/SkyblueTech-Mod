@@ -1,9 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from collections import deque
-from mod.server.extraServerApi import GetEngineCompFactory
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import ServerPlayerTryDestroyBlockEvent
-from skybluetech_scripts.tooldelta.api.server import GetBlockName
+
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 from skybluetech_scripts.skybluetech.common.define.id_enum import ObjectUpgraders
 from ...machinery.utils.charge import GetCharge, GetPowerCost
@@ -11,7 +11,6 @@ from .register import RegisterBlockDestroyCallback
 from .utils import GetUpgraderLevel
 
 
-CF = GetEngineCompFactory()
 veining = set()  # type: set[tuple[int, int, int, int]]
 
 
@@ -25,7 +24,7 @@ def bfsVeinMiner(dim, _x, _y, _z, block_id, max_limit):
         _, x, y, z = remainings.popleft()
         posdata = (dim, x, y, z)
         scanned.add(posdata)
-        if GetBlockName(dim, (x, y, z)) == block_id:
+        if (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, y, z), dim) or {}).get("name") == block_id:
             res.append(posdata)
             run_count += 1
             if run_count > max_limit:
@@ -80,7 +79,7 @@ def delayBreakBlock(
     if not blocks:
         return
     dim, x, y, z = blocks.popleft()
-    cur_block = GetBlockName(dim, (x, y, z))
+    cur_block = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, y, z), dim) or {}).get("name")
     if cur_block == block_id:
         digfunc((x, y, z), sendInv=not blocks)
     veining.discard((dim, x, y, z))

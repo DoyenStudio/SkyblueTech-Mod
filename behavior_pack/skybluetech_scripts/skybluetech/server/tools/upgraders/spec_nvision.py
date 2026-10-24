@@ -1,8 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import (
-    AddEffectToEntity,
-    RemoveEffectFromEntity,
-)
+from skybluetech_scripts.tooldelta.srv import CF
+
 from skybluetech_scripts.skybluetech.common.define.id_enum import ObjectUpgraders
 from skybluetech_scripts.skybluetech.server.player.armor_service import ArmorService
 
@@ -14,12 +12,17 @@ EFFECT_AMPLIFIER = 0
 
 def _grant(player_id):
     # type: (str) -> None
-    AddEffectToEntity(player_id, EFFECT_NAME, EFFECT_DURATION, EFFECT_AMPLIFIER, False)
+    CF.CreateEffect(player_id).AddEffectToEntity(
+        EFFECT_NAME,
+        EFFECT_DURATION,
+        EFFECT_AMPLIFIER,
+        False,
+    )
 
 
 def _revoke(player_id):
     # type: (str) -> None
-    RemoveEffectFromEntity(player_id, EFFECT_NAME)
+    CF.CreateEffect(player_id).RemoveEffectFromEntity(EFFECT_NAME)
 
 
 ArmorService.register_upgrade_handler(

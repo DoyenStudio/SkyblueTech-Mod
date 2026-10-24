@@ -1,7 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.server import UpdateBlockStates
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
+
 
 from ...common.define.facing import FACING_DXYZ, OPPOSITE_FACING
 from ...common.define.id_enum import Machinery
@@ -85,7 +86,11 @@ class EnergyCubeJunior(OperationListener, GUIControl, BasePowerProvider, BaseCli
         )
 
     def _energy_cube_junior_on_placed(self, event):
-        UpdateBlockStates(self.dim, (self.x, self.y, self.z), self.io_modes.states())
+        block_state_comp = CF.CreateBlockState(LEVEL_ID)
+        block_states = block_state_comp.GetBlockStates((self.x, self.y, self.z), self.dim)
+        if block_states is not None:
+            block_states.update(self.io_modes.states())
+            block_state_comp.SetBlockStates((self.x, self.y, self.z), block_states, self.dim)
 
 
     def AddPower(self, rf):
@@ -116,9 +121,11 @@ class EnergyCubeJunior(OperationListener, GUIControl, BasePowerProvider, BaseCli
         self.io_modes.save()
         self.energy_io_mode = self.io_modes.modes()
         self._refresh_output_faces()
-        UpdateBlockStates(
-            self.dim, (self.x, self.y, self.z), self.io_modes.states()
-        )
+        block_state_comp = CF.CreateBlockState(LEVEL_ID)
+        block_states = block_state_comp.GetBlockStates((self.x, self.y, self.z), self.dim)
+        if block_states is not None:
+            block_states.update(self.io_modes.states())
+            block_state_comp.SetBlockStates((self.x, self.y, self.z), block_states, self.dim)
         self.update_neighbor_access_point_modes()
 
     def _refresh_output_faces(self):

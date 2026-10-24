@@ -1,7 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from mod.server.extraServerApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import ItemExists, SetPlayerAllItems
+
 from skybluetech_scripts.tooldelta.utils import nbt
 
 GLASS_TUBE_TAG = "skybluetech:glass_tube"
@@ -65,11 +66,13 @@ def ApplyTubeContent(player_id, item, fluid_id, volume):
         )
     ud["display"] = {"Lore": [nbt.String(lore)]}
     item.userData = ud
-    SetPlayerAllItems(player_id, {(_ItemPosType.CARRIED, 0): item})
+    CF.CreateItem(player_id).SetPlayerAllItems(
+        {key: item.marshal() for key, item in ({(_ItemPosType.CARRIED, 0): item}).items()},
+    )
 
 
 def _GetFluidName(fluid_id):
     # type: (str) -> str
-    if ItemExists(fluid_id):
+    if CF.CreateGame(LEVEL_ID).LookupItemByName(fluid_id):
         return Item(fluid_id).GetBasicInfo().itemName
     return fluid_id

@@ -1,11 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
+from skybluetech_scripts.tooldelta.utils.timer import Delay
 from random import random
-from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
-from skybluetech_scripts.tooldelta.api.client import (
-    GetLocalPlayerMainhandItem,
-    GetLocalPlayerId,
-)
-from skybluetech_scripts.tooldelta.api.common import Delay
 from skybluetech_scripts.tooldelta.events.client import ClientBlockUseEvent
 from skybluetech_scripts.tooldelta.general import ClientInitCallback
 from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
@@ -15,7 +13,6 @@ from ...common.events.misc.transmitter_visual_checker import (
     TransmitterVisualCheckerCheckMultiResponse,
 )
 
-CF = GetEngineCompFactory()
 RATE_LIMIT = 0.5
 
 
@@ -29,7 +26,10 @@ g_multi_shapes = []
 @ClientBlockUseEvent.Listen()
 def onClientBlockUseEvent(event):
     # type: (ClientBlockUseEvent) -> None
-    mh_item = GetLocalPlayerMainhandItem()
+    mh_item_data = CF.CreateItem(GetLocalPlayerId()).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED, 0, True
+    )
+    mh_item = Item.from_dict(mh_item_data) if mh_item_data is not None else None
     if mh_item is None or mh_item.id != "skybluetech:transmitter_visual_checker":
         return
     ok = client_limiter.record(GetLocalPlayerId())
@@ -60,7 +60,7 @@ def displayModel(event):
     # type: (TransmitterVisualCheckerCheckResponse) -> None
     clean()
     shapes = []
-    draw_comp = CF.CreateDrawing(GetLevelId())
+    draw_comp = CF.CreateDrawing(LEVEL_ID)
     nodes = set(event.nodes)
     all_nodes = nodes | set(event.inputs + event.outputs)
     for nx, ny, nz in nodes:
@@ -131,7 +131,7 @@ def displayMultiModel(event):
     # type: (TransmitterVisualCheckerCheckMultiResponse) -> None
     clean()
     shapes = []
-    draw_comp = CF.CreateDrawing(GetLevelId())
+    draw_comp = CF.CreateDrawing(LEVEL_ID)
     _DXYZ_FACING = ((1, 0, 0), (0, 1, 0), (0, 0, 1))
     text_map = {}
     for response in event.reses:

@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
@@ -17,10 +18,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill imp
     K_MAX_FLUID_VOLUME,
     K_VOLUME_LEFT_PERCENT,
     STORE_RF_MAX,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
@@ -69,7 +66,7 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
         self.last_structure_lacked_poses = None
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -109,7 +106,7 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
                 self.structure_desc_label.SetText(
                     "缺失组件： "
                     + "， ".join(
-                        GetItemHoverName(b) + "x" + str(n)
+                        CF.CreateItem(LEVEL_ID).GetItemHoverName(b) + "x" + str(n)
                         for b, n in structure_lacked_blocks.items()
                     )
                 )

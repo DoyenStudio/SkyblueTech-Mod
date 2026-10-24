@@ -1,6 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.api.common import Repeat
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.utils.timer import Repeat
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
     ModBlockEntityRemoveClientEvent,
@@ -47,7 +47,7 @@ def onModBlockRemoved(event):
 
 def update_single_hydroponic_bed(x, y, z, model):
     # type: (int, int, int, GeometryModel) -> bool
-    block_nbt = GetBlockEntityData(x, y, z) or {}
+    block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((x, y, z)) or {}
     ex_data = block_nbt.get("exData")
     if ex_data is None:
         return False

@@ -1,15 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 import random
 
 from mod.server.extraServerApi import GetMinecraftEnum
 
-from skybluetech_scripts.tooldelta.api.server import (
-    GetAllInventoryItems,
-    GetNameById,
-    GiveItem,
-    SetCommand,
-    SetPlayerAllItems,
-)
 from skybluetech_scripts.tooldelta.define import Item
 
 from ...common.define.id_enum import Machinery
@@ -173,10 +167,8 @@ class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
             if not usable:
                 return
             if pincer_item is None:
-                SetCommand(
-                    'execute as "%s" at @s positioned %d %d %d run playsound random.break'
-                    % (GetNameById(event.player_id), self.x, self.y, self.z)
-                )
+                CF.CreateCommand(LEVEL_ID).SetCommand('execute as "%s" at @s positioned %d %d %d run playsound random.break'
+                    % (CF.CreateName(event.player_id).GetName(), self.x, self.y, self.z), None)
             self.SetSlotItem(10, pincer_item)
         if recipe.wrench_level > 0:
             if wrench_item is None:
@@ -187,10 +179,8 @@ class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
             if not usable:
                 return
             if wrench_item is None:
-                SetCommand(
-                    'execute as "%s" at @s positioned %d %d %d run playsound random.break'
-                    % (GetNameById(event.player_id), self.x, self.y, self.z)
-                )
+                CF.CreateCommand(LEVEL_ID).SetCommand('execute as "%s" at @s positioned %d %d %d run playsound random.break'
+                    % (CF.CreateName(event.player_id).GetName(), self.x, self.y, self.z), None)
             self.SetSlotItem(9, wrench_item)
         self.craft_times += 1
         if self.craft_times >= recipe.craft_times:
@@ -216,10 +206,8 @@ class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
             "block.grindstone.use",
             "block.stonecutter.use",
         ][int(round(random.random() * 3))]
-        SetCommand(
-            'execute as "%s" at @s positioned %d %d %d run playsound %s'
-            % (GetNameById(event.player_id), self.x, self.y, self.z, sound)
-        )
+        CF.CreateCommand(LEVEL_ID).SetCommand('execute as "%s" at @s positioned %d %d %d run playsound %s'
+            % (CF.CreateName(event.player_id).GetName(), self.x, self.y, self.z, sound), None)
         self.CallSync()
 
     @property
@@ -253,7 +241,10 @@ class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
         # 归还合成格现有物品(归还失败则保留, 避免背包满时丢物品)
         for slot in range(9):
             cur = self.GetSlotItem(slot, get_user_data=True)
-            if cur is not None and GiveItem(player_id, cur):
+            if cur is not None and CF.CreateItem(player_id).SpawnItemToPlayerInv(
+                cur.marshal(),
+                player_id,
+            ):
                 self.SetSlotItem(slot, None)
         for tool_slot, need_level, level_of in tool_reqs:
             if need_level <= 0:
@@ -261,11 +252,15 @@ class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
             cur = self.GetSlotItem(tool_slot, get_user_data=True)
             if cur is None or level_of(cur) >= need_level:
                 continue
-            if GiveItem(player_id, cur):
+            if CF.CreateItem(player_id).SpawnItemToPlayerInv(cur.marshal(), player_id):
                 self.SetSlotItem(tool_slot, None)
+        raw_inventory = CF.CreateItem(player_id).GetPlayerAllItems(
+            ItemPosType.INVENTORY, True
+        )
         inv_items = {
-            slot: item.copy()
-            for slot, item in GetAllInventoryItems(player_id, get_userdata=True).items()
+            slot: Item.from_dict(item).copy()
+            for slot, item in enumerate(raw_inventory)
+            if item is not None
         }
         changed_inv = {}  # type: dict[tuple[int, int], Item]
         for slot, input in recipe.input_items.items():
@@ -324,7 +319,9 @@ class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
             )
             self.SetSlotItem(tool_slot, tool_item)
         if changed_inv:
-            SetPlayerAllItems(player_id, changed_inv)
+            CF.CreateItem(player_id).SetPlayerAllItems(
+                {k: v.marshal() for k, v in changed_inv.items()},
+            )
         self.load_recipe()
         self.CallSync()
 

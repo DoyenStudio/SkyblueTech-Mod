@@ -65,7 +65,9 @@ def onModBlockRemoved(event):
     remove_text(event.dimensionId, pos)
 
 
-@HoverTextDisplayerContentUpdate.Listen()
+# 编辑界面通过另一个事件总线监听同一事件；同优先级会生成同名引擎回调。
+# 使用独立优先级，避免打开界面后覆盖世界文本的更新监听。
+@HoverTextDisplayerContentUpdate.Listen(priority=1)
 def onTextUpdated(event):
     # type: (HoverTextDisplayerContentUpdate) -> None
     if event.dimension_id != CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension():

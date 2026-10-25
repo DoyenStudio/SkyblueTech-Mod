@@ -139,6 +139,9 @@
         "skybluetech:description_icon": {
             "textures": "textures/items/description"
         },
+        "skybluetech:dilute_brine_bucket": {
+            "textures": "textures/items/buckets/dilute_brine_bucket"
+        },
         "skybluetech:distilled_water_bucket": {
             "textures": "textures/items/buckets/distilled_water_bucket"
         },

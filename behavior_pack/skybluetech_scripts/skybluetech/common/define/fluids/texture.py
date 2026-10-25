@@ -52,6 +52,7 @@ FLUID_TEXTURES = {
     fluids.CommonLiquid.SATURATED_BRINE: BasicFluidTexture("textures/fluid/baked/skybluetech.saturated_brine/static", 32, 2),
     fluids.CommonGas.CHLORINE: BasicFluidTexture("textures/fluid/baked/skybluetech.chlorine/static", 32, 2),
     fluids.Alkali.SODIUM_HYDROXIDE_SOLUTION: BasicFluidTexture("textures/fluid/baked/skybluetech.sodium_hydroxide_solution/static", 32, 2),
+    fluids.CommonLiquid.DILUTE_BRINE: BasicFluidTexture("textures/fluid/baked/skybluetech.dilute_brine/static", 32, 2),
 }
 
 

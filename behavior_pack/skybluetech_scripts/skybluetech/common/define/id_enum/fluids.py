@@ -75,6 +75,7 @@ class CommonLiquid(Common):
     "对流体管道无特殊要求的液体"
 
     BRINE = "skybluetech:brine"
+    DILUTE_BRINE = "skybluetech:dilute_brine"
     LIQUID_AIR = "skybluetech:liquid_air"
     LIQUID_RESIN = "skybluetech:liquid_resin"
     SATURATED_BRINE = "skybluetech:saturated_brine"

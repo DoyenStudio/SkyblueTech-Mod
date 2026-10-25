@@ -470,3 +470,6 @@ item.skybluetech:chlorine_bucket.name=氯气桶
 tile.skybluetech:sodium_hydroxide_solution.name=氢氧化钠溶液
 tile.skybluetech:flowing_sodium_hydroxide_solution.name=流动氢氧化钠溶液
 item.skybluetech:sodium_hydroxide_solution_bucket.name=氢氧化钠溶液桶
+tile.skybluetech:dilute_brine.name=淡盐水
+tile.skybluetech:flowing_dilute_brine.name=流动淡盐水
+item.skybluetech:dilute_brine_bucket.name=淡盐水桶

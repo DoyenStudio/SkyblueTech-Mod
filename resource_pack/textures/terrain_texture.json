@@ -1,6 +1,13 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:baked_dilute_brine_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.dilute_brine/flowing"
+        },
+        "skybluetech:baked_dilute_brine_static": {
+            "textures": "textures/fluid/baked/skybluetech.dilute_brine/static"
+        },
         "skybluetech:air_compressor": {
             "textures": "textures/models/air_compressor_texture"
         },

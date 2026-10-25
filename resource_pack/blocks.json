@@ -4,6 +4,22 @@
         1,
         0
     ],
+    "skybluetech:dilute_brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_dilute_brine_static",
+            "side": "skybluetech:baked_dilute_brine_flowing",
+            "up": "skybluetech:baked_dilute_brine_static"
+        }
+    },
+    "skybluetech:flowing_dilute_brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_dilute_brine_static",
+            "side": "skybluetech:baked_dilute_brine_flowing",
+            "up": "skybluetech:baked_dilute_brine_flowing"
+        }
+    },
     "skybluetech:air_compressor": {
         "sound": "iron"
     },

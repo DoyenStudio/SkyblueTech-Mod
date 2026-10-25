@@ -498,5 +498,16 @@
         "atlas_tile": "skybluetech:baked_sodium_hydroxide_solution_flowing",
         "replicate": 2,
         "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.dilute_brine/static",
+        "atlas_tile": "skybluetech:baked_dilute_brine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.dilute_brine/flowing",
+        "atlas_tile": "skybluetech:baked_dilute_brine_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
     }
 ]

@@ -1,0 +1,16 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "bucket_name": "skybluetech:dilute_brine_bucket",
+                "can_float_boat": true
+            }
+        },
+        "description": {
+            "base_block": "liquid",
+            "category": "none",
+            "identifier": "skybluetech:dilute_brine"
+        }
+    }
+}

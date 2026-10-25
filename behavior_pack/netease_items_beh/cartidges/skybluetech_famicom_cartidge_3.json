@@ -9,7 +9,7 @@
             "netease:initial_user_data": {
                 "song_included": {
                     "__type__": 8,
-                    "__value__": "music.skybluetech.famicom_3"
+                    "__value__": "record.skybluetech.famicom_3"
                 }
             }
         },

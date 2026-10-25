@@ -2,7 +2,7 @@
     "dy_load_list": [],
     "format_version": "1.14.0",
     "sound_definitions": {
-        "music.skybluetech.famicom_1": {
+        "record.skybluetech.famicom_1": {
             "category": "record",
             "sounds": [
                 {
@@ -13,7 +13,7 @@
                 }
             ]
         },
-        "music.skybluetech.famicom_2": {
+        "record.skybluetech.famicom_2": {
             "category": "record",
             "sounds": [
                 {
@@ -24,7 +24,7 @@
                 }
             ]
         },
-        "music.skybluetech.famicom_3": {
+        "record.skybluetech.famicom_3": {
             "category": "record",
             "sounds": [
                 {
@@ -35,7 +35,7 @@
                 }
             ]
         },
-        "music.skybluetech.famicom_4": {
+        "record.skybluetech.famicom_4": {
             "category": "record",
             "sounds": [
                 {
@@ -46,7 +46,7 @@
                 }
             ]
         },
-        "music.skybluetech.famicom_5": {
+        "record.skybluetech.famicom_5": {
             "category": "record",
             "sounds": [
                 {

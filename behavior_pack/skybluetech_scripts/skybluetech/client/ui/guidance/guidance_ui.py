@@ -1,6 +1,7 @@
 # coding=utf-8
 from collections import deque
 from skybluetech_scripts.tooldelta.ui import (
+    Binder,
     ToolDeltaScreen,
     RegistToolDeltaScreen,
     SCREEN_BASE_PATH,
@@ -59,7 +60,13 @@ class GuidanceUI(ToolDeltaScreen):
         self.render_page()
 
     def OnDestroy(self):
+        if self.left_page_instance is not None and self._left_page_content is not None:
+            self.left_page_instance.DeRender(self._left_page_content)
+        if self.right_page_instance is not None and self._right_page_content is not None:
+            self.right_page_instance.DeRender(self._right_page_content)
         GuidanceUI.current_instance = None
+        self.left_page_instance = None
+        self.right_page_instance = None
         self._left_page_content = None
         self._right_page_content = None
 
@@ -68,6 +75,20 @@ class GuidanceUI(ToolDeltaScreen):
             self.left_page_instance.ScreenTicking()
         if self.right_page_instance:
             self.right_page_instance.ScreenTicking()
+
+    @Binder.binding(
+        Binder.BF_SliderChanged | Binder.BF_SliderFinished,
+        "#guidance.structure_model_size",
+    )
+    def on_structure_model_size_changed(self, _progress, _finished, _index):
+        from ...guidance.book_custom.define.multi_block_structure_model_page import (
+            MultiBlockStructureModelPage,
+        )
+
+        # 两页可以同时展示模型，读取各自控件，只更新实际发生变化的一页。
+        for page in (self.left_page_instance, self.right_page_instance):
+            if isinstance(page, MultiBlockStructureModelPage):
+                page.UpdateSizeFromSlider()
 
     def render_page(self):
         from ...guidance.book_custom.define import BookMarkMgr

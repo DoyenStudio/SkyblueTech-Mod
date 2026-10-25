@@ -210,8 +210,7 @@ def generate_block_recipe_check_btn_cb(
     if cb is None:
 
         def on_click(_):
-            CheckRecipe(block_id)
-            return None
+            return CheckRecipe(block_id)
 
         res = block_recipe_cbs_cacher[block_id] = on_click
         return res
@@ -244,14 +243,25 @@ def generate_blocks_btn_callback(
         e.SetLayer(80).BindLifeToObject(ctrl)
         e["exit_btn"].asButton().SetCallback(lambda _: e.Remove())
         grid = e["bg/grid"].asGrid()
+        tip = e["bg/tip/tip_part/tip_text"].asLabel()
         ctrl._vars["block_stack_desc"] = e
+
+        def option_callback(block_id):
+            check_recipe = generate_block_recipe_check_btn_cb(block_id)
+
+            def on_select(args):
+                tip.SetText("本位置可用方块")
+                if check_recipe(args) is None:
+                    tip.SetText("未收录获取途径")
+
+            return on_select
 
         def after():
             for i in range(len(block_ids)):
                 block_id = block_ids[i]
                 grid_elem = grid.GetGridItem(i, 0).asButton()
                 grid_elem["item_renderer"].asItemRenderer().SetUiItem(Item(block_id))
-                grid_elem.SetCallback(generate_block_recipe_check_btn_cb(block_id))
+                grid_elem.SetCallback(option_callback(block_id))
 
         grid.SetDimensionAndCall((len(block_ids), 1), after)
 

@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
+from skybluetech_scripts.tooldelta.srv import CF
 
 from ...common.define.id_enum import Machinery
 from ...common.define.ui_keys import HOVER_TEXT_DISPLAYER_UI
@@ -8,7 +9,7 @@ from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpload,
 )
 from ...common.machinery_def.hover_text_displayer import K_TEXT, STORE_RF_MAX
-from ...common.utils.block_sync import BlockSync
+from ...common.utils.block_sync import BlockSync, BlockSyncC2S
 from .basic import (
     BaseClicker,
     GUIControl,
@@ -16,6 +17,7 @@ from .basic import (
     PowerControl,
 )
 from .core import RegisterMachine
+from .core.pool import GetMachineWithoutCls
 
 block_sync = BlockSync(Machinery.HOVER_TEXT_DISPLAYER, side=BlockSync.SIDE_SERVER)
 
@@ -30,8 +32,7 @@ class HoverTextDisplayer(OperationListener, PowerControl, GUIControl, BaseClicke
     def __init__(self, dim, x, y, z, block_entity_data):
         super(HoverTextDisplayer, self).__init__(dim, x, y, z, block_entity_data)
         self.set_text()
-        self.can_display = self.PowerEnough()
-        self._last_can_display = self.can_display
+        self._last_can_display = self.IsActive()
         self.handler.UnsubscribeOnClick(self._gui_control_on_click)
         self.handler.SubscribeOnClick(self._hover_text_displayer_on_click)
         self.handler.SubscribeOnTicking(self._hover_text_displayer_on_ticking)
@@ -43,7 +44,7 @@ class HoverTextDisplayer(OperationListener, PowerControl, GUIControl, BaseClicke
             event,
             {
                 "st:init_content": HoverTextDisplayerContentUpdate(
-                    self.x, self.y, self.z, self.text, self.running_power
+                    self.x, self.y, self.z, self.text, self.running_power, self.dim
                 ).marshal()
             },
         )
@@ -61,10 +62,17 @@ class HoverTextDisplayer(OperationListener, PowerControl, GUIControl, BaseClicke
         if text is not None:
             self.text = text
         self.running_power = self.calcuate_power_cost()
-        if self.IsActive():
-            HoverTextDisplayerContentUpdate(
-                self.x, self.y, self.z, self.text, self.running_power
-            ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
+        self.PowerEnough()
+        self.get_display_update().sendMulti(
+            block_sync.get_players((self.dim, self.x, self.y, self.z))
+        )
+
+    def get_display_update(self):
+        # type: () -> HoverTextDisplayerContentUpdate
+        return HoverTextDisplayerContentUpdate(
+            self.x, self.y, self.z,
+            self.text if self.IsActive() else "", self.running_power, self.dim
+        )
 
     def update_display_stat(self):
         active = self.IsActive()
@@ -72,18 +80,9 @@ class HoverTextDisplayer(OperationListener, PowerControl, GUIControl, BaseClicke
             self._last_can_display = active
         else:
             return
-        if active:
-            HoverTextDisplayerContentUpdate(
-                self.x,
-                self.y,
-                self.z,
-                self.text,
-                self.running_power,
-            ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
-        else:
-            HoverTextDisplayerContentUpdate(
-                self.x, self.y, self.z, "", self.running_power
-            ).sendMulti(block_sync.get_players((self.dim, self.x, self.y, self.z)))
+        self.get_display_update().sendMulti(
+            block_sync.get_players((self.dim, self.x, self.y, self.z))
+        )
 
 
     def calcuate_power_cost(self):
@@ -102,6 +101,20 @@ class HoverTextDisplayer(OperationListener, PowerControl, GUIControl, BaseClicke
     def text(self, value):
         # type: (str) -> None
         self.bdata[K_TEXT] = str(value)
+
+
+@BlockSyncC2S.Listen()
+def on_display_loaded(event):
+    # type: (BlockSyncC2S) -> None
+    if (event.block_id != Machinery.HOVER_TEXT_DISPLAYER
+            or event.mode != BlockSyncC2S.MODE_BLOCK_LOADED):
+        return
+    dim = CF.CreateDimension(event.player_id).GetEntityDimensionId()
+    machine = GetMachineWithoutCls(dim, event.x, event.y, event.z)
+    if not isinstance(machine, HoverTextDisplayer):
+        return
+    # 新订阅者必须收到当前快照，即使机器一直通电、状态没有变化。
+    machine.get_display_update().send(event.player_id)
 
 
 @HoverTextDisplayer.ForOperation(HoverTextDisplayerContentUpload)

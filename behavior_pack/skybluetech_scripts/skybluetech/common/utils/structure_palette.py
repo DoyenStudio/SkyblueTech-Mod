@@ -273,21 +273,22 @@ def GenerateSimpleStructureTemplate(
         return pat2idx[pattern]
 
     for layer, platform in pattern.items():
+        # 同一个坐标可能同时更新最小值和最大值, 不能依赖图层遍历顺序。
         if layer < min_y:
             min_y = layer
-        elif layer > max_y:
+        if layer > max_y:
             max_y = layer
         for z, row_data in enumerate(platform):
             if z < min_z:
                 min_z = z
-            elif z > max_z:
+            if z > max_z:
                 max_z = z
             for x, pat in enumerate(row_data):
                 if pat == " ":
                     continue
                 if x < min_x:
                     min_x = x
-                elif x > max_x:
+                if x > max_x:
                     max_x = x
                 if pat == air_block_sign:
                     air_orig_poses.add((x, layer, z))

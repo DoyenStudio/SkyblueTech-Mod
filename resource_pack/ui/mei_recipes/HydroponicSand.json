@@ -1,0 +1,13 @@
+{
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiHydroponicSand.recipe"
+    },
+    "namespace": "SkyblueMeiHydroponicSand",
+    "recipe@SkyblueMeiHydroponic.recipe": {
+        "$shell_texture": "textures/models/hydroponic_bed_sand_texture",
+        "size": [
+            188,
+            68
+        ]
+    }
+}

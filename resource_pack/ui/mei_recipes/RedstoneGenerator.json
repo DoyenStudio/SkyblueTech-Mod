@@ -1,0 +1,126 @@
+{
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiRedstoneGenerator.recipe"
+    },
+    "content_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "flame@SkybluePanelLib.Flame": {
+                    "anchor_from": "bottom_left",
+                    "anchor_to": "bottom_left",
+                    "layer": 6,
+                    "offset": [
+                        7,
+                        -6
+                    ],
+                    "size": [
+                        14,
+                        14
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        4.0,
+                        5.0
+                    ],
+                    "size": [
+                        20.0,
+                        20.0
+                    ],
+                    "layer": 8,
+                    "controls": [
+                        {
+                            "0@mei_common.item_panel": {
+                                "$binding_name_prefix": "mei_ui.recipe.input0"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "layer": 6,
+                    "offset": [
+                        30,
+                        0
+                    ],
+                    "size": [
+                        28,
+                        16
+                    ]
+                }
+            },
+            {
+                "output@SkyblueMeiCommon.output": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "layer": 7,
+                    "offset": [
+                        62,
+                        0
+                    ]
+                }
+            },
+            {
+                "rfout@SkyblueMeiCommon.rf_output": {
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "layer": 6,
+                    "offset": [
+                        10,
+                        0
+                    ]
+                }
+            },
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/mei/recipe/recipe_bg"
+                }
+            }
+        ]
+    },
+    "namespace": "SkyblueMeiRedstoneGenerator",
+    "recipe@mei_recipe_common.recipe_panel": {
+        "controls": [
+            {
+                "wrapper": {
+                    "type": "panel",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0.0,
+                        2.0
+                    ],
+                    "size": [
+                        "100%+-20px",
+                        "100%+-20px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "content@SkyblueMeiRedstoneGenerator.content_panel": {}
+                        },
+                        {
+                            "buttons@mei_recipe_common.buttons_panel_horizontal": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "size": [
+            188,
+            72
+        ]
+    }
+}

@@ -1,0 +1,89 @@
+{
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiWorkstation.recipe"
+    },
+    "content_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "input@SkyblueMeiCommon.inputs_9": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        5,
+                        0
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.ProgressBar": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        68,
+                        16
+                    ],
+                    "size": [
+                        32,
+                        16
+                    ]
+                }
+            },
+            {
+                "side@SkyblueMeiCommon.side_slots": {
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [
+                        -4,
+                        5
+                    ]
+                }
+            },
+            {
+                "output@SkyblueMeiCommon.output": {
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "offset": [
+                        -4,
+                        -5
+                    ]
+                }
+            },
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/mei/recipe/recipe_bg"
+                }
+            }
+        ]
+    },
+    "namespace": "SkyblueMeiWorkstation",
+    "recipe@mei_recipe_common.recipe_panel": {
+        "controls": [
+            {
+                "wrapper": {
+                    "type": "panel",
+                    "size": [
+                        "100%+-54px",
+                        "100%+-4px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "content@SkyblueMeiWorkstation.content_panel": {}
+                        },
+                        {
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "size": [
+            188,
+            74
+        ]
+    }
+}

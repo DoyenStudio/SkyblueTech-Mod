@@ -1,0 +1,168 @@
+{
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiAlloyFurnace.recipe"
+    },
+    "content_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "power@SkyblueMeiCommon.power_slot": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        4,
+                        0
+                    ],
+                    "size": [
+                        16,
+                        "100%+-10px"
+                    ]
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "size": [
+                        "100%+-20px",
+                        "100%+0px"
+                    ],
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "anchor_from": "left_middle",
+                                "anchor_to": "left_middle",
+                                "offset": [
+                                    6.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    60.0,
+                                    60.0
+                                ],
+                                "layer": 8,
+                                "controls": [
+                                    {
+                                        "0@mei_common.item_panel": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input0",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                0,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "1@mei_common.item_panel": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input1",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "offset": [
+                                                0,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "2@mei_common.item_panel": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input2",
+                                            "anchor_from": "top_right",
+                                            "anchor_to": "top_right",
+                                            "offset": [
+                                                0,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "3@mei_common.item_panel": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input3",
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "offset": [
+                                                0,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "flame@SkybluePanelLib.Flame": {
+                                            "offset": [
+                                                0,
+                                                0
+                                            ],
+                                            "size": [
+                                                16,
+                                                16
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.ProgressBar": {
+                                "offset": [
+                                    8,
+                                    0
+                                ],
+                                "size": [
+                                    32,
+                                    16
+                                ]
+                            }
+                        },
+                        {
+                            "output@SkyblueMeiCommon.output": {
+                                "anchor_from": "right_middle",
+                                "anchor_to": "right_middle",
+                                "offset": [
+                                    -4,
+                                    0
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/mei/recipe/recipe_bg"
+                }
+            }
+        ]
+    },
+    "namespace": "SkyblueMeiAlloyFurnace",
+    "recipe@mei_recipe_common.recipe_panel": {
+        "controls": [
+            {
+                "wrapper": {
+                    "type": "panel",
+                    "size": [
+                        "100%+-34px",
+                        "100%+-4px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "content@SkyblueMeiAlloyFurnace.content_panel": {}
+                        },
+                        {
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "size": [
+            176,
+            74
+        ]
+    }
+}

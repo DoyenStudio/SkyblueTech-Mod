@@ -1,0 +1,192 @@
+{
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiHydroponic.recipe"
+    },
+    "content_panel": {
+        "type": "panel",
+        "$shell_texture|default": "textures/models/hydroponic_bed_texture",
+        "layer": 1,
+        "controls": [
+            {
+                "power@SkyblueMeiCommon.power_slot": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        4,
+                        0
+                    ],
+                    "size": [
+                        16,
+                        "100%+-10px"
+                    ]
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "size": [
+                        "100%+-20px",
+                        "100%+0px"
+                    ],
+                    "controls": [
+                        {
+                            "seed": {
+                                "type": "panel",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4.0,
+                                    8.0
+                                ],
+                                "size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "layer": 8,
+                                "controls": [
+                                    {
+                                        "0@mei_common.item_panel": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input",
+                                            "size": [
+                                                "default",
+                                                "default"
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "shell": {
+                                "type": "image",
+                                "anchor_from": "right_middle",
+                                "anchor_to": "right_middle",
+                                "offset": [
+                                    -6.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    52.0,
+                                    52.0
+                                ],
+                                "layer": 7,
+                                "clips_children": true,
+                                "texture": "$shell_texture",
+                                "uv_size": [
+                                    16.0,
+                                    16.0
+                                ],
+                                "controls": [
+                                    {
+                                        "crop": {
+                                            "type": "custom",
+                                            "renderer": "netease_paper_doll_renderer",
+                                            "size": [
+                                                "100%+-8px",
+                                                "100%+-8px"
+                                            ],
+                                            "layer": 5,
+                                            "enable_scissor_test": true,
+                                            "rotation": "gesture_x",
+                                            "screen_scale": 1.0
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.ProgressBar": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    32,
+                                    10
+                                ],
+                                "size": [
+                                    32,
+                                    16
+                                ]
+                            }
+                        },
+                        {
+                            "outputs@SkyblueMeiHydroponic.outputs_panel": {
+                                "anchor_from": "bottom_left",
+                                "anchor_to": "bottom_left",
+                                "offset": [
+                                    4,
+                                    -8
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/mei/recipe/recipe_bg"
+                }
+            }
+        ]
+    },
+    "namespace": "SkyblueMeiHydroponic",
+    "outputs_panel": {
+        "type": "panel",
+        "size": [
+            60.0,
+            20.0
+        ],
+        "layer": 8,
+        "controls": [
+            {
+                "0@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.output0",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle"
+                }
+            },
+            {
+                "1@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.output1"
+                }
+            },
+            {
+                "2@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.output2",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle"
+                }
+            }
+        ]
+    },
+    "recipe@mei_recipe_common.recipe_panel": {
+        "$shell_texture|default": "textures/models/hydroponic_bed_texture",
+        "controls": [
+            {
+                "wrapper": {
+                    "type": "panel",
+                    "size": [
+                        "100%+-42px",
+                        "100%+-4px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "content@SkyblueMeiHydroponic.content_panel": {}
+                        },
+                        {
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "size": [
+            188,
+            66
+        ]
+    }
+}

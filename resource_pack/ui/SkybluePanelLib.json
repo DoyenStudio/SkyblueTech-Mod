@@ -243,8 +243,7 @@
             {
                 "label": {
                     "type": "label",
-                    "$text": "-- RF",
-                    "$text|default": "",
+                    "$text|default": "-- RF",
                     "offset": [
                         0.0,
                         47.0

@@ -1,0 +1,193 @@
+{
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiDistillationChamber.recipe"
+    },
+    "content_panel": {
+        "type": "panel",
+        "layer": 1,
+        "controls": [
+            {
+                "output": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        6.0,
+                        6.0
+                    ],
+                    "size": [
+                        64.0,
+                        24.0
+                    ],
+                    "layer": 7,
+                    "controls": [
+                        {
+                            "0@SkyblueMeiCommon.fluid_slot": {
+                                "$binding_name_prefix": "mei_ui.recipe.output",
+                                "size": [
+                                    "100%+0px",
+                                    "100%+0px"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "type": "panel",
+                    "anchor_from": "bottom_left",
+                    "anchor_to": "bottom_left",
+                    "offset": [
+                        6.0,
+                        -6.0
+                    ],
+                    "size": [
+                        64.0,
+                        24.0
+                    ],
+                    "layer": 8,
+                    "controls": [
+                        {
+                            "0@SkyblueMeiCommon.fluid_slot": {
+                                "$binding_name_prefix": "mei_ui.recipe.input0",
+                                "size": [
+                                    "100%+0px",
+                                    "100%+0px"
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "board": {
+                    "type": "image",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -6.0,
+                        0.0
+                    ],
+                    "size": [
+                        66.0,
+                        52.0
+                    ],
+                    "layer": 5,
+                    "keep_ratio": false,
+                    "nineslice_size": [
+                        4.0,
+                        4.0,
+                        4.0,
+                        4.0
+                    ],
+                    "texture": "textures/ui/cell_image",
+                    "controls": [
+                        {
+                            "tip": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    5.0
+                                ],
+                                "size": [
+                                    "100%+-8px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.26,
+                                    0.26,
+                                    0.26
+                                ],
+                                "font_type": "default",
+                                "text": "最适产出温度"
+                            }
+                        },
+                        {
+                            "tip_text": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    18.0
+                                ],
+                                "size": [
+                                    "100%+-10px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.0,
+                                    0.67,
+                                    0.0
+                                ],
+                                "font_type": "default",
+                                "text": "0 K"
+                            }
+                        },
+                        {
+                            "tip_text2": {
+                                "type": "label",
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0.0,
+                                    32.0
+                                ],
+                                "size": [
+                                    "100%+-10px",
+                                    "default"
+                                ],
+                                "color": [
+                                    0.59,
+                                    0.39,
+                                    0.0
+                                ],
+                                "font_scale_factor": 1.3,
+                                "font_size": "small",
+                                "font_type": "default",
+                                "text": "0 K ~ 0 K"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/mei/recipe/recipe_bg"
+                }
+            }
+        ]
+    },
+    "namespace": "SkyblueMeiDistillationChamber",
+    "recipe@mei_recipe_common.recipe_panel": {
+        "controls": [
+            {
+                "wrapper": {
+                    "type": "panel",
+                    "size": [
+                        "100%+-34px",
+                        "100%+-4px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "content@SkyblueMeiDistillationChamber.content_panel": {}
+                        },
+                        {
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {}
+                        }
+                    ]
+                }
+            }
+        ],
+        "size": [
+            180,
+            68
+        ]
+    }
+}

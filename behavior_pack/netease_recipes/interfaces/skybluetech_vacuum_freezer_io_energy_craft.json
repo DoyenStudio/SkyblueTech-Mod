@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:vacuum_freezer_io_energy_craft"
+        },
+        "key": {
+            "W": {
+                "item": "skybluetech:wire_insulated_silver"
+            },
+            "F": {
+                "item": "skybluetech:vacuum_freezer_frame"
+            }
+        },
+        "pattern": [
+            " W ",
+            " F ",
+            "   "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:vacuum_freezer_io_energy"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

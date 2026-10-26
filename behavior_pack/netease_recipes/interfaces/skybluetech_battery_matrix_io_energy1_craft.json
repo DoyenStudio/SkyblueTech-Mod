@@ -1,0 +1,36 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:battery_matrix_io_energy1_craft"
+        },
+        "assume_symmetry": false,
+        "key": {
+            "L": {
+                "item": "skybluetech:light_skyblue_ingot"
+            },
+            "T": {
+                "item": "skybluetech:tin_plate"
+            },
+            "W": {
+                "item": "skybluetech:wire_insulated_silver"
+            }
+        },
+        "pattern": [
+            "LT ",
+            "TWT",
+            " TL"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:battery_matrix_io_energy1"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

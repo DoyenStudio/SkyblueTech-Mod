@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:vacuum_freezer_io_item1_craft"
+        },
+        "key": {
+            "P": {
+                "item": "skybluetech:item_transport_cable_steel"
+            },
+            "F": {
+                "item": "skybluetech:vacuum_freezer_frame"
+            }
+        },
+        "pattern": [
+            " P ",
+            " F ",
+            "   "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:vacuum_freezer_io_item1"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

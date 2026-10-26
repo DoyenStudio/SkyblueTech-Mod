@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/invar"
+                    "dusts/invar",
+                    "common:invar_dust",
+                    "c:invar_dust"
                 ]
             }
         },

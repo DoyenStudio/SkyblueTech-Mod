@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/tin"
+                    "plates/tin",
+                    "common:tin_plate",
+                    "c:tin_plate"
                 ]
             }
         },

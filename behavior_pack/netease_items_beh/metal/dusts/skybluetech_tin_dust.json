@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/tin"
+                    "dusts/tin",
+                    "common:tin_dust",
+                    "c:tin_dust"
                 ]
             }
         },

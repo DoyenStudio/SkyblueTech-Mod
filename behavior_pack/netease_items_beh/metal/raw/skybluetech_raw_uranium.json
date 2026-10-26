@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/uranium"
+                    "raws/uranium",
+                    "common:raw_uranium",
+                    "c:raw_uranium"
                 ]
             }
         },

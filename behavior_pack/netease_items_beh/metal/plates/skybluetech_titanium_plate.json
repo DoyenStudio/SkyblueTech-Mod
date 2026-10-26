@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/titanium"
+                    "plates/titanium",
+                    "common:titanium_plate",
+                    "c:titanium_plate"
                 ]
             }
         },

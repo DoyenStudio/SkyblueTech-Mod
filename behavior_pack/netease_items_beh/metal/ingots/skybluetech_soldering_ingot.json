@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/soldering"
+                    "ingots/soldering",
+                    "common:soldering_ingot",
+                    "c:soldering_ingot"
                 ]
             }
         },

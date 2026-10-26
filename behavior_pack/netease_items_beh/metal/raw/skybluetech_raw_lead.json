@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/lead"
+                    "raws/lead",
+                    "common:raw_lead",
+                    "c:raw_lead"
                 ]
             }
         },

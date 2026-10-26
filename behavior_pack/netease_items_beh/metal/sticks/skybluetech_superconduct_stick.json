@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "sticks/superconduct"
+                    "sticks/superconduct",
+                    "common:superconduct_stick",
+                    "c:superconduct_stick"
                 ]
             }
         },

@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/titanium"
+                    "ingots/titanium",
+                    "common:titanium_ingot",
+                    "c:titanium_ingot"
                 ]
             }
         },

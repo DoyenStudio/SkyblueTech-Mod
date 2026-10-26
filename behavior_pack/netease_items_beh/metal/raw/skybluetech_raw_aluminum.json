@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/aluminum"
+                    "raws/aluminum",
+                    "common:raw_aluminum",
+                    "c:raw_aluminum"
                 ]
             }
         },

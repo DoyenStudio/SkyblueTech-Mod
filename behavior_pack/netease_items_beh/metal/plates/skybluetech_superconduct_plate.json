@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/superconduct"
+                    "plates/superconduct",
+                    "common:superconduct_plate",
+                    "c:superconduct_plate"
                 ]
             }
         },

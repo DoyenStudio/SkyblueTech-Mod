@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/lead"
+                    "ingots/lead",
+                    "common:lead_ingot",
+                    "c:lead_ingot"
                 ]
             }
         },

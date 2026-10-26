@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "sticks/cupronickel"
+                    "sticks/cupronickel",
+                    "common:cupronickel_stick",
+                    "c:cupronickel_stick"
                 ]
             }
         },

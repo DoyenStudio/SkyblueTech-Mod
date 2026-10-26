@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/superconduct"
+                    "ingots/superconduct",
+                    "common:superconduct_ingot",
+                    "c:superconduct_ingot"
                 ]
             }
         },

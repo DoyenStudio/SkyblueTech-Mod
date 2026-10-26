@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/ancient_debris"
+                    "dusts/ancient_debris",
+                    "common:ancient_debris_dust",
+                    "c:ancient_debris_dust"
                 ]
             }
         },

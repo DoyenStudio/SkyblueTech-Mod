@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/nickel"
+                    "dusts/nickel",
+                    "common:nickel_dust",
+                    "c:nickel_dust"
                 ]
             }
         },

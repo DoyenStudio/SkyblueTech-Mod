@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/tin"
+                    "ingots/tin",
+                    "common:tin_ingot",
+                    "c:tin_ingot"
                 ]
             }
         },

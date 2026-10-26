@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/steel"
+                    "ingots/steel",
+                    "common:steel_ingot",
+                    "c:steel_ingot"
                 ]
             }
         },

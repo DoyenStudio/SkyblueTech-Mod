@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/aluminum"
+                    "dusts/aluminum",
+                    "common:aluminum_dust",
+                    "c:aluminum_dust"
                 ]
             }
         },

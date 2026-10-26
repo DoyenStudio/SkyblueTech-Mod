@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/alumite"
+                    "plates/alumite",
+                    "common:alumite_plate",
+                    "c:alumite_plate"
                 ]
             }
         },

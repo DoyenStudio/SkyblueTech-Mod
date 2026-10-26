@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/bronze"
+                    "plates/bronze",
+                    "common:bronze_plate",
+                    "c:bronze_plate"
                 ]
             }
         },

@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/platinum"
+                    "raws/platinum",
+                    "common:raw_platinum",
+                    "c:raw_platinum"
                 ]
             }
         },

@@ -4,7 +4,9 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "sticks/iron"
+                    "sticks/iron",
+                    "common:iron_stick",
+                    "c:iron_stick"
                 ]
             }
         },

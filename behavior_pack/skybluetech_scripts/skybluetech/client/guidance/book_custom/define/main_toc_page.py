@@ -1,10 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-
 from ..define.page_group import PageGroup
 from .base_page import BasePage
-from .utils import UnfinishedItemName, finish_name
+from .utils import UnfinishedItemName
 
 if 0 > 1:
     import typing
@@ -44,30 +41,6 @@ class MainTOCPage(BasePage):
     def GetByIdentifier(cls, identifier):
         # type: (str) -> MainTOCPage | None
         return cls._marked_tocpages.get(identifier)
-
-    def RenderInit(self, ctrl):
-        # type: (UBaseCtrl) -> None
-        BasePage.RenderInit(self, ctrl)
-        grid = ctrl["sections_grid"].asGrid()
-        grid.SetPropertyBag({"#maximum_grid_items": len(self.sections)})
-
-        def after():
-            for i, section in enumerate(self.sections):
-
-                def get_handler(index):
-                    def handler(_):
-                        self.on_select_section(index)
-
-                    return handler
-
-                e = grid["main_toc_section%d" % (i + 1)]
-                e["icon_item_renderer"].asItemRenderer().SetUiItem(
-                    Item(section.icon_item_id, section.icon_item_aux)
-                )
-                e["label"].asLabel().SetText(finish_name(section.title))
-                e["click_btn"].asButton().SetCallback(get_handler(i))
-
-        grid.ExecuteAfterUpdate(after)
 
     def on_select_section(self, index):
         # type: (int) -> None

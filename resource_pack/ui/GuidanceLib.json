@@ -376,6 +376,20 @@
     "main": {
         "type": "screen"
     },
+    "main_toc_page_left@GuidanceLib.main_toc_page": {
+        "$toc_collection_name": "guidance_left_tocs",
+        "$toc_count_binding": "#guidance.left_toc_count",
+        "$toc_icon_binding": "#guidance.left_toc_icon",
+        "$toc_title_binding": "#guidance.left_toc_title",
+        "$toc_select_binding": "#guidance.left_toc_select"
+    },
+    "main_toc_page_right@GuidanceLib.main_toc_page": {
+        "$toc_collection_name": "guidance_right_tocs",
+        "$toc_count_binding": "#guidance.right_toc_count",
+        "$toc_icon_binding": "#guidance.right_toc_icon",
+        "$toc_title_binding": "#guidance.right_toc_title",
+        "$toc_select_binding": "#guidance.right_toc_select"
+    },
     "main_toc_page": {
         "type": "panel",
         "layer": 1,
@@ -433,7 +447,7 @@
                         "default"
                     ],
                     "layer": 1,
-                    "collection_name": "guidance_tocs",
+                    "collection_name": "$toc_collection_name",
                     "grid_dimensions": [
                         1,
                         3
@@ -448,7 +462,7 @@
                             "binding_type": "global",
                             "binding_name_override": "#maximum_grid_items",
                             "binding_condition": "always_when_visible",
-                            "binding_name": "#maximum_grid_items"
+                            "binding_name": "$toc_count_binding"
                         }
                     ]
                 }
@@ -476,7 +490,21 @@
                     "layer": 1,
                     "property_bag": {
                         "#item_id_aux": 6684672
-                    }
+                    },
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_name_override": "#item_id_aux",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible",
+                            "binding_type": "collection",
+                            "binding_name": "$toc_icon_binding"
+                        }
+                    ]
                 }
             },
             {
@@ -495,8 +523,21 @@
                     ],
                     "font_scale_factor": 0.9999999999999999,
                     "font_type": "default",
-                    "text": "章节提示",
-                    "text_alignment": "center"
+                    "text": "$toc_title_binding",
+                    "text_alignment": "center",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible",
+                            "binding_name": "$toc_title_binding"
+                        }
+                    ]
                 }
             },
             {
@@ -529,11 +570,17 @@
                         0,
                         0
                     ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_button_name": "$toc_select_binding",
                     "$pressed_texture": "",
                     "$texture_layer": 2,
                     "layer": 2,
-                    "button_mappings": [],
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
                     "default_control": "default",
                     "hover_control": "hover",
                     "is_handle_button_move_event": true,
@@ -542,7 +589,7 @@
                     "bindings": [
                         {
                             "binding_type": "collection_details",
-                            "binding_collection_name": "",
+                            "binding_collection_name": "$toc_collection_name",
                             "binding_condition": "always_when_visible"
                         }
                     ],
@@ -1638,6 +1685,20 @@
             }
         ]
     },
+    "toc_page_left@GuidanceLib.toc_page": {
+        "$toc_collection_name": "guidance_left_tocs",
+        "$toc_grid_size_binding": "#guidance.left_toc_grid_size",
+        "$toc_icon_binding": "#guidance.left_toc_icon",
+        "$toc_title_binding": "#guidance.left_toc_title",
+        "$toc_select_binding": "#guidance.left_toc_select"
+    },
+    "toc_page_right@GuidanceLib.toc_page": {
+        "$toc_collection_name": "guidance_right_tocs",
+        "$toc_grid_size_binding": "#guidance.right_toc_grid_size",
+        "$toc_icon_binding": "#guidance.right_toc_icon",
+        "$toc_title_binding": "#guidance.right_toc_title",
+        "$toc_select_binding": "#guidance.right_toc_select"
+    },
     "toc_page": {
         "type": "panel",
         "anchor_from": "top_left",
@@ -1701,12 +1762,19 @@
                         "default"
                     ],
                     "layer": 1,
-                    "collection_name": "guidance_tocs",
+                    "collection_name": "$toc_collection_name",
+                    "grid_dimension_binding": "$toc_grid_size_binding",
                     "grid_dimensions": [
                         1,
                         9
                     ],
-                    "grid_item_template": "GuidanceLib.toc_section"
+                    "grid_item_template": "GuidanceLib.toc_section",
+                    "bindings": [
+                        {
+                            "binding_condition": "always_when_visible",
+                            "binding_name": "$toc_grid_size_binding"
+                        }
+                    ]
                 }
             }
         ]
@@ -1734,7 +1802,21 @@
                     "layer": 1,
                     "property_bag": {
                         "#item_id_aux": 6684672
-                    }
+                    },
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_name_override": "#item_id_aux",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible",
+                            "binding_type": "collection",
+                            "binding_name": "$toc_icon_binding"
+                        }
+                    ]
                 }
             },
             {
@@ -1757,7 +1839,20 @@
                     ],
                     "font_scale_factor": 1.4,
                     "font_type": "default",
-                    "text": "章节名称"
+                    "text": "$toc_title_binding",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible"
+                        },
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "$toc_collection_name",
+                            "binding_condition": "always_when_visible",
+                            "binding_name": "$toc_title_binding"
+                        }
+                    ]
                 }
             },
             {
@@ -1790,11 +1885,17 @@
                         0,
                         0
                     ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_button_name": "$toc_select_binding",
                     "$pressed_texture": "",
                     "$texture_layer": 2,
                     "layer": 2,
-                    "button_mappings": [],
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
                     "default_control": "default",
                     "hover_control": "hover",
                     "is_handle_button_move_event": true,
@@ -1803,7 +1904,7 @@
                     "bindings": [
                         {
                             "binding_type": "collection_details",
-                            "binding_collection_name": "",
+                            "binding_collection_name": "$toc_collection_name",
                             "binding_condition": "always_when_visible"
                         }
                     ],

@@ -1,0 +1,20 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.skybluetech.fluid_volume": {
+            "arrays": {
+                "textures": {
+                    "Array.volume_textures": [
+                        "Texture.volume",
+                        "Texture.volume_dilute_brine",
+                        "Texture.volume_saturated_brine"
+                    ]
+                }
+            },
+            "geometry": "Geometry.volume",
+            "materials": [{ "*": "Material.volume" }],
+            "textures": ["Array.volume_textures[query.mod.skybluetech_fluid_volume_texture]"],
+            "part_visibility": [{ "bb_main": "query.mod.skybluetech_y_scale > 0.0" }]
+        }
+    }
+}

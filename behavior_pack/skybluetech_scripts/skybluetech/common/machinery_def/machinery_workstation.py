@@ -136,6 +136,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         32,
     ),
+    # brine evaporation pond controller
+    MRecipe(
+        {
+            0: Input("minecraft:brick_block"),
+            1: Input("minecraft:lever"),
+            2: Input("minecraft:brick_block"),
+            3: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            4: Input("minecraft:iron_trapdoor"),
+            5: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            6: Input("minecraft:brick_block"),
+            7: Input("minecraft:blast_furnace"),
+            8: Input("minecraft:brick_block"),
+        },
+        id_enum.BrineEvaporationPond.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # charger
     MRecipe(
         {

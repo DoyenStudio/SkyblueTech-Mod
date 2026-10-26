@@ -1,6 +1,7 @@
 # coding=utf-8
 from . import (
     air_compressor,
+    brine_evaporation_pond,
     charger,
     default,
     distillation_chamber,

@@ -12,6 +12,10 @@ heat_power=0；spread_heat=False；max_heat_value=600 是相对环境温升上�
 
 SetOutputHeatPower(power)、HeatFromElectric(rf)、ElectricCostOf(heat)；Thermal 提供温度/热量换算。
 
+GetHeatInputTarget() 返回实际受热热体；TransferHeatTo(target, dt=None) 向已加载热机或受热口单向导热，返回实际传递的 RF 热量，默认 dt=WORK_INTERVAL。该方法不要求两热体相邻，调用方负责选择接触方块。
+
+多方块接口见[热力接口](heat_interfaces.md)：受热口、供热口代理控制器热量，不增加独立热容或环境散热。
+
 ## 事件与组合
 
 自动订阅 tick，每 WORK_INTERVAL 触发热工作；SubscribeOnHeatWork 接入自定义热流程。

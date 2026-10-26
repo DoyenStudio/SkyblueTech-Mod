@@ -9,6 +9,7 @@ class Machinery(SimpleEnum):
     BATTERY_MATRIX_CONTROLLER = "skybluetech:battery_matrix_controller"
     BATTERY_MATRIX_CORE = "skybluetech:battery_matrix_core"
     BEDROCK_LAVA_DRILL_CONTROLLER = "skybluetech:bedrock_lava_drill_controller"
+    BRINE_EVAPORATION_POND_CONTROLLER = "skybluetech:brine_evaporation_pond_controller"
     CHARGER = "skybluetech:charger"
     COMPRESSOR = "skybluetech:compressor"
     CREATIVE_GENERATOR = "skybluetech:creative_generator"

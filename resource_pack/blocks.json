@@ -34,6 +34,26 @@
             "up": "skybluetech:seawater_pump_io_energy"
         }
     },
+    "skybluetech:brine_evaporation_pond_controller": {
+        "client_entity": {},
+        "textures": {
+            "down": "skybluetech:brick",
+            "east": "skybluetech:brick",
+            "north": "skybluetech:brine_evaporation_pond_controller_front",
+            "south": "skybluetech:brick",
+            "up": "skybluetech:brick",
+            "west": "skybluetech:brick"
+        }
+    },
+    "skybluetech:brine_evaporation_pond_io_fluid1": {
+        "textures": "skybluetech:brine_evaporation_pond_io_fluid1"
+    },
+    "skybluetech:brine_evaporation_pond_io_fluid2": {
+        "textures": "skybluetech:brine_evaporation_pond_io_fluid2"
+    },
+    "skybluetech:brine_evaporation_pond_io_heat": {
+        "textures": "skybluetech:brine_evaporation_pond_io_heat"
+    },
     "skybluetech:air_compressor": {
         "sound": "iron"
     },

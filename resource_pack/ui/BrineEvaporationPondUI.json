@@ -1,0 +1,277 @@
+{
+    "brine_evaporation_pond_ui": {
+        "type": "panel",
+        "size": [
+            0.0,
+            0.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg_down": {
+                                "type": "image",
+                                "offset": [
+                                    0.0,
+                                    60.0
+                                ],
+                                "size": [
+                                    "default",
+                                    93
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "nineslice_size": [
+                                    4.0,
+                                    4.0,
+                                    4.0,
+                                    4.0
+                                ],
+                                "texture": "textures/ui/dialog_background_opaque",
+                                "controls": [
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                -7
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
+                                            "anchor_from": "top_right",
+                                            "anchor_to": "top_left"
+                                        }
+                                    },
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {
+                                            "button_mappings": [
+                                                {
+                                                    "from_button_id": "button.menu_select",
+                                                    "mapping_type": "pressed",
+                                                    "to_button_id": "button.menu_exit"
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "bg2": {
+                                                        "type": "image",
+                                                        "size": [
+                                                            "100%+-5px",
+                                                            "100%+-5px"
+                                                        ],
+                                                        "alpha": 0.4,
+                                                        "clip_direction": "left",
+                                                        "clip_ratio": 0.0,
+                                                        "texture": "textures/ui/brick",
+                                                        "tiled": true
+                                                    }
+                                                },
+                                                {
+                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -10,
+                                                            80
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "machine_label": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            0.0,
+                                                            4.0
+                                                        ],
+                                                        "font_scale_factor": 1.4,
+                                                        "font_type": "default",
+                                                        "shadow": true,
+                                                        "text": "卤水池",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "input_fluid_disp@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_size": "small",
+                                                        "$text_visible": false,
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            30,
+                                                            16
+                                                        ],
+                                                        "size": [
+                                                            80,
+                                                            48
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "output_fluid_disp@SkybluePanelLib.FluidDisplay": {
+                                                        "$text_visible": false,
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            30,
+                                                            -25
+                                                        ],
+                                                        "size": [
+                                                            80,
+                                                            30
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "databoard": {
+                                                        "type": "panel",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -10.0,
+                                                            20.0
+                                                        ],
+                                                        "size": [
+                                                            56.0,
+                                                            80.0
+                                                        ],
+                                                        "controls": [
+                                                            {
+                                                                "bg": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "bottom_middle",
+                                                                    "anchor_to": "bottom_middle",
+                                                                    "layer": 1,
+                                                                    "clip_direction": "left",
+                                                                    "clip_ratio": 0.0,
+                                                                    "nineslice_size": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "texture": "textures/ui/bg_frame_slim"
+                                                                }
+                                                            },
+                                                            {
+                                                                "data_label": {
+                                                                    "type": "label",
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "offset": [
+                                                                        0.0,
+                                                                        2.0
+                                                                    ],
+                                                                    "size": [
+                                                                        "100%+-4px",
+                                                                        "100%+-4px"
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "color": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "font_type": "default",
+                                                                    "text": "输入液量：\n0 mB\n输出液量：\n0 mB"
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "structure_not_finished_tip@SkybluePanelLib.StructureNotFinishedTip": {
+                                                        "anchor_from": "bottom_middle",
+                                                        "anchor_to": "bottom_middle",
+                                                        "offset": [
+                                                            0,
+                                                            -4
+                                                        ],
+                                                        "size": [
+                                                            "100%+-10px",
+                                                            "100%+-20px"
+                                                        ],
+                                                        "visible": false
+                                                    }
+                                                },
+                                                {
+                                                    "temperature@SkybluePanelLib.temperature_bar": {
+                                                        "anchor_from": "left_middle",
+                                                        "anchor_to": "left_middle",
+                                                        "offset": [
+                                                            8,
+                                                            0
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ],
+                                "offset": [
+                                    0,
+                                    -45
+                                ],
+                                "size": [
+                                    "100%+0px",
+                                    120
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 2,
+                    "size": [
+                        180,
+                        200
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "BrineEvaporationPondUI.brine_evaporation_pond_ui"
+    },
+    "namespace": "BrineEvaporationPondUI"
+}

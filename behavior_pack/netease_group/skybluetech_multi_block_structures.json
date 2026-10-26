@@ -9,6 +9,16 @@
             ]
         },
         {
+            "group_name": "itemGroup.skybluetech.brine_evaporation_pond",
+            "icon": "skybluetech:brine_evaporation_pond_controller",
+            "list": [
+                "skybluetech:brine_evaporation_pond_controller",
+                "skybluetech:brine_evaporation_pond_io_fluid1",
+                "skybluetech:brine_evaporation_pond_io_fluid2",
+                "skybluetech:brine_evaporation_pond_io_heat"
+            ]
+        },
+        {
             "group_name": "itemGroup.skybluetech.fermenter",
             "icon": "skybluetech:fermenter_controller",
             "list": [

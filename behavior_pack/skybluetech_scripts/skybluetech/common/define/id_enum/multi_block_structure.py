@@ -14,6 +14,13 @@ class BedrockLavaDrill:
     IO_FLUID = "skybluetech:bedrock_lava_drill_io_fluid"
 
 
+class BrineEvaporationPond:
+    CONTROLLER = "skybluetech:brine_evaporation_pond_controller"
+    IO_FLUID1 = "skybluetech:brine_evaporation_pond_io_fluid1"
+    IO_FLUID2 = "skybluetech:brine_evaporation_pond_io_fluid2"
+    IO_HEAT = "skybluetech:brine_evaporation_pond_io_heat"
+
+
 class SeawaterReservoir:
     CONTROLLER = "skybluetech:seawater_pump"
     IO_ENERGY = "skybluetech:seawater_pump_io_energy"

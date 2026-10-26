@@ -23,6 +23,21 @@
         "skybluetech:seawater_pump_io_energy": {
             "textures": "textures/blocks/multi_block_structure/seawater_reservoir/pump_side_energy_io"
         },
+        "skybluetech:brick": {
+            "textures": "textures/blocks/brick"
+        },
+        "skybluetech:brine_evaporation_pond_controller_front": {
+            "textures": "textures/blocks/multi_block_structure/brine_evaporation_pond/controller"
+        },
+        "skybluetech:brine_evaporation_pond_io_fluid1": {
+            "textures": "textures/blocks/multi_block_structure/brine_evaporation_pond/io_fluid1"
+        },
+        "skybluetech:brine_evaporation_pond_io_fluid2": {
+            "textures": "textures/blocks/multi_block_structure/brine_evaporation_pond/io_fluid2"
+        },
+        "skybluetech:brine_evaporation_pond_io_heat": {
+            "textures": "textures/blocks/multi_block_structure/brine_evaporation_pond/io_heat"
+        },
         "skybluetech:air_compressor": {
             "textures": "textures/models/air_compressor_texture"
         },

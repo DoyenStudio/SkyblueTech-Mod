@@ -19,7 +19,7 @@
         "pattern": [
             "LT ",
             "TWT",
-            " TL"
+            "LTL"
         ],
         "result": {
             "count": 1,

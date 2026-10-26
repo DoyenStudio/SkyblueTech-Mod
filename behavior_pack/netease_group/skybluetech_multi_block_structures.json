@@ -1,6 +1,14 @@
 {
     "groups": [
         {
+            "group_name": "itemGroup.skybluetech.seawater_reservoir",
+            "icon": "skybluetech:seawater_pump",
+            "list": [
+                "skybluetech:seawater_pump",
+                "skybluetech:seawater_pump_io_energy"
+            ]
+        },
+        {
             "group_name": "itemGroup.skybluetech.fermenter",
             "icon": "skybluetech:fermenter_controller",
             "list": [

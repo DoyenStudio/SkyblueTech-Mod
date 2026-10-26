@@ -69,6 +69,7 @@
         "ui/RFRepeaterPlantUI.json",
         "ui/richer_text.json",
         "ui/SawmillUI.json",
+        "ui/SeawaterPumpUI.json",
         "ui/SkybluePanelLib.json",
         "ui/SkyblueTechGuidanceUI.json",
         "ui/SolarPanelUI.json",

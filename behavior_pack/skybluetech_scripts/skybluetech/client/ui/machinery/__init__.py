@@ -50,6 +50,7 @@ from .redstone_generator import RedstoneGeneratorUI
 from .redstoneflux_brake import RedstoneFluxBrakeUI
 from .rf_repeater_plant import RFRepeaterPlantUI
 from .sawmill import SawmillUI
+from .seawater_pump import SeawaterPumpUI
 from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI
 from .template_assembler import TemplateAssemblerUI

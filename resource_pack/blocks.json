@@ -20,6 +20,20 @@
             "up": "skybluetech:baked_dilute_brine_flowing"
         }
     },
+    "skybluetech:seawater_pump": {
+        "textures": {
+            "down": "skybluetech:seawater_pump_bottom",
+            "side": "skybluetech:seawater_pump_side",
+            "up": "skybluetech:seawater_pump_top"
+        }
+    },
+    "skybluetech:seawater_pump_io_energy": {
+        "textures": {
+            "down": "skybluetech:stonebrick",
+            "side": "skybluetech:stonebrick",
+            "up": "skybluetech:seawater_pump_io_energy"
+        }
+    },
     "skybluetech:air_compressor": {
         "sound": "iron"
     },

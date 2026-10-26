@@ -8,6 +8,21 @@
         "skybluetech:baked_dilute_brine_static": {
             "textures": "textures/fluid/baked/skybluetech.dilute_brine/static"
         },
+        "skybluetech:stonebrick": {
+            "textures": "textures/blocks/stonebrick"
+        },
+        "skybluetech:seawater_pump_bottom": {
+            "textures": "textures/blocks/multi_block_structure/seawater_reservoir/pump_bottom"
+        },
+        "skybluetech:seawater_pump_side": {
+            "textures": "textures/blocks/multi_block_structure/seawater_reservoir/pump_side"
+        },
+        "skybluetech:seawater_pump_top": {
+            "textures": "textures/blocks/multi_block_structure/seawater_reservoir/pump_top"
+        },
+        "skybluetech:seawater_pump_io_energy": {
+            "textures": "textures/blocks/multi_block_structure/seawater_reservoir/pump_side_energy_io"
+        },
         "skybluetech:air_compressor": {
             "textures": "textures/models/air_compressor_texture"
         },

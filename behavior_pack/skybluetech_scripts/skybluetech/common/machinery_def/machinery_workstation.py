@@ -752,6 +752,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         8,
     ),
+    # seawater pump
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            1: Input(id_enum.FluidPipe.CHEMICAL),
+            2: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            3: Input("minecraft:bucket"),
+            4: Input(id_enum.Machinery.PUMP),
+            5: Input(id_enum.ELECTRIC_MOTOR),
+            6: Input("minecraft:iron_trapdoor"),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input("minecraft:iron_trapdoor"),
+        },
+        id_enum.Machinery.SEAWATER_PUMP,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # solar panel
     MRecipe(
         {

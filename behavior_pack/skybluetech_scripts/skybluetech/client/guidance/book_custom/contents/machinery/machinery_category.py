@@ -209,6 +209,12 @@ machinery_source_extraction_toc = PageGroup(
                     None,
                     machinery_source_extraction.pump,
                 ),
+                TOCPageSection(
+                    id_enum.Machinery.SEAWATER_PUMP,
+                    0,
+                    "海水蓄水池",
+                    machinery_source_extraction.seawater_reservoir,
+                ),
             ],
         ),
     ],

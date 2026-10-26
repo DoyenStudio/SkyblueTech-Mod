@@ -60,6 +60,7 @@ class Machinery(SimpleEnum):
     RESIN_COLLECTOR_OUTPUTER = "skybluetech:resin_collector_outputer"
     RF_REPEATER_PLANT = "skybluetech:rf_repeater_plant"
     SAWMILL = "skybluetech:sawmill"
+    SEAWATER_PUMP = "skybluetech:seawater_pump"
     SOLAR_PANEL = "skybluetech:solar_panel"
     SPLITTER = "skybluetech:splitter"
     TEMPLATE_ASSEMBLER = "skybluetech:template_assembler"

@@ -14,6 +14,11 @@ class BedrockLavaDrill:
     IO_FLUID = "skybluetech:bedrock_lava_drill_io_fluid"
 
 
+class SeawaterReservoir:
+    CONTROLLER = "skybluetech:seawater_pump"
+    IO_ENERGY = "skybluetech:seawater_pump_io_energy"
+
+
 class Fermenter:
     CONTROLLER = "skybluetech:fermenter_controller"
     FRAME = "minecraft:mud_bricks"

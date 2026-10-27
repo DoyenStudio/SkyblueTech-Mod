@@ -51,8 +51,8 @@ if 0 > 1:
 DEBUG = False
 
 FLAG_OK = 0
-MAX_STRUCTURE_MISMATCH_POSES = 5
-"最多写入方块实体数据的结构不匹配位置数量, 避免 UI 溢出."
+MAX_STRUCTURE_MISMATCH_POSES = 20
+"最多收集并写入方块实体数据的结构不匹配位置数量, 避免大量缺失时写入卡顿."
 STRUCTURE_DEACTIVE_FLAGS = (
     DEACTIVE_FLAG_STRUCTURE_BROKEN | DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
 )
@@ -529,15 +529,12 @@ class MultiBlockStructure(BaseMachine):
         return self.lacked_blocks
 
     def GetStructureLackedBlockPoses(self):
-        "返回缺失方块的具体位置列表, 每条为 (x, y, z, 期望方块, 实际方块) 组成的 dict."
+        # 返回缺失方块的具体位置列表, 每条为 (x, y, z, 期望方块, 实际方块) 组成的 dict.
         return self.lacked_block_poses
 
     def GetFunctionalBlockPoses(self):
-        """
-        返回功能性方块的世界坐标, 按方块 ID 分组, 结构完整时才会更新。
-
-        只包含放在调色板允许位置上的方块, 藏在结构内部的接口不会出现在这里。
-        """
+        # 返回功能性方块的世界坐标, 按方块 ID 分组, 结构完整时才会更新。
+        # 只包含放在调色板允许位置上的方块, 藏在结构内部的接口不会出现在这里。
         return self.area.functional_block_poses
 
     def StructureFinished(self):
@@ -550,6 +547,18 @@ class MultiBlockStructure(BaseMachine):
 
     def GetAllMachines(self, cls, block_id=None):
         # type: (type[MT], str | None) -> list[MT]
+        # 一次性获取当前多方块结构中指定方块 ID 的所有已加载功能性机器。
+        # 其 ID 需要被包含在类属性 `functional_block_ids` 中。
+
+        # Args:
+        #     cls (type[BaseMachine]): 机器类, 只返回该类或其子类的实例。
+        #     block_id (str, optional): 机器方块 ID。默认为 cls.block_name。
+        #         接口类注册了多个 ID 时, 传入当前结构使用的具体 ID。
+
+        # Returns:
+        #     list[BaseMachine]: 按功能性方块坐标登记顺序返回的机器列表。
+        #         只查找调色板允许位置上的方块, 跳过未加载或类型不符的机器。
+        #         没有匹配机器时返回空列表; 每次调用重新查询, 不缓存机器实例。
         from ..core.pool import GetLoadedMachine
 
         block_id = block_id or cls.block_name
@@ -642,7 +651,7 @@ class MultiBlockStructure(BaseMachine):
     @lacked_block_poses.setter
     def lacked_block_poses(self, value):
         # type: (list[dict[str, object]]) -> None
-        value = value or []
+        value = (value or [])[:MAX_STRUCTURE_MISMATCH_POSES]
         self.bdata[K_STRUCTURE_LACKED_BLOCK_POSES] = self._lacked_block_poses = value
 
 

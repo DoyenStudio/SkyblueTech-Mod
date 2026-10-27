@@ -46,6 +46,7 @@ class Forester(UpgradeControl, GUIControl):
     allow_upgraders = frozenset({
         Upgraders.BASIC_ENERGY_UPGRADER,
         Upgraders.GENERIC_AUTO_EJECTION, 
+        Upgraders.GENERIC_EXPANSION_UPGRADER,
     })
 
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -73,13 +74,13 @@ class Forester(UpgradeControl, GUIControl):
             return UpgradeControl.IsValidInput(self, slot, item)
         return True
 
-    def _scan_dx(self):
+    def _get_dx(self):
         # type: () -> int
         if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
             return DX_EXPANDED
         return DX
 
-    def _scan_dy(self):
+    def _get_dy(self):
         # type: () -> int
         if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
             return DY_EXPANDED
@@ -90,14 +91,14 @@ class Forester(UpgradeControl, GUIControl):
         ok = self.collect_tree()
         if not ok:
             return False
-        dx = self._scan_dx()
+        dx = self._get_dx()
         item_uqids = CF.CreateEntityComponent("").GetEntitiesBySelector("@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
             % (
                 self.x - dx,
                 self.y + Y_OFFSET,
                 self.z - dx,
                 dx * 2 + 1,
-                self._scan_dy(),
+                self._get_dy(),
                 dx * 2 + 1,
             ))
         items = []
@@ -124,9 +125,9 @@ class Forester(UpgradeControl, GUIControl):
             self.x,
             self.y + Y_OFFSET,
             self.z,
-            self._scan_dx(),
-            self._scan_dy(),
-            self._scan_dx(),
+            self._get_dx(),
+            self._get_dy(),
+            self._get_dx(),
             )
         sapling_id = ForesterUtils.GetSaplingId(main_log_block)
         if len(logs) + len(leaves) < 10:

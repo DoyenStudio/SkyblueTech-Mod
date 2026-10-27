@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/ultraheatinum",
                     "common:ultraheatinum_ingot",
                     "c:ultraheatinum_ingot"
                 ]

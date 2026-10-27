@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/refined_iron",
                     "common:refined_iron_ingot",
                     "c:refined_iron_ingot"
                 ]

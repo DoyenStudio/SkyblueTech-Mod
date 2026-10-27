@@ -10,7 +10,7 @@
             "minecraft:tags": {
                 "tags": [
                     "skybluetech:objects",
-                    "pincer/invar"
+                    "common:invar_pincer"
                 ]
             },
             "netease:initial_user_data": {

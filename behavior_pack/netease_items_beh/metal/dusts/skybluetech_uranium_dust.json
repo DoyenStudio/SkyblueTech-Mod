@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/uranium",
                     "common:uranium_dust",
                     "c:uranium_dust"
                 ]

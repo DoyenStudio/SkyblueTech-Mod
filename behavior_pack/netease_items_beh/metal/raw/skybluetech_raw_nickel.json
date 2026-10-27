@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/nickel",
                     "common:raw_nickel",
                     "c:raw_nickel"
                 ]

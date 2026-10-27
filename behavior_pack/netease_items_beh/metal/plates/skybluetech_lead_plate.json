@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/lead",
                     "common:lead_plate",
                     "c:lead_plate"
                 ]

@@ -10,7 +10,7 @@
             "minecraft:tags": {
                 "tags": [
                     "skybluetech:objects",
-                    "wrench/invar"
+                    "common:invar_wrench"
                 ]
             },
             "netease:initial_user_data": {

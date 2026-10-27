@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/copper",
                     "common:copper_plate",
                     "c:copper_plate"
                 ]

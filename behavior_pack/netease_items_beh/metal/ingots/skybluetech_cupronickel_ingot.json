@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/cupronickel",
                     "common:cupronickel_ingot",
                     "c:cupronickel_ingot"
                 ]

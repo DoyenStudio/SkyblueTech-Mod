@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/light_skyblue",
                     "common:light_skyblue_ingot",
                     "c:light_skyblue_ingot"
                 ]

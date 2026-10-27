@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/gold",
                     "common:gold_dust",
                     "c:gold_dust"
                 ]

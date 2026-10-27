@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "sticks/tin",
                     "common:tin_stick",
                     "c:tin_stick"
                 ]

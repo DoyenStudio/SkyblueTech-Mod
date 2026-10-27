@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "sticks/copper",
                     "common:copper_stick",
                     "c:copper_stick"
                 ]

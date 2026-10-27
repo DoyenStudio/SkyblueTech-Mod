@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/lead",
                     "common:lead_dust",
                     "c:lead_dust"
                 ]

@@ -4,7 +4,6 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/copper",
                     "common:copper_dust",
                     "c:copper_dust"
                 ]

@@ -4,7 +4,7 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/lapis"
+                    "common:lapis_dust"
                 ]
             }
         },

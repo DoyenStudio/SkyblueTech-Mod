@@ -4,7 +4,7 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/bio"
+                    "common:bio_dust"
                 ]
             }
         },

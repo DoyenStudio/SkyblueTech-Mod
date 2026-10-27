@@ -13,12 +13,13 @@ DESC_BOARD_KEY = "jei_desc_board"
 
 
 class ItemDisplayer(object):
-    def __init__(self, ctrl, item, tag=None, prob=1.0):
-        # type: (UBaseCtrl, Item, str | None, float) -> None
+    def __init__(self, ctrl, item, tag=None, prob=1.0, not_consumed=False):
+        # type: (UBaseCtrl, Item, str | None, float, bool) -> None
         self.ctrl = ctrl
         self.item = item
         self.tag = tag
         self.prob = prob
+        self.not_consumed = not_consumed
         self.item_renderer = ctrl["item_renderer"].asItemRenderer()
         self.item_count_label = ctrl["item_count"].asLabel()
         self.prob_label = ctrl["prob"].asLabel()
@@ -43,6 +44,8 @@ class ItemDisplayer(object):
 
     def onBtnReleased(self, _):
         fmt = CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(self.item.id) or self.item.id
+        if self.not_consumed:
+            fmt += "\n§e不被消耗。"
         if self.prob != 1.0:
             fmt += "\n§e产出概率： %.1f%%%%" % (self.prob * 100)
         if self.tag is not None:

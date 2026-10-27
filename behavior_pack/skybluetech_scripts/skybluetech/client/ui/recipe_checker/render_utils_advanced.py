@@ -52,6 +52,7 @@ class InputDisplayer(object):
     def __init__(self, ctrl, input):
         # type: (UBaseCtrl, Input) -> None
         self.ctrl = ctrl
+        self.not_consumed = input.count == 0
         if input.is_tag:
             self.enable_carousel = True
             self.tag = input.id
@@ -88,6 +89,8 @@ class InputDisplayer(object):
     def onBtnReleased(self, params):
         current_disp_item_id = self.get_current_carousel_item()
         fmt = CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(current_disp_item_id) or current_disp_item_id
+        if self.not_consumed:
+            fmt += "\n§e不被消耗。"
         if self.tag is not None:
             fmt += "\n\n§8接受标签: " + self.tag
         x, y = self.ctrl.GetRootPos()

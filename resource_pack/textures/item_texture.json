@@ -283,6 +283,9 @@
         "skybluetech:iron_plate": {
             "textures": "textures/items/plates/iron_plate"
         },
+        "skybluetech:hdpe_plate": {
+            "textures": "textures/items/plates/hdpe_plate"
+        },
         "skybluetech:iron_stick": {
             "textures": "textures/items/sticks/iron_stick"
         },
@@ -492,6 +495,12 @@
         },
         "skybluetech:resin": {
             "textures": "textures/items/resin"
+        },
+        "skybluetech:crude_salt": {
+            "textures": "textures/items/crude_salt"
+        },
+        "skybluetech:salt": {
+            "textures": "textures/items/salt"
         },
         "skybluetech:resin_spoon": {
             "textures": "textures/items/resin_spoon"

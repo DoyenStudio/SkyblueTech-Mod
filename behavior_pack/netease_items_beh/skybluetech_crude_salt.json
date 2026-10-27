@@ -1,0 +1,19 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "common:raw_salt",
+                    "c:raw_salt",
+                    "common:crude_salt",
+                    "c:crude_salt"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:crude_salt"
+        }
+    }
+}

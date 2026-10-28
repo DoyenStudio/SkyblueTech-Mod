@@ -55,6 +55,7 @@ from .seawater_pump import SeawaterPumpUI
 from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI
 from .template_assembler import TemplateAssemblerUI
+from .tesla_plant_ui import TeslaPlantUI
 from .thermal_generator import ThermalGeneratorUI
 from .vacuum_freezer import VacuumFreezerUI
 from .wind_generator import WindGeneratorUI

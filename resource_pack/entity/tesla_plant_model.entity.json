@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:tesla_plant_model",
+            "geometry": {
+                "default": "geometry.skybluetech.tesla_tower"
+            },
+            "textures": {
+                "default": "textures/models/tesla_plant"
+            },
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.tesla_plant_model"
+            ]
+        }
+    }
+}

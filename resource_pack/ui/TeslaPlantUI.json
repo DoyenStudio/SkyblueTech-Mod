@@ -61,7 +61,7 @@
                                                         "font_scale_factor": 1.4,
                                                         "font_type": "default",
                                                         "shadow": true,
-                                                        "text": "特斯拉电涌塔",
+                                                        "text": "特斯拉电塔",
                                                         "text_alignment": "center"
                                                     }
                                                 },
@@ -71,12 +71,12 @@
                                                         "anchor_from": "top_left",
                                                         "anchor_to": "top_left",
                                                         "offset": [
-                                                            25.0,
-                                                            21.0
+                                                            26.0,
+                                                            20.0
                                                         ],
                                                         "size": [
                                                             "80%+0px",
-                                                            60.0
+                                                            42.0
                                                         ],
                                                         "layer": 1,
                                                         "controls": [
@@ -100,7 +100,7 @@
                                                                     ],
                                                                     "font_scale_factor": 1.2,
                                                                     "font_type": "default",
-                                                                    "text": "对生物放电"
+                                                                    "text": "普通生物"
                                                                 }
                                                             },
                                                             {
@@ -117,7 +117,7 @@
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        46.0,
+                                                                        42.0,
                                                                         0.0
                                                                     ],
                                                                     "size": [
@@ -154,7 +154,7 @@
                                                                     ],
                                                                     "font_scale_factor": 1.2,
                                                                     "font_type": "default",
-                                                                    "text": "对玩家放电"
+                                                                    "text": "玩家[除你]"
                                                                 }
                                                             },
                                                             {
@@ -171,7 +171,7 @@
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        46.0,
+                                                                        42.0,
                                                                         14.0
                                                                     ],
                                                                     "size": [
@@ -208,7 +208,7 @@
                                                                     ],
                                                                     "font_scale_factor": 1.2,
                                                                     "font_type": "default",
-                                                                    "text": "对怪物放电"
+                                                                    "text": "怪物"
                                                                 }
                                                             },
                                                             {
@@ -225,7 +225,7 @@
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        46.0,
+                                                                        42.0,
                                                                         28.0
                                                                     ],
                                                                     "size": [
@@ -243,16 +243,16 @@
                                                                 }
                                                             },
                                                             {
-                                                                "label4": {
+                                                                "attack_range_tip": {
                                                                     "type": "label",
-                                                                    "anchor_from": "top_right",
-                                                                    "anchor_to": "top_right",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        -10.0,
+                                                                        86.0,
                                                                         2.0
                                                                     ],
                                                                     "size": [
-                                                                        52.0,
+                                                                        38.0,
                                                                         12.0
                                                                     ],
                                                                     "color": [
@@ -260,9 +260,32 @@
                                                                         0.3333333333333333,
                                                                         0.3333333333333333
                                                                     ],
-                                                                    "font_scale_factor": 1.2,
+                                                                    "font_scale_factor": 1.0,
                                                                     "font_type": "default",
-                                                                    "text": "电涌范围"
+                                                                    "text": "攻击范围"
+                                                                }
+                                                            },
+                                                            {
+                                                                "range_preview_bg": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "top_left",
+                                                                    "anchor_to": "top_left",
+                                                                    "offset": [
+                                                                        100.0,
+                                                                        18.0
+                                                                    ],
+                                                                    "size": [
+                                                                        24.0,
+                                                                        14.0
+                                                                    ],
+                                                                    "alpha": 0.5,
+                                                                    "color": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "texture": "textures/ui/white_background",
+                                                                    "tiled": true
                                                                 }
                                                             },
                                                             {
@@ -301,8 +324,8 @@
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        82.0,
-                                                                        29.0
+                                                                        86.0,
+                                                                        18.0
                                                                     ],
                                                                     "size": [
                                                                         14.0,
@@ -373,8 +396,8 @@
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        125.0,
-                                                                        29.0
+                                                                        124.0,
+                                                                        18.0
                                                                     ],
                                                                     "size": [
                                                                         14.0,
@@ -445,7 +468,7 @@
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        125.0,
+                                                                        124.0,
                                                                         1.0
                                                                     ],
                                                                     "size": [
@@ -494,67 +517,50 @@
                                                                     "anchor_from": "top_left",
                                                                     "anchor_to": "top_left",
                                                                     "offset": [
-                                                                        96.0,
-                                                                        29.0
+                                                                        100.0,
+                                                                        18.0
                                                                     ],
                                                                     "size": [
-                                                                        29.0,
+                                                                        23.0,
                                                                         14.0
                                                                     ],
+                                                                    "layer": 2,
                                                                     "color": [
-                                                                        0.3333333333333333,
-                                                                        0.3333333333333333,
-                                                                        0.3333333333333333
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
                                                                     ],
-                                                                    "font_scale_factor": 1.5,
+                                                                    "font_scale_factor": 1.4,
                                                                     "font_type": "default",
-                                                                    "text": "00",
+                                                                    "shadow": true,
+                                                                    "text": "5",
                                                                     "text_alignment": "center"
                                                                 }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "ant_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            0.0,
-                                                            -10.0
-                                                        ],
-                                                        "size": [
-                                                            18.0,
-                                                            18.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
+                                                            },
                                                             {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "$cell_overlay_ref|default": "TeslaPlantUI.crafting_template_slot_img",
-                                                                    "collection_index": 12
+                                                                "brorder": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "top_middle",
+                                                                    "anchor_to": "top_middle",
+                                                                    "offset": [
+                                                                        8.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        2.0,
+                                                                        "default"
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "color": [
+                                                                        0.6313725490196078,
+                                                                        0.6313725490196078,
+                                                                        0.6313725490196078
+                                                                    ],
+                                                                    "texture": "textures/ui/white_background",
+                                                                    "tiled": true
                                                                 }
                                                             }
                                                         ]
-                                                    }
-                                                },
-                                                {
-                                                    "slot_tip": {
-                                                        "type": "label",
-                                                        "anchor_from": "left_middle",
-                                                        "anchor_to": "left_middle",
-                                                        "offset": [
-                                                            26.0,
-                                                            -10.0
-                                                        ],
-                                                        "color": [
-                                                            0.3333333333333333,
-                                                            0.3333333333333333,
-                                                            0.3333333333333333
-                                                        ],
-                                                        "font_scale_factor": 1.2,
-                                                        "font_type": "default",
-                                                        "text": "电涌天线"
                                                     }
                                                 },
                                                 {
@@ -563,6 +569,49 @@
                                                         "offset": [
                                                             "-42%+0px",
                                                             "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "upgraders": {
+                                                        "type": "panel",
+                                                        "anchor_from": "top_left",
+                                                        "anchor_to": "top_left",
+                                                        "offset": [
+                                                            26.0,
+                                                            66.0
+                                                        ],
+                                                        "size": [
+                                                            "80%+0px",
+                                                            34.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "wip_tip_bg": {
+                                                                    "type": "image",
+                                                                    "layer": 1,
+                                                                    "alpha": 0.5,
+                                                                    "color": [
+                                                                        0.0,
+                                                                        0.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "texture": "textures/ui/white_background",
+                                                                    "tiled": true,
+                                                                    "controls": [
+                                                                        {
+                                                                            "wip_label": {
+                                                                                "type": "label",
+                                                                                "font_type": "default",
+                                                                                "shadow": true,
+                                                                                "text": "升级系统暂未开放。",
+                                                                                "text_alignment": "center"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            }
                                                         ]
                                                     }
                                                 }

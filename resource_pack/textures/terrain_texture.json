@@ -879,6 +879,9 @@
         "skybluetech:water_vapor": {
             "textures": "textures/fluid/water_vapor"
         },
+        "skybluetech:tesla_plant": {
+            "textures": "textures/models/tesla_plant"
+        },
         "skybluetech:wind_generator": {
             "textures": "textures/models/wind_generator_empty_texture"
         },

@@ -20,7 +20,7 @@ class TeslaPlantSettingsUpload(MachineryOperationC2S):
         z,  # type: int
         work_range,  # type: int
         do_attack_monster,  # type: bool
-        do_sttack_mob,  # type: bool
+        do_attack_mob,  # type: bool
         do_attack_player,  # type: bool
         player_id="",
     ):
@@ -30,7 +30,7 @@ class TeslaPlantSettingsUpload(MachineryOperationC2S):
         self.z = z
         self.work_range = work_range
         self.do_attack_monster = do_attack_monster
-        self.do_attack_mob = do_sttack_mob
+        self.do_attack_mob = do_attack_mob
         self.do_attack_player = do_attack_player
         self.player_id = player_id
 
@@ -53,7 +53,7 @@ class TeslaPlantSettingsUpload(MachineryOperationC2S):
             data["x"],
             data["y"],
             data["z"],
-            data["working_range"],
+            data["work_range"],
             data["do_attack_monster"],
             data["do_attack_mob"],
             data["do_attack_player"],
@@ -72,7 +72,7 @@ class TeslaPlantSettingsUpdate(CustomS2CEvent):
         z,
         work_range,  # type: int
         do_attack_monster,  # type: bool
-        do_sttack_mob,  # type: bool
+        do_attack_mob,  # type: bool
         do_attack_player,  # type: bool
     ):
         self.dim = dim
@@ -81,7 +81,7 @@ class TeslaPlantSettingsUpdate(CustomS2CEvent):
         self.z = z
         self.work_range = work_range
         self.do_attack_monster = do_attack_monster
-        self.do_sttack_mob = do_sttack_mob
+        self.do_attack_mob = do_attack_mob
         self.do_attack_player = do_attack_player
 
     def marshal(self):
@@ -92,7 +92,7 @@ class TeslaPlantSettingsUpdate(CustomS2CEvent):
             "z": self.z,
             "work_range": self.work_range,
             "do_attack_monster": self.do_attack_monster,
-            "do_attack_mob": self.do_sttack_mob,
+            "do_attack_mob": self.do_attack_mob,
             "do_attack_player": self.do_attack_player,
         }
 
@@ -113,13 +113,16 @@ class TeslaPlantSettingsUpdate(CustomS2CEvent):
 class TeslaPlantAttack(CustomS2CEvent):
     name = "st:TsPA"
 
-    def __init__(self, dim, x, y, z, to_entity_ids):
-        # type: (int, int, int, int, str) -> None
+    def __init__(self, dim, x, y, z, to_entity_ids, target_positions=None):
+        # type: (int, int, int, int, list[str], list[list[float]] | None) -> None
         self.dim = dim
         self.x = x
         self.y = y
         self.z = z
         self.entity_ids = to_entity_ids
+        # Capture successful hit positions on the server, including lethal hits
+        # whose actors may already have disappeared when clients receive this.
+        self.target_positions = target_positions or []
 
     def marshal(self):
         return {
@@ -128,8 +131,12 @@ class TeslaPlantAttack(CustomS2CEvent):
             "y": self.y,
             "z": self.z,
             "eids": self.entity_ids,
+            "positions": self.target_positions,
         }
 
     @classmethod
     def unmarshal(cls, data):
-        return cls(data["dim"], data["x"], data["y"], data["z"], data["eids"])
+        return cls(
+            data["dim"], data["x"], data["y"], data["z"], data["eids"],
+            data.get("positions", []),
+        )

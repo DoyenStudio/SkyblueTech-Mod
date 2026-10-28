@@ -9,6 +9,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     BlockStrengthChangedServerEvent,
     ContainerItemChangedServerEvent,
+    EntityPlaceBlockAfterServerEvent,
     ItemPullOutCustomContainerServerEvent,
     ItemPushInCustomContainerServerEvent,
     PlayerTryPutCustomContainerItemServerEvent,
@@ -119,6 +120,16 @@ def on_try_place(event):
     m = TryGetMachineCls(event.fullName)
     if m:
         m.OnPrePlaced(event)
+
+
+@EntityPlaceBlockAfterServerEvent.Listen()
+def on_entity_placed(event):
+    # type: (EntityPlaceBlockAfterServerEvent) -> None
+    m = pool.GetMachineWithoutCls(
+        event.dimensionId, event.x, event.y, event.z, event.fullName
+    )
+    if m is not None:
+        m.bdata["owner"] = event.entityId
 
 
 @ServerPlaceBlockEntityEvent.Listen()

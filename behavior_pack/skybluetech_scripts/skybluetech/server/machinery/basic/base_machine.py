@@ -60,6 +60,11 @@ class BaseMachine(object):
 
     # ==== API ====
 
+    def GetOwner(self):
+        # type: () -> str | None
+        "返回最近一次放置机器的玩家 ID；未记录时返回 None。"
+        return self.bdata["owner"]
+
     def GetRelativeFacing(self, absolute_face):
         # type: (str) -> str | None
         "将机器被接触的绝对面转为相对面；方向缺失或无效时返回 None。"

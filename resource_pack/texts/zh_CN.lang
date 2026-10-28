@@ -319,6 +319,7 @@ tile.skybluetech:thermoelectric_generator.name=温差发电机
 tile.skybluetech:tin_block.name=锡块
 tile.skybluetech:tin_ore.name=锡矿石
 tile.skybluetech:titanium_ore.name=钛矿石
+tile.skybluetech:tesla_plant.name=特斯拉电塔
 tile.skybluetech:wind_generator.name=风力发电机
 tile.skybluetech:hover_text_displayer.name=悬浮文本投影器
 item.skybluetech:sunflower_seeds.name=葵花籽

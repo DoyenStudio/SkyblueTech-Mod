@@ -9,6 +9,7 @@ from . import (
     hydroponic_bed,
     hydroponic_bed_sand,
     rf_repeater_plant,
+    tesla_plant,
     wind_generator,
 )
 

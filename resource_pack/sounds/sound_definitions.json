@@ -101,6 +101,23 @@
                     "volume": 1
                 }
             ]
+        },
+        "sfx.skybluetech.tesla_plant.shock": {
+            "category": "ambient",
+            "sounds": [
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock1"
+                },
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock2"
+                },
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock3"
+                },
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock4"
+                }
+            ]
         }
     }
 }

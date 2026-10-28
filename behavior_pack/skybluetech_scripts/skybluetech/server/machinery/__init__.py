@@ -58,6 +58,7 @@ from .seawater_pump import SeawaterPump
 from .splitter import Splitter
 from .solar_panel import SolarPanel
 from .template_assembler import TemplateAssembler
+from .tesla_plant import TeslaPlant
 from .thermal_generator import ThermalGenerator
 from .vacuum_freezer import VacuumFreezer
 from .wind_generator import WindGenerator

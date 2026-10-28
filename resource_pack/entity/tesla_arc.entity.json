@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:tesla_arc",
+            "geometry": {
+                "default": "geometry.skybluetech.tesla_arc"
+            },
+            "textures": {
+                "default": "textures/models/model_entity_texture"
+            },
+            "materials": {
+                "default": "skybluetech_tesla_arc_light"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.tesla_arc"
+            ]
+        }
+    }
+}

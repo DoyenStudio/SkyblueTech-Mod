@@ -1198,6 +1198,10 @@
         "blockshape": "water",
         "textures": "skybluetech:baked_water_vapor_static"
     },
+    "skybluetech:tesla_plant": {
+        "client_entity": {},
+        "sound": "iron"
+    },
     "skybluetech:wind_generator": {
         "client_entity": {},
         "sound": "iron"

@@ -1,0 +1,12 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.skybluetech.tesla_plant_model": {
+            "geometry": "Geometry.default",
+            "materials": [
+                {"*": "Material.default"}
+            ],
+            "textures": ["Texture.default"]
+        }
+    }
+}

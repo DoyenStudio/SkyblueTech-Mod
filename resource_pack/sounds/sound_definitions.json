@@ -7,7 +7,7 @@
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_1",
+                    "name": "sounds/skybluetech/music/famicom_1",
                     "stream": true,
                     "volume": 1
                 }
@@ -18,7 +18,7 @@
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_2",
+                    "name": "sounds/skybluetech/music/famicom_2",
                     "stream": true,
                     "volume": 1
                 }
@@ -29,7 +29,7 @@
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_3",
+                    "name": "sounds/skybluetech/music/famicom_3",
                     "stream": true,
                     "volume": 1
                 }
@@ -40,7 +40,7 @@
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_4",
+                    "name": "sounds/skybluetech/music/famicom_4",
                     "stream": true,
                     "volume": 1
                 }
@@ -51,7 +51,7 @@
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_5",
+                    "name": "sounds/skybluetech/music/famicom_5",
                     "stream": true,
                     "volume": 1
                 }
@@ -61,7 +61,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_125",
+                    "name": "sounds/skybluetech/samples/bit_125",
                     "volume": 1
                 }
             ]
@@ -70,7 +70,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_25",
+                    "name": "sounds/skybluetech/samples/bit_25",
                     "volume": 1
                 }
             ]
@@ -79,7 +79,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_50",
+                    "name": "sounds/skybluetech/samples/bit_50",
                     "volume": 1
                 }
             ]
@@ -88,7 +88,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_noise",
+                    "name": "sounds/skybluetech/samples/bit_noise",
                     "volume": 1
                 }
             ]
@@ -97,7 +97,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_noise2",
+                    "name": "sounds/skybluetech/samples/bit_noise2",
                     "volume": 1
                 }
             ]

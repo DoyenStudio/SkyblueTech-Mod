@@ -36,7 +36,7 @@ if 0 > 1:
 MAIN_PATH = UIPath(
     "/variables_button_mappings_and_controls/safezone_screen_matrix/inner_matrix/safezone_screen_panel/root_screen_panel"
 )
-CONTENT_PATH = MAIN_PATH
+CONTENT_PATH = MAIN_PATH / "panel"  # 全屏外层 screen_root -> panel
 BG_PATH = CONTENT_PATH / "bg1"
 FAVOURITES_BG_PATH = CONTENT_PATH / "bg2"
 GRID_PANEL_PATH = BG_PATH / "grid_panel"

@@ -13,12 +13,12 @@ from skybluetech_scripts.skybluetech.common.events.misc.transmitter_settings imp
     TransmitterSetPriority,
 )
 
-INDEX_GRID_PATH = SCREEN_BASE_PATH / "network_label_selector_stack"
-CLOSE_BTN_PATH = SCREEN_BASE_PATH / "close_btn"
-MAIN_LABEL_PATH = SCREEN_BASE_PATH / "main_label"
-PRIOR_EDITOR_PATH = SCREEN_BASE_PATH / "prior_editor"
-PRIOR_SUB_BTN_PATH = SCREEN_BASE_PATH / "prior_sub_btn"
-PRIOR_ADD_BTN_PATH = SCREEN_BASE_PATH / "prior_add_btn"
+INDEX_GRID_PATH = SCREEN_BASE_PATH / "panel/network_label_selector_stack"
+CLOSE_BTN_PATH = SCREEN_BASE_PATH / "panel/close_btn"
+MAIN_LABEL_PATH = SCREEN_BASE_PATH / "panel/main_label"
+PRIOR_EDITOR_PATH = SCREEN_BASE_PATH / "panel/prior_editor"
+PRIOR_SUB_BTN_PATH = SCREEN_BASE_PATH / "panel/prior_sub_btn"
+PRIOR_ADD_BTN_PATH = SCREEN_BASE_PATH / "panel/prior_add_btn"
 
 
 def rand_rgb_by_index(index):

@@ -1,5 +1,27 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent
+from skybluetech_scripts.tooldelta.events.basic import CustomC2SEvent, CustomS2CEvent
+
+
+class MachineStatusUpdate(CustomS2CEvent):
+    """
+    机器停机标志变化时, 推给正打开该机器界面的玩家。
+    界面上的状态灯 / 停机提示圈据此刷新, 客户端不需要轮询方块数据。
+    """
+    name = "st:MSTU"
+
+    def __init__(self, x=0, y=0, z=0, flags=0):
+        # type: (int, int, int, int) -> None
+        self.x = x
+        self.y = y
+        self.z = z
+        self.flags = flags
+
+    def marshal(self):
+        return {"x": self.x, "y": self.y, "z": self.z, "f": self.flags}
+
+    @classmethod
+    def unmarshal(cls, data):
+        return cls(data["x"], data["y"], data["z"], data["f"])
 
 
 class MachineryOperationC2S(CustomC2SEvent):

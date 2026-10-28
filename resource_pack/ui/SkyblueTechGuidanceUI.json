@@ -441,8 +441,16 @@
             }
         ]
     },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@SkyblueTechGuidanceUI.book": {}
+            }
+        ]
+    },
     "main@common.base_screen": {
-        "$screen_content": "SkyblueTechGuidanceUI.book"
+        "$screen_content": "SkyblueTechGuidanceUI.screen_root"
     },
     "namespace": "SkyblueTechGuidanceUI"
 }

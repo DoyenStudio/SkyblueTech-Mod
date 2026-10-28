@@ -32,7 +32,7 @@ from .machinery_workstation import (
     _get_output_display_name,
     _get_output_hover_name,
 )
-from .utils import GetPreviewMaskColor, UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import GetPreviewMaskColor, UpdatePowerBar, UpdateProgress
 
 PLEASE_SELECT_RECIPE_TEXT = "在右侧配方栏选择配方"
 RECIPES_COLLECTION = "electric_machinery_workstation_recipes_grid"
@@ -89,7 +89,7 @@ class ElectricMachineryWorkstationUI(MachinePanelUIProxyEx):
         self.update_recipe_preview()
         progress = GetValue(data, K_PROGRESS, 0.0) if output_id else 0.0
         UpdatePowerBar(self.power_bar, GetValue(data, K_STORE_RF, 0), STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress_bar, progress)
+        UpdateProgress(self.progress_bar, progress)
         display_id = output_id or self.selected_recipe_id
         self.result_item_label.SetText(
             _get_output_display_name(display_id) if display_id else PLEASE_SELECT_RECIPE_TEXT

@@ -1,5 +1,5 @@
 {
-    "DataTextScreen": {
+    "data_text_screen": {
         "type": "panel",
         "$text": "",
         "anchor_from": "top_left",
@@ -47,7 +47,8 @@
             }
         ]
     },
-    "Flame": {
+    "DataTextScreen@SkybluePanelLib.data_text_screen": {},
+    "flame": {
         "type": "panel",
         "$mask_img": "textures/ui/flame_mask",
         "size": [
@@ -76,7 +77,8 @@
             }
         ]
     },
-    "FluidDisplay": {
+    "Flame@SkybluePanelLib.flame": {},
+    "fluid_display": {
         "type": "panel",
         "$text_size": "normal",
         "$text_visible": true,
@@ -232,7 +234,8 @@
             }
         ]
     },
-    "PowerBar": {
+    "FluidDisplay@SkybluePanelLib.fluid_display": {},
+    "power_bar": {
         "type": "panel",
         "size": [
             14.0,
@@ -313,7 +316,8 @@
             }
         ]
     },
-    "ProgressBar": {
+    "PowerBar@SkybluePanelLib.power_bar": {},
+    "progress_bar": {
         "type": "panel",
         "$bg_image": "textures/ui/arrow_img",
         "$mask_image": "textures/ui/arrow_mask",
@@ -342,7 +346,8 @@
             }
         ]
     },
-    "StructureNotFinishedTip": {
+    "ProgressBar@SkybluePanelLib.progress_bar": {},
+    "structure_not_finished_tip": {
         "type": "input_panel",
         "size": [
             166.0,
@@ -440,8 +445,8 @@
                         32.0
                     ],
                     "size": [
-                        "100%+-40px",
-                        58.0
+                        "100% - 40px",
+                        "100% - 36px"
                     ],
                     "layer": 4,
                     "color": [
@@ -455,7 +460,8 @@
             }
         ]
     },
-    "TextWithBlackBg": {
+    "StructureNotFinishedTip@SkybluePanelLib.structure_not_finished_tip": {},
+    "text_with_black_bg": {
         "type": "image",
         "$alpha": 0.4,
         "$alpha|default": 0,
@@ -498,7 +504,8 @@
             }
         ]
     },
-    "UpgradeSlots": {
+    "TextWithBlackBg@SkybluePanelLib.text_with_black_bg": {},
+    "upgrade_slots": {
         "type": "panel",
         "$slot0": 2,
         "$slot1": 3,
@@ -617,6 +624,7 @@
             }
         ]
     },
+    "UpgradeSlots@SkybluePanelLib.upgrade_slots": {},
     "blank_container": {
         "type": "panel",
         "size": [
@@ -1114,7 +1122,6 @@
     "main": {
         "type": "screen"
     },
-    "namespace": "SkybluePanelLib",
     "output_power_displayer": {
         "type": "panel",
         "anchor_from": "right_middle",
@@ -1266,8 +1273,8 @@
     "simple_left_section": {
         "type": "panel",
         "size": [
-            28.0,
-            25.0
+            28,
+            26
         ],
         "bindings": [
             {
@@ -1281,20 +1288,15 @@
             {
                 "bg": {
                     "type": "image",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "size": [
-                        "100%+-2px",
-                        "100%+0px"
+                        28,
+                        24
                     ],
                     "layer": 1,
-                    "nineslice_size": [
-                        3.0,
-                        3.0,
-                        3.0,
-                        3.0
-                    ],
-                    "texture": "textures/ui/left_section_not_selected",
+                    "nineslice_size": 4,
+                    "texture": "textures/ui/dialog_background_opaque",
                     "bindings": [
                         {
                             "binding_name_override": "#texture",
@@ -1303,23 +1305,24 @@
                             "binding_type": "collection",
                             "binding_name": "#SkybluePanelLib.simple_left_section_bg_texture"
                         }
-                    ]
+                    ],
+                    "fill": true
                 }
             },
             {
                 "icon_img": {
                     "type": "image",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        3.0,
-                        0.0
+                        5,
+                        4
                     ],
                     "size": [
-                        "100%+-8px",
-                        "100%+-8px"
+                        16,
+                        16
                     ],
-                    "layer": 1,
+                    "layer": 2,
                     "bindings": [
                         {
                             "binding_name_override": "#texture",
@@ -1363,7 +1366,7 @@
                     "$pressed_button_name": "#SkybluePanelLib.simple_left_section_button_click",
                     "$pressed_texture": "",
                     "$texture_layer": 2,
-                    "layer": 2,
+                    "layer": 3,
                     "button_mappings": [
                         {
                             "to_button_id": "$pressed_button_name",
@@ -1391,6 +1394,12 @@
                         {
                             "pressed@netease_editor_template_namespace.pressed": {}
                         }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        28,
+                        24
                     ]
                 }
             }
@@ -1400,7 +1409,7 @@
         "type": "grid",
         "$collection_name": "simple_panel_left_sections",
         "size": [
-            20.0,
+            28,
             "default"
         ],
         "layer": 1,
@@ -1750,5 +1759,2322 @@
         "type": "image",
         "layer": 1,
         "texture": "textures/ui/slot_upgrader_bg"
-    }
+    },
+    "machine_screen": {
+        "type": "panel",
+        "$panel_size|default": [
+            176,
+            166
+        ],
+        "$content_size|default": [
+            162,
+            54
+        ],
+        "$title_text|default": "",
+        "$has_tabs|default": false,
+        "$has_upgrades|default": false,
+        "$show_led|default": true,
+        "$drawer_ref|default": "SkybluePanelLib.upgrade_drawer",
+        "$drawer_offset|default": [
+            170,
+            10
+        ],
+        "$upgrade_slot0|default": 2,
+        "$upgrade_slot1|default": 3,
+        "$upgrade_slot2|default": 4,
+        "$upgrade_slot3|default": 5,
+        "$machine_content|default": "SkybluePanelLib.machine_content_empty",
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "size": "$panel_size",
+                    "layer": 0,
+                    "controls": [
+                        {
+                            "left_sections@SkybluePanelLib.simple_panel_left_sections": {
+                                "ignored": "(not $has_tabs)",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_right",
+                                "offset": [
+                                    4,
+                                    10
+                                ],
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "upgraders@$drawer_ref": {
+                                "ignored": "(not $has_upgrades)",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": "$drawer_offset",
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "layer": 2,
+                                "controls": [
+                                    {
+                                        "title_bar@SkybluePanelLib.machine_title_bar": {}
+                                    },
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {
+                                            "offset": [
+                                                -2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "main@$machine_content": {
+                                            "layer": 1
+                                        }
+                                    },
+                                    {
+                                        "ex_panel": {
+                                            "type": "panel",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                7,
+                                                17
+                                            ],
+                                            "size": "$content_size",
+                                            "layer": 1
+                                        }
+                                    },
+                                    {
+                                        "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                            "layer": 1
+                                        }
+                                    },
+                                    {
+                                        "hotbar_grid@common.hotbar_grid_template": {
+                                            "layer": 1
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "machine_content_empty": {
+        "type": "panel"
+    },
+    "machine_title_bar": {
+        "type": "stack_panel",
+        "orientation": "horizontal",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            7,
+            6
+        ],
+        "size": [
+            "100%c",
+            10
+        ],
+        "layer": 3,
+        "controls": [
+            {
+                "title": {
+                    "type": "label",
+                    "size": [
+                        "default",
+                        10
+                    ],
+                    "text": "$title_text",
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "layer": 1
+                }
+            },
+            {
+                "gap": {
+                    "type": "panel",
+                    "size": [
+                        4,
+                        10
+                    ]
+                }
+            },
+            {
+                "status_led@SkybluePanelLib.status_led": {
+                    "ignored": "(not $show_led)"
+                }
+            }
+        ]
+    },
+    "status_led": {
+        "type": "panel",
+        "size": [
+            5,
+            10
+        ],
+        "controls": [
+            {
+                "core": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "size": [
+                        3,
+                        3
+                    ],
+                    "color": [
+                        0.545,
+                        0.545,
+                        0.545
+                    ],
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        1,
+                        3
+                    ],
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "blink": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "color": [
+                        0,
+                        0,
+                        0
+                    ],
+                    "visible": false,
+                    "alpha": "@SkybluePanelLib.anim_blink_on",
+                    "layer": 2,
+                    "size": [
+                        3,
+                        3
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        1,
+                        3
+                    ],
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "ring": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/led_ring",
+                    "size": [
+                        5,
+                        5
+                    ],
+                    "layer": 3,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        0,
+                        2
+                    ],
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "size": [
+                        11,
+                        14
+                    ],
+                    "layer": 4,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        -3,
+                        -2
+                    ]
+                }
+            }
+        ]
+    },
+    "hover_info@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "",
+        "$hover_texture": "",
+        "$pressed_texture": "",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$texture_layer": 2,
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "pressed_control": "pressed",
+        "is_handle_button_move_event": true,
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "",
+                "binding_condition": "always_when_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default": {
+                    "type": "panel"
+                }
+            },
+            {
+                "hover": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "alpha": 0.25,
+                    "fill": true,
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "hover_text@common.hover_text": {
+                                "layer": 29,
+                                "property_bag": {
+                                    "#hover_text": ""
+                                }
+                            }
+                        }
+                    ],
+                    "keep_ratio": false
+                }
+            },
+            {
+                "pressed": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "alpha": 0.25,
+                    "fill": true,
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "hover_text@common.hover_text": {
+                                "layer": 29,
+                                "property_bag": {
+                                    "#hover_text": ""
+                                }
+                            }
+                        }
+                    ],
+                    "keep_ratio": false
+                }
+            }
+        ],
+        "sound_volume": 0.0
+    },
+    "status_ring": {
+        "type": "image",
+        "texture": "textures/ui/skybluetech/status_ring",
+        "nineslice_size": 1,
+        "visible": false,
+        "alpha": "@SkybluePanelLib.anim_pulse_out",
+        "layer": 9,
+        "keep_ratio": false,
+        "fill": true
+    },
+    "anim_pulse_out": {
+        "anim_type": "alpha",
+        "duration": 1.1,
+        "from": 1.0,
+        "to": 0.25,
+        "next": "@SkybluePanelLib.anim_pulse_in"
+    },
+    "anim_pulse_in": {
+        "anim_type": "alpha",
+        "duration": 1.1,
+        "from": 0.25,
+        "to": 1.0,
+        "next": "@SkybluePanelLib.anim_pulse_out"
+    },
+    "anim_blink_on": {
+        "anim_type": "alpha",
+        "duration": 0.5,
+        "from": 0.0,
+        "to": 0.0,
+        "next": "@SkybluePanelLib.anim_blink_off"
+    },
+    "anim_blink_off": {
+        "anim_type": "alpha",
+        "duration": 0.5,
+        "from": 0.6,
+        "to": 0.6,
+        "next": "@SkybluePanelLib.anim_blink_on"
+    },
+    "invisible_button@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "",
+        "$hover_texture": "",
+        "$pressed_texture": "",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$texture_layer": 2,
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "pressed_control": "pressed",
+        "is_handle_button_move_event": true,
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "",
+                "binding_condition": "always_when_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {
+                    "fill": true
+                }
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {
+                    "fill": true
+                }
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {
+                    "fill": true
+                }
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {}
+            }
+        ]
+    },
+    "recipe_overlay_btn@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "",
+        "$hover_texture": "textures/ui/skybluetech/hover_tint",
+        "$pressed_texture": "textures/ui/skybluetech/press_tint",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$texture_layer": 2,
+        "size": [
+            24,
+            17
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "pressed_control": "pressed",
+        "is_handle_button_move_event": true,
+        "sound_name": "random.click",
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "",
+                "binding_condition": "always_when_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {
+                    "fill": true
+                }
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {
+                    "fill": true
+                }
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {
+                    "fill": true
+                }
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {}
+            }
+        ]
+    },
+    "icon_button@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "textures/ui/button_default",
+        "$hover_texture": "textures/ui/button_hovered",
+        "$pressed_texture": "textures/ui/button_pressed",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$texture_layer": 2,
+        "$icon_texture|default": "textures/ui/searcher",
+        "size": [
+            18,
+            18
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "pressed_control": "pressed",
+        "is_handle_button_move_event": true,
+        "sound_name": "random.click",
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "",
+                "binding_condition": "always_when_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {
+                    "fill": true
+                }
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {
+                    "fill": true
+                }
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {
+                    "fill": true
+                }
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {}
+            },
+            {
+                "image": {
+                    "type": "image",
+                    "texture": "$icon_texture",
+                    "size": [
+                        16,
+                        16
+                    ],
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
+    "item_button@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "textures/ui/button_default",
+        "$hover_texture": "textures/ui/button_hovered",
+        "$pressed_texture": "textures/ui/button_pressed",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            1,
+            1,
+            1,
+            1
+        ],
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$texture_layer": 2,
+        "size": [
+            18,
+            18
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "pressed_control": "pressed",
+        "is_handle_button_move_event": true,
+        "sound_name": "random.click",
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "",
+                "binding_condition": "always_when_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {
+                    "fill": true
+                }
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {
+                    "fill": true
+                }
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {
+                    "fill": true
+                }
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {}
+            },
+            {
+                "item": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        16,
+                        16
+                    ],
+                    "layer": 3,
+                    "property_bag": {
+                        "#item_id_aux": 0
+                    }
+                }
+            }
+        ]
+    },
+    "fluid_tank": {
+        "type": "panel",
+        "size": [
+            18,
+            54
+        ],
+        "layer": 1,
+        "$tank_ticks|default": "textures/ui/skybluetech/tank_ticks_52",
+        "$text_visible|default": false,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "color": [
+                        0.545,
+                        0.545,
+                        0.545
+                    ],
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "fluid": {
+                    "type": "panel",
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "img": {
+                                "type": "image",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "size": [
+                                    "100%",
+                                    "0%"
+                                ],
+                                "clip_ratio": 0,
+                                "color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "texture": "textures/fluid/basic_fluid",
+                                "tiled": true,
+                                "keep_ratio": false
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ticks": {
+                    "type": "image",
+                    "texture": "$tank_ticks",
+                    "size": [
+                        5,
+                        "100% - 2px"
+                    ],
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -1,
+                        0
+                    ],
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 4,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "text": {
+                    "type": "label",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "offset": [
+                        0,
+                        2
+                    ],
+                    "visible": "$text_visible",
+                    "text": "0B / 0B",
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "priority": 10,
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "progress_arrow": {
+        "type": "panel",
+        "size": [
+            22,
+            15
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/arrow_img",
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/arrow_mask",
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "layer": 2,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
+    "burn_flame": {
+        "type": "panel",
+        "size": [
+            13,
+            13
+        ],
+        "layer": 1,
+        "$mask_img|default": "textures/ui/flame_mask",
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/flame_img",
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "$mask_img",
+                    "clip_direction": "down",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "layer": 2,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "fill_up": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "sun_meter": {
+        "type": "panel",
+        "size": [
+            16,
+            16
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/sun_gray",
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/sun",
+                    "clip_direction": "down",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "layer": 2,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "fill_up": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "info_panel": {
+        "type": "image",
+        "texture": "textures/ui/skybluetech/info_bg",
+        "nineslice_size": 1,
+        "fill": true,
+        "layer": 1,
+        "keep_ratio": false
+    },
+    "upgrade_drawer": {
+        "type": "image",
+        "texture": "textures/ui/dialog_background_opaque",
+        "nineslice_size": 4,
+        "size": [
+            35,
+            86
+        ],
+        "controls": [
+            {
+                "slot0": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        7
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot0"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "slot1": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        25
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot1"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "slot2": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        43
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot2"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "slot3": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        61
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot3"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "keep_ratio": false,
+        "fill": true
+    },
+    "upgrade_drawer_left": {
+        "type": "image",
+        "texture": "textures/ui/dialog_background_opaque",
+        "nineslice_size": 4,
+        "size": [
+            35,
+            86
+        ],
+        "controls": [
+            {
+                "slot0": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        7
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot0"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "slot1": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        25
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot1"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "slot2": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        43
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot2"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "slot3": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        61
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot3"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "keep_ratio": false,
+        "fill": true
+    },
+    "energy_meter_classic": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/classic_track",
+                                "tiled": "y",
+                                "layer": 1,
+                                "keep_ratio": false
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/energy_bar_top",
+                                "tiled": "y",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "size": [
+                                    "100%",
+                                    "0%"
+                                ],
+                                "layer": 2,
+                                "keep_ratio": false
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "classic_style": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "energy_meter_flat": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar": {
+                    "type": "panel",
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/flat_track",
+                                "nineslice_size": 1,
+                                "layer": 1,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/flat_fill",
+                                "clip_direction": "down",
+                                "clip_ratio": 1.0,
+                                "clip_pixelperfect": true,
+                                "layer": 2,
+                                "nineslice_size": 1,
+                                "color": [
+                                    0.247,
+                                    0.663,
+                                    0.961
+                                ],
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "energy_meter_gradient": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/white",
+                                "color": [
+                                    0.545,
+                                    0.545,
+                                    0.545
+                                ],
+                                "layer": 1,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/gradient_fill",
+                                "clip_direction": "down",
+                                "clip_ratio": 1.0,
+                                "clip_pixelperfect": true,
+                                "layer": 2,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "energy_meter_glass": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/glass_track",
+                                "nineslice_size": [
+                                    2,
+                                    0,
+                                    2,
+                                    0
+                                ],
+                                "layer": 1,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/glass_fill",
+                                "clip_direction": "down",
+                                "clip_ratio": 1.0,
+                                "clip_pixelperfect": true,
+                                "layer": 2,
+                                "nineslice_size": [
+                                    2,
+                                    0,
+                                    2,
+                                    0
+                                ],
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        },
+                        {
+                            "gloss": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/glass_gloss",
+                                "nineslice_size": [
+                                    2,
+                                    0,
+                                    2,
+                                    0
+                                ],
+                                "layer": 3,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/energy/glass_frame",
+                    "nineslice_size": 1,
+                    "layer": 4,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "energy_meter_segment": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "back": {
+                                "type": "image",
+                                "texture": "textures/ui/white",
+                                "color": [
+                                    0.545,
+                                    0.545,
+                                    0.545
+                                ],
+                                "layer": 1,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        },
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/segment_track",
+                                "tiled": "y",
+                                "size": [
+                                    "100% - 2px",
+                                    "100% - 1px"
+                                ],
+                                "layer": 2,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    1,
+                                    0
+                                ],
+                                "keep_ratio": false
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/segment_fill",
+                                "clip_direction": "down",
+                                "clip_ratio": 1.0,
+                                "clip_pixelperfect": true,
+                                "layer": 3,
+                                "tiled": "y",
+                                "size": [
+                                    "100% - 2px",
+                                    "100% - 1px"
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    1,
+                                    0
+                                ],
+                                "keep_ratio": false
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 4,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "energy_meter_slim": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "$energy_ticks|default": "textures/ui/skybluetech/tank_ticks_52",
+        "controls": [
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        6,
+                        "100%"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/slim_track",
+                                "nineslice_size": 1,
+                                "layer": 1,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/slim_fill",
+                                "clip_direction": "down",
+                                "clip_ratio": 1.0,
+                                "clip_pixelperfect": true,
+                                "layer": 2,
+                                "nineslice_size": 1,
+                                "color": [
+                                    0.247,
+                                    0.663,
+                                    0.961
+                                ],
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        1,
+                        0
+                    ]
+                }
+            },
+            {
+                "ticks": {
+                    "type": "image",
+                    "texture": "$energy_ticks",
+                    "size": [
+                        5,
+                        "100% - 2px"
+                    ],
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "layer": 2,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "energy_meter_battery": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "cap": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/energy/battery_cap",
+                    "size": [
+                        4,
+                        2
+                    ],
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/energy/battery_frame",
+                    "nineslice_size": 1,
+                    "size": [
+                        "100%",
+                        "100% - 2px"
+                    ],
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        "100% - 4px",
+                        "100% - 6px"
+                    ],
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [
+                        0,
+                        -2
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/white",
+                                "color": [
+                                    0.545,
+                                    0.545,
+                                    0.545
+                                ],
+                                "layer": 1,
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/white",
+                                "clip_direction": "down",
+                                "clip_ratio": 1.0,
+                                "clip_pixelperfect": true,
+                                "layer": 2,
+                                "color": [
+                                    0.247,
+                                    0.663,
+                                    0.961
+                                ],
+                                "keep_ratio": false,
+                                "fill": true
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "bolt": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/energy/battery_bolt",
+                    "size": [
+                        5,
+                        8
+                    ],
+                    "offset": [
+                        0,
+                        1
+                    ],
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "layer": 5
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "energy_meter@SkybluePanelLib.energy_meter_classic": {},
+    "progress_icon_snow": {
+        "type": "panel",
+        "size": [
+            17,
+            18
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/snow_bg",
+                    "size": [
+                        17,
+                        18
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/snow_fill",
+                    "size": [
+                        17,
+                        18
+                    ],
+                    "layer": 2,
+                    "clip_direction": "up",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "fill_up": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "progress_icon_bolt": {
+        "type": "panel",
+        "size": [
+            9,
+            14
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/bolt_bg",
+                    "size": [
+                        9,
+                        14
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/bolt_fill",
+                    "size": [
+                        9,
+                        14
+                    ],
+                    "layer": 2,
+                    "clip_direction": "up",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "fill_up": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "progress_icon_drop": {
+        "type": "panel",
+        "size": [
+            13,
+            18
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/drop_bg",
+                    "size": [
+                        13,
+                        18
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/drop_fill",
+                    "size": [
+                        13,
+                        18
+                    ],
+                    "layer": 2,
+                    "clip_direction": "up",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "fill_up": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "progress_icon_bubble": {
+        "type": "panel",
+        "size": [
+            14,
+            19
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/bubble_bg",
+                    "size": [
+                        14,
+                        19
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/bubble_fill",
+                    "size": [
+                        14,
+                        19
+                    ],
+                    "layer": 2,
+                    "clip_direction": "up",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "fill_up": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "progress_icon_gear": {
+        "type": "panel",
+        "size": [
+            17,
+            18
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/gear_bg",
+                    "size": [
+                        17,
+                        18
+                    ],
+                    "layer": 1,
+                    "uv_size": [
+                        17,
+                        18
+                    ],
+                    "uv": "@SkybluePanelLib.anim_gear_spin",
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/gear_fill",
+                    "size": [
+                        17,
+                        18
+                    ],
+                    "layer": 2,
+                    "clip_direction": "right",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "uv_size": [
+                        17,
+                        18
+                    ],
+                    "uv": "@SkybluePanelLib.anim_gear_spin",
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "spin": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "anim_gear_spin": {
+        "anim_type": "flip_book",
+        "initial_frame": 0,
+        "frame_count": 6,
+        "fps": 10,
+        "reversible": false
+    },
+    "progress_icon_saw": {
+        "type": "panel",
+        "size": [
+            17,
+            18
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/saw_bg",
+                    "size": [
+                        17,
+                        18
+                    ],
+                    "layer": 1,
+                    "uv_size": [
+                        17,
+                        18
+                    ],
+                    "uv": "@SkybluePanelLib.anim_saw_spin",
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/saw_fill",
+                    "size": [
+                        17,
+                        18
+                    ],
+                    "layer": 2,
+                    "clip_direction": "right",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "uv_size": [
+                        17,
+                        18
+                    ],
+                    "uv": "@SkybluePanelLib.anim_saw_spin",
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "spin": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "anim_saw_spin": {
+        "anim_type": "flip_book",
+        "initial_frame": 0,
+        "frame_count": 6,
+        "fps": 24,
+        "reversible": false
+    },
+    "progress_inset_cutter": {
+        "type": "panel",
+        "size": [
+            38,
+            22
+        ],
+        "layer": 6,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_cutter_bg",
+                    "size": [
+                        38,
+                        22
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_cutter_fill",
+                    "size": [
+                        38,
+                        22
+                    ],
+                    "layer": 2,
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
+    "progress_inset_magma": {
+        "type": "panel",
+        "size": [
+            103,
+            22
+        ],
+        "layer": 6,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_magma_bg",
+                    "size": [
+                        103,
+                        22
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_magma_fill",
+                    "size": [
+                        103,
+                        22
+                    ],
+                    "layer": 2,
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
+    "progress_inset_mixer": {
+        "type": "panel",
+        "size": [
+            53,
+            26
+        ],
+        "layer": 6,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_mixer_bg",
+                    "size": [
+                        53,
+                        26
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_mixer_fill",
+                    "size": [
+                        53,
+                        26
+                    ],
+                    "layer": 2,
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
+    "progress_inset_reacting": {
+        "type": "panel",
+        "size": [
+            52,
+            26
+        ],
+        "layer": 6,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_reacting_bg",
+                    "size": [
+                        52,
+                        26
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_reacting_fill",
+                    "size": [
+                        52,
+                        26
+                    ],
+                    "layer": 2,
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
+    "progress_inset_vacuum": {
+        "type": "panel",
+        "size": [
+            38,
+            37
+        ],
+        "layer": 6,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_vacuum_bg",
+                    "size": [
+                        38,
+                        37
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "textures/ui/skybluetech/progress/inset_vacuum_fill",
+                    "size": [
+                        38,
+                        37
+                    ],
+                    "layer": 2,
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
+    "namespace": "SkybluePanelLib"
 }

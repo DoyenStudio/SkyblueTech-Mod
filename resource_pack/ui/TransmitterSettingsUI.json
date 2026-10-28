@@ -527,8 +527,16 @@
             }
         ]
     },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@TransmitterSettingsUI.content": {}
+            }
+        ]
+    },
     "main@common.base_screen": {
-        "$screen_content": "TransmitterSettingsUI.content"
+        "$screen_content": "TransmitterSettingsUI.screen_root"
     },
     "namespace": "TransmitterSettingsUI"
 }

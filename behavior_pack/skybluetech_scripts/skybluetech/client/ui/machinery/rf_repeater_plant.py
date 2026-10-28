@@ -12,16 +12,16 @@ from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen, UBaseCtrl
 from ..misc.rf_repeater_plant_build import RFRepeaterPlantBuildUI
 from .define import SCREEN_BASE_PATH, MachinePanelUI
 
-DATABOARD_TIP_TEXT_PATH = SCREEN_BASE_PATH / "databoard/tip_text"
-IO_MODE_CTRL_PATH = SCREEN_BASE_PATH / "io_mode_ctrl"
-BUILD_BTN_PATH = SCREEN_BASE_PATH / "build_btn"
+DATABOARD_TIP_TEXT_PATH = SCREEN_BASE_PATH / "panel/databoard/tip_text"
+IO_MODE_CTRL_PATH = SCREEN_BASE_PATH / "panel/io_mode_ctrl"
+BUILD_BTN_PATH = SCREEN_BASE_PATH / "panel/build_btn"
 IO_CTRL_BTN_PATH = IO_MODE_CTRL_PATH / "io_ctrl_btn"
 IO_MODE_LABEL_PATH = IO_MODE_CTRL_PATH / "io_mode_label"
 
 
 @RegistToolDeltaScreen("RFRepeaterPlantUI.main", key=RF_REPEATER_PLANT_UI)
 class RFRepeaterPlantUI(MachinePanelUI):
-    EXIT_BTN_PATH = SCREEN_BASE_PATH / "close_btn"
+    EXIT_BTN_PATH = SCREEN_BASE_PATH / "panel/close_btn"
     allow_esc_exit = True
 
     def OnCreate(self):

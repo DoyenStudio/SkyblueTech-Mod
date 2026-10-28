@@ -14,6 +14,9 @@ from skybluetech_scripts.tooldelta.extensions.ui_sync import (
     AddSyncPending,
     GetAllPlayersInSync,
 )
+from skybluetech_scripts.skybluetech.common.events.machinery.basic import (
+    MachineStatusUpdate,
+)
 
 from .base_machine import BaseMachine
 
@@ -37,8 +40,23 @@ class GUIControl(BaseMachine):
         self.ui_sync = S2CSync.NewServer(
             "machine_%d_%d_%d_%d" % (dim, x, y, z)
         ).Activate()
+        self._gui_sent_flags = None  # type: int | None
         self.handler.SubscribeOnClick(self._gui_control_on_click)
         self.handler.SubscribeOnUnload(self._gui_control_on_unload)
+        self.handler.SubscribeOnDeactiveFlagsChanged(self._gui_control_on_flags_changed)
+
+    def _gui_control_on_flags_changed(self, flush=True):
+        # type: (bool) -> None
+        "停机标志变化时推给正打开界面的玩家; 只在数值真的变了时发送 (SetDeactiveFlag 重复设置也会触发本回调)。"
+        players = self.ui_sync.GetPlayersInSync()
+        if not players:
+            self._gui_sent_flags = None  # 没人看着就不发; 下次有人打开时界面自己读一次方块数据
+            return
+        flags = self.deactive_flags
+        if flags == self._gui_sent_flags:
+            return
+        self._gui_sent_flags = flags
+        MachineStatusUpdate(self.x, self.y, self.z, flags).sendMulti(players)
 
     def _gui_control_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None

@@ -1,323 +1,4 @@
 {
-    "assembler_ui": {
-        "type": "panel",
-        "controls": [
-            {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "root_panel@common.root_panel": {
-                    "controls": [
-                        {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "装配站",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -54.0,
-                                                            -68.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "material_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -54.0,
-                                                            -11.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm+0px",
-                                                            "100%cm+0px"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "$cell_overlay_ref|default": "AssemblerUI.tool_upgrade_img",
-                                                                    "collection_index": 1
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "push_btn@common.button": {
-                                                        "type": "button",
-                                                        "$control_alpha": 1.0,
-                                                        "$default_texture": "textures/ui/button_default",
-                                                        "$hover_texture": "textures/ui/button_hovered",
-                                                        "$is_new_nine_slice": false,
-                                                        "$label_color": [
-                                                            1,
-                                                            1,
-                                                            1
-                                                        ],
-                                                        "$label_font_scale_factor": 1.0,
-                                                        "$label_font_size": "large",
-                                                        "$label_layer": 3,
-                                                        "$label_offset": [
-                                                            0.0,
-                                                            0.0
-                                                        ],
-                                                        "$label_text": "",
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            1.0,
-                                                            1.0,
-                                                            1.0,
-                                                            1.0
-                                                        ],
-                                                        "$pressed_button_name": "",
-                                                        "$pressed_texture": "textures/ui/button_pressed",
-                                                        "$texture_layer": 2,
-                                                        "offset": [
-                                                            -54.0,
-                                                            -32.0
-                                                        ],
-                                                        "size": [
-                                                            16.0,
-                                                            16.0
-                                                        ],
-                                                        "priority": 100,
-                                                        "button_mappings": [
-                                                            {
-                                                                "to_button_id": "$pressed_button_name",
-                                                                "from_button_id": "button.menu_select",
-                                                                "mapping_type": "pressed"
-                                                            }
-                                                        ],
-                                                        "default_control": "default",
-                                                        "hover_control": "hover",
-                                                        "is_handle_button_move_event": true,
-                                                        "pressed_control": "pressed",
-                                                        "bindings": [
-                                                            {
-                                                                "binding_type": "collection_details",
-                                                                "binding_collection_name": "",
-                                                                "binding_condition": "always_when_visible"
-                                                            }
-                                                        ],
-                                                        "controls": [
-                                                            {
-                                                                "default@netease_editor_template_namespace.default": {}
-                                                            },
-                                                            {
-                                                                "hover@netease_editor_template_namespace.hover": {}
-                                                            },
-                                                            {
-                                                                "pressed@netease_editor_template_namespace.pressed": {}
-                                                            },
-                                                            {
-                                                                "button_label@netease_editor_template_namespace.button_label": {}
-                                                            },
-                                                            {
-                                                                "image": {
-                                                                    "type": "image",
-                                                                    "layer": 2,
-                                                                    "texture": "textures/ui/tool_upgrade_push"
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "upgraders_view@common.scrolling_panel": {
-                                                        "$background_nine_slice_buttom": 0,
-                                                        "$background_nine_slice_left": 0,
-                                                        "$background_nine_slice_right": 0,
-                                                        "$background_nine_slice_top": 0,
-                                                        "$background_nineslice_size": [
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0
-                                                        ],
-                                                        "$box_nine_slice_buttom": 0,
-                                                        "$box_nine_slice_left": 0,
-                                                        "$box_nine_slice_right": 0,
-                                                        "$box_nine_slice_top": 0,
-                                                        "$box_nineslice_size": [
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0
-                                                        ],
-                                                        "$collection_name": "assembler_upgraders_list",
-                                                        "$is_background_nine_slice": false,
-                                                        "$is_box_nine_slice": false,
-                                                        "$is_track_nine_slice": false,
-                                                        "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                                                        "$scroll_background_texture": "textures/ui/ScrollRail",
-                                                        "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
-                                                        "$scroll_box_texture": "textures/ui/newTouchScrollBox",
-                                                        "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
-                                                        "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
-                                                        "$scroll_track_texture": "textures/ui/ScrollRail",
-                                                        "$scrolling_content": "AssemblerUI.upgraders",
-                                                        "$show_background": true,
-                                                        "$track_nine_slice_buttom": 0,
-                                                        "$track_nine_slice_left": 0,
-                                                        "$track_nine_slice_right": 0,
-                                                        "$track_nine_slice_top": 0,
-                                                        "$track_nineslice_size": [
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0
-                                                        ],
-                                                        "offset": [
-                                                            21,
-                                                            -40
-                                                        ],
-                                                        "size": [
-                                                            118,
-                                                            80
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
-                            }
-                        }
-                    ],
-                    "layer": 0,
-                    "size": [
-                        180,
-                        200
-                    ]
-                }
-            }
-        ]
-    },
-    "main@common.inventory_screen_common": {
-        "$screen_content": "AssemblerUI.assembler_ui"
-    },
-    "namespace": "AssemblerUI",
     "tool_upgrade_img": {
         "type": "image",
         "layer": 1,
@@ -474,5 +155,303 @@
                 "binding_name": "#assembler.upgraders"
             }
         ]
-    }
+    },
+    "content": {
+        "type": "panel",
+        "controls": [
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
+                }
+            },
+            {
+                "material_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        28,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "AssemblerUI.tool_upgrade_img",
+                                "collection_index": 1
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_in_material_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "push_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/button_default",
+                    "$hover_texture": "textures/ui/button_hovered",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0.0,
+                        0.0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        1,
+                        1,
+                        1,
+                        1
+                    ],
+                    "$pressed_button_name": "",
+                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$texture_layer": 2,
+                    "offset": [
+                        28,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "priority": 100,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        },
+                        {
+                            "image": {
+                                "type": "image",
+                                "layer": 2,
+                                "texture": "textures/ui/tool_upgrade_push",
+                                "size": [
+                                    16,
+                                    16
+                                ],
+                                "anchor_from": "center",
+                                "anchor_to": "center"
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "input_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        28,
+                        53
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_in_input_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        53
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "upgraders_view@common.scrolling_panel": {
+                    "$background_nine_slice_buttom": 0,
+                    "$background_nine_slice_left": 0,
+                    "$background_nine_slice_right": 0,
+                    "$background_nine_slice_top": 0,
+                    "$background_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$box_nine_slice_buttom": 0,
+                    "$box_nine_slice_left": 0,
+                    "$box_nine_slice_right": 0,
+                    "$box_nine_slice_top": 0,
+                    "$box_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$collection_name": "assembler_upgraders_list",
+                    "$is_background_nine_slice": false,
+                    "$is_box_nine_slice": false,
+                    "$is_track_nine_slice": false,
+                    "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                    "$scroll_background_texture": "textures/ui/ScrollRail",
+                    "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                    "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                    "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                    "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                    "$scroll_track_texture": "textures/ui/ScrollRail",
+                    "$scrolling_content": "AssemblerUI.upgraders",
+                    "$show_background": true,
+                    "$track_nine_slice_buttom": 0,
+                    "$track_nine_slice_left": 0,
+                    "$track_nine_slice_right": 0,
+                    "$track_nine_slice_top": 0,
+                    "$track_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "offset": [
+                        52,
+                        17
+                    ],
+                    "size": [
+                        117,
+                        72
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "AssemblerUI.content",
+        "$panel_size": [
+            176,
+            184
+        ],
+        "$content_size": [
+            162,
+            72
+        ],
+        "$title_text": "装配站",
+        "$has_tabs": false,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 2,
+        "$upgrade_slot1": 3,
+        "$upgrade_slot2": 4,
+        "$upgrade_slot3": 5
+    },
+    "namespace": "AssemblerUI"
 }

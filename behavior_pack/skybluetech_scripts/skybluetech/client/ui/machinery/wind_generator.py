@@ -18,6 +18,7 @@ TEXT_PATH = MAIN_PATH / "text"
 
 @RegistToolDeltaScreen("WindGeneratorUI.main", is_proxy=True)
 class WindGeneratorUI(MachinePanelUIProxy):
+    IS_GENERATOR = True
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.text = self.GetElement(TEXT_PATH).asLabel()

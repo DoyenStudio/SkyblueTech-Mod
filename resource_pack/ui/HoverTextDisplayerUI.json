@@ -50,11 +50,11 @@
                         4.0
                     ],
                     "layer": 3,
-                    "font_scale_factor": 1.4,
                     "font_type": "default",
-                    "shadow": true,
+                    "shadow": false,
                     "text": "悬浮文本投影器",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "color": "$title_text_color"
                 }
             },
             {
@@ -124,13 +124,17 @@
                 }
             },
             {
-                "power_bar@SkybluePanelLib.PowerBar": {
+                "power_bar@SkybluePanelLib.energy_meter": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
                     "layer": 27,
                     "offset": [
                         10,
                         10
+                    ],
+                    "size": [
+                        12,
+                        80
                     ]
                 }
             },
@@ -208,8 +212,16 @@
             }
         ]
     },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@HoverTextDisplayerUI.hover_text_displayer_ui": {}
+            }
+        ]
+    },
     "main@common.base_screen": {
-        "$screen_content": "HoverTextDisplayerUI.hover_text_displayer_ui"
+        "$screen_content": "HoverTextDisplayerUI.screen_root"
     },
     "namespace": "HoverTextDisplayerUI"
 }

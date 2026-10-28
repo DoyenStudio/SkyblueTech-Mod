@@ -24,7 +24,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import UpdatePowerBar, UpdateProgress
 
 PROGRESS_PATH = MAIN_PATH / "progress"
 POWER_PATH = MAIN_PATH / "power_bar"
@@ -59,7 +59,7 @@ class TemplateAssemblerUI(MachinePanelUIProxyEx):
         store_rf = GetValue(data, K_STORE_RF, 0)
         progress = GetValue(data, K_PROGRESS, 0)
         UpdatePowerBar(self.power, store_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
 
     @MachinePanelUIProxyEx.Listen(TemplateAssemblerUpdateRecipeEvent)
     @MachinePanelUIProxyEx.Listen(TemplateAssemblerUpdateRecipeEvent2)

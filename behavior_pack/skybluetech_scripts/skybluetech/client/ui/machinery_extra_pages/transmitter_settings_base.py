@@ -13,6 +13,33 @@ from skybluetech_scripts.skybluetech.common.events.misc.transmitter_settings imp
 )
 from .base_page import PageBase
 
+# 端口面按钮底色: -1 未连接管道 (灰) / 0 管道存入 = 机器输入 (蓝) / 1 管道抽取 = 机器输出 (橙)
+IO_FACE_COLORS = {
+    -1: (0.69, 0.69, 0.69),
+    0: (0.651, 0.835, 0.969),
+    1: (0.969, 0.804, 0.580),
+}
+
+
+def UpdateFaceButton(btn_ctrl, io_mode):
+    # type: (UBaseCtrl, int) -> None
+    "端口面按钮: 旧版 9x9 状态图标保留 (已隐藏), 新版用底色区分状态。"
+    if io_mode == -1:
+        uv_start = (0, 18)
+    elif io_mode:
+        uv_start = (0, 9)
+    else:
+        uv_start = (0, 0)
+    img = btn_ctrl["icon"].asImage()
+    img.SetUV(uv_start, (9, 9))
+    img.SetAlpha(0.5)
+    try:
+        fill = btn_ctrl["fill"].asImage()
+    except ValueError:
+        return
+    fill.SetSpriteColor(IO_FACE_COLORS[-1 if io_mode == -1 else int(bool(io_mode))])
+    fill.SetAlpha(1.0)
+
 
 class AccessMode(object):
     def __init__(self, face_helper, modes=None):
@@ -185,12 +212,4 @@ class TransmitterSettingsPageBase(PageBase):
 
     def update_btn_uv(self, btn_ctrl, io_mode):
         # type: (UBaseCtrl, int) -> None
-        if io_mode == -1:
-            uv_start = (0, 18)
-        elif io_mode:
-            uv_start = (0, 9)
-        else:
-            uv_start = (0, 0)
-        img = btn_ctrl["icon"].asImage()
-        img.SetUV(uv_start, (9, 9))
-        img.SetAlpha(0.5)
+        UpdateFaceButton(btn_ctrl, io_mode)

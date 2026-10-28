@@ -18,14 +18,14 @@ from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from .define import SCREEN_BASE_PATH, MachinePanelUI
 from .utils import UpdatePowerBar
 
-EDIT_BOX_PATH = SCREEN_BASE_PATH / "edit_box"
-TIP_LABEL_PATH = SCREEN_BASE_PATH / "tip_label"
-POWER_BAR_PATH = SCREEN_BASE_PATH / "power_bar"
+EDIT_BOX_PATH = SCREEN_BASE_PATH / "panel/edit_box"
+TIP_LABEL_PATH = SCREEN_BASE_PATH / "panel/tip_label"
+POWER_BAR_PATH = SCREEN_BASE_PATH / "panel/power_bar"
 
 
 @RegistToolDeltaScreen("HoverTextDisplayerUI.main", key=HOVER_TEXT_DISPLAYER_UI)
 class HoverTextDisplayerUI(MachinePanelUI):
-    EXIT_BTN_PATH = SCREEN_BASE_PATH / "close_btn"
+    EXIT_BTN_PATH = SCREEN_BASE_PATH / "panel/close_btn"
     allow_esc_exit = True
 
     def OnCreate(self):

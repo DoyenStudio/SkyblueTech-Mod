@@ -20,7 +20,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         32,
@@ -138,7 +138,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "offset": [
                         0,
                         0
@@ -209,7 +209,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "offset": [
                         10,
                         -20
@@ -221,7 +221,7 @@
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
+                "flame@SkybluePanelLib.flame": {
                     "offset": [
                         -40,
                         0
@@ -276,7 +276,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/arrow_img",
                     "$mask_image": "textures/ui/arrow_mask",
                     "anchor_from": "left_middle",
@@ -367,7 +367,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/compressor_bg",
                     "$mask_image": "textures/ui/compressor_mask",
                     "offset": [
@@ -612,7 +612,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         -30,
@@ -625,7 +625,7 @@
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
+                "fluid1@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         -30,
@@ -842,7 +842,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -857,7 +857,7 @@
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
+                "fluid1@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -902,7 +902,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         -35,
@@ -915,7 +915,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {}
+                "progress@SkybluePanelLib.progress_bar": {}
             }
         ]
     },
@@ -948,7 +948,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "layer": 1,
                     "offset": [
@@ -962,7 +962,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "layer": 1
                 }
             },
@@ -1045,7 +1045,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "offset": [
                         0,
                         -10
@@ -1053,7 +1053,7 @@
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
+                "flame@SkybluePanelLib.flame": {
                     "offset": [
                         -30,
                         10
@@ -1087,7 +1087,7 @@
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
+                "flame@SkybluePanelLib.flame": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
                     "offset": [
@@ -1097,7 +1097,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
@@ -1112,7 +1112,7 @@
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
+                "fluid1@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
@@ -1762,7 +1762,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/macerator_prgs_bg",
                     "$mask_image": "textures/ui/macerator_prgs_top",
                     "offset": [
@@ -1979,7 +1979,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_size": "small",
                     "$text_visible": false,
                     "$text_y_offset": [
@@ -1997,7 +1997,7 @@
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
+                "fluid1@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         14,
@@ -2010,7 +2010,7 @@
                 }
             },
             {
-                "fluid2@SkybluePanelLib.FluidDisplay": {
+                "fluid2@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         36,
@@ -2023,7 +2023,7 @@
                 }
             },
             {
-                "fluid3@SkybluePanelLib.FluidDisplay": {
+                "fluid3@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         58,
@@ -2036,7 +2036,7 @@
                 }
             },
             {
-                "fluid4@SkybluePanelLib.FluidDisplay": {
+                "fluid4@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         14,
@@ -2049,7 +2049,7 @@
                 }
             },
             {
-                "fluid5@SkybluePanelLib.FluidDisplay": {
+                "fluid5@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         36,
@@ -2062,7 +2062,7 @@
                 }
             },
             {
-                "fluid6@SkybluePanelLib.FluidDisplay": {
+                "fluid6@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         58,
@@ -2075,7 +2075,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/magma_centrifuge_proc",
                     "$mask_image": "textures/ui/magma_centrifuge_proc_mask",
                     "offset": [
@@ -2119,7 +2119,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         35,
@@ -2132,7 +2132,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {}
+                "progress@SkybluePanelLib.progress_bar": {}
             }
         ]
     },
@@ -2271,7 +2271,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         0,
@@ -2339,7 +2339,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/macerator_prgs_bg",
                     "$mask_image": "textures/ui/macerator_prgs_top",
                     "offset": [
@@ -2384,7 +2384,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         -40,
@@ -2397,7 +2397,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/mixer_arrow_img",
                     "$mask_image": "textures/ui/mixer_arrow_mask",
                     "offset": [
@@ -2450,7 +2450,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "offset": [
                         35,
@@ -2463,7 +2463,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {}
+                "progress@SkybluePanelLib.progress_bar": {}
             }
         ]
     },
@@ -2530,7 +2530,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/precision_cutter_arrow_bg",
                     "$mask_image": "textures/ui/precision_cutter_arrow_mask",
                     "offset": [
@@ -2578,7 +2578,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
@@ -2593,7 +2593,7 @@
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
+                "fluid1@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
@@ -2681,7 +2681,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "offset": [
                         -38,
                         -9
@@ -2689,7 +2689,7 @@
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
+                "flame@SkybluePanelLib.flame": {
                     "offset": [
                         -68,
                         11
@@ -2791,7 +2791,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/splitter_bg",
                     "$mask_image": "textures/ui/splitter_mask",
                     "offset": [
@@ -2966,7 +2966,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/compressor_bg",
                     "$mask_image": "textures/ui/compressor_mask"
                 }
@@ -3143,7 +3143,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_bar": {
                     "$bg_image": "textures/ui/vacuum_freezer_progress_bg",
                     "$mask_image": "textures/ui/vacuum_freezer_progress_mask",
                     "anchor_from": "left_middle",
@@ -3159,7 +3159,7 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
+                "fluid0@SkybluePanelLib.fluid_display": {
                     "$text_size": "small",
                     "$text_visible": false,
                     "anchor_from": "left_middle",
@@ -3175,7 +3175,7 @@
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
+                "fluid1@SkybluePanelLib.fluid_display": {
                     "$text_visible": false,
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",

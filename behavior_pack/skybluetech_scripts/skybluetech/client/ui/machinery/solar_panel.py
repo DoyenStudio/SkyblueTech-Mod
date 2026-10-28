@@ -19,6 +19,7 @@ TEXT_PATH = MAIN_PATH / "text"
 
 @RegistToolDeltaScreen("SolarPanelUI.main", is_proxy=True)
 class SolarPanelUI(MachinePanelUIProxy):
+    IS_GENERATOR = True
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.sun = self.GetElement(SUN_PATH)

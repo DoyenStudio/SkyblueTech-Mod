@@ -1,148 +1,99 @@
 {
-    "main@common.inventory_screen_common": {
-        "$screen_content": "PumpUI.pump_ui"
-    },
-    "namespace": "PumpUI",
-    "pump_ui": {
+    "content": {
         "type": "panel",
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "fluid_display@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        17
+                    ],
+                    "size": [
+                        144,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid_display@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        17
+                    ],
+                    "size": [
+                        144,
+                        54
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
                     "size": [
                         0,
                         0
-                    ]
-                }
-            },
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4
-                }
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
-            {
-                "root_panel@common.root_panel": {
-                    "controls": [
-                        {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "$slot0": 0,
-                                            "$slot1": 1,
-                                            "$slot2": 2,
-                                            "$slot3": 3,
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "电动泵",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            3.5,
-                                                            -40
-                                                        ],
-                                                        "size": [
-                                                            131,
-                                                            69
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
-                            }
-                        }
                     ],
-                    "layer": 0,
-                    "size": [
-                        180,
-                        200
-                    ]
+                    "layer": 1
                 }
             }
         ]
-    }
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "PumpUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "电动泵",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 0,
+        "$upgrade_slot1": 1,
+        "$upgrade_slot2": 2,
+        "$upgrade_slot3": 3
+    },
+    "namespace": "PumpUI"
 }

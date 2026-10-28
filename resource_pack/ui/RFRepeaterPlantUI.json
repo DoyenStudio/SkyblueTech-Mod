@@ -80,10 +80,6 @@
             }
         ]
     },
-    "main@common.base_screen": {
-        "$screen_content": "RFRepeaterPlantUI.rf_repeater_plant_ui"
-    },
-    "namespace": "RFRepeaterPlantUI",
     "rf_repeater_plant_ui": {
         "type": "panel",
         "size": [
@@ -105,11 +101,11 @@
                         4.0
                     ],
                     "layer": 2,
-                    "font_scale_factor": 1.4,
                     "font_type": "default",
-                    "shadow": true,
+                    "shadow": false,
                     "text": "能源中继塔",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "color": "$title_text_color"
                 }
             },
             {
@@ -475,5 +471,17 @@
                 }
             }
         ]
-    }
+    },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@RFRepeaterPlantUI.rf_repeater_plant_ui": {}
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "$screen_content": "RFRepeaterPlantUI.screen_root"
+    },
+    "namespace": "RFRepeaterPlantUI"
 }

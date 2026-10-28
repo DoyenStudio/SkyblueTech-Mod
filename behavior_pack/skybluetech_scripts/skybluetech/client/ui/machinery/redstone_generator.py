@@ -13,7 +13,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from ..machinery_extra_pages import ItemPipeSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import UpdateFlame, UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import UpdateFlame, UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 FLAME_PATH = MAIN_PATH / "flame"
@@ -22,6 +22,7 @@ PROGRESS_PATH = MAIN_PATH / "progress"
 
 @RegistToolDeltaScreen("RedstoneGeneratorUI.main", is_proxy=True)
 class RedstoneGeneratorUI(MachinePanelUIProxyEx):
+    IS_GENERATOR = True
     available_extra_pages = (ItemPipeSettingsPage,)
 
     def OnCreate(self):
@@ -41,4 +42,4 @@ class RedstoneGeneratorUI(MachinePanelUIProxyEx):
         progress = GetValue(data, K_PROGRESS, 0)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
         UpdateFlame(self.flame, (1 - progress) if progress > 0 else 0)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)

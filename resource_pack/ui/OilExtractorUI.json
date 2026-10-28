@@ -1,189 +1,163 @@
 {
-    "main@common.inventory_screen_common": {
-        "$screen_content": "OilExtractorUI.oil_extractor_ui"
-    },
-    "namespace": "OilExtractorUI",
-    "oil_extractor_ui": {
+    "content": {
         "type": "panel",
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
-            {
-                "root_panel@common.root_panel": {
+                "input_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        50,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
                     "controls": [
                         {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "$slot0": 1,
-                                            "$slot1": 2,
-                                            "$slot2": 3,
-                                            "$slot3": 4,
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "榨油机",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "offset": [
-                                                            -4,
-                                                            -39
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
-                                                        "$text_visible": false,
-                                                        "offset": [
-                                                            36,
-                                                            -40
-                                                        ],
-                                                        "size": [
-                                                            37,
-                                                            70
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -38.0,
-                                                            -39.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm+0px",
-                                                            "100%cm+0px"
-                                                        ],
-                                                        "layer": 1,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
-                                                        "offset": [
-                                                            71,
-                                                            0
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
                             }
                         }
                     ],
-                    "layer": 0,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_in_input_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        35
+                    ],
                     "size": [
-                        180,
-                        200
+                        18,
+                        18
                     ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_drop": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        82,
+                        36
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "layer": 4,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        35
+                    ],
+                    "size": [
+                        15,
+                        20
+                    ]
+                }
+            },
+            {
+                "fluid_display@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        17
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid_display@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        17
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
                 }
             }
         ]
-    }
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "OilExtractorUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "榨油机",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 1,
+        "$upgrade_slot1": 2,
+        "$upgrade_slot2": 3,
+        "$upgrade_slot3": 4
+    },
+    "namespace": "OilExtractorUI"
 }

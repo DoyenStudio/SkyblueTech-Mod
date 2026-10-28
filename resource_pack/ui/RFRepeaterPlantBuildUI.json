@@ -188,7 +188,7 @@
                             }
                         },
                         {
-                            "key_tip@SkybluePanelLib.TextWithBlackBg": {
+                            "key_tip@SkybluePanelLib.text_with_black_bg": {
                                 "$text_content": "键盘 O",
                                 "anchor_from": "left_middle",
                                 "anchor_to": "right_middle",
@@ -268,7 +268,7 @@
                             "button_label@netease_editor_template_namespace.button_label": {}
                         },
                         {
-                            "key_tip@SkybluePanelLib.TextWithBlackBg": {
+                            "key_tip@SkybluePanelLib.text_with_black_bg": {
                                 "$text_content": "键盘 F",
                                 "anchor_from": "left_middle",
                                 "anchor_to": "right_middle",

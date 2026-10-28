@@ -246,7 +246,7 @@ class STDBRecipePanel(ui.MachinePanelUIProxyEx):
         energy = nbt.GetValueWithDefault(ex, shared.K_STORE_RF, 0)
         progress = nbt.GetValueWithDefault(ex, shared.K_PROGRESS, 0.0)
         ui.UpdatePowerBar(self.power, energy, data.STORE_RF_MAX)
-        ui.UpdateGenericProgressL2R(self.progress, progress)
+        ui.UpdateProgress(self.progress, progress)
         if self.has_fluid:
             slot = shared.FluidSlotClient(ex, 0, data.FLUID_CAPACITY)
             self.fluid.update(slot.fluid_id, slot.volume, data.FLUID_CAPACITY)
@@ -279,6 +279,8 @@ def listen_machine_clicks(_):
 ```
 
 代理类继承主模组面板，因此这里用前置 ToolDelta 的注册器和客户端事件，保持它们与面板内部的坐标/同步上下文一致。UI 只显示服务端状态，不在客户端扣料、扣能量或产物。
+
+`UpdateProgress` 按 JSON 控件自己声明的方向填充：进度控件里放一个名为 `fill_up` / `fill_down` / `fill_left` 的 0×0 隐藏子控件，就是自下而上 / 自上而下 / 自右向左，没有则自左向右（原版箭头）；带 `spin` 子控件的序列帧图标（如 `SkybluePanelLib.progress_icon_gear`）会在机器运行时转动、停机时暂停。直接引用 `SkybluePanelLib.progress_icon_*` / `progress_inset_*` 时这些标记已经带好，换样式只改 JSON。面板基类会按服务端推送的停机标志（继承 `GUIControl` 的机器自动推送）处理标题栏状态灯（使用 `SkybluePanelLib.machine_screen` 框架时）和停机提示圈：在 `main` 下放 `ring_in_*` / `ring_out_*` / `ring_tin_*` / `ring_tout_*` / `ring_energy` 命名的 `SkybluePanelLib.status_ring`，与对应槽位同位置同尺寸即可，不需要写代码。旧的 `UpdateGenericProgressL2R` / `T2B` / `B2T` 仍然可用。
 
 ## MiniJEI 渲染
 

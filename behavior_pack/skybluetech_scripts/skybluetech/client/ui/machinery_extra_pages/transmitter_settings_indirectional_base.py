@@ -10,6 +10,7 @@ from skybluetech_scripts.skybluetech.common.events.misc.transmitter_settings imp
     TransmitterSwitchAccessMode,
 )
 from .base_page import PageBase
+from .transmitter_settings_base import UpdateFaceButton
 
 
 class AccessMode(object):
@@ -163,12 +164,4 @@ class TransmitterSettingsPageIndirectionalBase(PageBase):
 
     def update_btn_uv(self, btn_ctrl, io_mode):
         # type: (UBaseCtrl, int) -> None
-        if io_mode == -1:
-            uv_start = (0, 18)
-        elif io_mode:
-            uv_start = (0, 9)
-        else:
-            uv_start = (0, 0)
-        img = btn_ctrl["icon"].asImage()
-        img.SetUV(uv_start, (9, 9))
-        img.SetAlpha(0.5)
+        UpdateFaceButton(btn_ctrl, io_mode)

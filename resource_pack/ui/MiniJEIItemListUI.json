@@ -704,10 +704,6 @@
             }
         ]
     },
-    "main@common.base_screen": {
-        "$screen_content": "MiniJEIItemListUI.content"
-    },
-    "namespace": "MiniJEIItemListUI",
     "single_favourite_item@MiniJEIItemListUI.single_mjei_item": {
         "$item_collection_name": "minijei_favourites_grid",
         "$item_id_aux_binding_name": "#MiniJEIItemListUI.favourite_item_id_aux",
@@ -834,5 +830,17 @@
                 }
             }
         ]
-    }
+    },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@MiniJEIItemListUI.content": {}
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "$screen_content": "MiniJEIItemListUI.screen_root"
+    },
+    "namespace": "MiniJEIItemListUI"
 }

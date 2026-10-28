@@ -14,7 +14,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from ..machinery_extra_pages import ItemPipeSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import UpdateFlame, UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import UpdateFlame, UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "/progress"
@@ -43,4 +43,4 @@ class AlloyFurnaceUI(MachinePanelUIProxyEx):
         progress = GetValue(data, K_PROGRESS, 0)
         UpdatePowerBar(self.power_bar, storage_rf, RF_MAX)
         UpdateFlame(self.flame, float(storage_rf) / RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)

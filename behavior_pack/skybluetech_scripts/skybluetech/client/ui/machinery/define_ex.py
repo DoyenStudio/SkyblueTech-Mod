@@ -58,6 +58,7 @@ class MachinePanelUIProxyEx(MachinePanelUIProxy):
                 page.base.SetVisible(True)
             page.Active()
         self._current_ex_page = page
+        self.SetTitleSuffix(page_cls.GetTitle())
 
     @Binder.binding(Binder.BF_BindGridSize, "#simple_panel_left_sections_gridsize")
     def on_get_grid_size(self):
@@ -79,18 +80,11 @@ class MachinePanelUIProxyEx(MachinePanelUIProxy):
     )
     def on_get_grid_bg_texture(self, index):
         # type: (int) -> str
+        # 页签压在主面板之下: 选中 = 主面板贴图, 未选中 = 压暗 80%
         return (
-            (
-                "textures/ui/left_section_top"
-                if index == 0
-                else "textures/ui/left_section"
-            )
+            "textures/ui/dialog_background_opaque"
             if index == self._current_ex_page_index
-            else (
-                "textures/ui/left_section_not_selected_top"
-                if index == 0
-                else "textures/ui/left_section_not_selected"
-            )
+            else "textures/ui/skybluetech/tab_dim"
         )
 
     @Binder.binding(

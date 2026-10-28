@@ -19,3 +19,8 @@ class FluidPipeSettingsPageIndirectional(TransmitterSettingsPageIndirectionalBas
     def GetControlDef():
         # type: () -> str
         return "MachinePanelExPages.fluid_pipe_settings_indirectional"
+
+    @staticmethod
+    def GetTitle():
+        # type: () -> str
+        return "流体端口"

@@ -17,3 +17,8 @@ class FluidPipeSettingsPage(TransmitterSettingsPageBase):
     def GetControlDef():
         # type: () -> str
         return "MachinePanelExPages.fluid_pipe_settings"
+
+    @staticmethod
+    def GetTitle():
+        # type: () -> str
+        return "流体端口"

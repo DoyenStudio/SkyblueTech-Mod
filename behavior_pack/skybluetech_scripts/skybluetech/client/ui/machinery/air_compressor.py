@@ -20,7 +20,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from ..machinery_extra_pages import FluidPipeSettingsPageIndirectional
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import FluidDisplayer, UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import FluidDisplayer, UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "progress"
@@ -67,7 +67,7 @@ class AirCompressorUI(MachinePanelUIProxyEx):
         output_fluid_id = recipe.output_fluid_id if recipe is not None else None
 
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         self.fluid_displayer.update(fluid.fluid_id, fluid.volume, MAX_FLUID_VOLUME)
         self.dim_type_label.SetText(GetDimensionName(placed_dimension))
         self.air_type_label.SetText(GetFluidDisplayName(output_fluid_id))

@@ -26,7 +26,7 @@ from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from ..recipe_checker import AsRecipeCheckerBtn
 from ...machinery.bans import is_machine_banned
 from .define import MAIN_PATH, MachinePanelUIProxy
-from .utils import UpdateGenericProgressL2R
+from .utils import UpdateProgress
 
 WARNING_BAR_DISPLAY_THRESOLD = 0.8
 
@@ -58,9 +58,8 @@ def _get_output_hover_name(output_item_id):
     return _get_output_display_name(output_item_id).lower()
 
 
-# 本 UI 的 main 面板被嵌入 left_half 中(右侧为配方表), 故在共享 MAIN_PATH 基础上补一层
-MAIN_PATH = MAIN_PATH.parent / "left_half/main"
-RECIPES_VIEW_PATH = MAIN_PATH.parent.parent / "right_half/recipes_view"
+# 共享框架下 main 就是内容区; 右侧配方表 right_half 作为内容区的子控件放在主面板外侧 (同电动机件加工台)
+RECIPES_VIEW_PATH = MAIN_PATH / "right_half/recipes_view"
 
 CRAFT_BTN_PATH = MAIN_PATH / "craft_btn"
 CRAFT_SPEED_BAR_PATH = MAIN_PATH / "craft_speed_bar"
@@ -174,7 +173,7 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         else:
             self.output_item_previewer.SetVisible(True)
             self.output_item_previewer.SetUiItem(Item(output_item_id))
-            UpdateGenericProgressL2R(self.progress_bar, progress)
+            UpdateProgress(self.progress_bar, progress)
 
     def update_result_item_label(self, output_item_id, need_tool):
         # type: (str | None, bool) -> None

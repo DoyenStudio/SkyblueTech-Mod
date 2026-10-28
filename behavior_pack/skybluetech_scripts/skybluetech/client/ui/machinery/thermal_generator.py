@@ -19,6 +19,7 @@ FLAME_PATH = MAIN_PATH / "flame"
 
 @RegistToolDeltaScreen("ThermalGeneratorUI.main", is_proxy=True)
 class ThermalGeneratorUI(MachinePanelUIProxyEx):
+    IS_GENERATOR = True
     available_extra_pages = (ItemPipeSettingsPage,)
 
     def OnCreate(self):

@@ -1,277 +1,229 @@
 {
-    "distillation_chamber_ui": {
+    "content": {
         "type": "panel",
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
+                "lower_fluid@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        32,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        36,
+                        54
                     ]
                 }
             },
             {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
+                "ring_tin_lower_fluid@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        32,
+                        17
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ]
                 }
             },
             {
-                "selected_item_details_factory@common.selected_item_details_factory": {
+                "flow_arrow@SkybluePanelLib.progress_arrow": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        77,
+                        37
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
                     "layer": 4,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        76,
+                        36
+                    ],
                     "size": [
-                        0,
-                        0
+                        24,
+                        17
                     ]
                 }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {
+                "upper_fluid@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        18,
+                        54
                     ]
                 }
             },
             {
-                "root_panel@common.root_panel": {
+                "ring_tout_upper_fluid@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "right_board": {
+                    "type": "image",
+                    "offset": [
+                        130,
+                        17
+                    ],
+                    "size": [
+                        39,
+                        54
+                    ],
+                    "layer": 1,
+                    "nineslice_size": 1,
+                    "texture": "textures/ui/skybluetech/info_bg",
                     "controls": [
                         {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "小型蒸馏仓",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "lower_fluid@SkybluePanelLib.FluidDisplay": {
-                                                        "layer": 2,
-                                                        "offset": [
-                                                            -20,
-                                                            -20
-                                                        ],
-                                                        "size": [
-                                                            120,
-                                                            40
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "upper_fluid@SkybluePanelLib.FluidDisplay": {
-                                                        "layer": 2,
-                                                        "offset": [
-                                                            -20,
-                                                            -62
-                                                        ],
-                                                        "size": [
-                                                            120,
-                                                            30
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "right_board": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            63.0,
-                                                            -38.0
-                                                        ],
-                                                        "size": [
-                                                            42,
-                                                            78
-                                                        ],
-                                                        "layer": 1,
-                                                        "keep_ratio": false,
-                                                        "nineslice_size": [
-                                                            4.0,
-                                                            4.0,
-                                                            4.0,
-                                                            4.0
-                                                        ],
-                                                        "texture": "textures/ui/panel_bg",
-                                                        "controls": [
-                                                            {
-                                                                "tip_0": {
-                                                                    "type": "label",
-                                                                    "anchor_from": "top_middle",
-                                                                    "anchor_to": "top_middle",
-                                                                    "offset": [
-                                                                        0.0,
-                                                                        4.0
-                                                                    ],
-                                                                    "layer": 4,
-                                                                    "color": [
-                                                                        0.2588235294117647,
-                                                                        0.2588235294117647,
-                                                                        0.2588235294117647
-                                                                    ],
-                                                                    "font_type": "default",
-                                                                    "text": "蒸馏仓温"
-                                                                }
-                                                            },
-                                                            {
-                                                                "temp_disp": {
-                                                                    "type": "label",
-                                                                    "anchor_from": "top_middle",
-                                                                    "anchor_to": "top_middle",
-                                                                    "offset": [
-                                                                        0.0,
-                                                                        15.0
-                                                                    ],
-                                                                    "size": [
-                                                                        "100%+-8px",
-                                                                        "default"
-                                                                    ],
-                                                                    "layer": 4,
-                                                                    "color": [
-                                                                        1.0,
-                                                                        0.0,
-                                                                        0.0
-                                                                    ],
-                                                                    "font_type": "default",
-                                                                    "text": "300 K",
-                                                                    "text_alignment": "center"
-                                                                }
-                                                            },
-                                                            {
-                                                                "tip_1": {
-                                                                    "type": "label",
-                                                                    "anchor_from": "top_middle",
-                                                                    "anchor_to": "top_middle",
-                                                                    "offset": [
-                                                                        0.0,
-                                                                        30.0
-                                                                    ],
-                                                                    "layer": 4,
-                                                                    "color": [
-                                                                        0.2588235294117647,
-                                                                        0.2588235294117647,
-                                                                        0.2588235294117647
-                                                                    ],
-                                                                    "font_type": "default",
-                                                                    "text": "产出速率"
-                                                                }
-                                                            },
-                                                            {
-                                                                "rate_disp": {
-                                                                    "type": "label",
-                                                                    "anchor_from": "top_middle",
-                                                                    "anchor_to": "top_middle",
-                                                                    "offset": [
-                                                                        0.0,
-                                                                        41.0
-                                                                    ],
-                                                                    "size": [
-                                                                        "100%+-9px",
-                                                                        "default"
-                                                                    ],
-                                                                    "layer": 4,
-                                                                    "color": [
-                                                                        0.0,
-                                                                        0.3333333333333333,
-                                                                        0.0
-                                                                    ],
-                                                                    "font_scale_factor": 0.8,
-                                                                    "font_type": "default",
-                                                                    "text": "0 mB/t",
-                                                                    "text_alignment": "center"
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
-                                                        "layer": 5,
-                                                        "offset": [
-                                                            63,
-                                                            -15
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
+                            "tip_0": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    3,
+                                    3
                                 ],
-                                "layer": 0
+                                "layer": 4,
+                                "color": "$title_text_color",
+                                "font_type": "default",
+                                "text": "蒸馏仓温",
+                                "shadow": false
+                            }
+                        },
+                        {
+                            "temp_disp": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    3,
+                                    13
+                                ],
+                                "size": [
+                                    "100%+-8px",
+                                    "default"
+                                ],
+                                "layer": 4,
+                                "color": [
+                                    0.18,
+                                    0.18,
+                                    0.18
+                                ],
+                                "font_type": "default",
+                                "text": "300 K",
+                                "text_alignment": "center",
+                                "shadow": false
+                            }
+                        },
+                        {
+                            "tip_1": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    3,
+                                    29
+                                ],
+                                "layer": 4,
+                                "color": "$title_text_color",
+                                "font_type": "default",
+                                "text": "产出速率",
+                                "shadow": false
+                            }
+                        },
+                        {
+                            "rate_disp": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    3,
+                                    39
+                                ],
+                                "size": [
+                                    "100%+-9px",
+                                    "default"
+                                ],
+                                "layer": 4,
+                                "color": [
+                                    0.18,
+                                    0.18,
+                                    0.18
+                                ],
+                                "font_type": "default",
+                                "text": "0 mB/t",
+                                "text_alignment": "center",
+                                "shadow": false
                             }
                         }
                     ],
-                    "layer": 0,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "fill": true
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
                     "size": [
-                        180,
-                        200
-                    ]
+                        0,
+                        0
+                    ],
+                    "layer": 1
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "DistillationChamberUI.distillation_chamber_ui"
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "DistillationChamberUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "小型蒸馏仓",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 2,
+        "$upgrade_slot1": 3,
+        "$upgrade_slot2": 4,
+        "$upgrade_slot3": 5
     },
     "namespace": "DistillationChamberUI"
 }

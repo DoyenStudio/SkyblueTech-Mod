@@ -1,246 +1,261 @@
 {
-    "compressor_ui": {
+    "content": {
         "type": "panel",
-        "layer": 1,
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {
+                "input_slot0": {
+                    "type": "stack_panel",
+                    "offset": [
+                        50,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "root_panel@common.root_panel": {
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
                     "controls": [
                         {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "$slot0": 4,
-                                            "$slot1": 5,
-                                            "$slot2": 6,
-                                            "$slot3": 7,
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "压缩机",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot0": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -35.0,
-                                                            -60.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot1": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -35.0,
-                                                            -42.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 1
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot2": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -35.0,
-                                                            -24.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 2
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "output_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            37.0,
-                                                            -42.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 3
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/ui/compressor_bg",
-                                                        "$mask_image": "textures/ui/compressor_mask",
-                                                        "offset": [
-                                                            0,
-                                                            -42
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
-                                                        "offset": [
-                                                            71,
-                                                            0
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
                             }
                         }
                     ],
-                    "layer": 0,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_in_input_slot0@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        17
+                    ],
                     "size": [
-                        180,
-                        200
+                        18,
+                        18
                     ]
+                }
+            },
+            {
+                "input_slot1": {
+                    "type": "stack_panel",
+                    "offset": [
+                        50,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_in_input_slot1@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "input_slot2": {
+                    "type": "stack_panel",
+                    "offset": [
+                        50,
+                        53
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 2
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_in_input_slot2@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        53
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_bar": {
+                    "$bg_image": "textures/ui/compressor_bg",
+                    "$mask_image": "textures/ui/compressor_mask",
+                    "offset": [
+                        77,
+                        37
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        22,
+                        15
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "layer": 4,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        76,
+                        36
+                    ],
+                    "size": [
+                        24,
+                        17
+                    ]
+                }
+            },
+            {
+                "output_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        108,
+                        31
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 3,
+                                "size": [
+                                    26,
+                                    26
+                                ],
+                                "$cell_image_size": [
+                                    26,
+                                    26
+                                ]
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_out_output_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        31
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "CompressorUI.compressor_ui"
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "CompressorUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "压缩机",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 4,
+        "$upgrade_slot1": 5,
+        "$upgrade_slot2": 6,
+        "$upgrade_slot3": 7
     },
     "namespace": "CompressorUI"
 }

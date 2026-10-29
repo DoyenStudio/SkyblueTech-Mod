@@ -4,7 +4,7 @@
 
 **它不是「N 进 1 出」**，所以既不用通用布局也不用通用脚本：
 除了 3×3 的输入格与产物，它还要 **工具**（扳手 + 钳），摆在右上的侧栏两格。
-界面与模板机看着同形，但 **2026-09-05 已解耦**：本机**不吃电**（next 框架起是 `MachineRecipe` 子类，
+界面与模板机看着同形，但**两者已解耦**：本机**不吃电**（next 框架起是 `MachineRecipe` 子类，
 但功率与耗时恒为 0），而模板机吃电、行宽多 20px。各自一份布局（`Workstation.json`）与脚本（`ui_script.py`）。
 等级要求不占界面位置，挂在工具格的 hover 文本上（`ItemPanel.SetLore`）。
 工具是**催化剂** —— 不消耗，但决定这条配方做不做得成。
@@ -27,6 +27,9 @@ SORT_INDEX = 104
 INPUT_CELLS = 9
 """ 3×3。加工台的输入槽位号就是 0~8 """
 
+ELECTRIC_WORKSTATION = "skybluetech:electric_machinery_workstation"
+""" 电动机件加工台（N7）。方块 id 是公开的 """
+
 
 def Build():  # type: () -> tuple
     icon_id, recipes = exports.Collection(RECIPE_CLS)
@@ -41,6 +44,8 @@ def Build():  # type: () -> tuple
         sort_index=SORT_INDEX,
         decorate=_Decorate,
         ui_script=BuildUIScript(CATEGORY_ID, INPUT_CELLS, _SideSlot),
+        # N7 电动机件加工台做的是同一张表（只多挂一个工作站，页面不改）
+        stations=(icon_id, ELECTRIC_WORKSTATION),
     )
 
 

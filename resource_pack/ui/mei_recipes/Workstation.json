@@ -2,8 +2,15 @@
     "RECIPES_GRID@mei_recipe_common.recipes_grid": {
         "$recipe_ui_template": "SkyblueMeiWorkstation.recipe"
     },
+    "PREVIEW@mei_recipe_common.preview": {
+        "$recipe_content_template": "SkyblueMeiWorkstation.content_panel"
+    },
     "content_panel": {
         "type": "panel",
+        "size": [
+            134.0,
+            70.0
+        ],
         "layer": 1,
         "controls": [
             {
@@ -17,7 +24,7 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_sprite": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
                     "offset": [
@@ -66,8 +73,8 @@
                 "wrapper": {
                     "type": "panel",
                     "size": [
-                        "100%+-54px",
-                        "100%+-4px"
+                        134.0,
+                        70.0
                     ],
                     "layer": 1,
                     "controls": [
@@ -75,7 +82,9 @@
                             "content@SkyblueMeiWorkstation.content_panel": {}
                         },
                         {
-                            "buttons@mei_recipe_common.buttons_panel_vertical": {}
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {
+                                "$tree_button_ignored": false
+                            }
                         }
                     ]
                 }

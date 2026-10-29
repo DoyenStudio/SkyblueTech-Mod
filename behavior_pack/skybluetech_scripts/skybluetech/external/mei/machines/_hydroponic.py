@@ -17,6 +17,7 @@
 """
 from .. import bridge, convert
 from ._common import BuildBase
+from . import _layouts
 
 
 def MakeDecorate(return_seed, power_cost=0):  # type: (bool, int) -> any
@@ -61,7 +62,7 @@ def Decorate(sb_recipe, parts, return_seed, power_cost=0):
     # 给 `MachineRecipe` 传的 power_cost / tick_duration 都是 **0**，
     # 真正的值是 `machinery_def/hydroponic_bed.py` 里的**模块级常量**
     # `POWER_COST = 4`（每 tick）。
-    # 这也是为什么上一轮把它归成了「无电」：当时只数了配方对象。
+    # 只看配方对象会把它误判成「无电」。
     # ⇒ **判断一台机器吃不吃电，要同时看配方对象与 machinery_def 的模块常量。**
     if power_cost > 0:
         data["power_cost"] = power_cost
@@ -128,7 +129,7 @@ def BuildUIScript(category_id, animated):  # type: (str, bool) -> type
 
     class HydroponicUIScript(BuildBase()):
         """
-        种子 → 作物模型 → 产物。布局见 ui/mei_recipes/Hydroponic.json
+        种子 → 作物模型 → 产物。布局见 ui/mei_recipes/Hydroponic.json（由生成器的 `emit_hydroponic` 输出）
 
         **继承 `BuildBase()`** 而不是裸的 `RecipeUIScript`：水培床也吃电
         （`POWER_COST = 4`/tick，在 machinery_def 的模块常量里），
@@ -137,6 +138,9 @@ def BuildUIScript(category_id, animated):  # type: (str, bool) -> type
 
         TYPE = category_id
         ANIMATED = animated
+        LAYOUT = _layouts.HAND.get("hydroponic")
+        """ 新版控件（与其他机器的配方页一致）：能量条、进度、两个悬停走基类的 `LAYOUT` 那一套，
+            值由生成器写进 `_layouts.HAND`，与 JSON 同一次生成 """
 
         CROP_PATH = "/shell/crop"
         """ 作物模型控件的路径，**相对内容根**（`self.Child`）。
@@ -165,7 +169,7 @@ def BuildUIScript(category_id, animated):  # type: (str, bool) -> type
             if crop is None:
                 # **不要静默** —— 这条路径与 layout 是硬耦合的(§2.7-2 记的那类债),
                 # 布局一嵌套就断, 而"少一个模型"在界面上看不出是报错还是本来就没有。
-                # 2026-09-04 实机: shell 把 crop 包进去之后模型消失, 排查了一轮
+                # 实机: shell 把 crop 包进去之后模型消失
                 bridge.Error("找不到作物模型控件 {} —— 布局改过?".format(self.CROP_PATH))
             self.CropDoll = crop.asNeteasePaperDoll() if crop else None
             self.RenderCrop(0)
@@ -187,11 +191,18 @@ def BuildUIScript(category_id, animated):  # type: (str, bool) -> type
             if not block_id:
                 return
             try:
-                from skybluetech_scripts.tooldelta.api.client.block import (
-                    CombineBlockPaletteToGeometry, NewSingleBlockPalette,
-                )
-                palette = NewSingleBlockPalette(block_id, stage)
-                geo = CombineBlockPaletteToGeometry(
+                from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+                # 单方块调色板：生长阶段就是方块的 aux
+                palette = CF.CreateBlock(LEVEL_ID).GetBlankBlockPalette()
+                palette.DeserializeBlockPalette({
+                    "extra": {},
+                    "void": False,
+                    "actor": {},
+                    "volume": (1, 1, 1),
+                    "common": {(block_id, stage): [0]},
+                    "eliminateAir": True,
+                })
+                geo = CF.CreateBlockGeometry(LEVEL_ID).CombineBlockPaletteToGeometry(
                     palette, "geometry.mei_crop." + block_id.replace(":", "_"))
                 self.CropDoll.RenderBlockGeometryModel({
                     "block_geometry_model_name": geo,

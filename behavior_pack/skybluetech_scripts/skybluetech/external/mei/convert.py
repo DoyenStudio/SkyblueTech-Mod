@@ -10,7 +10,7 @@
   1. 蔚蓝的 inputs/outputs 是 `{类别: {槽位: 元素}}` 双层 dict，
      MEI 是两个**有序 list**。⇒ 按槽位号升序摊平，槽位号另存进 Data 备查。
   2. 蔚蓝的类别里除了 item 还有 fluid / energy / exp，MEI 只认物品。
-     ⇒ 本轮（M2）只转 item，其余类别原样落进 Data，等概念物品那期再接。
+     ⇒ 目前只转 item，其余类别原样落进 Data，等概念物品接入后再处理。
   3. 蔚蓝的 `Input.is_tag` 对应 MEI 的 `Ingredient.from_tag(tag_id=)`。
      **这条必须走 from_tag，不能自己展开成多候选** —— 见 to_ingredient 的注释。
 """
@@ -34,6 +34,23 @@ label 画的（`output_power_displayer` / `xp_cost_label`）。
 → 原样落进 `Recipe.Data`，由各机型的配方页自己画文字。
 论据见 `skybluetech.md` §7.8.1-②。
 """
+
+
+class Element(object):
+    """
+    形同蔚蓝 `Input` / `Output` 的元素：数据不是配方集合的机器（发酵池、火力 / 地热发电机）自己拼配方时用，
+    好让 `to_ingredient` 一条路走到底（特殊值、概率、流体的 KIND 都照旧）。
+    """
+
+    __slots__ = ("id", "count", "prob", "aux", "is_tag")
+
+    def __init__(self, item_id, count=1, prob=1):
+        # type: (str, float, float) -> None
+        self.id = item_id
+        self.count = count
+        self.prob = prob
+        self.aux = 0
+        self.is_tag = False
 
 
 def slot_key(kind, slot):  # type: (str, any) -> str
@@ -216,7 +233,7 @@ def _split(by_category):  # type: (dict) -> tuple
 
     # 排序必须确定: MEI 的 Recipe.Id 是内容哈希，有序配方的 canonical 保序。
     # 按 (种类, 槽位号) 而不是槽位键字符串: 后者在 "10" < "2" 上会排错。
-    # ⥠ 实数据核过（2026-09-04）: 这一排对**已上线的 9 台全部是空操作**，
+    # ⥠ 实数据核过: 这一排对**已上线的 9 台全部是空操作**，
     #   玩家的置顶与书签安全（模板成型机恰好占着第 10 格，它就是上面那个坑）。
     #   真正靠它定下来的是**混类别输入**那三台（金属压印机 / 搅拌机 /
     #   热反应发电机，都是 `item:0` + `fluid:0`）: 不排的话外层跑的是

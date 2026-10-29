@@ -25,33 +25,46 @@ MACHINES = (
     "hydroponic_bed",
     "hydroponic_bed_sand",
     "template_assembler",
+    "sawmill",
+    "precision_cutter",
+    "mixed_macerator",
+    "charger",
     # 单流体（物 <-> 流）
     "oil_extractor",
     "magma_furnace",
     "fluid_condenser",
     "freezer",
+    "air_compressor",
+    "vacuum_freezer",
     # 混合输入（流 + 物）
     "metal_press",
     "mixer",
+    "engraver",
     # 多流体产出
     "magma_centrifuge",
+    "electrolyzer",
     # 无电
     "distillation_chamber",
     "industrial_researching",
+    "brine_evaporation_pond",
     # 产电
     "redstone_generator",
     "gas_burning_generator",
     "reacting_thermal_generator",
+    "thermal_generator",
+    "geothermal_generator",
+    # 数据不是配方集合（自己拼配方）
+    "fermenter",
 )
 """
 已接入 MEI 的机器，**按想要的 tab 顺序排**（各模块自己的 sort_index 才是最终判据）。
 上面的分组注释按**形状**分，不按游戏里的机器分类 ——
 新接一台时先看它落在哪一组，那一组里随便挑一台照抄就行。
 
-**带标准 `inputs`/`outputs` 结构的 20 台全部接完**（2026-09-04）。
+**带标准 `inputs`/`outputs` 结构的 20 台全部接完**。
 ⥠ 但**不等于蔚蓝的合成方式都在这了**：另有三处数据形状不同的没接
 （发酵池的 `FermenterRecipe`、热力发电机的 `FUEL_TICK_MAP` 224 项燃料、
-地热发电机的四个硬编码常量），作者裁定暂不做，见 §7.13。
+地热发电机的四个硬编码常量），暂不做，见 §7.13。
 ⥠ 第 21 台 `cyro_heat_melting_chamber` **不在待办里**：
 蔚蓝自己就没启用它（`machinery_def/` 下只有 `.pyi` 存根，无 `.py`）。
 

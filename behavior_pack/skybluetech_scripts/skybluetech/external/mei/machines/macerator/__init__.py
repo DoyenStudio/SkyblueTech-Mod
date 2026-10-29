@@ -1,26 +1,21 @@
 # coding=utf-8
 """
-磨粉机。
+磨粉机（`macerator`）—— 1 进 1 出。
 
-一台「N 进 1 出」的机器要的东西全在 `_machine.BuildMachine` 里，
-本模块只声明它的身份参数。加一台机器就照抄本文件。
+配方页照蔚蓝 UI 规范 v2：格子顺序、能量条、进度都在 `_layouts.py`（生成器从机器界面算出，
+与 `ui/mei_recipes/Macerator.json` 同一次生成），`BuildMachine` 自动取 —— 本模块只声明身份。
+典型配方：**骨头 → 5 骨粉**（30 RF/t × 160 刻）
 """
 from .._common import BuildMachine
 from ... import exports
 
 CATEGORY_ID = "skybluetech:macerator"
-""" MEI 的配方类型标识。**带命名空间** —— 类型 id 在 MEI 里全局唯一，
-    不带前缀迟早和别的模组撞上 """
+""" MEI 的配方类型标识。**带命名空间** —— 类型 id 在 MEI 里全局唯一，不带前缀迟早和别的模组撞上 """
 
 RECIPE_CLS = "MaceratorRecipe"
 """ 蔚蓝导出（common.export.recipes）里的配方类名；机器 id 与配方集合都由它取 """
 
-CONTROL_DEF = "SkyblueMeiMacerator.RECIPES_GRID"
-""" 配方页控件定义名。对应 resource_pack/ui/mei_recipes/Macerator.json """
-
-INPUT_CELLS = 1
-""" 布局上有几个输入格。**取该机器配方里最大的槽位数**，
-    单条配方用不满是正常的（那几格渲染成空面板，语义就是"这条配方不用那一格"）"""
+SORT_INDEX = 100
 
 
 def Build():  # type: () -> tuple
@@ -30,8 +25,6 @@ def Build():  # type: () -> tuple
         category_id=CATEGORY_ID,
         icon_id=icon_id,
         name_key="skybluetech.mei.category.macerator",
-        control_def=CONTROL_DEF,
         recipes=recipes,
-        input_cells=INPUT_CELLS,
-        sort_index=100,
+        sort_index=SORT_INDEX,
     )

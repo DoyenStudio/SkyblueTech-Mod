@@ -20,7 +20,7 @@ MEI 是网易我的世界中国版的配方/物品浏览器（对标 JEI / EMI�
 接入时机
 --------
 挂在 `UiInitFinished` 上而不是客户端系统构造期：`CreateComponent` 要本地玩家 id，
-构造期还没有。这一条是实机验过的（2026-09-03）——
+构造期还没有。这一条实机验证过 ——
 跨 addon 的 `CreateComponent` **不需要** `modRequire`，只要调用点够晚。
 
 另外要等**蔚蓝自己的客户端业务**加载完（`SkyblueTechClientLoaded`）：配方集合是那时建的。

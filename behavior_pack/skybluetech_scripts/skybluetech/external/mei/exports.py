@@ -50,6 +50,26 @@ def ListenClientLoaded(callback):  # type: (any) -> None
     events.SkyblueTechClientLoaded.Listen()(lambda _event: callback())
 
 
+def MachineScreens():  # type: () -> list
+    """
+    用共享机器框架的界面的 screen def（形如 `"AlloyFurnaceUI.main"`），给 MEI 挂载用。
+
+    导出给了面板基类（`client.export.machinery.MachinePanelUIProxy`）但没给清单：顺着它，
+    在前置 ToolDelta 的界面注册表里找所有子类代理；取不到就返回空，什么也不挂。
+    没有背包的机器对话框不是代理，不在其中。
+    """
+    try:
+        from skybluetech_scripts.skybluetech.client.export.machinery import MachinePanelUIProxy
+        from skybluetech_scripts.tooldelta.ui.reg import registeredToolDeltaScreenClasses
+    except ImportError:
+        return []
+    return sorted(
+        bound_ui_name
+        for screen_cls, _cls_path, bound_ui_name, is_proxy in registeredToolDeltaScreenClasses.values()
+        if is_proxy and issubclass(screen_cls, MachinePanelUIProxy)
+    )
+
+
 def IconOf(recipe_cls_name):  # type: (str) -> str
     """ 导出配方类对应的机器（或工具）id，即它的 `recipe_icon_id` """
     cls = getattr(Recipes(), recipe_cls_name, None)
@@ -114,6 +134,22 @@ def OwnerConstant(collection, name, default=None):  # type: (any, str, any) -> a
         except Exception:  # noqa  个别模块的属性访问有副作用, 跳过即可
             continue
     return default
+
+
+def InternalModule(relative):  # type: (str) -> any
+    """
+    蔚蓝的内部模块（`skybluetech_scripts.skybluetech.<relative>`）—— **只给导出缺口用**：
+    发酵池的配方表、火力 / 地热发电机的常量都不在 `common.export` 里。
+    取不到抛 LookupError（那一台不注册，日志点名）。导出补上之后换回导出，见 `skybluetech.md` §8.11。
+    """
+    name = "skybluetech_scripts.skybluetech." + relative
+    module = sys.modules.get(name)
+    if module is not None:
+        return module
+    try:
+        return __import__(name, {}, {}, ["__name__"])
+    except Exception as e:  # noqa
+        raise LookupError("蔚蓝内部模块 {} 取不到: {}".format(name, e))
 
 
 def WorkstationTools(kind, level):  # type: (str, int) -> list

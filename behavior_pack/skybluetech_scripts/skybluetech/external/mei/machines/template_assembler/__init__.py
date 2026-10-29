@@ -1,39 +1,23 @@
 # coding=utf-8
 """
-模版成型机。
+模版成型机（`template_assembler`）—— 3×3 材料 + 焊锡锭 + 刻印模版（不消耗）→ 产物。
 
-槽位比别的机器多两格，而且有一格**不在数据里**：
+配方页照蔚蓝 UI 规范 v2：格子顺序、能量条、进度（转动的齿轮）都在 `_layouts.py`（生成器从机器界面算出，
+与 `ui/mei_recipes/TemplateAssembler.json` 同一次生成）。原来自己的配方页脚本（3×3 + 侧栏两格）随之删掉：
+网格 0~8 与焊锡锭（第 10 格）是普通输入格，刻印模版是催化剂格（`cat/0`），都由 `_common._LayoutScriptFor` 画。
 
-  0~8   材料网格（现有配方只用到 0~5）
-  9     刻印模版 —— `sb_recipe.inputs` 里**没有它**，它只出现在对方的
-        `GetInputs()` 里（那是给 minijei 显示用的旁路）。不补就少一格。
-  10    焊锡锭（在 `TemplateAssemblerRecipe.__init__` 里被塞进 inputs）
-  11    产物
-
-所以它要一个 `decorate` 去补第 9 格。
-界面与加工台看着同形，但 **2026-09-05 已解耦**：本机**吃电**（60 RF/t），
-布局要让出 20px 给电力条、行宽 208；加工台不吃电、行宽 188。
-各自一份布局（`TemplateAssembler.json`）与脚本（`ui_script.py`）。
+典型配方：**升级基板 + 2 通量核心 + 2 铜棒 + 金板 + 橡胶 + 基础电路 + 焊锡锭（刻印模版不消耗）→ 基础能效升级**
 """
 from .._common import BuildMachine
 from ... import exports
-from .ui_script import BuildUIScript
 
 CATEGORY_ID = "skybluetech:template_assembler"
 RECIPE_CLS = "TemplateAssemblerRecipe"
 """ 蔚蓝导出（common.export.recipes）里的配方类名；机器 id 与配方集合都由它取 """
 
-CONTROL_DEF = "SkyblueMeiTemplateAssembler.RECIPES_GRID"
 SORT_INDEX = 107
 
-GRID_CELLS = 9
-""" 材料网格 0~8 """
-
-SLOT_TEMPLATE = 9
-""" 刻印模版所在的槽位 """
-
-SLOT_SOLDERING = 10
-""" 焊锡锭所在的槽位 """
+TEMPLATE_LORE = "§7需要刻印对应的内容（不消耗）"
 
 
 def Build():  # type: () -> tuple
@@ -43,45 +27,35 @@ def Build():  # type: () -> tuple
         category_id=CATEGORY_ID,
         icon_id=icon_id,
         name_key="skybluetech.mei.category.template_assembler",
-        control_def=CONTROL_DEF,
         recipes=recipes,
         sort_index=SORT_INDEX,
         decorate=_Decorate,
-        ui_script=BuildUIScript(CATEGORY_ID, GRID_CELLS, _SideSlot),
+        lores=_Lore,
     )
+
+
+def _Lore(recipe):  # type: (any) -> dict
+    _ = recipe
+    return {"mei_ui.recipe.cat0": TEMPLATE_LORE}
 
 
 def _Decorate(sb_recipe, parts):  # type: (any, dict) -> None
     """
-    补上第 9 格的刻印模版。
+    补上刻印模版 —— **做催化剂，不进原料**。
 
-    **它必须按槽位号插到正确位置**：`input_slots` 与 `inputs` 是一一对应的两张表，
-    界面靠槽位号反查（`_common.IngredientForCell`），插错位置就渲染到别的格子上。
+    模版只用来决定做哪条配方，蔚蓝做配方时不扣它；放进原料的话 MEI 会把它当成消耗品，
+    收藏栏展开这条配方时还跟着倍数乘（实机发现）。
+    当催化剂也照样查得到：点模版查用途，`StaticRecipeSource` 会把催化剂一并索引进「按材料查」。
     """
-    from ... import bridge, convert
-
-    slots = parts["input_slots"]
-    key = convert.slot_key(convert.CATEGORY_ITEM, SLOT_TEMPLATE)
-    if key in slots:
-        return
+    from ... import bridge
 
     template_id = _TemplateId(sb_recipe)
     stacks = bridge.Registry.ItemFactory.GetStacksFromIds([template_id]) if template_id else []
-    ingredient = bridge.Types.Ingredient(stacks, 1) if stacks \
-        else bridge.Types.Ingredient([])
-
-    # 找插入点, 保持与 convert._split 同序(先类别、后槽位号)。
-    # **按编号比而不是按键字符串**: 字符串序下 "item:10" < "item:2" 会排错。
-    # 本机只有物品输入, 非物品条目一律排在前面(类别名 "fluid" < "item"), 跳过即可
-    position = len(slots)
-    for index, existing in enumerate(slots):
-        if not existing.startswith(convert.CATEGORY_ITEM + ":"):
-            continue
-        if convert.slot_number(existing) > SLOT_TEMPLATE:
-            position = index
-            break
-    slots.insert(position, key)
-    parts["inputs"].insert(position, ingredient)
+    if not stacks:
+        return
+    held = set(getattr(stack.Item, "ItemId", None) for catalyst in parts["catalysts"] for stack in catalyst.get_stacks())
+    if template_id not in held:
+        parts["catalysts"].append(bridge.Types.Ingredient(stacks, 1))
 
 
 def _TemplateId(sb_recipe):  # type: (any) -> str or None
@@ -97,19 +71,3 @@ def _TemplateId(sb_recipe):  # type: (any) -> str or None
         if item_id not in declared and not item_id.startswith("tag:"):
             return item_id
     return None
-
-
-def _SideSlot(recipe, index):  # type: (any, int) -> tuple
-    """
-    侧栏第 index 格：0 = 刻印模版，1 = 焊锡锭。返回 (Ingredient, lore)
-
-    与加工台不同，这两样是**真输入**（在 input_slots 里），所以按真实槽位号反查
-    —— 网格只用到 0~5 时，第 9 格在列表里的下标并不是 9。
-    """
-    from .._common import IngredientForCell
-
-    slot_no = (SLOT_TEMPLATE, SLOT_SOLDERING)[index] if index < 2 else None
-    if slot_no is None:
-        return None, None
-    lore = "§7需要刻印对应的内容" if slot_no == SLOT_TEMPLATE else None
-    return IngredientForCell(recipe, slot_no), lore

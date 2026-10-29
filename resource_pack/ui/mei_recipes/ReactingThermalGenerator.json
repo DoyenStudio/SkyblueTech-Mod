@@ -1,128 +1,170 @@
 {
+    "namespace": "SkyblueMeiReactingThermalGenerator",
     "RECIPES_GRID@mei_recipe_common.recipes_grid": {
         "$recipe_ui_template": "SkyblueMeiReactingThermalGenerator.recipe"
     },
+    "PREVIEW@mei_recipe_common.preview": {
+        "$recipe_content_template": "SkyblueMeiReactingThermalGenerator.content_panel"
+    },
     "content_panel": {
         "type": "panel",
+        "size": [
+            120,
+            63
+        ],
         "layer": 1,
         "controls": [
-            {
-                "input": {
-                    "type": "panel",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        6.0,
-                        0.0
-                    ],
-                    "size": [
-                        46.0,
-                        40.0
-                    ],
-                    "layer": 8,
-                    "controls": [
-                        {
-                            "0@SkyblueMeiCommon.fluid_slot": {
-                                "$binding_name_prefix": "mei_ui.recipe.input0",
-                                "anchor_from": "left_middle",
-                                "anchor_to": "left_middle",
-                                "offset": [
-                                    0,
-                                    0
-                                ],
-                                "size": [
-                                    22,
-                                    40
-                                ]
-                            }
-                        },
-                        {
-                            "1@mei_common.item_panel": {
-                                "$binding_name_prefix": "mei_ui.recipe.input1",
-                                "anchor_from": "right_middle",
-                                "anchor_to": "right_middle"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "layer": 6,
-                    "offset": [
-                        56,
-                        0
-                    ],
-                    "size": [
-                        24,
-                        16
-                    ]
-                }
-            },
-            {
-                "output": {
-                    "type": "panel",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        84.0,
-                        0.0
-                    ],
-                    "size": [
-                        22.0,
-                        40.0
-                    ],
-                    "layer": 7,
-                    "controls": [
-                        {
-                            "0@SkyblueMeiCommon.fluid_slot": {
-                                "$binding_name_prefix": "mei_ui.recipe.output",
-                                "size": [
-                                    "100%+0px",
-                                    "100%+0px"
-                                ]
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "rfout@SkyblueMeiCommon.rf_output": {
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
-                    "layer": 6,
-                    "offset": [
-                        10,
-                        0
-                    ]
-                }
-            },
             {
                 "background": {
                     "type": "image",
                     "layer": 1,
                     "texture": "textures/ui/mei/recipe/recipe_bg"
                 }
+            },
+            {
+                "power@SkyblueMeiCommon.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        76,
+                        5
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "layer": 2
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@SkyblueMeiCommon.fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input0",
+                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                4,
+                                                5
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "layer": -5
+                                        }
+                                    },
+                                    {
+                                        "1@mei_common.item_panel": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input1",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                37,
+                                                4
+                                            ],
+                                            "size": [
+                                                20,
+                                                20
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "output": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@SkyblueMeiCommon.fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output0",
+                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                98,
+                                                5
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "layer": -5
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.progress_inset_reacting": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    21,
+                                    22
+                                ],
+                                "size": [
+                                    52,
+                                    26
+                                ],
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "progress_hover@SkyblueMeiCommon.progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    58,
+                                    33
+                                ],
+                                "size": [
+                                    15,
+                                    15
+                                ],
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
             }
         ]
     },
-    "namespace": "SkyblueMeiReactingThermalGenerator",
     "recipe@mei_recipe_common.recipe_panel": {
+        "size": [
+            154,
+            67
+        ],
         "controls": [
             {
                 "wrapper": {
                     "type": "panel",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [
-                        0.0,
-                        2.0
-                    ],
                     "size": [
-                        "100%+-12px",
-                        "100%+-20px"
+                        120,
+                        63
                     ],
                     "layer": 1,
                     "controls": [
@@ -130,15 +172,13 @@
                             "content@SkyblueMeiReactingThermalGenerator.content_panel": {}
                         },
                         {
-                            "buttons@mei_recipe_common.buttons_panel_horizontal": {}
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {
+                                "$tree_button_ignored": false
+                            }
                         }
                     ]
                 }
             }
-        ],
-        "size": [
-            188,
-            72
         ]
     }
 }

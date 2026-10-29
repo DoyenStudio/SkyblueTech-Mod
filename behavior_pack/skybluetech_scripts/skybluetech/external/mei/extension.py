@@ -18,6 +18,27 @@ STATIONS = (
 工作站栏里应该看得到它们。**这不是注册新类型**，是往已有类型上加一个图标。
 """
 
+MACHINE_SCREEN_PARAMS = {
+    "ContentPaths": [
+        "/root_panel/bg",
+        "/root_panel/upgraders",
+        "/root_panel/left_sections",
+        "/root_panel/bg/main/right_half",
+    ],
+    "VisibleControlPath": "/root_panel",
+}
+"""
+MEI 挂到机器界面时要避让的控件，路径相对 MEI 默认的 RootPath（即界面的 `$screen_content`）。
+
+蔚蓝的机器界面共用 `SkybluePanelLib.machine_screen`，结构一致，所以所有机器共用这一份：
+**第一条是主体面板** —— MEI 的 `MainPath` 默认取 `ContentPaths[0]`，顺序不能换；
+后面是面板外的部分：升级抽屉、左侧页签、两台机件加工台面板右侧的独立配方面板。
+某台机器没有的控件 MEI 运行时找不到就跳过，尺寸也是运行时现取，不用逐台写。
+
+`VisibleControlPath` 设成整个 `root_panel`：打开配方详情时面板、抽屉、页签一起藏起来，
+只藏主体的话抽屉和页签会留在配方页两边。
+"""
+
 
 def Build():  # type: () -> type or None
     """ 造出扩展类。没连上 MEI 返回 None """
@@ -41,6 +62,9 @@ def Build():  # type: () -> type or None
             # 构造期**不碰引擎也不碰 MEI** —— 装配器控制构造时机就是为了这个,
             # 在 __init__ 里取东西会撞上时序问题
             self.Registered = []  # type: list  # 已注册的类别 id，供 OnUnload 逐条撤
+            self.Screens = []  # type: list  # 已挂上 MEI 的机器界面，供 OnUnload 逐个撤
+            self.Template = None  # type: any  # 合成样板界面接上 MEI 工具模式与配方转移的记录（crafting_template.Mount），OnUnload 撤
+            self.Selectors = None  # type: any  # 别的物品选择界面接上 MEI 工具模式的记录（selectors.Mount），OnUnload 撤
 
         def OnInit(self, ctx):
             bridge.Bind(ctx)
@@ -67,6 +91,30 @@ def Build():  # type: () -> type or None
                 self.Registered.append(category.Id)
 
             ctx.Log.info("已注册 {} 个机器配方类型".format(len(self.Registered)))
+
+            self.MountScreens(ctx)
+            from . import crafting_template, selectors
+            self.Template = crafting_template.Mount(ctx)
+            self.Selectors = selectors.Mount(ctx)
+
+        def MountScreens(self, ctx):
+            """
+            把 MEI 挂到所有机器界面上（`ctx.UI.Screens`），避让路径见 `MACHINE_SCREEN_PARAMS`。
+
+            用 `getattr` 探测：这个接口是 MEI 后加的（没升 API 版本），装着旧版 MEI 时
+            就是不挂，机器里的配方按钮照常可用。
+            """
+            screens = getattr(ctx.UI, "Screens", None)
+            if screens is None:
+                ctx.Log.warn("这个版本的 MEI 没有 ctx.UI.Screens, 机器界面不挂 MEI")
+                return
+            from . import exports
+            for screen_def in exports.MachineScreens():
+                params = dict(MACHINE_SCREEN_PARAMS)
+                params["ContentPaths"] = list(MACHINE_SCREEN_PARAMS["ContentPaths"])
+                if screens.Register(screen_def, params):
+                    self.Screens.append(screen_def)
+            ctx.Log.info("已在 {} 个机器界面挂上 MEI".format(len(self.Screens)))
 
         @staticmethod
         def RegisterFluidPanel(ctx):
@@ -122,6 +170,18 @@ def Build():  # type: () -> type or None
                 category = ctx.Registry.SourceRegistry.GetCategory(category_id)
                 if category is not None:
                     category.RemoveStationsByOwner(self.ID)
+
+            # 机器界面上挂的 MEI 同原版扩展一样逐个撤掉，重进世界时才能重新挂上
+            screens = getattr(ctx.UI, "Screens", None)
+            if screens is not None:
+                for screen_def in self.Screens:
+                    screens.Unregister(screen_def)
+            self.Screens = []
+            from . import crafting_template, selectors
+            crafting_template.Unmount(ctx, self.Template)
+            self.Template = None
+            selectors.Unmount(ctx, self.Selectors)
+            self.Selectors = None
             bridge.Unbind()
 
     return SkyblueTechExtension

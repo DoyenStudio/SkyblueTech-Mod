@@ -13,9 +13,6 @@ MEI 接入的**唯一接触点** —— 本包以外的任何地方都不许碰 
   3. 门面（ctx.Registry / ctx.Types / …）只存在于生命周期方法的 ctx 上，
      而配方类型子包是在模块级写代码的。Bind() 把它们摊成模块级名字，
      子包 `from ..bridge import Types` 即可。
-
-同一套纪律 MEI 自己对它的前置库也在用（`mei_mod/eternia/importer.py`：
-全项目唯一的前置接触点，禁止散点 ImportModule）。
 """
 
 COMP_NAMESPACE = "MoreEnoughItems"

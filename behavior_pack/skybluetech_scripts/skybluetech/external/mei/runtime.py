@@ -26,8 +26,33 @@ def Build():  # type: () -> any
     global _BUILT
     if _BUILT is not None:
         return _BUILT
-    _BUILT = _Namespace(MachineRecipeSource=_BuildSource())
+    _BUILT = _Namespace(MachineRecipeSource=_BuildSource(), ListRecipeSource=_BuildListSource())
     return _BUILT
+
+
+def MakeRecipe(category_id, inputs, outputs, data=None, catalysts=None):
+    # type: (str, list, list, dict, list) -> any
+    """
+    拼一条 MEI 配方 —— 数据不是蔚蓝配方集合的机器（发酵池、火力 / 地热发电机）用。
+
+    `inputs` / `outputs` 是 `[(种类, 槽位号, 物品 id, 数量, 概率), ...]`，槽位号同蔚蓝的写法（流体、物品各自从 0 数）。
+    规则同 `_Convert`：物品表里没有的输入保留成空格（槽位表不错位），没有的产物整格丢掉（两张表同一趟过滤）。
+    """
+    Ingredient = bridge.Types.Ingredient
+    in_slots, in_list = [], []
+    for kind, slot, item_id, count, chance in inputs:
+        in_slots.append(convert.slot_key(kind, slot))
+        in_list.append(convert.to_ingredient(convert.Element(item_id, count, chance), kind) or Ingredient([]))
+    out_slots, out_list = [], []
+    for kind, slot, item_id, count, chance in outputs:
+        ingredient = convert.to_ingredient(convert.Element(item_id, count, chance), kind)
+        if ingredient is not None:
+            out_slots.append(convert.slot_key(kind, slot))
+            out_list.append(ingredient)
+    data = dict(data or {})
+    data["input_slots"] = in_slots
+    data["output_slots"] = out_slots
+    return bridge.Types.Recipe(category_id, in_list, out_list, catalysts=catalysts or None, data=data)
 
 
 class _Namespace(object):
@@ -73,7 +98,7 @@ def _BuildSource():  # type: () -> type
 
               · 机件加工台：加**工具**催化剂（不消耗但决定能不能做）与等级；
               · 模版成型机：`sb_recipe.inputs` 里**没有**刻印模版，它只出现在
-                对方的 `GetInputs()` 里，要补一格；
+                对方的 `GetInputs()` 里，要补一格 —— 补成催化剂（做配方时不扣它）；
               · 水培床：种子与收获相同时 `harvest_outputs` 是**空表**，
                 产物其实是种子自己 —— 不补的话整条配方会因"零产物"被丢掉。
 
@@ -166,7 +191,7 @@ def _BuildSource():  # type: () -> type
                     self._decorate(sb_recipe, parts)
                 except Exception as e:  # noqa  一条配方的附加信息炸了不该丢掉整条
                     bridge.Error("配方附加信息解析失败: {}".format(bridge.ErrorText(e)))
-            # 槽位表可能被 decorate 改过(模版成型机补了一格), 回写
+            # 槽位表可能被 decorate 改过, 回写
             data["input_slots"] = parts["input_slots"]
             data["output_slots"] = parts["output_slots"]
 
@@ -188,3 +213,54 @@ def _BuildSource():  # type: () -> type
                 catalysts=parts["catalysts"] or None, data=data)
 
     return MachineRecipeSource
+
+
+def _BuildListSource():  # type: () -> type
+    StaticRecipeSource = bridge.Types.StaticRecipeSource
+
+    class ListRecipeSource(StaticRecipeSource):
+        """
+        配方由机器模块自己拼的来源（`make()` 返回 MEI 的 `Recipe` 列表）：发酵池、火力 / 地热发电机的数据不是配方集合。
+
+        与 `MachineRecipeSource` 一样**惰性建表 + 自愈**：拼配方要经 `ItemFactory`，OnRegister 时物品表未必齐；
+        物品表到了之后建最后一次就封盘。
+        """
+
+        CAN_ENUMERATE = True
+
+        def __init__(self, category_id, make):
+            # type: (str, any) -> None
+            StaticRecipeSource.__init__(self, category_id)
+            self._make = make
+            self._sealed = False
+
+        def QueryByOutput(self, item):
+            self._Ensure()
+            return StaticRecipeSource.QueryByOutput(self, item)
+
+        def QueryByInput(self, item):
+            self._Ensure()
+            return StaticRecipeSource.QueryByInput(self, item)
+
+        def GetAll(self):
+            self._Ensure()
+            return StaticRecipeSource.GetAll(self)
+
+        def IsAllComplete(self):
+            return self._sealed
+
+        def _Ensure(self):
+            if self._sealed:
+                return
+            items_ready = bool(GetAllItems())
+            self.Clear()
+            try:
+                recipes = self._make() or []
+            except Exception as e:  # noqa  拼不出来不该带走这次查询
+                bridge.Error("{} 的配方拼不出来: {}".format(self.CategoryId, bridge.ErrorText(e)))
+                recipes = []
+            for recipe in recipes:
+                self.Add(recipe)
+            self._sealed = items_ready
+
+    return ListRecipeSource

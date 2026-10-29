@@ -4,7 +4,7 @@
 
 **为什么流体不用另造物品**：`skybluetech:raw_oil` 是 `base_block: liquid` +
 `category: none` 的方块，落进 `GetLoadItems(True) - GetLoadItems(False)` 的隐藏表，
-客户端照常注册 ⇒ **它本来就是 MEI 里的一个 Item**（2026-09-04 实机确认）。
+客户端照常注册 ⇒ **它本来就是 MEI 里的一个 Item**（实机确认）。
 所以索引 / 查询 / 书签 / 键一处都不用改，要分发的只有**渲染**
 ——这正是 MEI `SlotPanelRegistry` 的用途。
 
@@ -67,12 +67,28 @@ def FormatVolume(volume):  # type: (float) -> str
 
 
 def Texture(fluid_id):  # type: (str) -> tuple
-    """ (贴图路径, (r,g,b), alpha 0~255)。**表在蔚蓝这边，MEI 一个流体 id 都不认识** """
+    """
+    (贴图路径, (r,g,b), alpha 0~255)。**表在蔚蓝这边，MEI 一个流体 id 都不认识**
+
+    两代接口都认（上游改过流体贴图表的写法，只认旧写法时每种流体都退回默认白贴图）：
+      · 新框架：`GetFluidTexture` 直接给 `BasicFluidTexture(texture_path, flipbook_frames, ticks_per_frame)`，
+        贴图是烤好颜色的（`textures/fluid/baked/<流体>/...`），不再着色；
+      · 旧框架：给一个带 `basic_texture` + `rgb` + `alpha` 的对象，基础贴图再着色。
+    """
     try:
         texture = exports.Fluids().GetFluidTexture(fluid_id)
-        return texture.basic_texture.texture_path, tuple(texture.rgb), int(texture.alpha)
     except Exception:  # noqa  取不到就用默认贴图, 不该因为一格流体炸掉整页
         return DEFAULT_TEXTURE
+    try:
+        basic = getattr(texture, "basic_texture", None)
+        if basic is not None:
+            return basic.texture_path, tuple(texture.rgb), int(texture.alpha)
+        path = getattr(texture, "texture_path", None)
+        if path:
+            return path, (255, 255, 255), 255
+    except Exception:  # noqa
+        pass
+    return DEFAULT_TEXTURE
 
 
 def IsGas(fluid_id):  # type: (str) -> bool
@@ -139,6 +155,7 @@ def _BuildPanel():  # type: () -> type
         def __init__(self, control):
             self.FluidImage = None
             self.MaxVolume = None
+            self.VolumeShown = True
             # 基类的 __init__ 里会调 InitControls, 所以纯数据属性必须前置
             # (引擎会吞构造异常并保留半成品实例, CLAUDE.md 引擎结论 §7)
             ItemPanel.__init__(self, control)
@@ -213,6 +230,14 @@ def _BuildPanel():  # type: () -> type
                 bridge.Error("流体渲染失败 {}: {}".format(fluid_id, bridge.ErrorText(e)))
                 self.FluidImage = None      # 别每次回调再试一次
 
+        def HideVolume(self):  # type: () -> any
+            """ 悬停里不写体积（连续产出、没有固定量的：发酵池），返回 self """
+            if self.VolumeShown:
+                self.VolumeShown = False
+                if self.Stack is not None:
+                    self.RefreshHoverText()
+            return self
+
         def RefreshHoverText(self):
             """
             物品名（流体是隐藏 Item，有名字）+ 使用方的 lore + 体积。
@@ -221,7 +246,7 @@ def _BuildPanel():  # type: () -> type
             `SetLore()` 会整个覆盖它，写进去等于把体积和使用方的说明互相顶掉。
             """
             ItemPanel.RefreshHoverText(self)
-            if self.Stack is not None:
+            if self.Stack is not None and self.VolumeShown:
                 self.ItemHoverText += (
                     NEWLINE + "§a体积: §f" + FormatVolume(self.Stack.Count))
 

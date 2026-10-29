@@ -2,6 +2,7 @@
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_NO_RECIPE,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
 )
@@ -79,6 +80,10 @@ MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_b
 
 @RegistToolDeltaScreen("FermenterUI.main", is_proxy=True)
 class FermenterUI(MachinePanelUIProxy):
+    # 服务端用 NO_RECIPE 表示未接种菌种；不点亮输入槽提示圈
+    STATUS_TEXTS = {DEACTIVE_FLAG_NO_RECIPE: "未接种菌种"}
+    STATUS_RINGS = {DEACTIVE_FLAG_NO_RECIPE: ()}
+
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.output_gas_display = self.GetElement(OUT_GAS_DISP_PATH)

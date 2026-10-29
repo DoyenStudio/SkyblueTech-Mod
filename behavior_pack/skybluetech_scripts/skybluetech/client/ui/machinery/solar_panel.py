@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_NO_INPUT
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
 from skybluetech_scripts.skybluetech.common.machinery_def.solar_panel import (
     K_LIGHT_LEVEL,
@@ -20,6 +21,10 @@ TEXT_PATH = MAIN_PATH / "text"
 @RegistToolDeltaScreen("SolarPanelUI.main", is_proxy=True)
 class SolarPanelUI(MachinePanelUIProxy):
     IS_GENERATOR = True
+    # 服务端用 NO_INPUT 表示没有日照; 与物品槽无关, 不点亮提示圈
+    STATUS_TEXTS = {DEACTIVE_FLAG_NO_INPUT: "没有日照（夜晚或被遮挡）"}
+    STATUS_RINGS = {DEACTIVE_FLAG_NO_INPUT: ()}
+
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.sun = self.GetElement(SUN_PATH)

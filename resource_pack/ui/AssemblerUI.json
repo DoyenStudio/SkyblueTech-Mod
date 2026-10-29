@@ -447,7 +447,7 @@
         "$title_text": "装配站",
         "$has_tabs": false,
         "$has_upgrades": true,
-        "$show_led": true,
+        "$show_led": false,
         "$upgrade_slot0": 2,
         "$upgrade_slot1": 3,
         "$upgrade_slot2": 4,

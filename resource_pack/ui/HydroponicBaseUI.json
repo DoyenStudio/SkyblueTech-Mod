@@ -108,7 +108,7 @@
         "$title_text": "水培基座",
         "$has_tabs": true,
         "$has_upgrades": false,
-        "$show_led": true
+        "$show_led": false
     },
     "namespace": "HydroponicBaseUI"
 }

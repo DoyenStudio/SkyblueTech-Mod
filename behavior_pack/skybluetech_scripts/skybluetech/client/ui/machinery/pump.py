@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_NO_INPUT
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
     K_STORE_RF,
@@ -22,6 +23,7 @@ FLUID_PATH = MAIN_PATH / "fluid_display"
 @RegistToolDeltaScreen("PumpUI.main", is_proxy=True)
 class PumpUI(MachinePanelUIProxyEx):
     available_extra_pages = (FluidPipeSettingsPage,)
+    STATUS_TEXTS = {DEACTIVE_FLAG_NO_INPUT: "下方没有可抽取的流体"}
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)

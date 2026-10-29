@@ -57,6 +57,9 @@ class Forester(UpgradeControl, GUIControl):
         # 1t 内如果处理多次任务会导致卡顿
         # 直接忽略 1t 内任务的多次处理
         if BaseSpeedControl.ProcessOnce(self):
+            # 每轮都刷新能量不足标志 (同种植站): 范围内没有树时 collect_tree 不检查能量,
+            # 没接电源时也没有 AddPower 来更新它
+            self.PowerEnough()
             self.run_once()
 
     def IsValidInput(self, slot, item):

@@ -1,5 +1,9 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_NO_INPUT,
+    DEACTIVE_FLAG_NO_RECIPE,
+)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
 from skybluetech_scripts.skybluetech.common.machinery_def.wind_generator import (
     K_MCW,
@@ -19,6 +23,12 @@ TEXT_PATH = MAIN_PATH / "text"
 @RegistToolDeltaScreen("WindGeneratorUI.main", is_proxy=True)
 class WindGeneratorUI(MachinePanelUIProxy):
     IS_GENERATOR = True
+    # 服务端: 缺叶片 = NO_INPUT (亮叶片槽), 有叶片但没有风力输出 = NO_RECIPE (不亮提示圈)
+    STATUS_TEXTS = {
+        DEACTIVE_FLAG_NO_INPUT: "缺少叶片",
+        DEACTIVE_FLAG_NO_RECIPE: "没有风力（高度不超过 40 或周围遮挡太多）",
+    }
+    STATUS_RINGS = {DEACTIVE_FLAG_NO_RECIPE: ()}
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.text = self.GetElement(TEXT_PATH).asLabel()

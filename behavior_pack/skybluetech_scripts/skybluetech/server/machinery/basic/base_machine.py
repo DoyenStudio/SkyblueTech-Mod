@@ -184,6 +184,23 @@ class BaseMachine(object):
         self.handler.CallOnUnsetDeactiveFlagHandlers(flag, flush)
         self.handler.CallOnDeactiveFlagsChangedHandlers(flush)
 
+    def UpdateDeactiveFlag(self, flag, on, flush=True):
+        # type: (int, bool, bool) -> None
+        """
+        按条件设置或取消停机标志; 标志已是目标状态时什么都不做。
+        适合在每 tick 的工作逻辑里调用 (SetDeactiveFlag 即使标志已设置也会触发回调并写方块数据)。
+
+        Args:
+            flag (int): 标志位
+            on (bool): True 设置, False 取消
+            flush (bool): 是否立即刷新机器工作外观
+        """
+        if on:
+            if not self.HasDeactiveFlag(flag):
+                self.SetDeactiveFlag(flag, flush)
+        else:
+            self.UnsetDeactiveFlag(flag, flush)
+
     def HasDeactiveFlag(self, flag):
         # type: (int) -> bool
         """

@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_NO_RECIPE
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_HEAT_VALUE,
     FluidSlotClient,
@@ -28,6 +29,9 @@ UPPER_FLUID_PATH = MAIN_PATH / "upper_fluid"
 @RegistToolDeltaScreen("DistillationChamberUI.main", is_proxy=True)
 class DistillationChamberUI(MachinePanelUIProxyEx):
     available_extra_pages = (FluidPipeSettingsPageIndirectional,)
+    # 服务端用 NO_RECIPE 表示温度不在任何配方范围内: 换成对应文字, 不点亮输入槽提示圈
+    STATUS_TEXTS = {DEACTIVE_FLAG_NO_RECIPE: "温度不在配方范围内"}
+    STATUS_RINGS = {DEACTIVE_FLAG_NO_RECIPE: ()}
 
     def OnCreate(self):
         self.upper_fluid = self.GetElement(UPPER_FLUID_PATH)

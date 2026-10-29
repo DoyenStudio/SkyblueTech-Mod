@@ -78,9 +78,9 @@ def _SetSpinning(ctrls, on):
             base.PauseAnimation()
 
 
-def GetMachineStatus(deactive_flags, is_generator=False):
-    # type: (int, bool) -> tuple[tuple[float, float, float], str]
-    "停机标志 -> (状态灯颜色, 数据板文字)。"
+def GetMachineStatus(deactive_flags, is_generator=False, texts=None):
+    # type: (int, bool, dict[int, str] | None) -> tuple[tuple[float, float, float], str]
+    "停机标志 -> (状态灯颜色, 悬停文字); texts 按标志改写原因文字 (机器自己的待机原因)。"
     if deactive_flags == 0:
         return _LED_GREEN, "§a运行中"
     color = None
@@ -91,6 +91,8 @@ def GetMachineStatus(deactive_flags, is_generator=False):
         if flag == DEACTIVE_FLAG_POWER_LACK and is_generator:
             # 发电机与耗电机器共用同一位: 对发电机而言是缓冲已满
             c, text = _LED_AMBER, "能量已满"
+        if texts and flag in texts:
+            text = texts[flag]
         color = color or c
         lines.append("§7· " + text)
     if color is None:
@@ -179,6 +181,10 @@ class MachinePanelUI(ToolDeltaScreen):
 class MachinePanelUIProxy(ToolDeltaScreen):
     IS_GENERATOR = False
     "发电机为 True: 能量位 (b6) 表示缓冲已满而不是能量不足"
+    STATUS_TEXTS = {}  # type: dict[int, str]
+    "按停机标志改写状态灯的原因文字, 用于机器自己的待机原因 (如电力加热仓的 NO_RECIPE = 已达到设定温度)"
+    STATUS_RINGS = {}  # type: dict[int, tuple[str, ...]]
+    "按停机标志改写要亮的提示圈前缀; 空元组 = 这个原因不亮提示圈"
 
     def __init__(self, screen_name, screen_instance, params=None):
         ToolDeltaScreen.__init__(self, screen_name, screen_instance, params)
@@ -256,7 +262,7 @@ class MachinePanelUIProxy(ToolDeltaScreen):
         if flags == self._status_flags:
             return
         self._status_flags = flags
-        color, text = GetMachineStatus(flags, self.IS_GENERATOR)
+        color, text = GetMachineStatus(flags, self.IS_GENERATOR, self.STATUS_TEXTS)
         if self._status_led is not None:
             self._status_core.SetSpriteColor(color)
             PlayLoop(self._status_blink, color is _LED_RED)
@@ -264,6 +270,9 @@ class MachinePanelUIProxy(ToolDeltaScreen):
         want = {}
         for flag, prefixes in _RING_RULES:
             if not flags & flag:
+                continue
+            prefixes = self.STATUS_RINGS.get(flag, prefixes)
+            if not prefixes:
                 continue
             ring_color = _FLAG_COLORS[flag]
             if flag == DEACTIVE_FLAG_POWER_LACK and self.IS_GENERATOR:

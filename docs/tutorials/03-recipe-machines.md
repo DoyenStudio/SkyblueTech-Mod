@@ -282,6 +282,8 @@ def listen_machine_clicks(_):
 
 `UpdateProgress` 按 JSON 控件自己声明的方向填充：进度控件里放一个名为 `fill_up` / `fill_down` / `fill_left` 的 0×0 隐藏子控件，就是自下而上 / 自上而下 / 自右向左，没有则自左向右（原版箭头）；带 `spin` 子控件的序列帧图标（如 `SkybluePanelLib.progress_icon_gear`）会在机器运行时转动、停机时暂停。直接引用 `SkybluePanelLib.progress_icon_*` / `progress_inset_*` 时这些标记已经带好，换样式只改 JSON。面板基类会按服务端推送的停机标志（继承 `GUIControl` 的机器自动推送）处理标题栏状态灯（使用 `SkybluePanelLib.machine_screen` 框架时）和停机提示圈：在 `main` 下放 `ring_in_*` / `ring_out_*` / `ring_tin_*` / `ring_tout_*` / `ring_energy` 命名的 `SkybluePanelLib.status_ring`，与对应槽位同位置同尺寸即可，不需要写代码。旧的 `UpdateGenericProgressL2R` / `T2B` / `B2T` 仍然可用。
 
+状态灯和提示圈只看停机标志，所以机器空闲时（缺料、温度不够、没有日照等）要在服务端设上对应的标志，否则会一直显示运行中。每 tick 都要判断的状态用 `BaseMachine.UpdateDeactiveFlag(flag, on)`：标志已是目标状态时不触发回调，也不写方块数据。只用于显示、不该挡住工作逻辑的标志，要在相应的 `IsActive()` 判断里改用 `IsActiveIgnoreCondition(flag)`。面板类可以用 `STATUS_TEXTS = {标志: 文字}` 改写状态灯的原因文字，用 `STATUS_RINGS = {标志: (前缀, ...)}` 改写要亮的提示圈，空元组表示这个原因不亮提示圈。
+
 ## MiniJEI 渲染
 
 `stdb_scripts/stdb/client/recipe_renderers.py`：

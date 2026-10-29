@@ -2,6 +2,7 @@
 from skybluetech_scripts.tooldelta.define.item import Item
 
 from .basic.item_container import ItemContainer
+from ...common.define import flags
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.item_spreader import (
     K_NUM_CONTAINERS,
@@ -46,6 +47,7 @@ class ItemSpreader(UpgradeControl, OperationListener, GUIControl):
         self._working = False
         self._dirty = True
         self._empty = False
+        self._fail_streak = 0  # 连续投递失败次数; 一整轮容器都放不进才算输出受阻 (个别容器满了不算)
         self.handler.SubscribeOnTicking(self._item_spreader_on_ticking)
         self.handler.SubscribeOnSlotUpdate(self._item_spreader_on_slot_update)
         self.handler.SubscribeOnInvalidateCaches(self._item_spreader_on_invalidate_caches)
@@ -54,9 +56,15 @@ class ItemSpreader(UpgradeControl, OperationListener, GUIControl):
         if self._dirty:
             self.update_acceess_points()
             self._dirty = False
+        # 状态灯: 没有物品 = 缺少输入, 能量不够投递一次 = 能量不足 (投递失败的原因在 spread 里设)
+        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT, self._empty)
         if self._empty:
+            self._fail_streak = 0
+            self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL, False)
             return
-        if BaseSpeedControl.ProcessOnce(self) and self.store_rf >= self.running_power:
+        power_enough = self.store_rf >= self.running_power
+        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK, not power_enough)
+        if BaseSpeedControl.ProcessOnce(self) and power_enough:
             self.spread()
 
     def _item_spreader_on_slot_update(self, slot):
@@ -104,6 +112,8 @@ class ItemSpreader(UpgradeControl, OperationListener, GUIControl):
     def spread(self):
         ap = self._next_acceess_point()
         if ap is None:
+            # 没有连接任何可投递的容器
+            self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL, True)
             return
         item = self.GetSlotItem(0)
         if item is None:
@@ -116,10 +126,18 @@ class ItemSpreader(UpgradeControl, OperationListener, GUIControl):
             new_count = item.count - 1
         else:
             new_count = item.count - (item_new.count - rest.count)
-        if new_count != item.count:
+        moved = new_count != item.count
+        if moved:
             item.count = new_count
             self.SetSlotItem(0, item)
             self.ReducePower(self.running_power)
+            self._fail_streak = 0
+        else:
+            self._fail_streak += 1
+        self.UpdateDeactiveFlag(
+            flags.DEACTIVE_FLAG_OUTPUT_FULL,
+            self._fail_streak >= len(self._all_input_access_points),
+        )
 
     def _next_acceess_point(self):
         access_points_num = len(self._all_input_access_points)

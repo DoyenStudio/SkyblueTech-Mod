@@ -2,12 +2,20 @@
 from skybluetech_scripts.tooldelta.define.item import Item
 
 from .basic.item_container import ItemContainer
+from ...common.define import flags
 from ...common.define.id_enum import Machinery
 from .basic import (
     GUIControl,
     UpgradeControl,
 )
 from .core import RegisterMachine
+
+# 没能转换的原因 (互斥): 没有输入 / 没有模板或物品与模板不符 / 产出槽放不下
+IDLE_FLAGS = (
+    flags.DEACTIVE_FLAG_NO_INPUT,
+    flags.DEACTIVE_FLAG_NO_RECIPE,
+    flags.DEACTIVE_FLAG_OUTPUT_FULL,
+)
 
 
 class TransInfo:
@@ -83,17 +91,27 @@ class LexicalTransmuter(UpgradeControl, GUIControl):
             self.refresh_template_info()
         self.run_once()
 
+    def set_idle_reason(self, reason):
+        # type: (int) -> None
+        "没能转换的原因 (0 = 已转换); 只在原因变化时改停机标志, 状态灯与提示圈随之更新。"
+        for flag in IDLE_FLAGS:
+            self.UpdateDeactiveFlag(flag, flag == reason)
+
     def run_once(self):
         input_item = self.GetSlotItem(0)
         if input_item is None:
+            self.set_idle_reason(flags.DEACTIVE_FLAG_NO_INPUT)
             return
         if self.template_item_trans_info is None or self.template_item is None:
+            self.set_idle_reason(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
         output_item = self.GetSlotItem(1)
         if output_item is not None:
             if not output_item.CanMerge(self.template_item):
+                self.set_idle_reason(flags.DEACTIVE_FLAG_OUTPUT_FULL)
                 return
             if output_item.StackFull():
+                self.set_idle_reason(flags.DEACTIVE_FLAG_OUTPUT_FULL)
                 return
         input_item_trans_data = TransInfo(
             input_item.id,
@@ -103,6 +121,7 @@ class LexicalTransmuter(UpgradeControl, GUIControl):
         )
         template_item_basic_info = self.template_item.GetBasicInfo()
         if not input_item_trans_data.like(self.template_item_trans_info):
+            self.set_idle_reason(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
         output_item_count = output_item.count if output_item is not None else 0
         after_count = input_item.count + output_item_count
@@ -116,6 +135,8 @@ class LexicalTransmuter(UpgradeControl, GUIControl):
             output_item.count = after_count
         else:
             output_item.count = after_count
+        # 先清掉待机原因: 下面写槽位触发的槽位更新会再跑一次 run_once, 由它给出转换后的状态
+        self.set_idle_reason(0)
         input_item.count = overflow_count
         self.SetSlotItem(0, input_item)
         self.SetSlotItem(1, output_item)

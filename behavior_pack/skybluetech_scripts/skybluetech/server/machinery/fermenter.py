@@ -114,11 +114,17 @@ class Fermenter(
             self.t = 0
             if not self.StructureFinished():
                 return
-            if self.IsActive():
+            # 未接种菌种 (也不在接种中) 时没有产出, 状态灯显示待机。这个标志只用于显示:
+            # 下面加水 / 控温 / 接种 / 生长的判断都忽略它, 否则永远等不到接种
+            self.UpdateDeactiveFlag(
+                flags.DEACTIVE_FLAG_NO_RECIPE,
+                self.recipe_id == 0 and self.current_inoculating_recipe == 0,
+            )
+            if self.IsActiveIgnoreCondition(flags.DEACTIVE_FLAG_NO_RECIPE):
                 if self.ProcessOnce():
                     self.workOnce()
                     self.CallSync()
-            if self.IsActiveIgnoreCondition(flags.DEACTIVE_FLAG_POWER_LACK):
+            if self.IsActiveIgnoreCondition(flags.DEACTIVE_FLAG_POWER_LACK | flags.DEACTIVE_FLAG_NO_RECIPE):
                 self.tryInoculate()
                 recipe = spec_recipes.get(self.recipe_id)
                 if recipe is None:
@@ -214,7 +220,7 @@ class Fermenter(
                             self.current_inoculating_recipe = recipe_id
                             break
         elif slot_pos == 1:
-            if self.IsActive():
+            if self.IsActiveIgnoreCondition(flags.DEACTIVE_FLAG_NO_RECIPE):
                 for i in range(5):
                     self.on_other_slot_update(i)
 

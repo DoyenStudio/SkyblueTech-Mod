@@ -1,5 +1,6 @@
 # coding=utf-8
 
+from ...common.define import flags
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.electric_heater import ElectricHeaterSubmitModifiesEvent
 from ...common.machinery_def.electric_heater import (
@@ -64,8 +65,17 @@ class ElectricHeater(OperationListener, PowerControl, GUIControl, HeatCtrl):
         注意扣电在钳位之前: 本周期该产的热由 `Thermal.HeatToTarget` 按 "距目标还差多少"
         钳位, 但电费按 `running_power` 全额扣。温差不够时没进来的那部分热量就是白烧,
         这是有意为之(见类文档)。
+
+        不产热时用停机标志标出待机原因 (状态灯显示): 未设定功率 = NO_INPUT,
+        已达到设定温度 = NO_RECIPE。这两个标志在 `_update_heat_value` 之前就已按本周期的
+        判断更新, 需要产热的周期不会被它们挡住。
         """
-        if not self.PowerEnough() or self.kelvin >= self.heat_target_kelvin:
+        power_enough = self.PowerEnough()
+        no_power_set = self.max_power <= 0
+        reached = self.kelvin >= self.heat_target_kelvin
+        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT, no_power_set)
+        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE, reached and not no_power_set)
+        if not power_enough or no_power_set or reached:
             self.SetOutputHeatPower(0.0)
             self._set_current_power(0.0)
             return

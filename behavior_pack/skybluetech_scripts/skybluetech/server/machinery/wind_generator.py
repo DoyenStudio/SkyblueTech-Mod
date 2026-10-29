@@ -161,9 +161,11 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
     def _wind_generator_on_slot_update(self, slot_pos):
         if slot_pos == 0:
             self._cached_paddle_type = None
-        if self.paddle_type != WindGeneratorStatesUpdate.PADDLE_EMPTY:
-            if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT):
-                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
+        # 叶片槽空了立即显示缺少输入, 不用等下一次耐久结算 (reduce_dura)
+        self.UpdateDeactiveFlag(
+            flags.DEACTIVE_FLAG_NO_INPUT,
+            self.paddle_type == WindGeneratorStatesUpdate.PADDLE_EMPTY,
+        )
         self.update_power()
         ExecLater(
             0,
@@ -211,6 +213,12 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
         else:
             self.rot_speed = 0
         self.SetOutputPower(self.power_output)
+        # 有叶片但没有风力输出 (高度不超过 40 / 扫风范围内空气不足六成) 时状态灯显示待机;
+        # 缺叶片仍是 NO_INPUT, 由槽位更新与 reduce_dura 管理
+        self.UpdateDeactiveFlag(
+            flags.DEACTIVE_FLAG_NO_RECIPE,
+            self.paddle_type != WindGeneratorStatesUpdate.PADDLE_EMPTY and self.power_output <= 0,
+        )
 
     def get_actual_output_pc(self):
         if self.facing == "north" or self.facing == "south":

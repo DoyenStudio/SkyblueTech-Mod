@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_OUTPUT_FULL
 from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Fluids
 from skybluetech_scripts.skybluetech.common.events.machinery.fluid_splitter import (
     FluidSplitterSettingsListUpdate,
@@ -28,6 +29,7 @@ FLUID_DISP_PATH = MAIN_PATH / "fluid_display"
 @RegistToolDeltaScreen("FluidSplitterUI.main", is_proxy=True)
 class FluidSplitterUI(MachinePanelUIProxyEx):
     available_extra_pages = (FluidPipeSettingsPageIndirectional,)
+    STATUS_TEXTS = {DEACTIVE_FLAG_OUTPUT_FULL: "送不出去（没有对应标签的出口或出口已满）"}
 
     def OnCreate(self):
         self.settings_view = self.GetElement(SETTINGS_VIEW_PATH).asScrollView()

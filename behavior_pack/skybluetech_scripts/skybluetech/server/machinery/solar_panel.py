@@ -4,6 +4,7 @@ from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 
+from ...common.define import flags
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.solar_panel import (
     K_LIGHT_LEVEL,
@@ -62,6 +63,8 @@ class SolarPanel(GUIControl, ItemContainer, BaseGenerator):
             self.power_output = round(self.light_level / 2.0)
         else:
             self.power_output = 0
+        # 没有日照（夜晚 / 头顶被遮挡）时不发电，状态灯显示待机；储存的电仍照常输出
+        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT, self.power_output <= 0)
 
 
     @property

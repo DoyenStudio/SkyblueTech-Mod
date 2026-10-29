@@ -26,6 +26,11 @@ MIN_DISPLAY_TEMPERATURE = 300.0
 MAX_DISPLAY_TEMPERATURE = 370.0
 K_FLUID_RENDER_ORIGIN = "st:pond_fluid_origin"
 K_FLUID_RENDER_SIZE = "st:pond_fluid_size"
+# 无后缀为全池汇总，后缀 0 为输入口、1 为输出口；液量按液体 ID 分别汇总。
+K_FLUID_VOLUMES = "st:pond_fluid_volumes"
+K_FLUID_CAPACITY = "st:pond_fluid_capacity"
+# 接口数量保留按方向统计。
+K_FLUID_PORT_COUNT = "st:pond_fluid_port_count"
 
 recipes = RecipesCollection(
     CONTROLLER,

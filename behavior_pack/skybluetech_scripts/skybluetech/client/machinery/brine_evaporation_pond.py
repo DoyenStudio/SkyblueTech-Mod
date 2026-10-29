@@ -23,10 +23,10 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_DESTROY_FLAG,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.brine_evaporation_pond import (
-    INPUT_MAX_VOLUME,
+    K_FLUID_CAPACITY,
     K_FLUID_RENDER_ORIGIN,
     K_FLUID_RENDER_SIZE,
-    OUTPUT_MAX_VOLUME,
+    K_FLUID_VOLUMES,
 )
 from skybluetech_scripts.skybluetech.client.utils.fluid_model import FluidVolumeModel
 
@@ -46,6 +46,32 @@ def _read_vector(data, key):
     if any(isnan(value) or isinf(value) for value in values):
         return None
     return values
+
+
+def _read_fluid_surface(data):
+    input_fluid = FluidSlotClient(data, 0)
+    output_fluid = FluidSlotClient(data, 1)
+    # 各快照是该方向液量最多的一种液体的同种汇总；相等时选择输入。
+    fluid = input_fluid if input_fluid.volume >= output_fluid.volume else output_fluid
+    # 选种保持不变；分子只计该种液体的全池储量，分母计全部接口容量。
+    pool_volumes = ValueOf(data.get(K_FLUID_VOLUMES))
+    if not fluid.fluid_id or not isinstance(pool_volumes, dict):
+        return None
+    try:
+        volume = float(ValueOf(pool_volumes.get(fluid.fluid_id)) or 0.0)
+        max_volume = float(ValueOf(data.get(K_FLUID_CAPACITY)) or 0.0)
+    except (TypeError, ValueError, OverflowError):
+        return None
+    if (
+        volume <= 0.0
+        or max_volume <= 0.0
+        or isnan(volume)
+        or isinf(volume)
+        or isnan(max_volume)
+        or isinf(max_volume)
+    ):
+        return None
+    return fluid.fluid_id, max(0.0, min(1.0, volume / max_volume))
 
 
 class PondFluidDisplay(object):
@@ -77,19 +103,11 @@ class PondFluidDisplay(object):
             self.clear_model()
             return
 
-        input_fluid = FluidSlotClient(data, 0)
-        output_fluid = FluidSlotClient(data, 1)
-        # 比较各接口的实际液量；相等时固定选择输入口，不把两槽相加。
-        if input_fluid.volume >= output_fluid.volume:
-            fluid = input_fluid
-            max_volume = INPUT_MAX_VOLUME
-        else:
-            fluid = output_fluid
-            max_volume = OUTPUT_MAX_VOLUME
-        if not fluid.fluid_id or fluid.volume <= 0.0:
+        surface = _read_fluid_surface(data)
+        if surface is None:
             self.clear_model()
             return
-        ratio = max(0.0, min(1.0, fluid.volume / float(max_volume)))
+        fluid_id, ratio = surface
         x, y, z = xyz
         model_origin = (
             x + origin[0],
@@ -101,7 +119,7 @@ class PondFluidDisplay(object):
             self.model = FluidVolumeModel(*model_origin)
             self.model_origin = model_origin
 
-        state = (fluid.fluid_id, size, ratio)
+        state = (fluid_id, size, ratio)
         previous = self.applied_state
         if state == previous:
             return

@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:seawater_pump_io_energy_craft"
+        },
+        "key": {
+            "S": {
+                "item": "minecraft:stone_brick_slab"
+            },
+            "W": {
+                "item": "skybluetech:wire_insulated_copper"
+            }
+        },
+        "pattern": [
+            "SWS"
+        ],
+        "result": {
+            "item": "skybluetech:seawater_pump_io_energy"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

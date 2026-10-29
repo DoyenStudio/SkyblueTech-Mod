@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/ultraheatinum"
+                    "common:ultraheatinum_plate",
+                    "c:ultraheatinum_plate"
                 ]
             }
         },

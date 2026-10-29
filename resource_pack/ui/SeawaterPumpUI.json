@@ -1,0 +1,294 @@
+{
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SeawaterPumpUI.seawater_pump_ui"
+    },
+    "namespace": "SeawaterPumpUI",
+    "seawater_pump_ui": {
+        "type": "panel",
+        "controls": [
+            {
+                "flying_item_renderer@common.flying_item_renderer": {
+                    "layer": 11,
+                    "size": [
+                        0,
+                        0
+                    ]
+                }
+            },
+            {
+                "container_gamepad_helpers@common.container_gamepad_helpers": {
+                    "layer": 3
+                }
+            },
+            {
+                "selected_item_details_factory@common.selected_item_details_factory": {
+                    "layer": 4
+                }
+            },
+            {
+                "item_lock_notification_factory@common.item_lock_notification_factory": {}
+            },
+            {
+                "root_panel@common.root_panel": {
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "controls": [
+                                    {
+                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
+                                    },
+                                    {
+                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
+                                            "visible": true
+                                        }
+                                    },
+                                    {
+                                        "close@common.close_button": {}
+                                    },
+                                    {
+                                        "main": {
+                                            "type": "panel",
+                                            "controls": [
+                                                {
+                                                    "machine_label": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_middle",
+                                                        "anchor_to": "top_middle",
+                                                        "offset": [
+                                                            0.0,
+                                                            4.0
+                                                        ],
+                                                        "font_scale_factor": 1.4,
+                                                        "font_type": "default",
+                                                        "shadow": true,
+                                                        "text": "海水泵",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "fluid_display@SkybluePanelLib.FluidDisplay": {
+                                                        "layer": 0,
+                                                        "offset": [
+                                                            4,
+                                                            -48
+                                                        ],
+                                                        "size": [
+                                                            136,
+                                                            64
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "power_bar@SkybluePanelLib.PowerBar": {
+                                                        "layer": 0,
+                                                        "offset": [
+                                                            "-42%+0px",
+                                                            "-20%+0px"
+                                                        ]
+                                                    }
+                                                },
+                                                {
+                                                    "salt_thickness_tip": {
+                                                        "type": "label",
+                                                        "anchor_from": "top_left",
+                                                        "anchor_to": "top_left",
+                                                        "offset": [
+                                                            26.0,
+                                                            90.0
+                                                        ],
+                                                        "color": [
+                                                            0.2588235294117647,
+                                                            0.2588235294117647,
+                                                            0.2588235294117647
+                                                        ],
+                                                        "font_type": "default",
+                                                        "text": "盐水浓度",
+                                                        "text_alignment": "center"
+                                                    }
+                                                },
+                                                {
+                                                    "structure_not_finished_tip@SkybluePanelLib.StructureNotFinishedTip": {
+                                                        "offset": [
+                                                            0,
+                                                            -38
+                                                        ],
+                                                        "size": [
+                                                            172,
+                                                            92
+                                                        ],
+                                                        "visible": false
+                                                    }
+                                                },
+                                                {
+                                                    "salt_thickness_bar": {
+                                                        "type": "panel",
+                                                        "anchor_from": "top_right",
+                                                        "anchor_to": "top_right",
+                                                        "offset": [
+                                                            -18.0,
+                                                            90.0
+                                                        ],
+                                                        "size": [
+                                                            100.0,
+                                                            10.0
+                                                        ],
+                                                        "layer": 1,
+                                                        "controls": [
+                                                            {
+                                                                "bg": {
+                                                                    "type": "image",
+                                                                    "color": [
+                                                                        0.4941176470588236,
+                                                                        0.4941176470588236,
+                                                                        0.4941176470588236
+                                                                    ],
+                                                                    "texture": "textures/ui/white",
+                                                                    "tiled": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "clip_panel": {
+                                                                    "type": "panel",
+                                                                    "anchor_from": "left_middle",
+                                                                    "anchor_to": "left_middle",
+                                                                    "offset": [
+                                                                        1.0,
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        "50%+-2px",
+                                                                        "100%+-1px"
+                                                                    ],
+                                                                    "layer": 1,
+                                                                    "clips_children": true,
+                                                                    "controls": [
+                                                                        {
+                                                                            "bar": {
+                                                                                "type": "image",
+                                                                                "anchor_from": "left_middle",
+                                                                                "anchor_to": "left_middle",
+                                                                                "size": [
+                                                                                    100,
+                                                                                    "default"
+                                                                                ],
+                                                                                "layer": 1,
+                                                                                "texture": "textures/ui/sea_water_concentration_bar",
+                                                                                "tiled": "y"
+                                                                            }
+                                                                        }
+                                                                    ]
+                                                                }
+                                                            },
+                                                            {
+                                                                "frame": {
+                                                                    "type": "image",
+                                                                    "layer": 3,
+                                                                    "nineslice_size": [
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0,
+                                                                        1.0
+                                                                    ],
+                                                                    "texture": "textures/ui/frame_empty_slim"
+                                                                }
+                                                            },
+                                                            {
+                                                                "percent_50_column": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "left_middle",
+                                                                    "anchor_to": "left_middle",
+                                                                    "offset": [
+                                                                        "30%+0px",
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        2.0,
+                                                                        "100%+4px"
+                                                                    ],
+                                                                    "layer": 5,
+                                                                    "alpha": 0.5,
+                                                                    "color": [
+                                                                        0.7019607843137254,
+                                                                        0.7019607843137254,
+                                                                        0.0
+                                                                    ],
+                                                                    "texture": "textures/ui/white",
+                                                                    "tiled": true
+                                                                }
+                                                            },
+                                                            {
+                                                                "percent_75_column": {
+                                                                    "type": "image",
+                                                                    "anchor_from": "left_middle",
+                                                                    "anchor_to": "left_middle",
+                                                                    "offset": [
+                                                                        "60%+0px",
+                                                                        0.0
+                                                                    ],
+                                                                    "size": [
+                                                                        2.0,
+                                                                        "100%+4px"
+                                                                    ],
+                                                                    "layer": 5,
+                                                                    "alpha": 0.5,
+                                                                    "color": [
+                                                                        0.2470588235294118,
+                                                                        0.7450980392156863,
+                                                                        0.0
+                                                                    ],
+                                                                    "texture": "textures/ui/white",
+                                                                    "tiled": true
+                                                                }
+                                                            }
+                                                        ]
+                                                    }
+                                                }
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "backpack@SkybluePanelLib.player_backpack": {
+                                            "offset": [
+                                                0,
+                                                46
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_right",
+                                            "layer": 4,
+                                            "offset": [
+                                                -2,
+                                                0
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "ex_panel": {
+                                            "type": "panel",
+                                            "anchor_from": "top_middle",
+                                            "anchor_to": "top_middle",
+                                            "size": [
+                                                "default",
+                                                "56%+0px"
+                                            ],
+                                            "layer": 1
+                                        }
+                                    }
+                                ],
+                                "layer": 0
+                            }
+                        }
+                    ],
+                    "layer": 0,
+                    "size": [
+                        180,
+                        200
+                    ]
+                }
+            }
+        ]
+    }
+}

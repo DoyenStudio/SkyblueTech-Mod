@@ -28,3 +28,5 @@
 耗能配方链：`Processor → ProcessorBase → WorkRenderer + UpgradeControl + GUIControl`；升级链：`UpgradeControl → SPControl + ItemContainer`，`SPControl → PowerControl + BaseSpeedControl`。发电配方链：`GeneratorProcessor → ProcessorBase + BaseGenerator → BasePowerProvider`。所有路径最终汇入同一个 BaseMachine。
 
 迁移注意：不存在 ProcessBase；现用 handler 订阅代替空 OnXXX 方法；发电功率是 SetOutputPower；允许升级项是 allow_upgraders；新机器的状态采用原生 NBT 兼容值。
+
+多方块专用接口：[热力接口（受热口 / 供热口）](heat_interfaces.md)，从 `server.machinery.interfaces` 导入。

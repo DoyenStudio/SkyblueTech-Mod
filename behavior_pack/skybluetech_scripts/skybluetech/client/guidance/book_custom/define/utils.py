@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 
@@ -19,7 +19,7 @@ class UnfinishedItemName(object):
 
 def item_name_zh(item_id):
     # type: (str) -> str
-    return GetItemHoverName(item_id) or item_id
+    return CF.CreateItem(LEVEL_ID).GetItemHoverName(item_id) or item_id
 
 
 def clean_name(name):

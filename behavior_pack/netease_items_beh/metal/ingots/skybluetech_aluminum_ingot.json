@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/aluminum"
+                    "common:aluminum_ingot",
+                    "c:alminum_ingot"
                 ]
             }
         },

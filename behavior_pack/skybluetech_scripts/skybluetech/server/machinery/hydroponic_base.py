@@ -23,11 +23,11 @@ POWER_COST = 4
 class HydroponicBase(GUIControl, MultiFluidContainer, ItemContainer):
     block_name = Machinery.HYDROPONIC_BASE
     is_non_energy_machine = True
-    input_slots = ()
-    output_slots = tuple(range(16))
-    fluid_input_slots = {0, 1}
+    item_input_slots = ()
+    item_output_slots = tuple(range(16))
+    fluid_input_slots = (0, 1)
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
-    fluid_slot_max_volumes = (FLUID_0_MAX_VOLUME, FLUID_1_MAX_VOLUME)
+    fluid_slot_max_volumes = {0: FLUID_0_MAX_VOLUME, 1: FLUID_1_MAX_VOLUME}
     fluid_io_fix_mode = -1
     running_power = POWER_COST
 

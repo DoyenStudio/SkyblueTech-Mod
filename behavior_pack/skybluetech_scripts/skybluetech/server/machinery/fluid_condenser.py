@@ -20,11 +20,11 @@ class FluidCondenser(Processor, MultiFluidContainer):
     process_fluid = True
     process_item = True
     recipes = Recipes
-    input_slots = ()
-    output_slots = (0,)
+    item_input_slots = ()
+    item_output_slots = (0,)
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
-    fluid_input_slots = {0}
-    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
+    fluid_input_slots = (0,)
+    fluid_slot_max_volumes = {0: MAX_FLUID_VOLUME}
     upgrade_slot_start = 1
 
     def __init__(self, dim, x, y, z, block_entity_data):

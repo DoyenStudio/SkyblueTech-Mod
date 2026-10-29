@@ -1,0 +1,27 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:brine_evaporation_pond_io_fluid1_craft"
+        },
+        "key": {
+            "B": {
+                "item": "minecraft:brick"
+            },
+            "F": {
+                "item": "skybluetech:pipe_chemical"
+            }
+        },
+        "pattern": [
+            " B ",
+            "BFB",
+            " B "
+        ],
+        "result": {
+            "item": "skybluetech:brine_evaporation_pond_io_fluid1"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

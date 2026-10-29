@@ -1,13 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 import math
 
 from skybluetech_scripts.skybluetech.client.mini_jei import RecipeRenderer
 from skybluetech_scripts.skybluetech.common.mini_jei import CategoryType, RecipeBase
-from skybluetech_scripts.tooldelta.api.client import (
-    GetItemFormattedHoverText,
-    GetScreenSize,
-)
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import (
     MouseWheelClientEvent,
@@ -110,7 +107,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
             self.update_all()
 
     def update_left_content_size(self):
-        screen_size_x, screen_size_y = GetScreenSize()
+        screen_size_x, screen_size_y = CF.CreateGame(LEVEL_ID).GetScreenSize()
         middle_content_size_x = (
             self.GetElement(MIDDLE_CONTENT_PATH).GetSize()[0] / 2
             + self.GetElement(MIDDLE_CONTENT_PATH / "left_sections_grid").GetSize()[0]
@@ -297,7 +294,7 @@ class RecipeCheckerUI(ToolDeltaScreen):
                 CategoryType.ITEM,
                 selected_item_id,
                 selected_item_id,
-                GetItemFormattedHoverText(selected_item_id),
+                CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(selected_item_id),
             )
 
     @Binder.binding_collection(
@@ -338,5 +335,5 @@ class RecipeCheckerUI(ToolDeltaScreen):
             category,
             item_id,
             display_item_id,
-            GetItemFormattedHoverText(display_item_id),
+            CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(display_item_id),
         )

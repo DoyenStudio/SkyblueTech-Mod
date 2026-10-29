@@ -4,13 +4,7 @@
         "components": {
             "netease:liquid": {
                 "bucket_name": "skybluetech:distilled_water_bucket",
-                "can_float_boat": true,
-                "liquid_color": [
-                    0,
-                    229,
-                    255,
-                    128
-                ]
+                "can_float_boat": true
             }
         },
         "description": {

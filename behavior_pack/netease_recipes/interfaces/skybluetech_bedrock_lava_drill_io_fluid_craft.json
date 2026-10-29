@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:bedrock_lava_drill_io_fluid_craft"
+        },
+        "key": {
+            "P": {
+                "item": "skybluetech:ultraheatinum_plate"
+            },
+            "F": {
+                "item": "skybluetech:pipe_ultraheatinum"
+            }
+        },
+        "pattern": [
+            " P ",
+            "PFP",
+            " P "
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:bedrock_lava_drill_io_fluid"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

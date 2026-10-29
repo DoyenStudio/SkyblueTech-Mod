@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "sticks/silver"
+                    "common:silver_stick",
+                    "c:silver_stick"
                 ]
             }
         },

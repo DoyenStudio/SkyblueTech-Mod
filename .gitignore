@@ -19,3 +19,6 @@ world_behavior_packs.json
 world_resource_packs.json
 
 *.cmd
+
+# The web application is maintained as an independent Git repository.
+/web/

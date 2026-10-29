@@ -1,12 +1,8 @@
 # coding=utf-8
-from mod.client.extraClientApi import GetEngineCompFactory, GetLevelId
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId
+from skybluetech_scripts.tooldelta.utils.timer import Repeat
 
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetBlockNameAndAux,
-    GetPlayerDimensionId,
-)
-from skybluetech_scripts.tooldelta.api.common import Repeat
 from skybluetech_scripts.tooldelta.events.client import (
     DimensionChangeClientEvent,
     ModBlockEntityLoadedClientEvent,
@@ -28,7 +24,6 @@ from ...common.machinery_def.deepslate_lava_vibrator import (
 )
 from ..ui.machinery.utils import FormatFluidVolume, FormatNum
 
-CF = GetEngineCompFactory()
 texts = {}  # type: dict[int, dict[tuple[int, int, int], DeepslateVibratorText]]
 
 
@@ -41,7 +36,7 @@ class DeepslateVibratorText(object):
         self._last_predict_progress = None
         self._last_storage_predicted = None
         self._last_store_rf = None
-        self.shape = CF.CreateDrawing(GetLevelId()).AddTextShape(
+        self.shape = CF.CreateDrawing(LEVEL_ID).AddTextShape(
             (
                 self.bound_x + 0.5,
                 self.bound_y + 1,
@@ -52,7 +47,9 @@ class DeepslateVibratorText(object):
         self.update()
 
     def update(self):
-        block_nbt = GetBlockEntityData(self.bound_x, self.bound_y, self.bound_z)
+        block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(
+            (self.bound_x, self.bound_y, self.bound_z),
+        )
         if block_nbt is None:
             return
         ex_data = block_nbt.get("exData", {})
@@ -96,7 +93,7 @@ class DeepslateVibratorText(object):
 
 def add_text(x, y, z):
     # type: (int, int, int) -> None
-    dim = GetPlayerDimensionId()
+    dim = CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
     pos = (x, y, z)
     if pos in texts.get(dim, {}):
         return
@@ -113,7 +110,7 @@ def remove_text(dim, x, y, z):
 @asModBlockLoadedListener(Machinery.DEEPSLATE_LAVA_VIBRATOR)
 def onModBlockLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
-    _, aux = GetBlockNameAndAux((event.posX, event.posY, event.posZ))
+    _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((event.posX, event.posY, event.posZ)) or (None, 0)
     if aux != 0:
         return
     add_text(event.posX, event.posY, event.posZ)
@@ -122,13 +119,13 @@ def onModBlockLoaded(event):
 @asModBlockRemovedListener(Machinery.DEEPSLATE_LAVA_VIBRATOR)
 def onModBlockRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
-    remove_text(GetPlayerDimensionId(), event.posX, event.posY, event.posZ)
+    remove_text(CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension(), event.posX, event.posY, event.posZ)
 
 
 @ClientInitCallback()
 @Repeat(1)
 def onRepeatUpdate():
-    for v in texts.get(GetPlayerDimensionId(), {}).values():
+    for v in texts.get(CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension(), {}).values():
         v.update()
 
 

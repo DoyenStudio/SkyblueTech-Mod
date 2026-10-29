@@ -1,7 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-from skybluetech_scripts.tooldelta.api.client import GetItemFormattedHoverText
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from skybluetech_scripts.skybluetech.common.mini_jei.core.define import CategoryType
 from .render_utils import ItemDisplayer, CreateDescBoard
@@ -41,7 +41,7 @@ class FluidDisplayer(object):
             self.fluid_id,
             self.fluid_id,
             "§d流体类型： §f"
-            + (GetItemFormattedHoverText(self.fluid_id) or self.fluid_id)
+            + (CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(self.fluid_id) or self.fluid_id)
             + "\n"
             + "§a体积： §f"
             + FormatFluidVolume(self.volume),
@@ -52,6 +52,7 @@ class InputDisplayer(object):
     def __init__(self, ctrl, input):
         # type: (UBaseCtrl, Input) -> None
         self.ctrl = ctrl
+        self.not_consumed = input.count == 0
         if input.is_tag:
             self.enable_carousel = True
             self.tag = input.id
@@ -87,7 +88,9 @@ class InputDisplayer(object):
 
     def onBtnReleased(self, params):
         current_disp_item_id = self.get_current_carousel_item()
-        fmt = GetItemFormattedHoverText(current_disp_item_id) or current_disp_item_id
+        fmt = CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(current_disp_item_id) or current_disp_item_id
+        if self.not_consumed:
+            fmt += "\n§e不被消耗。"
         if self.tag is not None:
             fmt += "\n\n§8接受标签: " + self.tag
         x, y = self.ctrl.GetRootPos()
@@ -131,7 +134,7 @@ class MultiItemsDisplayer(object):
 
     def onBtnReleased(self, params):
         current_disp_item = self.get_current_carousel_item()
-        fmt = GetItemFormattedHoverText(current_disp_item.id) or current_disp_item.id
+        fmt = CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(current_disp_item.id) or current_disp_item.id
         x, y = self.ctrl.GetRootPos()
         sizex, sizey = self.ctrl.GetSize()
         CreateDescBoard(

@@ -20,8 +20,8 @@ class MagmaCentrifuge(Processor, MultiFluidContainer):
     process_fluid = True
     recipes = Recipes
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES
-    fluid_input_slots = {0}
-    fluid_output_slots = {1, 2, 3, 4, 5, 6}
+    fluid_input_slots = (0,)
+    fluid_output_slots = (1, 2, 3, 4, 5, 6)
     upgrade_slot_start = 0
     upgrade_slots = 4
 

@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetBlockName
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.events.server import CustomCommandTriggerServerEvent
 from .register import RegisterCommand
 from .utils import generate_simple_arg_mapping
@@ -23,7 +24,7 @@ def onCommand(event):
     x = int(x)
     z = int(z)
     # TODO: BUG: 世界外方块判定为 air
-    if GetBlockName(dim, (x, 0, z)) is None:
+    if (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, 0, z), dim) or {}).get("name") is None:
         event.SetReturnMsg("commands.generic.outOfWorld")
         event.SetReturnFailed()
         return

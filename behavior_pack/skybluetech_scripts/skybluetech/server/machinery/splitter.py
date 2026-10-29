@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server.world import GetRecipesByInput
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     CraftingRecipeRes,
@@ -29,8 +30,8 @@ class Splitter(WorkRenderer, SPControl, ItemContainer, GUIControl):
     dump_progress_to_block_entity_data = True
     origin_process_ticks = 20 * 8
     running_power = 30
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(Splitter, self).__init__(dim, x, y, z, block_entity_data)
@@ -136,7 +137,9 @@ def GetSplitResult(item_id, aux_value=0):
         return res
     elif res in cant_split_recipes:
         return None
-    recipes = GetRecipesByInput(item_id, "crafting_table", aux_value)
+        recipes = CF.CreateRecipe(LEVEL_ID).GetRecipesByInput(
+            item_id, "crafting_table", aux_value, -1
+        )
     for recipe in recipes:
         recipe = GetCraftingRecipe(recipe)
         if isinstance(recipe, CraftingRecipeRes):

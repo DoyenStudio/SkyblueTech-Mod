@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/silver"
+                    "common:raw_silver",
+                    "c:raw_silver"
                 ]
             }
         },

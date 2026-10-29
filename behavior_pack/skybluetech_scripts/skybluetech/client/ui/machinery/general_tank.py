@@ -1,9 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.tank import TANK_MAX_VOLUMES
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData, GetBlockName
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 
 from ..machinery_extra_pages import FluidPipeSettingsPageIndirectional
@@ -21,10 +21,10 @@ class GeneralTankUI(MachinePanelUIProxyEx):
         self.fluid_displayer = FluidDisplayer(self.GetElement(FLUID_PATH))
 
     def OnTicking(self):
-        block_id = GetBlockName(self.pos[1:])
+        block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlock(self.pos[1:]) or (None, 0))[0]
         if not block_id:
             return
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

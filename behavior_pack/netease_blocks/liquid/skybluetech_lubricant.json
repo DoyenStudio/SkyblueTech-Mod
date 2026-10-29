@@ -4,13 +4,7 @@
         "components": {
             "netease:liquid": {
                 "bucket_name": "minecraft:water_bucket",
-                "can_float_boat": false,
-                "liquid_color": [
-                    255,
-                    207,
-                    0,
-                    192
-                ]
+                "can_float_boat": false
             }
         },
         "description": {

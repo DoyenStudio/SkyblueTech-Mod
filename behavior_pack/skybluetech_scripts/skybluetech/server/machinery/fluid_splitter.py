@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
 from ...common.define.id_enum import Machinery, Upgraders
@@ -34,9 +34,9 @@ DEFAULT_SETTINGS_LIMIT = 3
 class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIControl):
     block_name = Machinery.FLUID_SPLITTER
     fluid_io_fix_mode = -1
-    fluid_input_slots = {0}
-    fluid_output_slots = set()
-    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
+    fluid_input_slots = (0,)
+    fluid_output_slots = ()
+    fluid_slot_max_volumes = {0: MAX_FLUID_VOLUME}
     upgrade_slot_start = 0
     allow_upgraders = frozenset({
         Upgraders.GENERIC_SPLIT,
@@ -54,7 +54,7 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
     def _fluid_splitter_on_ticking(self):
         if self._sending_fluid and self._ticking_t % 5 == 0:
             self.ready_try_post_fluid()
-            all_empty = all(i.volume <= 0 for i in self.fluids)
+            all_empty = all(i.volume <= 0 for i in self.fluids.values())
             if all_empty:
                 self._sending_fluid = False
         self._ticking_t += 1

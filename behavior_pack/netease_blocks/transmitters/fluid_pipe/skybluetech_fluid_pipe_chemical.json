@@ -1,0 +1,2132 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "bone_visibility": {
+                    "hang_down": "q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:cable_io_down')",
+                    "hang_east": "q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:cable_io_east')",
+                    "hang_north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:cable_io_north')",
+                    "hang_south": "q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:cable_io_south')",
+                    "hang_up": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:cable_io_up')",
+                    "hang_west": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:cable_io_west')",
+                    "north": "q.block_state('skybluetech:connection_north')",
+                    "south": "q.block_state('skybluetech:connection_south')",
+                    "up": "q.block_state('skybluetech:connection_up')",
+                    "west": "q.block_state('skybluetech:connection_west')",
+                    "down": "q.block_state('skybluetech:connection_down')",
+                    "east": "q.block_state('skybluetech:connection_east')",
+                    "r_up2down": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')",
+                    "r_west2east": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')",
+                    "r_south2north": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                    "r_common": "!(q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_west')) && !(q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down')) && !(q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west'))"
+                },
+                "identifier": "geometry.skybluetech.fluid_pipe"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "opaque",
+                    "texture": "skybluetech:pipe_chemical"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.fluid_pipe_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:pipe_chemical"
+                    }
+                }
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "liquid_type": "water",
+                        "can_contain_liquid": true,
+                        "on_liquid_touches": "no_reaction"
+                    }
+                ]
+            },
+            "netease:block_entity": {},
+            "netease:custom_tips": {
+                "value": "\n§7可在机器或储罐间传输流体。\n§b传输速率： §a100 mB/t\n§6支持输送§b化学品§6。\n§3使用扳手可以切换输入 / 提取模式；\n对准连接处点击或潜行点击可断开 / 恢复连接。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:pathable": {
+                "value": true
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_fluid_pipe": {},
+            "netease:aabb": {
+                "collision": {
+                    "min": [
+                        0.3125,
+                        0.3125,
+                        0.3125
+                    ],
+                    "max": [
+                        0.6875,
+                        0.6875,
+                        0.6875
+                    ]
+                },
+                "clip": {
+                    "min": [
+                        0.3125,
+                        0.3125,
+                        0.3125
+                    ],
+                    "max": [
+                        0.6875,
+                        0.6875,
+                        0.6875
+                    ]
+                }
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:pipe_chemical",
+            "states": {
+                "skybluetech:cable_io_down": [
+                    false,
+                    true
+                ],
+                "skybluetech:cable_io_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:cable_io_north": [
+                    false,
+                    true
+                ],
+                "skybluetech:cable_io_south": [
+                    false,
+                    true
+                ],
+                "skybluetech:cable_io_up": [
+                    false,
+                    true
+                ],
+                "skybluetech:cable_io_west": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_down": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_north": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_south": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_up": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_west": [
+                    false,
+                    true
+                ]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.3125,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                0.6875,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                0.6875
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && !q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.3125
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && !q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.3125,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "!q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                0.6875,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('skybluetech:connection_up') && q.block_state('skybluetech:connection_down') && q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_west')",
+                "components": {
+                    "netease:aabb": {
+                        "collision": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        },
+                        "clip": {
+                            "min": [
+                                0.0,
+                                0.0,
+                                0.0
+                            ],
+                            "max": [
+                                1.0,
+                                1.0,
+                                1.0
+                            ]
+                        }
+                    }
+                }
+            }
+        ]
+    }
+}

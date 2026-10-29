@@ -5,12 +5,6 @@
             "netease:liquid": {
                 "bucket_name": "skybluetech:raw_oil_bucket",
                 "can_float_boat": false,
-                "liquid_color": [
-                    44,
-                    39,
-                    28,
-                    255
-                ],
                 "mob_effects": [],
                 "remove_effects": []
             }

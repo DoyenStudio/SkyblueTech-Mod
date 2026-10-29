@@ -1,12 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import (
-    AddTextureToOneActor,
-    CreateClientEntity,
-    DestroyClientEntity,
-    GetBlockNameAndAux,
-    RebuildRenderForOneActor,
-    SetEntityShadowShow,
-)
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetClient
 from skybluetech_scripts.tooldelta.events.client import (
     ClientBlockUseEvent,
     ModBlockEntityLoadedClientEvent,
@@ -43,14 +37,14 @@ client_modelentity_rot_speed_pool = {}  # type: dict[tuple[int, int, int], float
 
 def get_layer(x, y, z):
     # type: (int, int, int) -> int
-    _, aux = GetBlockNameAndAux((x, y, z))
+    _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((x, y, z)) or (None, 0)
     return (aux & 0b1100) >> 2
 
 
 def update_wind_generator_render(entity_id, x, y, z, paddle_type):
     # type: (str, int, int, int, int | None) -> None
     pos = (x, y, z)
-    _, aux = GetBlockNameAndAux((x, y, z))
+    _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((x, y, z)) or (None, 0)
     facing = aux & 0b11
     layer = (aux & 0b1100) >> 2
     is_conn_east = bool(aux & 0b00010000)
@@ -69,8 +63,8 @@ def update_wind_generator_render(entity_id, x, y, z, paddle_type):
                 PaddleEnum.PADDLE_IRON: "textures/models/wind_generator_ironpaddle_texture",
                 PaddleEnum.PADDLE_STEEL: "textures/models/wind_generator_steelpaddle_texture",
             }.get(paddle_type, "textures/models/wind_generator_empty_texture")
-            AddTextureToOneActor(entity_id, "default", texture)
-            RebuildRenderForOneActor(entity_id)
+            CF.CreateActorRender(LEVEL_ID).AddTextureToOneActor(entity_id, 'default', texture)
+            CF.CreateActorRender(entity_id).RebuildRenderForOneActor()
 
     IS_BASE_BLOCK.set_to_entity(entity_id, 1)
     FACE.set_to_entity(entity_id, facing)
@@ -92,7 +86,7 @@ def set_anim_speed(entity_id, x, y, z, rot_speed):
 
 def create_model_entity(x, y, z):
     # type: (int, int, int) -> str
-    res = CreateClientEntity("skybluetech:wind_generator_model", (x, y, z), (0, 0))
+    res = GetClient().CreateClientEntityByTypeStr('skybluetech:wind_generator_model', (x, y, z), (0, 0))
     if res is None:
         raise ValueError("WindGenerator error: Create ModelEntity failed")
     old = client_modelentity_pool.pop((x, y, z), None)
@@ -101,7 +95,7 @@ def create_model_entity(x, y, z):
     client_modelentity_pool[(x, y, z)] = res
     client_modelentity_paddle_pool[(x, y, z)] = PaddleEnum.PADDLE_EMPTY
     client_modelentity_rot_speed_pool[(x, y, z)] = 0.0
-    SetEntityShadowShow(res, False)
+    CF.CreateModel(res).SetEntityShadowShow(False)
     return res
 
 
@@ -111,7 +105,7 @@ def destroy_model_entity(x, y, z):
     client_modelentity_rot_speed_pool.pop((x, y, z), None)
     entity_id = client_modelentity_pool.pop((x, y, z), None)
     if entity_id is not None:
-        DestroyClientEntity(entity_id)
+        GetClient().DestroyClientEntity(entity_id)
 
 
 @ClientBlockUseEvent.Listen(priority=10)
@@ -119,7 +113,7 @@ def onClickWindGenerator(event):
     # type: (ClientBlockUseEvent) -> None
     if event.blockName != Machinery.WIND_GENERATOR:
         return
-    _, aux = GetBlockNameAndAux((event.x, event.y, event.z))
+    _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((event.x, event.y, event.z)) or (None, 0)
     layer = (aux & 0b1100) >> 2
     if layer != 0:
         # 只改变 GUI 读取到的 xyz。。

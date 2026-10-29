@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/tin"
+                    "common:raw_tin",
+                    "c:raw_tin"
                 ]
             }
         },

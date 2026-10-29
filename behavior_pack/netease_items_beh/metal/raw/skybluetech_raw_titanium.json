@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "raws/titanium"
+                    "common:raw_titanium",
+                    "c:raw_titanium"
                 ]
             }
         },

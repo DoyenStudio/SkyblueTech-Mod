@@ -32,8 +32,10 @@ GetLoadedMachine(dimension, x, y, z)          # 只查已加载实例，可能 N
 GetMachineWithoutCls(dimension, x, y, z, block_id=None)
 RecipesCollection(collection_name, *recipes)
 RecipesCollection.get_collection(collection_name)
-RegisterFluidTexture(fluid_id, basic_texture, rgb=(255, 255, 255), alpha=255)
+RegisterFluidTexture(fluid_id, basic_texture)
 ```
+
+流体材质只有 `BasicFluidTexture(texture_path, flipbook_frames, ticks_per_frame=1)` 一个数据类。`RegisterFluidTexture(fluid_id, basic_texture)` 直接保存该实例，`GetFluidTexture(fluid_id)` 直接返回该实例，不再经过 `FluidTexture` 包装，也不接收 RGB / alpha。颜色和透明度需预先乘算进 PNG，UI 直接使用贴图本身的 RGBA。
 
 命名空间注册不会自动注册机器、配方、流体、GUI 或资源；两端各有注册表。配方集合名称使用唯一机器 ID，通过 `get_collection()` 取得原集合并在初始化时 `add_recipe()`。不要创建同名新集合来“扩展”，那会替换集合注册项。
 

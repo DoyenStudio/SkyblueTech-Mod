@@ -4,12 +4,14 @@ from .alloy_furnace import AlloyFurnaceUI
 from .assembler import AssemblerUI
 from .battery_matrix import BatteryMatrixUI
 from .bedrock_lava_drill import BedrockLavaDrillUI
+from .brine_evaporation_pond import BrineEvaporationPondUI
 from .charger import ChargerUI
 from .compressor import CompressorUI
 from .digger import DiggerUI
 from .distillation_chamber import DistillationChamberUI
 from .electric_crafter import ElectricCrafterUI
 from .electric_heater import ElectricHeaterUI
+from .electrolyzer import ElectrolyzerUI
 from .energy_cube import EnergyCubeUI
 from .engraver import EngraverUI
 from .farming_station import FarmingStationUI
@@ -49,9 +51,11 @@ from .redstone_generator import RedstoneGeneratorUI
 from .redstoneflux_brake import RedstoneFluxBrakeUI
 from .rf_repeater_plant import RFRepeaterPlantUI
 from .sawmill import SawmillUI
+from .seawater_pump import SeawaterPumpUI
 from .solar_panel import SolarPanelUI
 from .splitter import SplitterUI
 from .template_assembler import TemplateAssemblerUI
+from .tesla_plant_ui import TeslaPlantUI
 from .thermal_generator import ThermalGeneratorUI
 from .vacuum_freezer import VacuumFreezerUI
 from .wind_generator import WindGeneratorUI

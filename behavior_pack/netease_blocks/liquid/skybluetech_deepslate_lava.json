@@ -3,12 +3,6 @@
     "minecraft:block": {
         "components": {
             "netease:liquid": {
-                "liquid_color": [
-                    192,
-                    38,
-                    26,
-                    255
-                ],
                 "spread_fire": true,
                 "water_splash": "minecraft:water_splash_particle_manual"
             }

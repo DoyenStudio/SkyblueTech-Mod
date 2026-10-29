@@ -15,5 +15,5 @@ class RedstoneGenerator(GeneratorProcessor):
     dump_progress_to_block_entity_data = True
     process_item = True
     recipes = Recipes
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)

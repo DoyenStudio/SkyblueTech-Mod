@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/silver"
+                    "common:silver_ingot",
+                    "c:silver_ingot"
                 ]
             }
         },

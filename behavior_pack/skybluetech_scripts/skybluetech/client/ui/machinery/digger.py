@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
     K_STORE_RF,
@@ -7,10 +8,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.digger import (
     K_FRONT_BLOCK_AUX,
     K_FRONT_BLOCK_ID,
     STORE_RF_MAX,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
@@ -38,7 +35,7 @@ class DiggerUI(MachinePanelUIProxyEx):
         self.block_disp.SetUiItem(Item("minecraft:barrier"))
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -52,6 +49,6 @@ class DiggerUI(MachinePanelUIProxyEx):
             front_block_id = "minecraft:barrier"
         self.block_disp.SetUiItem(Item(front_block_id, front_block_aux))
         if front_block_id != "minecraft:barrier":
-            self.work_status.SetText("当前正在挖掘 " + GetItemHoverName(front_block_id))
+            self.work_status.SetText("当前正在挖掘 " + CF.CreateItem(LEVEL_ID).GetItemHoverName(front_block_id))
         else:
             self.work_status.SetText("当前无可挖掘方块")

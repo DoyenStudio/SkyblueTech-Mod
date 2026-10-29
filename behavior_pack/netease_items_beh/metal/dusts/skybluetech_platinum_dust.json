@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/platinum"
+                    "common:platinum_dust",
+                    "c:platinum_dust"
                 ]
             }
         },

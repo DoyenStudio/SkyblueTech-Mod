@@ -1,7 +1,6 @@
 # coding=utf-8
-
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import GetItemBasicInfo, SetItemLayer
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.utils import nbt
 from .lore import GetLorePos, SetLoreAtPos, SetLoreAuto
 
@@ -47,7 +46,11 @@ def UpdateCharge(item, store_rf, preserve_durability=False):
         store_rf_max = nbt.GetValueWithDefault(ud, K_STORE_RF_MAX, 1)
         level = int(float(store_rf) / store_rf_max * (ENERGY_BAR_LEVELS - 1))
         level = max(0, min(ENERGY_BAR_LEVELS - 1, level))
-        SetItemLayer(item, ENERGY_BAR_LAYER, "skybluetech:energy_bar_%d" % level)
+        item_dict = item.marshal()
+        CF.CreateItem(LEVEL_ID).SetItemLayer(
+            item_dict, ENERGY_BAR_LAYER, "skybluetech:energy_bar_%d" % level
+        )
+        item.unmarshal(item_dict)
         # 能量改用叠加贴图显示, 清除残留的耐久损耗, 避免耐久条与叠加贴图同时表示能量。
         max_durability = item.GetBasicInfo().maxDurability
         if max_durability > 0:
@@ -75,7 +78,7 @@ def UpdateChargeNBT(item_id, ud, store_rf):
     SetLoreAtPos(ud, GetLorePos(ud, "charge"), lore)
     # 能量改用叠加贴图显示, 此处无 Item 对象无法设置叠加贴图,
     # 但仍需清除残留的耐久损耗, 避免耐久条继续表示能量。
-    if GetItemBasicInfo(item_id).maxDurability > 0:
+    if Item(item_id).GetBasicInfo().maxDurability > 0:
         ud["Damage"] = nbt.Int(0)
 
 

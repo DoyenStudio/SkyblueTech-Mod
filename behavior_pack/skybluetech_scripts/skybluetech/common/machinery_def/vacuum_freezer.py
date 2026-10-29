@@ -11,7 +11,7 @@ from ..mini_jei.machinery.vacuum_freezer import (
 from ..utils.structure_palette import GenerateSimpleStructureTemplate
 
 STORE_RF_MAX = 80000
-MAX_FLUID_VOLUMES = (4000, 4000)
+MAX_FLUID_VOLUMES = {0: 4000, 1: 4000}
 
 K_MAX_POWER = "st:max_power"
 K_EXPECTED_KELVIN = "st:expected_kelvin"

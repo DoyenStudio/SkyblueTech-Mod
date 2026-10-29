@@ -1,16 +1,13 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from mod.server.extraServerApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.extensions import rate_limiter
 from skybluetech_scripts.tooldelta.events.server import (
     ServerItemUseOnEvent,
     PushUIRequest,
 )
-from skybluetech_scripts.tooldelta.api.server import (
-    IsSneaking,
-    GetPlayerMainhandItem,
-    SpawnItemToPlayerCarried,
-    GetRecipesByInput,
-)
+
 from skybluetech_scripts.tooldelta.extensions import (
     recipe_obj,
     schema,
@@ -55,7 +52,7 @@ def onServerItemUseOnEvent(event):
     if not limiter.record(event.entityId):
         return
 
-    if event.item.id != CRAFTING_TEMPLATE or not IsSneaking(event.entityId):
+    if event.item.id != CRAFTING_TEMPLATE or not CF.CreatePlayer(event.entityId).isSneaking():
         return
     uds = event.item.userData or {}
 
@@ -73,7 +70,12 @@ def onServerItemUseOnEvent(event):
 @CraftingTemplateSettingsUpload.Listen()
 def onCraftingTemplateSettingsUpload(event):
     # type: (CraftingTemplateSettingsUpload) -> None
-    mh = GetPlayerMainhandItem(event.player_id)
+    mh = CF.CreateItem(event.player_id).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    mh = Item.from_dict(mh) if mh is not None else None
     if mh is None or mh.id != CRAFTING_TEMPLATE:
         return
     if not SLOTITEMS_SCHEMA.check(event.template_slotitems):
@@ -121,7 +123,7 @@ def onCraftingTemplateSettingsUpload(event):
             )
         )
         SetLoreAuto(mh.userData, "recipe_data_disp", desc)
-    SpawnItemToPlayerCarried(event.player_id, mh)
+    CF.CreateItem(event.player_id).SpawnItemToPlayerCarried(mh.marshal(), event.player_id)
     CraftingTemplateUpdateRecipe(recipe.data if recipe is not None else None).send(
         event.player_id
     )
@@ -143,12 +145,22 @@ def get_recipe(
         if not recipes:
             recipes = {
                 recipe_obj.GetCraftingRecipe(rcp)
-                for rcp in GetRecipesByInput(item_id, "crafting_table", aux)
+                for rcp in CF.CreateRecipe(LEVEL_ID).GetRecipesByInput(
+                    item_id,
+                    "crafting_table",
+                    aux,
+                    -1,
+                )
             }
         else:
             recipes &= {
                 recipe_obj.GetCraftingRecipe(rcp)
-                for rcp in GetRecipesByInput(item_id, "crafting_table", aux)
+                for rcp in CF.CreateRecipe(LEVEL_ID).GetRecipesByInput(
+                    item_id,
+                    "crafting_table",
+                    aux,
+                    -1,
+                )
             }
     for recipe in recipes:
         if crafting_slots_completely_matched(template_slot_items, recipe):

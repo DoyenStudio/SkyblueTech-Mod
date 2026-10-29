@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/nickel"
+                    "common:nickel_ingot",
+                    "c:nickel_ingot"
                 ]
             }
         },

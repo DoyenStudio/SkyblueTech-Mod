@@ -1,13 +1,11 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
 from skybluetech_scripts.skybluetech.common.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
     ItemSplitterSettingsSetLabel,
     ItemSplitterSimpleAction,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetItemHoverName,
-    GetLocalPlayerHotbarAndInvItems,
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
@@ -46,7 +44,7 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             label, fluid_id = lis[i]
             griditem = self.settings_grid.GetGridItem(0, i)
             griditem["label"].asLabel().SetText(
-                GetItemHoverName(fluid_id).replace("§f", "")
+                CF.CreateItem(LEVEL_ID).GetItemHoverName(fluid_id).replace("§f", "")
             )
             griditem["color_img"].asImage().SetSpriteColor(rand_rgb_by_index(label))
             griditem["item_renderer"].asItemRenderer().SetUiItem(Item(fluid_id))
@@ -98,7 +96,12 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             lambda _: self.close_item_selector()
         )
         _i0 = 0
-        items = GetLocalPlayerHotbarAndInvItems()
+        items = [
+            Item.from_dict(it) if it is not None else None
+            for it in CF.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.INVENTORY, False
+            )
+        ]
         item_ids = set()  # type: set[str]
         for i in range(36):
             item = items[i]
@@ -180,7 +183,12 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
                 "[Error] ItemSplitterUISync: onItemSelected: selected_setting_index empty"
             )
             return
-        selected_item = GetLocalPlayerHotbarAndInvItems()[idx]
+        selected_item = [
+            Item.from_dict(it) if it is not None else None
+            for it in CF.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.INVENTORY, False
+            )
+        ][idx]
         if selected_item is None:
             return
         self.close_item_selector()

@@ -14,6 +14,18 @@ class Acid(Fluids):
     SO3 = "skybluetech:so3"
 
 
+class Alkali(Fluids):
+    "碱性流体"
+
+    SODIUM_HYDROXIDE_SOLUTION = "skybluetech:sodium_hydroxide_solution"
+
+
+class Chemical(Acid, Alkali):
+    "化学品流体"
+
+    pass
+
+
 class Gas(Fluids):
     "气体"
 
@@ -42,10 +54,12 @@ class Common(Fluids):
 class CommonGas(Common, Gas):
     "对流体管道无特殊要求的气体"
 
+    CHLORINE = "skybluetech:chlorine"
     COMPRESSED_AIR = "skybluetech:compressed_air"
     HYDROGEN = "skybluetech:hydrogen"
     NITROGEN = "skybluetech:nitrogen"
     METHANE = "skybluetech:methane"
+    OXYGEN = "skybluetech:oxygen"
     WATER_VAPOR = "skybluetech:water_vapor"
 
 
@@ -60,8 +74,11 @@ class CommonOil(Common, Oil):
 class CommonLiquid(Common):
     "对流体管道无特殊要求的液体"
 
+    BRINE = "skybluetech:brine"
+    DILUTE_BRINE = "skybluetech:dilute_brine"
     LIQUID_AIR = "skybluetech:liquid_air"
     LIQUID_RESIN = "skybluetech:liquid_resin"
+    SATURATED_BRINE = "skybluetech:saturated_brine"
     WATER = Vanilla.WATER
     DISTILLED_WATER = "skybluetech:distilled_water"
     METHANE_MUD = "skybluetech:methane_mud"

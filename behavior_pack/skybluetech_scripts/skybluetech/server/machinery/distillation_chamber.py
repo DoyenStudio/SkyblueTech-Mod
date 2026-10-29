@@ -33,9 +33,9 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
     heat_capacity = CHAMBER_HEAT_CAPACITY
     # 本机热容远大于默认值, 产油扣热才不会把仓温踹穿, 见 CHAMBER_HEAT_CAPACITY
     fluid_io_fix_mode = 0
-    fluid_input_slots = {0}
-    fluid_output_slots = {1}
-    fluid_slot_max_volumes = (INPUT_MAX_VOLUME, OUTPUT_MAX_VOLUME)
+    fluid_input_slots = (0,)
+    fluid_output_slots = (1,)
+    fluid_slot_max_volumes = {0: INPUT_MAX_VOLUME, 1: OUTPUT_MAX_VOLUME}
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(DistillationChamber, self).__init__(dim, x, y, z, block_entity_data)

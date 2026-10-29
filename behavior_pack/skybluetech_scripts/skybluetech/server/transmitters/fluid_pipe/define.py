@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetBlockEntityData
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.skybluetech.common.define.id_enum import FluidPipe, fluids
 from skybluetech_scripts.skybluetech.common.misc.transmitter import TransmitterType
 from ..base.define import BaseNetwork, BaseAccessPoint
@@ -10,12 +11,14 @@ INT32 = 1 << 32
 TRANSFER_SPEED_MAPPING = {
     FluidPipe.ACIDPROOF: 100,
     FluidPipe.BRONZE: 100,
+    FluidPipe.CHEMICAL: 100,
     FluidPipe.CUPRONICKEL: 60,
     FluidPipe.ULTRAHEATINUM: 100,
 }
 CAPACITY_MAPPING = {
     FluidPipe.ACIDPROOF: 1000,
     FluidPipe.BRONZE: 1000,
+    FluidPipe.CHEMICAL: 1000,
     FluidPipe.CUPRONICKEL: 1000,
     FluidPipe.ULTRAHEATINUM: 1000,
 }
@@ -24,6 +27,12 @@ FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING = {
         f in fluids.Common.all_sub() or f in fluids.Acid.all_sub()
     ),
     FluidPipe.BRONZE: lambda f: f in fluids.Common.all_sub(),
+    FluidPipe.CHEMICAL: lambda f: (
+        f in fluids.Common.all_sub()
+        or f in fluids.Acid.all_sub()
+        or f in fluids.Alkali.all_sub()
+        or f in fluids.Chemical.all_sub()
+    ),
     FluidPipe.CUPRONICKEL: lambda f: (
         f in fluids.Common.all_sub() or f in fluids.HotFluid.all_sub()
     ),
@@ -59,7 +68,10 @@ class FluidPipeNetwork(BaseNetwork["FluidPipeAccessPoint"]):
         )
 
     def load_network_data(self):
-        b = GetBlockEntityData(self.dim, self.get_data_store_node())
+        b = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            self.get_data_store_node(),
+        )
         if b is not None:
             self.fluid_id = b["fluid_id"]
             self.fluid_volume = b["fluid_volume"] or 0.0
@@ -68,7 +80,10 @@ class FluidPipeNetwork(BaseNetwork["FluidPipeAccessPoint"]):
                 self.fluid_volume = 0.0
 
     def save_network_data(self):
-        b = GetBlockEntityData(self.dim, self.get_data_store_node())
+        b = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            self.get_data_store_node(),
+        )
         if b is not None:
             if self.fluid_id is None or self.fluid_volume <= 0:
                 self.fluid_id = None

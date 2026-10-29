@@ -13,9 +13,9 @@ if 0>1:
 class FluidOutputInterface(GUIControl, MultiFluidContainer, BaseInterface):
     fluid_io_mode = (1, 1, 1, 1, 1, 1)
     fluid_io_fix_mode = 0
-    fluid_slot_max_volumes = (FLUID_INTERFACE_MAX_VOLUME,)
-    fluid_input_slots = set()
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: FLUID_INTERFACE_MAX_VOLUME}
+    fluid_input_slots = ()
+    fluid_output_slots = (0,)
     player_fluid_input_slots = {0}
     migrate_legacy_fluid_data = True
 

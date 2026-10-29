@@ -107,36 +107,6 @@ recipes = RecipesCollection(
         {
             0: Input(id_enum.Ingots.LIGHT_SKYBLUE),
             1: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            3: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            4: Input(id_enum.Wire.SILVER_INSULATED),
-            5: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            7: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            8: Input(id_enum.Ingots.LIGHT_SKYBLUE),
-        },
-        id_enum.BatteryMatrix.IO_ENERGY_INPUT,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            1: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            2: Input(id_enum.Ingots.LIGHT_SKYBLUE),
-            3: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            4: Input(id_enum.Wire.SILVER_INSULATED),
-            5: Input(tag_enum.PlateTag.TIN, is_tag=True),
-            6: Input(id_enum.Ingots.LIGHT_SKYBLUE),
-            7: Input(tag_enum.PlateTag.TIN, is_tag=True),
-        },
-        id_enum.BatteryMatrix.IO_ENERGY_OUTPUT,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            0: Input(id_enum.Ingots.LIGHT_SKYBLUE),
-            1: Input(tag_enum.PlateTag.TIN, is_tag=True),
             2: Input(id_enum.Ingots.LIGHT_SKYBLUE),
             3: Input(id_enum.Wire.SILVER_INSULATED),
             4: Input(id_enum.REDSTONEFLUX_CORE),
@@ -166,31 +136,23 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         32,
     ),
+    # brine evaporation pond controller
     MRecipe(
         {
-            1: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            3: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            4: Input(id_enum.Wire.SILVER),
-            5: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            7: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            0: Input("minecraft:brick_block"),
+            1: Input("minecraft:lever"),
+            2: Input("minecraft:brick_block"),
+            3: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            4: Input("minecraft:iron_trapdoor"),
+            5: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            6: Input("minecraft:brick_block"),
+            7: Input("minecraft:blast_furnace"),
+            8: Input("minecraft:brick_block"),
         },
-        id_enum.BedrockLavaDrill.IO_ENERGY,
+        id_enum.BrineEvaporationPond.CONTROLLER,
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            1: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            3: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            4: Input(id_enum.FluidPipe.ULTRAHEATINUM),
-            5: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            7: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-        },
-        id_enum.BedrockLavaDrill.IO_FLUID,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
+        16,
     ),
     # charger
     MRecipe(
@@ -808,6 +770,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         8,
     ),
+    # seawater pump
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            1: Input(id_enum.FluidPipe.CHEMICAL),
+            2: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            3: Input("minecraft:bucket"),
+            4: Input(id_enum.Machinery.PUMP),
+            5: Input(id_enum.ELECTRIC_MOTOR),
+            6: Input("minecraft:iron_trapdoor"),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input("minecraft:iron_trapdoor"),
+        },
+        id_enum.Machinery.SEAWATER_PUMP,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # solar panel
     MRecipe(
         {
@@ -869,56 +849,6 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
         24,
-    ),
-    MRecipe(
-        {
-            1: Input(id_enum.FluidPipe.BRONZE),
-            4: Input(id_enum.VacuumFreezer.FRAME),
-        },
-        id_enum.VacuumFreezer.IO_FLUID1,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            4: Input(id_enum.VacuumFreezer.FRAME),
-            7: Input(id_enum.FluidPipe.BRONZE),
-        },
-        id_enum.VacuumFreezer.IO_FLUID2,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            1: Input(id_enum.ItemPipe.STEEL),
-            4: Input(id_enum.VacuumFreezer.FRAME),
-        },
-        id_enum.VacuumFreezer.IO_ITEM1,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            4: Input(id_enum.VacuumFreezer.FRAME),
-            7: Input(id_enum.ItemPipe.STEEL),
-        },
-        id_enum.VacuumFreezer.IO_ITEM2,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            1: Input(id_enum.Wire.SILVER_INSULATED),
-            4: Input(id_enum.VacuumFreezer.FRAME),
-        },
-        id_enum.VacuumFreezer.IO_ENERGY,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
     ),
     # wind generator
     MRecipe(

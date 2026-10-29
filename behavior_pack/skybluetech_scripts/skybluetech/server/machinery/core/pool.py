@@ -1,14 +1,12 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 "机器实例的创建、查询、移除及缓存失效; 不注册游戏事件监听。"
 from skybluetech_scripts.skybluetech.common.define.facing import (
     DXYZ_FACING,
     FACING_DXYZ,
 )
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.server.block import (
-    GetBlockEntityData,
-    GetBlockName,
-)
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
+
 from .registry import TryGetMachineCls
 
 # TYPE_CHECKING
@@ -83,7 +81,10 @@ def GetNearbyMachines(
 
 def GetMachineWithoutCls(dimension, x, y, z, block_id=None):
     # type: (int, int, int, int, str | None) -> BaseMachine | None
-    bname = block_id or GetBlockName(dimension, (x, y, z))
+    bname = block_id or (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+        (x, y, z),
+        dimension,
+    ) or {}).get("name")
     if bname is None:
         return None
     block_cls = TryGetMachineCls(bname)
@@ -112,7 +113,7 @@ def PopMachine(dimension, x, y, z, machine_cls):
     if k in cached_machines:
         return cached_machines.pop(k)
     else:
-        bdata = GetBlockEntityData(dimension, (x, y, z))
+        bdata = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(dimension, (x, y, z))
         if bdata is None:
             raise RuntimeError("BlockEntityData load failed")
         return machine_cls(dimension, x, y, z, bdata)
@@ -126,7 +127,7 @@ def PopMachineStrict(dimension, x, y, z):
 def LoadMachine(dimension, x, y, z, machine_cls):
     # type: (int, int, int, int, type[BaseMachine]) -> BaseMachine
     "从方块实体数据创建并登记实例; 区块加载时替换该位置的旧缓存。"
-    bdata = GetBlockEntityData(dimension, (x, y, z))
+    bdata = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(dimension, (x, y, z))
     if bdata is None:
         raise RuntimeError(
             "BlockEntityData load failed in %d ~ %d %d %d" % (dimension, x, y, z)

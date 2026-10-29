@@ -40,10 +40,10 @@ class GeoThermalGenerator(
     block_name = Machinery.GEO_THERMAL_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
-    fluid_input_slots = {0, 1}
+    fluid_input_slots = (0, 1)
     fluid_io_fix_mode = 0
-    fluid_slot_max_volumes = (MAX_LAVA_VOLUME, MAX_WATER_VOLUME)
-    output_slots = (0,)
+    fluid_slot_max_volumes = {0: MAX_LAVA_VOLUME, 1: MAX_WATER_VOLUME}
+    item_output_slots = (0,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(GeoThermalGenerator, self).__init__(dim, x, y, z, block_entity_data)
@@ -98,7 +98,7 @@ class GeoThermalGenerator(
 
     def next_burn(self):
         self.SetOutputPower(0)
-        f0, f1 = self.fluids
+        f0, f1 = self.fluids[0], self.fluids[1]
         if f0.fluid_id == LAVA_ID and f0.volume >= ONCE_LAVA_REDUCE_VOLUME:
             f0.volume -= ONCE_LAVA_REDUCE_VOLUME
             if f1.fluid_id == WATER_ID and f1.volume >= ONCE_WATER_REDUCE_VOLUME:

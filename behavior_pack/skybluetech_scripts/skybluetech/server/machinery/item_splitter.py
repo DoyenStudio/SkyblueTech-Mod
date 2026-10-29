@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import ExecLater
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
@@ -29,7 +29,7 @@ DEFAULT_SETTINGS_LIMIT = 6
 @RegisterMachine
 class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     block_name = Machinery.ITEM_SPLITTER
-    input_slots = (0, 1, 2)
+    item_input_slots = (0, 1, 2)
     upgrade_slot_start = 3
     allow_upgraders = frozenset({
         Upgraders.GENERIC_SPLIT,
@@ -47,7 +47,7 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     def _item_splitter_on_ticking(self):
         if self._sending_items and self._ticking_t % 5 == 0:
             has_item = False
-            for slot in self.input_slots:
+            for slot in self.item_input_slots:
                 item = self.GetSlotItem(slot)
                 if item is not None:
                     has_item = True

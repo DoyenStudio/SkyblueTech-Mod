@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/lead_sulfate"
+                    "common:lead_sulfate_dust",
+                    "c:lead_sulfate_dust"
                 ]
             }
         },

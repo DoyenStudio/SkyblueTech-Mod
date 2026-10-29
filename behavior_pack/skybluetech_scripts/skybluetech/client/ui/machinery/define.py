@@ -1,4 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from mod.client.extraClientApi import GetMinecraftEnum
 
 from skybluetech_scripts.skybluetech.common.define.flags import (
@@ -17,10 +20,6 @@ from skybluetech_scripts.skybluetech.common.events.machinery.basic import (
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.base_machine import (
     K_DEACTIVE_FLAGS,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
-from skybluetech_scripts.tooldelta.api.client.block import GetBlockName
-from skybluetech_scripts.tooldelta.api.client.player import GetPlayerDimensionId
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events import CustomC2SEvent
 from skybluetech_scripts.tooldelta.events.client import (
     ClientBlockUseEvent,
@@ -215,7 +214,7 @@ class MachinePanelUIProxy(ToolDeltaScreen):
             self._title_label = self.GetElement(TITLE_PATH).asLabel()
         except ValueError:
             self._title_label = None
-        block_id = GetBlockName(self.pos[1:])
+        block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlock(tuple(self.pos[1:])) or (None, 0))[0]
         if self._title_label is not None and block_id:
             self.title_text = FormatBlockName(block_id)
             self._title_label.SetText(self.title_text)
@@ -235,7 +234,7 @@ class MachinePanelUIProxy(ToolDeltaScreen):
         for name in names:
             if name.startswith("ring_"):
                 self._rings.append((name, main[name].asImage()))
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         flags = 0
         if data is not None:
             flags = GetValueWithDefault(data["exData"], K_DEACTIVE_FLAGS, 0) or 0
@@ -317,6 +316,6 @@ class MachinePanelUIProxy(ToolDeltaScreen):
 @ClientBlockUseEvent.Listen()
 def onClisBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
-    dim = GetPlayerDimensionId()
+    dim = CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
     _RUNTIME.GPlayerId = event.playerId
     _RUNTIME.GPos = (dim, int(event.x), int(event.y), int(event.z))

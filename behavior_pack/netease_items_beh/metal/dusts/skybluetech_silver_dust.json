@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/silver"
+                    "common:silver_dust",
+                    "c:silver_dust"
                 ]
             }
         },

@@ -39,6 +39,7 @@ class MachineRecipeRendererBase(RecipeRenderer):
                 panel["slot%d" % slot],
                 Item(item_id, item_aux, count=int(input.count)),
                 tag=item if is_tag else None,
+                not_consumed=input.count == 0,
             )
         output_items = recipe.outputs.get("item", {})
         for slot, output in output_items.items():

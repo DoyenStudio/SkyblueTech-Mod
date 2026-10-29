@@ -1,0 +1,24 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:block_entity": {},
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "tag:piston_denier": {},
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:custom_tips": {
+                "value": "\n§7卤水池的受热口。"
+            },
+            "tag:minecraft:iron_tier_destructible": {},
+            "tag:minecraft:is_pickaxe_item_destructible": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:brine_evaporation_pond_io_heat"
+        }
+    }
+}

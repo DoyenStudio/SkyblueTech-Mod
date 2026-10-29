@@ -29,8 +29,8 @@ class ElectricCrafter(UpgradeControl, GUIControl):
     dump_progress_to_block_entity_data = True
     running_power = 35
     store_rf_max = STORE_RF_MAX
-    input_slots = tuple(range(9))
-    output_slots = tuple(range(9, 12))
+    item_input_slots = tuple(range(9))
+    item_output_slots = tuple(range(9, 12))
     upgrade_slot_start = TEMPLATE_SLOT + 1
     energy_io_mode = (0, 0, 0, 0, 0, 0)
     allow_upgraders = frozenset({

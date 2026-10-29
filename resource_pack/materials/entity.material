@@ -2,9 +2,33 @@
     "materials": {
         "version": "1.0.0",
         "fluid_model:entity": {
-            "+states": [
-                // "Blending", "DisableDepthTest"
-            ]
+            "vertexShader": "shaders/glsl/skybluetech_fluid_volume_vertex.glsl",
+            "fragmentShader": "shaders/glsl/skybluetech_fluid_volume_fragment.glsl",
+            "+states": ["Blending"],
+            "+defines": ["USE_SKINNING"]
+        },
+        "skybluetech_fluid_volume:entity": {
+            "vertexShader": "shaders/glsl/skybluetech_fluid_volume_vertex.glsl",
+            "fragmentShader": "shaders/glsl/skybluetech_fluid_volume_fragment.glsl",
+            "+states": ["Blending"],
+            "+defines": ["USE_SKINNING"]
+        },
+        "skybluetech_tesla_arc_light:entity": {
+            "vertexShader": "shaders/glsl/skybluetech_tesla_arc_beam_vertex.glsl",
+            "fragmentShader": "shaders/glsl/skybluetech_tesla_arc_light_fragment.glsl",
+            // Writing only visible light depth prevents later sky passes from erasing it.
+            "+states": ["Blending", "DisableCulling", "DisableAlphaWrite"],
+            "+defines": ["USE_SKINNING"],
+            "blendSrc": "SourceAlpha",
+            "blendDst": "One"
+        },
+        "skybluetech_tesla_range_preview:entity": {
+            "vertexShader": "shaders/glsl/skybluetech_tesla_range_preview_vertex.glsl",
+            "fragmentShader": "shaders/glsl/skybluetech_tesla_range_preview_fragment.glsl",
+            "+states": ["Blending", "DisableCulling", "DisableAlphaWrite"],
+            "+defines": ["USE_SKINNING"],
+            "blendSrc": "SourceAlpha",
+            "blendDst": "OneMinusSrcAlpha"
         },
         "armor_with_alpha:armor": {
             "+states": ["Blending"]

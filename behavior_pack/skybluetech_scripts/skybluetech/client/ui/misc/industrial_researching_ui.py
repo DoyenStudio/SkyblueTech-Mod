@@ -1,12 +1,9 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.common import ExecLater
 from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
-from skybluetech_scripts.tooldelta.api.client import (
-    GetItemHoverName,
-    GetLocalPlayerHotbarAndInvItems,
-    GetLocalPlayerLevelByExp,
-)
 from skybluetech_scripts.tooldelta.ui import (
     Binder,
     RegistToolDeltaScreen,
@@ -52,7 +49,7 @@ def _clean_item_name(item_id):
     if cached is not None:
         return cached
     try:
-        item_name = GetItemHoverName(item_id) or item_id
+        item_name = CF.CreateItem(LEVEL_ID).GetItemHoverName(item_id) or item_id
     except Exception:
         item_name = item_id
     item_name = item_name.replace("§r", "").replace("§f", "")
@@ -189,7 +186,19 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
         recipe = self.current_recipe
         researched = recipe.result_item_id in self.researched_items
         item_counts = self.get_local_item_counts()
-        player_level = GetLocalPlayerLevelByExp()
+        exp_left = int(CF.CreateGame(LEVEL_ID).GetPlayerTotalExp(GetLocalPlayerId()))
+        player_level = 0
+        while exp_left > 0:
+            if player_level <= 15:
+                need = 2 * player_level + 7
+            elif player_level <= 30:
+                need = 5 * player_level - 38
+            else:
+                need = 9 * player_level - 158
+            if exp_left < need:
+                break
+            exp_left -= need
+            player_level += 1
         can_submit = True
         items = []
         requirements = list(recipe.require_items)  # type: list[Input | None]
@@ -356,7 +365,12 @@ class IndustrialResearchProgressUI(ToolDeltaScreen):
     def get_local_item_counts(self):
         # type: () -> dict[str, int]
         counts = {}
-        for item in GetLocalPlayerHotbarAndInvItems():
+        for item in [
+            Item.from_dict(it) if it is not None else None
+            for it in CF.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.INVENTORY, False
+            )
+        ]:
             if item is None:
                 continue
             counts[item.id] = counts.get(item.id, 0) + item.count

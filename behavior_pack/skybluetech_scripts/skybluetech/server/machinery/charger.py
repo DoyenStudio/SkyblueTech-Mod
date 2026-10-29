@@ -53,8 +53,8 @@ class Charger(Processor, OperationListener):
 
     block_name = Machinery.CHARGER
     allow_upgraders = frozenset()
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
     upgrade_slot_start = 2
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True

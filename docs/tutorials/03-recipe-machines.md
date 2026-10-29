@@ -80,8 +80,8 @@ class STDBGrinder(m.Processor):
     store_rf_max = STORE_RF_MAX
     recipes = grinder_recipes
     process_item = True
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
     upgrade_slot_start = 2
     upgrade_slots = 4
 
@@ -92,13 +92,13 @@ class STDBMelter(m.Processor, m.MultiFluidContainer):
     recipes = melter_recipes
     process_item = True
     process_fluid = True
-    input_slots = (0,)
-    output_slots = ()
+    item_input_slots = (0,)
+    item_output_slots = ()
     upgrade_slot_start = 1
     upgrade_slots = 4
-    fluid_slot_max_volumes = (FLUID_CAPACITY,)
-    fluid_input_slots = set()
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: FLUID_CAPACITY}
+    fluid_input_slots = ()
+    fluid_output_slots = (0,)
     fluid_io_mode = (1, 1, 1, 1, 1, 1)
 
 @m.RegisterMachine
@@ -107,8 +107,8 @@ class STDBFuelGenerator(m.GeneratorProcessor):
     store_rf_max = STORE_RF_MAX
     recipes = fuel_recipes
     process_item = True
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
     upgrade_slots = 0
 ```
 

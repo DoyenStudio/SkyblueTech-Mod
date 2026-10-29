@@ -1,15 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server.block import (
-    GetBlockName,
-    GetBlockStates,
-    SetBlock,
-)
-from skybluetech_scripts.tooldelta.api.server.entity import (
-    DestroyEntity,
-    GetDroppedItem,
-    GetEntitiesBySelector,
-    SpawnDroppedItem,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
+
 from skybluetech_scripts.tooldelta.define.item import Item
 
 from ...common.define.id_enum import Machinery
@@ -37,8 +29,8 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
     store_rf_max = STORE_RF_MAX
     running_power = 30
     origin_process_ticks = 20 * 5
-    input_slots = ()
-    output_slots = tuple(range(24))
+    item_input_slots = ()
+    item_output_slots = tuple(range(24))
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(FarmingStation, self).__init__(dim, x, y, z, block_entity_data)
@@ -54,19 +46,24 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
         ok = self.collect_crops()
         if not ok:
             return False
-        item_uqids = GetEntitiesBySelector(
-            "@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
-            % (self.x - DX, self.y + Y_OFFSET, self.z - DZ, DX * 2 + 1, 1, DZ * 2 + 1)
-        )
-        items = [GetDroppedItem(item_uqid, True) for item_uqid in item_uqids]
+        item_uqids = CF.CreateEntityComponent("").GetEntitiesBySelector("@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
+            % (self.x - DX, self.y + Y_OFFSET, self.z - DZ, DX * 2 + 1, 1, DZ * 2 + 1))
+        items = []
         for item_uqid in item_uqids:
-            DestroyEntity(item_uqid)
+            raw_item = CF.CreateItem(LEVEL_ID).GetDroppedItem(item_uqid, True)
+            items.append(Item.from_dict(raw_item) if raw_item is not None else None)
+        for item_uqid in item_uqids:
+            GetServer().DestroyEntity(item_uqid)
         for item in items:
             if item is None:
                 continue
             item_rest = self.OutputItem(item)
             if item_rest is not None:
-                SpawnDroppedItem(self.dim, (self.x, self.y - 1, self.z), item_rest)
+                GetServer().CreateEngineItemEntity(
+                    item_rest.marshal(),
+                    self.dim,
+                    (self.x, self.y - 1, self.z),
+                )
         return True
 
     def collect_crops(self):
@@ -78,10 +75,13 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
         for x in range(_x - DX, _x + DX + 1):
             for z in range(_z - DZ, _z + DZ + 1):
                 reduce_power = False
-                bname = GetBlockName(dim, (x, _y, z))
+                bname = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                    (x, _y, z),
+                    dim,
+                ) or {}).get("name")
                 if bname is None:
                     continue
-                bstates = GetBlockStates(dim, (x, _y, z))
+                bstates = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, _y, z), dim)
                 if bstates is None:
                     continue
                 if isRipedCrop(bname, bstates):
@@ -120,9 +120,19 @@ def isRipedCrop(block_name, block_states):
 
 def _breakBlock(dim, xyz):
     # type: (int, tuple[int, int, int]) -> None
-    SetBlock(dim, xyz, "minecraft:air", old_block_handing=1)
+    CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+        xyz,
+        {"name": "minecraft:air", "aux": 0},
+        1,
+        dimensionId=dim,
+    )
 
 
 def _breakAndResetBlock(dim, xyz, block_name):
     # type: (int, tuple[int, int, int], str) -> None
-    SetBlock(dim, xyz, block_name, old_block_handing=1)
+    CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+        xyz,
+        {"name": block_name, "aux": 0},
+        1,
+        dimensionId=dim,
+    )

@@ -1,9 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.ui import UBaseCtrl
-
 from .base_page import BasePage
-from .utils import UnfinishedItemName, finish_name
+from .utils import UnfinishedItemName
 
 if 0 > 1:
     import typing
@@ -48,29 +45,6 @@ class TOCPage(BasePage):
     def GetByIdentifier(cls, identifier):
         # type: (str) -> TOCPage | None
         return cls._marked_tocpages.get(identifier)
-
-    def RenderInit(self, ctrl):
-        # type: (UBaseCtrl) -> None
-        BasePage.RenderInit(self, ctrl)
-        grid = ctrl["sections_grid"].asGrid()
-
-        def after():
-            for i, section in enumerate(self.sections):
-
-                def get_handler(index):
-                    def handler(_):
-                        self._on_select_section(index)
-
-                    return handler
-
-                e = grid.GetGridItem(0, i)
-                e["icon_item_renderer"].asItemRenderer().SetUiItem(
-                    Item(section.icon_item_id, section.icon_item_aux)
-                )
-                e["label"].asLabel().SetText(finish_name(section.title))
-                e["click_btn"].asButton().SetCallback(get_handler(i))
-
-        grid.SetDimensionAndCall((1, len(self.sections)), after)
 
     def SetGroup(self, group):
         # type: (PageGroup) -> None

@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.skybluetech.common.define.id_enum import DeepLava, Machinery
 from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill import (
@@ -18,7 +19,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill imp
     STRUCTURE_PALETTE,
     STRUCTURE_REQUIRE_BLOCKS,
 )
-from skybluetech_scripts.tooldelta.api.server.block import GetBlockName
+
 from skybluetech_scripts.tooldelta.define.item import Item
 
 from ..basic.item_container import ItemContainer
@@ -158,7 +159,10 @@ class BedrockLavaDrill(UpgradeControl, MultiBlockStructure, GUIControl):
     def detect_block(self):
         if self.y > 5:
             return False
-        down_block = GetBlockName(self.dim, (self.x, self.y - 1, self.z))
+        down_block = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            (self.x, self.y - 1, self.z),
+            self.dim,
+        ) or {}).get("name")
         if down_block != "minecraft:bedrock":
             return False
         return True

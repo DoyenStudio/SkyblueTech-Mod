@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetBlockEntityData
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.extensions.typing import Generic, TypeVar
 from skybluetech_scripts.skybluetech.common.misc.transmitter import TransmitterType
 
@@ -102,7 +103,10 @@ class BaseAccessPoint(Generic[_NT]):
         self.z = z
         self.access_facing = access_facing
         self.io_mode = io_mode
-        bdata = GetBlockEntityData(self.dim, (self.x, self.y, self.z))
+        bdata = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(
+            self.dim,
+            (self.x, self.y, self.z),
+        )
         if bdata is None:
             raise Exception(
                 "[ERROR] No block entity data at {}".format((self.x, self.y, self.z))

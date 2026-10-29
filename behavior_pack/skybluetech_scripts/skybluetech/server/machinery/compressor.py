@@ -13,7 +13,7 @@ class Compressor(Processor):
     store_rf_max = STORE_RF_MAX
     process_item = True
     recipes = Recipes
-    input_slots = (0, 1, 2)
-    output_slots = (3,)
+    item_input_slots = (0, 1, 2)
+    item_output_slots = (3,)
     upgrade_slot_start = 4
     upgrade_slots = 4

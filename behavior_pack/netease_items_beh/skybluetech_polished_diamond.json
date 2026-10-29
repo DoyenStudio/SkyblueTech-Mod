@@ -4,8 +4,7 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "common:polished_diamond",
-                    "diamond/polished"
+                    "common:polished_diamond"
                 ]
             }
         },

@@ -1,20 +1,33 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
-from skybluetech_scripts.tooldelta.api.server.block import BlockHasTag
+
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.core.pool import GetLoadedMachine
 from ..base import LogicModule
 from .define import FluidPipeNetwork, FluidPipeAccessPoint, FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING
 
+_block_tags_cache = {}  # type: dict[str, set[str]]
+
 
 def is_fluid_pipe(blockName):
     # type: (str) -> bool
-    return BlockHasTag(blockName, "skybluetech_fluid_pipe")
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "skybluetech_fluid_pipe" in tags
 
 
 def isFluidContainer(blockName, dim=None, xyz=None):
     # type: (str, int | None, tuple[int, int, int] | None) -> bool
-    return BlockHasTag(blockName, "skybluetech_fluid_container")
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "skybluetech_fluid_container" in tags
 
 
 def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
@@ -76,7 +89,13 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
     m = GetLoadedMachine(ap.dim, *cxyz)
     if not isinstance(m, MultiFluidContainer):
         return False, fluid_volume
-    ok, rest_fluid_volume = m.AddFluid(fluid_id, fluid_volume)
+    if m.fluid_input_slots_by_face is None:
+        ok, rest_fluid_volume = m.AddFluid(fluid_id, fluid_volume)
+    else:
+        relative_face = m.GetRelativeFacingFromAccessFacing(ap.access_facing)
+        ok, rest_fluid_volume = m.AddFluidFromFace(
+            fluid_id, fluid_volume, relative_face
+        )
     return ok, rest_fluid_volume
 
 
@@ -113,7 +132,10 @@ def onNetworkTick(network):
         om = GetLoadedMachine(output.dim, *output.target_pos)
         if isinstance(om, MultiFluidContainer):
             do_break = False
-            for slot in om.fluid_output_slots:
+            relative_face = None
+            if om.fluid_output_slots_by_face is not None:
+                relative_face = om.GetRelativeFacingFromAccessFacing(output.access_facing)
+            for slot in om.GetFluidOutputSlotsForFace(relative_face):
                 fluid = om.fluids[slot]
                 fluid_id = fluid.fluid_id
                 if fluid_id is not None and fluid.volume <= 0:

@@ -1,12 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 import uuid
-from mod.server.extraServerApi import GetLevelId
 from mod_log import logger
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockEntityData,
-    GetExtraData,
-    SetExtraData,
-)
 from skybluetech_scripts.skybluetech.common.define.facing import (
     OPPOSITE_FACING,
     FACING_DXYZ,
@@ -109,7 +104,7 @@ class NodeData(object):
             self.K_CONNECTED_NODES: self.connected_nodes,
         }
         # extra
-        bdata = GetBlockEntityData(self.dim, (x, y, z))
+        bdata = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(self.dim, (x, y, z))
         if bdata is None:
             logger.error("RFRepeaterPlant: Failed to dump: {}".format(self.pos))
             return
@@ -150,22 +145,24 @@ def sum_network_data(network_uuid):
 
 
 def get_networks_data():
-    return GetExtraData(GetLevelId(), K_GLOBAL_NETWORK_DATAS, {})
+    data = CF.CreateExtraData(LEVEL_ID).GetExtraData(K_GLOBAL_NETWORK_DATAS)
+    return data if data is not None else {}
 
 
 def save_networks_data(networks_data):
     # type: (dict[str, dict]) -> None
-    SetExtraData(GetLevelId(), K_GLOBAL_NETWORK_DATAS, networks_data)
+    CF.CreateExtraData(LEVEL_ID).SetExtraData(K_GLOBAL_NETWORK_DATAS, networks_data, True)
 
 
 def get_nodes_data():
     # type: () -> dict[tuple[int, int, int, int], dict]
-    return GetExtraData(GetLevelId(), K_GLOBAL_NODES, {})
+    data = CF.CreateExtraData(LEVEL_ID).GetExtraData(K_GLOBAL_NODES)
+    return data if data is not None else {}
 
 
 def save_nodes_data(nodes_data):
     # type: (dict[tuple[int, int, int, int], dict]) -> None
-    SetExtraData(GetLevelId(), K_GLOBAL_NODES, nodes_data)
+    CF.CreateExtraData(LEVEL_ID).SetExtraData(K_GLOBAL_NODES, nodes_data, True)
 
 
 def get_node(dim, pos, global_nodes_data=None):

@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import SpawnItemToPlayerInv
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
 from skybluetech_scripts.tooldelta.events.server import CustomCommandTriggerServerEvent
 from .register import RegisterCommand
 from .utils import generate_simple_arg_mapping
@@ -16,5 +17,8 @@ def onCommand(event):
         return
     args = generate_simple_arg_mapping(event.args)
     item_id = args["templateItem"]["itemName"]
-    SpawnItemToPlayerInv(player_id, GenerateInscribingTemplateByItemId(item_id))
+    CF.CreateItem(LEVEL_ID).SpawnItemToPlayerInv(
+        GenerateInscribingTemplateByItemId(item_id).marshal(),
+        player_id,
+    )
     event.SetReturnMsg("%commands.skybluetech.inscribing_template_give.success")

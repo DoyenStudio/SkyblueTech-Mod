@@ -1,7 +1,14 @@
 {
     "format_version": "1.10",
     "minecraft:item": {
-        "components": {},
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "common:light_skyblue_ingot",
+                    "c:light_skyblue_ingot"
+                ]
+            }
+        },
         "description": {
             "category": "skybluetech",
             "identifier": "skybluetech:light_skyblue_ingot"

@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_HEAT_VALUE,
     FluidSlotClient,
@@ -10,7 +11,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.distillation_chamber i
     recipes,
 )
 from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
@@ -42,7 +42,7 @@ class DistillationChamberUI(MachinePanelUIProxyEx):
         )
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

@@ -1,11 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF
 from mod.server.extraServerApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    GetAllInventoryItems,
-    GetArmorSlotItems,
-    SetPlayerAllItems,
-)
+
 from skybluetech_scripts.tooldelta.events.server import InventoryItemChangedServerEvent
 from .base import PlayerService
 from ..machinery.utils.charge import (
@@ -47,9 +44,14 @@ class ChargeService(PlayerService):
         """
         new_items = {}  # type: dict[tuple[int, int], Item]
         if charge_inv:
-            for slot, item in GetAllInventoryItems(
-                self.player_id, get_userdata=True
-            ).items():
+            for slot, item in {
+                slot: Item.from_dict(raw_item)
+                for slot, raw_item in enumerate(CF.CreateItem(self.player_id).GetPlayerAllItems(
+                    GetMinecraftEnum().ItemPosType.INVENTORY,
+                    True,
+                ))
+                if raw_item is not None
+            }.items():
                 if item.userData is None or GetIOPower(item.userData or {}, -1, -1) == (
                     -1,
                     -1,
@@ -74,9 +76,14 @@ class ChargeService(PlayerService):
                     if rf <= 0:
                         break
         if charge_armor:
-            for slot, item in GetArmorSlotItems(
-                self.player_id, get_userdata=True
-            ).items():
+            for slot, item in {
+                slot: Item.from_dict(raw_item)
+                for slot, raw_item in enumerate(CF.CreateItem(self.player_id).GetPlayerAllItems(
+                    GetMinecraftEnum().ItemPosType.ARMOR,
+                    True,
+                ))
+                if raw_item is not None
+            }.items():
                 if item.userData is None or GetIOPower(item.userData or {}, -1, -1) == (
                     -1,
                     -1,
@@ -89,7 +96,9 @@ class ChargeService(PlayerService):
                 new_items[(ItemPosType.ARMOR, slot)] = item
                 if rf <= 0:
                     break
-        SetPlayerAllItems(self.player_id, new_items)
+        CF.CreateItem(self.player_id).SetPlayerAllItems(
+            {key: item.marshal() for key, item in (new_items).items()},
+        )
         return rf
 
     def on_tick(self):
@@ -98,9 +107,14 @@ class ChargeService(PlayerService):
         chargers = {}  # type: dict[int, Item]
         charge_inv_items = {}  # type: dict[int, Item]
         charge_armor_items = {}  # type: dict[int, Item]
-        for slot, item in GetAllInventoryItems(
-            self.player_id, get_userdata=True
-        ).items():
+        for slot, item in {
+            slot: Item.from_dict(raw_item)
+            for slot, raw_item in enumerate(CF.CreateItem(self.player_id).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.INVENTORY,
+                True,
+            ))
+            if raw_item is not None
+        }.items():
             if item.userData is None or GetIOPower(item.userData or {}, -1, -1) == (
                 -1,
                 -1,
@@ -115,7 +129,14 @@ class ChargeService(PlayerService):
                     continue
             else:
                 charge_inv_items[slot] = item
-        for slot, item in GetArmorSlotItems(self.player_id, get_userdata=True).items():
+        for slot, item in {
+            slot: Item.from_dict(raw_item)
+            for slot, raw_item in enumerate(CF.CreateItem(self.player_id).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.ARMOR,
+                True,
+            ))
+            if raw_item is not None
+        }.items():
             if item.userData is None or GetIOPower(item.userData or {}, -1, -1) == (
                 -1,
                 -1,
@@ -157,7 +178,9 @@ class ChargeService(PlayerService):
             if charge_rf != charge_rf_origin:
                 UpdateCharge(charger_item, rf_rest)
                 allitems[(ItemPosType.INVENTORY, charger_slot)] = charger_item
-        SetPlayerAllItems(self.player_id, allitems)
+        CF.CreateItem(self.player_id).SetPlayerAllItems(
+            {key: item.marshal() for key, item in (allitems).items()},
+        )
 
     @PlayerService.Listen(InventoryItemChangedServerEvent.WithUserData())
     def on_get_item(self, event):

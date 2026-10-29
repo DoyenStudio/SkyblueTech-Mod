@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "sticks/platinum"
+                    "common:platinum_stick",
+                    "c:platinum_stick"
                 ]
             }
         },

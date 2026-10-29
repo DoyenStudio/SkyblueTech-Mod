@@ -1,6 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetPosBlockTags, SetBlock
-from skybluetech_scripts.tooldelta.api.common import Delay
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
+from skybluetech_scripts.tooldelta.utils.timer import Delay
 from skybluetech_scripts.tooldelta.events.server import PistonActionServerEvent
 
 
@@ -8,7 +9,10 @@ from skybluetech_scripts.tooldelta.events.server import PistonActionServerEvent
 def onPistonAction(event):
     # type: (PistonActionServerEvent) -> None
     for x, y, z in event.blockList:
-        if "piston_denier" in (GetPosBlockTags(event.dimensionId, (x, y, z)) or ()):
+        block = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, y, z), event.dimensionId)
+        if block is None:
+            continue
+        if "piston_denier" in CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(block["name"]):
             event.cancel()
             removePistonLater(event)
             break
@@ -17,9 +21,9 @@ def onPistonAction(event):
 @Delay(0)
 def removePistonLater(event):
     # type: (PistonActionServerEvent) -> None
-    SetBlock(
-        event.dimensionId,
+    CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
         (event.pistonX, event.pistonY, event.pistonZ),
-        "minecraft:air",
-        old_block_handing=1,
+        {"name": "minecraft:air", "aux": 0},
+        1,
+        dimensionId=event.dimensionId,
     )

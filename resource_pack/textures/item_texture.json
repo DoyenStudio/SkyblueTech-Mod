@@ -34,6 +34,9 @@
         "skybluetech:bio_dust": {
             "textures": "textures/items/dusts/bio_dust"
         },
+        "skybluetech:brine_bucket": {
+            "textures": "textures/items/buckets/brine_bucket"
+        },
         "skybluetech:bronze_axe": {
             "textures": "textures/items/metal_tools/bronze_axe"
         },
@@ -81,6 +84,9 @@
         },
         "skybluetech:cartidge_5_model": {
             "textures": "textures/models/cartidges/cartidge_cyan"
+        },
+        "skybluetech:chlorine_bucket": {
+            "textures": "textures/items/buckets/chlorine_bucket"
         },
         "skybluetech:circuit_base_plate": {
             "textures": "textures/items/circuit_base_plate"
@@ -132,6 +138,9 @@
         },
         "skybluetech:description_icon": {
             "textures": "textures/items/description"
+        },
+        "skybluetech:dilute_brine_bucket": {
+            "textures": "textures/items/buckets/dilute_brine_bucket"
         },
         "skybluetech:distilled_water_bucket": {
             "textures": "textures/items/buckets/distilled_water_bucket"
@@ -273,6 +282,9 @@
         },
         "skybluetech:iron_plate": {
             "textures": "textures/items/plates/iron_plate"
+        },
+        "skybluetech:hdpe_plate": {
+            "textures": "textures/items/plates/hdpe_plate"
         },
         "skybluetech:iron_stick": {
             "textures": "textures/items/sticks/iron_stick"
@@ -433,6 +445,12 @@
         "skybluetech:platinum_plate": {
             "textures": "textures/items/plates/platinum_plate"
         },
+        "skybluetech:saturated_brine_bucket": {
+            "textures": "textures/items/buckets/saturated_brine_bucket"
+        },
+        "skybluetech:sodium_hydroxide_solution_bucket": {
+            "textures": "textures/items/buckets/sodium_hydroxide_solution_bucket"
+        },
         "skybluetech:titanium_plate": {
             "textures": "textures/items/plates/titanium_plate"
         },
@@ -477,6 +495,12 @@
         },
         "skybluetech:resin": {
             "textures": "textures/items/resin"
+        },
+        "skybluetech:crude_salt": {
+            "textures": "textures/items/crude_salt"
+        },
+        "skybluetech:salt": {
+            "textures": "textures/items/salt"
         },
         "skybluetech:resin_spoon": {
             "textures": "textures/items/resin_spoon"

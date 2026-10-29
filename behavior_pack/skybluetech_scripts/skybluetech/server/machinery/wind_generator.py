@@ -1,15 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockAuxValueFromStates,
-    GetBlockName,
-    GetBlockPaletteBetweenPos,
-    GetBlockStates,
-    GetPlayerDimensionId,
-    MayPlace,
-    PlayerUseItemToPos,
-    SetBlock,
-)
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -48,13 +40,13 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
     block_name = Machinery.WIND_GENERATOR
     store_rf_max = STORE_RF_MAX
     energy_io_mode = (1, 1, 1, 1, 1, 1)
-    input_slots = (0,)
-    output_slots = ()
+    item_input_slots = (0,)
+    item_output_slots = ()
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(WindGenerator, self).__init__(dim, x, y, z, block_entity_data)
         self.t = 0
-        states = GetBlockStates(self.dim, (self.x, self.y, self.z))
+        states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((self.x, self.y, self.z), self.dim)
         if states is None:
             raise ValueError("WindGenerator BlockState None")
         self.facing = states["minecraft:cardinal_direction"]  # type: str
@@ -84,7 +76,10 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
             GUIControl._gui_control_on_click(self, event)
         else:
             event.cancel()
-            PlayerUseItemToPos(event.playerId, (self.x, self.y - self.layer, self.z), 2)
+            CF.CreateBlockInfo(event.playerId).PlayerUseItemToPos(
+                (self.x, self.y - self.layer, self.z),
+                2,
+            )
 
     def _wind_generator_on_ticking(self):
         if not self.is_base_block:
@@ -103,8 +98,16 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
         y = event.y
         z = event.z
         facing = event.face
-        if not MayPlace(block_id, (x, y + 1, z), facing, dim) or not MayPlace(
-            block_id, (x, y + 2, z), facing, dim
+        if not CF.CreateBlockInfo(LEVEL_ID).MayPlace(
+            block_id,
+            (x, y + 1, z),
+            facing,
+            dim,
+        ) or not CF.CreateBlockInfo(LEVEL_ID).MayPlace(
+            block_id,
+            (x, y + 2, z),
+            facing,
+            dim,
         ):
             event.cancel()
 
@@ -113,11 +116,11 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
             return
         TCON.block_placed(self)
         for i in range(1, 3):
-            SetBlock(
-                self.dim,
+            CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
                 (self.x, self.y + i, self.z),
-                self.block_name,
-                GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": i}),
+                {"name": self.block_name, "aux": CF.CreateBlockState(LEVEL_ID).GetBlockAuxValueFromStates(self.block_name, {"skybluetech:layer": i})},
+                0,
+                dimensionId=self.dim,
             )
 
     def _wind_generator_on_neighbor_changed(self, event):
@@ -141,8 +144,16 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
                     m.DropAllItems()
             if i != self.layer:
                 pos = (self.x, base_y + i, self.z)
-                if GetBlockName(self.dim, pos) == self.block_name:
-                    SetBlock(self.dim, pos, "minecraft:air")
+                if (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                    pos,
+                    self.dim,
+                ) or {}).get("name") == self.block_name:
+                    CF.CreateBlockInfo(LEVEL_ID).SetBlockNew(
+                        pos,
+                        {"name": "minecraft:air", "aux": 0},
+                        0,
+                        dimensionId=self.dim,
+                    )
 
     def _wind_generator_on_unload(self):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
@@ -212,7 +223,12 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
             print("[WindGenerator] facing error: %s" % self.facing)
             return 0
         vol = (pos2[0] - pos1[0]) * (pos2[1] - pos1[1]) * (pos2[2] - pos1[2])
-        pal = GetBlockPaletteBetweenPos(self.dim, pos1, pos2, eliminateAir=False)
+        pal = CF.CreateBlock(LEVEL_ID).GetBlockPaletteBetweenPos(
+            self.dim,
+            pos1,
+            pos2,
+            eliminateAir=False,
+        )
         air_count = pal.GetBlockCountInBlockPalette("minecraft:air")
         if pal.GetBlockCountInBlockPalette("minecraft:air") < vol * 0.6:
             return 0
@@ -253,7 +269,7 @@ class WindGenerator(GUIControl, ItemContainer, BaseGenerator):
 def onRecvRequest(event):
     # type: (WindGeneratorStatesRequest) -> None
     m = GetLoadedMachine(
-        GetPlayerDimensionId(event.player_id), event.x, event.y, event.z
+        CF.CreateDimension(event.player_id).GetEntityDimensionId(), event.x, event.y, event.z
     )
     if not isinstance(m, WindGenerator) or not m.is_base_block:
         return

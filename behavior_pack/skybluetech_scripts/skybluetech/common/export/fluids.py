@@ -4,7 +4,7 @@ from ..define.id_enum.fluids import (
     Fluids, Acid, Gas, Oil, Vanilla, Common, CommonGas, CommonOil, CommonLiquid,
     HotFluid, ExtremeHotFluid, HotLava, DeepLava, Molten,
 )
-from ..define.fluids.define import BasicFluidTexture, FluidTexture
+from ..define.fluids.define import BasicFluidTexture
 from ..define.fluids.texture import (
     RegisterFluidTexture, GetFluidTexture, AIR, WATER, WATER_VAPOR, LAVA,
     MOLTEN_METAL, VANILLA_WATER, VANILLA_LAVA, DEEPSLATE_LAVA,
@@ -14,7 +14,7 @@ from ..define.fluids.texture import (
 __all__ = [
     "Fluids", "Acid", "Gas", "Oil", "Vanilla", "Common", "CommonGas", "CommonOil",
     "CommonLiquid", "HotFluid", "ExtremeHotFluid", "HotLava", "DeepLava", "Molten",
-    "BasicFluidTexture", "FluidTexture", "RegisterFluidTexture", "GetFluidTexture",
+    "BasicFluidTexture", "RegisterFluidTexture", "GetFluidTexture",
     "AIR", "WATER", "WATER_VAPOR", "LAVA", "MOLTEN_METAL", "VANILLA_WATER",
     "VANILLA_LAVA", "DEEPSLATE_LAVA", "METHANE_MUD", "BASIC_FLUID", "LIQUID_RESIN_STATIC",
 ]

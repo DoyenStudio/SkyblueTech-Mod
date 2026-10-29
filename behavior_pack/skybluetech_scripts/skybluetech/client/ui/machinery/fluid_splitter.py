@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.id_enum.fluids import Fluids
 from skybluetech_scripts.skybluetech.common.events.machinery.fluid_splitter import (
     FluidSplitterSettingsListUpdate,
@@ -9,10 +10,6 @@ from skybluetech_scripts.skybluetech.common.events.machinery.fluid_splitter impo
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient
 from skybluetech_scripts.skybluetech.common.machinery_def.fluid_splitter import (
     MAX_FLUID_VOLUME,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import OnKeyPressInGame
@@ -51,7 +48,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
         self.close_fluid_selector()
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -65,7 +62,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
             label, fluid_id = lis[i]
             griditem = self.settings_grid.GetGridItem(0, i)
             griditem["label"].asLabel().SetText(
-                GetItemHoverName(fluid_id).replace("§f", "")
+                CF.CreateItem(LEVEL_ID).GetItemHoverName(fluid_id).replace("§f", "")
             )
             griditem["color_img"].asImage().SetSpriteColor(rand_rgb_by_index(label))
             griditem["item_renderer"].asItemRenderer().SetUiItem(
@@ -214,7 +211,7 @@ class FluidSplitterUI(MachinePanelUIProxyEx):
             return
         if self.fluid_selector_window is not None:
             self.fluid_selector_window["title"].asLabel().SetText(
-                "选中流体： " + GetItemHoverName(fluid_id).replace("§f", "")
+                "选中流体： " + CF.CreateItem(LEVEL_ID).GetItemHoverName(fluid_id).replace("§f", "")
             )
             self.current_selected_fluid_id = fluid_id
 
@@ -278,7 +275,7 @@ def fuzzySearch(text, sections):
 def _get_all_fluid_names():
     if _get_all_fluid_names.cache is None:
         SEARCHABLE_FLUIDS = {
-            GetItemHoverName(fluid_id).replace("§f", ""): fluid_id
+            CF.CreateItem(LEVEL_ID).GetItemHoverName(fluid_id).replace("§f", ""): fluid_id
             for fluid_id in Fluids.all_sub()
         }
         SEARCHABLE_FLUIDS.update({fluid_id: fluid_id for fluid_id in Fluids.all_sub()})

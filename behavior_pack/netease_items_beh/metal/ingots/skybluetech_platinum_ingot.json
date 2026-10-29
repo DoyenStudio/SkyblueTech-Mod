@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/platinum"
+                    "common:platinum_ingot",
+                    "c:platinum_ingot"
                 ]
             }
         },

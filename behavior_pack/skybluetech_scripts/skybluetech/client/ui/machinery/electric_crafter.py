@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
     K_STORE_RF,
@@ -7,7 +8,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.electric_crafter impor
     K_RECIPE_PREVIEW,
     STORE_RF_MAX,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
@@ -34,7 +34,7 @@ class ElectricCrafterUI(MachinePanelUIProxyEx):
         self.preview_id_auxes = [None] * PREVIEW_SLOT_COUNT  # type: list[int | None]
         self._preview_raw = None  # type: str | None
         # 开界面时先取一次方块实体数据, 让首帧渲染就有正确状态
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         self.update_recipe_preview(
             GetValue(data["exData"], K_RECIPE_PREVIEW, None)
             if data is not None
@@ -42,7 +42,7 @@ class ElectricCrafterUI(MachinePanelUIProxyEx):
         )
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

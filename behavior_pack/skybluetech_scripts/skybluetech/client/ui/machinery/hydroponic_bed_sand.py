@@ -1,15 +1,11 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
 from skybluetech_scripts.skybluetech.common.machinery_def.hydroponic_bed_sand import (
     K_CROP_BLOCK_ID,
     K_GROW_PROGRESS,
     STORE_RF_MAX,
     recipes,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    CombineBlockPaletteToGeometry,
-    GetBlockEntityData,
-    NewSingleBlockPalette,
 )
 from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
@@ -36,7 +32,7 @@ class HydroponicBedSandUI(MachinePanelUIProxy):
         self.last_progress = None
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -51,9 +47,18 @@ class HydroponicBedSandUI(MachinePanelUIProxy):
             return
         self.last_render_crop_block_id = crop_block_id
         self.last_progress = grow_progress
-        pal = NewSingleBlockPalette(crop_block_id or "minecraft:air", 0)
-        geo_id = CombineBlockPaletteToGeometry(
-            pal, "geometry.skybluetech_temp.crop_block_id"
+        pal = CF.CreateBlock(LEVEL_ID).GetBlankBlockPalette()
+        pal.DeserializeBlockPalette({
+            "extra": {},
+            "void": False,
+            "actor": {},
+            "volume": (1, 1, 1),
+            "common": {(crop_block_id or 'minecraft:air', 0): [0]},
+            "eliminateAir": True,
+        })
+        geo_id = CF.CreateBlockGeometry(LEVEL_ID).CombineBlockPaletteToGeometry(
+            pal,
+            'geometry.skybluetech_temp.crop_block_id',
         )
         self.crop_disp.RenderBlockGeometryModel(
             geo_id,

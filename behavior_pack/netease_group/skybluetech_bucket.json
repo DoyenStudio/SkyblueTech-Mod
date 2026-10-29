@@ -4,7 +4,10 @@
             "group_name": "itemGroup.skybluetech.buckets",
             "icon": "skybluetech:molten_tin_bucket",
             "list": [
+                "skybluetech:brine_bucket",
+                "skybluetech:chlorine_bucket",
                 "skybluetech:deepslate_lava_bucket",
+                "skybluetech:dilute_brine_bucket",
                 "skybluetech:distilled_water_bucket",
                 "skybluetech:heavy_lava_bucket",
                 "skybluetech:hydrogen_bucket",
@@ -26,6 +29,8 @@
                 "skybluetech:molten_silver_bucket",
                 "skybluetech:molten_tin_bucket",
                 "skybluetech:raw_oil_bucket",
+                "skybluetech:saturated_brine_bucket",
+                "skybluetech:sodium_hydroxide_solution_bucket",
                 "skybluetech:sulfuric_acid_bucket",
                 "skybluetech:vegetable_oil_bucket",
                 "skybluetech:water_vapor_bucket"

@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from collections import deque
 from weakref import WeakValueDictionary
 
@@ -6,13 +7,8 @@ from skybluetech_scripts.skybluetech.common.define.facing import (
     NEIGHBOR_BLOCKS_ENUM,
     OPPOSITE_FACING,
 )
-from skybluetech_scripts.tooldelta.api.common import Delay, ExecLater
-from skybluetech_scripts.tooldelta.api.server import (
-    CheckChunkState,
-    GetBlockName,
-    GetBlockStates,
-    UpdateBlockStates,
-)
+from skybluetech_scripts.tooldelta.utils.timer import Delay, ExecLater
+
 from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -257,7 +253,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         if walked is not None and start in walked:
             return None
 
-        start_bname = GetBlockName(dim, start)
+        start_bname = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(start, dim) or {}).get("name")
         if start_bname is None:
             return None
         if not self.transmitter_check_func(start_bname):  # 确保 start 一定是管道 !!!
@@ -276,7 +272,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         while queue:
             current = queue.popleft()
             cx, cy, cz = current
-            block_states = GetBlockStates(dim, current) or {}
+            block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(current, dim) or {}
 
             _i = set()  # type: set[_APT]
             _o = set()  # type: set[_APT]
@@ -288,7 +284,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                     # 未连接的面也不必再读邻居方块
                     continue
                 xyz = (cx + dx, cy + dy, cz + dz)
-                block_name = GetBlockName(dim, xyz)
+                block_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(xyz, dim) or {}).get("name")
                 if block_name is None:
                     continue
                 elif self.transmitter_check_func(block_name):
@@ -516,14 +512,17 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         区块边缘加载顺序不稳定时, 邻区块方块可能晚一点才可读取, 因此只处理
         所在区块已加载完成的邻居。
         """
-        if not CheckChunkState(dim, (x, y, z)):
+        if not CF.CreateChunkSource(LEVEL_ID).CheckChunkState(dim, (x, y, z)):
             return
         if block_name is None:
-            block_name = GetBlockName(dim, (x, y, z))
+            block_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                (x, y, z),
+                dim,
+            ) or {}).get("name")
         if block_name is None or not self.transmitter_check_func(block_name):
             return
         states = {}  # type: dict[str, bool]
-        current_states = GetBlockStates(dim, (x, y, z)) or {}
+        current_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, y, z), dim) or {}
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
             facing_key = (
                 "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
@@ -532,9 +531,12 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 # 这一面本来就没有连接记录, 不在此处补连
                 continue
             neighbor_pos = (x + dx, y + dy, z + dz)
-            if not CheckChunkState(dim, neighbor_pos):
+            if not CF.CreateChunkSource(LEVEL_ID).CheckChunkState(dim, neighbor_pos):
                 continue
-            neighbor_name = GetBlockName(dim, neighbor_pos)
+            neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                neighbor_pos,
+                dim,
+            ) or {}).get("name")
             if neighbor_name is not None and self.can_connect(
                 dim, block_name, (x, y, z), neighbor_name, neighbor_pos
             ):
@@ -542,13 +544,19 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             # 邻居方块已不存在或不再可连接, 清除这一面的连接记录
             states[facing_key] = False
         if states:
-            UpdateBlockStates(dim, (x, y, z), states)
+            _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, y, z), dim)
+            if _block_states is not None:
+                _block_states.update(states)
+                CF.CreateBlockState(LEVEL_ID).SetBlockStates((x, y, z), _block_states, dim)
 
     def refresh_nearby_transmitter_connections(self, dim, x, y, z):
         # type: (int, int, int, int) -> None
         for dx, dy, dz in NEIGHBOR_BLOCKS_ENUM:
             tx, ty, tz = x + dx, y + dy, z + dz
-            block_name = GetBlockName(dim, (tx, ty, tz))
+            block_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                (tx, ty, tz),
+                dim,
+            ) or {}).get("name")
             if block_name is not None and self.transmitter_check_func(block_name):
                 self.refresh_transmitter_connections(dim, tx, ty, tz, block_name)
 
@@ -579,7 +587,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         is_transmitter = self.transmitter_check_func(block_name)
         for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
             neighbor_pos = (x + dx, y + dy, z + dz)
-            neighbor_name = GetBlockName(dim, neighbor_pos)
+            neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                neighbor_pos,
+                dim,
+            ) or {}).get("name")
             if neighbor_name is None:
                 continue
             if self.transmitter_check_func(neighbor_name):
@@ -589,10 +600,20 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                     # 不同等级的管道无法互相连接
                     continue
                 key = "skybluetech:connection_" + FACING_EN[OPPOSITE_FACING[facing]]
-                neighbor_states = GetBlockStates(dim, neighbor_pos) or {}
+                neighbor_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+                    neighbor_pos,
+                    dim,
+                ) or {}
                 if not neighbor_states.get(key, False):
                     # 相邻管道朝向本方块的那一面也要点亮, 两侧的连接状态必须对称
-                    UpdateBlockStates(dim, neighbor_pos, {key: True})
+                    _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(neighbor_pos, dim)
+                    if _block_states is not None:
+                        _block_states.update({key: True})
+                        CF.CreateBlockState(LEVEL_ID).SetBlockStates(
+                            neighbor_pos,
+                            _block_states,
+                            dim,
+                        )
                 if not is_transmitter:
                     # 机器自身朝向该管道的插座模型: 放置事件与机器放置事件谁先
                     # 谁后不确定, 机器一侧的模型统一在这里再刷一次
@@ -611,7 +632,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         """
         for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
             neighbor_pos = (x + dx, y + dy, z + dz)
-            neighbor_name = GetBlockName(dim, neighbor_pos)
+            neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                neighbor_pos,
+                dim,
+            ) or {}).get("name")
             if neighbor_name is None:
                 continue
             if self.transmitter_check_func(neighbor_name):
@@ -621,7 +645,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                     # 不同等级的管道本来就不会互相连接
                     continue
                 opposite_en = FACING_EN[OPPOSITE_FACING[facing]]
-                neighbor_states = GetBlockStates(dim, neighbor_pos) or {}
+                neighbor_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+                    neighbor_pos,
+                    dim,
+                ) or {}
                 if not neighbor_states.get(
                     "skybluetech:connection_" + opposite_en, False
                 ):
@@ -631,7 +658,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 if io_key in neighbor_states:
                     # 只有物品管道声明了 IO 模式状态, 别给其他管线写不存在的键
                     new_states[io_key] = False
-                UpdateBlockStates(dim, neighbor_pos, new_states)
+                _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(neighbor_pos, dim)
+                if _block_states is not None:
+                    _block_states.update(new_states)
+                    CF.CreateBlockState(LEVEL_ID).SetBlockStates(neighbor_pos, _block_states, dim)
             elif self.transmittable_block_check_func(neighbor_name, dim, neighbor_pos):
                 # 机器一侧的插座模型: 管线没了, 插座也要收回去
                 self.refresh_machine_socket(dim, neighbor_pos, (x, y, z))
@@ -656,10 +686,13 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             )
             if old_network is not None:
                 old_networks.add(old_network)
-            current_states = GetBlockStates(dim, (x, y, z)) or {}
+            current_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, y, z), dim) or {}
             for facing, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
                 neighbor_pos = (x + dx, y + dy, z + dz)
-                neighbor_name = GetBlockName(dim, neighbor_pos)
+                neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                    neighbor_pos,
+                    dim,
+                ) or {}).get("name")
                 if neighbor_name is None or not self.transmitter_can_connect(
                     blockName, neighbor_name
                 ):
@@ -724,10 +757,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 facing_key = (
                     "skybluetech:connection_" + FACING_EN[DXYZ_FACING[(dx, dy, dz)]]
                 )
-                bname = GetBlockName(
-                    event.dimensionId,
+                bname = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
                     (event.x + dx, event.y + dy, event.z + dz),
-                )
+                    event.dimensionId,
+                ) or {}).get("name")
                 if bname is None:
                     continue
                 states[facing_key] = (
@@ -737,7 +770,17 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                     event.dimensionId,
                     (event.x + dx, event.y + dy, event.z + dz),
                 )
-            UpdateBlockStates(event.dimensionId, (event.x, event.y, event.z), states)
+            _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+                (event.x, event.y, event.z),
+                event.dimensionId,
+            )
+            if _block_states is not None:
+                _block_states.update(states)
+                CF.CreateBlockState(LEVEL_ID).SetBlockStates(
+                    (event.x, event.y, event.z),
+                    _block_states,
+                    event.dimensionId,
+                )
             # self.clean_access_point(event.dimensionId, event.x, event.y, event.z)
             # 不再需要, 直接覆盖即可
             # 相邻管道朝向本方块的那一面也要点亮, 两侧的连接状态必须对称
@@ -782,8 +825,9 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         facing_en = FACING_EN[DXYZ_FACING[dxyz]]
         facing_key = "skybluetech:connection_" + facing_en
         # 连接只在放置 / 拆除方块时建立, 这里不自动补连, 只清理已经失效的连接
-        current_states = GetBlockStates(
-            event.dimensionId, (event.posX, event.posY, event.posZ)
+        current_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            (event.posX, event.posY, event.posZ),
+            event.dimensionId,
         ) or {}
         if not current_states.get(facing_key, False):
             return
@@ -792,7 +836,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             event.neighborPosY,
             event.neighborPosZ,
         )
-        neighbor_name = GetBlockName(event.dimensionId, neighbor_pos)
+        neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            neighbor_pos,
+            event.dimensionId,
+        ) or {}).get("name")
         if neighbor_name is not None and self.can_connect(
             event.dimensionId,
             event.blockName,
@@ -807,9 +854,17 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         if io_key in current_states:
             # 只有物品管道声明了 IO 模式状态, 别给其他管线写不存在的键
             new_states[io_key] = False
-        UpdateBlockStates(
-            event.dimensionId, (event.posX, event.posY, event.posZ), new_states
+        _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            (event.posX, event.posY, event.posZ),
+            event.dimensionId,
         )
+        if _block_states is not None:
+            _block_states.update(new_states)
+            CF.CreateBlockState(LEVEL_ID).SetBlockStates(
+                (event.posX, event.posY, event.posZ),
+                _block_states,
+                event.dimensionId,
+            )
 
     @EventListenerService.Listen(BlockRemoveServerEvent)
     @Delay(0)  # 等待下一 tick, 此时才能保证此处方块为空
@@ -820,7 +875,10 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         # 同类方块 (快速拆+放), 此时放置事件已经完成了正确的清理与重建, 若不加
         # 校验直接清理, 会把刚建好的接入点从活网络中永久误删 (2026-07 实证)。
         # 所以延迟处理时必须先确认该处现状: 仍是同类方块则跳过, 交给放置事件。
-        current = GetBlockName(event.dimension, (event.x, event.y, event.z))
+        current = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            (event.x, event.y, event.z),
+            event.dimension,
+        ) or {}).get("name")
         # 被移除方块已不存在, 只能按名称判断; 但新连接规则按容器大小判断,
         # 因此同时以该位置是否存在容器节点缓存为准, 避免漏掉按名称无法识别的容器
         has_container_node = (event.dimension, (event.x, event.y, event.z)) in self.container_nodes_pool

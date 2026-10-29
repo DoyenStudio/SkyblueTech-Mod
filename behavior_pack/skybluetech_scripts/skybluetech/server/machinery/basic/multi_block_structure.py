@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from weakref import ref
 
 from mod_log import logger
@@ -20,16 +21,9 @@ from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
     AIR_BLOCK_ID,
     StructureBlockPalette,
 )
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlankBlockPalette,
-)
-from skybluetech_scripts.tooldelta.api.common import Delay, ExecLater
-from skybluetech_scripts.tooldelta.api.server import (
-    AddBlocksToBlockRemoveListener,
-    GetBlockCardinalFacing,
-    GetBlockName,
-    GetBlockPaletteBetweenPos,
-)
+
+from skybluetech_scripts.tooldelta.utils.timer import Delay, ExecLater
+
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     ChunkAcquireDiscardedServerEvent,
@@ -57,8 +51,8 @@ if 0 > 1:
 DEBUG = False
 
 FLAG_OK = 0
-MAX_STRUCTURE_MISMATCH_POSES = 5
-"最多写入方块实体数据的结构不匹配位置数量, 避免 UI 溢出."
+MAX_STRUCTURE_MISMATCH_POSES = 20
+"最多收集并写入方块实体数据的结构不匹配位置数量, 避免大量缺失时写入卡顿."
 STRUCTURE_DEACTIVE_FLAGS = (
     DEACTIVE_FLAG_STRUCTURE_BROKEN | DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK
 )
@@ -158,9 +152,10 @@ class DetectArea(object):
         self.functional_block_poses = {}  # type: dict[str, list[tuple[int, int, int]]]
         # 朝向只在初始化时取一次: 下面的包围盒和 `_detect_structure()` 里的旋转都依赖它,
         # 两处用同一个值才能保证始终互相自洽
-        self.core_block_facing = GetBlockCardinalFacing(
-            self.dim, (self.center_x, self.center_y, self.center_z)
-        )
+        self.core_block_facing = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            (self.center_x, self.center_y, self.center_z),
+            self.dim,
+        )["minecraft:cardinal_direction"]
         self.rotation_times = ROT_TIMES_MAPPING[self.core_block_facing]
         self._rotated_palette = None  # type: StructureBlockPalette | None
         self._air_poses_in_world = None  # type: set[tuple[int, int, int]] | None
@@ -206,7 +201,9 @@ class DetectArea(object):
             else:
                 block_removed_listen_pool.update(block_id)
         if server_inited:
-            AddBlocksToBlockRemoveListener(block_removed_listen_pool)
+            block_info_comp = CF.CreateBlockInfo(LEVEL_ID)
+            for block_id in block_removed_listen_pool:
+                block_info_comp.ListenOnBlockRemoveEvent(block_id, True)
         if not self.chunks_not_loaded:
             mark_detect_area_dirty(self)
 
@@ -319,7 +316,7 @@ class DetectArea(object):
 
     def _detect_structure(self):
         spalette = self.rotated_palette
-        current_palette = GetBlockPaletteBetweenPos(
+        current_palette = CF.CreateBlock(LEVEL_ID).GetBlockPaletteBetweenPos(
             self.dim,
             (self.min_x, self.min_y, self.min_z),
             (self.max_x, self.max_y, self.max_z),
@@ -362,7 +359,10 @@ class DetectArea(object):
             "y": wy,
             "z": wz,
             "expected": expected_block_ids,
-            "actual": GetBlockName(self.dim, (wx, wy, wz)) or "",
+            "actual": (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                (wx, wy, wz),
+                self.dim,
+            ) or {}).get("name") or "",
         }
 
     def _find_mismatch_poses(self, spalette, actual_poses):
@@ -529,15 +529,12 @@ class MultiBlockStructure(BaseMachine):
         return self.lacked_blocks
 
     def GetStructureLackedBlockPoses(self):
-        "返回缺失方块的具体位置列表, 每条为 (x, y, z, 期望方块, 实际方块) 组成的 dict."
+        # 返回缺失方块的具体位置列表, 每条为 (x, y, z, 期望方块, 实际方块) 组成的 dict.
         return self.lacked_block_poses
 
     def GetFunctionalBlockPoses(self):
-        """
-        返回功能性方块的世界坐标, 按方块 ID 分组, 结构完整时才会更新。
-
-        只包含放在调色板允许位置上的方块, 藏在结构内部的接口不会出现在这里。
-        """
+        # 返回功能性方块的世界坐标, 按方块 ID 分组, 结构完整时才会更新。
+        # 只包含放在调色板允许位置上的方块, 藏在结构内部的接口不会出现在这里。
         return self.area.functional_block_poses
 
     def StructureFinished(self):
@@ -550,6 +547,18 @@ class MultiBlockStructure(BaseMachine):
 
     def GetAllMachines(self, cls, block_id=None):
         # type: (type[MT], str | None) -> list[MT]
+        # 一次性获取当前多方块结构中指定方块 ID 的所有已加载功能性机器。
+        # 其 ID 需要被包含在类属性 `functional_block_ids` 中。
+
+        # Args:
+        #     cls (type[BaseMachine]): 机器类, 只返回该类或其子类的实例。
+        #     block_id (str, optional): 机器方块 ID。默认为 cls.block_name。
+        #         接口类注册了多个 ID 时, 传入当前结构使用的具体 ID。
+
+        # Returns:
+        #     list[BaseMachine]: 按功能性方块坐标登记顺序返回的机器列表。
+        #         只查找调色板允许位置上的方块, 跳过未加载或类型不符的机器。
+        #         没有匹配机器时返回空列表; 每次调用重新查询, 不缓存机器实例。
         from ..core.pool import GetLoadedMachine
 
         block_id = block_id or cls.block_name
@@ -642,7 +651,7 @@ class MultiBlockStructure(BaseMachine):
     @lacked_block_poses.setter
     def lacked_block_poses(self, value):
         # type: (list[dict[str, object]]) -> None
-        value = value or []
+        value = (value or [])[:MAX_STRUCTURE_MISMATCH_POSES]
         self.bdata[K_STRUCTURE_LACKED_BLOCK_POSES] = self._lacked_block_poses = value
 
 
@@ -674,7 +683,9 @@ def get_not_loaded_chunk_poses_in_range(dim, startx, startz, endx, endz):
 @ServerInitCallback()
 def onServerInit():
     global server_inited
-    AddBlocksToBlockRemoveListener(block_removed_listen_pool)
+    block_info_comp = CF.CreateBlockInfo(LEVEL_ID)
+    for block_id in block_removed_listen_pool:
+        block_info_comp.ListenOnBlockRemoveEvent(block_id, True)
     server_inited = True
 
 
@@ -774,6 +785,8 @@ def onCheckRequest(event):
 
 # CLIENT PART
 if False:
+    from skybluetech_scripts.tooldelta.cli import CF as CLIENT_CF, LEVEL_ID as CLIENT_LEVEL_ID
+
     multi_block_model_displaying = False
 
     @MultiBlockStructureCheckResponse.Listen()
@@ -823,7 +836,7 @@ if False:
                 pal_dict.setdefault((palette_display[pal_index], 0), []).append(
                     (y - min_y) * size_x * size_z + (x - min_x) * size_z + (z - min_z)
                 )
-        pal = GetBlankBlockPalette()
+        pal = CLIENT_CF.CreateBlock(CLIENT_LEVEL_ID).GetBlankBlockPalette()
         pal.DeserializeBlockPalette(
             {
                 "extra": {},
@@ -863,7 +876,10 @@ if False:
         for _x, _y, _z in expected.difference(actual):
             print(
                 " ({} {} {}) : {}".format(
-                    x + _x, y + _y, z + _z, GetBlockName(dim, (x + _x, y + _y, z + _z))
+                    x + _x, y + _y, z + _z, (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                        (x + _x, y + _y, z + _z),
+                        dim,
+                    ) or {}).get("name")
                 )
             )
         print("====== Structure debug end ======")

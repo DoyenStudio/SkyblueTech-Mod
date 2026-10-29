@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/bronze"
+                    "common:bronze_dust",
+                    "c:bronze_dust"
                 ]
             }
         },

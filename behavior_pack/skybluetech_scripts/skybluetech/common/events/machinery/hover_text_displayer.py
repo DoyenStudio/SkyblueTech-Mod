@@ -20,13 +20,14 @@ class HoverTextDisplayerContentUpload(MachineryOperationC2S):
 class HoverTextDisplayerContentUpdate(CustomS2CEvent):
     name = "st:HTDCUd"
 
-    def __init__(self, x, y, z, new_text, power_cost):
-        # type: (int, int, int, str, int) -> None
+    def __init__(self, x, y, z, new_text, power_cost, dimension_id):
+        # type: (int, int, int, str, int, int) -> None
         self.x = x
         self.y = y
         self.z = z
         self.new_text = new_text
         self.power_cost = power_cost
+        self.dimension_id = dimension_id
 
     def marshal(self):
         return {
@@ -35,6 +36,7 @@ class HoverTextDisplayerContentUpdate(CustomS2CEvent):
             "z": self.z,
             "new_text": self.new_text,
             "power_cost": self.power_cost,
+            "dimension_id": self.dimension_id,
         }
 
     @classmethod
@@ -45,4 +47,5 @@ class HoverTextDisplayerContentUpdate(CustomS2CEvent):
             z=data["z"],
             new_text=data["new_text"],
             power_cost=data["power_cost"],
+            dimension_id=data["dimension_id"],
         )

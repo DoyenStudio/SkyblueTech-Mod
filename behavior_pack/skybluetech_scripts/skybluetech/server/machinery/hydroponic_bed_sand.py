@@ -38,7 +38,7 @@ class HydroponicBedSand(
 ):
     block_name = Machinery.HYDROPONIC_BED_SAND
     store_rf_max = STORE_RF_MAX
-    input_slots = (0,)
+    item_input_slots = (0,)
     running_power = POWER_COST
     original_speed = WORK_TICK_DELAY
 

@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.mini_jei import (
     CategoryType,
     GetRecipesByInput,
@@ -6,7 +7,6 @@ from skybluetech_scripts.skybluetech.common.mini_jei import (
     RecipeBase,
     RecipesCollection,
 )
-from skybluetech_scripts.tooldelta.api.client import GetItemHoverName
 from skybluetech_scripts.tooldelta.ui.elem_comp import UButton
 
 from .recipe_checker_ui import RecipeCheckerUI
@@ -24,8 +24,8 @@ def _GroupRecipesByRenderer(recipes):
                 "Can't push a recipe without a renderer :: %s" % recipe.cls_name
             )
         recipe_icon_id = recipe_renderer_cls.recipe_icon_id
-        recipe_title = recipe_renderer_cls.minijei_title or GetItemHoverName(
-            recipe_icon_id
+        recipe_title = recipe_renderer_cls.minijei_title or CF.CreateItem(LEVEL_ID).GetItemHoverName(
+            recipe_icon_id,
         )
         key = (recipe_icon_id, recipe_title)
         if key not in grouped_recipes:

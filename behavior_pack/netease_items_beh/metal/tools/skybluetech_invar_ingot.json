@@ -4,7 +4,7 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "ingots/invar"
+                    "common:invar_ingot"
                 ]
             }
         },

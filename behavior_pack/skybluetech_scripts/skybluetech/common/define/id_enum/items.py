@@ -142,6 +142,7 @@ class Plates(SimpleEnum):
     CUPRONICKEL = "skybluetech:cupronickel_plate"
     ULTRAHEATINUM = "skybluetech:ultraheatinum_plate"
     SUPERCONDUCT = "skybluetech:superconduct_plate"
+    HDPE = "skybluetech:hdpe_plate"
 
 
 class RawOres(SimpleEnum):
@@ -200,6 +201,7 @@ class Cutter(SimpleEnum):
 AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"
 CIRCUIT_BASE_PLATE = "skybluetech:circuit_base_plate"
 CRAFTING_TEMPLATE = "skybluetech:crafting_template"
+CRUDE_SALT = "skybluetech:crude_salt"
 DEACTIVATION_REDSTONE = "skybluetech:deactivation_redstone"
 DRILL_TOP_STEEL = "skybluetech:drill_top_steel"
 DRILL_TOP_ULTRAHEATINUM = "skybluetech:drill_top_ultraheatinum"
@@ -216,6 +218,7 @@ RESIN = "skybluetech:resin"
 RESIN_SPOON = "skybluetech:resin_spoon"
 ROUGH_RUBBER = "skybluetech:rough_rubber"
 ROSIN = "skybluetech:rosin"
+SALT = "skybluetech:salt"
 SKYBLUE_CORE = "skybluetech:skyblue_core"
 SULFUR = "skybluetech:sulfur"
 SUNFLOWER_SEEDS = "skybluetech:sunflower_seeds"

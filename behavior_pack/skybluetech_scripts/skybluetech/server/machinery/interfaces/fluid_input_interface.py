@@ -14,9 +14,9 @@ class FluidInputInterface(GUIControl, MultiFluidContainer, BaseInterface):
     is_non_energy_machine = True
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_io_fix_mode = 0
-    fluid_slot_max_volumes = (FLUID_INTERFACE_MAX_VOLUME,)
-    fluid_input_slots = {0}
-    fluid_output_slots = set()
+    fluid_slot_max_volumes = {0: FLUID_INTERFACE_MAX_VOLUME}
+    fluid_input_slots = (0,)
+    fluid_output_slots = ()
     migrate_legacy_fluid_data = True
 
     def __init__(self, dim, x, y, z, block_entity_data):

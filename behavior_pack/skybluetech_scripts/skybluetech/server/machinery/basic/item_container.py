@@ -1,15 +1,10 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.tooldelta.internal import GetServer
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events import (
     PlayerTryPutCustomContainerItemClientEvent,
     PlayerTryPutCustomContainerItemServerEvent,
-)
-from skybluetech_scripts.tooldelta.api.server import (
-    GetContainerItem,
-    SetContainerItem,
-    PutItemIntoContainer,
-    SetChestBoxItemNum,
-    SpawnDroppedItem,
 )
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
@@ -21,15 +16,32 @@ class ItemContainer(BaseMachine):
     可存储物品的机器基类。
 
     类属性:
-        input_slots (tuple[int, ...]): 可用输入槽位
-        output_slots (tuple[int, ...]): 可用输出槽位
+        item_input_slots (tuple[int, ...]): 可用输入槽位
+        item_output_slots (tuple[int, ...]): 可用输出槽位
+        item_input_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面输入白名单
+        item_output_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面抽取白名单
 
     覆写:
         - `__init__`
     """
 
-    input_slots = ()  # type: tuple[int, ...]
-    output_slots = ()  # type: tuple[int, ...]
+    item_input_slots = ()  # type: tuple[int, ...]
+    item_output_slots = ()  # type: tuple[int, ...]
+    # 键为 RelativeFacingStrEnum；None 不限制，空映射/缺失面/空元组禁止。
+    item_input_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
+    item_output_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
+
+    def GetItemInputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.item_input_slots, self.item_input_slots_by_face, relative_face
+        )
+
+    def GetItemOutputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.item_output_slots, self.item_output_slots_by_face, relative_face
+        )
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ItemContainer, self).__init__(dim, x, y, z, block_entity_data)
@@ -40,9 +52,9 @@ class ItemContainer(BaseMachine):
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
         "只约束本组件声明的槽位, 其他槽位交给对应组件校验。"
-        if slot in self.input_slots:
+        if slot in self.item_input_slots:
             return True
-        return slot not in self.output_slots
+        return slot not in self.item_output_slots
 
     def GetSlotItem(self, slot_pos, get_user_data=True):
         # type: (int, bool) -> Item | None
@@ -56,7 +68,13 @@ class ItemContainer(BaseMachine):
         Returns:
             Item (optional): 槽位内物品实例, 如果为空则返回 None
         """
-        return GetContainerItem(self.dim, self.xyz, slot_pos, get_user_data)
+        raw_item = CF.CreateItem(LEVEL_ID).GetContainerItem(
+            self.xyz,
+            slot_pos,
+            self.dim,
+            get_user_data,
+        )
+        return Item.from_dict(raw_item) if raw_item is not None else None
 
     def SetSlotItem(self, slot_pos, item):
         # type: (int, Item | None) -> bool
@@ -70,21 +88,24 @@ class ItemContainer(BaseMachine):
         Returns:
             bool: 是否成功设置物品
         """
-        return SetContainerItem(
-            self.dim, self.xyz, slot_pos, item or Item("minecraft:air", count=0)
+        return CF.CreateItem(LEVEL_ID).SpawnItemToContainer(
+            (item or Item("minecraft:air", count=0)).marshal(),
+            slot_pos,
+            self.xyz,
+            self.dim,
         )
 
     def DropAllItems(self):
-        for slot in self.input_slots + self.output_slots:
+        for slot in self.item_input_slots + self.item_output_slots:
             item = self.GetSlotItem(slot)
             if item is not None:
-                SpawnDroppedItem(self.dim, self.xyz, item)
+                GetServer().CreateEngineItemEntity(item.marshal(), self.dim, self.xyz)
                 self.SetSlotItem(slot, None)
 
     def SetSlotItemCount(self, slot_pos, count):
         # type: (int, int) -> None
         """WARNING: 此 api 对于自定义容器有 bug"""
-        SetChestBoxItemNum(None, self.xyz, slot_pos, count, self.dim)
+        CF.CreateChestBlock(LEVEL_ID).SetChestBoxItemNum(None, self.xyz, slot_pos, count, self.dim)
 
     def GetSlotSize(self):
         """
@@ -93,7 +114,7 @@ class ItemContainer(BaseMachine):
         Returns:
             int
         """
-        return len(self.input_slots) + len(self.output_slots)
+        return len(self.item_input_slots) + len(self.item_output_slots)
 
     def GetInputSlotItems(self, get_user_data=True):
         # type: (bool) -> dict[int, Item]
@@ -104,7 +125,7 @@ class ItemContainer(BaseMachine):
             dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
         """
         res = {}  # type: dict[int, Item]
-        for slot_pos in self.input_slots:
+        for slot_pos in self.item_input_slots:
             item = self.GetSlotItem(slot_pos, get_user_data=get_user_data)
             if item is not None:
                 res[slot_pos] = item
@@ -119,7 +140,7 @@ class ItemContainer(BaseMachine):
             dict[int, Item]: 槽位对应的物品实例, 如果槽位里有物品
         """
         res = {}  # type: dict[int, Item]
-        for slot_pos in self.output_slots:
+        for slot_pos in self.item_output_slots:
             item = self.GetSlotItem(slot_pos)
             if item is not None:
                 res[slot_pos] = item
@@ -147,7 +168,7 @@ class ItemContainer(BaseMachine):
         Returns:
             Item (optional): 如有剩余物品则返回物品实例
         """
-        for slot_pos in self.input_slots:
+        for slot_pos in self.item_input_slots:
             orig_item = self.GetSlotItem(slot_pos, get_user_data=True)
             if orig_item is None:
                 if not self.IsValidInput(slot_pos, item):
@@ -196,11 +217,11 @@ class ItemContainer(BaseMachine):
         """
         _c = [
             self.GetSlotItem(slot_pos, get_user_data=True)
-            for slot_pos in self.output_slots
+            for slot_pos in self.item_output_slots
         ]
         current_items = [i for i in _c if i is not None]
         items_sorted = SortItems(items + current_items)
-        return len(items_sorted) <= len(self.output_slots)
+        return len(items_sorted) <= len(self.item_output_slots)
 
     def OutputItem(self, item):
         # type: (Item) -> Item | None
@@ -211,7 +232,7 @@ class ItemContainer(BaseMachine):
         #     return None
         """
         输出产出的物品。
-        需要机器设置了 output_slots
+        需要机器设置了 item_output_slots
 
         Args:
             item (Item): 产出物
@@ -219,4 +240,20 @@ class ItemContainer(BaseMachine):
         Returns:
             Item: 剩余物品, 当没有剩余物时返回 None
         """
-        return PutItemIntoContainer(self.dim, self.xyz, item, self.output_slots)
+        for slot in self.item_output_slots:
+            slotitem = self.GetSlotItem(slot, get_user_data=False)
+            if slotitem is None:
+                self.SetSlotItem(slot, item)
+                return None
+            elif slotitem.StackFull():
+                continue
+            elif slotitem.CanMerge(item):
+                require_count = min(
+                    item.GetBasicInfo().maxStackSize - slotitem.count, item.count
+                )
+                slotitem.count += require_count
+                item.count -= require_count
+                self.SetSlotItem(slot, slotitem)
+                if item.count == 0:
+                    return None
+        return item

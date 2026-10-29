@@ -41,8 +41,8 @@ class ElectricMachineryWorkstation(Processor, OperationListener):
     dump_progress_to_block_entity_data = True
     process_item = True
     recipes = recipes # pyright: ignore[reportAssignmentType]
-    input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
-    output_slots = (10,)
+    item_input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9)
+    item_output_slots = (10,)
     upgrade_slot_start = 11
     upgrade_slots = 4
 
@@ -126,7 +126,7 @@ class ElectricMachineryWorkstation(Processor, OperationListener):
             return UpgradeControl.IsValidInput(self, slot, item)
         if slot == SOLDER_SLOT:
             return item.id == SOLDER_ITEM_ID
-        if slot in self.output_slots:
+        if slot in self.item_output_slots:
             return False
         recipe = self._get_selected_recipe()
         if recipe is None:
@@ -140,7 +140,7 @@ class ElectricMachineryWorkstation(Processor, OperationListener):
         if recipe is None:
             return
         slot_inputs = {}  # type: dict[int, Input]
-        for slot in self.input_slots:
+        for slot in self.item_input_slots:
             required = recipe.input_items.get(slot)
             if required is not None:
                 slot_inputs[slot] = required
@@ -163,7 +163,7 @@ class ElectricMachineryWorkstation(Processor, OperationListener):
                 break
 
     def _electric_machinery_workstation_on_slot_update(self, slot_pos):
-        if slot_pos in self.input_slots:
+        if slot_pos in self.item_input_slots:
             self.separate_items()
         Processor._processor_on_slot_update(self, slot_pos)
         self.CallSync()

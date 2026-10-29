@@ -1,11 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.mini_jei.core.define import (
     CategoryType,
     RecipeBase,
-)
-from skybluetech_scripts.tooldelta.api.client.item import (
-    GetItemFormattedHoverText,
-    GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
@@ -16,12 +13,13 @@ DESC_BOARD_KEY = "jei_desc_board"
 
 
 class ItemDisplayer(object):
-    def __init__(self, ctrl, item, tag=None, prob=1.0):
-        # type: (UBaseCtrl, Item, str | None, float) -> None
+    def __init__(self, ctrl, item, tag=None, prob=1.0, not_consumed=False):
+        # type: (UBaseCtrl, Item, str | None, float, bool) -> None
         self.ctrl = ctrl
         self.item = item
         self.tag = tag
         self.prob = prob
+        self.not_consumed = not_consumed
         self.item_renderer = ctrl["item_renderer"].asItemRenderer()
         self.item_count_label = ctrl["item_count"].asLabel()
         self.prob_label = ctrl["prob"].asLabel()
@@ -45,7 +43,9 @@ class ItemDisplayer(object):
             self.prob_label.SetText("%.1f%%%%" % (self.prob * 100))
 
     def onBtnReleased(self, _):
-        fmt = GetItemFormattedHoverText(self.item.id) or self.item.id
+        fmt = CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(self.item.id) or self.item.id
+        if self.not_consumed:
+            fmt += "\n§e不被消耗。"
         if self.prob != 1.0:
             fmt += "\n§e产出概率： %.1f%%%%" % (self.prob * 100)
         if self.tag is not None:
@@ -128,7 +128,7 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
             (
                 recipe_renderer.recipe_icon_id,
                 recipe_renderer.minijei_title
-                or GetItemHoverName(recipe_renderer.recipe_icon_id),
+                or CF.CreateItem(LEVEL_ID).GetItemHoverName(recipe_renderer.recipe_icon_id),
             ),
             [],
         ).append(recipe)
@@ -138,7 +138,7 @@ def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, te
             (
                 recipe_renderer.recipe_icon_id,
                 recipe_renderer.minijei_title
-                or GetItemHoverName(recipe_renderer.recipe_icon_id),
+                or CF.CreateItem(LEVEL_ID).GetItemHoverName(recipe_renderer.recipe_icon_id),
             ),
             [],
         ).append(recipe)

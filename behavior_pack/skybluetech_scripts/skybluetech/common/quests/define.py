@@ -1,9 +1,5 @@
 # coding=utf-8
 import time
-from skybluetech_scripts.tooldelta.api.server import (
-    GetExtraData,
-    SetExtraData,
-)
 
 if 0>1:
     import typing
@@ -37,9 +33,14 @@ class Quest(object):
 
     def add_to_player(self, player_id):
         # type: (str) -> None
-        prev_data = GetExtraData(player_id, K_RUNNING_QUESTS, {})
+        from skybluetech_scripts.tooldelta.srv import CF
+
+        comp = CF.CreateExtraData(player_id)
+        prev_data = comp.GetExtraData(K_RUNNING_QUESTS)
+        if prev_data is None:
+            prev_data = {}
         prev_data[self.id] = {"_ctime": int(time.time())}
-        SetExtraData(player_id, K_RUNNING_QUESTS, prev_data, auto_save=True)
+        comp.SetExtraData(K_RUNNING_QUESTS, prev_data, True)
 
     def get_data(self, player_id):
         # type: (str) -> dict
@@ -123,28 +124,44 @@ class ItemQuest(Quest):
 
 def GetRunningQuests(player_id):
     # type: (str) -> set[str]
-    return set(GetExtraData(player_id, K_RUNNING_QUESTS, {}))
+    from skybluetech_scripts.tooldelta.srv import CF
+
+    return set(CF.CreateExtraData(player_id).GetExtraData(K_RUNNING_QUESTS) or {})
 
 
 def QuestIsFinished(player_id, quest_id):
     # type: (str, str) -> bool
-    return quest_id in GetExtraData(player_id, K_FINISHED_QUESTS, {})
+    from skybluetech_scripts.tooldelta.srv import CF
+
+    return quest_id in (CF.CreateExtraData(player_id).GetExtraData(K_FINISHED_QUESTS) or {})
 
 
 def SetQuestFinished(player_id, quest_id):
     # type: (str, str) -> None
-    prev_data = GetExtraData(player_id, K_FINISHED_QUESTS, {})
+    from skybluetech_scripts.tooldelta.srv import CF
+
+    comp = CF.CreateExtraData(player_id)
+    prev_data = comp.GetExtraData(K_FINISHED_QUESTS)
+    if prev_data is None:
+        prev_data = {}
     prev_data[quest_id] = int(time.time())
-    SetExtraData(player_id, K_FINISHED_QUESTS, prev_data, auto_save=True)
+    comp.SetExtraData(K_FINISHED_QUESTS, prev_data, True)
 
 
 def ReadQuestData(player_id, quest_id):
     # type: (str, str) -> dict
-    return GetExtraData(player_id, K_RUNNING_QUESTS, {}).get(quest_id, {})
+    from skybluetech_scripts.tooldelta.srv import CF
+
+    return (CF.CreateExtraData(player_id).GetExtraData(K_RUNNING_QUESTS) or {}).get(quest_id, {})
 
 
 def SaveQuestData(player_id, quest_id, data):
     # type: (str, str, dict) -> None
-    prev_data = GetExtraData(player_id, K_RUNNING_QUESTS, {})
+    from skybluetech_scripts.tooldelta.srv import CF
+
+    comp = CF.CreateExtraData(player_id)
+    prev_data = comp.GetExtraData(K_RUNNING_QUESTS)
+    if prev_data is None:
+        prev_data = {}
     prev_data[quest_id] = data
-    SetExtraData(player_id, K_RUNNING_QUESTS, prev_data, auto_save=True)
+    comp.SetExtraData(K_RUNNING_QUESTS, prev_data, True)

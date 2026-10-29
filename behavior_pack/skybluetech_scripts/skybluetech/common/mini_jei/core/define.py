@@ -1,5 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import GetItemTags
+from skybluetech_scripts.tooldelta.internal import InClientEnv
+
+_item_tags_cache = {}  # type: dict[str, set[str]]
 
 if 0>1:
     import typing  # noqa: F401
@@ -136,7 +138,16 @@ class Input(Element):
     def match_item_id(self, item_id, aux=0):
         # type: (str, int) -> bool
         if self.is_tag:
-            return self.id in GetItemTags(item_id, self.aux)
+            tags = _item_tags_cache.get(item_id)
+            if tags is None:
+                if InClientEnv():
+                    from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+                else:
+                    from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+
+                tags = set(CF.CreateItem(LEVEL_ID).GetItemTags(item_id, self.aux))
+                _item_tags_cache[item_id] = tags
+            return self.id in tags
         else:
             return item_id == self.id and (self.aux == -1 or self.aux == aux)
 
@@ -231,8 +242,8 @@ class Recipe(RecipeBase):
         from .marshal_utils import UnmarshalInputs, UnmarshalOutputs
 
         return cls(
-            UnmarshalInputs(dct["inputs"].items()),
-            UnmarshalOutputs(dct["outputs"].items()),
+            UnmarshalInputs(dct["inputs"]),
+            UnmarshalOutputs(dct["outputs"]),
         )
 
     def __hash__(self):

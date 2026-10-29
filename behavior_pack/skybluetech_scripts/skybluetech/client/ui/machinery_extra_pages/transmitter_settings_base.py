@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetBlockNameAndAux
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.skybluetech.common.define.facing import (
     FACING_DXYZ,
@@ -166,7 +166,7 @@ class TransmitterSettingsPageBase(PageBase):
             tx = self.machine_pos[1] + dx
             ty = self.machine_pos[2] + dy
             tz = self.machine_pos[3] + dz
-            transmitter_name, aux = GetBlockNameAndAux((tx, ty, tz))
+            transmitter_name, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock((tx, ty, tz)) or (None, 0)
             if transmitter_name not in self.transmitter_block_ids_set:
                 continue
             transmitter_conn_face = OPPOSITE_FACING[face]
@@ -191,7 +191,7 @@ class TransmitterSettingsPageBase(PageBase):
         self.update()
 
     def init(self):
-        _, aux = GetBlockNameAndAux(self.machine_pos[1:])
+        _, aux = CF.CreateBlockInfo(LEVEL_ID).GetBlock(self.machine_pos[1:]) or (None, 0)
         aux = aux & 0b11
         r = FrontFacingRes(OPPOSITE_FACING[CARDINAL_TO_FACING[aux]])
         self.left_face = r.left_face

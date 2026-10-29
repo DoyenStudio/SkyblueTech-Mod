@@ -1,7 +1,8 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import GetItemTags
 from .define import RecipeBase, CategoryType
 from .storage import recipesFrom, recipesTo, recipesOf
+
+_item_tags_cache = {}  # type: dict[str, set[str]]
 
 
 def GetRecipesByOutput(category, id):
@@ -23,7 +24,15 @@ def GetRecipesByOutput(category, id):
     res = list(recipesFrom.get(category, {}).get(id, set()))
     if category is not CategoryType.ITEM or not id.startswith("tag:"):
         # 还需要根据 tag 找配方
-        tags = GetItemTags(id)
+        from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+
+        tags = _item_tags_cache.get(id)
+        if tags is None:
+            tags_list = CF.CreateItem(LEVEL_ID).GetItemTags(id, 0)
+            if tags_list is None:
+                raise ValueError("Item id invalid: " + id)
+            tags = set(tags_list)
+            _item_tags_cache[id] = tags
         res += [
             recipe
             for tag in tags
@@ -51,7 +60,15 @@ def GetRecipesByInput(category, id):
     res = list(recipesTo.get(category, {}).get(id, []))
     if category is not CategoryType.ITEM or not id.startswith("tag:"):
         # 还需要根据 tag 找配方
-        tags = GetItemTags(id)
+        from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+
+        tags = _item_tags_cache.get(id)
+        if tags is None:
+            tags_list = CF.CreateItem(LEVEL_ID).GetItemTags(id, 0)
+            if tags_list is None:
+                raise ValueError("Item id invalid: " + id)
+            tags = set(tags_list)
+            _item_tags_cache[id] = tags
         res += [
             recipe
             for tag in tags

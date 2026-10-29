@@ -1,5 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.server import GetPlayerDimensionId
+from skybluetech_scripts.tooldelta.srv import CF
+
 from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
 
 from .base_machine import BaseMachine
@@ -39,7 +40,7 @@ class OperationListener(BaseMachine):
                 def listener(event):
                     # type: (EventT) -> None
                     machine = GetLoadedMachine(
-                        GetPlayerDimensionId(event.player_id), event.x, event.y, event.z
+                        CF.CreateDimension(event.player_id).GetEntityDimensionId(), event.x, event.y, event.z
                     )
                     if not isinstance(machine, cls):
                         return

@@ -5,6 +5,7 @@ from .assembler import Assembler
 from .battery_matrix import BatteryMatrix
 from .battery_matrix_core import BatteryMatrixCore
 from .bedrock_lava_drill import BedrockLavaDrill
+from . import brine_evaporation_pond
 from .charger import Charger
 from .compressor import Compressor
 from .creative_generator import CreativeGenerator
@@ -15,6 +16,7 @@ from .digger import Digger
 from .distillation_chamber import DistillationChamber
 from .electric_heater import ElectricHeater
 from .electric_crafter import ElectricCrafter
+from .electrolyzer import Electrolyzer
 from .energy_cube import EnergyCubeJunior
 from .engraver import Engraver
 from .farming_station import FarmingStation
@@ -52,9 +54,11 @@ from .redstone_generator import RedstoneGenerator
 from .resin_collector_outputer import ResinCollectorOutputer
 from .rf_repeater_plant import RFRepeaterPlant
 from .sawmill import Sawmill
+from .seawater_pump import SeawaterPump
 from .splitter import Splitter
 from .solar_panel import SolarPanel
 from .template_assembler import TemplateAssembler
+from .tesla_plant import TeslaPlant
 from .thermal_generator import ThermalGenerator
 from .vacuum_freezer import VacuumFreezer
 from .wind_generator import WindGenerator

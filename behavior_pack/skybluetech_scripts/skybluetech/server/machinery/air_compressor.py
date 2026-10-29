@@ -23,10 +23,10 @@ class AirCompressor(Processor, MultiFluidContainer):
     process_fluid = True
     recipes = Recipes
     fluid_io_mode = (1, 1, 1, 1, 1, 1)
-    fluid_output_slots = {0}
-    fluid_slot_max_volumes = (MAX_FLUID_VOLUME,)
-    input_slots = (0, 1, 2, 3)
-    output_slots = ()
+    fluid_output_slots = (0,)
+    fluid_slot_max_volumes = {0: MAX_FLUID_VOLUME}
+    item_input_slots = (0, 1, 2, 3)
+    item_output_slots = ()
     upgrade_slot_start = 0
     upgrade_slots = 4
     allow_player_use_bucket_push = False

@@ -1,4 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF
+from mod.server.extraServerApi import GetMinecraftEnum
 
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import (
@@ -8,7 +10,7 @@ from skybluetech_scripts.tooldelta.events.server import (
     PlayerAttackEntityEvent,
     ServerPlayerTryDestroyBlockEvent,
 )
-from skybluetech_scripts.tooldelta.api.server import GetPlayerMainhandItem
+
 from .utils import GetUpgraders
 
 # TYPE_CHECKING
@@ -114,7 +116,12 @@ def onServerItemUseOn(event):
 @ServerPlayerTryDestroyBlockEvent.Listen(-1000)
 def onServerPlayerTryDestroyBlock(event):
     # type: (ServerPlayerTryDestroyBlockEvent) -> None
-    item = GetPlayerMainhandItem(event.playerId)
+    item = CF.CreateItem(event.playerId).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    item = Item.from_dict(item) if item is not None else None
     if item is None:
         return
     ud = item.userData
@@ -130,7 +137,12 @@ def onServerPlayerTryDestroyBlock(event):
 @PlayerAttackEntityEvent.Listen(-1000)
 def onPlayerAttackEntity(event):
     # type: (PlayerAttackEntityEvent) -> None
-    item = GetPlayerMainhandItem(event.playerId)
+    item = CF.CreateItem(event.playerId).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    item = Item.from_dict(item) if item is not None else None
     if item is None:
         return
     ud = item.userData
@@ -146,7 +158,12 @@ def onPlayerAttackEntity(event):
 @DestroyBlockEvent.Listen(-1000)
 def onDestroyBlock(event):
     # type: (DestroyBlockEvent) -> None
-    item = GetPlayerMainhandItem(event.playerId)
+    item = CF.CreateItem(event.playerId).GetPlayerItem(
+        GetMinecraftEnum().ItemPosType.CARRIED,
+        0,
+        True,
+    )
+    item = Item.from_dict(item) if item is not None else None
     if item is None:
         return
     ud = item.userData

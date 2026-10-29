@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
     K_STORE_RF,
@@ -10,7 +11,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.mini_miner import (
     STORE_RF_MAX,
     WorkMode,
 )
-from skybluetech_scripts.tooldelta.api.client import GetBlockEntityData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import (
     GetValueWithDefault as GetValue,
@@ -44,7 +44,7 @@ class MiniMinerUI(MachinePanelUIProxyEx):
         self.fluid_displayer = FluidDisplayer(self.GetElement(FLUID_PATH))
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]

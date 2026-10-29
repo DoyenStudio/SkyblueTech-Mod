@@ -1,7 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.internal import GetServer
 from .basic.multi_fluid_container import MultiFluidContainer
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+
 from ...common.define.id_enum.machinery import CYRO_HEAT_MELTING_CHAMBER as MACHINE_ID
 from ...common.machinery_def.cyro_heat_melting_chamber import (
     recipes as Recipes,
@@ -28,9 +29,9 @@ class CyroHeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, Hea
     block_name = MACHINE_ID
     is_non_energy_machine = True
     fluid_io_fix_mode = 0
-    fluid_slot_max_volumes = (1000,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: 1000}
+    fluid_input_slots = (0,)
+    fluid_output_slots = (0,)
     migrate_legacy_fluid_data = True
 
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -136,8 +137,10 @@ class CyroHeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, Hea
         if self.kelvin <= recipe.max_temperature:
             OutputRecipe(self, recipe)
         elif recipe.waste is not None:
-            SpawnDroppedItem(
-                self.dim, (self.x + 0.5, self.y + 0.5, self.z + 0.5), Item(recipe.waste)
+            GetServer().CreateEngineItemEntity(
+                Item(recipe.waste).marshal(),
+                self.dim,
+                (self.x + 0.5, self.y + 0.5, self.z + 0.5),
             )
         self.working_ticks = 0
 

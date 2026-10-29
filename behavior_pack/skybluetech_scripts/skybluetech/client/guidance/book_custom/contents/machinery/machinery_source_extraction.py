@@ -4,9 +4,13 @@ from skybluetech_scripts.skybluetech.common.define import id_enum
 from skybluetech_scripts.skybluetech.common.machinery_def.bedrock_lava_drill import (
     STRUCTURE_PALETTE,
 )
+from skybluetech_scripts.skybluetech.common.machinery_def.seawater_pump import (
+    STRUCTURE_PALETTE as SEAWATER_RESERVOIR_SP,
+)
 
 from ...define import (
     MachineryWorkstationRecipePage,
+    MultiBlockStructureModelPage,
     MultiBlockStructureRenderPage,
     PageGroup,
     TextPage,
@@ -107,5 +111,20 @@ pump = PageGroup(
             '电动泵消耗能量<text color="§9" t="抽取">其下方的流体方块的流体源， 可以使用流体管道导出。\n\n泵会寻找 16 格以内的的<text color="§3" t="流体源">； 如果安装了<text color="§5" t="强化： 范围扩增">， 搜寻范围会变为原来的 4 倍！',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.PUMP),
+    ],
+)
+
+seawater_reservoir = PageGroup(
+    "seawater_reservoir_description",
+    [
+        TextPage(
+            "海水蓄水池",
+            '抽取盐水！ <item id="{seawater_pump}">海水泵可以从<text color="§9" t="海水蓄水池">中抽取淡盐水。\n\n把蓄水池建到<text color="§9" t="宽阔海域的水底">！ 若建在水量不足的淡水区域， 海水泵将难以抽取盐水。 抽取速度与蓄水池所在水域盐水浓度有关； 海水泵界面上<img path="textures/ui/white_background" rgba=#B0B000 alpha=0.5 size_x=2 size_y=12>是抽取盐水所需最低海水浓度；浓度达到<img path="textures/ui/white_background" rgba=#00B000 alpha=0.5 size_x=2 size_y=12>时抽取速率最高。'.format(
+                seawater_pump=id_enum.Machinery.SEAWATER_PUMP
+            ),
+        ),
+        MultiBlockStructureModelPage(
+            id_enum.Machinery.SEAWATER_PUMP, SEAWATER_RESERVOIR_SP
+        ),
     ],
 )

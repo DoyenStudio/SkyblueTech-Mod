@@ -2,7 +2,12 @@
     "format_version": "1.10",
     "minecraft:item": {
         "components": {
-
+            "minecraft:tags": {
+                "tags": [
+                    "common:refined_iron_ingot",
+                    "c:refined_iron_ingot"
+                ]
+            }
         },
         "description": {
             "category": "skybluetech",

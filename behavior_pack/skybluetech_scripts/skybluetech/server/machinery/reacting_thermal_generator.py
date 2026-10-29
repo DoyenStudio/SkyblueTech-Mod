@@ -23,9 +23,9 @@ class ReactingThermalGenerator(GeneratorProcessor, MultiFluidContainer):
     process_item = True
     process_fluid = True
     recipes = Recipes
-    input_slots = (0,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {1}
+    item_input_slots = (0,)
+    fluid_input_slots = (0,)
+    fluid_output_slots = (1,)
     fluid_slot_max_volumes = MAX_FLUID_VOLUMES
 
     def __init__(self, dim, x, y, z, block_entity_data):

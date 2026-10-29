@@ -1,0 +1,53 @@
+{
+    "format_version": "1.12.0",
+    "minecraft:geometry": [
+        {
+            "description": {
+                "identifier": "geometry.skybluetech.tesla_arc",
+                "texture_width": 16,
+                "texture_height": 16,
+                "visible_bounds_width": 64,
+                "visible_bounds_height": 64,
+                "visible_bounds_offset": [0, 0, 0]
+            },
+            "bones": [
+                {
+                    "name": "arc",
+                    "pivot": [0, 0, 0],
+                    "cubes": [
+                        {
+                            "origin": [-8, -8, 0],
+                            "size": [16, 16, 0],
+                            "uv": {
+                                "north": {
+                                    "uv": [0, 0],
+                                    "uv_size": [16, 16]
+                                }
+                            }
+                        },
+                        {
+                            "origin": [-8, -8, 0],
+                            "size": [16, 16, 0],
+                            "uv": {
+                                "north": {
+                                    "uv": [32, 0],
+                                    "uv_size": [16, 16]
+                                }
+                            }
+                        },
+                        {
+                            "origin": [-8, -8, 0],
+                            "size": [16, 16, 0],
+                            "uv": {
+                                "north": {
+                                    "uv": [64, 0],
+                                    "uv_size": [16, 16]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

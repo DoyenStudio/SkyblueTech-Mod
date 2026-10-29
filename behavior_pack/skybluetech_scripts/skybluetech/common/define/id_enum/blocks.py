@@ -11,6 +11,7 @@ class ItemPipe(SimpleEnum):
 class FluidPipe(SimpleEnum):
     ACIDPROOF = "skybluetech:pipe_acidproof"
     BRONZE = "skybluetech:pipe_bronze"
+    CHEMICAL = "skybluetech:pipe_chemical"
     CUPRONICKEL = "skybluetech:pipe_cupronickel"
     ULTRAHEATINUM = "skybluetech:pipe_ultraheatinum"
 

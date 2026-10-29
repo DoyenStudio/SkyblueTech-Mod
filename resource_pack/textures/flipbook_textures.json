@@ -131,5 +131,383 @@
         "atlas_tile": "skybluetech:oil_extractor_front_active",
         "ticks_per_frame": 4,
         "blend_frames": false
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.concentrated_sulfuric_acid/static",
+        "atlas_tile": "skybluetech:baked_concentrated_sulfuric_acid_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.concentrated_sulfuric_acid/flowing",
+        "atlas_tile": "skybluetech:baked_concentrated_sulfuric_acid_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.deepslate_lava/static",
+        "atlas_tile": "skybluetech:baked_deepslate_lava_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.deepslate_lava/flowing",
+        "atlas_tile": "skybluetech:baked_deepslate_lava_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.distilled_water/static",
+        "atlas_tile": "skybluetech:baked_distilled_water_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.distilled_water/flowing",
+        "atlas_tile": "skybluetech:baked_distilled_water_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.deepslate_lava/flowing_block_static",
+        "atlas_tile": "skybluetech:baked_deepslate_lava_flowing_block_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.deepslate_lava/flowing_block_flowing",
+        "atlas_tile": "skybluetech:baked_deepslate_lava_flowing_block_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.heavy_lava/static",
+        "atlas_tile": "skybluetech:baked_heavy_lava_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.heavy_lava/flowing",
+        "atlas_tile": "skybluetech:baked_heavy_lava_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.light_lava/flowing_block_static",
+        "atlas_tile": "skybluetech:baked_light_lava_flowing_block_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.light_lava/flowing_block_flowing",
+        "atlas_tile": "skybluetech:baked_light_lava_flowing_block_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.liquid_resin/static",
+        "atlas_tile": "skybluetech:baked_liquid_resin_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.liquid_resin/flowing",
+        "atlas_tile": "skybluetech:baked_liquid_resin_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.liquid_soldering_tin/static",
+        "atlas_tile": "skybluetech:baked_liquid_soldering_tin_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.liquid_soldering_tin/flowing",
+        "atlas_tile": "skybluetech:baked_liquid_soldering_tin_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.lubricant/flowing_block_static",
+        "atlas_tile": "skybluetech:baked_lubricant_flowing_block_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.lubricant/flowing_block_flowing",
+        "atlas_tile": "skybluetech:baked_lubricant_flowing_block_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.mid_lava/flowing_block_static",
+        "atlas_tile": "skybluetech:baked_mid_lava_flowing_block_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.mid_lava/flowing_block_flowing",
+        "atlas_tile": "skybluetech:baked_mid_lava_flowing_block_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_copper/static",
+        "atlas_tile": "skybluetech:baked_molten_copper_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_copper/flowing",
+        "atlas_tile": "skybluetech:baked_molten_copper_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_earth/static",
+        "atlas_tile": "skybluetech:baked_molten_earth_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_earth/flowing",
+        "atlas_tile": "skybluetech:baked_molten_earth_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_gold/static",
+        "atlas_tile": "skybluetech:baked_molten_gold_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_gold/flowing",
+        "atlas_tile": "skybluetech:baked_molten_gold_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_impurity/static",
+        "atlas_tile": "skybluetech:baked_molten_impurity_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_impurity/flowing",
+        "atlas_tile": "skybluetech:baked_molten_impurity_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_iron/static",
+        "atlas_tile": "skybluetech:baked_molten_iron_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_iron/flowing",
+        "atlas_tile": "skybluetech:baked_molten_iron_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_lead/static",
+        "atlas_tile": "skybluetech:baked_molten_lead_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_lead/flowing",
+        "atlas_tile": "skybluetech:baked_molten_lead_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_nickel/static",
+        "atlas_tile": "skybluetech:baked_molten_nickel_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_nickel/flowing",
+        "atlas_tile": "skybluetech:baked_molten_nickel_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_platinum/static",
+        "atlas_tile": "skybluetech:baked_molten_platinum_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_platinum/flowing",
+        "atlas_tile": "skybluetech:baked_molten_platinum_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_rosin/static",
+        "atlas_tile": "skybluetech:baked_molten_rosin_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_rosin/flowing",
+        "atlas_tile": "skybluetech:baked_molten_rosin_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_silver/static",
+        "atlas_tile": "skybluetech:baked_molten_silver_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_silver/flowing",
+        "atlas_tile": "skybluetech:baked_molten_silver_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_tin/static",
+        "atlas_tile": "skybluetech:baked_molten_tin_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_tin/flowing",
+        "atlas_tile": "skybluetech:baked_molten_tin_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.raw_oil/static",
+        "atlas_tile": "skybluetech:baked_raw_oil_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.raw_oil/flowing",
+        "atlas_tile": "skybluetech:baked_raw_oil_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.so3/static",
+        "atlas_tile": "skybluetech:baked_so3_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.so3/flowing",
+        "atlas_tile": "skybluetech:baked_so3_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sulfuric_acid/flowing_block_static",
+        "atlas_tile": "skybluetech:baked_sulfuric_acid_flowing_block_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sulfuric_acid/flowing_block_flowing",
+        "atlas_tile": "skybluetech:baked_sulfuric_acid_flowing_block_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.vegetable_oil/static",
+        "atlas_tile": "skybluetech:baked_vegetable_oil_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.vegetable_oil/flowing",
+        "atlas_tile": "skybluetech:baked_vegetable_oil_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.light_lava/static",
+        "atlas_tile": "skybluetech:baked_light_lava_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.light_lava/flowing",
+        "atlas_tile": "skybluetech:baked_light_lava_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.lubricant/static",
+        "atlas_tile": "skybluetech:baked_lubricant_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.lubricant/flowing",
+        "atlas_tile": "skybluetech:baked_lubricant_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.mid_lava/static",
+        "atlas_tile": "skybluetech:baked_mid_lava_static",
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.mid_lava/flowing",
+        "atlas_tile": "skybluetech:baked_mid_lava_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sulfuric_acid/static",
+        "atlas_tile": "skybluetech:baked_sulfuric_acid_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sulfuric_acid/flowing",
+        "atlas_tile": "skybluetech:baked_sulfuric_acid_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/gas_static",
+        "atlas_tile": "skybluetech:gas_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.oxygen/static",
+        "atlas_tile": "skybluetech:baked_oxygen_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.brine/static",
+        "atlas_tile": "skybluetech:baked_brine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.brine/flowing",
+        "atlas_tile": "skybluetech:baked_brine_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.saturated_brine/static",
+        "atlas_tile": "skybluetech:baked_saturated_brine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.saturated_brine/flowing",
+        "atlas_tile": "skybluetech:baked_saturated_brine_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.chlorine/static",
+        "atlas_tile": "skybluetech:baked_chlorine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/static",
+        "atlas_tile": "skybluetech:baked_sodium_hydroxide_solution_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/flowing",
+        "atlas_tile": "skybluetech:baked_sodium_hydroxide_solution_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.dilute_brine/static",
+        "atlas_tile": "skybluetech:baked_dilute_brine_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.dilute_brine/flowing",
+        "atlas_tile": "skybluetech:baked_dilute_brine_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
     }
 ]

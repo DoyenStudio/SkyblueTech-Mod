@@ -1,13 +1,7 @@
 # coding=utf-8
+from mod.server.extraServerApi import GetMinecraftEnum
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    ItemExists,
-    GetPlayerMainhandItem,
-    SpawnItemToPlayerCarried,
-    GiveItem,
-    GetSelectedSlot,
-    SetInventorySlotItemCount,
-)
 from skybluetech_scripts.skybluetech.common.define.global_config import BUCKET_VOLUME
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotServer
 from .gui_ctrl import GUIControl
@@ -21,9 +15,11 @@ class MultiFluidContainer(BaseMachine):
 
     类属性:
         fluid_io_mode (tuple[int, int, int, int, int, int]): 每个面的流体输入输出模式, -1:兼容 0:输入 1:输出 其他:无
-        fluid_input_slots (set[int]): 可接受输入的流体槽位
-        fluid_output_slots (set[int]): 可输出的流体槽位
-        fluid_slot_max_volumes (tuple[float, ...]): 每个流体槽最多可存储流体容量
+        fluid_input_slots (tuple[int, ...]): 可接受输入的流体槽位
+        fluid_output_slots (tuple[int, ...]): 可输出的流体槽位
+        fluid_input_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面输入白名单
+        fluid_output_slots_by_face (dict[str, tuple[int, ...]] | None): 管道分面抽取白名单
+        fluid_slot_max_volumes (dict[int, float]): 流体槽位到最大容量的映射
         player_fluid_input_slots (set[int] | None): 桶和试管可倒入的槽位, None 时跟随输入槽
         migrate_legacy_fluid_data (bool): 是否将旧单流体存档迁移到 0 号槽
         allow_player_use_bucket_interact (bool): 是否允许玩家直接使用桶交互
@@ -35,10 +31,13 @@ class MultiFluidContainer(BaseMachine):
     """
 
     fluid_io_mode = (2, 2, 2, 2, 2, 2)  # type: tuple[int, int, int, int, int, int]
-    fluid_input_slots = set()  # type: set[int]
-    fluid_output_slots = set()  # type: set[int]
+    fluid_input_slots = ()  # type: tuple[int, ...]
+    fluid_output_slots = ()  # type: tuple[int, ...]
+    # 键为 RelativeFacingStrEnum；None 不限制，空映射/缺失面/空元组禁止。
+    fluid_input_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
+    fluid_output_slots_by_face = None  # type: dict[str, tuple[int, ...]] | None
     player_fluid_input_slots = None  # type: set[int] | None
-    fluid_slot_max_volumes = (4000, 4000)  # type: tuple[float, ...]
+    fluid_slot_max_volumes = {0: 4000, 1: 4000}  # type: dict[int, float]
     allow_player_use_bucket_interact = True
     allow_player_use_bucket_push = True
     allow_player_use_bucket_pull = True
@@ -51,10 +50,10 @@ class MultiFluidContainer(BaseMachine):
         self.bdata = block_entity_data
         if self.migrate_legacy_fluid_data:
             self._migrate_legacy_fluid_data()
-        self.fluids = [
-            FluidSlotServer(self.bdata, i, mv)
-            for i, mv in enumerate(self.fluid_slot_max_volumes)
-        ]
+        self.fluids = {
+            slot: FluidSlotServer(self.bdata, slot, max_volume)
+            for slot, max_volume in self.fluid_slot_max_volumes.items()
+        }  # type: dict[int, FluidSlotServer]
 
     def _migrate_legacy_fluid_data(self):
         "只为原单槽设备迁移一次；已有新槽位数据优先，空槽也不能恢复旧液体。"
@@ -103,8 +102,27 @@ class MultiFluidContainer(BaseMachine):
         # type: (str, float) -> tuple[bool, float]
         return self._add_fluid_to_slots(fluid_id, fluid_volume, self.fluid_input_slots)
 
+    def GetFluidInputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.fluid_input_slots, self.fluid_input_slots_by_face, relative_face
+        )
+
+    def GetFluidOutputSlotsForFace(self, relative_face):
+        # type: (str | None) -> tuple[int, ...]
+        return self._filter_slots_for_face(
+            self.fluid_output_slots, self.fluid_output_slots_by_face, relative_face
+        )
+
+    def AddFluidFromFace(self, fluid_id, fluid_volume, relative_face):
+        # type: (str, float, str | None) -> tuple[bool, float]
+        # 管道按相对面输入；内部产出和玩家交互继续使用原有接口。
+        return self._add_fluid_to_slots(
+            fluid_id, fluid_volume, self.GetFluidInputSlotsForFace(relative_face)
+        )
+
     def _add_fluid_to_slots(self, fluid_id, fluid_volume, slots):
-        # type: (str, float, set[int]) -> tuple[bool, float]
+        # type: (str, float, set[int] | tuple[int, ...]) -> tuple[bool, float]
         if fluid_id is None or fluid_volume is None or fluid_volume <= 0:
             return False, fluid_volume
         _orig = fluid_volume
@@ -141,10 +159,15 @@ class MultiFluidContainer(BaseMachine):
         # type: (str, bool) -> bool
         from ...tools.glass_tube import IsGlassTube
 
-        input_slots = self._get_player_fluid_input_slots()
+        player_input_slots = self._get_player_fluid_input_slots()
         if not self.allow_player_use_bucket_interact:
             return False
-        item = GetPlayerMainhandItem(player_id)
+        raw_item = CF.CreateItem(player_id).GetPlayerItem(
+            GetMinecraftEnum().ItemPosType.CARRIED,
+            0,
+            True,
+        )
+        item = Item.from_dict(raw_item) if raw_item is not None else None
         if item is None:
             return False
         elif IsGlassTube(item):
@@ -159,19 +182,24 @@ class MultiFluidContainer(BaseMachine):
             if item.newItemName == "minecraft:bucket":
                 if not self.allow_player_use_bucket_pull:
                     return False
-                for slot, fluid in enumerate(self.fluids):
+                for slot in sorted(self.fluids):
+                    fluid = self.fluids[slot]
                     if fluid.fluid_id is None or fluid.volume < BUCKET_VOLUME:
                         continue
                     bucket_id = fluid.fluid_id + "_bucket"
-                    if ItemExists(bucket_id):
+                    if CF.CreateGame(LEVEL_ID).LookupItemByName(bucket_id):
                         fluid_id = fluid.fluid_id
                         fluid.volume -= BUCKET_VOLUME
                         if fluid.volume <= 0.0:
                             fluid.fluid_id = None
-                        SetInventorySlotItemCount(
-                            player_id, GetSelectedSlot(player_id), item.count - 1
+                        CF.CreateItem(player_id).SetInvItemNum(
+                            CF.CreateItem(player_id).GetSelectSlotId(),
+                            item.count - 1,
                         )
-                        GiveItem(player_id, Item(bucket_id, count=1))
+                        CF.CreateItem(player_id).SpawnItemToPlayerInv(
+                            Item(bucket_id, count=1).marshal(),
+                            player_id,
+                        )
                         self._on_reduced_fluid(
                             slot, fluid_id, BUCKET_VOLUME, True
                         )
@@ -182,10 +210,10 @@ class MultiFluidContainer(BaseMachine):
                 fluid_id = item.newItemName
                 if fluid_id.endswith("_bucket"):
                     fluid_id = fluid_id[:-len("_bucket")]
-                if ItemExists(fluid_id):
+                if CF.CreateGame(LEVEL_ID).LookupItemByName(fluid_id):
                     # 一桶只倒进一个槽位: 找到第一个装得下整桶的输入槽后立刻停止,
                     # 否则每个还装得下的槽位都会各加一桶, 凭空多出流体。
-                    for slot in sorted(input_slots):
+                    for slot in sorted(player_input_slots):
                         fluid = self.fluids[slot]
                         if not self.IsValidFluidInput(slot, fluid_id):
                             continue
@@ -196,11 +224,13 @@ class MultiFluidContainer(BaseMachine):
                         elif fluid.fluid_id != fluid_id:
                             continue
                         fluid.volume += BUCKET_VOLUME
-                        SetInventorySlotItemCount(
-                            player_id, GetSelectedSlot(player_id), item.count - 1
+                        CF.CreateItem(player_id).SetInvItemNum(
+                            CF.CreateItem(player_id).GetSelectSlotId(),
+                            item.count - 1,
                         )
-                        SpawnItemToPlayerCarried(
-                            player_id, Item("minecraft:bucket", count=1)
+                        CF.CreateItem(player_id).SpawnItemToPlayerCarried(
+                            Item("minecraft:bucket", count=1).marshal(),
+                            player_id,
                         )
                         # 这里就是本次操作的最后一个槽位更新, 必须让 is_final 为真,
                         # `Processor._processor_on_added_fluid` 才会去重查配方(输入槽空着时挂上的停机旗靠它唤醒)。
@@ -213,7 +243,7 @@ class MultiFluidContainer(BaseMachine):
             return False
 
     def _get_player_fluid_input_slots(self):
-        # type: () -> set[int]
+        # type: () -> set[int] | tuple[int, ...]
         # 输出接口允许手动倒液，但不允许管道向其输入。
         if self.player_fluid_input_slots is not None:
             return self.player_fluid_input_slots
@@ -248,9 +278,9 @@ class MultiFluidContainer(BaseMachine):
                 changed = True
         # 否则从容器舀出填充试管, 优先舀出输出槽的流体
         if not changed and self.allow_player_use_bucket_pull:
-            output_slots = self.fluid_output_slots
-            ordered_slots = sorted(output_slots) + [
-                i for i in range(len(self.fluids)) if i not in output_slots
+            fluid_output_slots = self.fluid_output_slots
+            ordered_slots = sorted(fluid_output_slots) + [
+                slot for slot in sorted(self.fluids) if slot not in fluid_output_slots
             ]
             updates = []
             for slot in ordered_slots:

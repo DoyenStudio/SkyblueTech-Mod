@@ -26,9 +26,9 @@ class GasBurningGenerator(GeneratorProcessor, MultiFluidContainer):
     store_rf_max = STORE_RF_MAX
     process_fluid = True
     recipes = Recipes
-    fluid_input_slots = {0}
-    fluid_output_slots = {1}
-    fluid_slot_max_volumes = (MAX_INPUT_GAS_VOLUME, MAX_OUTPUT_GAS_VOLUME)
+    fluid_input_slots = (0,)
+    fluid_output_slots = (1,)
+    fluid_slot_max_volumes = {0: MAX_INPUT_GAS_VOLUME, 1: MAX_OUTPUT_GAS_VOLUME}
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(GasBurningGenerator, self).__init__(dim, x, y, z, block_entity_data)

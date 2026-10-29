@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/lead_oxide"
+                    "common:lead_oxide_dust",
+                    "c:lead_oxide_dust"
                 ]
             }
         },

@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "dusts/cupronickel"
+                    "common:cupronickel_dust",
+                    "c:cupronickel_dust"
                 ]
             }
         },

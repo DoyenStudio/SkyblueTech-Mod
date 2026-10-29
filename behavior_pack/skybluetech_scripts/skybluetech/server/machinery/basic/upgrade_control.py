@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.internal import GetServer
 from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.skybluetech.common.define.facing import FACING_DXYZ
 from skybluetech_scripts.skybluetech.common.define.id_enum.items import Upgraders
@@ -8,7 +9,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.upgraders import (
     SPEED_NEGATIVE,
     SPEED_POSITIVE,
 )
-from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server.item import (
     PlayerTryPutCustomContainerItemServerEvent,
@@ -126,10 +127,10 @@ class UpgradeControl(SPControl, ItemContainer):
             extra_item = item.copy()
             extra_item.count = item.count - 1
             px, py, pz = self.xyz
-            SpawnDroppedItem(
+            GetServer().CreateEngineItemEntity(
+                extra_item.marshal(),
                 self.dim,
                 (px + 0.5, py + 0.5, pz + 0.5),
-                extra_item,
             )
             item.count = 1
             self.SetSlotItem(slot, item)
@@ -161,7 +162,7 @@ class UpgradeControl(SPControl, ItemContainer):
     def OutputItem(self, item):
         # type: (Item) -> Item | None
         rest = ItemContainer.OutputItem(self, item)
-        self.FlushOutputSlots(list(self.output_slots))
+        self.FlushOutputSlots(list(self.item_output_slots))
         return rest
 
     def UpdateUpgraders(self, upgraders):
@@ -213,7 +214,7 @@ class UpgradeControl(SPControl, ItemContainer):
         from ...transmitters.item_pipe.logic import PushItemToGenericContainerEasy
 
         for slot in slots:
-            if slot not in self.output_slots:
+            if slot not in self.item_output_slots:
                 continue
             item = self.GetSlotItem(slot, get_user_data=True)
             if item is None:

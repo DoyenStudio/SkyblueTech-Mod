@@ -1,6 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 import time
-from skybluetech_scripts.tooldelta.api.client import GetConfigData, SetConfigData
 from .page_group import PageGroup, GetPageGroup
 
 CFG_KEY = "skybluetech:guidance_bookmarks"
@@ -65,9 +65,9 @@ class BookMarkMgr(object):
 
 def _get_bookmarks():
     # type: () -> dict[str, int]
-    return GetConfigData(CFG_KEY) or {}
+    return CF.CreateConfigClient(LEVEL_ID).GetConfigData(CFG_KEY, False) or {}
 
 
 def _set_bookmarks(bookmarks):
     # type: (dict[str, int]) -> None
-    SetConfigData(CFG_KEY, bookmarks)
+    CF.CreateConfigClient(LEVEL_ID).SetConfigData(CFG_KEY, bookmarks, False)

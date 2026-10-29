@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/nickel"
+                    "common:nickel_plate",
+                    "c:nickel_plate"
                 ]
             }
         },

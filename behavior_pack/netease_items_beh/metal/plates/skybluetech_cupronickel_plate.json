@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/cupronickel"
+                    "common:cupronickel_plate",
+                    "c:cupronickel_plate"
                 ]
             }
         },

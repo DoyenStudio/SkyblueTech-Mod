@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.facing import (
     NEIGHBOR_BLOCKS_ENUM,
     OPPOSITE_FACING,
@@ -12,14 +13,7 @@ from skybluetech_scripts.skybluetech.common.events.misc.transmitter_settings imp
     TransmitterSetPriority,
     TransmitterSwitchAccessMode,
 )
-from skybluetech_scripts.tooldelta.api.server import (
-    GetBlockName,
-    GetBlockStates,
-    GetPlayerDimensionId,
-    IsSneaking,
-    SetOnePopupNotice,
-    UpdateBlockStates,
-)
+
 from skybluetech_scripts.tooldelta.events.event_bus import GetMCServerEventBus
 from skybluetech_scripts.tooldelta.events.server import (
     PushUIRequest,
@@ -106,7 +100,10 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         # 可连接的邻居包含机器, 这样断开的机器-管道连接也能被点回来。
         dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[event.face]
         next_pos = (event.x + dx, event.y + dy, event.z + dz)
-        next_block = GetBlockName(event.dimensionId, next_pos)
+        next_block = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            next_pos,
+            event.dimensionId,
+        ) or {}).get("name")
         if next_block is None:
             return None
         if self.logic_module.can_connect(
@@ -130,15 +127,18 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
     def toggle_transmitter_link(self, dim, x, y, z, face, player_id=None):
         # type: (int, int, int, int, int, str | None) -> bool
         "切断/恢复此面与相邻管道或机器之间的连接, 并重建相关网络。"
-        states = GetBlockStates(dim, (x, y, z))
+        states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, y, z), dim)
         if states is None:
             return False
-        block_name = GetBlockName(dim, (x, y, z))
+        block_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, y, z), dim) or {}).get("name")
         if block_name is None:
             return False
         dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[face]
         neighbor_pos = (x + dx, y + dy, z + dz)
-        neighbor_name = GetBlockName(dim, neighbor_pos)
+        neighbor_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            neighbor_pos,
+            dim,
+        ) or {}).get("name")
         facing_key = "skybluetech:connection_" + FACING_EN[face]
         connect = not states.get(facing_key, False)
         is_transmitter = (
@@ -153,26 +153,28 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         ):
             if player_id is not None:
                 if is_transmitter:
-                    SetOnePopupNotice(
+                    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
                         player_id,
                         "§6不同种类的管道无法互相连接",
                         "§7[§cx§7] §c错误",
                     )
                 else:
-                    SetOnePopupNotice(
+                    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
                         player_id,
                         "§6此方向没有可连接的管道或容器",
                         "§7[§cx§7] §c错误",
                     )
             return False
-        UpdateBlockStates(dim, (x, y, z), {facing_key: connect})
+        _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, y, z), dim)
+        if _block_states is not None:
+            _block_states.update({facing_key: connect})
+            CF.CreateBlockState(LEVEL_ID).SetBlockStates((x, y, z), _block_states, dim)
         if is_transmitter:
             # 管道之间的连接状态需要两侧同时记录
-            UpdateBlockStates(
-                dim,
-                neighbor_pos,
-                {"skybluetech:connection_" + FACING_EN[OPPOSITE_FACING[face]]: connect},
-            )
+            _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(neighbor_pos, dim)
+            if _block_states is not None:
+                _block_states.update({"skybluetech:connection_" + FACING_EN[OPPOSITE_FACING[face]]: connect})
+                CF.CreateBlockState(LEVEL_ID).SetBlockStates(neighbor_pos, _block_states, dim)
         elif neighbor_name is not None:
             # 机器一侧的插座模型需要跟着显示 / 隐藏
             self.logic_module.refresh_machine_socket(dim, neighbor_pos, (x, y, z))
@@ -203,37 +205,34 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             else:
                 target = "容器"
             if connect:
-                SetOnePopupNotice(
-                    player_id,
-                    "§f已连接管道的§6"
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§f已连接管道的§6"
                     + FACING_ZHCN[face]
                     + "§f面与"
-                    + target,
-                )
+                    + target, "§6提示§f")
             else:
-                SetOnePopupNotice(
-                    player_id,
-                    "§f已断开管道§6"
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§f已断开管道§6"
                     + FACING_ZHCN[face]
                     + "§f面与"
                     + target
-                    + "§f的连接",
-                )
+                    + "§f的连接", "§6提示§f")
         return True
 
     def switch_access_mode(self, dim, x, y, z, face, player_id=None):
         # type: (int, int, int, int, int, str | None) -> bool
         if not self.enable_io_mode_settings:
             return False
-        block_name = GetBlockName(dim, (x, y, z))
+        block_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew((x, y, z), dim) or {}).get("name")
         if block_name is None:
             return False
-        block_orig_status = GetBlockStates(dim, (x, y, z))
+        block_orig_status = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, y, z), dim)
         dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[face]
-        nextBlock = GetBlockName(dim, (x + dx, y + dy, z + dz))
+        nextBlock = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            (x + dx, y + dy, z + dz),
+            dim,
+        ) or {}).get("name")
         if nextBlock is None or self.logic_module.transmitter_check_func(nextBlock):
             if player_id is not None:
-                SetOnePopupNotice(
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
                     player_id,
                     "§6无法为已连接了另外一根管道的管道设置传输模式",
                     "§7[§cx§7] §c错误",
@@ -243,7 +242,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             dim, nextBlock, (x + dx, y + dy, z + dz), block_name, (x, y, z)
         ):
             if player_id is not None:
-                SetOnePopupNotice(
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
                     player_id,
                     "§6无法为未连接的管道设置传输模式",
                     "§7[§cx§7] §c错误",
@@ -255,7 +254,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         current_network = self.logic_module.GetNetworkByTransmitter(dim, x, y, z)
         if current_network is None:
             if player_id is not None:
-                SetOnePopupNotice(player_id, "§4管道数据异常", "§7[§cx§7] §c错误")
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§4管道数据异常", "§7[§cx§7] §c错误")
             return False
         if newState:
             ap = self.logic_module.access_point_cls(dim, x, y, z, face, AP_MODE_OUTPUT)
@@ -267,23 +266,20 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             ok = self.logic_module.SetAccessPointIOMode(ap, AP_MODE_INPUT)
         if ok:
             if player_id is not None:
-                SetOnePopupNotice(
-                    player_id,
-                    "§f已将管道的§6"
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§f已将管道的§6"
                     + FACING_ZHCN[face]
                     + "§f面设置为"
-                    + ("§a输入", "§c抽出")[newState],
-                )
+                    + ("§a输入", "§c抽出")[newState], "§6提示§f")
         else:
             if player_id is not None:
-                SetOnePopupNotice(
-                    player_id,
-                    "§6无法将管道的§6"
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(player_id, "§6无法将管道的§6"
                     + FACING_ZHCN[face]
                     + "§6面设置为"
-                    + ("§a输入", "§c抽出")[newState],
-                )
-        UpdateBlockStates(dim, (x, y, z), block_orig_status)
+                    + ("§a输入", "§c抽出")[newState], "§6提示§f")
+        _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, y, z), dim)
+        if _block_states is not None:
+            _block_states.update(block_orig_status)
+            CF.CreateBlockState(LEVEL_ID).SetBlockStates((x, y, z), _block_states, dim)
         return True
 
     @EventListenerService.Listen(ServerItemUseOnEvent)
@@ -297,7 +293,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         """
         if event.item is None or event.item.newItemName != TRANSMITTER_WRENCH:
             return
-        if not IsSneaking(event.entityId):
+        if not CF.CreatePlayer(event.entityId).isSneaking():
             return
         if not self.logic_module.transmitter_check_func(event.blockName):
             return
@@ -306,7 +302,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             return
         face = self.resolve_wrench_facing(event)
         if face is None:
-            SetOnePopupNotice(event.entityId, "无效扳手调节位置")
+            CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.entityId, "无效扳手调节位置", "§6提示§f")
             return
         self.toggle_transmitter_link(
             event.dimensionId, event.x, event.y, event.z, face, event.entityId
@@ -320,13 +316,14 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         if event.item.newItemName == TRANSMITTER_WRENCH:
             face = self.resolve_wrench_facing(event)
             if face is None:
-                SetOnePopupNotice(event.playerId, "无效扳手调节位置")
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.playerId, "无效扳手调节位置", "§6提示§f")
                 return
             dx, dy, dz = NEIGHBOR_BLOCKS_ENUM[face]
-            next_block = GetBlockName(
-                event.dimensionId, (event.x + dx, event.y + dy, event.z + dz)
-            )
-            if IsSneaking(event.playerId):
+            next_block = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                (event.x + dx, event.y + dy, event.z + dz),
+                event.dimensionId,
+            ) or {}).get("name")
+            if CF.CreatePlayer(event.playerId).isSneaking():
                 # 潜行点击: 断开 / 恢复此面的连接 (机器与管道之间同样适用)
                 # 潜行时一般走 ServerItemUseOnEvent, 这里只作兜底
                 if sneak_cut_limiter.record(event.playerId):
@@ -352,7 +349,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
                         event.playerId,
                     )
                 else:
-                    SetOnePopupNotice(
+                    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
                         event.playerId,
                         "§6不同种类的管道无法互相连接",
                         "§7[§cx§7] §c错误",
@@ -360,7 +357,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             else:
                 if not self.enable_io_mode_settings:
                     # 电线没有输入 / 提取模式可切换, 按无效位置处理
-                    SetOnePopupNotice(event.playerId, "无效扳手调节位置")
+                    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.playerId, "无效扳手调节位置", "§6提示§f")
                     return
                 self.switch_access_mode(
                     event.dimensionId, event.x, event.y, event.z, face, event.playerId
@@ -372,7 +369,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
                 event.clickX, event.clickY, event.clickZ, event.face
             )
             if facing is None:
-                SetOnePopupNotice(event.playerId, "无效扳手设置位置")
+                CF.CreateGame(LEVEL_ID).SetOnePopupNotice(event.playerId, "无效扳手设置位置", "§6提示§f")
                 return
             ap = self.logic_module.access_points_pool.get((
                 event.dimensionId,
@@ -393,8 +390,10 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
                     facing,
                 ))
                 if ap is None:
-                    SetOnePopupNotice(
-                        event.playerId, "管道此面没有邻接容器， 无法进行设置"
+                    CF.CreateGame(LEVEL_ID).SetOnePopupNotice(
+                        event.playerId,
+                        "管道此面没有邻接容器， 无法进行设置",
+                        "§6提示§f",
                     )
                     return
             PushUIRequest(
@@ -416,7 +415,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
         if event.transmitter_type != self.logic_module.network_cls.network_type:
             return
         self.switch_access_mode(
-            GetPlayerDimensionId(event.pid),
+            CF.CreateDimension(event.pid).GetEntityDimensionId(),
             event.x,
             event.y,
             event.z,
@@ -446,7 +445,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             return
         if not isinstance(event.label, int) or event.label < 0 or event.label > 100000:
             return
-        dim = GetPlayerDimensionId(event.pid)
+        dim = CF.CreateDimension(event.pid).GetEntityDimensionId()
         ap = self.logic_module.access_points_pool.get((
             dim,
             event.x,
@@ -470,7 +469,7 @@ class ActionModule(Generic[_NT, _APT], EventListenerService):
             or event.priority > 100000
         ):
             return
-        dim = GetPlayerDimensionId(event.pid)
+        dim = CF.CreateDimension(event.pid).GetEntityDimensionId()
         ap = self.logic_module.access_points_pool.get((
             dim,
             event.x,

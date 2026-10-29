@@ -731,6 +731,188 @@
             }
         ]
     },
+    "electrolyzer_recipes": {
+        "type": "panel",
+        "size": [
+            180,
+            90
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2,
+                        2,
+                        2,
+                        2
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        0,
+                        1
+                    ],
+                    "size": [
+                        48,
+                        72
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        56,
+                        -22
+                    ],
+                    "size": [
+                        24,
+                        26
+                    ]
+                }
+            },
+            {
+                "fluid3@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        56,
+                        4
+                    ],
+                    "size": [
+                        24,
+                        26
+                    ]
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.FluidDisplay": {
+                    "$text_visible": false,
+                    "offset": [
+                        -56,
+                        -9
+                    ],
+                    "size": [
+                        24,
+                        52
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        56,
+                        27
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -65,
+                        27
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.item_displayer": {
+                    "offset": [
+                        -45,
+                        27
+                    ]
+                }
+            },
+            {
+                "left_connection_bar_img": {
+                    "type": "image",
+                    "offset": [
+                        -33.0,
+                        -10.0
+                    ],
+                    "size": [
+                        22.0,
+                        8.0
+                    ],
+                    "layer": 1,
+                    "color": [
+                        0.611764705882353,
+                        0.611764705882353,
+                        0.611764705882353
+                    ],
+                    "texture": "textures/ui/white",
+                    "tiled": true
+                }
+            },
+            {
+                "left_connection_bar2_img": {
+                    "type": "image",
+                    "offset": [
+                        -29.0,
+                        27.0
+                    ],
+                    "size": [
+                        12.0,
+                        8.0
+                    ],
+                    "layer": 1,
+                    "color": [
+                        0.611764705882353,
+                        0.611764705882353,
+                        0.611764705882353
+                    ],
+                    "texture": "textures/ui/white",
+                    "tiled": true
+                }
+            },
+            {
+                "right_connection_bar_img": {
+                    "type": "image",
+                    "offset": [
+                        34.0,
+                        -10.0
+                    ],
+                    "size": [
+                        22.0,
+                        8.0
+                    ],
+                    "layer": 1,
+                    "color": [
+                        0.611764705882353,
+                        0.611764705882353,
+                        0.611764705882353
+                    ],
+                    "texture": "textures/ui/white",
+                    "tiled": true
+                }
+            },
+            {
+                "right_connection_bar2_img": {
+                    "type": "image",
+                    "offset": [
+                        36.0,
+                        27.0
+                    ],
+                    "size": [
+                        24.0,
+                        8.0
+                    ],
+                    "layer": 1,
+                    "color": [
+                        0.611764705882353,
+                        0.611764705882353,
+                        0.611764705882353
+                    ],
+                    "texture": "textures/ui/white",
+                    "tiled": true
+                }
+            }
+        ]
+    },
     "engraver_recipes": {
         "type": "panel",
         "size": [

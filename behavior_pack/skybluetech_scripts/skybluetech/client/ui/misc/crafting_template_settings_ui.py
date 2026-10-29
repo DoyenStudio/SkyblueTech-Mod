@@ -1,4 +1,6 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import (
     ToolDeltaScreen,
@@ -6,12 +8,6 @@ from skybluetech_scripts.tooldelta.ui import (
     Binder,
     UBaseCtrl,
     SCREEN_BASE_PATH,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetRecipesByInput,
-    GetLocalPlayerHotbarAndInvItems,
-    GetItemTags,
-    GetItemHoverName,
 )
 from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     CraftingRecipeRes,
@@ -74,7 +70,12 @@ class CraftingTemplateSettingsUI(ToolDeltaScreen):
             lambda _: self.close_item_selector()
         )
         _i0 = 0
-        items = GetLocalPlayerHotbarAndInvItems()
+        items = [
+            Item.from_dict(it) if it is not None else None
+            for it in CF.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.INVENTORY, False
+            )
+        ]
         item_ids = set()  # type: set[str]
         for i in range(36):
             item = items[i] if i != AIR_SLOT else Item("minecraft:barrier")
@@ -133,7 +134,7 @@ class CraftingTemplateSettingsUI(ToolDeltaScreen):
                 (
                     "， ".join(
                         (
-                            GetItemHoverName(input.item_ids[0])
+                            CF.CreateItem(LEVEL_ID).GetItemHoverName(input.item_ids[0])
                             + "§r§fx"
                             + str(input.count)
                         )
@@ -146,7 +147,7 @@ class CraftingTemplateSettingsUI(ToolDeltaScreen):
                 )
                 + " -> "
                 + "， ".join(
-                    (GetItemHoverName(output.item_id) + "§r§fx" + str(output.count))
+                    (CF.CreateItem(LEVEL_ID).GetItemHoverName(output.item_id) + "§r§fx" + str(output.count))
                     for output in rcp.result
                 )
             )
@@ -190,7 +191,12 @@ class CraftingTemplateSettingsUI(ToolDeltaScreen):
                 "[Error] CraftingTemplateSettingsUI: onItemSelected: last_selected_slot empty"
             )
             return
-        selected_item = GetLocalPlayerHotbarAndInvItems()[idx]
+        selected_item = [
+            Item.from_dict(it) if it is not None else None
+            for it in CF.CreateItem(GetLocalPlayerId()).GetPlayerAllItems(
+                GetMinecraftEnum().ItemPosType.INVENTORY, False
+            )
+        ][idx]
         if idx == AIR_SLOT:
             self.template_slot_items[self.last_selected_slot] = None
         elif selected_item is None:

@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:hdpe_plate"
+        },
+        "description": {
+            "identifier": "skybluetech:hdpe_plate"
+        }
+    }
+}

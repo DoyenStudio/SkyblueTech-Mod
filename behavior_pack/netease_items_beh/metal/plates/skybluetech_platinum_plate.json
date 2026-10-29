@@ -4,7 +4,8 @@
         "components": {
             "minecraft:tags": {
                 "tags": [
-                    "plates/platinum"
+                    "common:platinum_plate",
+                    "c:platinum_plate"
                 ]
             }
         },

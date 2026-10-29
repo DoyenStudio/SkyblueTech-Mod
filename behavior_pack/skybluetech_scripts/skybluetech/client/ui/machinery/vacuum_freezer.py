@@ -1,4 +1,5 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
@@ -29,10 +30,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import 
     clamp_power,
 )
 from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
-from skybluetech_scripts.tooldelta.api.client import (
-    GetBlockEntityData,
-    GetItemHoverName,
-)
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
@@ -107,7 +104,7 @@ class VacuumFreezerUI(MachinePanelUIProxy):
         # 服务端当前的设定值, 玩家只改动其中一个输入框时用于补全另一个
         self.server_power = 0.0
         self.server_kelvin = MAX_EXPECTED_KELVIN
-        block_nbt = GetBlockEntityData(x, y, z)
+        block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData((x, y, z))
         if block_nbt is None:
             return
         ex_data = block_nbt.get("exData")
@@ -126,7 +123,7 @@ class VacuumFreezerUI(MachinePanelUIProxy):
             self.kelvin_input.SetText(FormatKelvinInput(kelvin))
 
     def OnTicking(self):
-        data = GetBlockEntityData(*self.pos[1:])
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
         if data is None:
             return
         data = data["exData"]
@@ -198,7 +195,7 @@ class VacuumFreezerUI(MachinePanelUIProxy):
                 self.structure_desc_label.SetText(
                     "缺失组件： "
                     + "， ".join(
-                        GetItemHoverName(b) + "x" + str(n)
+                        CF.CreateItem(LEVEL_ID).GetItemHoverName(b) + "x" + str(n)
                         for b, n in structure_lacked_blocks.items()
                     )
                 )

@@ -84,9 +84,10 @@ class HeatCtrl(BaseMachine):
         # 与其他机器读到的都是同一套数值, 不会因为改了热容而错位。
         self._heat_value = heat_value * self.heat_capacity
         self.t = 0
-        self.neighbor_heaters = [None] * len(FACING_DXYZ)  # type: list[HeatCtrl | None]
+        self.neighbor_heaters = [None] * len(FACING_DXYZ)  # type: list[HeatCtrl | BaseHeatInterface | None]
         self._update_neighbor_heaters()
         self.handler.SubscribeOnTicking(self._heat_ctrl_on_ticking)
+        self.handler.SubscribeOnInvalidateCaches(self._update_neighbor_heaters)
 
     def _heat_ctrl_on_ticking(self):
         self.t += 1
@@ -118,15 +119,18 @@ class HeatCtrl(BaseMachine):
 
     def _update_neighbor_heaters(self):
         from ..core.pool import GetLoadedMachine
+        from ..interfaces.base_heat_interface import BaseHeatInterface
 
         for face, (dx, dy, dz) in enumerate(FACING_DXYZ):
             m = GetLoadedMachine(self.dim, self.x + dx, self.y + dy, self.z + dz)
-            if isinstance(m, HeatCtrl):
+            self.neighbor_heaters[face] = None
+            if isinstance(m, (HeatCtrl, BaseHeatInterface)):
                 self.neighbor_heaters[face] = m
+            if isinstance(m, HeatCtrl):
                 m.set_neighbor_heater(OPPOSITE_FACING[face], self)
 
     def set_neighbor_heater(self, face, m):
-        # type: (int, HeatCtrl) -> None
+        # type: (int, HeatCtrl | BaseHeatInterface | None) -> None
         self.neighbor_heaters[face] = m
 
     def _update_heat_value(self):
@@ -198,25 +202,46 @@ class HeatCtrl(BaseMachine):
         每个邻居按 `Thermal.ConductHeat` 单独结算, 传热后的热值立即作为
         下一个邻居的起点, 保证本机不会把邻居"加热到超过自己"。
         """
-        H = self.heat_value
-        transferred = False
         for heater in self.neighbor_heaters:
-            if heater is None:
-                continue
-            res = Thermal.ConductHeat(
-                H,
-                heater.heat_value,
-                dt=self.WORK_INTERVAL,
-                capacity_hot=self.heat_capacity,
-                capacity_cold=heater.heat_capacity,
-            )
-            if res.Q_transferred <= 0:
-                continue
-            H = res.H_hot_next
-            heater.heat_value = res.H_cold_next
-            transferred = True
-        if transferred:
-            self.heat_value = H
+            self.TransferHeatTo(heater)
+
+    def GetHeatInputTarget(self):
+        # type: () -> HeatCtrl
+        "普通热机直接接收热量。"
+        return self
+
+    def TransferHeatTo(self, target, dt=None):
+        # type: (BaseMachine | None, float | None) -> float
+        "向热机或受热口单向导热, 返回实际传递的热量(RF)。"
+        from ..core.pool import GetLoadedMachine
+        from ..interfaces.base_heat_interface import BaseHeatInterface
+
+        if not isinstance(target, (HeatCtrl, BaseHeatInterface)):
+            return 0.0
+        # 接触方块、热源和解析后的热体都必须仍是当前加载的实例。
+        if GetLoadedMachine(self.dim, self.x, self.y, self.z) is not self:
+            return 0.0
+        if GetLoadedMachine(target.dim, target.x, target.y, target.z) is not target:
+            return 0.0
+        receiver = target.GetHeatInputTarget()
+        if not isinstance(receiver, HeatCtrl) or receiver is self:
+            return 0.0
+        if GetLoadedMachine(receiver.dim, receiver.x, receiver.y, receiver.z) is not receiver:
+            return 0.0
+        if dt is None:
+            dt = self.WORK_INTERVAL
+        res = Thermal.ConductHeat(
+            self.heat_value,
+            receiver.heat_value,
+            dt=dt,
+            capacity_hot=self.heat_capacity,
+            capacity_cold=receiver.heat_capacity,
+        )
+        if res.Q_transferred <= 0:
+            return 0.0
+        self.heat_value = res.H_hot_next
+        receiver.heat_value = res.H_cold_next
+        return res.Q_transferred
 
     @property
     def heat_value(self):

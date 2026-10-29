@@ -4,6 +4,7 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     alloy_furnace,
     compressor,
     engraver,
+    electrolyzer,
     fluid_condenser,
     macerator,
     magma_centrifuge,
@@ -17,7 +18,11 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     sawmill,
 )
 
-from .define import GeneratorRecipeRenderer, MachineRecipeRenderer
+from .define import (
+    GeneratorRecipeRenderer,
+    MachineRecipeRenderer,
+    MachineRecipeRendererBase,
+)
 
 alloy_furnace.AlloyFurnaceRecipe.SetRenderer(
     type(
@@ -46,6 +51,33 @@ engraver.EngraverRecipe.SetRenderer(
         {
             "render_ui_def_name": "RecipeCheckerLib.engraver_recipes",
             "recipe_icon_id": machinery.Machinery.ENGRAVER,
+        },
+    )
+)
+
+
+# class ElectrolyzerRecipeRenderer(MachineRecipeRendererBase):
+#     render_ui_def_name = "RecipeCheckerLib.electrolyzer_recipes"
+#     recipe_icon_id = machinery.Machinery.ELECTROLYZER
+
+#     def RenderInit(self, panel):
+#         MachineRecipeRendererBase.RenderInit(self, panel)
+#         input_items = self.recipe.inputs.get("item", {})
+#         output_items = self.recipe.outputs.get("item", {})
+#         for slot in (0, 1, 2):
+#             panel["slot%d" % slot].SetVisible(
+#                 slot in input_items or slot in output_items
+#             )
+
+
+electrolyzer.ElectrolyzerRecipe.SetRenderer(
+    type(
+        "ElectrolyzerRecipeRenderer",
+        (MachineRecipeRenderer,),
+        {
+            "render_ui_def_name": "RecipeCheckerLib.electrolyzer_recipes",
+            "recipe_icon_id": machinery.Machinery.ELECTROLYZER,
+            "render_progress": False,
         },
     )
 )

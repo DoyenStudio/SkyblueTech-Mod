@@ -1,6 +1,7 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.common import ExecLater
-from skybluetech_scripts.tooldelta.api.server import SpawnDroppedItem
+from skybluetech_scripts.tooldelta.internal import GetServer
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
@@ -50,8 +51,8 @@ class BatteryMatrix(
 ):
     block_name = Machinery.BATTERY_MATRIX_CONTROLLER
     store_rf_max = 100000
-    input_slots = (0, 1, 2, 3, 4, 5, 6)
-    output_slots = (0, 1, 2, 3, 4, 5, 6)
+    item_input_slots = (0, 1, 2, 3, 4, 5, 6)
+    item_output_slots = (0, 1, 2, 3, 4, 5, 6)
     structure_palette = STRUCTURE_PALETTE
     functional_block_ids = set(STRUCTURE_REQUIRE_BLOCKS)
 
@@ -200,7 +201,7 @@ class BatteryMatrix(
         if self.GetStructureDestroyFlag() != 0:
             return
         slotitems = self.GetInputSlotItems(get_user_data=False)
-        if not any(slotitems.get(i) is None for i in self.input_slots):
+        if not any(slotitems.get(i) is None for i in self.item_input_slots):
             return
         core = self.get_core()
         if index >= len(core.slots) or index < 0:
@@ -212,7 +213,7 @@ class BatteryMatrix(
         res = self.OutputItem(battery_item)
         if res is not None:
             # cannot happen
-            SpawnDroppedItem(self.dim, (self.x, self.y, self.z), res)
+            GetServer().CreateEngineItemEntity(res.marshal(), self.dim, (self.x, self.y, self.z))
         core.update_core_data()
         self.CallSync()
         core.gen_update_event().sendMulti(self.ui_sync.GetPlayersInSync())

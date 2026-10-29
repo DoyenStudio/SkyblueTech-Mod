@@ -3,25 +3,39 @@
     "minecraft:client_entity": {
         "description": {
             "geometry": {
-                "default": "geometry.skybluetech.model_entity"
+                "default": "geometry.skybluetech.model_entity",
+                "volume": "geometry.skybluetech.fluid_volume"
             },
             "scripts": {
+                "initialize": [
+                    "variable.skybluetech_fluid_fill = 0.0;"
+                ],
+                "pre_animation": [
+                    "variable.skybluetech_fluid_fill = math.lerp(variable.skybluetech_fluid_fill, query.mod.skybluetech_y_scale, 1.0 - math.pow(0.5, math.clamp(query.delta_time, 0.0, 0.1) * 20.0));"
+                ],
                 "animate": [
-                    "y_scale"
+                    { "y_scale": "query.mod.skybluetech_fluid_volume_mode < 0.5" },
+                    { "volume_scale": "query.mod.skybluetech_fluid_volume_mode >= 0.5" }
                 ]
             },
             "materials": {
-                "default": "fluid_model"
+                "default": "fluid_model",
+                "volume": "skybluetech_fluid_volume"
             },
             "identifier": "skybluetech:fluid_model_entity",
             "textures": {
-                "default": "textures/models/model_entity_texture"
+                "default": "textures/models/model_entity_texture",
+                "volume": "textures/models/model_entity_texture",
+                "volume_dilute_brine": "textures/fluid/baked/skybluetech.dilute_brine/static",
+                "volume_saturated_brine": "textures/fluid/baked/skybluetech.saturated_brine/static"
             },
             "animations": {
-                "y_scale": "animation.skybluetech.fluid_model_entity.y_scale"
+                "y_scale": "animation.skybluetech.fluid_model_entity.y_scale",
+                "volume_scale": "animation.skybluetech.fluid_model_entity.volume_scale"
             },
             "render_controllers": [
-                "controller.render.skybluetech.model_entity"
+                { "controller.render.skybluetech.model_entity": "query.mod.skybluetech_fluid_volume_mode < 0.5" },
+                { "controller.render.skybluetech.fluid_volume": "query.mod.skybluetech_fluid_volume_mode >= 0.5" }
             ]
         }
     }

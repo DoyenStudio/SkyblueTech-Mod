@@ -4,6 +4,8 @@
 
 本章建立名为 `stdb` 的教学附属。准备独立行为包、资源包及各自 manifest，脚本包放在行为包 `stdb_scripts/`。不要复制主模组；附属自带的 ToolDelta 与已发布太阳能附属一样放在 `stdb_scripts/tooldelta/`。Studio 测试世界同时加载两个模组。
 
+以下目录树位于**本仓库之外的独立附属工程根目录**。后续所有教程沿用这个工程；脚本、方块、语言条目和 UI 注册均写入附属自己的包，不添加到蔚蓝科技主模组的行为包、资源包或打包入口。本仓库仅保留 Markdown 教程代码块，主模组运行不依赖这些示例文件。
+
 ```text
 behavior_pack/
   manifest.json

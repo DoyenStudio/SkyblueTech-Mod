@@ -4,7 +4,7 @@ from ..mini_jei.core import RecipesCollection, Input
 from ..mini_jei.machinery.engraver import EngraverRecipe
 
 STORE_RF_MAX = 16000
-FLUID_SLOT_MAX_VOLUMES = (1500, 1500)
+FLUID_SLOT_MAX_VOLUMES = {0: 1500, 1: 1500}
 
 
 recipes = RecipesCollection(

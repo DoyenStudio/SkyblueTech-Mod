@@ -1,12 +1,6 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.api.client import (
-    CreateDropItemModelEntity,
-    DeleteClientDropItemEntity,
-    SetDropItemTransform,
-)
-from skybluetech_scripts.tooldelta.api.client import (
-    GetPlayerDimensionId as CGetPlayerDim,
-)
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from mod.client.extraClientApi import GetLocalPlayerId
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.client import (
     ModBlockEntityLoadedClientEvent,
@@ -41,15 +35,23 @@ def onModelUpdate(event):
     if model_id is not None and (
         event.item_id is None or last_item_id != event.item_id
     ):
-        DeleteClientDropItemEntity(model_id)
+        CF.CreateItem(LEVEL_ID).DeleteClientDropItemEntity(model_id)
         del cli_models[pos]
     if event.item_id is not None and last_item_id != event.item_id:
         _, model_id = cli_models[pos] = (
             event.item_id,
-            CreateDropItemModelEntity(CGetPlayerDim(), pos, Item(event.item_id)),
+            CF.CreateItem(LEVEL_ID).AddDropItemToWorld(
+                Item(event.item_id).marshal(),
+                CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension(),
+                pos,
+                0,
+                0,
+            ),
         )
-        SetDropItemTransform(
-            model_id, (event.x + 0.4, event.y + 0.5, event.z + 0.3), (90, 0, 0)
+        CF.CreateItem(LEVEL_ID).SetDropItemTransform(
+            model_id,
+            (event.x + 0.4, event.y + 0.5, event.z + 0.3),
+            (90, 0, 0),
         )
 
 
@@ -69,4 +71,4 @@ def onModBlockRemoved(event):
     cli_loading_machines.discard(pos)
     model_id = cli_models.get(pos)
     if model_id is not None:
-        DeleteClientDropItemEntity(cli_models.pop(pos)[1])
+        CF.CreateItem(LEVEL_ID).DeleteClientDropItemEntity(cli_models.pop(pos)[1])

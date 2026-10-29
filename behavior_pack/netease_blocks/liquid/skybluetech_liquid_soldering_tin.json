@@ -2,14 +2,7 @@
     "format_version": "1.20.80",
     "minecraft:block": {
         "components": {
-            "netease:liquid": {
-                "liquid_color": [
-                    0,
-                    0,
-                    0,
-                    255
-                ]
-            }
+            "netease:liquid": {}
         },
         "description": {
             "base_block": "liquid",

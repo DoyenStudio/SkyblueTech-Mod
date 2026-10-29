@@ -1,13 +1,8 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from copy import deepcopy
 
-from skybluetech_scripts.tooldelta.api.server import (
-    BlockHasTag,
-    GetBlockName,
-    GetContainerItem,
-    GetContainerSize,
-    SetBlockEntityData,
-    SetContainerItem,
-)
+
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
@@ -18,7 +13,6 @@ from skybluetech_scripts.tooldelta.events.server import (
 from skybluetech_scripts.tooldelta.utils.nbt import (
     Byte,
     GetValueWithDefault,
-    Py2NBT,
     Short,
     String,
 )
@@ -49,30 +43,41 @@ if 0 > 1:
 # 读取容器内容走方块实体 NBT 批量读(箱子走容器 API) + 跨 tick 缓存, 不区分机器与普通
 # 容器; 只在真正写入某个槽位时构造 ItemPushInCustomContainerServerEvent /
 # ItemPullOutCustomContainerServerEvent 广播一次来验证这一次取出 / 存入:
-# 机器在 machinery/basic/register.py 里按 input_slots / output_slots / IsValidInput
+# 机器在 machinery/listeners/event_listener.py 里按 item_input_slots / item_output_slots / IsValidInput
 # 否决(容器里不属于机器物品槽位的格子因此不会被塞东西), 附属模组同样可以否决。
 # 被否决的槽位直接跳过, 不产生任何写入。
+# 分面白名单在枚举候选槽位时按接入点筛选，不替代上述事件校验。
 
 # todo: 后续优化:
 #       1. 添加物品过滤功能
 #       2. 如果找到了可投递的容器, 下次优先向此容器进行投递, 提高命中率
 
+_block_tags_cache = {}  # type: dict[str, set[str]]
+
 
 def is_item_pipe(blockName):
     # type: (str) -> bool
-    return BlockHasTag(blockName, "skybluetech_item_pipe")
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "skybluetech_item_pipe" in tags
 
 
 def isContainer(blockName, dim=None, xyz=None):
     # type: (str, int | None, tuple[int, int, int] | None) -> bool
     "方块是否为可连接的物品容器: 只要能获取到容器大小即可连接。"
     if dim is not None and xyz is not None:
-        size = GetContainerSize(xyz, dim)
+        size = CF.CreateItem(LEVEL_ID).GetContainerSize(xyz, dim)
         if size is not None and size > 0:
             return True
-    return BlockHasTag(
-        blockName, "skybluetech_container"
-    )
+    tags = _block_tags_cache.get(blockName)
+    if tags is None:
+        tags = _block_tags_cache[blockName] = set(
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
+        )
+    return "skybluetech_container" in tags
 
 
 def _broadcast_push_in(dim, pos, slot, item, block_name):
@@ -112,7 +117,7 @@ def _set_slot_item(dim, pos, slot, item):
     "写入槽位; 物品为空或数量为 0 时清空该槽位。"
     if item is None or item.count <= 0:
         item = Item("minecraft:air", count=0)
-    SetContainerItem(dim, pos, slot, item)
+    CF.CreateItem(LEVEL_ID).SpawnItemToContainer(item.marshal(), slot, pos, dim)
 
 
 def _calc_move_count(source_item, target_item):
@@ -152,8 +157,8 @@ def PostItemIntoNetworks(dim, xyz, item, networks):
     return item
 
 
-def _push_item_to_container(dim, xyz, item, limit_count=None):
-    # type: (int, tuple[int, int, int], Item, int | None) -> Item | None
+def _push_item_to_container(dim, xyz, face, item, limit_count=None):
+    # type: (int, tuple[int, int, int], int, Item, int | None) -> Item | None
     """
     把物品放满容器的各个槽位, 返回剩余物品 (全部放入则返回 None)。
 
@@ -164,14 +169,18 @@ def _push_item_to_container(dim, xyz, item, limit_count=None):
     if limit_count is not None:
         rest.count = int(min(rest.count, limit_count))
     overflow_count = item.count - rest.count
-    container_size = GetContainerSize(xyz, dim)
+    container_size = CF.CreateItem(LEVEL_ID).GetContainerSize(xyz, dim)
     if container_size is None or container_size <= 0:
         return item
-    block_name = GetBlockName(dim, xyz) or ""
-    for slot_pos in py2_xrange(container_size):
+    block_name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(xyz, dim) or {}).get("name") or ""
+    slots = _filter_machine_slots_for_access(
+        dim, xyz, face, tuple(py2_xrange(container_size)), True
+    )
+    for slot_pos in slots:
         if rest.count <= 0:
             break
-        orig_item = GetContainerItem(dim, xyz, slot_pos, getUserData=True)
+        orig_item = CF.CreateItem(LEVEL_ID).GetContainerItem(xyz, slot_pos, dim, True)
+        orig_item = Item.from_dict(orig_item) if orig_item is not None else None
         move_count = _calc_move_count(rest, orig_item)
         if move_count <= 0:
             continue
@@ -201,8 +210,8 @@ def PushItemToGenericContainer(ap, item, limit_count=None):
 
 def PushItemToGenericContainerEasy(dim, xyz, face, item, limit_count=None):
     # type: (int, tuple[int, int, int], int, Item, int | None) -> Item | None
-    "把物品投入指定坐标的容器, 返回剩余物品。"
-    return _push_item_to_container(dim, xyz, item, limit_count)
+    "把物品投入指定坐标的容器；face 从来源指向目标，返回剩余物品。"
+    return _push_item_to_container(dim, xyz, face, item, limit_count)
 
 
 def onMachineryPlacedLater(dim, x, y, z):
@@ -234,7 +243,7 @@ def onNetworkTick(network):
     for output_index in range(output_count):
         output_ap = outputs[(start + output_index) % output_count]
         output_pos = output_ap.target_pos
-        output_slotposes = _get_container_output_slots(network, output_pos)
+        output_slotposes = _get_container_output_slots(network, output_ap)
 
         pair_pos = None
         if _is_chest(network, output_pos):
@@ -309,7 +318,7 @@ def onNetworkTick(network):
                         scanned_in_chest_pairs.add(ipair_key)
 
                 break_flag2 = False
-                input_slotposes = _get_container_input_slots(network, input_pos)
+                input_slotposes = _get_container_input_slots(network, input_ap)
                 input_name = _get_block_name(network, input_pos)
                 for input_slot in input_slotposes:
                     input_item = _get_container_item(network, input_pos, input_slot)
@@ -381,9 +390,19 @@ def onNetworkTick(network):
             # 本地 0-26 槽, 而容器 API 把两个半箱映射成统一的 0-53 槽位
             for slot, item in writes:
                 if item is None:
-                    SetContainerItem(network.dim, pos, slot, Item("minecraft:air"))
+                    CF.CreateItem(LEVEL_ID).SpawnItemToContainer(
+                        Item("minecraft:air").marshal(),
+                        slot,
+                        pos,
+                        network.dim,
+                    )
                 else:
-                    SetContainerItem(network.dim, pos, slot, item)
+                    CF.CreateItem(LEVEL_ID).SpawnItemToContainer(
+                        item.marshal(),
+                        slot,
+                        pos,
+                        network.dim,
+                    )
             _invalidate_container(network, pos)
             continue
         data, items = _get_container_nbt(network.dim, pos, network._cache_datas)
@@ -401,12 +420,12 @@ def onNetworkTick(network):
                 old_entry["Name"] = String(item.newItemName)
                 old_entry["Damage"] = Short(item.newAuxValue)
                 if item.userData is not None:
-                    old_entry["tag"] = Py2NBT(item.userData)
+                    old_entry["tag"] = deepcopy(item.userData)
                 else:
                     old_entry.pop("tag", None)
             else:
                 items.append(_item_to_nbt_entry(slot, item))
-        SetBlockEntityData(network.dim, pos, data)
+        CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityData(network.dim, pos, data)
         # 自己写回后同样标记失效, 下次 tick 与引擎实际状态重新对齐
         _invalidate_container(network, pos)
 
@@ -419,7 +438,8 @@ def _get_container_item(network, xyz, slot):
     elif slot in cache:
         return cache[slot]
     if _is_chest(network, xyz):
-        res = GetContainerItem(network.dim, xyz, slot, getUserData=True)
+        res = CF.CreateItem(LEVEL_ID).GetContainerItem(xyz, slot, network.dim, True)
+        res = Item.from_dict(res) if res is not None else None
         if res is None or res.count <= 0:
             res = None
         cache[slot] = res
@@ -443,7 +463,7 @@ def _get_container_slotposes(network, xyz):
     if cached is not MISSING:
         return cached
     # 不区分机器与普通容器: 所有槽位都是候选, 该不该收 / 该不该放由事件监听者判定
-    size = GetContainerSize(xyz, network.dim)
+    size = CF.CreateItem(LEVEL_ID).GetContainerSize(xyz, network.dim)
     if size is None or size <= 0:
         res = ((), ())
     else:
@@ -453,21 +473,54 @@ def _get_container_slotposes(network, xyz):
     return res
 
 
-def _get_container_input_slots(network, xyz):
-    # type: (ItemPipeNetwork, tuple[int, int, int]) -> tuple[int, ...]
-    return _get_container_slotposes(network, xyz)[0]
+def _filter_machine_slots_for_access(dim, xyz, access_facing, slots, is_input):
+    # type: (int, tuple[int, int, int], int, tuple[int, ...], bool) -> tuple[int, ...]
+    "只筛选设置了对应分面白名单的机器；不缓存依赖朝向的结果。"
+    # 机器模块也会导入管道接口，延迟导入避免初始化时形成循环依赖。
+    from skybluetech_scripts.skybluetech.server.machinery.basic.item_container import ItemContainer
+    from skybluetech_scripts.skybluetech.server.machinery.core.pool import GetLoadedMachine
+
+    machine = GetLoadedMachine(dim, *xyz)
+    if not isinstance(machine, ItemContainer):
+        return slots
+    slots_by_face = (
+        machine.item_input_slots_by_face if is_input
+        else machine.item_output_slots_by_face
+    )
+    if slots_by_face is None:
+        return slots
+    relative_face = machine.GetRelativeFacingFromAccessFacing(access_facing)
+    allowed_slots = (
+        machine.GetItemInputSlotsForFace(relative_face) if is_input
+        else machine.GetItemOutputSlotsForFace(relative_face)
+    )
+    return tuple(slot for slot in slots if slot in allowed_slots)
 
 
-def _get_container_output_slots(network, xyz):
-    # type: (ItemPipeNetwork, tuple[int, int, int]) -> tuple[int, ...]
-    return _get_container_slotposes(network, xyz)[1]
+def _get_container_input_slots(network, ap):
+    # type: (ItemPipeNetwork, ItemPipeAccessPoint) -> tuple[int, ...]
+    return _filter_machine_slots_for_access(
+        network.dim, ap.target_pos, ap.access_facing,
+        _get_container_slotposes(network, ap.target_pos)[0], True
+    )
+
+
+def _get_container_output_slots(network, ap):
+    # type: (ItemPipeNetwork, ItemPipeAccessPoint) -> tuple[int, ...]
+    return _filter_machine_slots_for_access(
+        network.dim, ap.target_pos, ap.access_facing,
+        _get_container_slotposes(network, ap.target_pos)[1], False
+    )
 
 
 def _get_block_name(network, xyz):
     # type: (ItemPipeNetwork, tuple[int, int, int]) -> str
     res = network._cache_block_names.get(xyz, MISSING)
     if res is MISSING:
-        res = network._cache_block_names[xyz] = GetBlockName(network.dim, xyz) or ""
+        res = network._cache_block_names[xyz] = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+            xyz,
+            network.dim,
+        ) or {}).get("name") or ""
     return res
 
 
@@ -520,7 +573,7 @@ def onContainerItemChanged(event):
     # 另一个半箱。若事件半箱不在连接池中, 沿 pairx/pairz 找到配对半箱, 让连接
     # 在配对半箱上的网络缓存一并失效, 否则另一侧半箱的物品永远读不到。
     positions = [pos]
-    if GetBlockName(dim, pos) in CHEST_CONTAINERS:
+    if (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(pos, dim) or {}).get("name") in CHEST_CONTAINERS:
         data, _ = _get_container_nbt(dim, pos, {})
         pair_x = GetValueWithDefault(data or {}, "pairx", None)
         pair_z = GetValueWithDefault(data or {}, "pairz", None)

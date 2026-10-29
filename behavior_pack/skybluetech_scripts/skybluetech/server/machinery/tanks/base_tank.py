@@ -1,8 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define import Item
-from skybluetech_scripts.tooldelta.api.server import (
-    ItemExists,
-)
+
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 from skybluetech_scripts.skybluetech.common.define.global_config import BUCKET_VOLUME
 from ..basic import MultiFluidContainer, ItemContainer, GUIControl
@@ -19,12 +18,12 @@ class BasicTank(GUIControl, ItemContainer, MultiFluidContainer):
     is_non_energy_machine = True
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
     fluid_io_fix_mode = 0
-    fluid_slot_max_volumes = (0,)
-    fluid_input_slots = {0}
-    fluid_output_slots = {0}
+    fluid_slot_max_volumes = {0: 0}
+    fluid_input_slots = (0,)
+    fluid_output_slots = (0,)
     migrate_legacy_fluid_data = True
-    input_slots = (0,)
-    output_slots = (1,)
+    item_input_slots = (0,)
+    item_output_slots = (1,)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(BasicTank, self).__init__(dim, x, y, z, block_entity_data)
@@ -54,7 +53,7 @@ class BasicTank(GUIControl, ItemContainer, MultiFluidContainer):
                     return
                 fluid_id = fluid.fluid_id
                 bucket_id = fluid_id + "_bucket"
-                if not ItemExists(bucket_id):
+                if not CF.CreateGame(LEVEL_ID).LookupItemByName(bucket_id):
                     return
                 # TODO: 我们只能假定桶 id 是液体 id + "_bucket"
                 fluid.volume -= BUCKET_VOLUME
@@ -72,7 +71,7 @@ class BasicTank(GUIControl, ItemContainer, MultiFluidContainer):
                     fluid.isFull()
                     or (fluid.fluid_id is not None and fluid.fluid_id != fluid_id)
                     or fluid.volume + BUCKET_VOLUME > fluid.max_volume
-                    or not ItemExists(fluid_id)
+                    or not CF.CreateGame(LEVEL_ID).LookupItemByName(fluid_id)
                 ):
                     return
                 if fluid.fluid_id is None:

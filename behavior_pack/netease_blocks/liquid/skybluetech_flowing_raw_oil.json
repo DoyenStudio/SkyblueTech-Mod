@@ -4,12 +4,6 @@
         "components": {
             "netease:liquid": {
                 "bucket_name": "skybluetech:raw_oil_bucket",
-                "liquid_color": [
-                    44,
-                    39,
-                    28,
-                    255
-                ],
                 "spread_delay": 5,
                 "spread_range": 6
             }

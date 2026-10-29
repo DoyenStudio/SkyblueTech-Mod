@@ -2,56 +2,56 @@
     "dy_load_list": [],
     "format_version": "1.14.0",
     "sound_definitions": {
-        "music.skybluetech.famicom_1": {
+        "record.skybluetech.famicom_1": {
             "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_1",
+                    "name": "sounds/skybluetech/music/famicom_1",
                     "stream": true,
                     "volume": 1
                 }
             ]
         },
-        "music.skybluetech.famicom_2": {
+        "record.skybluetech.famicom_2": {
             "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_2",
+                    "name": "sounds/skybluetech/music/famicom_2",
                     "stream": true,
                     "volume": 1
                 }
             ]
         },
-        "music.skybluetech.famicom_3": {
+        "record.skybluetech.famicom_3": {
             "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_3",
+                    "name": "sounds/skybluetech/music/famicom_3",
                     "stream": true,
                     "volume": 1
                 }
             ]
         },
-        "music.skybluetech.famicom_4": {
+        "record.skybluetech.famicom_4": {
             "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_4",
+                    "name": "sounds/skybluetech/music/famicom_4",
                     "stream": true,
                     "volume": 1
                 }
             ]
         },
-        "music.skybluetech.famicom_5": {
+        "record.skybluetech.famicom_5": {
             "category": "record",
             "sounds": [
                 {
                     "load_on_low_memory": true,
-                    "name": "sounds/music/skybluetech/famicom_5",
+                    "name": "sounds/skybluetech/music/famicom_5",
                     "stream": true,
                     "volume": 1
                 }
@@ -61,7 +61,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_125",
+                    "name": "sounds/skybluetech/samples/bit_125",
                     "volume": 1
                 }
             ]
@@ -70,7 +70,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_25",
+                    "name": "sounds/skybluetech/samples/bit_25",
                     "volume": 1
                 }
             ]
@@ -79,7 +79,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_50",
+                    "name": "sounds/skybluetech/samples/bit_50",
                     "volume": 1
                 }
             ]
@@ -88,7 +88,7 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_noise",
+                    "name": "sounds/skybluetech/samples/bit_noise",
                     "volume": 1
                 }
             ]
@@ -97,8 +97,25 @@
             "category": "record",
             "sounds": [
                 {
-                    "name": "sounds/samples/skybluetech/bit_noise2",
+                    "name": "sounds/skybluetech/samples/bit_noise2",
                     "volume": 1
+                }
+            ]
+        },
+        "sfx.skybluetech.tesla_plant.shock": {
+            "category": "ambient",
+            "sounds": [
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock1"
+                },
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock2"
+                },
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock3"
+                },
+                {
+                    "name": "sounds/skybluetech/sfx/tesla_plant/shock4"
                 }
             ]
         }

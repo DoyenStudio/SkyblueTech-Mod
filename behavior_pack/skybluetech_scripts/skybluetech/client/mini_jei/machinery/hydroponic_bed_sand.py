@@ -1,10 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define import UICtrlPosData, Item
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
-from skybluetech_scripts.tooldelta.api.client import (
-    NewSingleBlockPalette,
-    CombineBlockPaletteToGeometry,
-)
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.hydroponic_bed_sand import (
     HydroponicBedSandRecipe,
 )
@@ -24,10 +21,18 @@ class HydroponicBedSandRecipeRenderer(RecipeRenderer):
         self.recipe = recipe
         self.crop_renderer = None
         self.output_renderers = []
-        self.palette = NewSingleBlockPalette(self.recipe.crop_block_id, 0)
-        self.geo_id = CombineBlockPaletteToGeometry(
+        self.palette = CF.CreateBlock(LEVEL_ID).GetBlankBlockPalette()
+        self.palette.DeserializeBlockPalette({
+            "extra": {},
+            "void": False,
+            "actor": {},
+            "volume": (1, 1, 1),
+            "common": {(self.recipe.crop_block_id, 0): [0]},
+            "eliminateAir": True,
+        })
+        self.geo_id = CF.CreateBlockGeometry(LEVEL_ID).CombineBlockPaletteToGeometry(
             self.palette,
-            "geometry.skybluetech_temp.crop_geo_" + self.recipe.crop_block_id,
+            'geometry.skybluetech_temp.crop_geo_' + self.recipe.crop_block_id,
         )
         self.view_grow_progress = 0
 

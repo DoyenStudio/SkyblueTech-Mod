@@ -10,6 +10,14 @@ FLUID_VOLUME_TEXTURE_INDICES = {
     "textures/fluid/baked/skybluetech.saturated_brine/static": 2,
 }
 
+# 只有依赖引擎额外着色的灰度源图才登记；已烘焙颜色的流体保持原色。
+# 原版 biomes_client.json 的默认 water_surface_color 为 #44AFF5。
+# RGB 为乘数，第四项为着色开关（不是透明度）。
+FLUID_TEXTURE_TINTS = {
+    "textures/blocks/water_still_grey": (68 / 255.0, 175 / 255.0, 245 / 255.0, 1.0),
+    "textures/blocks/water_flow_grey": (68 / 255.0, 175 / 255.0, 245 / 255.0, 1.0),
+}
+
 FLUID_TEXTURE_FRAMES = {
     "textures/fluid_models/minecraft.lava": (1, 0.0),
     "textures/fluid_models/minecraft.water": (1, 0.0),

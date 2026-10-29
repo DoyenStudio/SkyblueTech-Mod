@@ -12,6 +12,7 @@ from skybluetech_scripts.skybluetech.client.utils.client_molangs import (
 )
 from skybluetech_scripts.skybluetech.client.utils.fluid_texture_frames import (
     FLUID_TEXTURE_FRAMES,
+    FLUID_TEXTURE_TINTS,
     FLUID_VOLUME_TEXTURE_INDICES,
 )
 
@@ -24,6 +25,19 @@ def GetFluidTexturePath(fluid_id):
     # 使用源流体方块的顶面；多贴图变体取首个路径。
     paths = texture_info.get("Up", {}).get("paths", [])
     return paths[0] if paths else None
+
+
+def SetFluidTextureUniforms(actor_render, texture_key):
+    # 未识别贴图由 GLES3 查询尺寸；GLES2 保留静态回退，不猜动画帧数。
+    frame_count, frame_rate = FLUID_TEXTURE_FRAMES.get(texture_key, (0, 0.0))
+    if not actor_render.SetEntityExtraUniforms(
+        1, (float(frame_count), float(frame_rate), 0.0, 0.0)
+    ):
+        return False
+    # 每次换流体都更新，防止从水切换到已着色贴图后残留蓝色乘数。
+    return actor_render.SetEntityExtraUniforms(
+        2, FLUID_TEXTURE_TINTS.get(texture_key, (1.0, 1.0, 1.0, 0.0))
+    )
 
 
 class FluidModel:
@@ -78,7 +92,15 @@ class FluidModel:
         if not res:
             print("[ST] Failed to add texture to fluid model")
             return False
-        return CF.CreateActorRender(self.ceid).RebuildRenderForOneActor()
+        actor_render = CF.CreateActorRender(self.ceid)
+        if not actor_render.RebuildRenderForOneActor():
+            return False
+        texture_key = texture_path.replace("\\", "/")
+        if texture_key.endswith(".png"):
+            texture_key = texture_key[:-4]
+        # 与体积流体共用逐帧采样：整张序列图不能直接当作单帧贴到储罐上。
+        # 在重建渲染后设置，液体和气体实体都需要相同的动画参数。
+        return SetFluidTextureUniforms(actor_render, texture_key)
 
     def SetYScale(self, y_scale):
         # type: (float) -> bool
@@ -118,8 +140,6 @@ class FluidVolumeModel(object):
         texture_key = texture_path.replace("\\", "/")
         if texture_key.endswith(".png"):
             texture_key = texture_key[:-4]
-        # 未识别贴图由 GLES3 查询尺寸；GLES2 保留静态回退，不猜动画帧数。
-        frame_count, frame_rate = FLUID_TEXTURE_FRAMES.get(texture_key, (0, 0.0))
         actor_render = CF.CreateActorRender(self.ceid)
         texture_index = FLUID_VOLUME_TEXTURE_INDICES.get(texture_key, 0)
         # 蒸发池贴图预先声明，由渲染控制器选择。首次动态替换贴图在重进后
@@ -131,9 +151,7 @@ class FluidVolumeModel(object):
                 return False
             if not actor_render.RebuildRenderForOneActor():
                 return False
-        if not actor_render.SetEntityExtraUniforms(
-            1, (float(frame_count), float(frame_rate), 0.0, 0.0)
-        ):
+        if not SetFluidTextureUniforms(actor_render, texture_key):
             return False
         if not FLUID_VOLUME_TEXTURE.set_to_entity(self.ceid, float(texture_index)):
             return False

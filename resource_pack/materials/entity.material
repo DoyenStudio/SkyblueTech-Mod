@@ -2,9 +2,10 @@
     "materials": {
         "version": "1.0.0",
         "fluid_model:entity": {
-            "+states": [
-                // "Blending", "DisableDepthTest"
-            ]
+            "vertexShader": "shaders/glsl/skybluetech_fluid_volume_vertex.glsl",
+            "fragmentShader": "shaders/glsl/skybluetech_fluid_volume_fragment.glsl",
+            "+states": ["Blending"],
+            "+defines": ["USE_SKINNING"]
         },
         "skybluetech_fluid_volume:entity": {
             "vertexShader": "shaders/glsl/skybluetech_fluid_volume_vertex.glsl",

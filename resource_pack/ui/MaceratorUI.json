@@ -70,9 +70,12 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.progress_bar": {
+                "progress@SkybluePanelLib.progress_sprite": {
                     "$bg_image": "textures/ui/macerator_prgs_bg",
                     "$mask_image": "textures/ui/macerator_prgs_top",
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         72,
                         36
@@ -80,10 +83,7 @@
                     "size": [
                         32,
                         16
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1
+                    ]
                 }
             },
             {

@@ -5,31 +5,27 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery.distillation_cham
     DistillationChamberRecipe,
 )
 from skybluetech_scripts.skybluetech.client.ui.machinery.utils import FormatKelvin
-from .define import MachineRecipeRendererBase
+from .define import MachineRecipeRendererBase, _AnimatedRenderer
 
 
-class DistillationChamberRecipeRenderer(MachineRecipeRendererBase):
+class DistillationChamberRecipeRenderer(_AnimatedRenderer):
+    """蒸馏是连续过程 (不走进度): 静态箭头, 温度要求写进箭头的悬停 (同 MEI 配方页)。"""
+
     recipe_icon_id = machinery.Machinery.DISTILLATION_CHAMBER
     render_ui_def_name = "RecipeCheckerLib.distillation_chamber_recipes"
+    render_progress = False
 
     def __init__(self, recipe):
         # type: (DistillationChamberRecipe) -> None
         MachineRecipeRendererBase.__init__(self, recipe)
         self.recipe = recipe
 
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        MachineRecipeRendererBase.RenderInit(self, panel)
-        panel["right_board/tip_text"].asLabel().SetText(
-            FormatKelvin(self.recipe.fit_temperature)
-        )
-        panel["right_board/tip_text2"].asLabel().SetText(
-            "> %s\n< %s"
-            % (
-                FormatKelvin(self.recipe.min_temperature),
-                FormatKelvin(self.recipe.max_temperature),
-            )
-        )
+    def ProgressTip(self):
+        return [
+            "§7最适温度： §f" + FormatKelvin(self.recipe.fit_temperature),
+            "§7温度范围： §f%s ~ %s"
+            % (FormatKelvin(self.recipe.min_temperature), FormatKelvin(self.recipe.max_temperature)),
+        ]
 
 
 DistillationChamberRecipe.SetRenderer(DistillationChamberRecipeRenderer)

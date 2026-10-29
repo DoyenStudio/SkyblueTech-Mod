@@ -35,7 +35,7 @@
                 "gen_slot@netease_container.custom_grid_item": {
                     "layer": 10,
                     "offset": [
-                        28,
+                        25,
                         26
                     ],
                     "anchor_from": "top_left",
@@ -47,7 +47,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        28,
+                        25,
                         26
                     ],
                     "size": [
@@ -57,62 +57,27 @@
                 }
             },
             {
-                "progress": {
-                    "type": "panel",
+                "progress@SkybluePanelLib.gauge_h": {
+                    "layer": 1,
+                    "$gauge_fill": "textures/ui/skybluetech/gauge/fill_blue",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        50,
-                        30
+                        47,
+                        28
                     ],
                     "size": [
-                        119,
-                        8
-                    ],
-                    "layer": 1,
-                    "controls": [
-                        {
-                            "bg": {
-                                "type": "image",
-                                "layer": 1,
-                                "nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
-                                "texture": "textures/ui/frame_empty_slim"
-                            }
-                        },
-                        {
-                            "mask": {
-                                "type": "image",
-                                "anchor_from": "left_middle",
-                                "anchor_to": "left_middle",
-                                "layer": 1,
-                                "color": [
-                                    0.0,
-                                    1.0,
-                                    0.0
-                                ],
-                                "nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
-                                "texture": "textures/ui/white_with_empty_edge"
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
+                        122,
+                        6
+                    ]
                 }
             },
             {
                 "note_label": {
                     "type": "label",
                     "offset": [
-                        50,
-                        44
+                        47,
+                        37
                     ],
                     "color": "$title_text_color",
                     "font_type": "default",
@@ -121,7 +86,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "size": [
-                        119,
+                        122,
                         10
                     ],
                     "layer": 1,

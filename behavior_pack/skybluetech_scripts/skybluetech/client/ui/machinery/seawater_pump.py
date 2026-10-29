@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
-from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.define.flags import (
@@ -16,8 +15,10 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.seawater_pump import (
+    FULL_SPEED_WATER_RATIO,
     K_WATER_BLOCK_COUNT,
     MAX_FLUID_VOLUME,
+    MIN_WATER_RATIO,
     STORE_RF_MAX,
     WATER_SCAN_VOLUME,
 )
@@ -34,12 +35,15 @@ from skybluetech_scripts.skybluetech.client.ui.machinery.utils import (
     FormatStructureLackedBlockPoses,
     GetStructureLackedBlockPoses,
     GetStructureLackedBlocks,
+    SetHoverText,
     UpdatePowerBar,
+    UpdateProgress,
 )
 
 POWER_PATH = MAIN_PATH / "power_bar"
 FLUID_PATH = MAIN_PATH / "fluid_display"
-WATER_RATIO_CLIP_PATH = MAIN_PATH / "salt_thickness_bar/clip_panel"
+# 水源占比条 = SkybluePanelLib.gauge_h (通用计量条, 30% / 60% 两道刻度在 JSON 里), 由 UpdateProgress 驱动
+WATER_RATIO_PATH = MAIN_PATH / "salt_thickness_bar"
 STRUCTURE_TIP_PATH = MAIN_PATH / "structure_not_finished_tip"
 STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_btn"
 
@@ -51,7 +55,7 @@ class SeawaterPumpUI(MachinePanelUIProxyEx):
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.fluid_displayer = FluidDisplayer(self.GetElement(FLUID_PATH))
-        self.water_ratio_clip = self.GetElement(WATER_RATIO_CLIP_PATH)
+        self.water_ratio_bar = self.GetElement(WATER_RATIO_PATH)
         self.last_water_ratio = None
         self.structure_tip = self.GetElement(STRUCTURE_TIP_PATH)
         self.structure_desc_label = self.GetElement(
@@ -75,8 +79,15 @@ class SeawaterPumpUI(MachinePanelUIProxyEx):
         water_count = GetValue(data, K_WATER_BLOCK_COUNT, 0) or 0
         water_ratio = max(0.0, min(1.0, float(water_count) / WATER_SCAN_VOLUME))
         if water_ratio != self.last_water_ratio:
-            self.water_ratio_clip.SetFullSize(
-                "x", UICtrlPosData("parent", relative_value=water_ratio)
+            UpdateProgress(self.water_ratio_bar, water_ratio)
+            SetHoverText(
+                self.water_ratio_bar,
+                "盐水浓度 %d%%\n§7≥ %d%% 开始抽取, ≥ %d%% 全速"
+                % (
+                    int(water_ratio * 100),
+                    int(MIN_WATER_RATIO * 100),
+                    int(FULL_SPEED_WATER_RATIO * 100),
+                ),
             )
             self.last_water_ratio = water_ratio
 

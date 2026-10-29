@@ -162,29 +162,18 @@ def _QuantizeEnergy(ratio, segments):
     return 3.0 * k / (3 * segments + 1)
 
 
-def UpdatePowerBar(ui, rf_now, rf_max):
-    # type: (UBaseCtrl, int, int) -> None
+def UpdatePowerBar(ui, rf_now, rf_max, hover=None):
+    # type: (UBaseCtrl, int, int, str | None) -> None
     """
-    更新能量条。
-    - 新组件 (SkybluePanelLib.energy_meter_*): 悬停显示储能 / 容量。经典分段 (energy_meter_classic) 的带电层
-      写法同原版 PowerBar: 底部锚定的平铺图, 用 SetFullSize 按电量改高度并按整段取整; 低于 15% 换琥珀、
-      低于 5% 换红色贴图 (发电机的缓冲见底不算异常, 不变色)。
-    - 旧组件 (SkybluePanelLib.power_bar, 附属可能仍在使用): 保持原来的拉伸填充 + 文字。
+    更新能量条 (SkybluePanelLib.energy_meter_*): 悬停显示储能 / 容量。经典分段 (energy_meter_classic) 的带电层
+    写法同原版 PowerBar: 底部锚定的平铺图, 用 SetFullSize 按电量改高度并按整段取整; 低于 15% 换琥珀、
+    低于 5% 换红色贴图 (发电机的缓冲见底不算异常, 不变色)。
+    hover: 配方页 (MiniJEI) 用, 悬停改写耗能 / 产能, 不写储能。
     """
     if rf_max <= 0:
         return
     cache = ui._vars
     ratio = max(0.0, min(1.0, float(rf_now) / rf_max))
-    if "legacy" not in cache:
-        try:
-            ui["info"]
-            cache["legacy"] = False
-        except ValueError:
-            cache["legacy"] = True
-    if cache["legacy"]:
-        ui["bar/mask"].SetFullSize("y", UICtrlPosData("parent", relative_value=ratio))
-        ui["label"].asLabel().SetText(FormatRF(rf_now))
-        return
     if "mask" not in cache:
         cache["mask"] = ui["bar/mask"].asImage()
         try:
@@ -202,11 +191,15 @@ def UpdatePowerBar(ui, rf_now, rf_max):
         else:
             cache["mask"].SetSpriteClipRatio("fromTopToBottom", 1.0 - shown)
     level = 0
-    if cache["classic"] and not getattr(ui._root, "IS_GENERATOR", False):
+    # 配方页 (hover 非空) 的能量条只表示耗能 / 产能, 随进度增减时不换低电量颜色
+    if cache["classic"] and hover is None and not getattr(ui._root, "IS_GENERATOR", False):
         level = 2 if ratio < ENERGY_CRITICAL else (1 if ratio < ENERGY_LOW else 0)
         if cache.get("level") != level:
             cache["level"] = level
             cache["mask"].SetSprite(_ENERGY_FILLS[level])
+    if hover is not None:
+        SetHoverText(ui, hover)
+        return
     SetHoverText(
         ui,
         "§b储能： §f%s\n§7容量： §f%s%s"
@@ -365,8 +358,11 @@ def UpdateImageTransformColor(
 class FluidDisplayer(object):
     def __init__(self, ctrl, enable_interact=True):
         # type: (UBaseCtrl, bool) -> None
+        """
+        流体槽 (SkybluePanelLib.fluid_tank): 液面 + 悬停提示 (子控件 info)。
+        enable_interact=False: 只画液面, 悬停文字由调用方写 (MiniJEI 配方页写的是配方用量, 不是储罐容量)。
+        """
         self.ctrl = ctrl
-        self.databoard = None
         self.fluid_id = None
         self.fluid_volume = None
         self.max_volume = None
@@ -376,55 +372,6 @@ class FluidDisplayer(object):
         self.flipbook_tick = 0
         self.first_update = True
         self.enable_interact = enable_interact
-        # 新组件 (SkybluePanelLib.fluid_tank) 带悬停提示 info; 旧组件 (fluid_display) 仍是点击弹出数据板
-        try:
-            ctrl["info"]
-            self.hover_mode = True
-        except ValueError:
-            self.hover_mode = False
-        if self.hover_mode or not enable_interact:
-            return
-        btn = ctrl["data_btn"].asButton()
-        screen_vars = ctrl._root._vars
-
-        # def onRollOver(params):
-        #     prev_board = get_last_ui_board()
-        #     if prev_board is not None:
-        #         return
-        #     e = ctrl._root.AddElement("SkybluePanelLib.data_text_screen", "fluid_hover_text")
-        #     e.SetPos(ctrl.GetRootPos())
-        #     e.SetLayer(100)
-        #     screen_vars["disp_fluid_databoard"] = e
-        #     current_ctrl[0] = e
-        #     _updateHook()
-
-        # def onRollOut(params):
-        #     prev_board = get_last_ui_board()
-        #     if prev_board is not None:
-        #         prev_board.Remove()
-        #         del screen_vars["disp_fluid_databoard"]
-        #     current_ctrl[0] = None
-
-        def onRelease(params):
-            prev_board = ctrl._root._vars.get("disp_board")  # type: UBaseCtrl | None
-            if prev_board is not None:
-                prev_board.Remove()
-                del screen_vars["disp_board"]
-                if screen_vars.get("disp_board_src") is ctrl:
-                    screen_vars.pop("disp_board_src")
-                    return
-            e = ctrl._root.AddElement(
-                "SkybluePanelLib.data_text_screen", "fluid_hover_text"
-            )
-            e.SetPos(ctrl.GetRootPos())
-            e.SetLayer(100)
-            screen_vars["disp_board"] = e
-            screen_vars["disp_board_src"] = ctrl
-            self._update_hover()
-
-        # btn.SetOnRollOverCallback(onRollOver)
-        # btn.SetOnRollOutCallback(onRollOut)
-        btn.SetCallback(onRelease)
 
     def update(self, fluid_id, fluid_volume, max_volume):
         # type: (str | None, float, float) -> None
@@ -440,7 +387,7 @@ class FluidDisplayer(object):
             )
         )
         self._update_fluid_img()
-        if self.hover_mode or self.enable_interact:
+        if self.enable_interact:
             self._update_hover()
 
     def _get_target_relative_volume(self):
@@ -538,11 +485,4 @@ class FluidDisplayer(object):
                 else "未知"
             )
         )
-        if self.hover_mode:
-            SetHoverText(self.ctrl, text)
-            return
-        databoard = self.ctrl._root._vars.get("disp_board")  # type: UBaseCtrl | None
-        databoard_src = self.ctrl._root._vars.get("disp_board_src")  # type: UBaseCtrl | None
-        if databoard is None or databoard_src is not self.ctrl:
-            return
-        (databoard / "image/label").asLabel().SetText(text)
+        SetHoverText(self.ctrl, text)

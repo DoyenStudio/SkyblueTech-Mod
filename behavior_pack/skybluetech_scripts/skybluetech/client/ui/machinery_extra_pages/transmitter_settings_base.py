@@ -23,7 +23,7 @@ IO_FACE_COLORS = {
 
 def UpdateFaceButton(btn_ctrl, io_mode):
     # type: (UBaseCtrl, int) -> None
-    "端口面按钮: 旧版 9x9 状态图标保留 (已隐藏), 新版用底色区分状态。"
+    "端口面按钮: 用底色区分输入 / 输出状态; 9x9 状态图标 (icon) 仍按状态设置 UV, 但在界面里是隐藏的。"
     if io_mode == -1:
         uv_start = (0, 18)
     elif io_mode:

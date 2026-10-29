@@ -21,7 +21,7 @@ from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from ..recipe_checker import AsRecipeCheckerBtn
 from ...machinery.bans import is_machine_banned
 from .define import MAIN_PATH, MachinePanelUIProxy
-from .utils import UpdateProgress
+from .utils import SetHoverText, UpdateProgress
 
 WARNING_BAR_DISPLAY_THRESOLD = 0.8
 
@@ -95,7 +95,8 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
             .asButton()
             .SetCallback(self.onClickResearchingBtn)
         )
-        self.craft_speed_bar = self.GetElement(CRAFT_SPEED_BAR_PATH).asImage()
+        # 操作强度条 = SkybluePanelLib.gauge_h (通用计量条), 由 UpdateProgress 驱动
+        self.craft_speed_bar = self.GetElement(CRAFT_SPEED_BAR_PATH)
         self.warning_bar = self.GetElement(WARNING_BAR_PATH)
         self.output_item_previewer = self.GetElement(
             OUTPUT_ITEM_PREVIEWER_PATH
@@ -194,9 +195,10 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         self.result_item_label.SetColor(color)
 
     def update_craft_speed_bar(self):
-        self.craft_speed_bar.SetSpriteClipRatio(
-            "fromRightToLeft",
-            1 - self.craft_strength,
+        UpdateProgress(self.craft_speed_bar, self.craft_strength)
+        SetHoverText(
+            self.craft_speed_bar,
+            "操作强度 %d%%\n§7点得过快会加速工具磨损" % int(self.craft_strength * 100),
         )
         if self.craft_strength >= WARNING_BAR_DISPLAY_THRESOLD:
             self.warning_bar_display_time = 60

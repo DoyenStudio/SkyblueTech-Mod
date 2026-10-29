@@ -340,7 +340,7 @@
                 }
             },
             {
-                "check_btn@SkybluePanelLib.recipe_check_btn": {
+                "check_btn@SkybluePanelLib.icon_button": {
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "layer": 0,

@@ -229,6 +229,70 @@
         "type": "panel",
         "controls": [
             {
+                "wrench_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "MachineryWorkstationUI.wrench_slot_img",
+                                "collection_index": 9,
+                                "layer": 0
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "pincer_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        7,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "MachineryWorkstationUI.pincer_slot_img",
+                                "collection_index": 10,
+                                "layer": 0
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "researching_btn@SkybluePanelLib.icon_button": {
+                    "layer": 2,
+                    "$icon_texture": "textures/items/inscribing_template",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        53
+                    ]
+                }
+            },
+            {
                 "crafting_grid@MachineryWorkstationUI.container_slots": {
                     "grid_dimensions": [
                         3,
@@ -236,7 +300,7 @@
                     ],
                     "layer": 0,
                     "offset": [
-                        7,
+                        25,
                         17
                     ],
                     "anchor_from": "top_left",
@@ -244,14 +308,16 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.progress_bar": {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
                     "layer": 1,
-                    "offset": [
-                        70,
-                        37
-                    ],
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "offset": [
+                        86,
+                        37
+                    ],
                     "size": [
                         22,
                         15
@@ -264,7 +330,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        69,
+                        85,
                         36
                     ],
                     "size": [
@@ -306,8 +372,8 @@
                     "$pressed_texture": "textures/ui/button_pressed",
                     "$texture_layer": 2,
                     "offset": [
-                        72,
-                        55
+                        88,
+                        53
                     ],
                     "size": [
                         18,
@@ -364,7 +430,7 @@
                 "output_slot": {
                     "type": "stack_panel",
                     "offset": [
-                        101,
+                        115,
                         31
                     ],
                     "size": [
@@ -399,7 +465,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        101,
+                        115,
                         31
                     ],
                     "size": [
@@ -409,100 +475,14 @@
                 }
             },
             {
-                "wrench_slot": {
-                    "type": "stack_panel",
-                    "offset": [
-                        133,
-                        17
-                    ],
-                    "size": [
-                        18,
-                        18
-                    ],
-                    "layer": 1,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "MachineryWorkstationUI.wrench_slot_img",
-                                "collection_index": 9,
-                                "layer": 0
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
-                }
-            },
-            {
-                "pincer_slot": {
-                    "type": "stack_panel",
-                    "offset": [
-                        151,
-                        17
-                    ],
-                    "size": [
-                        18,
-                        18
-                    ],
-                    "layer": 1,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "MachineryWorkstationUI.pincer_slot_img",
-                                "collection_index": 10,
-                                "layer": 0
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
-                }
-            },
-            {
-                "craft_speed_bar_bg": {
-                    "type": "image",
-                    "offset": [
-                        133,
-                        37
-                    ],
-                    "size": [
-                        36,
-                        4
-                    ],
-                    "layer": 1,
-                    "texture": "textures/ui/rgb_bar_20_bg",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
-                }
-            },
-            {
-                "craft_speed_bar": {
-                    "type": "image",
-                    "offset": [
-                        133,
-                        37
-                    ],
-                    "size": [
-                        36,
-                        4
-                    ],
-                    "layer": 2,
-                    "texture": "textures/ui/rgb_bar_20",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
-                }
-            },
-            {
                 "result_item_label": {
                     "type": "label",
                     "offset": [
-                        101,
-                        61
+                        7,
+                        75
                     ],
                     "size": [
-                        68,
+                        104,
                         10
                     ],
                     "color": "$title_text_color",
@@ -516,14 +496,30 @@
                 }
             },
             {
+                "craft_speed_bar@SkybluePanelLib.gauge_h": {
+                    "layer": 1,
+                    "$gauge_fill": "textures/ui/skybluetech/gauge/fill_heat_h",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        115,
+                        77
+                    ],
+                    "size": [
+                        54,
+                        6
+                    ]
+                }
+            },
+            {
                 "extra_msg": {
                     "type": "label",
                     "offset": [
-                        7,
-                        75
+                        60,
+                        6
                     ],
                     "size": [
-                        162,
+                        96,
                         10
                     ],
                     "layer": 1,
@@ -540,11 +536,11 @@
                     "type": "panel",
                     "offset": [
                         7,
-                        89
+                        71
                     ],
                     "size": [
                         162,
-                        16
+                        18
                     ],
                     "layer": 20,
                     "controls": [
@@ -552,159 +548,74 @@
                             "bg": {
                                 "type": "image",
                                 "layer": 1,
-                                "alpha": 0.5,
-                                "color": [
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
                                 "keep_ratio": false,
-                                "nineslice_size": [
-                                    0.0,
-                                    0.0,
-                                    0.0,
-                                    0.0
-                                ],
-                                "texture": "textures/ui/white"
+                                "texture": "textures/ui/skybluetech/info_bg",
+                                "nineslice_size": 1,
+                                "fill": true
                             }
                         },
                         {
                             "warning_ico": {
                                 "type": "image",
-                                "anchor_from": "left_middle",
-                                "anchor_to": "left_middle",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "size": [
                                     16,
                                     16
                                 ],
                                 "layer": 1,
-                                "texture": "textures/ui/warning_icon"
+                                "texture": "textures/ui/warning_icon",
+                                "offset": [
+                                    2,
+                                    1
+                                ]
                             }
                         },
                         {
                             "text1": {
                                 "type": "label",
-                                "anchor_from": "left_middle",
-                                "anchor_to": "left_middle",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    20.0,
-                                    0.0
+                                    21,
+                                    4
                                 ],
                                 "layer": 3,
                                 "color": [
-                                    1.0,
-                                    0.6666666666666666,
-                                    0.0
+                                    0.75,
+                                    0.16,
+                                    0.12
                                 ],
-                                "font_scale_factor": 1.4,
                                 "font_type": "default",
                                 "text": "太快了！",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "shadow": false
                             }
                         },
                         {
                             "text2": {
                                 "type": "label",
-                                "anchor_from": "bottom_left",
-                                "anchor_to": "bottom_left",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    58.0,
-                                    -3.0
+                                    59,
+                                    4
                                 ],
                                 "layer": 3,
                                 "color": [
-                                    1.0,
-                                    1.0,
-                                    1.0
+                                    0.18,
+                                    0.18,
+                                    0.18
                                 ],
                                 "font_type": "default",
                                 "text": "这将导致工具快速磨损！",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "shadow": false
                             }
                         }
                     ],
                     "anchor_from": "top_left",
                     "anchor_to": "top_left"
-                }
-            },
-            {
-                "researching_btn@common.button": {
-                    "type": "button",
-                    "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/left_section",
-                    "$hover_texture": "textures/ui/left_section",
-                    "$is_new_nine_slice": false,
-                    "$label_color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "large",
-                    "$label_layer": 3,
-                    "$label_offset": [
-                        0,
-                        0
-                    ],
-                    "$label_text": "Button",
-                    "$nine_slice_buttom": 0,
-                    "$nine_slice_left": 0,
-                    "$nine_slice_right": 0,
-                    "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        3.0,
-                        3.0,
-                        3.0,
-                        3.0
-                    ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/left_section",
-                    "$texture_layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        -28,
-                        40
-                    ],
-                    "size": [
-                        24,
-                        24
-                    ],
-                    "layer": 2,
-                    "button_mappings": [],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "pressed_control": "pressed",
-                    "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "",
-                            "binding_condition": "always_when_visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "default@netease_editor_template_namespace.default": {}
-                        },
-                        {
-                            "hover@netease_editor_template_namespace.hover": {}
-                        },
-                        {
-                            "pressed@netease_editor_template_namespace.pressed": {}
-                        },
-                        {
-                            "image": {
-                                "type": "image",
-                                "size": [
-                                    "100%+-6px",
-                                    "100%+-6px"
-                                ],
-                                "layer": 3,
-                                "texture": "textures/items/inscribing_template"
-                            }
-                        }
-                    ]
                 }
             },
             {
@@ -718,7 +629,7 @@
                     ],
                     "size": [
                         100,
-                        202
+                        184
                     ],
                     "layer": 1,
                     "controls": [
@@ -862,11 +773,11 @@
         "$machine_content": "MachineryWorkstationUI.content",
         "$panel_size": [
             176,
-            202
+            184
         ],
         "$content_size": [
             162,
-            90
+            72
         ],
         "$title_text": "机件加工台",
         "$has_tabs": false,

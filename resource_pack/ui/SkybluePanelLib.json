@@ -1,352 +1,4 @@
 {
-    "data_text_screen": {
-        "type": "panel",
-        "$text": "",
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "size": [
-            "0%c+0px",
-            "0%c+0px"
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "image": {
-                    "type": "image",
-                    "size": [
-                        "100%c+9px",
-                        "100%c+8px"
-                    ],
-                    "layer": 1,
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
-                    "texture": "textures/ui/detail_bg",
-                    "controls": [
-                        {
-                            "label": {
-                                "type": "label",
-                                "$text": "",
-                                "$text|default": "",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    4.0,
-                                    4.0
-                                ],
-                                "layer": 1,
-                                "font_type": "default",
-                                "text": "$text"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "DataTextScreen@SkybluePanelLib.data_text_screen": {},
-    "flame": {
-        "type": "panel",
-        "$mask_img": "textures/ui/flame_mask",
-        "size": [
-            20.0,
-            20.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "layer": 1,
-                    "clip_direction": "left",
-                    "clip_ratio": 0.0,
-                    "texture": "textures/ui/flame_img"
-                }
-            },
-            {
-                "mask": {
-                    "type": "image",
-                    "$mask_img|default": "",
-                    "layer": 2,
-                    "clip_direction": "down",
-                    "texture": "$mask_img"
-                }
-            }
-        ]
-    },
-    "Flame@SkybluePanelLib.flame": {},
-    "fluid_display": {
-        "type": "panel",
-        "$text_size": "normal",
-        "$text_visible": true,
-        "$text_y_offset": [
-            0.0,
-            2.0
-        ],
-        "size": [
-            167.0,
-            53.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "fluid": {
-                    "type": "panel",
-                    "size": [
-                        "100%+-2px",
-                        "100%+-4px"
-                    ],
-                    "controls": [
-                        {
-                            "img": {
-                                "type": "image",
-                                "anchor_from": "bottom_middle",
-                                "anchor_to": "bottom_middle",
-                                "size": [
-                                    "default",
-                                    "0%+0px"
-                                ],
-                                "clip_ratio": 0.0,
-                                "color": [
-                                    1,
-                                    1,
-                                    1
-                                ],
-                                "texture": "textures/fluid/basic_fluid",
-                                "tiled": true
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "frame": {
-                    "type": "image",
-                    "size": [
-                        "100%+0px",
-                        "100%+0px"
-                    ],
-                    "layer": 1,
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "texture": "textures/ui/frame_empty"
-                }
-            },
-            {
-                "text": {
-                    "type": "label",
-                    "$text_size|default": "normal",
-                    "$text_visible|default": false,
-                    "$text_y_offset|default": [
-                        0,
-                        0
-                    ],
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": "$text_y_offset",
-                    "max_size": [
-                        "default",
-                        "0%+0px"
-                    ],
-                    "layer": 2,
-                    "visible": "$text_visible",
-                    "color": [
-                        0.0,
-                        0.0,
-                        0.7725490196078432
-                    ],
-                    "font_scale_factor": 1.5,
-                    "font_size": "$text_size",
-                    "font_type": "unicode",
-                    "text": "0B / 0B",
-                    "text_alignment": "center"
-                }
-            },
-            {
-                "data_btn@common.button": {
-                    "type": "button",
-                    "$control_alpha": 1.0,
-                    "$default_texture": "",
-                    "$hover_texture": "",
-                    "$is_new_nine_slice": false,
-                    "$label_color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "large",
-                    "$label_layer": 3,
-                    "$label_offset": [
-                        0,
-                        0
-                    ],
-                    "$label_text": "",
-                    "$nine_slice_buttom": 0,
-                    "$nine_slice_left": 0,
-                    "$nine_slice_right": 0,
-                    "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "",
-                    "$texture_layer": 2,
-                    "priority": 10,
-                    "layer": 3,
-                    "button_mappings": [],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "pressed_control": "pressed",
-                    "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "",
-                            "binding_condition": "always_when_visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "default@netease_editor_template_namespace.default": {}
-                        },
-                        {
-                            "hover@netease_editor_template_namespace.hover": {}
-                        },
-                        {
-                            "pressed@netease_editor_template_namespace.pressed": {}
-                        },
-                        {
-                            "button_label@netease_editor_template_namespace.button_label": {}
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "FluidDisplay@SkybluePanelLib.fluid_display": {},
-    "power_bar": {
-        "type": "panel",
-        "size": [
-            14.0,
-            80.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "label": {
-                    "type": "label",
-                    "$text|default": "-- RF",
-                    "offset": [
-                        0.0,
-                        47.0
-                    ],
-                    "layer": 1,
-                    "font_scale_factor": 1.2,
-                    "font_type": "unicode",
-                    "shadow": true,
-                    "text": "$text",
-                    "text_alignment": "center"
-                }
-            },
-            {
-                "bar": {
-                    "type": "panel",
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "bg": {
-                                "type": "image",
-                                "layer": 1,
-                                "clip_direction": "left",
-                                "clip_ratio": 0.0,
-                                "keep_ratio": false,
-                                "texture": "textures/ui/energy_bar_bg",
-                                "tiled": true
-                            }
-                        },
-                        {
-                            "mask": {
-                                "type": "image",
-                                "anchor_from": "bottom_middle",
-                                "anchor_to": "bottom_middle",
-                                "size": [
-                                    "default",
-                                    "50%+0px"
-                                ],
-                                "layer": 2,
-                                "clip_offset": [
-                                    0.0,
-                                    0.0
-                                ],
-                                "enabled": false,
-                                "clip_ratio": 0.4999999999999997,
-                                "keep_ratio": false,
-                                "texture": "textures/ui/energy_bar_top",
-                                "tiled": "y"
-                            }
-                        },
-                        {
-                            "frame": {
-                                "type": "image",
-                                "layer": 3,
-                                "clip_ratio": 0.0,
-                                "keep_ratio": false,
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
-                                "texture": "textures/ui/frame_empty"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "PowerBar@SkybluePanelLib.power_bar": {},
-    "progress_bar": {
-        "type": "panel",
-        "$bg_image": "textures/ui/arrow_img",
-        "$mask_image": "textures/ui/arrow_mask",
-        "size": [
-            36,
-            20.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "$bg_image|default": "",
-                    "layer": 1,
-                    "texture": "$bg_image"
-                }
-            },
-            {
-                "mask": {
-                    "type": "image",
-                    "$mask_image|default": "",
-                    "layer": 2,
-                    "clip_direction": "right",
-                    "texture": "$mask_image"
-                }
-            }
-        ]
-    },
-    "ProgressBar@SkybluePanelLib.progress_bar": {},
     "structure_not_finished_tip": {
         "type": "input_panel",
         "size": [
@@ -408,7 +60,6 @@
                         0.6666666666666666,
                         0.0
                     ],
-                    "font_scale_factor": 1.2,
                     "font_type": "default",
                     "text": "多方块结构未成型",
                     "text_alignment": "center"
@@ -429,7 +80,6 @@
                         1.0,
                         1.0
                     ],
-                    "font_scale_factor": 1.1,
                     "font_type": "default",
                     "text": "详情：",
                     "text_alignment": "center"
@@ -460,7 +110,6 @@
             }
         ]
     },
-    "StructureNotFinishedTip@SkybluePanelLib.structure_not_finished_tip": {},
     "text_with_black_bg": {
         "type": "image",
         "$alpha": 0.4,
@@ -504,127 +153,6 @@
             }
         ]
     },
-    "TextWithBlackBg@SkybluePanelLib.text_with_black_bg": {},
-    "upgrade_slots": {
-        "type": "panel",
-        "$slot0": 2,
-        "$slot1": 3,
-        "$slot2": 4,
-        "$slot3": 5,
-        "size": [
-            32,
-            86.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "layer": 1,
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
-                    "texture": "textures/ui/panel_bg"
-                }
-            },
-            {
-                "slot0": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        -27.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
-                                "collection_index": "$slot0"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "slot1": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        -9.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
-                                "collection_index": "$slot1"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "slot2": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        9.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
-                                "collection_index": "$slot2"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "slot3": {
-                    "type": "stack_panel",
-                    "offset": [
-                        0.0,
-                        27.0
-                    ],
-                    "size": [
-                        "100%cm",
-                        "100%cm"
-                    ],
-                    "layer": 15,
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
-                                "collection_index": "$slot3"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "UpgradeSlots@SkybluePanelLib.upgrade_slots": {},
     "blank_container": {
         "type": "panel",
         "size": [
@@ -632,227 +160,6 @@
             100.0
         ],
         "layer": 1
-    },
-    "collect_recipe_btn@common.button": {
-        "type": "button",
-        "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
-        "$is_new_nine_slice": false,
-        "$label_color": [
-            1,
-            1,
-            1
-        ],
-        "$label_font_scale_factor": 1.0,
-        "$label_font_size": "large",
-        "$label_layer": 3,
-        "$label_offset": [
-            0,
-            0
-        ],
-        "$label_text": "",
-        "$nine_slice_buttom": 0,
-        "$nine_slice_left": 0,
-        "$nine_slice_right": 0,
-        "$nine_slice_top": 0,
-        "$nineslice_size": [
-            2.0,
-            2.0,
-            2.0,
-            2.0
-        ],
-        "$pressed_button_name": "%netease_editor_template_namespace.click",
-        "$pressed_texture": "textures/ui/button_pressed",
-        "$texture_layer": 2,
-        "size": [
-            10.0,
-            10.0
-        ],
-        "layer": 2,
-        "button_mappings": [],
-        "default_control": "default",
-        "hover_control": "hover",
-        "is_handle_button_move_event": true,
-        "pressed_control": "pressed",
-        "sound_name": "random.toast",
-        "bindings": [
-            {
-                "binding_type": "collection_details",
-                "binding_collection_name": "",
-                "binding_condition": "always_when_visible"
-            }
-        ],
-        "controls": [
-            {
-                "default@netease_editor_template_namespace.default": {}
-            },
-            {
-                "hover@netease_editor_template_namespace.hover": {}
-            },
-            {
-                "pressed@netease_editor_template_namespace.pressed": {}
-            },
-            {
-                "collected_img": {
-                    "type": "image",
-                    "size": [
-                        "100%+-4px",
-                        "100%+-4px"
-                    ],
-                    "layer": 3,
-                    "texture": "textures/ui/collection_yellow_img"
-                }
-            },
-            {
-                "not_collected_img": {
-                    "type": "image",
-                    "size": [
-                        "100%+-4px",
-                        "100%+-4px"
-                    ],
-                    "layer": 3,
-                    "texture": "textures/ui/collection_gray_img"
-                }
-            }
-        ]
-    },
-    "item_displayer": {
-        "type": "panel",
-        "size": [
-            20.0,
-            20.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "layer": 1,
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "texture": "textures/ui/bg_frame_01"
-                }
-            },
-            {
-                "item_count": {
-                    "type": "label",
-                    "anchor_from": "bottom_right",
-                    "anchor_to": "bottom_right",
-                    "size": [
-                        "100%+0px",
-                        "default"
-                    ],
-                    "layer": 5,
-                    "font_scale_factor": 0.9999999999999997,
-                    "font_type": "unicode",
-                    "shadow": true,
-                    "text_alignment": "right"
-                }
-            },
-            {
-                "item_renderer": {
-                    "type": "custom",
-                    "renderer": "inventory_item_renderer",
-                    "size": [
-                        "100%+-2px",
-                        "100%+-2px"
-                    ],
-                    "layer": 2,
-                    "visible": false,
-                    "property_bag": {
-                        "#item_id_aux": -10551296
-                    }
-                }
-            },
-            {
-                "check_btn@common.button": {
-                    "type": "button",
-                    "$control_alpha": 1.0,
-                    "$default_texture": "",
-                    "$hover_texture": "",
-                    "$is_new_nine_slice": false,
-                    "$label_color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "normal",
-                    "$label_layer": 3,
-                    "$label_offset": [
-                        0,
-                        0
-                    ],
-                    "$label_text": "",
-                    "$nine_slice_buttom": 0,
-                    "$nine_slice_left": 0,
-                    "$nine_slice_right": 0,
-                    "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "",
-                    "$texture_layer": 2,
-                    "layer": 3,
-                    "button_mappings": [],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "pressed_control": "pressed",
-                    "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "",
-                            "binding_condition": "always_when_visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "default@netease_editor_template_namespace.default": {}
-                        },
-                        {
-                            "hover@netease_editor_template_namespace.hover": {}
-                        },
-                        {
-                            "pressed@netease_editor_template_namespace.pressed": {}
-                        },
-                        {
-                            "button_label@netease_editor_template_namespace.button_label": {}
-                        }
-                    ]
-                }
-            },
-            {
-                "prob": {
-                    "type": "label",
-                    "anchor_from": "top_right",
-                    "anchor_to": "top_right",
-                    "size": [
-                        "100%+0px",
-                        "default"
-                    ],
-                    "layer": 5,
-                    "color": [
-                        1.0,
-                        1.0,
-                        0.0
-                    ],
-                    "font_scale_factor": 1.6,
-                    "font_size": "small",
-                    "font_type": "unicode",
-                    "text_alignment": "right"
-                }
-            }
-        ]
     },
     "item_selector_rect": {
         "type": "panel",
@@ -866,13 +173,10 @@
             {
                 "frame": {
                     "type": "image",
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "nineslice_size": 1,
+                    "texture": "textures/ui/cell_image",
+                    "fill": true,
+                    "keep_ratio": false
                 }
             },
             {
@@ -986,13 +290,10 @@
                         "100%sm+10px",
                         "100%sm+20px"
                     ],
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
-                    "texture": "textures/ui/panel_bg_rect"
+                    "nineslice_size": 4,
+                    "texture": "textures/ui/dialog_background_opaque",
+                    "fill": true,
+                    "keep_ratio": false
                 }
             },
             {
@@ -1005,14 +306,11 @@
                         4.0
                     ],
                     "layer": 5,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "text": "选择物品",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
@@ -1105,71 +403,13 @@
                         {
                             "bg": {
                                 "type": "image",
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
-                                "texture": "textures/ui/bg_frame_01"
+                                "nineslice_size": 1,
+                                "texture": "textures/ui/skybluetech/info_bg",
+                                "fill": true,
+                                "keep_ratio": false
                             }
                         }
                     ]
-                }
-            }
-        ]
-    },
-    "main": {
-        "type": "screen"
-    },
-    "output_power_displayer": {
-        "type": "panel",
-        "anchor_from": "right_middle",
-        "anchor_to": "right_middle",
-        "offset": [
-            -4.0,
-            0.0
-        ],
-        "size": [
-            94.0,
-            16.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "energy_img": {
-                    "type": "image",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "size": [
-                        16.0,
-                        "100%+0px"
-                    ],
-                    "layer": 1,
-                    "texture": "textures/icon/energy_icon"
-                }
-            },
-            {
-                "rf_label": {
-                    "type": "label",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        16.0,
-                        0.0
-                    ],
-                    "size": [
-                        "100%+-16px",
-                        12.0
-                    ],
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_scale_factor": 1.2,
-                    "font_type": "unicode",
-                    "text": "999, 99 MRF"
                 }
             }
         ]
@@ -1191,82 +431,6 @@
             },
             {
                 "inventory@common.inventory_panel": {}
-            }
-        ]
-    },
-    "recipe_check_btn@common.button": {
-        "type": "button",
-        "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
-        "$is_new_nine_slice": false,
-        "$label_color": [
-            1,
-            1,
-            1
-        ],
-        "$label_font_scale_factor": 1.0,
-        "$label_font_size": "large",
-        "$label_layer": 3,
-        "$label_offset": [
-            0,
-            0
-        ],
-        "$label_text": "",
-        "$nine_slice_buttom": 0,
-        "$nine_slice_left": 0,
-        "$nine_slice_right": 0,
-        "$nine_slice_top": 0,
-        "$nineslice_size": [
-            2.0,
-            2.0,
-            2.0,
-            2.0
-        ],
-        "$pressed_button_name": "%netease_editor_template_namespace.click",
-        "$pressed_texture": "textures/ui/button_pressed",
-        "$texture_layer": 2,
-        "size": [
-            20.0,
-            20.0
-        ],
-        "layer": 2,
-        "button_mappings": [],
-        "default_control": "default",
-        "hover_control": "hover",
-        "is_handle_button_move_event": true,
-        "pressed_control": "pressed",
-        "sound_name": "random.toast",
-        "bindings": [
-            {
-                "binding_type": "collection_details",
-                "binding_collection_name": "",
-                "binding_condition": "always_when_visible"
-            }
-        ],
-        "controls": [
-            {
-                "default@netease_editor_template_namespace.default": {}
-            },
-            {
-                "hover@netease_editor_template_namespace.hover": {}
-            },
-            {
-                "pressed@netease_editor_template_namespace.pressed": {}
-            },
-            {
-                "button_label@netease_editor_template_namespace.button_label": {}
-            },
-            {
-                "image": {
-                    "type": "image",
-                    "size": [
-                        "100%+-4px",
-                        "100%+-4px"
-                    ],
-                    "layer": 3,
-                    "texture": "textures/ui/searcher"
-                }
             }
         ]
     },
@@ -1427,111 +591,6 @@
             }
         ]
     },
-    "temperature_bar": {
-        "type": "panel",
-        "size": [
-            14.0,
-            80.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "temperature_label": {
-                    "type": "label",
-                    "$text": "-- K",
-                    "$text|default": "",
-                    "offset": [
-                        0.0,
-                        47.0
-                    ],
-                    "layer": 1,
-                    "font_scale_factor": 1.2,
-                    "font_type": "unicode",
-                    "shadow": true,
-                    "text": "$text",
-                    "text_alignment": "center"
-                }
-            },
-            {
-                "bar": {
-                    "type": "panel",
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "bg": {
-                                "type": "image",
-                                "layer": 1,
-                                "clip_direction": "left",
-                                "clip_ratio": 0.0,
-                                "color": [
-                                    0.3333333333333333,
-                                    0.3333333333333333,
-                                    0.3333333333333333
-                                ],
-                                "keep_ratio": false,
-                                "texture": "textures/ui/temperature_bar_vertical",
-                                "tiled": "x"
-                            }
-                        },
-                        {
-                            "clip_panel": {
-                                "type": "panel",
-                                "anchor_from": "bottom_middle",
-                                "anchor_to": "bottom_middle",
-                                "offset": [
-                                    0.0,
-                                    -1.0
-                                ],
-                                "size": [
-                                    "100%+-2px",
-                                    "50%+-2px"
-                                ],
-                                "clips_children": true,
-                                "controls": [
-                                    {
-                                        "mask": {
-                                            "type": "image",
-                                            "anchor_from": "bottom_middle",
-                                            "anchor_to": "bottom_middle",
-                                            "size": [
-                                                12.0,
-                                                78.0
-                                            ],
-                                            "layer": 2,
-                                            "clip_offset": [
-                                                0.0,
-                                                0.0
-                                            ],
-                                            "enabled": false,
-                                            "clip_ratio": 0.4999999999999997,
-                                            "keep_ratio": false,
-                                            "texture": "textures/ui/temperature_bar_vertical",
-                                            "tiled": "x"
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "frame": {
-                                "type": "image",
-                                "layer": 3,
-                                "clip_ratio": 0.0,
-                                "keep_ratio": false,
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
-                                "texture": "textures/ui/frame_empty"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
     "ui_block_stack_desc": {
         "type": "panel",
         "layer": 1,
@@ -1544,13 +603,8 @@
                         "100%cm+8px"
                     ],
                     "priority": 1,
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "texture": "textures/ui/panel_bg_rect_slim",
+                    "nineslice_size": 4,
+                    "texture": "textures/ui/dialog_background_opaque",
                     "controls": [
                         {
                             "grid": {
@@ -1608,14 +662,11 @@
                                                             5.0,
                                                             3.0
                                                         ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
+                                                        "color": "$title_text_color",
                                                         "font_type": "default",
                                                         "text": "本位置可用方块",
-                                                        "text_alignment": "center"
+                                                        "text_alignment": "center",
+                                                        "shadow": false
                                                     }
                                                 }
                                             ]
@@ -1624,7 +675,9 @@
                                 ]
                             }
                         }
-                    ]
+                    ],
+                    "fill": true,
+                    "keep_ratio": false
                 }
             },
             {
@@ -2702,6 +1755,39 @@
             }
         ]
     },
+    "progress_sprite": {
+        "type": "panel",
+        "size": [
+            22,
+            15
+        ],
+        "layer": 1,
+        "$bg_image|default": "textures/ui/arrow_img",
+        "$mask_image|default": "textures/ui/arrow_mask",
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "$bg_image",
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "$mask_image",
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "layer": 2,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            }
+        ]
+    },
     "progress_arrow": {
         "type": "panel",
         "size": [
@@ -2823,6 +1909,286 @@
         "fill": true,
         "layer": 1,
         "keep_ratio": false
+    },
+    "gauge_h": {
+        "type": "panel",
+        "size": [
+            54,
+            6
+        ],
+        "layer": 1,
+        "$gauge_fill|default": "textures/ui/skybluetech/gauge/fill_blue",
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "color": [
+                        0.545,
+                        0.545,
+                        0.545
+                    ],
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "$gauge_fill",
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 2,
+                    "clip_direction": "left",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            }
+        ]
+    },
+    "gauge_v": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "$gauge_fill|default": "textures/ui/skybluetech/gauge/fill_blue",
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "color": [
+                        0.545,
+                        0.545,
+                        0.545
+                    ],
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "mask": {
+                    "type": "image",
+                    "texture": "$gauge_fill",
+                    "size": [
+                        "100% - 2px",
+                        "100% - 2px"
+                    ],
+                    "layer": 2,
+                    "clip_direction": "down",
+                    "clip_ratio": 1.0,
+                    "clip_pixelperfect": true,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "info@SkybluePanelLib.hover_info": {
+                    "layer": 6
+                }
+            },
+            {
+                "fill_up": {
+                    "type": "panel",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "recipe_slot": {
+        "type": "panel",
+        "size": [
+            20,
+            20
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "texture": "textures/ui/bg_frame_01",
+                    "nineslice_size": [
+                        2,
+                        2,
+                        2,
+                        2
+                    ],
+                    "layer": 1,
+                    "fill": false,
+                    "keep_ratio": true
+                }
+            },
+            {
+                "item_renderer": {
+                    "type": "custom",
+                    "renderer": "inventory_item_renderer",
+                    "size": [
+                        16,
+                        16
+                    ],
+                    "layer": 2,
+                    "visible": false,
+                    "property_bag": {
+                        "#item_id_aux": -10551296
+                    }
+                }
+            },
+            {
+                "item_count": {
+                    "type": "label",
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "offset": [
+                        0,
+                        1
+                    ],
+                    "size": [
+                        "100%",
+                        "default"
+                    ],
+                    "text": "",
+                    "color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "shadow": true,
+                    "font_type": "default",
+                    "text_alignment": "right",
+                    "layer": 5
+                }
+            },
+            {
+                "prob": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 5
+                }
+            },
+            {
+                "check_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "",
+                    "$hover_texture": "textures/ui/skybluetech/hover_tint",
+                    "$pressed_texture": "textures/ui/skybluetech/press_tint",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "normal",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$texture_layer": 2,
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 6,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "pressed_control": "pressed",
+                    "is_handle_button_move_event": true,
+                    "sound_name": "random.click",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            }
+        ]
     },
     "upgrade_drawer": {
         "type": "image",

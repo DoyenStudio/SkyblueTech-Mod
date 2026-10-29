@@ -62,16 +62,6 @@ class ItemDisplayer(object):
         )
 
 
-class RFOutputDisplayer(object):
-    def __init__(self, ctrl, rf):
-        # type: (UBaseCtrl, int) -> None
-        from ..machinery.utils import FormatRF
-
-        self.ctrl = ctrl
-        self.rf = rf
-        self.ctrl["rf_label"].asLabel().SetText(FormatRF(rf))
-
-
 # def GetDoubleClickHelper(delay=0.25):
 #     ticker = [0.0]
 
@@ -87,12 +77,6 @@ class RFOutputDisplayer(object):
 
 def CreateDescBoard(hang_ctrl, global_xy, category, item_id, display_item_id, text):
     # type: (UBaseCtrl, tuple[float, float], str, str, str, str) -> UBaseCtrl | None
-    # RemoveDisplayBoard(ctrl._root)
-    # screen_vars = ctrl._root._vars
-    # databoard = ctrl._root.AddElement("SkybluePanelLib.DataTextScreen", "display_board")
-    # databoard["image/label"].asLabel().SetText(text, sync_size=True)
-    # databoard.SetLayer(100)
-
     from skybluetech_scripts.skybluetech.common.mini_jei import (
         GetRecipesByInput,
         GetRecipesByOutput,

@@ -2,35 +2,41 @@
     "energy_cube_ui": {
         "type": "panel",
         "size": [
-            180.0,
-            200.0
+            176,
+            190
         ],
         "layer": 1,
         "controls": [
             {
+                "dlg_bg@common.dialog_background_opaque": {
+                    "layer": 0
+                }
+            },
+            {
                 "upper": {
                     "type": "panel",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "size": [
-                        "default",
-                        "55%+0px"
+                        176,
+                        104
                     ],
                     "layer": 1,
                     "controls": [
                         {
                             "bg@common.dialog_background_opaque": {
-                                "layer": 0
+                                "layer": 0,
+                                "visible": false
                             }
                         },
                         {
                             "machine_label": {
                                 "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    0.0,
-                                    4.0
+                                    7,
+                                    6
                                 ],
                                 "layer": 2,
                                 "font_type": "default",
@@ -73,15 +79,15 @@
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
                                 "$pressed_texture": "textures/ui/close_button_default",
                                 "$texture_layer": 2,
-                                "anchor_from": "top_right",
-                                "anchor_to": "top_right",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    -4.0,
-                                    4.0
+                                    156,
+                                    3
                                 ],
                                 "size": [
-                                    18.0,
-                                    18.0
+                                    15,
+                                    15
                                 ],
                                 "layer": 21,
                                 "button_mappings": [],
@@ -115,15 +121,15 @@
                         {
                             "battery_icon": {
                                 "type": "panel",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    0.0,
-                                    24.0
+                                    7,
+                                    17
                                 ],
                                 "size": [
-                                    96.0,
-                                    36.0
+                                    96,
+                                    36
                                 ],
                                 "layer": 1,
                                 "controls": [
@@ -166,25 +172,22 @@
                         {
                             "total_power": {
                                 "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    0.0,
-                                    62.0
+                                    7,
+                                    57
                                 ],
                                 "size": [
-                                    128.0,
-                                    "default"
+                                    96,
+                                    20
                                 ],
                                 "layer": 1,
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
+                                "color": "$title_text_color",
                                 "font_type": "default",
                                 "text": "999.99 MRF / 999.99 MRF",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "shadow": false
                             }
                         },
                         {
@@ -193,19 +196,19 @@
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
-                                    18.0,
-                                    72.0
+                                    7,
+                                    81
                                 ],
                                 "layer": 1,
-                                "color": [
-                                    0.6666666666666666,
-                                    0.0,
-                                    0.0
-                                ],
-                                "font_scale_factor": 1.2,
-                                "font_type": "rune",
+                                "color": "$title_text_color",
+                                "font_type": "default",
                                 "text": "输入 0.0 RF/t",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "size": [
+                                    96,
+                                    10
+                                ],
+                                "shadow": false
                             }
                         },
                         {
@@ -214,41 +217,41 @@
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
-                                    18.0,
-                                    84.0
+                                    7,
+                                    93
                                 ],
                                 "layer": 1,
-                                "color": [
-                                    0.0,
-                                    0.0,
-                                    1.0
-                                ],
-                                "font_scale_factor": 1.2,
-                                "font_type": "rune",
+                                "color": "$title_text_color",
+                                "font_type": "default",
                                 "text": "输出 0.0 RF/t",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "size": [
+                                    96,
+                                    10
+                                ],
+                                "shadow": false
                             }
                         },
                         {
                             "input_switch@common_toggles.switch_toggle_collection": {
                                 "type": "panel",
-                                "$checked_locked_texture": "textures/ui/simple_switch_on",
-                                "$default_texture": "textures/ui/simple_switch_off",
-                                "$hover_texture": "textures/ui/simple_switch_on",
-                                "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
-                                "$pressed_texture": "textures/ui/simple_switch_off",
+                                "$checked_locked_texture": "textures/ui/toggle_on",
+                                "$default_texture": "textures/ui/toggle_off",
+                                "$hover_texture": "textures/ui/toggle_off_hover",
+                                "$pressed_no_hover_texture": "textures/ui/toggle_on",
+                                "$pressed_texture": "textures/ui/toggle_on_hover",
                                 "$toggle_name": "#EnergyCubeUI.input_switch",
                                 "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                                "$unchecked_locked_texture": "textures/ui/simple_switch_off",
-                                "anchor_from": "top_right",
-                                "anchor_to": "top_right",
+                                "$unchecked_locked_texture": "textures/ui/toggle_off",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    -12.0,
-                                    66.0
+                                    113,
+                                    30
                                 ],
                                 "size": [
-                                    25.0,
-                                    25.0
+                                    30,
+                                    16
                                 ],
                                 "layer": 1,
                                 "bindings": [
@@ -263,24 +266,24 @@
                         {
                             "output_switch@common_toggles.switch_toggle_collection": {
                                 "type": "panel",
-                                "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                "$checked_locked_texture": "textures/ui/toggle_on",
                                 "$default_border_visible|default": false,
-                                "$default_texture": "textures/ui/simple_switch_off",
-                                "$hover_texture": "textures/ui/simple_switch_on",
-                                "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
-                                "$pressed_texture": "textures/ui/simple_switch_off",
+                                "$default_texture": "textures/ui/toggle_off",
+                                "$hover_texture": "textures/ui/toggle_off_hover",
+                                "$pressed_no_hover_texture": "textures/ui/toggle_on",
+                                "$pressed_texture": "textures/ui/toggle_on_hover",
                                 "$toggle_name": "#EnergyCubeUI.output_switch",
                                 "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                                "$unchecked_locked_texture": "textures/ui/simple_switch_off",
-                                "anchor_from": "top_right",
-                                "anchor_to": "top_right",
+                                "$unchecked_locked_texture": "textures/ui/toggle_off",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    -12.0,
-                                    79.0
+                                    113,
+                                    64
                                 ],
                                 "size": [
-                                    25.0,
-                                    25.0
+                                    30,
+                                    16
                                 ],
                                 "layer": 1,
                                 "bindings": [
@@ -295,60 +298,59 @@
                         {
                             "input_tip": {
                                 "type": "label",
-                                "anchor_from": "top_right",
-                                "anchor_to": "top_right",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    -40.0,
-                                    73.0
+                                    113,
+                                    19
                                 ],
                                 "layer": 1,
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
+                                "color": "$title_text_color",
                                 "font_type": "default",
                                 "text": "允许输入",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "shadow": false
                             }
                         },
                         {
                             "output_tip": {
                                 "type": "label",
-                                "anchor_from": "top_right",
-                                "anchor_to": "top_right",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    -41.0,
-                                    85.0
+                                    113,
+                                    53
                                 ],
                                 "layer": 1,
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
+                                "color": "$title_text_color",
                                 "font_type": "default",
                                 "text": "允许输出",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "shadow": false
                             }
                         }
+                    ],
+                    "offset": [
+                        0,
+                        0
                     ]
                 }
             },
             {
                 "lower": {
                     "type": "panel",
-                    "anchor_from": "bottom_middle",
-                    "anchor_to": "bottom_middle",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "size": [
-                        "default",
-                        "45%+0px"
+                        176,
+                        86
                     ],
                     "layer": 1,
                     "controls": [
                         {
                             "bg@common.dialog_background_opaque": {
-                                "layer": 0
+                                "layer": 0,
+                                "visible": false
                             }
                         },
                         {
@@ -356,7 +358,7 @@
                                 "type": "panel",
                                 "size": [
                                     100,
-                                    73.0
+                                    75
                                 ],
                                 "layer": 1,
                                 "controls": [
@@ -385,17 +387,17 @@
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
                                             "$nineslice_size": [
-                                                1.0,
-                                                1.0,
-                                                1.0,
-                                                1.0
+                                                1,
+                                                1,
+                                                1,
+                                                1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/button_pressed",
                                             "$texture_layer": 2,
                                             "size": [
-                                                25.0,
-                                                25.0
+                                                25,
+                                                25
                                             ],
                                             "layer": 2,
                                             "button_mappings": [],
@@ -412,13 +414,19 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "default@netease_editor_template_namespace.default": {}
+                                                    "default@netease_editor_template_namespace.default": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                    "hover@netease_editor_template_namespace.hover": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                    "pressed@netease_editor_template_namespace.pressed": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
                                                     "icon": {
@@ -476,6 +484,12 @@
                                                         "text_alignment": "center"
                                                     }
                                                 }
+                                            ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                25,
+                                                25
                                             ]
                                         }
                                     },
@@ -504,21 +518,21 @@
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
                                             "$nineslice_size": [
-                                                1.0,
-                                                1.0,
-                                                1.0,
-                                                1.0
+                                                1,
+                                                1,
+                                                1,
+                                                1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
-                                                0.0,
-                                                -25.0
+                                                25,
+                                                0
                                             ],
                                             "size": [
-                                                25.0,
-                                                25.0
+                                                25,
+                                                25
                                             ],
                                             "layer": 2,
                                             "button_mappings": [],
@@ -535,13 +549,19 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "default@netease_editor_template_namespace.default": {}
+                                                    "default@netease_editor_template_namespace.default": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                    "hover@netease_editor_template_namespace.hover": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                    "pressed@netease_editor_template_namespace.pressed": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
                                                     "dir_tip": {
@@ -599,7 +619,9 @@
                                                         ]
                                                     }
                                                 }
-                                            ]
+                                            ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left"
                                         }
                                     },
                                     {
@@ -627,21 +649,21 @@
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
                                             "$nineslice_size": [
-                                                1.0,
-                                                1.0,
-                                                1.0,
-                                                1.0
+                                                1,
+                                                1,
+                                                1,
+                                                1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
-                                                0.0,
-                                                25.0
+                                                25,
+                                                50
                                             ],
                                             "size": [
-                                                25.0,
-                                                25.0
+                                                25,
+                                                25
                                             ],
                                             "layer": 2,
                                             "button_mappings": [],
@@ -658,13 +680,19 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "default@netease_editor_template_namespace.default": {}
+                                                    "default@netease_editor_template_namespace.default": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                    "hover@netease_editor_template_namespace.hover": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                    "pressed@netease_editor_template_namespace.pressed": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
                                                     "dir_tip": {
@@ -722,7 +750,9 @@
                                                         ]
                                                     }
                                                 }
-                                            ]
+                                            ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left"
                                         }
                                     },
                                     {
@@ -750,21 +780,21 @@
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
                                             "$nineslice_size": [
-                                                1.0,
-                                                1.0,
-                                                1.0,
-                                                1.0
+                                                1,
+                                                1,
+                                                1,
+                                                1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
-                                                -25.0,
-                                                0.0
+                                                0,
+                                                25
                                             ],
                                             "size": [
-                                                25.0,
-                                                25.0
+                                                25,
+                                                25
                                             ],
                                             "layer": 2,
                                             "button_mappings": [],
@@ -781,13 +811,19 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "default@netease_editor_template_namespace.default": {}
+                                                    "default@netease_editor_template_namespace.default": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                    "hover@netease_editor_template_namespace.hover": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                    "pressed@netease_editor_template_namespace.pressed": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
                                                     "dir_tip": {
@@ -845,7 +881,9 @@
                                                         ]
                                                     }
                                                 }
-                                            ]
+                                            ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left"
                                         }
                                     },
                                     {
@@ -873,21 +911,21 @@
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
                                             "$nineslice_size": [
-                                                1.0,
-                                                1.0,
-                                                1.0,
-                                                1.0
+                                                1,
+                                                1,
+                                                1,
+                                                1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
-                                                25.0,
-                                                0.0
+                                                50,
+                                                25
                                             ],
                                             "size": [
-                                                25.0,
-                                                25.0
+                                                25,
+                                                25
                                             ],
                                             "layer": 2,
                                             "button_mappings": [],
@@ -904,13 +942,19 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "default@netease_editor_template_namespace.default": {}
+                                                    "default@netease_editor_template_namespace.default": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                    "hover@netease_editor_template_namespace.hover": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                    "pressed@netease_editor_template_namespace.pressed": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
                                                     "dir_tip": {
@@ -968,7 +1012,9 @@
                                                         ]
                                                     }
                                                 }
-                                            ]
+                                            ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left"
                                         }
                                     },
                                     {
@@ -996,21 +1042,21 @@
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
                                             "$nineslice_size": [
-                                                1.0,
-                                                1.0,
-                                                1.0,
-                                                1.0
+                                                1,
+                                                1,
+                                                1,
+                                                1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                            "$pressed_texture": "textures/ui/button_hovered",
+                                            "$pressed_texture": "textures/ui/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
-                                                25.0,
-                                                25.0
+                                                75,
+                                                25
                                             ],
                                             "size": [
-                                                25.0,
-                                                25.0
+                                                25,
+                                                25
                                             ],
                                             "layer": 2,
                                             "button_mappings": [],
@@ -1027,13 +1073,19 @@
                                             ],
                                             "controls": [
                                                 {
-                                                    "default@netease_editor_template_namespace.default": {}
+                                                    "default@netease_editor_template_namespace.default": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                    "hover@netease_editor_template_namespace.hover": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
-                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                    "pressed@netease_editor_template_namespace.pressed": {
+                                                        "fill": true
+                                                    }
                                                 },
                                                 {
                                                     "dir_tip": {
@@ -1091,12 +1143,24 @@
                                                         ]
                                                     }
                                                 }
-                                            ]
+                                            ],
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left"
                                         }
                                     }
+                                ],
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    38,
+                                    4
                                 ]
                             }
                         }
+                    ],
+                    "offset": [
+                        0,
+                        104
                     ]
                 }
             }

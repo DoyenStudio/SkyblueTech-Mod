@@ -1,5 +1,5 @@
 {
-    "mixer_progress@SkybluePanelLib.progress_bar": {
+    "mixer_progress@SkybluePanelLib.progress_sprite": {
         "$bg_image": "textures/ui/mixer_arrow_img",
         "$mask_image": "textures/ui/mixer_arrow_mask",
         "offset": [

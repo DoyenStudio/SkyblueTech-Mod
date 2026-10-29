@@ -1169,8 +1169,8 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        110,
-                        23
+                        113,
+                        19
                     ],
                     "color": "$title_text_color",
                     "font_type": "default",
@@ -1183,23 +1183,23 @@
             {
                 "input_switch@common_toggles.switch_toggle_collection": {
                     "type": "panel",
-                    "$checked_locked_texture": "textures/ui/simple_switch_on",
-                    "$default_texture": "textures/ui/simple_switch_off",
-                    "$hover_texture": "textures/ui/simple_switch_on",
-                    "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
-                    "$pressed_texture": "textures/ui/simple_switch_off",
+                    "$checked_locked_texture": "textures/ui/toggle_on",
+                    "$default_texture": "textures/ui/toggle_off",
+                    "$hover_texture": "textures/ui/toggle_off_hover",
+                    "$pressed_no_hover_texture": "textures/ui/toggle_on",
+                    "$pressed_texture": "textures/ui/toggle_on_hover",
                     "$toggle_name": "#BatteryMatrixUI.input_switch",
                     "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                    "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                    "$unchecked_locked_texture": "textures/ui/toggle_off",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        144,
-                        17
+                        113,
+                        30
                     ],
                     "size": [
-                        25,
-                        25
+                        30,
+                        16
                     ],
                     "layer": 1,
                     "bindings": [
@@ -1217,8 +1217,8 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        110,
-                        51
+                        113,
+                        53
                     ],
                     "color": "$title_text_color",
                     "font_type": "default",
@@ -1231,24 +1231,24 @@
             {
                 "output_switch@common_toggles.switch_toggle_collection": {
                     "type": "panel",
-                    "$checked_locked_texture": "textures/ui/simple_switch_on",
+                    "$checked_locked_texture": "textures/ui/toggle_on",
                     "$default_border_visible|default": false,
-                    "$default_texture": "textures/ui/simple_switch_off",
-                    "$hover_texture": "textures/ui/simple_switch_on",
-                    "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
-                    "$pressed_texture": "textures/ui/simple_switch_off",
+                    "$default_texture": "textures/ui/toggle_off",
+                    "$hover_texture": "textures/ui/toggle_off_hover",
+                    "$pressed_no_hover_texture": "textures/ui/toggle_on",
+                    "$pressed_texture": "textures/ui/toggle_on_hover",
                     "$toggle_name": "#BatteryMatrixUI.output_switch",
                     "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                    "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                    "$unchecked_locked_texture": "textures/ui/toggle_off",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        144,
-                        45
+                        113,
+                        64
                     ],
                     "size": [
-                        25,
-                        25
+                        30,
+                        16
                     ],
                     "layer": 1,
                     "bindings": [

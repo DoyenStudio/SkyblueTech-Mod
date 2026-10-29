@@ -83,22 +83,24 @@
     "rf_repeater_plant_ui": {
         "type": "panel",
         "size": [
-            180.0,
-            200.0
+            176,
+            172
         ],
         "layer": 1,
         "controls": [
             {
-                "bg@common.dialog_background_opaque": {}
+                "dlg_bg@common.dialog_background_opaque": {
+                    "layer": 0
+                }
             },
             {
                 "machine_label": {
                     "type": "label",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        0.0,
-                        4.0
+                        7,
+                        6
                     ],
                     "layer": 2,
                     "font_type": "default",
@@ -109,83 +111,149 @@
                 }
             },
             {
-                "databoard": {
-                    "type": "image",
+                "close_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/close_button_default",
+                    "$hover_texture": "textures/ui/close_button_default",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/close_button_default",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        0.0,
-                        -36.0
+                        156,
+                        3
                     ],
                     "size": [
-                        160.0,
-                        80.0
+                        15,
+                        15
                     ],
-                    "layer": 3,
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "rotate_pivot": [
-                        0.0,
-                        0.0
-                    ],
-                    "texture": "textures/ui/bg_frame_slim",
-                    "uv": [
-                        0.0,
-                        0.0
-                    ],
-                    "uv_size": [
-                        0.0,
-                        0.0
+                    "layer": 21,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
                     ],
                     "controls": [
                         {
-                            "tip_text": {
-                                "type": "label",
-                                "size": [
-                                    "100%+-3px",
-                                    "100%+-3px"
-                                ],
-                                "layer": 1,
-                                "font_type": "default",
-                                "text": "§a电网架设完毕。\n\n§b电网中继塔数： §f0 （在线 0）\n§4总输出端数： §f0 （在线 0）\n§a总输入端数：§f 0 （在线 0）"
-                            }
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
                         }
                     ]
                 }
             },
             {
+                "databoard": {
+                    "type": "image",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        162,
+                        80
+                    ],
+                    "layer": 3,
+                    "nineslice_size": 1,
+                    "rotate_pivot": [
+                        0.0,
+                        0.0
+                    ],
+                    "texture": "textures/ui/skybluetech/info_bg",
+                    "controls": [
+                        {
+                            "tip_text": {
+                                "type": "label",
+                                "size": [
+                                    156,
+                                    74
+                                ],
+                                "layer": 1,
+                                "font_type": "default",
+                                "text": "§a电网架设完毕。\n\n§b电网中继塔数： §f0 （在线 0）\n§4总输出端数： §f0 （在线 0）\n§a总输入端数：§f 0 （在线 0）",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    3,
+                                    3
+                                ],
+                                "color": "$title_text_color",
+                                "shadow": false
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "fill": true
+                }
+            },
+            {
                 "ctrl_tip": {
                     "type": "label",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        10.0,
-                        36.0
+                        7,
+                        101
                     ],
                     "layer": 5,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_scale_factor": 1.1,
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "text": "供能模式控制",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
                 "io_mode_ctrl": {
                     "type": "panel",
                     "offset": [
-                        0.0,
-                        60.0
+                        7,
+                        113
                     ],
                     "size": [
-                        100,
-                        30.0
+                        162,
+                        30
                     ],
                     "layer": 6,
                     "controls": [
@@ -233,13 +301,7 @@
                                     20.0
                                 ],
                                 "layer": 4,
-                                "nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
-                                "texture": "textures/ui/rect_panel_bg",
+                                "texture": "textures/ui/skybluetech/info_bg",
                                 "controls": [
                                     {
                                         "rf_repeater_icon": {
@@ -252,7 +314,10 @@
                                             "texture": "textures/icon/rf_repeater_plant_icon"
                                         }
                                     }
-                                ]
+                                ],
+                                "nineslice_size": 1,
+                                "fill": true,
+                                "keep_ratio": false
                             }
                         },
                         {
@@ -303,27 +368,26 @@
                         {
                             "io_mode_label": {
                                 "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    1.0,
-                                    0.0
+                                    1,
+                                    0
                                 ],
                                 "size": [
-                                    "100%+0px",
-                                    10.0
+                                    160,
+                                    10
                                 ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
+                                "color": "$title_text_color",
                                 "font_type": "default",
                                 "text": "§2电网向中继塔供能",
-                                "text_alignment": "center"
+                                "text_alignment": "center",
+                                "shadow": false
                             }
                         }
-                    ]
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
                 }
             },
             {
@@ -351,23 +415,23 @@
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
                     "$nineslice_size": [
-                        2.0,
-                        1.0,
-                        1.0,
-                        1.0
+                        1,
+                        1,
+                        1,
+                        1
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/button_pressed",
                     "$texture_layer": 2,
-                    "anchor_from": "bottom_right",
-                    "anchor_to": "bottom_right",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -10.0,
-                        -77.0
+                        7,
+                        147
                     ],
                     "size": [
-                        160.0,
-                        16.0
+                        162,
+                        18
                     ],
                     "layer": 11,
                     "button_mappings": [],
@@ -384,85 +448,19 @@
                     ],
                     "controls": [
                         {
-                            "default@netease_editor_template_namespace.default": {}
+                            "default@netease_editor_template_namespace.default": {
+                                "fill": true
+                            }
                         },
                         {
-                            "hover@netease_editor_template_namespace.hover": {}
+                            "hover@netease_editor_template_namespace.hover": {
+                                "fill": true
+                            }
                         },
                         {
-                            "pressed@netease_editor_template_namespace.pressed": {}
-                        },
-                        {
-                            "button_label@netease_editor_template_namespace.button_label": {}
-                        }
-                    ]
-                }
-            },
-            {
-                "close_btn@common.button": {
-                    "type": "button",
-                    "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/close_button_default",
-                    "$hover_texture": "textures/ui/close_button_default",
-                    "$is_new_nine_slice": false,
-                    "$label_color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "large",
-                    "$label_layer": 3,
-                    "$label_offset": [
-                        0,
-                        0
-                    ],
-                    "$label_text": "",
-                    "$nine_slice_buttom": 0,
-                    "$nine_slice_left": 0,
-                    "$nine_slice_right": 0,
-                    "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/close_button_default",
-                    "$texture_layer": 2,
-                    "anchor_from": "top_right",
-                    "anchor_to": "top_right",
-                    "offset": [
-                        -4.0,
-                        4.0
-                    ],
-                    "size": [
-                        18.0,
-                        18.0
-                    ],
-                    "layer": 21,
-                    "button_mappings": [],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "pressed_control": "pressed",
-                    "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "",
-                            "binding_condition": "always_when_visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "default@netease_editor_template_namespace.default": {}
-                        },
-                        {
-                            "hover@netease_editor_template_namespace.hover": {}
-                        },
-                        {
-                            "pressed@netease_editor_template_namespace.pressed": {}
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "fill": true
+                            }
                         },
                         {
                             "button_label@netease_editor_template_namespace.button_label": {}

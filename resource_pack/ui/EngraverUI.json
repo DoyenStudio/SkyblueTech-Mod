@@ -244,9 +244,12 @@
                 }
             },
             {
-                "progress@MixerUI.mixer_progress": {
+                "progress@SkybluePanelLib.progress_sprite": {
                     "$bg_image": "textures/ui/arrow_img",
                     "$mask_image": "textures/ui/arrow_mask_redstone",
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         105,
                         37
@@ -254,10 +257,7 @@
                     "size": [
                         22,
                         15
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1
+                    ]
                 }
             },
             {

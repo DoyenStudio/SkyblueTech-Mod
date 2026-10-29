@@ -12,21 +12,33 @@ if 0>1:
 
 
 class FluidDisplayer(object):
+    """
+    配方行里的流体格 (SkybluePanelLib.fluid_tank):
+    液面按同一行同方向里最大的用量画; 悬停写配方用量 (不写储罐容量); 点击 (悬停层 info 是按钮) 弹出说明, 同物品格。
+    """
+
     def __init__(self, ctrl, fluid_id, fluid_volume, max_volume):
         # type: (UBaseCtrl, str, float, float) -> None
         self.ctrl = ctrl
         self.fluid_id = fluid_id
         self.volume = fluid_volume
         self.max_volume = max_volume
-        self.check_btn = ctrl["data_btn"].asButton()
+        self.check_btn = ctrl["info"].asButton()
         self.check_btn.SetCallback(self.onBtnReleased)
         self.update()
 
     def update(self):
-        from ..machinery.utils import FluidDisplayer
+        from ..machinery.utils import FluidDisplayer, FormatFluidVolume, SetHoverText
 
         FluidDisplayer(self.ctrl, enable_interact=False).update(
             self.fluid_id, self.volume, self.max_volume
+        )
+        SetHoverText(
+            self.ctrl,
+            "§d流体类型： §f"
+            + (CF.CreateItem(LEVEL_ID).GetItemHoverName(self.fluid_id) or self.fluid_id)
+            + "\n§a体积： §f"
+            + FormatFluidVolume(self.volume),
         )
 
     def onBtnReleased(self, params):

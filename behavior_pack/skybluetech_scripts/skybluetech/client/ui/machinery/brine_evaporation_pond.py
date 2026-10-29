@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
-from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.define.flags import (
@@ -28,18 +27,19 @@ from skybluetech_scripts.skybluetech.client.ui.machinery.define import (
 from skybluetech_scripts.skybluetech.client.ui.machinery.utils import (
     FluidDisplayer,
     FormatBlockName,
-    FormatFluidVolume,
     FormatKelvin,
     FormatStructureLackedBlockPoses,
     GetStructureLackedBlockPoses,
     GetStructureLackedBlocks,
+    SetHoverText,
+    UpdateProgress,
 )
 
 INPUT_FLUID_PATH = MAIN_PATH / "input_fluid_disp"
 OUTPUT_FLUID_PATH = MAIN_PATH / "output_fluid_disp"
-DATA_LABEL_PATH = MAIN_PATH / "databoard/data_label"
-TEMPERATURE_LABEL_PATH = MAIN_PATH / "temperature/temperature_label"
-TEMPERATURE_CLIP_PATH = MAIN_PATH / "temperature/bar/clip_panel"
+# 温度计 = SkybluePanelLib.gauge_v (通用计量条, 自下而上), 由 UpdateProgress 驱动, 温度数值在悬停提示;
+# 输入 / 输出液量只在流体槽的悬停提示里 (原右侧液量文字板已去掉)
+TEMPERATURE_PATH = MAIN_PATH / "temperature"
 STRUCTURE_TIP_PATH = MAIN_PATH / "structure_not_finished_tip"
 
 
@@ -48,16 +48,8 @@ class BrineEvaporationPondUI(MachinePanelUIProxy):
     def OnCreate(self):
         self.input_fluid_displayer = FluidDisplayer(self.GetElement(INPUT_FLUID_PATH))
         self.output_fluid_displayer = FluidDisplayer(self.GetElement(OUTPUT_FLUID_PATH))
-        self.data_label = self.GetElement(DATA_LABEL_PATH).asLabel()
-        self.temperature_label = self.GetElement(TEMPERATURE_LABEL_PATH).asLabel()
-        self.temperature_clip = self.GetElement(TEMPERATURE_CLIP_PATH)
-        self.temperature_clip["mask"].asImage().SetSpriteClipRatio(
-            "fromTopToBottom", 0.0
-        )
-        self.temperature_clip.SetFullSize(
-            "y", UICtrlPosData("parent", relative_value=0.0)
-        )
-        self.last_temperature_ratio = 0.0
+        self.temperature = self.GetElement(TEMPERATURE_PATH)
+        self.last_temperature_ratio = None
         self.structure_tip = self.GetElement(STRUCTURE_TIP_PATH)
         self.structure_desc_label = self.GetElement(
             STRUCTURE_TIP_PATH / "desc_label"
@@ -86,18 +78,18 @@ class BrineEvaporationPondUI(MachinePanelUIProxy):
         self.output_fluid_displayer.update(
             output_fluid.fluid_id, output_fluid.volume, OUTPUT_MAX_VOLUME
         )
-        self.data_label.SetText(
-            "输入液量：\n%s\n输出液量：\n%s"
-            % (
-                FormatFluidVolume(input_fluid.volume),
-                FormatFluidVolume(output_fluid.volume),
-            )
-        )
-
         current_temperature = Thermal.GetKelvin(
             GetValue(data, K_HEAT_VALUE, Thermal.ENV_HEAT)
         )
-        self.temperature_label.SetText(FormatKelvin(current_temperature))
+        SetHoverText(
+            self.temperature,
+            "温度 %s\n§7刻度 %d - %d K"
+            % (
+                FormatKelvin(current_temperature),
+                MIN_DISPLAY_TEMPERATURE,
+                MAX_DISPLAY_TEMPERATURE,
+            ),
+        )
         temperature_ratio = max(
             0.0,
             min(
@@ -107,14 +99,7 @@ class BrineEvaporationPondUI(MachinePanelUIProxy):
             ),
         )
         if temperature_ratio != self.last_temperature_ratio:
-            # 外框高 80px、内条高 78px; 同步缩放 2px 边距, 最低温度时裁切高度为 0。
-            self.temperature_clip.SetFullSize(
-                "y", UICtrlPosData(
-                    "parent",
-                    relative_value=temperature_ratio,
-                    absolute_value=-2.0 * temperature_ratio,
-                )
-            )
+            UpdateProgress(self.temperature, temperature_ratio)
             self.last_temperature_ratio = temperature_ratio
 
         destroy_flag = GetValue(data, K_DESTROY_FLAG, DEACTIVE_FLAG_STRUCTURE_BROKEN)

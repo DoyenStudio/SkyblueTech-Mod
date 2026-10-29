@@ -208,7 +208,7 @@ class MachinePanelUIProxy(ToolDeltaScreen):
         """
         共享框架 (SkybluePanelLib.machine_screen): 标题取方块名; 状态灯 + 停机提示圈按停机标志显示。
         打开时读一次方块数据, 之后由服务端在标志变化时推送 MachineStatusUpdate (不轮询)。
-        旧版整份复制的界面没有这些控件, 一律跳过。
+        没有使用共享框架的界面 (如附属自带的整份界面) 没有这些控件, 一律跳过。
         """
         try:
             self._title_label = self.GetElement(TITLE_PATH).asLabel()

@@ -31,15 +31,12 @@ class AirCompressorRecipeRenderer(MachineRecipeRenderer):
         MachineRecipeRenderer.__init__(self, recipe)
         self.recipe = recipe
 
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        MachineRecipeRenderer.RenderInit(self, panel)
-        panel["databoard/dim_type_label"].asLabel().SetText(
-            GetDimensionName(self.recipe.dimension)
-        )
-        panel["databoard/air_type_label"].asLabel().SetText(
-            GetFluidDisplayName(self.recipe.output_fluid_id)
-        )
+    def ProgressTip(self):
+        # 维度与产出的空气种类写进进度悬停 (同 MEI 配方页)
+        return [
+            "§7维度： §f" + GetDimensionName(self.recipe.dimension),
+            "§7产出： §f" + GetFluidDisplayName(self.recipe.output_fluid_id),
+        ]
 
 
 AirCompressorRecipe.SetRenderer(AirCompressorRecipeRenderer)

@@ -53,18 +53,20 @@
                 }
             },
             {
-                "progress@SkybluePanelLib.progress_bar": {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         77,
                         37
                     ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
                     "size": [
                         22,
                         15
-                    ],
-                    "layer": 1
+                    ]
                 }
             },
             {

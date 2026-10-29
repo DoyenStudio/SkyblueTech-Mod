@@ -2,22 +2,132 @@
     "hover_text_displayer_ui": {
         "type": "panel",
         "size": [
-            200.0,
-            140.0
+            176,
+            96
         ],
         "layer": 1,
         "controls": [
             {
-                "bg": {
-                    "type": "image",
-                    "layer": 1,
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
+                "dlg_bg@common.dialog_background_opaque": {
+                    "layer": 0
+                }
+            },
+            {
+                "title": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        6
                     ],
-                    "texture": "textures/ui/panel_bg"
+                    "layer": 3,
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "悬浮文本投影器",
+                    "text_alignment": "center",
+                    "color": "$title_text_color"
+                }
+            },
+            {
+                "close_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/close_button_default",
+                    "$hover_texture": "textures/ui/close_button_default",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/close_button_default",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        156,
+                        3
+                    ],
+                    "size": [
+                        15,
+                        15
+                    ],
+                    "layer": 37,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
                 }
             },
             {
@@ -26,35 +136,19 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        40.0,
-                        25.0
+                        25,
+                        19
                     ],
                     "layer": 2,
-                    "color": [
-                        0.3450980392156863,
-                        0.3372549019607843,
-                        0.3450980392156863
-                    ],
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "text": "投影内容    耗能: 0 RF/t",
-                    "text_alignment": "center"
-                }
-            },
-            {
-                "title": {
-                    "type": "label",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle",
-                    "offset": [
-                        0.0,
-                        4.0
-                    ],
-                    "layer": 3,
-                    "font_type": "default",
-                    "shadow": false,
-                    "text": "悬浮文本投影器",
                     "text_alignment": "center",
-                    "color": "$title_text_color"
+                    "size": [
+                        144,
+                        10
+                    ],
+                    "shadow": false
                 }
             },
             {
@@ -111,103 +205,16 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        40.0,
-                        40.0
+                        25,
+                        31
                     ],
                     "size": [
-                        "100%+-50px",
-                        "100%+-50px"
+                        144,
+                        58
                     ],
                     "layer": 4,
                     "enabled_newline": true,
                     "max_length": 256
-                }
-            },
-            {
-                "power_bar@SkybluePanelLib.energy_meter": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "layer": 27,
-                    "offset": [
-                        10,
-                        10
-                    ],
-                    "size": [
-                        12,
-                        80
-                    ]
-                }
-            },
-            {
-                "close_btn@common.button": {
-                    "type": "button",
-                    "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/close_button_default",
-                    "$hover_texture": "textures/ui/close_button_default",
-                    "$is_new_nine_slice": false,
-                    "$label_color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "large",
-                    "$label_layer": 3,
-                    "$label_offset": [
-                        0,
-                        0
-                    ],
-                    "$label_text": "",
-                    "$nine_slice_buttom": 0,
-                    "$nine_slice_left": 0,
-                    "$nine_slice_right": 0,
-                    "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/close_button_default",
-                    "$texture_layer": 2,
-                    "anchor_from": "top_right",
-                    "anchor_to": "top_right",
-                    "offset": [
-                        -5.0,
-                        5.0
-                    ],
-                    "size": [
-                        12.0,
-                        12.0
-                    ],
-                    "layer": 37,
-                    "button_mappings": [],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "pressed_control": "pressed",
-                    "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "",
-                            "binding_condition": "always_when_visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "default@netease_editor_template_namespace.default": {}
-                        },
-                        {
-                            "hover@netease_editor_template_namespace.hover": {}
-                        },
-                        {
-                            "pressed@netease_editor_template_namespace.pressed": {}
-                        },
-                        {
-                            "button_label@netease_editor_template_namespace.button_label": {}
-                        }
-                    ]
                 }
             }
         ]

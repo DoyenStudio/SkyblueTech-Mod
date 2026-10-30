@@ -15,7 +15,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 
 from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "progress"
@@ -44,7 +44,7 @@ class DiggerUI(MachinePanelUIProxyEx):
         front_block_id = GetValue(data, K_FRONT_BLOCK_ID, None)
         front_block_aux = GetValue(data, K_FRONT_BLOCK_AUX, 0)
         UpdatePowerBar(self.power_bar, storage_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         if front_block_id == "minecraft:air" or front_block_id is None:
             front_block_id = "minecraft:barrier"
         self.block_disp.SetUiItem(Item(front_block_id, front_block_aux))

@@ -29,13 +29,16 @@ from .utils import (
     FormatStructureLackedBlockPoses,
     GetStructureLackedBlockPoses,
     GetStructureLackedBlocks,
+    SetHoverText,
     UpdatePowerBar,
+    UpdateProgress,
 )
 
 POWER_PATH = MAIN_PATH / "power_bar"
 FLUID_PATH = MAIN_PATH / "fluid_display"
-DRILL_PROGRESS_PATH = MAIN_PATH / "drill_progress/progress_bar/bar_mask"
-STORAGE_LEFT_PATH = MAIN_PATH / "storage_left/progress_bar/bar_mask"
+# 两条进度都是 SkybluePanelLib.gauge_h (通用计量条), 由 UpdateProgress 驱动, 百分比写进悬停提示
+DRILL_PROGRESS_PATH = MAIN_PATH / "drill_progress"
+STORAGE_LEFT_PATH = MAIN_PATH / "storage_left"
 STRUCTURE_NOT_FINISHED_TIP_PATH = MAIN_PATH / "structure_not_finished_tip"
 STRUCTURE_DESC_LABEL_PATH = STRUCTURE_NOT_FINISHED_TIP_PATH / "desc_label"
 MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_btn"
@@ -81,8 +84,10 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
         structure_lacked_poses = GetStructureLackedBlockPoses(data)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
         self.fluid_displayer.update(fluid_id, fluid_volume, max_volume)
-        self.drill_progress.SetFullSize("x", UICtrlPosData("parent", drill_progress))
-        self.storage_left.SetFullSize("x", UICtrlPosData("parent", lava_storage_left))
+        UpdateProgress(self.drill_progress, drill_progress)
+        SetHoverText(self.drill_progress, "钻探进度 %d%%" % int(drill_progress * 100))
+        UpdateProgress(self.storage_left, lava_storage_left)
+        SetHoverText(self.storage_left, "熔岩剩余量 %d%%" % int(lava_storage_left * 100))
         if (
             destroy_flag != self.last_destroy_flag
             or structure_lacked_blocks != self.last_structure_lacked_blocks

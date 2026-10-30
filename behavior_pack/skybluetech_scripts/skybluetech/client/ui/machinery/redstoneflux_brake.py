@@ -20,16 +20,16 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from .define import MachinePanelUI
 from .utils import FormatRF
 
-POWER_AVG_LABEL_PATH = SCREEN_BASE_PATH / "power_board/label"
-ENERGY_SCROLL_PATH = SCREEN_BASE_PATH / "graphics/wire/energy_scroll"
-REDSTONE_WIRE_PATH = SCREEN_BASE_PATH / "graphics/redstone_wire"
-REDSTONE_MODE_SWITCH_PATH = SCREEN_BASE_PATH / "redstone_mode_switch"
+POWER_AVG_LABEL_PATH = SCREEN_BASE_PATH / "panel/power_board/label"
+ENERGY_SCROLL_PATH = SCREEN_BASE_PATH / "panel/graphics/wire/energy_scroll"
+REDSTONE_WIRE_PATH = SCREEN_BASE_PATH / "panel/graphics/redstone_wire"
+REDSTONE_MODE_SWITCH_PATH = SCREEN_BASE_PATH / "panel/redstone_mode_switch"
 
 
 @RegistToolDeltaScreen("RedstoneFluxBrakeUI.main", key=REDSTONEFLUX_BRAKE_UI)
 class RedstoneFluxBrakeUI(MachinePanelUI):
     allow_esc_exit = True
-    EXIT_BTN_PATH = SCREEN_BASE_PATH / "close_btn"
+    EXIT_BTN_PATH = SCREEN_BASE_PATH / "panel/close_btn"
 
     def OnCreate(self):
         self.power_avg = 0

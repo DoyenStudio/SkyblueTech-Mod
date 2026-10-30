@@ -1,214 +1,179 @@
 {
-    "charger_ui": {
+    "content": {
         "type": "panel",
-        "layer": 1,
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {
+                "input_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        50,
+                        35
+                    ],
                     "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "root_panel@common.root_panel": {
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
                     "controls": [
                         {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "充能台",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -24.0,
-                                                            -40.0
-                                                        ],
-                                                        "size": [
-                                                            "11%cm",
-                                                            "11%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "output_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            24.0,
-                                                            -40.0
-                                                        ],
-                                                        "size": [
-                                                            "11%cm+0px",
-                                                            "11%cm+0px"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 1
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "offset": [
-                                                            0.0,
-                                                            -40.0
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "energy_img": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            0.0,
-                                                            -40.0
-                                                        ],
-                                                        "size": [
-                                                            16.0,
-                                                            16.0
-                                                        ],
-                                                        "layer": 10,
-                                                        "texture": "textures/icon/energy_icon"
-                                                    }
-                                                },
-                                                {
-                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
-                                                        "offset": [
-                                                            71,
-                                                            0
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
                             }
                         }
                     ],
-                    "layer": 0,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_in_input_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        35
+                    ],
                     "size": [
-                        180,
-                        200
+                        18,
+                        18
                     ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_bolt": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        38
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "layer": 4,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        83,
+                        37
+                    ],
+                    "size": [
+                        11,
+                        16
+                    ]
+                }
+            },
+            {
+                "output_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        108,
+                        31
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1,
+                                "size": [
+                                    26,
+                                    26
+                                ],
+                                "$cell_image_size": [
+                                    26,
+                                    26
+                                ]
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_out_output_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        31
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "ChargerUI.charger_ui"
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "ChargerUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "充能台",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 2,
+        "$upgrade_slot1": 3,
+        "$upgrade_slot2": 4,
+        "$upgrade_slot3": 5
     },
     "namespace": "ChargerUI"
 }

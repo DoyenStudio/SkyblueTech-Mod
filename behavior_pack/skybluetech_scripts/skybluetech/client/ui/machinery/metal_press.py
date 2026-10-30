@@ -18,8 +18,8 @@ from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import (
     FluidDisplayer,
-    UpdateGenericProgressL2R,
     UpdatePowerBar,
+    UpdateProgress,
 )
 
 POWER_PATH = MAIN_PATH / "power_bar"
@@ -52,5 +52,5 @@ class MetalPressUI(MachinePanelUIProxyEx):
         progress = GetValue(data, K_PROGRESS, 0)
         fluid = FluidSlotClient(data)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         self.fluid_displayer.update(fluid.fluid_id, fluid.volume, MAX_FLUID_VOLUME)

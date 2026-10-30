@@ -29,6 +29,7 @@ FLAME_PATH = MAIN_PATH / "flame"
 
 @RegistToolDeltaScreen("GeoThermalGeneratorUI.main", is_proxy=True)
 class GeoThermalGeneratorUI(MachinePanelUIProxyEx):
+    IS_GENERATOR = True
     available_extra_pages = (
         ItemPipeSettingsPageIndirectional,
         FluidPipeSettingsPageIndirectional,

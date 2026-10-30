@@ -313,8 +313,16 @@
             }
         ]
     },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@CraftingTemplateSettingsUI.content": {}
+            }
+        ]
+    },
     "main@common.base_screen": {
-        "$screen_content": "CraftingTemplateSettingsUI.content"
+        "$screen_content": "CraftingTemplateSettingsUI.screen_root"
     },
     "namespace": "CraftingTemplateSettingsUI"
 }

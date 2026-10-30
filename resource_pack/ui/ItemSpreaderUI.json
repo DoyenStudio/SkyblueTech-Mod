@@ -1,218 +1,131 @@
 {
-    "item_spreader_ui": {
+    "content": {
         "type": "panel",
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        0,
-                        -1
+                        7,
+                        17
                     ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "gen_slot@netease_container.custom_grid_item": {
+                    "layer": 10,
+                    "offset": [
+                        25,
+                        26
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_in_gen_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        26
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.gauge_h": {
+                    "layer": 1,
+                    "$gauge_fill": "textures/ui/skybluetech/gauge/fill_blue",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        47,
+                        28
+                    ],
+                    "size": [
+                        122,
+                        6
+                    ]
+                }
+            },
+            {
+                "note_label": {
+                    "type": "label",
+                    "offset": [
+                        47,
+                        37
+                    ],
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "text": "正在投放第 0 / 0 个容器",
+                    "text_alignment": "center",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        122,
+                        10
+                    ],
+                    "layer": 1,
+                    "shadow": false
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
                     "size": [
                         0,
                         0
-                    ]
-                }
-            },
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
-            {
-                "root_panel@common.root_panel": {
-                    "controls": [
-                        {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "物流分发机",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "gen_slot@netease_container.custom_grid_item": {
-                                                        "layer": 10,
-                                                        "offset": [
-                                                            0,
-                                                            -54
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                                        "$slot0": 1,
-                                                        "$slot1": 2,
-                                                        "$slot2": 3,
-                                                        "$slot3": 4,
-                                                        "anchor_from": "top_right",
-                                                        "anchor_to": "top_left"
-                                                    }
-                                                },
-                                                {
-                                                    "note_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            4.0,
-                                                            -24.0
-                                                        ],
-                                                        "color": [
-                                                            0.3058823529411765,
-                                                            0.2549019607843137,
-                                                            0.3137254901960784
-                                                        ],
-                                                        "font_type": "default",
-                                                        "text": "正在投放第 0 / 0 个容器",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "progress": {
-                                                        "type": "panel",
-                                                        "offset": [
-                                                            6.0,
-                                                            -12.0
-                                                        ],
-                                                        "size": [
-                                                            120.0,
-                                                            8.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "controls": [
-                                                            {
-                                                                "bg": {
-                                                                    "type": "image",
-                                                                    "layer": 1,
-                                                                    "nineslice_size": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "texture": "textures/ui/frame_empty_slim"
-                                                                }
-                                                            },
-                                                            {
-                                                                "mask": {
-                                                                    "type": "image",
-                                                                    "anchor_from": "left_middle",
-                                                                    "anchor_to": "left_middle",
-                                                                    "layer": 1,
-                                                                    "color": [
-                                                                        0.0,
-                                                                        1.0,
-                                                                        0.0
-                                                                    ],
-                                                                    "nineslice_size": [
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0,
-                                                                        1.0
-                                                                    ],
-                                                                    "texture": "textures/ui/white_with_empty_edge"
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
-                            }
-                        }
                     ],
-                    "layer": 0,
-                    "size": [
-                        180,
-                        200
-                    ]
+                    "layer": 1
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "ItemSpreaderUI.item_spreader_ui"
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "ItemSpreaderUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "物流分发机",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 1,
+        "$upgrade_slot1": 2,
+        "$upgrade_slot2": 3,
+        "$upgrade_slot3": 4
     },
     "namespace": "ItemSpreaderUI"
 }

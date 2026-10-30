@@ -2,8 +2,8 @@
     "air_compressor_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            60.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -11,138 +11,81 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        32,
-                        0
+                        47,
+                        4
                     ],
                     "size": [
-                        32,
-                        50
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "databoard": {
-                    "type": "image",
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -36.0,
-                        0.0
+                        65,
+                        24
                     ],
                     "size": [
-                        40.0,
-                        50.0
-                    ],
-                    "layer": 1,
-                    "clip_direction": "left",
-                    "clip_ratio": 0.0,
-                    "nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
-                    "texture": "textures/ui/rect_panel_bg",
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
                     "controls": [
                         {
-                            "tip0": {
-                                "type": "label",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    1.0,
-                                    1.0
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_scale_factor": 0.8,
-                                "font_type": "default",
-                                "text": "当前世界：",
-                                "text_alignment": "center"
-                            }
-                        },
-                        {
-                            "dim_type_label": {
-                                "type": "label",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    1.0,
-                                    9.0
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_scale_factor": 0.8,
-                                "font_type": "default",
-                                "text": "主世界",
-                                "text_alignment": "center"
-                            }
-                        },
-                        {
-                            "tip1": {
-                                "type": "label",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    1.0,
-                                    32.0
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_scale_factor": 0.8,
-                                "font_type": "default",
-                                "text": "正在抽取：",
-                                "text_alignment": "center"
-                            }
-                        },
-                        {
-                            "air_type_label": {
-                                "type": "label",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    1.0,
-                                    40.0
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_scale_factor": 0.8,
-                                "font_type": "default",
-                                "text": "压缩空气",
-                                "text_alignment": "center"
-                            }
+                            "info@SkybluePanelLib.hover_info": {}
                         }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        65,
+                        24
+                    ],
+                    "size": [
+                        22,
+                        15
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        0,
-                        0
-                    ]
+                        96,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
                 }
             }
         ]
@@ -150,8 +93,8 @@
     "alloy_furnace_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            80.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -159,76 +102,141 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -60,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 1,
-                    "offset": [
-                        -40,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        -20,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        -40,
-                        20
-                    ]
-                }
-            },
-            {
-                "slot4@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        40,
-                        -20
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "offset": [
-                        10,
-                        -20
+                        32,
+                        4
                     ],
                     "size": [
-                        36,
-                        20
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -40,
-                        0
+                        50,
+                        11
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        70,
+                        11
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        31
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        70,
+                        31
+                    ]
+                }
+            },
+            {
+                "flame@SkybluePanelLib.burn_flame": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        102,
+                        8
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        97,
+                        24
                     ],
                     "size": [
-                        18,
-                        18
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        97,
+                        24
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        128,
+                        11
+                    ]
+                }
+            },
+            {
+                "slot5@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        128,
+                        31
                     ]
                 }
             }
@@ -237,8 +245,8 @@
     "charger_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            40.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -246,69 +254,81 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        12,
-                        0
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "layer": 1,
-                    "offset": [
-                        62,
-                        0
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        27,
-                        0
-                    ],
-                    "size": [
                         40,
-                        20
+                        4
+                    ],
+                    "size": [
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "energy_cost": {
-                    "type": "label",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        21
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_bolt": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        93,
+                        25
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        93,
+                        25
+                    ],
                     "size": [
-                        82.0,
-                        "default"
-                    ],
-                    "layer": 1,
-                    "color": [
-                        1.0,
-                        0.0,
-                        0.0
-                    ],
-                    "font_type": "default",
-                    "shadow": true,
-                    "text": "000 RF\n000 RF/t"
+                        9,
+                        14
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        120,
+                        21
+                    ]
                 }
             }
         ]
@@ -316,8 +336,8 @@
     "compressor_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            80.0
+            180,
+            68
         ],
         "layer": 1,
         "controls": [
@@ -325,54 +345,108 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        -20
+                        40,
+                        4
+                    ],
+                    "size": [
+                        12,
+                        60
                     ]
                 }
             },
             {
-                "slot1@SkybluePanelLib.item_displayer": {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        0
+                        58,
+                        4
                     ]
                 }
             },
             {
-                "slot2@SkybluePanelLib.item_displayer": {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        20
+                        58,
+                        24
                     ]
                 }
             },
             {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "layer": 1,
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        30,
-                        0
+                        58,
+                        44
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_sprite": {
                     "$bg_image": "textures/ui/compressor_bg",
                     "$mask_image": "textures/ui/compressor_mask",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        0,
-                        0
+                        86,
+                        27
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        86,
+                        27
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        120,
+                        24
                     ]
                 }
             }
@@ -399,99 +473,137 @@
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "slot0@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -50,
                         -20
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot1@SkybluePanelLib.item_displayer": {
+                "slot1@SkybluePanelLib.recipe_slot": {
                     "layer": 1,
                     "offset": [
                         -30,
                         -20
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot2@SkybluePanelLib.item_displayer": {
+                "slot2@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -10,
                         -20
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot3@SkybluePanelLib.item_displayer": {
+                "slot3@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -50,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot4@SkybluePanelLib.item_displayer": {
+                "slot4@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -30,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot5@SkybluePanelLib.item_displayer": {
+                "slot5@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -10,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot6@SkybluePanelLib.item_displayer": {
+                "slot6@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -50,
                         20
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot7@SkybluePanelLib.item_displayer": {
+                "slot7@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -30,
                         20
-                    ]
-                }
-            },
-            {
-                "slot8@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        -10,
+                    ],
+                    "size": [
+                        20,
                         20
                     ]
                 }
             },
             {
-                "slot9@SkybluePanelLib.item_displayer": {
+                "slot8@SkybluePanelLib.recipe_slot": {
+                    "offset": [
+                        -10,
+                        20
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot9@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         50,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "image": {
-                    "type": "image",
+                "image@SkybluePanelLib.progress_arrow": {
                     "offset": [
-                        20.0,
-                        0.0
+                        20,
+                        0
                     ],
                     "size": [
-                        30.0,
-                        30.0
+                        22,
+                        15
                     ],
-                    "layer": 1,
-                    "texture": "textures/ui/arrow_img"
+                    "layer": 1
                 }
             }
         ]
@@ -533,14 +645,9 @@
                                     15.0
                                 ],
                                 "layer": 5,
-                                "color": [
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
-                                "font_scale_factor": 1.600000000000001,
+                                "color": "$title_text_color",
                                 "font_type": "default",
-                                "shadow": true,
+                                "shadow": false,
                                 "text": "你好世界"
                             }
                         },
@@ -557,13 +664,10 @@
                                     "100%+-6px",
                                     "default"
                                 ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
+                                "color": "$title_text_color",
                                 "font_type": "default",
-                                "text": "月是细耐室军母唱都进征火。印句调迅露运金早弱喜怕亚线，树心磁孩船。电参度思许己该括研安显苦失。\n\n秋持门皮息序级显杨良宪。试队你测诗践销东。了演参称要受条官苏入船下里，益光测晚思另陆守略础巴，宣材亮到似，必士马则细去夫去丝养扩派置。\n\n不盐多过套，承将超聚石做应高养攻附环医。激优重们说矿则烧先源严项林持，承汽许音面著末育。研优裂修止算山似胶些盾跑银。Lorem ipsum dolor what can i say?"
+                                "text": "月是细耐室军母唱都进征火。印句调迅露运金早弱喜怕亚线，树心磁孩船。电参度思许己该括研安显苦失。\n\n秋持门皮息序级显杨良宪。试队你测诗践销东。了演参称要受条官苏入船下里，益光测晚思另陆守略础巴，宣材亮到似，必士马则细去夫去丝养扩派置。\n\n不盐多过套，承将超聚石做应高养攻附环医。激优重们说矿则烧先源严项林持，承汽许音面著末育。研优裂修止算山似胶些盾跑银。Lorem ipsum dolor what can i say?",
+                                "shadow": false
                             }
                         }
                     ]
@@ -594,148 +698,8 @@
     "distillation_chamber_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            60.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bg": {
-                    "type": "image",
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "texture": "textures/ui/rect_panel_bg"
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        -30,
-                        12
-                    ],
-                    "size": [
-                        60,
-                        28
-                    ]
-                }
-            },
-            {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        -30,
-                        -15
-                    ],
-                    "size": [
-                        60,
-                        20
-                    ]
-                }
-            },
-            {
-                "right_board": {
-                    "type": "image",
-                    "offset": [
-                        40.0,
-                        0.0
-                    ],
-                    "size": [
-                        66.0,
-                        54.0
-                    ],
-                    "layer": 1,
-                    "keep_ratio": false,
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
-                    "texture": "textures/ui/panel_bg",
-                    "controls": [
-                        {
-                            "tip": {
-                                "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0.0,
-                                    4.0
-                                ],
-                                "size": [
-                                    "100%+-8px",
-                                    "default"
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_type": "default",
-                                "text": "最适产出温度"
-                            }
-                        },
-                        {
-                            "tip_text": {
-                                "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0.0,
-                                    15.0
-                                ],
-                                "size": [
-                                    "100%+-10px",
-                                    "default"
-                                ],
-                                "color": [
-                                    0.0,
-                                    0.6666666666666666,
-                                    0.0
-                                ],
-                                "font_type": "default",
-                                "text": "0 K"
-                            }
-                        },
-                        {
-                            "tip_text2": {
-                                "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0.0,
-                                    26.0
-                                ],
-                                "size": [
-                                    "100%+-10px",
-                                    "default"
-                                ],
-                                "color": [
-                                    0.5882352941176471,
-                                    0.39215686271098,
-                                    0.0
-                                ],
-                                "font_scale_factor": 1.3,
-                                "font_size": "small",
-                                "font_type": "default",
-                                "text": "0 K ~ 0 K"
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
-    },
-    "electrolyzer_recipes": {
-        "type": "panel",
-        "size": [
             180,
-            90
+            62
         ],
         "layer": 1,
         "controls": [
@@ -752,172 +716,76 @@
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        0,
-                        1
-                    ],
-                    "size": [
-                        48,
-                        72
-                    ]
-                }
-            },
-            {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        56,
-                        -22
-                    ],
-                    "size": [
-                        24,
-                        26
-                    ]
-                }
-            },
-            {
-                "fluid3@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        56,
+                        43,
                         4
                     ],
                     "size": [
-                        24,
-                        26
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_arrow": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        88,
+                        24
                     ]
                 }
             },
             {
-                "fluid2@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -56,
-                        -9
+                        88,
+                        24
                     ],
                     "size": [
-                        24,
-                        52
+                        22,
+                        15
                     ]
                 }
             },
             {
-                "slot1@SkybluePanelLib.item_displayer": {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        56,
-                        27
-                    ]
-                }
-            },
-            {
-                "slot0@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        -65,
-                        27
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        -45,
-                        27
-                    ]
-                }
-            },
-            {
-                "left_connection_bar_img": {
-                    "type": "image",
-                    "offset": [
-                        -33.0,
-                        -10.0
+                        119,
+                        4
                     ],
                     "size": [
-                        22.0,
-                        8.0
+                        18,
+                        54
                     ],
-                    "layer": 1,
-                    "color": [
-                        0.611764705882353,
-                        0.611764705882353,
-                        0.611764705882353
-                    ],
-                    "texture": "textures/ui/white",
-                    "tiled": true
-                }
-            },
-            {
-                "left_connection_bar2_img": {
-                    "type": "image",
-                    "offset": [
-                        -29.0,
-                        27.0
-                    ],
-                    "size": [
-                        12.0,
-                        8.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0.611764705882353,
-                        0.611764705882353,
-                        0.611764705882353
-                    ],
-                    "texture": "textures/ui/white",
-                    "tiled": true
-                }
-            },
-            {
-                "right_connection_bar_img": {
-                    "type": "image",
-                    "offset": [
-                        34.0,
-                        -10.0
-                    ],
-                    "size": [
-                        22.0,
-                        8.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0.611764705882353,
-                        0.611764705882353,
-                        0.611764705882353
-                    ],
-                    "texture": "textures/ui/white",
-                    "tiled": true
-                }
-            },
-            {
-                "right_connection_bar2_img": {
-                    "type": "image",
-                    "offset": [
-                        36.0,
-                        27.0
-                    ],
-                    "size": [
-                        24.0,
-                        8.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0.611764705882353,
-                        0.611764705882353,
-                        0.611764705882353
-                    ],
-                    "texture": "textures/ui/white",
-                    "tiled": true
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
                 }
             }
         ]
     },
-    "engraver_recipes": {
+    "electrolyzer_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            80.0
+            180,
+            80
         ],
         "layer": 1,
         "controls": [
@@ -925,131 +793,317 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "bar_img": {
-                    "type": "image",
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        25.0,
-                        53.0
+                        8,
+                        4
                     ],
                     "size": [
-                        21.0,
-                        5.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0.7176470588235294,
-                        0.7176470588235294,
-                        0.7176470588235294
-                    ],
-                    "texture": "textures/ui/white",
-                    "tiled": true
+                        12,
+                        72
+                    ]
                 }
             },
             {
-                "progress@MixerUI.mixer_progress": {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        26,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        72
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_70"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        63,
+                        30
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_arrow": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        86,
+                        33
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        86,
+                        33
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        112,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        36
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34"
+                }
+            },
+            {
+                "fluid3@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        132,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        36
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34"
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        151,
+                        12
+                    ]
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        112,
+                        40
+                    ],
+                    "size": [
+                        38,
+                        36
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34"
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        151,
+                        48
+                    ]
+                }
+            }
+        ]
+    },
+    "engraver_recipes": {
+        "type": "panel",
+        "size": [
+            180,
+            62
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2,
+                        2,
+                        2,
+                        2
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        15,
+                        4
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        33,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        53,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        73,
+                        11
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        93,
+                        11
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        73,
+                        31
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        93,
+                        31
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
                     "$bg_image": "textures/ui/arrow_img",
                     "$mask_image": "textures/ui/arrow_mask_redstone",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -6,
-                        16
+                        115,
+                        24
                     ],
                     "size": [
-                        37,
-                        25
+                        22,
+                        15
                     ]
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        6,
-                        36
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        6,
-                        56
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 2,
-                    "offset": [
-                        46,
-                        36
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 2,
-                    "offset": [
-                        46,
-                        56
-                    ]
-                }
-            },
-            {
-                "slot4@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 2,
-                    "offset": [
-                        104,
-                        46
-                    ]
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        6,
-                        6
+                        115,
+                        24
                     ],
                     "size": [
-                        60,
-                        30
+                        22,
+                        15
                     ]
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
+                "slot4@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        66,
-                        6
-                    ],
-                    "size": [
-                        60,
-                        30
+                        144,
+                        21
                     ]
                 }
             }
@@ -1058,8 +1112,8 @@
     "fluid_condenser_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            60.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -1067,45 +1121,95 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        30,
-                        0
-                    ]
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        -35,
-                        0
+                        31,
+                        4
                     ],
                     "size": [
-                        30,
-                        50
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {}
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        49,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_drop": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        99,
+                        23
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        99,
+                        23
+                    ],
+                    "size": [
+                        13,
+                        18
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        128,
+                        21
+                    ]
+                }
             }
         ]
     },
     "freezer_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            60.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -1113,77 +1217,85 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        30,
-                        0
+                        31,
+                        4
+                    ],
+                    "size": [
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "layer": 1,
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -35,
-                        0
+                        49,
+                        4
                     ],
                     "size": [
-                        30,
-                        50
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_snow": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        97,
+                        23
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "layer": 1
-                }
-            },
-            {
-                "fake_btn": {
-                    "type": "image",
-                    "offset": [
-                        30.0,
-                        18.0
-                    ],
-                    "size": [
-                        16.0,
-                        16.0
-                    ],
-                    "layer": 1,
-                    "clip_direction": "left",
-                    "clip_ratio": 0.0,
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
-                    "texture": "textures/ui/button_default",
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
                     "controls": [
                         {
-                            "item_renderer": {
-                                "type": "custom",
-                                "renderer": "inventory_item_renderer",
-                                "size": [
-                                    "100%+-2px",
-                                    "100%+-2px"
-                                ],
-                                "layer": 1,
-                                "property_bag": {
-                                    "#item_id_aux": 131072
-                                }
-                            }
+                            "info@SkybluePanelLib.hover_info": {}
                         }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        97,
+                        23
+                    ],
+                    "size": [
+                        17,
+                        18
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        128,
+                        21
                     ]
                 }
             }
@@ -1210,39 +1322,53 @@
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "slot0@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -30,
                         -10
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot1@SkybluePanelLib.item_displayer": {
+                "slot1@SkybluePanelLib.recipe_slot": {
                     "layer": 1,
                     "offset": [
                         30,
                         -10
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_sprite": {
                     "offset": [
                         0,
                         -10
+                    ],
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "size": [
+                        22,
+                        15
                     ]
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
+                "flame@SkybluePanelLib.burn_flame": {
                     "offset": [
                         -30,
                         10
                     ],
                     "size": [
-                        18,
-                        18
+                        13,
+                        13
                     ]
                 }
             }
@@ -1251,8 +1377,8 @@
     "gas_burning_generator_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            40.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -1260,105 +1386,70 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        38,
-                        0
+                        32,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "flame@SkybluePanelLib.burn_flame": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        82,
+                        25
                     ]
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        6,
-                        0
+                        108,
+                        4
                     ],
                     "size": [
-                        28,
-                        32
+                        18,
+                        54
                     ]
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        62,
-                        0
+                        130,
+                        4
                     ],
                     "size": [
-                        28,
-                        32
-                    ]
-                }
-            },
-            {
-                "output_power@SkybluePanelLib.output_power_displayer": {
-                    "offset": [
-                        -10,
-                        -6
+                        18,
+                        54
                     ],
-                    "size": [
-                        70,
-                        16
-                    ]
-                }
-            },
-            {
-                "tick_power": {
-                    "type": "label",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
-                    "offset": [
-                        -8.0,
-                        6.0
-                    ],
-                    "size": [
-                        56.0,
-                        10.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0,
-                        0.4,
-                        0
-                    ],
-                    "font_type": "unicode",
-                    "text": "999, 99 MRF/t"
-                }
-            },
-            {
-                "garbage_gas_tip": {
-                    "type": "label",
-                    "offset": [
-                        -14.0,
-                        0.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_type": "default",
-                    "text": "无废气",
-                    "text_alignment": "center"
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
                 }
             }
         ]
@@ -1425,10 +1516,14 @@
                 }
             },
             {
-                "seed_item@SkybluePanelLib.item_displayer": {
+                "seed_item@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         32,
                         -22
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
@@ -1440,15 +1535,11 @@
                         -22.0
                     ],
                     "layer": 1,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_scale_factor": 1.4,
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "text": "种子",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
@@ -1459,15 +1550,11 @@
                         4.0
                     ],
                     "layer": 1,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_scale_factor": 1.4,
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "text": "产出",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
@@ -1562,10 +1649,14 @@
                 }
             },
             {
-                "seed_item@SkybluePanelLib.item_displayer": {
+                "seed_item@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         32,
                         -22
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
@@ -1577,15 +1668,11 @@
                         -22.0
                     ],
                     "layer": 1,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_scale_factor": 1.4,
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "text": "种子",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
@@ -1596,15 +1683,11 @@
                         4.0
                     ],
                     "layer": 1,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_scale_factor": 1.4,
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "text": "产出",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
@@ -1674,123 +1757,169 @@
                 }
             },
             {
-                "arrow_img": {
-                    "type": "image",
+                "arrow_img@SkybluePanelLib.progress_arrow": {
                     "size": [
-                        30.0,
-                        30.0
+                        22,
+                        15
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/arrow_img"
-                }
-            },
-            {
-                "slot0@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
                     "offset": [
-                        10,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        30,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        50,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        10,
+                        0,
                         0
                     ]
                 }
             },
             {
-                "slot4@SkybluePanelLib.item_displayer": {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        10,
+                        -20
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        30,
+                        -20
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        50,
+                        -20
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        10,
+                        0
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
                     "offset": [
                         30,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot5@SkybluePanelLib.item_displayer": {
+                "slot5@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
                     "offset": [
                         50,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot6@SkybluePanelLib.item_displayer": {
+                "slot6@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
                     "offset": [
                         10,
                         20
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot7@SkybluePanelLib.item_displayer": {
+                "slot7@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "left_middle",
                     "anchor_to": "left_middle",
                     "offset": [
                         30,
                         20
-                    ]
-                }
-            },
-            {
-                "slot8@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        50,
+                    ],
+                    "size": [
+                        20,
                         20
                     ]
                 }
             },
             {
-                "inscribing_template_slot@SkybluePanelLib.item_displayer": {
+                "slot8@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        50,
+                        20
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "inscribing_template_slot@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
                     "offset": [
                         -50,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "inscribing_item_slot@SkybluePanelLib.item_displayer": {
+                "inscribing_item_slot@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
                     "offset": [
                         -22,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
@@ -1804,13 +1933,10 @@
                         19.0
                     ],
                     "layer": 1,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
+                    "color": "$title_text_color",
                     "font_type": "default",
-                    "text": "模版研究"
+                    "text": "模版研究",
+                    "shadow": false
                 }
             },
             {
@@ -1822,15 +1948,12 @@
                         -43.0,
                         0.0
                     ],
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
+                    "color": "$title_text_color",
                     "font_size": "large",
                     "font_type": "default",
                     "text": "（",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
@@ -1842,15 +1965,12 @@
                         -15.0,
                         0.0
                     ],
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
+                    "color": "$title_text_color",
                     "font_size": "large",
                     "font_type": "default",
                     "text": "）",
-                    "text_alignment": "center"
+                    "text_alignment": "center",
+                    "shadow": false
                 }
             },
             {
@@ -1893,14 +2013,9 @@
                         10.0
                     ],
                     "layer": 1,
-                    "color": [
-                        0.0,
-                        1.0,
-                        0.0
-                    ],
-                    "font_scale_factor": 1.2,
+                    "color": "$title_text_color",
                     "font_type": "default",
-                    "shadow": true,
+                    "shadow": false,
                     "text": "花费经验 Lv 0"
                 }
             }
@@ -1909,8 +2024,8 @@
     "macerator_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            40.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -1918,42 +2033,86 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        0
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "layer": 1,
-                    "offset": [
-                        30,
-                        0
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/macerator_prgs_bg",
-                    "$mask_image": "textures/ui/macerator_prgs_top",
-                    "offset": [
-                        0,
-                        0
+                        40,
+                        4
                     ],
                     "size": [
-                        40,
-                        20
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        21
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/macerator_prgs_bg",
+                    "$mask_image": "textures/ui/macerator_prgs_top",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        23
+                    ],
+                    "size": [
+                        32,
+                        16
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        23
+                    ],
+                    "size": [
+                        32,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        120,
+                        21
                     ]
                 }
             }
@@ -1985,107 +2144,146 @@
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "slot0@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
                         10,
                         10
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot1@SkybluePanelLib.item_displayer": {
+                "slot1@SkybluePanelLib.recipe_slot": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "layer": 1,
                     "offset": [
                         30,
                         10
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        50,
-                        10
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        10,
-                        30
-                    ]
-                }
-            },
-            {
-                "slot4@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        30,
-                        30
-                    ]
-                }
-            },
-            {
-                "slot5@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        50,
-                        30
-                    ]
-                }
-            },
-            {
-                "slot6@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        10,
-                        50
-                    ]
-                }
-            },
-            {
-                "slot7@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        30,
-                        50
-                    ]
-                }
-            },
-            {
-                "slot8@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        50,
-                        50
-                    ]
-                }
-            },
-            {
-                "output_slot@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        28,
+                    ],
+                    "size": [
+                        20,
                         20
                     ]
                 }
             },
             {
-                "progress_img": {
-                    "type": "image",
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        10
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        30
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        30,
+                        30
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot5@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        30
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot6@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        50
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot7@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        30,
+                        50
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "slot8@SkybluePanelLib.recipe_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        50
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "output_slot@SkybluePanelLib.recipe_slot": {
+                    "offset": [
+                        28,
+                        20
+                    ],
+                    "size": [
+                        20,
+                        20
+                    ]
+                }
+            },
+            {
+                "progress_img@SkybluePanelLib.progress_arrow": {
                     "$arrow_img_anchor|default": "center",
                     "$arrow_img_offset|default": [
                         0,
@@ -2094,26 +2292,33 @@
                     "anchor_from": "$arrow_img_anchor",
                     "offset": "$arrow_img_offset",
                     "size": [
-                        30.0,
-                        30.0
+                        22,
+                        15
                     ],
-                    "layer": 1,
-                    "texture": "textures/ui/arrow_img"
+                    "layer": 1
                 }
             },
             {
-                "pincer_slot@SkybluePanelLib.item_displayer": {
+                "pincer_slot@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         48,
                         -20
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "wrench_slot@SkybluePanelLib.item_displayer": {
+                "wrench_slot@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         28,
                         -20
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
@@ -2129,13 +2334,10 @@
                         20
                     ],
                     "layer": 1,
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
+                    "color": "$title_text_color",
                     "font_type": "default",
-                    "text": "扳手等级： ？\n钳等级： ？"
+                    "text": "扳手等级： ？\n钳等级： ？",
+                    "shadow": false
                 }
             }
         ]
@@ -2143,8 +2345,8 @@
     "magma_centrifuge_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            90.0
+            180,
+            80
         ],
         "layer": 1,
         "controls": [
@@ -2152,121 +2354,169 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_size": "small",
-                    "$text_visible": false,
-                    "$text_y_offset": [
-                        0,
-                        "2%+0px"
-                    ],
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -47,
-                        0
+                        18,
+                        4
                     ],
                     "size": [
-                        29,
-                        76
+                        12,
+                        72
                     ]
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        14,
-                        -22
-                    ],
-                    "size": [
-                        22,
-                        30
-                    ]
-                }
-            },
-            {
-                "fluid2@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         36,
-                        -22
+                        4
                     ],
                     "size": [
-                        22,
-                        30
+                        18,
+                        72
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_70"
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        97,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        26
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        121,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        26
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "fluid3@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        144,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        26
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "fluid4@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        97,
+                        50
+                    ],
+                    "size": [
+                        18,
+                        26
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "fluid5@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        121,
+                        50
+                    ],
+                    "size": [
+                        18,
+                        26
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "fluid6@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        144,
+                        50
+                    ],
+                    "size": [
+                        18,
+                        26
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_inset_magma": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        53,
+                        29
                     ]
                 }
             },
             {
-                "fluid3@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        58,
-                        -22
+                        53,
+                        29
                     ],
                     "size": [
-                        22,
-                        30
-                    ]
-                }
-            },
-            {
-                "fluid4@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        14,
+                        103,
                         22
-                    ],
-                    "size": [
-                        22,
-                        30
-                    ]
-                }
-            },
-            {
-                "fluid5@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        36,
-                        22
-                    ],
-                    "size": [
-                        22,
-                        30
-                    ]
-                }
-            },
-            {
-                "fluid6@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        58,
-                        22
-                    ],
-                    "size": [
-                        22,
-                        30
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/magma_centrifuge_proc",
-                    "$mask_image": "textures/ui/magma_centrifuge_proc_mask",
-                    "offset": [
-                        23.5,
-                        0
-                    ],
-                    "size": [
-                        120,
-                        15
                     ]
                 }
             }
@@ -2275,8 +2525,8 @@
     "magma_furnace_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            70.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -2284,37 +2534,93 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        0
-                    ]
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        35,
-                        0
+                        33,
+                        4
                     ],
                     "size": [
-                        30,
-                        50
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {}
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        51,
+                        21
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        79,
+                        24
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        79,
+                        24
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        110,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
             }
         ]
     },
@@ -2342,30 +2648,40 @@
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "slot0@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         -30,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "slot1@SkybluePanelLib.item_displayer": {
+                "slot1@SkybluePanelLib.recipe_slot": {
                     "offset": [
                         30,
                         0
+                    ],
+                    "size": [
+                        20,
+                        20
                     ]
                 }
             },
             {
-                "arrow_img": {
-                    "type": "image",
+                "arrow_img@SkybluePanelLib.progress_arrow": {
                     "size": [
-                        30.0,
-                        30.0
+                        22,
+                        15
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/arrow_img"
+                    "offset": [
+                        0,
+                        0
+                    ]
                 }
             },
             {
@@ -2409,8 +2725,8 @@
     "metal_press_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            70.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -2418,50 +2734,102 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -40,
-                        -18
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        40,
-                        -18
-                    ]
-                }
-            },
-            {
-                "progress@MixerUI.mixer_progress": {
-                    "$bg_image": "textures/ui/metal_press_bg",
-                    "$mask_image": "textures/ui/metal_press_mask",
-                    "offset": [
-                        0,
-                        -18
-                    ]
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        0,
-                        12
+                        29,
+                        4
                     ],
                     "size": [
-                        50,
-                        30
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        47,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        68,
+                        21
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/metal_press_bg",
+                    "$mask_image": "textures/ui/metal_press_mask",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        93,
+                        27
+                    ],
+                    "size": [
+                        28,
+                        9
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        93,
+                        27
+                    ],
+                    "size": [
+                        28,
+                        9
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        130,
+                        21
                     ]
                 }
             }
@@ -2470,8 +2838,8 @@
     "mixed_macerator_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            80.0
+            180,
+            68
         ],
         "layer": 1,
         "controls": [
@@ -2479,58 +2847,108 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        -30,
-                        0
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        -30,
-                        20
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "layer": 1,
-                    "offset": [
-                        30,
-                        0
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/macerator_prgs_bg",
-                    "$mask_image": "textures/ui/macerator_prgs_top",
-                    "offset": [
-                        0,
-                        0
+                        40,
+                        4
                     ],
                     "size": [
-                        40,
-                        20
+                        12,
+                        60
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        24
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        58,
+                        44
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/macerator_prgs_bg",
+                    "$mask_image": "textures/ui/macerator_prgs_top",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        26
+                    ],
+                    "size": [
+                        32,
+                        16
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        81,
+                        26
+                    ],
+                    "size": [
+                        32,
+                        16
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        120,
+                        24
                     ]
                 }
             }
@@ -2539,8 +2957,8 @@
     "mixer_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            80.0
+            180,
+            65
         ],
         "layer": 1,
         "controls": [
@@ -2548,66 +2966,105 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
                     "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -6,
-                        -22
-                    ]
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        -40,
-                        0
+                        33,
+                        4
                     ],
                     "size": [
-                        30,
-                        65
+                        12,
+                        57
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/mixer_arrow_img",
-                    "$mask_image": "textures/ui/mixer_arrow_mask",
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        0,
-                        0
-                    ],
-                    "size": [
-                        50,
-                        25
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        36,
+                        51,
                         5
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        80,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        127,
+                        31
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_inset_mixer": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        68,
+                        22
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        68,
+                        22
+                    ],
+                    "size": [
+                        53,
+                        26
                     ]
                 }
             }
         ]
     },
-    "namespace": "RecipeCheckerLib",
     "oil_extractor_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            60.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -2615,45 +3072,95 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        0
-                    ]
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "offset": [
-                        35,
-                        0
+                        33,
+                        4
                     ],
                     "size": [
-                        30,
-                        50
+                        12,
+                        54
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {}
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        51,
+                        21
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_drop": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        23
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        23
+                    ],
+                    "size": [
+                        13,
+                        18
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        110,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
             }
         ]
     },
     "precision_cutter_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            66.0
+            180,
+            68
         ],
         "layer": 1,
         "controls": [
@@ -2661,67 +3168,112 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
                     "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -45,
-                        10
-                    ]
-                }
-            },
-            {
-                "cutter_slot@SkybluePanelLib.item_displayer": {
-                    "layer": 2,
-                    "offset": [
-                        -24,
-                        -16
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        10,
-                        10
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        30,
-                        10
-                    ]
-                }
-            },
-            {
-                "slot4@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        50,
-                        10
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/precision_cutter_arrow_bg",
-                    "$mask_image": "textures/ui/precision_cutter_arrow_mask",
-                    "offset": [
-                        -18,
-                        6
+                        42,
+                        4
                     ],
                     "size": [
-                        34,
-                        27
+                        12,
+                        60
+                    ]
+                }
+            },
+            {
+                "cutter_slot@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        6
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        60,
+                        29
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_inset_cutter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        78,
+                        24
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        78,
+                        24
+                    ],
+                    "size": [
+                        38,
+                        22
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        24
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        44
                     ]
                 }
             }
@@ -2730,98 +3282,110 @@
     "reacting_thermal_generator_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            40.0
+            180,
+            63
         ],
         "layer": 1,
         "controls": [
             {
                 "bg": {
                     "type": "image",
-                    "offset": [
-                        0.0,
-                        1.0
-                    ],
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -42,
-                        0
+                        34,
+                        5
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        67,
+                        4
                     ]
                 }
             },
             {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        6,
-                        0
+                        106,
+                        5
                     ],
                     "size": [
-                        28,
-                        32
+                        18,
+                        54
                     ]
                 }
             },
             {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        62,
-                        0
+                        128,
+                        5
                     ],
                     "size": [
-                        28,
-                        32
+                        18,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_inset_reacting": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        51,
+                        22
                     ]
                 }
             },
             {
-                "output_power@SkybluePanelLib.output_power_displayer": {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -10,
-                        -6
+                        51,
+                        22
                     ],
                     "size": [
-                        70,
-                        16
+                        52,
+                        26
                     ]
-                }
-            },
-            {
-                "tick_power": {
-                    "type": "label",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
-                    "offset": [
-                        -8.0,
-                        6.0
-                    ],
-                    "size": [
-                        56.0,
-                        10.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0,
-                        0.4,
-                        0
-                    ],
-                    "font_type": "unicode",
-                    "text": "999, 99 MRF/t"
                 }
             }
         ]
@@ -2829,8 +3393,8 @@
     "redstone_generator_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            50.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -2838,83 +3402,98 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -68,
-                        -9
+                        40,
+                        21
                     ]
                 }
             },
             {
-                "slot1@SkybluePanelLib.item_displayer": {
+                "flame@SkybluePanelLib.burn_flame": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -8,
-                        -9
+                        73,
+                        8
                     ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -38,
-                        -9
+                        68,
+                        24
+                    ],
+                    "size": [
+                        22,
+                        15
                     ]
                 }
             },
             {
-                "flame@SkybluePanelLib.Flame": {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -68,
-                        11
+                        68,
+                        24
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        99,
+                        4
                     ],
                     "size": [
                         18,
-                        18
+                        54
                     ]
                 }
             },
             {
-                "output_power@SkybluePanelLib.output_power_displayer": {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -6,
-                        -9
-                    ],
-                    "size": [
-                        70,
-                        16
+                        120,
+                        21
                     ]
-                }
-            },
-            {
-                "tick_power": {
-                    "type": "label",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
-                    "offset": [
-                        -4.0,
-                        2.0
-                    ],
-                    "size": [
-                        56.0,
-                        10.0
-                    ],
-                    "layer": 1,
-                    "color": [
-                        0,
-                        0.4,
-                        0
-                    ],
-                    "font_type": "unicode",
-                    "text": "999, 99 MRF/t"
                 }
             }
         ]
@@ -2922,8 +3501,8 @@
     "sawmill_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            80.0
+            180,
+            68
         ],
         "layer": 1,
         "controls": [
@@ -2931,58 +3510,102 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -30,
-                        0
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        30,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "layer": 1,
-                    "offset": [
-                        30,
-                        0
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        30,
-                        20
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/splitter_bg",
-                    "$mask_image": "textures/ui/splitter_mask",
-                    "offset": [
-                        0,
-                        0
+                        42,
+                        4
                     ],
                     "size": [
-                        40,
-                        20
+                        12,
+                        60
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        60,
+                        24
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_saw": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        91,
+                        26
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        91,
+                        26
+                    ],
+                    "size": [
+                        17,
+                        18
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        24
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        44
                     ]
                 }
             }
@@ -2990,14 +3613,9 @@
     },
     "template_assembler_recipes": {
         "type": "panel",
-        "$arrow_img_anchor": "top_left",
-        "$arrow_img_offset": [
-            90.0,
-            60.0
-        ],
         "size": [
-            180.0,
-            80.0
+            180,
+            68
         ],
         "layer": 1,
         "controls": [
@@ -3005,152 +3623,191 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "slot0@SkybluePanelLib.item_displayer": {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        10,
-                        10
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1,
-                    "offset": [
-                        30,
-                        10
-                    ]
-                }
-            },
-            {
-                "slot2@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        50,
-                        10
-                    ]
-                }
-            },
-            {
-                "slot3@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        10,
-                        30
-                    ]
-                }
-            },
-            {
-                "slot4@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        30,
-                        30
-                    ]
-                }
-            },
-            {
-                "slot5@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        50,
-                        30
-                    ]
-                }
-            },
-            {
-                "slot6@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        10,
-                        50
-                    ]
-                }
-            },
-            {
-                "slot7@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        30,
-                        50
-                    ]
-                }
-            },
-            {
-                "slot8@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        50,
-                        50
-                    ]
-                }
-            },
-            {
-                "slot9@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        28,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot10@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        48,
-                        -20
-                    ]
-                }
-            },
-            {
-                "slot11@SkybluePanelLib.item_displayer": {
-                    "offset": [
-                        28,
-                        20
-                    ]
-                }
-            },
-            {
-                "template_tip": {
-                    "type": "label",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
-                    "offset": [
-                        -8.0,
-                        0.0
+                        26,
+                        4
                     ],
-                    "color": [
-                        0.2588235294117647,
-                        0.2588235294117647,
-                        0.2588235294117647
-                    ],
-                    "font_type": "default",
-                    "text": "需要刻印对应内容",
-                    "text_alignment": "center"
+                    "size": [
+                        12,
+                        60
+                    ]
                 }
             },
             {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/compressor_bg",
-                    "$mask_image": "textures/ui/compressor_mask"
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        44,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        64,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot2@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot3@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        44,
+                        24
+                    ]
+                }
+            },
+            {
+                "slot4@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        64,
+                        24
+                    ]
+                }
+            },
+            {
+                "slot5@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        24
+                    ]
+                }
+            },
+            {
+                "slot6@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        44,
+                        44
+                    ]
+                }
+            },
+            {
+                "slot7@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        64,
+                        44
+                    ]
+                }
+            },
+            {
+                "slot8@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        44
+                    ]
+                }
+            },
+            {
+                "slot9@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        113,
+                        4
+                    ]
+                }
+            },
+            {
+                "slot10@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        133,
+                        4
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_icon_gear": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        110,
+                        45
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        110,
+                        45
+                    ],
+                    "size": [
+                        17,
+                        18
+                    ]
+                }
+            },
+            {
+                "slot11@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        133,
+                        44
+                    ]
                 }
             }
         ]
@@ -3158,8 +3815,8 @@
     "vacuum_freezer_recipes": {
         "type": "panel",
         "size": [
-            180.0,
-            120.0
+            180,
+            62
         ],
         "layer": 1,
         "controls": [
@@ -3167,231 +3824,201 @@
                 "bg": {
                     "type": "image",
                     "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
+                        2,
+                        2,
+                        2,
+                        2
                     ],
                     "texture": "textures/ui/rect_panel_bg"
                 }
             },
             {
-                "right_board": {
-                    "type": "image",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        -4.0,
-                        0.0
+                        42,
+                        4
                     ],
                     "size": [
-                        66.0,
-                        86.0
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "slot0@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        60,
+                        8
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        61,
+                        28
                     ],
-                    "layer": 1,
-                    "keep_ratio": false,
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
+                    "size": [
+                        18,
+                        26
                     ],
-                    "texture": "textures/ui/panel_bg",
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "slot1@SkybluePanelLib.recipe_slot": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        8
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        119,
+                        28
+                    ],
+                    "size": [
+                        18,
+                        26
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_inset_vacuum": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        78,
+                        11
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
                     "controls": [
                         {
-                            "max_kelvin_tip": {
-                                "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0.0,
-                                    4.0
-                                ],
-                                "size": [
-                                    "100%+-8px",
-                                    "default"
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_type": "default",
-                                "text": "冷凝温度上限"
-                            }
-                        },
-                        {
-                            "max_kelvin": {
-                                "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0.0,
-                                    16.0
-                                ],
-                                "size": [
-                                    "100%+-10px",
-                                    "default"
-                                ],
-                                "color": [
-                                    0.0,
-                                    0.6666666666666666,
-                                    0.0
-                                ],
-                                "font_type": "default",
-                                "text": "0 K"
-                            }
-                        },
-                        {
-                            "fit_kelvin_tip": {
-                                "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0.0,
-                                    30.0
-                                ],
-                                "size": [
-                                    "100%+-10px",
-                                    "default"
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_type": "default",
-                                "text": "最佳冷凝温度"
-                            }
-                        },
-                        {
-                            "fit_kelvin": {
-                                "type": "label",
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
-                                "offset": [
-                                    0.0,
-                                    42.0
-                                ],
-                                "size": [
-                                    "100%+-10px",
-                                    "default"
-                                ],
-                                "color": [
-                                    0.0,
-                                    0.0,
-                                    1.0
-                                ],
-                                "font_type": "default",
-                                "text": "0 K"
-                            }
-                        },
-                        {
-                            "upgrader_slot@SkybluePanelLib.item_displayer": {
-                                "anchor_from": "bottom_left",
-                                "anchor_to": "bottom_left",
-                                "layer": 1,
-                                "offset": [
-                                    4,
-                                    -4
-                                ]
-                            }
-                        },
-                        {
-                            "upgrader_tip": {
-                                "type": "label",
-                                "anchor_from": "bottom_left",
-                                "anchor_to": "bottom_left",
-                                "offset": [
-                                    24.0,
-                                    -8.0
-                                ],
-                                "size": [
-                                    40.0,
-                                    10.0
-                                ],
-                                "color": [
-                                    0.2588235294117647,
-                                    0.2588235294117647,
-                                    0.2588235294117647
-                                ],
-                                "font_scale_factor": 1.4,
-                                "font_size": "small",
-                                "font_type": "default",
-                                "text": "--"
-                            }
+                            "info@SkybluePanelLib.hover_info": {}
                         }
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.ProgressBar": {
-                    "$bg_image": "textures/ui/vacuum_freezer_progress_bg",
-                    "$mask_image": "textures/ui/vacuum_freezer_progress_mask",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
-                        32,
-                        -14
+                        78,
+                        11
                     ],
                     "size": [
-                        48,
-                        58
-                    ]
-                }
-            },
-            {
-                "fluid0@SkybluePanelLib.FluidDisplay": {
-                    "$text_size": "small",
-                    "$text_visible": false,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        8,
-                        10
-                    ],
-                    "size": [
-                        24,
-                        64
-                    ]
-                }
-            },
-            {
-                "fluid1@SkybluePanelLib.FluidDisplay": {
-                    "$text_visible": false,
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        80,
-                        10
-                    ],
-                    "size": [
-                        24,
-                        64
-                    ]
-                }
-            },
-            {
-                "slot0@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        12,
-                        -32
-                    ]
-                }
-            },
-            {
-                "slot1@SkybluePanelLib.item_displayer": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "layer": 1,
-                    "offset": [
-                        80,
-                        -32
+                        38,
+                        37
                     ]
                 }
             }
         ]
-    }
+    },
+    "brine_evaporation_pond_recipes": {
+        "type": "panel",
+        "size": [
+            180,
+            62
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "nineslice_size": [
+                        2,
+                        2,
+                        2,
+                        2
+                    ],
+                    "texture": "textures/ui/rect_panel_bg"
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        34,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_arrow": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        79,
+                        24
+                    ]
+                }
+            },
+            {
+                "progress_tip": {
+                    "type": "panel",
+                    "layer": 9,
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        79,
+                        24
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        110,
+                        4
+                    ],
+                    "size": [
+                        36,
+                        54
+                    ],
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52"
+                }
+            }
+        ]
+    },
+    "namespace": "RecipeCheckerLib"
 }

@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
+from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_OUTPUT_FULL
 from skybluetech_scripts.skybluetech.common.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
@@ -21,6 +22,7 @@ ADD_BTN_PATH = MAIN_PATH / "add_btn"
 @RegistToolDeltaScreen("ItemSplitterUI.main", is_proxy=True)
 class ItemSplitterUI(MachinePanelUIProxyEx):
     available_extra_pages = (ItemPipeSettingsPageIndirectional,)
+    STATUS_TEXTS = {DEACTIVE_FLAG_OUTPUT_FULL: "送不出去（没有对应标签的出口或出口已满）"}
 
     def OnCreate(self):
         dim, x, y, z = self.pos

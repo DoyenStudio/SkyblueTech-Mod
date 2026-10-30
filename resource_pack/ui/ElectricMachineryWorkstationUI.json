@@ -89,414 +89,9 @@
             }
         ]
     },
-    "electric_machinery_workstation_ui": {
-        "type": "panel",
-        "controls": [
-            {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
-            {
-                "root_panel@common.root_panel": {
-                    "controls": [
-                        {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0,
-                                                            4
-                                                        ],
-                                                        "font_scale_factor": 1.2,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "电动机件加工台",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "upgrader@SkybluePanelLib.UpgradeSlots": {
-                                                        "$slot0": 11,
-                                                        "$slot1": 12,
-                                                        "$slot2": 13,
-                                                        "$slot3": 14,
-                                                        "offset": [
-                                                            212,
-                                                            -57
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
-                                                        "offset": [
-                                                            70,
-                                                            0
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "crafting_grid@ElectricMachineryWorkstationUI.container_slots": {
-                                                        "anchor_from": "top_left",
-                                                        "anchor_to": "top_left",
-                                                        "grid_dimensions": [
-                                                            3,
-                                                            3
-                                                        ],
-                                                        "grid_item_template": "ElectricMachineryWorkstationUI.item_slot_with_recipe_preview",
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            36,
-                                                            32
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "solder_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            48,
-                                                            -58.0
-                                                        ],
-                                                        "size": [
-                                                            18,
-                                                            18
-                                                        ],
-                                                        "layer": 2,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "$cell_overlay_ref|default": "ElectricMachineryWorkstationUI.solder_preview_visual",
-                                                                    "collection_index": 9
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "output_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            48,
-                                                            -22
-                                                        ],
-                                                        "size": [
-                                                            18,
-                                                            18
-                                                        ],
-                                                        "layer": 2,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "$cell_overlay_ref|default": "ElectricMachineryWorkstationUI.output_preview_visual",
-                                                                    "collection_index": 10
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "offset": [
-                                                            19,
-                                                            -22
-                                                        ],
-                                                        "size": [
-                                                            32,
-                                                            22
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "result_item_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            0.0,
-                                                            -5.0
-                                                        ],
-                                                        "size": [
-                                                            100.0,
-                                                            10
-                                                        ],
-                                                        "layer": 2,
-                                                        "color": [
-                                                            0.31,
-                                                            0.31,
-                                                            0.31
-                                                        ],
-                                                        "text": "在右侧配方栏选择配方",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "right_half": {
-                                                        "type": "panel",
-                                                        "anchor_from": "right_middle",
-                                                        "anchor_to": "left_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            0
-                                                        ],
-                                                        "size": [
-                                                            106.0,
-                                                            200
-                                                        ],
-                                                        "layer": 1,
-                                                        "controls": [
-                                                            {
-                                                                "bg@common.dialog_background_opaque": {
-                                                                    "layer": 0
-                                                                }
-                                                            },
-                                                            {
-                                                                "recipes_view@common.scrolling_panel": {
-                                                                    "$background_nine_slice_buttom": 0,
-                                                                    "$background_nine_slice_left": 0,
-                                                                    "$background_nine_slice_right": 0,
-                                                                    "$background_nine_slice_top": 0,
-                                                                    "$background_nineslice_size": [
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        0
-                                                                    ],
-                                                                    "$box_nine_slice_buttom": 0,
-                                                                    "$box_nine_slice_left": 0,
-                                                                    "$box_nine_slice_right": 0,
-                                                                    "$box_nine_slice_top": 0,
-                                                                    "$box_nineslice_size": [
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        0
-                                                                    ],
-                                                                    "$is_background_nine_slice": false,
-                                                                    "$is_box_nine_slice": false,
-                                                                    "$is_track_nine_slice": false,
-                                                                    "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                                                                    "$scroll_background_texture": "textures/ui/ScrollRail",
-                                                                    "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
-                                                                    "$scroll_box_texture": "textures/ui/newTouchScrollBox",
-                                                                    "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
-                                                                    "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
-                                                                    "$scroll_track_texture": "textures/ui/ScrollRail",
-                                                                    "$scrolling_content": "ElectricMachineryWorkstationUI.recipes_grid",
-                                                                    "$show_background": true,
-                                                                    "$track_nine_slice_buttom": 0,
-                                                                    "$track_nine_slice_left": 0,
-                                                                    "$track_nine_slice_right": 0,
-                                                                    "$track_nine_slice_top": 0,
-                                                                    "$track_nineslice_size": [
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        0
-                                                                    ],
-                                                                    "anchor_from": "bottom_middle",
-                                                                    "anchor_to": "bottom_middle",
-                                                                    "layer": 1,
-                                                                    "offset": [
-                                                                        0,
-                                                                        -4
-                                                                    ],
-                                                                    "size": [
-                                                                        "100%+-8px",
-                                                                        "100%+-32px"
-                                                                    ]
-                                                                }
-                                                            },
-                                                            {
-                                                                "edit_box@common.text_edit_box": {
-                                                                    "type": "edit_box",
-                                                                    "$edit_box_default_texture": "textures/ui/edit_box_indent",
-                                                                    "$edit_box_hover_texture": "textures/ui/edit_box_indent_hover",
-                                                                    "$font_scale_factor": 1,
-                                                                    "$font_size": "normal",
-                                                                    "$is_new_nine_slice": false,
-                                                                    "$nine_slice_buttom": 0,
-                                                                    "$nine_slice_left": 0,
-                                                                    "$nine_slice_right": 0,
-                                                                    "$nine_slice_top": 0,
-                                                                    "$nineslice_size": [
-                                                                        0,
-                                                                        0,
-                                                                        0,
-                                                                        0
-                                                                    ],
-                                                                    "$place_holder_text": "搜索配方..",
-                                                                    "$place_holder_text_color": [
-                                                                        0.5,
-                                                                        0.5,
-                                                                        0.5
-                                                                    ],
-                                                                    "$text_background_default": "netease_editor_template_namespace.edit_box_background_default",
-                                                                    "$text_background_hover": "netease_editor_template_namespace.edit_box_background_hover",
-                                                                    "$text_box_name": "#ElectricMachineryWorkstationUI.search_recipe",
-                                                                    "$text_box_text_color": [
-                                                                        1,
-                                                                        1,
-                                                                        1
-                                                                    ],
-                                                                    "$text_edit_box_content_binding_name": "#netease_editor_template_namespace.message_content",
-                                                                    "$text_edit_box_label_anchor_point": "right_middle",
-                                                                    "$text_edit_box_label_min_size": [
-                                                                        "100%",
-                                                                        0
-                                                                    ],
-                                                                    "$text_edit_box_label_size": [
-                                                                        "default",
-                                                                        "default"
-                                                                    ],
-                                                                    "anchor_from": "top_middle",
-                                                                    "anchor_to": "top_middle",
-                                                                    "offset": [
-                                                                        0,
-                                                                        6
-                                                                    ],
-                                                                    "size": [
-                                                                        "100%+-8px",
-                                                                        20
-                                                                    ],
-                                                                    "layer": 1,
-                                                                    "max_length": 40
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "bar_img": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            48.0,
-                                                            -40.0
-                                                        ],
-                                                        "size": [
-                                                            6.0,
-                                                            20.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "clip_direction": "left",
-                                                        "clip_ratio": 0.0,
-                                                        "color": [
-                                                            0.7176470588235294,
-                                                            0.7176470588235294,
-                                                            0.7176470588235294
-                                                        ],
-                                                        "texture": "textures/ui/white",
-                                                        "tiled": true
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
-                            }
-                        }
-                    ],
-                    "layer": 0,
-                    "offset": [
-                        -66,
-                        0
-                    ],
-                    "size": [
-                        180,
-                        200
-                    ]
-                }
-            }
-        ]
-    },
     "item_slot_with_recipe_preview@netease_container.custom_grid_item": {
         "$cell_overlay_ref|default": "ElectricMachineryWorkstationUI.crafting_preview_visual"
     },
-    "main@common.inventory_screen_common": {
-        "$screen_content": "ElectricMachineryWorkstationUI.electric_machinery_workstation_ui"
-    },
-    "namespace": "ElectricMachineryWorkstationUI",
     "output_preview_visual": {
         "type": "panel",
         "size": [
@@ -791,5 +386,368 @@
                 }
             }
         ]
-    }
+    },
+    "content": {
+        "type": "panel",
+        "controls": [
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
+                }
+            },
+            {
+                "crafting_grid@ElectricMachineryWorkstationUI.container_slots": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "grid_dimensions": [
+                        3,
+                        3
+                    ],
+                    "grid_item_template": "ElectricMachineryWorkstationUI.item_slot_with_recipe_preview",
+                    "layer": 0,
+                    "offset": [
+                        25,
+                        17
+                    ]
+                }
+            },
+            {
+                "solder_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        25,
+                        71
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "ElectricMachineryWorkstationUI.solder_preview_visual",
+                                "collection_index": 9
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_in_solder_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        71
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/arrow_img",
+                    "$mask_image": "textures/ui/arrow_mask",
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        86,
+                        37
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "layer": 4,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        85,
+                        36
+                    ],
+                    "size": [
+                        24,
+                        17
+                    ]
+                }
+            },
+            {
+                "output_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        115,
+                        31
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "ElectricMachineryWorkstationUI.output_preview_visual",
+                                "collection_index": 10,
+                                "size": [
+                                    26,
+                                    26
+                                ],
+                                "$cell_image_size": [
+                                    26,
+                                    26
+                                ]
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_out_output_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        115,
+                        31
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ]
+                }
+            },
+            {
+                "result_item_label": {
+                    "type": "label",
+                    "offset": [
+                        47,
+                        75
+                    ],
+                    "size": [
+                        122,
+                        10
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "text": "在右侧配方栏选择配方",
+                    "text_alignment": "center",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "shadow": false,
+                    "font_type": "default"
+                }
+            },
+            {
+                "right_half": {
+                    "type": "panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        178,
+                        0
+                    ],
+                    "size": [
+                        106,
+                        184
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg@common.dialog_background_opaque": {
+                                "layer": 0
+                            }
+                        },
+                        {
+                            "recipes_view@common.scrolling_panel": {
+                                "$background_nine_slice_buttom": 0,
+                                "$background_nine_slice_left": 0,
+                                "$background_nine_slice_right": 0,
+                                "$background_nine_slice_top": 0,
+                                "$background_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$box_nine_slice_buttom": 0,
+                                "$box_nine_slice_left": 0,
+                                "$box_nine_slice_right": 0,
+                                "$box_nine_slice_top": 0,
+                                "$box_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$is_background_nine_slice": false,
+                                "$is_box_nine_slice": false,
+                                "$is_track_nine_slice": false,
+                                "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                                "$scroll_background_texture": "textures/ui/ScrollRail",
+                                "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                                "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                                "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                                "$scroll_track_texture": "textures/ui/ScrollRail",
+                                "$scrolling_content": "ElectricMachineryWorkstationUI.recipes_grid",
+                                "$show_background": true,
+                                "$track_nine_slice_buttom": 0,
+                                "$track_nine_slice_left": 0,
+                                "$track_nine_slice_right": 0,
+                                "$track_nine_slice_top": 0,
+                                "$track_nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "layer": 1,
+                                "offset": [
+                                    0,
+                                    -4
+                                ],
+                                "size": [
+                                    "100%+-8px",
+                                    "100%+-32px"
+                                ]
+                            }
+                        },
+                        {
+                            "edit_box@common.text_edit_box": {
+                                "type": "edit_box",
+                                "$edit_box_default_texture": "textures/ui/edit_box_indent",
+                                "$edit_box_hover_texture": "textures/ui/edit_box_indent_hover",
+                                "$font_scale_factor": 1,
+                                "$font_size": "normal",
+                                "$is_new_nine_slice": false,
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$place_holder_text": "搜索配方..",
+                                "$place_holder_text_color": [
+                                    0.5,
+                                    0.5,
+                                    0.5
+                                ],
+                                "$text_background_default": "netease_editor_template_namespace.edit_box_background_default",
+                                "$text_background_hover": "netease_editor_template_namespace.edit_box_background_hover",
+                                "$text_box_name": "#ElectricMachineryWorkstationUI.search_recipe",
+                                "$text_box_text_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$text_edit_box_content_binding_name": "#netease_editor_template_namespace.message_content",
+                                "$text_edit_box_label_anchor_point": "right_middle",
+                                "$text_edit_box_label_min_size": [
+                                    "100%",
+                                    0
+                                ],
+                                "$text_edit_box_label_size": [
+                                    "default",
+                                    "default"
+                                ],
+                                "anchor_from": "top_middle",
+                                "anchor_to": "top_middle",
+                                "offset": [
+                                    0,
+                                    6
+                                ],
+                                "size": [
+                                    "100%+-8px",
+                                    20
+                                ],
+                                "layer": 1,
+                                "max_length": 40
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "ElectricMachineryWorkstationUI.content",
+        "$panel_size": [
+            176,
+            184
+        ],
+        "$content_size": [
+            162,
+            72
+        ],
+        "$title_text": "电动机件加工台",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 11,
+        "$upgrade_slot1": 12,
+        "$upgrade_slot2": 13,
+        "$upgrade_slot3": 14,
+        "$drawer_ref": "SkybluePanelLib.upgrade_drawer_left",
+        "$drawer_offset": [
+            -29,
+            64
+        ]
+    },
+    "namespace": "ElectricMachineryWorkstationUI"
 }

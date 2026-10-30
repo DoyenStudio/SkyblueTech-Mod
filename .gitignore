@@ -1,5 +1,6 @@
 .mcs
 .trae
+.claude
 .*
 
 work.mcscfg

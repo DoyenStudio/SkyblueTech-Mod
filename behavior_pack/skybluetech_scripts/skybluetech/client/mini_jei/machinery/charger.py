@@ -18,18 +18,7 @@ class ChargerRecipeRenderer(MachineRecipeRenderer):
         MachineRecipeRenderer.__init__(self, recipe)
         self.recipe = recipe
 
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        from ...ui.machinery.utils import FormatRF
-
-        MachineRecipeRenderer.RenderInit(self, panel)
-        panel["energy_cost"].asLabel().SetText(
-            "%s\n%s/t"
-            % (
-                FormatRF(self.recipe.power_cost * self.recipe.tick_duration),
-                FormatRF(self.recipe.power_cost),
-            )
-        )
+    # 耗能由基类 MachineRecipeRenderer 画在能量条上并写进其悬停
 
 
 ChargerRecipe.SetRenderer(ChargerRecipeRenderer)

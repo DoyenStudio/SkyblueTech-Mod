@@ -10,7 +10,7 @@
 
 block_name：唯一方块 ID；store_rf_max=10000；energy_io_mode=(0,0,0,0,0,0)，0 输入、1 输出、其他关闭；is_non_energy_machine=False。
 
-AddPower(rf) 返回 (是否变化, 溢出量)；TakeoutPower(rf) 返回实际取出量；GivebackPower(rf) 返还；SetDeactiveFlag/UnsetDeactiveFlag/HasDeactiveFlag 管理停机位；IsActive() 判断所有标志均清除。
+AddPower(rf) 返回 (是否变化, 溢出量)；TakeoutPower(rf) 返回实际取出量；GivebackPower(rf) 返还；SetDeactiveFlag/UnsetDeactiveFlag/HasDeactiveFlag 管理停机位；UpdateDeactiveFlag(flag, on) 按条件设置或取消，标志已是目标状态时不触发回调也不写方块数据，适合在每 tick 的工作逻辑里调用；IsActive() 判断所有标志均清除。
 
 ## 事件与组合
 

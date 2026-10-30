@@ -2,6 +2,7 @@
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_NO_RECIPE,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
 )
@@ -56,6 +57,7 @@ from .utils import (
     GetStructureLackedBlocks,
     UpdateImageTransformColor,
     UpdatePowerBar,
+    UpdateProgress,
 )
 
 FLAG_OK = 0
@@ -68,6 +70,8 @@ TEMPERATURE_LABEL_PATH = MAIN_PATH / "temp_label"
 EXPECTED_TEMPERATURE_LABEL_PATH = MAIN_PATH / "expected_temp_label"
 POOL_TIP_LABEL_PATH = MAIN_PATH / "pool_tip"
 LACK_BLOCKS_TIP_PATH = MAIN_PATH / "lack_blocks_tip"
+# 菌群浓度气泡 (风格化进度图标, 自下而上随浓度冒起)
+FERMENTATION_GAUGE_PATH = MAIN_PATH / "fermentation_gauge"
 TEMPERATURE_SLIDER_PATH = MAIN_PATH / "slider"
 MAX_VOLUME_BAR_PATH = MAIN_PATH / "pool/max_volume_bar"
 VOLUME_SLIDER_PATH = MAIN_PATH / "volume_slider"
@@ -76,11 +80,16 @@ MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_b
 
 @RegistToolDeltaScreen("FermenterUI.main", is_proxy=True)
 class FermenterUI(MachinePanelUIProxy):
+    # 服务端用 NO_RECIPE 表示未接种菌种；不点亮输入槽提示圈
+    STATUS_TEXTS = {DEACTIVE_FLAG_NO_RECIPE: "未接种菌种"}
+    STATUS_RINGS = {DEACTIVE_FLAG_NO_RECIPE: ()}
+
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.output_gas_display = self.GetElement(OUT_GAS_DISP_PATH)
         self.output_fluid_display = self.GetElement(OUT_FLUID_DISP_PATH)
         self.pool_img = self.GetElement(POOL_IMG_PATH).asImage()
+        self.fermentation_gauge = self.GetElement(FERMENTATION_GAUGE_PATH)
         self.temperature_label = self.GetElement(TEMPERATURE_LABEL_PATH).asLabel()
         self.expected_temperature_label = self.GetElement(
             EXPECTED_TEMPERATURE_LABEL_PATH
@@ -107,6 +116,7 @@ class FermenterUI(MachinePanelUIProxy):
         store_rf = GetValue(data, K_STORE_RF, 0)
         mud_temperature = GetValue(data, K_TEMPERATURE, 0.0)
         mud_thickness = GetValue(data, K_MUD_THICKNESS, 0.0)
+        UpdateProgress(self.fermentation_gauge, mud_thickness)
         total_volume_pc = GetValue(data, K_TOTAL_VOLUME, 0.0)
         expected_mud_temperature = GetValue(data, K_EXPECTED_TEMPERTURE, 0.0)
         expected_water_max_volume = GetValue(data, K_EXPECTED_WATER_MAX_VOLUME, 0.0)

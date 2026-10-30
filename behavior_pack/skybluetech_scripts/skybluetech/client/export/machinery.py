@@ -13,9 +13,9 @@ from ..ui.machinery_extra_pages.transmitter_settings_indirectional_base import (
 )
 from ..ui.recipe_checker import AsRecipeCheckerBtn
 from ..ui.machinery.utils import (
-    FluidDisplayer, UpdatePowerBar, UpdateFlame, UpdateGenericProgressL2R,
-    UpdateGenericProgressT2B, UpdateGenericProgressB2T, FormatRF, FormatFluidVolume,
-    FormatKelvin, GetStructureLackedBlocks, GetStructureLackedBlockPoses,
+    FluidDisplayer, UpdatePowerBar, UpdateProgress, UpdateFlame, UpdateGenericProgressL2R,
+    UpdateGenericProgressT2B, UpdateGenericProgressB2T, SetHoverText, PlayLoop, FormatRF,
+    FormatFluidVolume, FormatKelvin, GetStructureLackedBlocks, GetStructureLackedBlockPoses,
 )
 
 __all__ = [
@@ -23,7 +23,8 @@ __all__ = [
     "ItemPipeSettingsPage", "ItemPipeSettingsPageIndirectional", "FluidPipeSettingsPage",
     "FluidPipeSettingsPageIndirectional", "TransmitterSettingsPageBase",
     "TransmitterSettingsPageIndirectionalBase", "AsRecipeCheckerBtn", "FluidDisplayer",
-    "UpdatePowerBar", "UpdateFlame", "UpdateGenericProgressL2R", "UpdateGenericProgressT2B",
-    "UpdateGenericProgressB2T", "FormatRF", "FormatFluidVolume", "FormatKelvin",
+    "UpdatePowerBar", "UpdateProgress", "UpdateFlame", "UpdateGenericProgressL2R",
+    "UpdateGenericProgressT2B", "UpdateGenericProgressB2T", "SetHoverText", "PlayLoop",
+    "FormatRF", "FormatFluidVolume", "FormatKelvin",
     "GetStructureLackedBlocks", "GetStructureLackedBlockPoses",
 ]

@@ -160,11 +160,6 @@
             }
         ]
     },
-    "main@common.base_screen": {
-        "type": "screen",
-        "$screen_content|default": "InscribingTemplateUI.content"
-    },
-    "namespace": "InscribingTemplateUI",
     "section_btn@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
@@ -418,5 +413,18 @@
                 }
             }
         ]
-    }
+    },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@InscribingTemplateUI.content": {}
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "type": "screen",
+        "$screen_content|default": "InscribingTemplateUI.screen_root"
+    },
+    "namespace": "InscribingTemplateUI"
 }

@@ -1,18 +1,18 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_OUTPUT_FULL
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
 from skybluetech_scripts.skybluetech.common.machinery_def.item_spreader import (
     K_NUM_CONTAINERS,
     K_SPREADER_POINTER,
     STORE_RF_MAX,
 )
-from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
 from ..machinery_extra_pages import ItemPipeSettingsPage
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import UpdatePowerBar
+from .utils import UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PROGRESS_PATH = MAIN_PATH / "progress"
@@ -22,6 +22,7 @@ NOTE_LABEL_PATH = MAIN_PATH / "note_label"
 @RegistToolDeltaScreen("ItemSpreaderUI.main", is_proxy=True)
 class ItemSpreaderUI(MachinePanelUIProxyEx):
     available_extra_pages = (ItemPipeSettingsPage,)
+    STATUS_TEXTS = {DEACTIVE_FLAG_OUTPUT_FULL: "没有可投递的容器或容器已满"}
 
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
@@ -47,6 +48,4 @@ class ItemSpreaderUI(MachinePanelUIProxyEx):
         self.note_label.SetText(
             "正在投递第 %d / %d 个容器" % (display_pointer, num_containers)
         )
-        self.progress["mask"].SetFullSize(
-            "x", UICtrlPosData("parent", relative_value=progress)
-        )
+        UpdateProgress(self.progress, progress)  # SkybluePanelLib.gauge_h

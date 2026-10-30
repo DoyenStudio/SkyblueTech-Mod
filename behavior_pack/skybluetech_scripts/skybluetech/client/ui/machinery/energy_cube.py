@@ -25,8 +25,8 @@ from skybluetech_scripts.tooldelta.utils.nbt import (
 from .define import SCREEN_BASE_PATH, MachinePanelUI
 from .utils import FormatRF, UpdateGenericProgressL2R
 
-UPPER_PANEL_PATH = SCREEN_BASE_PATH / "upper"
-LOWER_PANEL_PATH = SCREEN_BASE_PATH / "lower"
+UPPER_PANEL_PATH = SCREEN_BASE_PATH / "panel/upper"
+LOWER_PANEL_PATH = SCREEN_BASE_PATH / "panel/lower"
 ENERGY_LABEL_PATH = UPPER_PANEL_PATH / "battery_icon/energy_label"
 TOTAL_POWER_PATH = UPPER_PANEL_PATH / "total_power"
 BATTERY_ICON_PATH = UPPER_PANEL_PATH / "battery_icon"

@@ -2,6 +2,7 @@
 from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
+from ...common.define import flags
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.fluid_splitter import (
     FluidSplitterSettingsListUpdate,
@@ -53,8 +54,11 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
 
     def _fluid_splitter_on_ticking(self):
         if self._sending_fluid and self._ticking_t % 5 == 0:
-            self.ready_try_post_fluid()
+            sent = self.ready_try_post_fluid()
             all_empty = all(i.volume <= 0 for i in self.fluids.values())
+            # 状态灯: 空 = 缺少输入; 有流体但这一轮一点都没送出去 = 输出受阻
+            self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT, all_empty)
+            self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL, not all_empty and not sent)
             if all_empty:
                 self._sending_fluid = False
         self._ticking_t += 1

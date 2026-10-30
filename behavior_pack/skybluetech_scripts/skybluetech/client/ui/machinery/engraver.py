@@ -18,8 +18,8 @@ from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import (
     FluidDisplayer,
-    UpdateGenericProgressL2R,
     UpdatePowerBar,
+    UpdateProgress,
 )
 
 POWER_PATH = MAIN_PATH / "power_bar"
@@ -56,7 +56,7 @@ class EngraverUI(MachinePanelUIProxyEx):
         fluid_0 = FluidSlotClient(data, 0)
         fluid_1 = FluidSlotClient(data, 1)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         self.fluid_0_displayer.update(
             fluid_0.fluid_id, fluid_0.volume, FLUID_SLOT_MAX_VOLUMES[0]
         )

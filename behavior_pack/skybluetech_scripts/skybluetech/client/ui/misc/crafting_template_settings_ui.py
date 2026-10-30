@@ -21,10 +21,10 @@ from skybluetech_scripts.skybluetech.common.events.misc.crafting_template_settin
 )
 
 AIR_SLOT = 35
-CLOSE_BTN_PATH = SCREEN_BASE_PATH / "close_btn"
-GRID_PATH = SCREEN_BASE_PATH / "grid"
-OUT_ITEM_PATH = SCREEN_BASE_PATH / "out_item"
-LABEL_PATH = SCREEN_BASE_PATH / "databoard/label"
+CLOSE_BTN_PATH = SCREEN_BASE_PATH / "panel/close_btn"
+GRID_PATH = SCREEN_BASE_PATH / "panel/grid"
+OUT_ITEM_PATH = SCREEN_BASE_PATH / "panel/out_item"
+LABEL_PATH = SCREEN_BASE_PATH / "panel/databoard/label"
 
 
 @RegistToolDeltaScreen("CraftingTemplateSettingsUI.main")

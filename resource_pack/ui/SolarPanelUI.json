@@ -1,134 +1,137 @@
 {
-    "main@common.inventory_screen_common": {
-        "$screen_content": "SolarPanelUI.solar_panel_ui"
-    },
-    "namespace": "SolarPanelUI",
-    "solar_panel_ui": {
+    "content": {
         "type": "panel",
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11
-                }
-            },
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4
-                }
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
-            {
-                "root_panel@common.root_panel": {
-                    "controls": [
-                        {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "太阳能电池板",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "gen_slot@netease_container.custom_grid_item": {
-                                                        "layer": 10,
-                                                        "offset": [
-                                                            0,
-                                                            -13
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "progress@SkybluePanelLib.ProgressBar": {
-                                                        "$bg_image": "textures/ui/sun_gray",
-                                                        "$mask_image": "textures/ui/sun",
-                                                        "offset": [
-                                                            0,
-                                                            -65
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "text": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            0.0,
-                                                            -40.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_type": "default",
-                                                        "text": "太阳光强度: 0 Lux\n电池板输出功率: 0 RF/t",
-                                                        "text_alignment": "center"
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    }
-                                ],
-                                "layer": 0
-                            }
-                        }
+                "info_bg@SkybluePanelLib.info_panel": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
                     ],
-                    "layer": 0,
                     "size": [
-                        180,
-                        200
+                        94,
+                        24
                     ]
+                }
+            },
+            {
+                "text": {
+                    "type": "label",
+                    "offset": [
+                        10,
+                        19
+                    ],
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "text": "太阳光强度: 0 Lux\n电池板输出功率: 0 RF/t",
+                    "text_alignment": "center",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        88,
+                        20
+                    ],
+                    "layer": 1,
+                    "shadow": false
+                }
+            },
+            {
+                "progress@SkybluePanelLib.sun_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        52,
+                        46
+                    ]
+                }
+            },
+            {
+                "gen_slot@netease_container.custom_grid_item": {
+                    "layer": 10,
+                    "offset": [
+                        24,
+                        45
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_in_gen_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        24,
+                        45
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
                 }
             }
         ]
-    }
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "SolarPanelUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "太阳能电池板",
+        "$has_tabs": false,
+        "$has_upgrades": false,
+        "$show_led": true
+    },
+    "namespace": "SolarPanelUI"
 }

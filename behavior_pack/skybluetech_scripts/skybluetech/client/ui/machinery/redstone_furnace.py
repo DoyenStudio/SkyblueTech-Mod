@@ -12,7 +12,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 
 from ..machinery_extra_pages import ItemPipeSettingsPage
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import UpdateFlame, UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import UpdateFlame, UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "progress"
@@ -37,5 +37,5 @@ class RedstoneFurnaceUI(MachinePanelUIProxyEx):
         store_rf = GetValue(data, K_STORE_RF, 0)
         progress = GetValue(data, K_PROGRESS, 0)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         UpdateFlame(self.flame, float(store_rf) / STORE_RF_MAX)

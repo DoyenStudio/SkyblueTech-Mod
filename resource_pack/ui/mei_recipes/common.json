@@ -1,0 +1,337 @@
+{
+    "inputs_9": {
+        "type": "panel",
+        "size": [
+            60.0,
+            60.0
+        ],
+        "layer": 8,
+        "controls": [
+            {
+                "0@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input0",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "1@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input1",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle"
+                }
+            },
+            {
+                "2@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input2",
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right"
+                }
+            },
+            {
+                "3@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input3",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle"
+                }
+            },
+            {
+                "4@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input4"
+                }
+            },
+            {
+                "5@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input5",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle"
+                }
+            },
+            {
+                "6@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input6",
+                    "anchor_from": "bottom_left",
+                    "anchor_to": "bottom_left"
+                }
+            },
+            {
+                "7@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input7",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle"
+                }
+            },
+            {
+                "8@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.input8",
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right"
+                }
+            }
+        ]
+    },
+    "namespace": "SkyblueMeiCommon",
+    "output": {
+        "type": "panel",
+        "size": [
+            28.0,
+            28.0
+        ],
+        "layer": 7,
+        "controls": [
+            {
+                "0@mei_common.item_panel": {
+                    "$binding_name_prefix": "mei_ui.recipe.output",
+                    "size": [
+                        "default",
+                        "default"
+                    ]
+                }
+            }
+        ]
+    },
+    "power_hover@mei_common.slot_base": {
+        "$binding_name_prefix|default": "mei_ui.recipe.power",
+        "controls": [
+            {
+                "overlay@mei_common.slot_overlay": {
+                    "$overlay_btn_control": "mei_common.slot_overlay_button_flat"
+                }
+            }
+        ],
+        "size": [
+            "100%+0px",
+            "100%+0px"
+        ]
+    },
+    "side_slots": {
+        "type": "panel",
+        "$side0_prefix|default": "mei_ui.recipe.side0",
+        "$side1_prefix|default": "mei_ui.recipe.side1",
+        "size": [
+            40.0,
+            20.0
+        ],
+        "layer": 8,
+        "controls": [
+            {
+                "0@mei_common.item_panel": {
+                    "$binding_name_prefix": "$side0_prefix",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle"
+                }
+            },
+            {
+                "1@mei_common.item_panel": {
+                    "$binding_name_prefix": "$side1_prefix",
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle"
+                }
+            }
+        ]
+    },
+    "energy_meter": {
+        "type": "panel",
+        "size": [
+            12,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bar": {
+                    "type": "panel",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "bg": {
+                                "type": "image",
+                                "texture": "textures/ui/skybluetech/energy/classic_track",
+                                "tiled": "y",
+                                "layer": 1,
+                                "keep_ratio": false
+                            }
+                        },
+                        {
+                            "mask": {
+                                "type": "image",
+                                "texture": "textures/ui/energy_bar_top",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 2,
+                                "keep_ratio": false
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "hover@SkyblueMeiCommon.power_hover": {
+                    "layer": 4
+                }
+            }
+        ]
+    },
+    "progress_hover@mei_common.slot_base": {
+        "$binding_name_prefix|default": "mei_ui.recipe.progress",
+        "controls": [
+            {
+                "overlay@mei_common.slot_overlay": {
+                    "$overlay_btn_control": "mei_common.slot_overlay_button_flat"
+                }
+            }
+        ]
+    },
+    "fluid_slot@mei_common.slot_base": {
+        "$binding_name_prefix|default": "mei_ui.recipe.input0",
+        "$tank_ticks|default": "textures/ui/skybluetech/tank_ticks_52",
+        "size": [
+            18,
+            54
+        ],
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "texture": "textures/ui/white",
+                    "color": [
+                        0.545,
+                        0.545,
+                        0.545
+                    ],
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "item": {
+                    "type": "panel",
+                    "size": [
+                        "100%+-2px",
+                        "100%+-2px"
+                    ],
+                    "layer": 1,
+                    "visible": "#visible",
+                    "property_bag": {
+                        "#visible": false
+                    },
+                    "bindings": [
+                        {
+                            "binding_name_override": "#visible",
+                            "binding_collection_name": "$collection_name",
+                            "binding_condition": "always",
+                            "binding_type": "collection",
+                            "binding_name": "($item_visible_binding_name)"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "fluid": {
+                                "type": "panel",
+                                "size": [
+                                    "100%+0px",
+                                    "100%+0px"
+                                ],
+                                "controls": [
+                                    {
+                                        "img": {
+                                            "type": "image",
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "size": [
+                                                "100%+0px",
+                                                "0%+0px"
+                                            ],
+                                            "color": [
+                                                1,
+                                                1,
+                                                1
+                                            ],
+                                            "texture": "textures/fluid/basic_fluid",
+                                            "tiled": true
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "renderer": {
+                                "type": "custom",
+                                "renderer": "inventory_item_renderer",
+                                "layer": 3,
+                                "visible": "#visible",
+                                "property_bag": {
+                                    "#item_id_aux": -10551296
+                                },
+                                "bindings": [
+                                    {
+                                        "binding_name_override": "#visible",
+                                        "binding_collection_name": "$collection_name",
+                                        "binding_condition": "always",
+                                        "binding_type": "collection",
+                                        "binding_name": "($item_renderer_visible_binding_name)"
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ticks": {
+                    "type": "image",
+                    "texture": "$tank_ticks",
+                    "size": [
+                        5,
+                        "100%+-2px"
+                    ],
+                    "anchor_from": "right_middle",
+                    "anchor_to": "right_middle",
+                    "offset": [
+                        -1,
+                        0
+                    ],
+                    "layer": 3,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "texture": "textures/ui/frame_empty_slim",
+                    "nineslice_size": 1,
+                    "layer": 5,
+                    "keep_ratio": false,
+                    "fill": true
+                }
+            },
+            {
+                "overlay@mei_common.slot_overlay": {}
+            }
+        ]
+    }
+}

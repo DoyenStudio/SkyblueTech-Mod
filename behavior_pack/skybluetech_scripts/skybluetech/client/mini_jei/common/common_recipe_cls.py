@@ -105,8 +105,10 @@ class GenericFurnaceRecipeRenderer(RecipeRenderer):
 
     def RenderUpdate(self, panel, render_ticks):
         # type: (UBaseCtrl, int) -> None
+        from ...ui.machinery.utils import UpdateProgress
+
         p = float(render_ticks % 300) / 300
-        panel["progress/mask"].asImage().SetSpriteClipRatio("fromRightToLeft", 1 - p)
+        UpdateProgress(panel["progress"], p)  # 按进度组件自身标记的方向填充 (同机器界面)
         if self.input_displayer:
             self.input_displayer.tick(render_ticks)
 

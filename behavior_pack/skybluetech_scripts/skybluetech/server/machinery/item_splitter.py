@@ -4,6 +4,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
 from .basic.item_container import ItemContainer
+from ...common.define import flags
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.item_splitter import (
     ItemSplitterSettingsListUpdate,
@@ -47,6 +48,7 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     def _item_splitter_on_ticking(self):
         if self._sending_items and self._ticking_t % 5 == 0:
             has_item = False
+            moved = False
             for slot in self.item_input_slots:
                 item = self.GetSlotItem(slot)
                 if item is not None:
@@ -56,7 +58,11 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
                 it = self.try_post_item_by_label(item)
                 if it is not None and it.id == item.id and it.count == item.count:
                     continue
+                moved = True
                 self.SetSlotItem(slot, it)
+            # 状态灯: 空 = 缺少输入; 有物品但这一轮一件都没送出去 = 输出受阻
+            self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT, not has_item)
+            self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL, has_item and not moved)
             if not has_item:
                 self._sending_items = False
         self._ticking_t += 1

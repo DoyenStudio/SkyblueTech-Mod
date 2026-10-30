@@ -44,13 +44,15 @@ class HydroponicBedSandRecipeRenderer(RecipeRenderer):
             panel["seed_item"], Item(self.recipe.seed_item)
         )
         outputs_stack = panel["outputs_stack"]
+        # 物品格用 SkybluePanelLib.recipe_slot; 每格名字带序号, 避免重名
         ctrl = outputs_stack.AddElement(
-            "SkybluePanelLib.item_displayer", "crop_item_disp%s" % idx
+            "SkybluePanelLib.recipe_slot", "crop_item_disp%s" % idx
         )
         self.output_seed_item_disp = ItemDisplayer(ctrl, Item(self.recipe.seed_item))
         for output in self.recipe.harvest_outputs:
+            idx += 1
             ctrl = outputs_stack.AddElement(
-                "SkybluePanelLib.item_displayer", "crop_item_disp%s" % idx
+                "SkybluePanelLib.recipe_slot", "crop_item_disp%s" % idx
             )
             self.output_renderers.append(
                 ItemDisplayer(ctrl, Item(output.id), prob=output.prob)

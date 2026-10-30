@@ -16,7 +16,7 @@ from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetVa
 from ..machinery_extra_pages import FluidPipeSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import FluidDisplayer, UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import FluidDisplayer, UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "progress"
@@ -50,7 +50,7 @@ class MagmaCentrifugeUI(MachinePanelUIProxyEx):
         left_fluid = FluidSlotClient(data, 0)
         right_fluids = [FluidSlotClient(data, i) for i in range(1, 7)]
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         self.left_fluid_displayer.update(
             left_fluid.fluid_id, left_fluid.volume, FLUID_SLOT_MAX_VOLUMES[0]
         )

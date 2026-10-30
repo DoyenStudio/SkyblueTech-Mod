@@ -31,7 +31,7 @@ class VeinMinerSettingsUI(ToolDeltaScreen):
     def OnCreate(self):
         self.grid = (
             self
-            .GetElement(SCREEN_BASE_PATH / "vein_blocks")
+            .GetElement(SCREEN_BASE_PATH / "panel/vein_blocks")
             .asScrollView()
             .GetContent()
             .asGrid()

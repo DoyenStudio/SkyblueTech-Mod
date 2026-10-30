@@ -1,5 +1,6 @@
 # coding=utf-8
 
+from ...common.define import flags
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.distillation_chamber import (
     CHAMBER_HEAT_CAPACITY,
@@ -25,6 +26,13 @@ recipes_collection = {}  # type: dict[str, list[DistillationChamberRecipe]]
 for recipe in Recipes:
     recipes_collection.setdefault(recipe.collection_name, []).append(recipe)
 
+# 没有产出的原因 (互斥): 缺少输入 / 温度不在任何配方范围内 / 产出槽放不下
+IDLE_FLAGS = (
+    flags.DEACTIVE_FLAG_NO_INPUT,
+    flags.DEACTIVE_FLAG_NO_RECIPE,
+    flags.DEACTIVE_FLAG_FLUID_FULL,
+)
+
 
 @RegisterMachine
 class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
@@ -49,7 +57,7 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
 
 
     def _distillation_chamber_on_ticking(self):
-        self.work_once()
+        self.set_idle_reason(self.work_once())
         self._tick_counter += 1
         if self._tick_counter >= TICKS_PER_SECOND:
             self.output_rate = self._produce_accum
@@ -73,37 +81,46 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
         # type: (int, str) -> bool
         return fluid_id in recipes_collection
 
+    def set_idle_reason(self, reason):
+        # type: (int) -> None
+        "本 tick 没有产出的原因 (0 = 正常产出); 只在原因变化时改停机标志, 状态灯与提示圈随之更新。"
+        for flag in IDLE_FLAGS:
+            self.UpdateDeactiveFlag(flag, flag == reason)
+
     def work_once(self):
+        # type: () -> int
+        "尝试蒸馏一次, 返回没能产出的原因 (IDLE_FLAGS 之一, 0 = 已产出)。"
         in_fluid = self.fluids[0]
         out_fluid = self.fluids[1]
         input_fluid_id = in_fluid.fluid_id
         if input_fluid_id is None:
-            return
+            return flags.DEACTIVE_FLAG_NO_INPUT
         rcps = recipes_collection.get(input_fluid_id)
         if rcps is None:
-            return
+            return flags.DEACTIVE_FLAG_NO_RECIPE
         if self.locked_recipe_idx is None:
             for idx, rcp in enumerate(rcps):
                 if (
                     self.kelvin > rcp.min_temperature
                     and self.kelvin < rcp.max_temperature
                 ):
-                    self.work_with_recipe(rcp, in_fluid, out_fluid)
+                    reason = self.work_with_recipe(rcp, in_fluid, out_fluid)
                     self.locked_recipe_idx = idx
-                    break
-        else:
-            rcp = rcps[self.locked_recipe_idx]
-            if self.kelvin > rcp.min_temperature:
-                self.work_with_recipe(rcp, in_fluid, out_fluid)
+                    return reason
+            return flags.DEACTIVE_FLAG_NO_RECIPE
+        rcp = rcps[self.locked_recipe_idx]
+        if self.kelvin > rcp.min_temperature:
+            return self.work_with_recipe(rcp, in_fluid, out_fluid)
+        return flags.DEACTIVE_FLAG_NO_RECIPE
 
     def work_with_recipe(self, rcp, in_fluid, out_fluid):
-        # type: (DistillationChamberRecipe, FluidSlotServer, FluidSlotServer) -> None
+        # type: (DistillationChamberRecipe, FluidSlotServer, FluidSlotServer) -> int
         T = self.kelvin
         T_min = rcp.min_temperature
         T_fit = rcp.fit_temperature
         T_max = rcp.max_temperature
         if T <= T_min:
-            return
+            return flags.DEACTIVE_FLAG_NO_RECIPE
         if T <= T_fit:
             produce_rate = consume_rate = float(T - T_min) / (T_fit - T_min)
         elif T <= T_max:
@@ -114,11 +131,14 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
             consume_rate = float(T_max - T_min) / (T_fit - T_min)
         consume = rcp.consume * consume_rate
         produce = rcp.produce * produce_rate
-        if in_fluid.volume >= consume:
-            if out_fluid.max_volume - out_fluid.volume >= produce:
-                in_fluid.volume -= consume
-                self._produce_accum += produce
-                self.OutputFluid(rcp.produce_matter, produce, 1, True)
-                self.heat_value -= produce * rcp.heat_per_produce
-                if in_fluid.volume <= 0:
-                    in_fluid.fluid_id = None
+        if in_fluid.volume < consume:
+            return flags.DEACTIVE_FLAG_NO_INPUT
+        if out_fluid.max_volume - out_fluid.volume < produce:
+            return flags.DEACTIVE_FLAG_FLUID_FULL
+        in_fluid.volume -= consume
+        self._produce_accum += produce
+        self.OutputFluid(rcp.produce_matter, produce, 1, True)
+        self.heat_value -= produce * rcp.heat_per_produce
+        if in_fluid.volume <= 0:
+            in_fluid.fluid_id = None
+        return 0

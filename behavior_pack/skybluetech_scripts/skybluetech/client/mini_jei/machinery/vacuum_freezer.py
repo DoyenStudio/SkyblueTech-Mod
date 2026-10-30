@@ -35,26 +35,25 @@ class VacuumFreezerRecipeRenderer(MachineRecipeRenderer):
         MachineRecipeRenderer.__init__(self, recipe)
         self.recipe = recipe
 
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        MachineRecipeRenderer.RenderInit(self, panel)
-        panel["right_board/max_kelvin"].asLabel().SetText(
-            FormatKelvin(self.recipe.max_temperature)
-        )
-        panel["right_board/fit_kelvin"].asLabel().SetText(
-            FormatKelvin(self.recipe.fit_temperature)
-        )
-        if self.recipe.extra_upgrader_id is None:
-            panel["/right_board/upgrader_slot"].SetVisible(False)
-            panel["/right_board/upgrader_tip"].SetVisible(False)
-        else:
-            ItemDisplayer(
-                panel["/right_board/upgrader_slot"],
-                Item(self.recipe.extra_upgrader_id),
-            )
-            panel["/right_board/upgrader_tip"].asLabel().SetText(
-                "需要机器升级"
-            )
+    # 温度要求与所需的机器升级写进进度悬停 (同 MEI 配方页); 配方功率为 0, 实际耗电取决于机器设定的温度
+
+    def ProgressTip(self):
+        lines = [
+            "§7温度： §f≤ %s（最适 %s）"
+            % (FormatKelvin(self.recipe.max_temperature), FormatKelvin(self.recipe.fit_temperature))
+        ]
+        if self.recipe.extra_upgrader_id is not None:
+            name = Item(self.recipe.extra_upgrader_id).GetBasicInfo().itemName or self.recipe.extra_upgrader_id
+            lines.append("§e需要机器升级： §f" + name)
+        return lines
+
+    def PowerTip(self):
+        return "§7耗能： §f随设定温度变化"
+
+    def RenderPower(self, panel, p):
+        from ...ui.machinery.utils import UpdatePowerBar
+
+        UpdatePowerBar(panel["power_bar"], 1, 1, hover=self.PowerTip())
 
 
 VacuumFreezerRecipe.SetRenderer(VacuumFreezerRecipeRenderer)

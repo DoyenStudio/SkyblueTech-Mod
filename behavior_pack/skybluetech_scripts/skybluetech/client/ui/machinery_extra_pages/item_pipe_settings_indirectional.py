@@ -19,3 +19,8 @@ class ItemPipeSettingsPageIndirectional(TransmitterSettingsPageIndirectionalBase
     def GetControlDef():
         # type: () -> str
         return "MachinePanelExPages.item_pipe_settings_indirectional"
+
+    @staticmethod
+    def GetTitle():
+        # type: () -> str
+        return "物品端口"

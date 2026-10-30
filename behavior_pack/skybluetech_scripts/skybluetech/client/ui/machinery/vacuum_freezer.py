@@ -40,8 +40,8 @@ from .utils import (
     FormatStructureLackedBlockPoses,
     GetStructureLackedBlockPoses,
     GetStructureLackedBlocks,
-    UpdateGenericProgressL2R,
     UpdatePowerBar,
+    UpdateProgress,
 )
 
 POWER_BAR_PATH = MAIN_PATH / "power_bar"
@@ -156,7 +156,7 @@ class VacuumFreezerUI(MachinePanelUIProxy):
         input_fluid = FluidSlotClient(data, 0)
         output_fluid = FluidSlotClient(data, 1)
         UpdatePowerBar(self.power_bar, GetValue(data, K_STORE_RF, 0), STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         self.input_fluid_displayer.update(
             input_fluid.fluid_id, input_fluid.volume, MAX_FLUID_VOLUMES[0]
         )

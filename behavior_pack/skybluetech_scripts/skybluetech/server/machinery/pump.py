@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
+from ...common.define import flags
 from ...common.define.global_config import BUCKET_VOLUME
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.pump import (
@@ -47,6 +48,11 @@ class Pump(UpgradeControl, GUIControl, MultiFluidContainer):
         if self.ProcessOnce():
             self.work_once()
 
+    def set_idle_reason(self, reason):
+        # type: (int) -> None
+        "没能抽取的原因 (0 = 正常抽取): 储罐已满 = FLUID_FULL, 下方没有可抽的流体 = NO_INPUT。"
+        for flag in (flags.DEACTIVE_FLAG_FLUID_FULL, flags.DEACTIVE_FLAG_NO_INPUT):
+            self.UpdateDeactiveFlag(flag, flag == reason)
 
     def work_once(self):
         fluid = self.fluids[0]
@@ -57,17 +63,20 @@ class Pump(UpgradeControl, GUIControl, MultiFluidContainer):
             volume = min(self.cached_volume, BUCKET_VOLUME * 0.2)
             _, remaining = self.OutputFluid(self.cached_fluid_id, volume, 0, True)
             self.cached_volume -= volume - remaining
+            self.set_idle_reason(flags.DEACTIVE_FLAG_FLUID_FULL if remaining >= volume else 0)
         else:
             if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
                 max_dfs_depth = 64
             else:
                 max_dfs_depth = 16
             if fluid.volume > fluid.max_volume - BUCKET_VOLUME:
+                self.set_idle_reason(flags.DEACTIVE_FLAG_FLUID_FULL)
                 return
             res = find_source_block(
                 self.dim, self.x, self.y - 1, self.z, fluid.fluid_id, max_dfs_depth
             )
             if res is None:
+                self.set_idle_reason(flags.DEACTIVE_FLAG_NO_INPUT)
                 return
             fluid_id, src_pos = res
             block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(src_pos, self.dim)
@@ -90,6 +99,7 @@ class Pump(UpgradeControl, GUIControl, MultiFluidContainer):
             volume = BUCKET_VOLUME * 0.2
             _, remaining = self.OutputFluid(fluid_id, volume, 0, True)
             self.cached_volume -= volume - remaining
+            self.set_idle_reason(0)
 
     @property
     def cached_volume(self):

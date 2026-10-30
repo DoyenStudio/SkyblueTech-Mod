@@ -1,5 +1,9 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_NO_INPUT,
+    DEACTIVE_FLAG_NO_RECIPE,
+)
 from skybluetech_scripts.skybluetech.common.events.machinery.electric_heater import (
     ElectricHeaterSubmitModifiesEvent,
 )
@@ -36,6 +40,12 @@ KELVIN_LIMIT_BOX_NAME = "#electric_heater.kelvin_limit"
 
 @RegistToolDeltaScreen("ElectricHeaterUI.main", is_proxy=True)
 class ElectricHeaterUI(MachinePanelUIProxy):
+    # 服务端的待机原因: 未设定功率 = NO_INPUT, 已达到设定温度 = NO_RECIPE
+    STATUS_TEXTS = {
+        DEACTIVE_FLAG_NO_INPUT: "未设定功率",
+        DEACTIVE_FLAG_NO_RECIPE: "已达到设定温度",
+    }
+
     def OnCreate(self):
         _, x, y, z = self.pos
         self.power_bar = self.GetElement(POWER_BAR_PATH)

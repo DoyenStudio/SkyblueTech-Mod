@@ -19,7 +19,7 @@ from ..machinery_extra_pages import (
 )
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import FluidDisplayer, UpdateGenericProgressL2R, UpdatePowerBar
+from .utils import FluidDisplayer, UpdatePowerBar, UpdateProgress
 
 POWER_PATH = MAIN_PATH / "power_bar"
 PRGS_PATH = MAIN_PATH / "progress"
@@ -29,6 +29,7 @@ OUTPUT_FLUID_PATH = MAIN_PATH / "output_fluid_display"
 
 @RegistToolDeltaScreen("ReactingThermalGeneratorUI.main", is_proxy=True)
 class ReactingThermalGeneratorUI(MachinePanelUIProxyEx):
+    IS_GENERATOR = True
     available_extra_pages = (
         ItemPipeSettingsPage,
         FluidPipeSettingsPage,
@@ -54,7 +55,7 @@ class ReactingThermalGeneratorUI(MachinePanelUIProxyEx):
         input_fluid = FluidSlotClient(data, 0)
         output_fluid = FluidSlotClient(data, 1)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
-        UpdateGenericProgressL2R(self.progress, progress)
+        UpdateProgress(self.progress, progress)
         self.input_fluid_displayer.update(
             input_fluid.fluid_id, input_fluid.volume, MAX_FLUID_VOLUMES[0]
         )

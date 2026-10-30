@@ -27,6 +27,12 @@ class PageBase(object):
         # type: () -> str
         raise NotImplementedError("GetControlDef")
 
+    @staticmethod
+    def GetTitle():
+        # type: () -> str
+        "副页面名, 显示为标题「机器名 / 页面名」; 主页面返回空串。"
+        return ""
+
 
 class MainPage(PageBase):
     "机器主界面, 仅占位用"

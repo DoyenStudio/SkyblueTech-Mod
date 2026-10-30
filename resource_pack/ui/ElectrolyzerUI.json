@@ -1,403 +1,329 @@
 {
-    "electrolyzer_ui": {
+    "content": {
         "type": "panel",
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        72
                     ]
                 }
             },
             {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        12,
+                        72
                     ]
                 }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_70",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        17
+                    ],
                     "size": [
-                        0,
-                        0
+                        36,
+                        72
                     ]
                 }
             },
             {
-                "root_panel@common.root_panel": {
+                "ring_tin_fluid0@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        17
+                    ],
+                    "size": [
+                        36,
+                        72
+                    ]
+                }
+            },
+            {
+                "anode_input_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        63,
+                        44
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
                     "controls": [
                         {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "$slot0": 3,
-                                            "$slot1": 4,
-                                            "$slot2": 5,
-                                            "$slot3": 6,
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0,
-                                                            4
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "电解机",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "offset": [
-                                                            "-42%+0px",
-                                                            "-20%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "fluid0@SkybluePanelLib.FluidDisplay": {
-                                                        "$text_visible": false,
-                                                        "offset": [
-                                                            8,
-                                                            -36
-                                                        ],
-                                                        "size": [
-                                                            48,
-                                                            68
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "fluid1@SkybluePanelLib.FluidDisplay": {
-                                                        "$text_visible": false,
-                                                        "offset": [
-                                                            64,
-                                                            -58
-                                                        ],
-                                                        "size": [
-                                                            24,
-                                                            24
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "fluid3@SkybluePanelLib.FluidDisplay": {
-                                                        "$text_visible": false,
-                                                        "offset": [
-                                                            64,
-                                                            -34
-                                                        ],
-                                                        "size": [
-                                                            24,
-                                                            24
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "fluid2@SkybluePanelLib.FluidDisplay": {
-                                                        "$text_visible": false,
-                                                        "offset": [
-                                                            -49,
-                                                            -46
-                                                        ],
-                                                        "size": [
-                                                            24,
-                                                            48
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "input_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            8,
-                                                            -75.0
-                                                        ],
-                                                        "color": [
-                                                            0.25,
-                                                            0.25,
-                                                            0.25
-                                                        ],
-                                                        "text": "电解槽"
-                                                    }
-                                                },
-                                                {
-                                                    "output_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            64,
-                                                            -75.0
-                                                        ],
-                                                        "color": [
-                                                            0.25,
-                                                            0.25,
-                                                            0.25
-                                                        ],
-                                                        "font_scale_factor": 0.8,
-                                                        "text": "阴极槽",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "output2_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            -49,
-                                                            -75.0
-                                                        ],
-                                                        "color": [
-                                                            0.25,
-                                                            0.25,
-                                                            0.25
-                                                        ],
-                                                        "font_scale_factor": 0.8,
-                                                        "text": "阳极槽",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "recipe_check_btn@SkybluePanelLib.recipe_check_btn": {
-                                                        "offset": [
-                                                            74,
-                                                            -12
-                                                        ],
-                                                        "size": [
-                                                            18,
-                                                            18
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "cathode_output_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            56.0,
-                                                            -12.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 1
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "anode_input_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -58,
-                                                            -12.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "anode_output_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -40,
-                                                            -12.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm",
-                                                            "100%cm"
-                                                        ],
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 2
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "left_connection_bar_img": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            -26.0,
-                                                            -47.0
-                                                        ],
-                                                        "size": [
-                                                            24.0,
-                                                            8.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "color": [
-                                                            0.611764705882353,
-                                                            0.611764705882353,
-                                                            0.611764705882353
-                                                        ],
-                                                        "texture": "textures/ui/white",
-                                                        "tiled": true
-                                                    }
-                                                },
-                                                {
-                                                    "left_connection_bar2_img": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            -24.0,
-                                                            -12.0
-                                                        ],
-                                                        "size": [
-                                                            16.0,
-                                                            8.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "color": [
-                                                            0.611764705882353,
-                                                            0.611764705882353,
-                                                            0.611764705882353
-                                                        ],
-                                                        "texture": "textures/ui/white",
-                                                        "tiled": true
-                                                    }
-                                                },
-                                                {
-                                                    "right_connection_bar_img": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            43.0,
-                                                            -47.0
-                                                        ],
-                                                        "size": [
-                                                            22.0,
-                                                            8.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "color": [
-                                                            0.611764705882353,
-                                                            0.611764705882353,
-                                                            0.611764705882353
-                                                        ],
-                                                        "texture": "textures/ui/white",
-                                                        "tiled": true
-                                                    }
-                                                },
-                                                {
-                                                    "right_connection_bar2_img": {
-                                                        "type": "image",
-                                                        "offset": [
-                                                            40.0,
-                                                            -12.0
-                                                        ],
-                                                        "size": [
-                                                            16.0,
-                                                            8.0
-                                                        ],
-                                                        "layer": 1,
-                                                        "color": [
-                                                            0.611764705882353,
-                                                            0.611764705882353,
-                                                            0.611764705882353
-                                                        ],
-                                                        "texture": "textures/ui/white",
-                                                        "tiled": true
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
                             }
                         }
                     ],
-                    "layer": 0,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_in_anode_input_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        63,
+                        44
+                    ],
                     "size": [
-                        180,
-                        200
+                        18,
+                        18
                     ]
+                }
+            },
+            {
+                "flow_arrow@SkybluePanelLib.progress_arrow": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        85,
+                        46
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "layer": 4,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        45
+                    ],
+                    "size": [
+                        24,
+                        17
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        111,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        36
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid1@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        111,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        36
+                    ]
+                }
+            },
+            {
+                "fluid3@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        131,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        36
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid3@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        131,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        36
+                    ]
+                }
+            },
+            {
+                "cathode_output_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        151,
+                        26
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_out_cathode_output_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        151,
+                        26
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        111,
+                        53
+                    ],
+                    "size": [
+                        38,
+                        36
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid2@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        111,
+                        53
+                    ],
+                    "size": [
+                        38,
+                        36
+                    ]
+                }
+            },
+            {
+                "anode_output_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        151,
+                        62
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 2
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "ring_out_anode_output_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        151,
+                        62
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "ElectrolyzerUI.electrolyzer_ui"
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "ElectrolyzerUI.content",
+        "$panel_size": [
+            176,
+            184
+        ],
+        "$content_size": [
+            162,
+            72
+        ],
+        "$title_text": "电解机",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 3,
+        "$upgrade_slot1": 4,
+        "$upgrade_slot2": 5,
+        "$upgrade_slot3": 6
     },
     "namespace": "ElectrolyzerUI"
 }

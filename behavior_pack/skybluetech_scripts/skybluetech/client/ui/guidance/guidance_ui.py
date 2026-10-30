@@ -32,29 +32,29 @@ class GuidanceUI(ToolDeltaScreen):
         GuidanceUI.current_instance = self
 
     def OnCreate(self):
-        self.left_page = self.GetElement(SCREEN_BASE_PATH / "full_page/left_page")
-        self.right_page = self.GetElement(SCREEN_BASE_PATH / "full_page/right_page")
+        self.left_page = self.GetElement(SCREEN_BASE_PATH / "panel/full_page/left_page")
+        self.right_page = self.GetElement(SCREEN_BASE_PATH / "panel/full_page/right_page")
         self.prev_page_btn = (
             self
-            .GetElement(SCREEN_BASE_PATH / "prev_page_btn")
+            .GetElement(SCREEN_BASE_PATH / "panel/prev_page_btn")
             .asButton()
             .SetCallback(self.on_click_prev_page)
         )
         self.next_page_btn = (
             self
-            .GetElement(SCREEN_BASE_PATH / "next_page_btn")
+            .GetElement(SCREEN_BASE_PATH / "panel/next_page_btn")
             .asButton()
             .SetCallback(self.on_click_next_page)
         )
         self.back_btn = (
             self
-            .GetElement(SCREEN_BASE_PATH / "back_btn")
+            .GetElement(SCREEN_BASE_PATH / "panel/back_btn")
             .asButton()
             .SetCallback(self.on_click_back)
         )
         self.close_btn = (
             self
-            .GetElement(SCREEN_BASE_PATH / "close_btn")
+            .GetElement(SCREEN_BASE_PATH / "panel/close_btn")
             .asButton()
             .SetCallback(self.on_click_close)
         )

@@ -1,0 +1,169 @@
+{
+    "namespace": "SkyblueMeiGasBurningGenerator",
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiGasBurningGenerator.recipe"
+    },
+    "PREVIEW@mei_recipe_common.preview": {
+        "$recipe_content_template": "SkyblueMeiGasBurningGenerator.content_panel"
+    },
+    "content_panel": {
+        "type": "panel",
+        "size": [
+            124,
+            62
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/mei/recipe/recipe_bg"
+                }
+            },
+            {
+                "power@SkyblueMeiCommon.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        80,
+                        4
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "layer": 2
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@SkyblueMeiCommon.fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input0",
+                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                4,
+                                                4
+                                            ],
+                                            "size": [
+                                                36,
+                                                54
+                                            ],
+                                            "layer": -5
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "output": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@SkyblueMeiCommon.fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output0",
+                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                102,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "layer": -5
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "flame@SkybluePanelLib.burn_flame": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    54,
+                                    25
+                                ],
+                                "size": [
+                                    13,
+                                    13
+                                ],
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "progress_hover@SkyblueMeiCommon.progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    54,
+                                    25
+                                ],
+                                "size": [
+                                    13,
+                                    13
+                                ],
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "recipe@mei_recipe_common.recipe_panel": {
+        "size": [
+            158,
+            66
+        ],
+        "controls": [
+            {
+                "wrapper": {
+                    "type": "panel",
+                    "size": [
+                        124,
+                        62
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "content@SkyblueMeiGasBurningGenerator.content_panel": {}
+                        },
+                        {
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {
+                                "$tree_button_ignored": false
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    }
+}

@@ -1,580 +1,523 @@
 {
-    "fermenter_ui": {
-        "type": "panel",
-        "controls": [
-            {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
-                    "size": [
-                        0,
-                        0
-                    ]
-                }
-            },
-            {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
-            {
-                "root_panel@common.root_panel": {
-                    "controls": [
-                        {
-                            "bg_down": {
-                                "type": "image",
-                                "offset": [
-                                    0.0,
-                                    60.0
-                                ],
-                                "size": [
-                                    "default",
-                                    93
-                                ],
-                                "clip_direction": "left",
-                                "clip_ratio": 0.0,
-                                "nineslice_size": [
-                                    4.0,
-                                    4.0,
-                                    4.0,
-                                    4.0
-                                ],
-                                "texture": "textures/ui/dialog_background_opaque",
-                                "controls": [
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                -7
-                                            ]
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "upgraders@SkybluePanelLib.UpgradeSlots": {
-                                            "anchor_from": "top_right",
-                                            "anchor_to": "top_left"
-                                        }
-                                    },
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {
-                                            "button_mappings": [
-                                                {
-                                                    "from_button_id": "button.menu_select",
-                                                    "mapping_type": "pressed",
-                                                    "to_button_id": "button.menu_exit"
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "发酵池控制器",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "out_gas_display@SkybluePanelLib.FluidDisplay": {
-                                                        "$text_visible": false,
-                                                        "offset": [
-                                                            93,
-                                                            -12
-                                                        ],
-                                                        "size": [
-                                                            54,
-                                                            31
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "out_fluid_display@SkybluePanelLib.FluidDisplay": {
-                                                        "$text_visible": false,
-                                                        "offset": [
-                                                            93,
-                                                            36
-                                                        ],
-                                                        "size": [
-                                                            54,
-                                                            31
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -89.0,
-                                                            13.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm+0px",
-                                                            "100%cm+0px"
-                                                        ],
-                                                        "layer": 1,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 0
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "input_slot2": {
-                                                        "type": "stack_panel",
-                                                        "offset": [
-                                                            -89.0,
-                                                            42.0
-                                                        ],
-                                                        "size": [
-                                                            "100%cm+0px",
-                                                            "100%cm+0px"
-                                                        ],
-                                                        "layer": 1,
-                                                        "collection_name": "netease_container",
-                                                        "controls": [
-                                                            {
-                                                                "slot@netease_container.custom_grid_item": {
-                                                                    "collection_index": 1
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "power_bar@SkybluePanelLib.PowerBar": {
-                                                        "offset": [
-                                                            "-50%+14px",
-                                                            "0%+0px"
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "pool": {
-                                                        "type": "panel",
-                                                        "offset": [
-                                                            -11.5,
-                                                            27.0
-                                                        ],
-                                                        "size": [
-                                                            101.0,
-                                                            45.0
-                                                        ],
-                                                        "controls": [
-                                                            {
-                                                                "fluid_img": {
-                                                                    "type": "image",
-                                                                    "anchor_from": "bottom_middle",
-                                                                    "anchor_to": "bottom_middle",
-                                                                    "layer": 1,
-                                                                    "clip_direction": "left",
-                                                                    "clip_ratio": 0.0,
-                                                                    "fill": true,
-                                                                    "keep_ratio": false,
-                                                                    "texture": "textures/fluid/basic_fluid",
-                                                                    "tiled": true
-                                                                }
-                                                            },
-                                                            {
-                                                                "frame": {
-                                                                    "type": "image",
-                                                                    "size": [
-                                                                        "100%+4px",
-                                                                        "100%+4px"
-                                                                    ],
-                                                                    "layer": 1,
-                                                                    "clip_direction": "left",
-                                                                    "clip_ratio": 0.0,
-                                                                    "nineslice_size": [
-                                                                        2.0,
-                                                                        2.0,
-                                                                        2.0,
-                                                                        2.0
-                                                                    ],
-                                                                    "texture": "textures/ui/frame_empty"
-                                                                }
-                                                            },
-                                                            {
-                                                                "max_volume_bar": {
-                                                                    "type": "image",
-                                                                    "offset": [
-                                                                        "50%+-4px",
-                                                                        0.0
-                                                                    ],
-                                                                    "size": [
-                                                                        8.0,
-                                                                        2.0
-                                                                    ],
-                                                                    "layer": 1,
-                                                                    "clip_direction": "left",
-                                                                    "clip_ratio": 0.0,
-                                                                    "texture": "textures/ui/red_bar"
-                                                                }
-                                                            }
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "slider@common.slider": {
-                                                        "$background_default_control": "common.slider_background",
-                                                        "$background_hover_control": "common.slider_background_hover",
-                                                        "$progress_default_clip_direction": "left",
-                                                        "$progress_default_control": "common.slider_progress",
-                                                        "$progress_hover_clip_direction": "left",
-                                                        "$progress_hover_control": "common.slider_progress_hover",
-                                                        "$slider_box_hover_layout": "common.slider_button_hover_layout",
-                                                        "$slider_box_indent_layout": "common.slider_button_indent_layout",
-                                                        "$slider_box_layout": "common.slider_button_layout",
-                                                        "$slider_box_locked_layout": "common.slider_button_locked_layout",
-                                                        "$slider_box_size": [
-                                                            10,
-                                                            14
-                                                        ],
-                                                        "$slider_direction": "horizontal",
-                                                        "$slider_name": "#fermenter.temperature_set_ok",
-                                                        "$slider_name|default": "#fermenter.temperature_set_ok",
-                                                        "$slider_step_factory_control_ids": {
-                                                            "slider_step": "@common.slider_step",
-                                                            "slider_step_hover": "@common.slider_step_hover",
-                                                            "slider_step_progress": "@common.slider_step_progress",
-                                                            "slider_step_progress_hover": "@common.slider_step_progress_hover"
-                                                        },
-                                                        "$slider_tts_text_value": "#netease_tts_text_value",
-                                                        "offset": [
-                                                            -3.5,
-                                                            -18
-                                                        ],
-                                                        "size": [
-                                                            113,
-                                                            8
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "temp_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            -35.0,
-                                                            -30.0
-                                                        ],
-                                                        "size": [
-                                                            60.0,
-                                                            12.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_scale_factor": 1.2,
-                                                        "font_type": "default",
-                                                        "text": "酵温 20°C"
-                                                    }
-                                                },
-                                                {
-                                                    "expected_temp_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            25.0,
-                                                            -30.0
-                                                        ],
-                                                        "size": [
-                                                            60.0,
-                                                            12.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_scale_factor": 1.2,
-                                                        "font_type": "default",
-                                                        "text": "控温 20°C",
-                                                        "text_alignment": "right"
-                                                    }
-                                                },
-                                                {
-                                                    "gas_tip": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            93.0,
-                                                            -34.0
-                                                        ],
-                                                        "size": [
-                                                            52.0,
-                                                            12.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_scale_factor": 1.1,
-                                                        "font_type": "default",
-                                                        "text": "产出 - 气体"
-                                                    }
-                                                },
-                                                {
-                                                    "fluid_tip": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            93.0,
-                                                            14.0
-                                                        ],
-                                                        "size": [
-                                                            52.0,
-                                                            12.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_scale_factor": 1.1,
-                                                        "font_type": "default",
-                                                        "text": "产出 - 流体"
-                                                    }
-                                                },
-                                                {
-                                                    "pool_tip": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            -4.5,
-                                                            -2.0
-                                                        ],
-                                                        "size": [
-                                                            121.0,
-                                                            12.0
-                                                        ],
-                                                        "color": [
-                                                            0.2588235294117647,
-                                                            0.2588235294117647,
-                                                            0.2588235294117647
-                                                        ],
-                                                        "font_scale_factor": 1.1,
-                                                        "font_type": "default",
-                                                        "text": "发酵池 （未知状态）"
-                                                    }
-                                                },
-                                                {
-                                                    "lack_blocks_tip": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            -4.0,
-                                                            28.0
-                                                        ],
-                                                        "size": [
-                                                            118.0,
-                                                            45
-                                                        ],
-                                                        "layer": 2,
-                                                        "color": [
-                                                            0.6666666666666666,
-                                                            0.0,
-                                                            0.0
-                                                        ],
-                                                        "font_scale_factor": 2.0,
-                                                        "font_size": "small",
-                                                        "font_type": "default",
-                                                        "text": "§lUndefined data"
-                                                    }
-                                                },
-                                                {
-                                                    "volume_slider@common.slider": {
-                                                        "$background_default_control": "common.slider_background",
-                                                        "$background_hover_control": "common.slider_background_hover",
-                                                        "$progress_default_clip_direction": "up",
-                                                        "$progress_default_control": "common.slider_progress",
-                                                        "$progress_hover_clip_direction": "up",
-                                                        "$progress_hover_control": "common.slider_progress_hover",
-                                                        "$slider_box_hover_layout": "FermenterUI.temperature_slider_btn_img",
-                                                        "$slider_box_indent_layout": "common.slider_button_indent_layout",
-                                                        "$slider_box_layout": "FermenterUI.temperature_slider_btn_img",
-                                                        "$slider_box_locked_layout": "common.slider_button_locked_layout",
-                                                        "$slider_box_size": [
-                                                            16,
-                                                            10
-                                                        ],
-                                                        "$slider_box_size|default": [
-                                                            16,
-                                                            10
-                                                        ],
-                                                        "$slider_direction": "vertical",
-                                                        "$slider_direction|default": "vertical",
-                                                        "$slider_name": "#fermenter.volume_setter",
-                                                        "$slider_name|default": "#fermenter.volume_setter",
-                                                        "$slider_step_factory_control_ids": {
-                                                            "slider_step": "@common.slider_step",
-                                                            "slider_step_hover": "@common.slider_step_hover",
-                                                            "slider_step_progress": "@common.slider_step_progress",
-                                                            "slider_step_progress_hover": "@common.slider_step_progress_hover"
-                                                        },
-                                                        "$slider_steps|default": 8,
-                                                        "$slider_tts_text_value": "#netease_tts_text_value",
-                                                        "offset": [
-                                                            52,
-                                                            27
-                                                        ],
-                                                        "size": [
-                                                            6,
-                                                            48
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "multi_block_structure_check_btn@common.button": {
-                                                        "type": "button",
-                                                        "$control_alpha": 1.0,
-                                                        "$default_texture": "textures/ui/multi_block_structure_check_button",
-                                                        "$hover_texture": "textures/ui/multi_block_structure_check_button",
-                                                        "$is_new_nine_slice": false,
-                                                        "$label_color": [
-                                                            1,
-                                                            1,
-                                                            1
-                                                        ],
-                                                        "$label_font_scale_factor": 1.0,
-                                                        "$label_font_size": "large",
-                                                        "$label_layer": 3,
-                                                        "$label_offset": [
-                                                            0,
-                                                            0
-                                                        ],
-                                                        "$nine_slice_buttom": 0,
-                                                        "$nine_slice_left": 0,
-                                                        "$nine_slice_right": 0,
-                                                        "$nine_slice_top": 0,
-                                                        "$nineslice_size": [
-                                                            0,
-                                                            0,
-                                                            0,
-                                                            0
-                                                        ],
-                                                        "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                                        "$pressed_texture": "textures/ui/multi_block_structure_check_button",
-                                                        "$texture_layer": 2,
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            -48.0,
-                                                            2.0
-                                                        ],
-                                                        "size": [
-                                                            14.0,
-                                                            16.0
-                                                        ],
-                                                        "layer": 5,
-                                                        "button_mappings": [],
-                                                        "default_control": "default",
-                                                        "hover_control": "hover",
-                                                        "is_handle_button_move_event": true,
-                                                        "pressed_control": "pressed",
-                                                        "bindings": [
-                                                            {
-                                                                "binding_type": "collection_details",
-                                                                "binding_collection_name": "",
-                                                                "binding_condition": "always_when_visible"
-                                                            }
-                                                        ],
-                                                        "controls": [
-                                                            {
-                                                                "default@netease_editor_template_namespace.default": {}
-                                                            },
-                                                            {
-                                                                "hover@netease_editor_template_namespace.hover": {}
-                                                            },
-                                                            {
-                                                                "pressed@netease_editor_template_namespace.pressed": {}
-                                                            }
-                                                        ]
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    }
-                                ],
-                                "layer": 0,
-                                "offset": [
-                                    0,
-                                    -45
-                                ],
-                                "size": [
-                                    "100%+80px",
-                                    120
-                                ]
-                            }
-                        }
-                    ],
-                    "layer": 0,
-                    "size": [
-                        180,
-                        200
-                    ]
-                }
-            }
-        ]
-    },
-    "main@common.inventory_screen_common": {
-        "$screen_content": "FermenterUI.fermenter_ui",
-        "button_mappings": [
-            {
-                "from_button_id": "button.menu_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            },
-            {
-                "from_button_id": "button.menu_inventory_cancel",
-                "mapping_type": "global",
-                "to_button_id": "button.menu_exit"
-            }
-        ]
-    },
-    "namespace": "FermenterUI",
     "temperature_slider_btn_img": {
         "type": "image",
         "layer": 1,
         "clip_direction": "left",
         "clip_ratio": 0.0,
         "texture": "textures/ui/left_triangle_slider_button"
-    }
+    },
+    "content": {
+        "type": "panel",
+        "controls": [
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        90
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        90
+                    ]
+                }
+            },
+            {
+                "input_slot": {
+                    "type": "stack_panel",
+                    "offset": [
+                        24,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_in_input_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        24,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "input_slot2": {
+                    "type": "stack_panel",
+                    "offset": [
+                        24,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_in_input_slot2@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        24,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "fermentation_gauge@SkybluePanelLib.progress_icon_bubble": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        53
+                    ]
+                }
+            },
+            {
+                "pool": {
+                    "type": "panel",
+                    "offset": [
+                        46,
+                        17
+                    ],
+                    "size": [
+                        74,
+                        54
+                    ],
+                    "controls": [
+                        {
+                            "fluid_img": {
+                                "type": "image",
+                                "anchor_from": "bottom_middle",
+                                "anchor_to": "bottom_middle",
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/fluid/basic_fluid",
+                                "tiled": true
+                            }
+                        },
+                        {
+                            "frame": {
+                                "type": "image",
+                                "size": [
+                                    "100%+4px",
+                                    "100%+4px"
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "nineslice_size": [
+                                    2.0,
+                                    2.0,
+                                    2.0,
+                                    2.0
+                                ],
+                                "texture": "textures/ui/frame_empty"
+                            }
+                        },
+                        {
+                            "max_volume_bar": {
+                                "type": "image",
+                                "offset": [
+                                    "50%+-4px",
+                                    0.0
+                                ],
+                                "size": [
+                                    8.0,
+                                    2.0
+                                ],
+                                "layer": 1,
+                                "clip_direction": "left",
+                                "clip_ratio": 0.0,
+                                "texture": "textures/ui/red_bar"
+                            }
+                        }
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1
+                }
+            },
+            {
+                "volume_slider@common.slider": {
+                    "$background_default_control": "common.slider_background",
+                    "$background_hover_control": "common.slider_background_hover",
+                    "$progress_default_clip_direction": "up",
+                    "$progress_default_control": "common.slider_progress",
+                    "$progress_hover_clip_direction": "up",
+                    "$progress_hover_control": "common.slider_progress_hover",
+                    "$slider_box_hover_layout": "FermenterUI.temperature_slider_btn_img",
+                    "$slider_box_indent_layout": "common.slider_button_indent_layout",
+                    "$slider_box_layout": "FermenterUI.temperature_slider_btn_img",
+                    "$slider_box_locked_layout": "common.slider_button_locked_layout",
+                    "$slider_box_size": [
+                        16,
+                        10
+                    ],
+                    "$slider_box_size|default": [
+                        16,
+                        10
+                    ],
+                    "$slider_direction": "vertical",
+                    "$slider_direction|default": "vertical",
+                    "$slider_name": "#fermenter.volume_setter",
+                    "$slider_name|default": "#fermenter.volume_setter",
+                    "$slider_step_factory_control_ids": {
+                        "slider_step": "@common.slider_step",
+                        "slider_step_hover": "@common.slider_step_hover",
+                        "slider_step_progress": "@common.slider_step_progress",
+                        "slider_step_progress_hover": "@common.slider_step_progress_hover"
+                    },
+                    "$slider_steps|default": 8,
+                    "$slider_tts_text_value": "#netease_tts_text_value",
+                    "offset": [
+                        123,
+                        17
+                    ],
+                    "size": [
+                        6,
+                        54
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "out_gas_display@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        133,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tout_out_gas_display@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        133,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "out_fluid_display@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        151,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tout_out_fluid_display@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        151,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "pool_tip": {
+                    "type": "label",
+                    "offset": [
+                        24,
+                        75
+                    ],
+                    "size": [
+                        145,
+                        10
+                    ],
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "text": "发酵池 （未知状态）",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "shadow": false
+                }
+            },
+            {
+                "temp_label": {
+                    "type": "label",
+                    "offset": [
+                        24,
+                        93
+                    ],
+                    "size": [
+                        42,
+                        10
+                    ],
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "text": "酵温 20°C",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "shadow": false
+                }
+            },
+            {
+                "slider@common.slider": {
+                    "$background_default_control": "common.slider_background",
+                    "$background_hover_control": "common.slider_background_hover",
+                    "$progress_default_clip_direction": "left",
+                    "$progress_default_control": "common.slider_progress",
+                    "$progress_hover_clip_direction": "left",
+                    "$progress_hover_control": "common.slider_progress_hover",
+                    "$slider_box_hover_layout": "common.slider_button_hover_layout",
+                    "$slider_box_indent_layout": "common.slider_button_indent_layout",
+                    "$slider_box_layout": "common.slider_button_layout",
+                    "$slider_box_locked_layout": "common.slider_button_locked_layout",
+                    "$slider_box_size": [
+                        10,
+                        14
+                    ],
+                    "$slider_direction": "horizontal",
+                    "$slider_name": "#fermenter.temperature_set_ok",
+                    "$slider_name|default": "#fermenter.temperature_set_ok",
+                    "$slider_step_factory_control_ids": {
+                        "slider_step": "@common.slider_step",
+                        "slider_step_hover": "@common.slider_step_hover",
+                        "slider_step_progress": "@common.slider_step_progress",
+                        "slider_step_progress_hover": "@common.slider_step_progress_hover"
+                    },
+                    "$slider_tts_text_value": "#netease_tts_text_value",
+                    "offset": [
+                        68,
+                        94
+                    ],
+                    "size": [
+                        56,
+                        8
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left"
+                }
+            },
+            {
+                "expected_temp_label": {
+                    "type": "label",
+                    "offset": [
+                        128,
+                        93
+                    ],
+                    "size": [
+                        41,
+                        10
+                    ],
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "text": "控温 20°C",
+                    "text_alignment": "right",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "shadow": false
+                }
+            },
+            {
+                "lack_blocks_tip": {
+                    "type": "label",
+                    "offset": [
+                        46,
+                        17
+                    ],
+                    "size": [
+                        74,
+                        54
+                    ],
+                    "layer": 3,
+                    "color": "$title_text_color",
+                    "font_size": "small",
+                    "font_type": "default",
+                    "text": "§lUndefined data",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "shadow": false
+                }
+            },
+            {
+                "multi_block_structure_check_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/multi_block_structure_check_button",
+                    "$hover_texture": "textures/ui/multi_block_structure_check_button",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "%netease_editor_template_namespace.click",
+                    "$pressed_texture": "textures/ui/multi_block_structure_check_button",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        136,
+                        1
+                    ],
+                    "size": [
+                        14,
+                        16
+                    ],
+                    "layer": 5,
+                    "button_mappings": [],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "FermenterUI.content",
+        "$panel_size": [
+            176,
+            202
+        ],
+        "$content_size": [
+            162,
+            90
+        ],
+        "$title_text": "发酵池控制器",
+        "$has_tabs": false,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 2,
+        "$upgrade_slot1": 3,
+        "$upgrade_slot2": 4,
+        "$upgrade_slot3": 5
+    },
+    "namespace": "FermenterUI"
 }

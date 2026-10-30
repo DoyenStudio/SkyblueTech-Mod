@@ -26,6 +26,7 @@ FLAME_PATH = MAIN_PATH / "flame"
 
 @RegistToolDeltaScreen("GasBurningGeneratorUI.main", is_proxy=True)
 class GasBurningGeneratorUI(MachinePanelUIProxyEx):
+    IS_GENERATOR = True
     available_extra_pages = (FluidPipeSettingsPageIndirectional,)
 
     def OnCreate(self):

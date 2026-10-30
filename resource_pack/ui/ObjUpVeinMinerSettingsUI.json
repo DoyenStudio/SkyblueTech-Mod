@@ -28,10 +28,6 @@
             }
         ]
     },
-    "main@common.base_screen": {
-        "$screen_content": "ObjUpVeinMinerSettingsUI.settings_panel"
-    },
-    "namespace": "ObjUpVeinMinerSettingsUI",
     "settings_panel": {
         "type": "panel",
         "size": [
@@ -422,5 +418,17 @@
                 }
             }
         ]
-    }
+    },
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@ObjUpVeinMinerSettingsUI.settings_panel": {}
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "$screen_content": "ObjUpVeinMinerSettingsUI.screen_root"
+    },
+    "namespace": "ObjUpVeinMinerSettingsUI"
 }

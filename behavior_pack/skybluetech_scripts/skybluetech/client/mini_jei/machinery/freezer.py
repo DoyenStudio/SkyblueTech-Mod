@@ -17,12 +17,7 @@ class FreezerRecipeRenderer(MachineRecipeRenderer):
         MachineRecipeRenderer.__init__(self, recipe)
         self.recipe = recipe
 
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        MachineRecipeRenderer.RenderInit(self, panel)
-        panel["fake_btn/item_renderer"].asItemRenderer().SetUiItem(
-            Item(self.recipe.output_item)
-        )
+    # 配方行不画产物选择按钮, 产物显示在输出格里 (同 MEI 配方页)
 
 
 FreezerRecipe.SetRenderer(FreezerRecipeRenderer)

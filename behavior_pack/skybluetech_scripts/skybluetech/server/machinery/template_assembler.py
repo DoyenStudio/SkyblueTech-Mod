@@ -28,7 +28,7 @@ from ...common.machinery_def.template_assembler import (
     recipes as Recipes,
 )
 from ...common.misc.inscribing_template import K_UD_TEMPLATE_GRAPH
-from .basic import MultiFluidContainer, Processor
+from .basic import MultiFluidContainer, Processor, UpgradeControl
 from .core import RegisterMachine
 
 

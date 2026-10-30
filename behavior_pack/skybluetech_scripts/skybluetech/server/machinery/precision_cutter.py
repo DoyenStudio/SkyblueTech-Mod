@@ -13,7 +13,7 @@ from ...common.machinery_def.precision_cutter import (
     recipes as Recipes,
 )
 from ...common.mini_jei.machinery.precision_cutter import PrecisionCutterRecipe
-from .basic import MultiFluidContainer, Processor
+from .basic import MultiFluidContainer, Processor, UpgradeControl
 from .core import RegisterMachine
 
 

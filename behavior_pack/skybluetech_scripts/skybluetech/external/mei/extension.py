@@ -66,6 +66,7 @@ def Build():  # type: () -> type or None
             self.Template = None  # type: any  # 合成样板界面接上 MEI 的记录（crafting_template.Mount），OnUnload 撤
             self.Selectors = None  # type: any  # 几个选物品的界面接上工具模式的记录（selectors.Mount），OnUnload 撤
             self.Workstation = None  # type: any  # 机件加工台接上配方转移的记号（workstation.Mount），OnUnload 撤
+            self.Groups = None  # type: any  # 物品栏分组的记录（groups.Mount），OnUnload 撤
 
         def OnInit(self, ctx):
             bridge.Bind(ctx)
@@ -159,6 +160,10 @@ def Build():  # type: () -> type or None
                 # 免得卸载时把原版自带的工作站也清了
                 category.AddStation(stacks[0], owner=self.ID)
 
+            # 物品栏的分组：一部分并进原版的组（锭、粗矿、镐……），那些组是原版扩展在 OnRegister 里建的，所以也放在这里
+            from . import groups
+            self.Groups = groups.Mount(ctx)
+
         def OnUnload(self, ctx):
             # OnRegister 注册的每一样都要能在这里撤掉，
             # 否则重进世界时会重复提交并被管理器拒绝
@@ -186,6 +191,9 @@ def Build():  # type: () -> type or None
             self.Selectors = None
             workstation.Unmount(ctx, self.Workstation)
             self.Workstation = None
+            from . import groups
+            groups.Unmount(ctx, self.Groups)
+            self.Groups = None
             bridge.Unbind()
 
     return SkyblueTechExtension

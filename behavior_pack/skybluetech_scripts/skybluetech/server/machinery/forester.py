@@ -16,9 +16,8 @@ from .basic import (
 )
 from .core import RegisterMachine
 
-DX = 8
+DXZ = 8
 DY = 32
-DZ = 8
 Y_OFFSET = 2
 DX_EXPANDED = 20
 DY_EXPANDED = 128
@@ -74,11 +73,11 @@ class Forester(UpgradeControl, GUIControl):
             return UpgradeControl.IsValidInput(self, slot, item)
         return True
 
-    def _get_dx(self):
+    def _get_dxz(self):
         # type: () -> int
         if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
             return DX_EXPANDED
-        return DX
+        return DXZ
 
     def _get_dy(self):
         # type: () -> int
@@ -91,15 +90,15 @@ class Forester(UpgradeControl, GUIControl):
         ok = self.collect_tree()
         if not ok:
             return False
-        dx = self._get_dx()
+        dxz = self._get_dxz()
         item_uqids = CF.CreateEntityComponent("").GetEntitiesBySelector("@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
             % (
-                self.x - dx,
+                self.x - dxz,
                 self.y + Y_OFFSET,
-                self.z - dx,
-                dx * 2 + 1,
+                self.z - dxz,
+                dxz * 2 + 1,
                 self._get_dy(),
-                dx * 2 + 1,
+                dxz * 2 + 1,
             ))
         items = []
         for item_uqid in item_uqids:
@@ -125,9 +124,9 @@ class Forester(UpgradeControl, GUIControl):
             self.x,
             self.y + Y_OFFSET,
             self.z,
-            self._get_dx(),
+            self._get_dxz(),
             self._get_dy(),
-            self._get_dx(),
+            self._get_dxz(),
             )
         sapling_id = ForesterUtils.GetSaplingId(main_log_block)
         if len(logs) + len(leaves) < 10:

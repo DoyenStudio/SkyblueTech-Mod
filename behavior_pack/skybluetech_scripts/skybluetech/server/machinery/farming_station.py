@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.internal import GetServer
 
 from skybluetech_scripts.tooldelta.define.item import Item
 
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.farming_station import (
     COMMON_CROP_MAX_GROWTH,
     FRUITLESS_CROPS,
@@ -14,16 +14,17 @@ from ...common.machinery_def.farming_station import (
     isBlockCrop,
     isCommonCrop,
 )
-from .basic import GUIControl, ItemContainer, SPControl
+from .basic import GUIControl, UpgradeControl, BaseSpeedControl
 from .core import RegisterMachine
 
-DX = 2
-DZ = 2
+DXZ = 2
+DXZ_EXPANDED = 8
+DZ_EXPANDED = 8
 Y_OFFSET = 2
 
 
 @RegisterMachine
-class FarmingStation(SPControl, ItemContainer, GUIControl):
+class FarmingStation(UpgradeControl, GUIControl):
     block_name = Machinery.FARMING_STATION
     dump_progress_to_block_entity_data = True
     store_rf_max = STORE_RF_MAX
@@ -31,6 +32,11 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
     origin_process_ticks = 20 * 5
     item_input_slots = ()
     item_output_slots = tuple(range(24))
+    upgrade_slot_start = 24
+    upgrade_slots = 4
+    allow_upgraders = frozenset(
+        [Upgraders.BASIC_ENERGY_UPGRADER, Upgraders.GENERIC_EXPANSION_UPGRADER]
+    )
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(FarmingStation, self).__init__(dim, x, y, z, block_entity_data)
@@ -39,15 +45,24 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
     def _farming_station_on_ticking(self):
         # 1t 内如果处理多次任务会导致卡顿
         # 直接忽略 1t 内任务的多次处理
-        if self.ProcessOnce():
+        if BaseSpeedControl.ProcessOnce(self):
             self.run_once()
 
     def run_once(self):
         ok = self.collect_crops()
         if not ok:
             return False
-        item_uqids = CF.CreateEntityComponent("").GetEntitiesBySelector("@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
-            % (self.x - DX, self.y + Y_OFFSET, self.z - DZ, DX * 2 + 1, 1, DZ * 2 + 1))
+        item_uqids = CF.CreateEntityComponent("").GetEntitiesBySelector(
+            "@e[type=item,x=%d,y=%d,z=%d,dx=%d,dy=%d,dz=%d]"
+            % (
+                self.x - self._get_dxz(),
+                self.y + Y_OFFSET,
+                self.z - self._get_dxz(),
+                self._get_dxz() * 2 + 1,
+                1,
+                self._get_dxz() * 2 + 1,
+            )
+        )
         items = []
         for item_uqid in item_uqids:
             raw_item = CF.CreateItem(LEVEL_ID).GetDroppedItem(item_uqid, True)
@@ -72,13 +87,16 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
         _y = self.y + Y_OFFSET
         _z = self.z
         collected = False
-        for x in range(_x - DX, _x + DX + 1):
-            for z in range(_z - DZ, _z + DZ + 1):
+        for x in range(_x - self._get_dxz(), _x + self._get_dxz() + 1):
+            for z in range(_z - self._get_dxz(), _z + self._get_dxz() + 1):
                 reduce_power = False
-                bname = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
-                    (x, _y, z),
-                    dim,
-                ) or {}).get("name")
+                bname = (
+                    CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
+                        (x, _y, z),
+                        dim,
+                    )
+                    or {}
+                ).get("name")
                 if bname is None:
                     continue
                 bstates = CF.CreateBlockState(LEVEL_ID).GetBlockStates((x, _y, z), dim)
@@ -103,6 +121,12 @@ class FarmingStation(SPControl, ItemContainer, GUIControl):
             output_slot_item.newItemName == expected_output_item_id
             and not output_slot_item.StackFull()
         )
+
+    def _get_dxz(self):
+        # type: () -> int
+        if self.HasUpgrader(Upgraders.GENERIC_EXPANSION_UPGRADER):
+            return DXZ_EXPANDED
+        return DXZ
 
 
 def isRipedCrop(block_name, block_states):

@@ -71,7 +71,9 @@ farming_station = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.FARMING_STATION),
-            '种植站可<text color="§2" t="自动收获并补种">其上方 5x5 范围内耕地上的作物， 你需要把种植站放在耕地泥土方块的下方。\n支持我的世界原版、 棱花农夫乐事以及 MI4C 神秘农业等的作物。',
+            '种植站可<text color="§2" t="自动收获并补种">其上方 5x5 范围内耕地上的作物， 你需要把种植站放在耕地泥土方块的下方。\n支持我的世界原版、 棱花农夫乐事以及 MI4C 神秘农业等的作物。\n\n可使用<item id={expansion_upgrader}>范围扩增升级模块扩展自动收割的面积。'.format(
+                expansion_upgrader=id_enum.Upgraders.GENERIC_EXPANSION_UPGRADER
+            ),
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.FARMING_STATION),
     ],

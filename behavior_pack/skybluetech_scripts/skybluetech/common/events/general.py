@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.basic import ClientEvent, ServerEvent
+from skybluetech_scripts.skybluetech.common import MOD_VERSION
 
 
 class SkyblueTechClientLoaded(ClientEvent):
@@ -17,15 +18,16 @@ class SkyblueTechClientLoaded(ClientEvent):
 
         return GetModClientEngineName()
 
-    def __init__(self):
-        pass
+    def __init__(self, mod_version=MOD_VERSION):
+        self.MOD_VERSION = mod_version
 
     def marshal(self):
-        return {}
+        return {"MOD_VERSION": self.MOD_VERSION}
 
     @classmethod
-    def unmarshal(cls, _):
-        return cls()
+    def unmarshal(cls, data):
+        return cls(data["MOD_VERSION"])
+
 
 class SkyblueTechServerLoaded(ServerEvent):
     name = "SkyblueTechServerLoaded"
@@ -42,12 +44,12 @@ class SkyblueTechServerLoaded(ServerEvent):
 
         return GetModServerEngineName()
 
-    def __init__(self):
-        pass
+    def __init__(self, mod_version=MOD_VERSION):
+        self.MOD_VERSION = mod_version
 
     def marshal(self):
-        return {}
+        return {"MOD_VERSION": self.MOD_VERSION}
 
     @classmethod
-    def unmarshal(cls, _):
-        return cls()
+    def unmarshal(cls, data):
+        return cls(data["MOD_VERSION"])

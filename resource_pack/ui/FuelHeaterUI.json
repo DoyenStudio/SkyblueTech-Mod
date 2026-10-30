@@ -2,8 +2,8 @@
     "fuel_heater_ui": {
         "type": "panel",
         "size": [
-            180.0,
-            200.0
+            0.0,
+            0.0
         ],
         "controls": [
             {
@@ -70,11 +70,15 @@
                                                     }
                                                 },
                                                 {
-                                                    "flame@SkybluePanelLib.Flame": {
+                                                    "flame@SkybluePanelLib.burn_flame": {
                                                         "layer": 3,
                                                         "offset": [
                                                             0,
                                                             -19
+                                                        ],
+                                                        "size": [
+                                                            20,
+                                                            20
                                                         ]
                                                     }
                                                 },
@@ -88,12 +92,32 @@
                                                     }
                                                 },
                                                 {
-                                                    "temperature@SkybluePanelLib.temperature_bar": {
+                                                    "temperature@SkybluePanelLib.gauge_v": {
+                                                        "$gauge_fill": "textures/ui/skybluetech/gauge/fill_heat_v",
                                                         "layer": 0,
                                                         "offset": [
                                                             -72,
                                                             -40
+                                                        ],
+                                                        "size": [
+                                                            14,
+                                                            80
                                                         ]
+                                                    }
+                                                },
+                                                {
+                                                    "temperature_label": {
+                                                        "type": "label",
+                                                        "offset": [
+                                                            -72,
+                                                            7
+                                                        ],
+                                                        "layer": 1,
+                                                        "font_scale_factor": 1.2,
+                                                        "font_type": "unicode",
+                                                        "shadow": true,
+                                                        "text": "-- K",
+                                                        "text_alignment": "center"
                                                     }
                                                 }
                                             ]

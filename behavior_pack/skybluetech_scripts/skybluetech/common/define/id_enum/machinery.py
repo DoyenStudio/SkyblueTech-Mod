@@ -30,6 +30,7 @@ class Machinery(SimpleEnum):
     FLUID_SPLITTER = "skybluetech:fluid_splitter"
     FORESTER = "skybluetech:forester"
     FREEZER = "skybluetech:freezer"
+    FUEL_HEATER = "skybluetech:fuel_heater"
     GAS_BURNING_GENERATOR = "skybluetech:gas_burning_generator"
     GEO_THERMAL_GENERATOR = "skybluetech:geothermal_generator"
     HEAVY_COMPRESSOR = "skybluetech:heavy_compressor"

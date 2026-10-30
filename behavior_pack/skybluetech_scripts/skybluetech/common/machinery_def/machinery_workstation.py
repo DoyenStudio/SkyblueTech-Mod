@@ -374,6 +374,22 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # fuel heater
+    MRecipe(
+        {
+            1: Input("minecraft:furnace"),
+            3: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            4: Input(id_enum.REDSTONEFLUX_CORE),
+            5: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            6: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            7: Input("minecraft:copper_ingot"),
+            8: Input(tag_enum.PlateTag.TIN, is_tag=True),
+        },
+        id_enum.Machinery.FUEL_HEATER,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # gas burning generator
     MRecipe(
         {

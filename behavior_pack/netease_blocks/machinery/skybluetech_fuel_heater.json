@@ -1,0 +1,197 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "minecraft:geometry": {
+                "identifier": "minecraft:geometry.full_block"
+            },
+            "netease:block_container": {
+                "container_size": 1,
+                "custom_description": "燃料加热机",
+                "hopper": {
+                    "input": true,
+                    "input_slot": [
+                        {
+                            "face": 1,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 2,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 3,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 4,
+                            "slot": [
+                                0
+                            ]
+                        },
+                        {
+                            "face": 5,
+                            "slot": [
+                                0
+                            ]
+                        }
+                    ],
+                    "output": false
+                },
+                "screen_name": "FuelHeaterUI.main"
+            },
+            "netease:block_entity": {
+                "client_tick": false,
+                "movable": false,
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7燃烧§f燃料§7直接产生热能， 从 4 个面的§f铜盘§7输出热量。\n相比燃料发电再通过电力加热仓供热， 效率§f高得多§7。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_machine": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:fuel_heater",
+            "states": {
+                "skybluetech:active": [
+                    false,
+                    true
+                ]
+            },
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "permutations": [
+            {
+                "components": {
+                    "minecraft:light_emission": 15,
+                    "minecraft:material_instances": {
+                        "down": {
+                            "texture": "skybluetech:generator_frame_bottom"
+                        },
+                        "east": {
+                            "texture": "skybluetech:fuel_heater_side"
+                        },
+                        "north": {
+                            "texture": "skybluetech:fuel_heater_front_active"
+                        },
+                        "south": {
+                            "texture": "skybluetech:fuel_heater_side_2"
+                        },
+                        "up": {
+                            "texture": "skybluetech:fuel_heater_top"
+                        },
+                        "west": {
+                            "texture": "skybluetech:fuel_heater_side"
+                        }
+                    }
+                },
+                "condition": "q.block_state('skybluetech:active')"
+            },
+            {
+                "components": {
+                    "minecraft:light_emission": 0,
+                    "minecraft:material_instances": {
+                        "down": {
+                            "texture": "skybluetech:generator_frame_bottom"
+                        },
+                        "east": {
+                            "texture": "skybluetech:fuel_heater_side"
+                        },
+                        "north": {
+                            "texture": "skybluetech:fuel_heater_front"
+                        },
+                        "south": {
+                            "texture": "skybluetech:fuel_heater_side_2"
+                        },
+                        "up": {
+                            "texture": "skybluetech:fuel_heater_top"
+                        },
+                        "west": {
+                            "texture": "skybluetech:fuel_heater_side"
+                        }
+                    }
+                },
+                "condition": "!q.block_state('skybluetech:active')"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'"
+            }
+        ]
+    }
+}

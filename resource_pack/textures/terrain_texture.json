@@ -522,6 +522,21 @@
         "skybluetech:freezer_front_active": {
             "textures": "textures/blocks/machinery/freezer_front_active"
         },
+        "skybluetech:fuel_heater_front": {
+            "textures": "textures/blocks/machinery/fuel_heater_front"
+        },
+        "skybluetech:fuel_heater_front_active": {
+            "textures": "textures/blocks/machinery/flipbook_textures/fuel_heater_front_active"
+        },
+        "skybluetech:fuel_heater_side": {
+            "textures": "textures/blocks/machinery/fuel_heater_side"
+        },
+        "skybluetech:fuel_heater_side_2": {
+            "textures": "textures/blocks/machinery/fuel_heater_side_2"
+        },
+        "skybluetech:fuel_heater_top": {
+            "textures": "textures/blocks/machinery/fuel_heater_top"
+        },
         "skybluetech:gas_static": {
             "textures": "textures/fluid/gas_static"
         },

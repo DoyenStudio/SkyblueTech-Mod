@@ -27,6 +27,7 @@
         "ui/FluidSplitterUI.json",
         "ui/ForesterUI.json",
         "ui/FreezerUI.json",
+        "ui/FuelHeaterUI.json",
         "ui/GasBurningGeneratorUI.json",
         "ui/GeneralTankUI.json",
         "ui/GeoThermalGeneratorUI.json",

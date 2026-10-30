@@ -577,6 +577,17 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:fuel_heater": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:generator_frame_bottom",
+            "east": "skybluetech:fuel_heater_side",
+            "north": "skybluetech:fuel_heater_front",
+            "south": "skybluetech:fuel_heater_side_2",
+            "up": "skybluetech:fuel_heater_top",
+            "west": "skybluetech:fuel_heater_side"
+        }
+    },
     "skybluetech:gas_burning_generator": {
         "sound": "iron"
     },

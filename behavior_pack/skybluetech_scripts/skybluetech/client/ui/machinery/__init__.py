@@ -22,6 +22,7 @@ from .fluid_output_interface import FluidOutputInterfaceUI
 from .fluid_splitter import FluidSplitterUI
 from .forester import ForesterUI
 from .freezer import FreezerUI
+from .fuel_heater import FuelHeaterUI
 from .gas_burning_generator import GasBurningGeneratorUI
 from .general_tank import GeneralTankUI
 from .geothermal_generator import GeoThermalGeneratorUI

@@ -24,6 +24,7 @@ from .feeding_trough import FeedingTrough
 from .fermenter import Fermenter
 from .forester import Forester
 from .freezer import Freezer
+from .fuel_heater import FuelHeater
 from .fluid_splitter import FluidSplitter
 from .gas_burning_generator import GasBurningGenerator
 from .geothermal_generator import GeoThermalGenerator

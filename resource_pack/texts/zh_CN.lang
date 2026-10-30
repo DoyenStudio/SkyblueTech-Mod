@@ -250,6 +250,7 @@ tile.skybluetech:fluid_condenser.name=流体冷却机
 tile.skybluetech:fluid_splitter.name=分流器
 tile.skybluetech:forester.name=伐木机
 tile.skybluetech:freezer.name=冷冻机
+tile.skybluetech:fuel_heater.name=燃料加热机
 tile.skybluetech:geothermal_generator.name=地热发电机
 tile.skybluetech:heavy_compressor.name=重压机
 tile.skybluetech:heavy_lava.name=重熔岩

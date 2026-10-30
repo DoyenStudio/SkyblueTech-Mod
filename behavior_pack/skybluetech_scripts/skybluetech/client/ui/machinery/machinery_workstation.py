@@ -148,7 +148,7 @@ class MachineryWorkstationUI(MachinePanelUIProxy):
         self.recipe_refresh_ticks += 1
         if self.recipe_refresh_ticks % RECIPE_REFRESH_INTERVAL == 0:
             self.refresh_visible_recipes()
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if data is None:
             return
         data = data["exData"]

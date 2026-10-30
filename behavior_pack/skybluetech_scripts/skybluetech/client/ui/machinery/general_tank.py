@@ -24,7 +24,7 @@ class GeneralTankUI(MachinePanelUIProxyEx):
         block_id = (CF.CreateBlockInfo(LEVEL_ID).GetBlock(self.pos[1:]) or (None, 0))[0]
         if not block_id:
             return
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if data is None:
             return
         data = data["exData"]

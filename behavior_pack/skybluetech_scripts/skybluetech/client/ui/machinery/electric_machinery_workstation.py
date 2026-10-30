@@ -68,7 +68,7 @@ class ElectricMachineryWorkstationUI(MachinePanelUIProxyEx):
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(), recipes
         )
         # 开界面时先取一次方块实体数据, 让首帧渲染就有正确状态
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if data is not None:
             self.selected_recipe_id = GetValue(
                 data["exData"], K_SELECTED_RECIPE, None
@@ -77,7 +77,7 @@ class ElectricMachineryWorkstationUI(MachinePanelUIProxyEx):
         self.update_recipe_preview()
 
     def OnTicking(self):
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if data is None:
             return
         data = data["exData"]

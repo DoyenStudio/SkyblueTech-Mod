@@ -38,7 +38,7 @@ class FuelHeaterUI(MachinePanelUIProxyEx):
         self.flame = self.GetElement(FLAME_PATH)
 
     def OnTicking(self):
-        block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        block_data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if block_data is None:
             return
         data = block_data.get("exData")

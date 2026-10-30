@@ -100,7 +100,7 @@ class FermenterUI(MachinePanelUIProxy):
         self.output_fluid_displayer = FluidDisplayer(self.output_fluid_display)
 
     def OnTicking(self):
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if data is None:
             return
         data = data["exData"]

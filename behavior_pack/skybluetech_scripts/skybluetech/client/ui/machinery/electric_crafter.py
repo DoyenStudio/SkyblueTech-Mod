@@ -34,7 +34,7 @@ class ElectricCrafterUI(MachinePanelUIProxyEx):
         self.preview_id_auxes = [None] * PREVIEW_SLOT_COUNT  # type: list[int | None]
         self._preview_raw = None  # type: str | None
         # 开界面时先取一次方块实体数据, 让首帧渲染就有正确状态
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         self.update_recipe_preview(
             GetValue(data["exData"], K_RECIPE_PREVIEW, None)
             if data is not None
@@ -42,7 +42,7 @@ class ElectricCrafterUI(MachinePanelUIProxyEx):
         )
 
     def OnTicking(self):
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if data is None:
             return
         data = data["exData"]

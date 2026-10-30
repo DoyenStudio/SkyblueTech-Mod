@@ -63,7 +63,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
             self.kelvin_limit_input.SetText("")
 
     def OnTicking(self):
-        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(tuple(self.pos[1:]))
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
         if data is None:
             return
         data = data["exData"]

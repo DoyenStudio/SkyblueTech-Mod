@@ -17,12 +17,10 @@
                 "skybluetech:compressor",
                 "skybluetech:distillation_chamber",
                 "skybluetech:electric_crafter",
-                "skybluetech:electric_heater",
                 "skybluetech:electrolyzer",
                 "skybluetech:engraver",
                 "skybluetech:fluid_condenser",
                 "skybluetech:freezer",
-                "skybluetech:fuel_heater",
                 "skybluetech:heavy_compressor",
                 "skybluetech:hydroponic_base",
                 "skybluetech:hydroponic_bed",
@@ -84,6 +82,14 @@
                 "skybluetech:solar_panel",
                 "skybluetech:thermal_generator",
                 "skybluetech:wind_generator"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.machinery_thermal",
+            "icon": "skybluetech:electric_heater",
+            "list": [
+                "skybluetech:electric_heater",
+                "skybluetech:fuel_heater"
             ]
         },
         {

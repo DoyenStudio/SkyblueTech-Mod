@@ -4,7 +4,7 @@
         "components": {
             "minecraft:max_stack_size": 1,
             "netease:customtips": {
-                "value": "\n§8§o图书馆典藏！ 真的吗？"
+                "value": "\n§r§7下蹲时使用书可打开 MiniJEI 页面了！\n§8§o图书馆典藏！ 真的吗？"
             }
         },
         "description": {

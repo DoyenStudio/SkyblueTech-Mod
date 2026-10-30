@@ -4,56 +4,6 @@
         1,
         0
     ],
-    "skybluetech:dilute_brine": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:baked_dilute_brine_static",
-            "side": "skybluetech:baked_dilute_brine_flowing",
-            "up": "skybluetech:baked_dilute_brine_static"
-        }
-    },
-    "skybluetech:flowing_dilute_brine": {
-        "blockshape": "water",
-        "textures": {
-            "down": "skybluetech:baked_dilute_brine_static",
-            "side": "skybluetech:baked_dilute_brine_flowing",
-            "up": "skybluetech:baked_dilute_brine_flowing"
-        }
-    },
-    "skybluetech:seawater_pump": {
-        "textures": {
-            "down": "skybluetech:seawater_pump_bottom",
-            "side": "skybluetech:seawater_pump_side",
-            "up": "skybluetech:seawater_pump_top"
-        }
-    },
-    "skybluetech:seawater_pump_io_energy": {
-        "textures": {
-            "down": "skybluetech:stonebrick",
-            "side": "skybluetech:stonebrick",
-            "up": "skybluetech:seawater_pump_io_energy"
-        }
-    },
-    "skybluetech:brine_evaporation_pond_controller": {
-        "client_entity": {},
-        "textures": {
-            "down": "skybluetech:brick",
-            "east": "skybluetech:brick",
-            "north": "skybluetech:brine_evaporation_pond_controller_front",
-            "south": "skybluetech:brick",
-            "up": "skybluetech:brick",
-            "west": "skybluetech:brick"
-        }
-    },
-    "skybluetech:brine_evaporation_pond_io_fluid1": {
-        "textures": "skybluetech:brine_evaporation_pond_io_fluid1"
-    },
-    "skybluetech:brine_evaporation_pond_io_fluid2": {
-        "textures": "skybluetech:brine_evaporation_pond_io_fluid2"
-    },
-    "skybluetech:brine_evaporation_pond_io_heat": {
-        "textures": "skybluetech:brine_evaporation_pond_io_heat"
-    },
     "skybluetech:air_compressor": {
         "sound": "iron"
     },
@@ -130,6 +80,26 @@
             "side": "skybluetech:baked_brine_flowing",
             "up": "skybluetech:baked_brine_static"
         }
+    },
+    "skybluetech:brine_evaporation_pond_controller": {
+        "client_entity": {},
+        "textures": {
+            "down": "skybluetech:brick",
+            "east": "skybluetech:brick",
+            "north": "skybluetech:brine_evaporation_pond_controller_front",
+            "south": "skybluetech:brick",
+            "up": "skybluetech:brick",
+            "west": "skybluetech:brick"
+        }
+    },
+    "skybluetech:brine_evaporation_pond_io_fluid1": {
+        "textures": "skybluetech:brine_evaporation_pond_io_fluid1"
+    },
+    "skybluetech:brine_evaporation_pond_io_fluid2": {
+        "textures": "skybluetech:brine_evaporation_pond_io_fluid2"
+    },
+    "skybluetech:brine_evaporation_pond_io_heat": {
+        "textures": "skybluetech:brine_evaporation_pond_io_heat"
     },
     "skybluetech:bronze_block": {
         "sound": "copper",
@@ -208,6 +178,14 @@
         },
         "sound": "iron"
     },
+    "skybluetech:dilute_brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_dilute_brine_static",
+            "side": "skybluetech:baked_dilute_brine_flowing",
+            "up": "skybluetech:baked_dilute_brine_static"
+        }
+    },
     "skybluetech:distillation_chamber": {
         "sound": "glass"
     },
@@ -231,6 +209,20 @@
             "south": "skybluetech:electric_crafter_front",
             "up": "skybluetech:electric_crafter_top",
             "west": "skybluetech:electric_crafter_side"
+        }
+    },
+    "skybluetech:electric_machinery_workstation": {
+        "sound": "iron"
+    },
+    "skybluetech:electrolyzer": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:electrolyzer_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
         }
     },
     "skybluetech:engraver": {
@@ -313,6 +305,14 @@
             "down": "skybluetech:baked_deepslate_lava_flowing_block_static",
             "side": "skybluetech:baked_deepslate_lava_flowing_block_flowing",
             "up": "skybluetech:baked_deepslate_lava_flowing_block_static"
+        }
+    },
+    "skybluetech:flowing_dilute_brine": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_dilute_brine_static",
+            "side": "skybluetech:baked_dilute_brine_flowing",
+            "up": "skybluetech:baked_dilute_brine_flowing"
         }
     },
     "skybluetech:flowing_distilled_water": {
@@ -711,17 +711,6 @@
             "up": "skybluetech:baked_lubricant_static"
         }
     },
-    "skybluetech:electrolyzer": {
-        "sound": "iron",
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:electrolyzer_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_top",
-            "west": "skybluetech:frame"
-        }
-    },
     "skybluetech:macerator": {
         "sound": "iron",
         "textures": {
@@ -740,7 +729,6 @@
             "up": "skybluetech:frame_top"
         }
     },
-    "skybluetech:electric_machinery_workstation": {"sound": "iron"},
     "skybluetech:machinery_workstation": {
         "sound": "iron"
     },
@@ -1061,6 +1049,20 @@
             "west": "skybluetech:sawmill_side_b"
         }
     },
+    "skybluetech:seawater_pump": {
+        "textures": {
+            "down": "skybluetech:seawater_pump_bottom",
+            "side": "skybluetech:seawater_pump_side",
+            "up": "skybluetech:seawater_pump_top"
+        }
+    },
+    "skybluetech:seawater_pump_io_energy": {
+        "textures": {
+            "down": "skybluetech:stonebrick",
+            "side": "skybluetech:stonebrick",
+            "up": "skybluetech:seawater_pump_io_energy"
+        }
+    },
     "skybluetech:silver_block": {
         "textures": "skybluetech:silver_block"
     },
@@ -1129,6 +1131,10 @@
         "sound": "glass"
     },
     "skybluetech:template_assembler": {
+        "sound": "iron"
+    },
+    "skybluetech:tesla_plant": {
+        "client_entity": {},
         "sound": "iron"
     },
     "skybluetech:thermal_generator": {
@@ -1208,10 +1214,6 @@
     "skybluetech:water_vapor": {
         "blockshape": "water",
         "textures": "skybluetech:baked_water_vapor_static"
-    },
-    "skybluetech:tesla_plant": {
-        "client_entity": {},
-        "sound": "iron"
     },
     "skybluetech:wind_generator": {
         "client_entity": {},

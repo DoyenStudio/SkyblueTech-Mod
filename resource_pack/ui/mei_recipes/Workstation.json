@@ -83,7 +83,8 @@
                         },
                         {
                             "buttons@mei_recipe_common.buttons_panel_vertical": {
-                                "$tree_button_ignored": false
+                                "$tree_button_ignored": false,
+                                "$plus_button_ignored": false
                             }
                         }
                     ]

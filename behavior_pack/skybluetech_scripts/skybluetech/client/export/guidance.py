@@ -21,7 +21,7 @@ def AddAddition(entry):
             return
         page.AddSection(
             pages_define.MainTOCPageSection(
-                "minecraft:bundle", 0, "附属模组", additions_toc
+                "minecraft:bundle", 0, "联动&附属", additions_toc
             )
         )
         group = page.GetGroup()
@@ -39,7 +39,7 @@ additions_toc = pages_define.PageGroup(
     "additions_toc",
     [
         pages_define.TextPage(
-            "附属模组列表", "在本页面查看《蔚蓝科技》所有附属的教程。"
+            "联动&附属模组列表", "在本页面查看《蔚蓝科技》所有附属的教程。"
         ),
         addition_sections,
     ],

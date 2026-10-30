@@ -9,7 +9,7 @@ main_pages = PageGroup(
     "main",
     [
         TextPage(
-            "蔚蓝科技",
+            "蔚蓝科技 N.E.X.T. 实验版",
             '蔚蓝空域精英计划¹；\n红石能专业必修教材²；\n红石能电路基础³\n\n本书将带您走进复杂、 高度自由的蔚蓝科技®红石能<item id="%s">世界， 教导您从如何使用<style color="§c">红石能<style color="R">到设计出复杂的工业生产线。\n\n加入玩家QQ群 <text color="§d" t="532685971"> 以获取视频攻略和最新更新消息！'
             % id_enum.REDSTONEFLUX_CORE,
         ),

@@ -1,12 +1,16 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.client.ui.recipe_checker import CheckRecipe
 from skybluetech_scripts.skybluetech.common.define import id_enum
+from skybluetech_scripts.skybluetech.common.machinery_def.brine_evaporation_pond import (
+    STRUCTURE_PALETTE as BRINE_EVAPORATION_POND_SP,
+)
 from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import (
     STRUCTURE_PALETTE as VACUUM_FREEZER_SP,
 )
 
 from ...define import (
     MachineryWorkstationRecipePage,
+    MultiBlockStructureModelPage,
     MultiBlockStructureRenderPage,
     PageGroup,
     TextPage,
@@ -22,6 +26,20 @@ alloy_furnace = PageGroup(
             % ("minecraft:iron_ingot", id_enum.Dusts.CARBON, id_enum.Ingots.STEEL),
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.ALLOY_FURNACE),
+    ],
+)
+
+
+brine_evaporation_pond = PageGroup(
+    "brine_evaporation_pond_description",
+    [
+        TextPage(
+            "卤水池",
+            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n<text color="§9" t="卤水池">多方块结构是海水化工中的核心设施之一， 可以使用热能浓缩盐水。\n\n在受热口放置热源， 即可浓缩输入的<text color="§3" t="淡盐水">。',
+        ),
+        MultiBlockStructureModelPage(
+            id_enum.BrineEvaporationPond.CONTROLLER, BRINE_EVAPORATION_POND_SP
+        ),
     ],
 )
 
@@ -44,7 +62,11 @@ distillation_chamber = PageGroup(
         TextPage(
             UnfinishedItemName(id_enum.Machinery.DISTILLATION_CHAMBER),
             '小型蒸馏仓可以使用<text color="§c" t="热能">对其中的流体进行<text color="§9" t="蒸馏">， 如生产饮用水和部分油类液体等。\n它的下方需要一个<text color="§4" t="热源">为其供热， 如<link text="电力加热仓" id="electric_heater">。',
-            hyperlink_cbs={"electric_heater": lambda _: electric_heater.FastJump()},
+            hyperlink_cbs={
+                "electric_heater": lambda _: (
+                    _get_machinery_thermal_module().electric_heater.FastJump()
+                )
+            },
         ),
         TextPage(
             "",
@@ -71,14 +93,19 @@ electric_crafter = PageGroup(
     ],
 )
 
-electric_heater = PageGroup(
-    "electric_heater_description",
+
+fuel_heater = PageGroup(
+    "fuel_heater_description",
     [
         TextPage(
-            UnfinishedItemName(id_enum.Machinery.ELECTRIC_HEATER),
-            '通电后可按照设置的温度向上前后左右五个铜盘面输出<text color="§c" t="热能">， 供一些需热机器使用。\n\n适当调节输入功率和最大温度可以让其达到合适的产热温度。',
+            UnfinishedItemName(id_enum.Machinery.FUEL_HEATER),
+            '燃料加热机消耗燃料直接产生<text color="§c" t="热能">， 无需接入电力。\n可用燃料与火力发电机相同， <text color="§4" t="不能使用熔岩桶">。\n\n同等燃料的理论产热量是先经火力发电机发电、 再由电力加热仓转为热量的<text color="§9" t="400%">， 当前产热速率为每 tick 20 热值。',
         ),
-        MachineryWorkstationRecipePage(id_enum.Machinery.ELECTRIC_HEATER),
+        TextPage(
+            "供热与温度",
+            '燃料加热机最高加热至<text color="§c" t="900K">， 向相邻热机或受热口传递热量， 并按通常规则与环境换热。\n\n达到温度上限时暂停燃烧与添料， 降温后继续供热。接近上限的单次加热会舍弃超出目标温度的热量， 实际输出还会受到散热和用热负载影响。\n\n主界面的温度条范围为<text color="§9" t="300K 至 900K">， 火焰显示当前燃料的剩余燃烧比例。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.FUEL_HEATER),
     ],
 )
 
@@ -251,7 +278,15 @@ vacuum_freezer = PageGroup(
                 ice="minecraft:ice",
             ),
         ),
-        MultiBlockStructureRenderPage(id_enum.VacuumFreezer.CONTROLLER, VACUUM_FREEZER_SP),
+        MultiBlockStructureRenderPage(
+            id_enum.VacuumFreezer.CONTROLLER, VACUUM_FREEZER_SP
+        ),
         MachineryWorkstationRecipePage(id_enum.Machinery.VACUUM_FREEZER),
     ],
 )
+
+
+def _get_machinery_thermal_module():
+    from . import machinery_thermal
+
+    return machinery_thermal

@@ -81,7 +81,7 @@ forester = PageGroup(
     "forester_description",
     [
         TextPage(
-            UnfinishedItemName(id_enum.Machinery.FORESTER),  
+            UnfinishedItemName(id_enum.Machinery.FORESTER),
             '伐木机可以<text color="§2" t="自动砍伐">上方 17x17 范围内的树木且<text color="§2" t="自动补种树苗">。兼容绝大部分模组的树木。\n\n你可以在伐木机上方 5x1x5 的范围内填满泥土后再往上一格种满树苗， 然后给伐木机通电以等待收成。\n\n如果安装了<text color="§5" t="强化： 范围扩增">， 砍伐范围会迅速提升至 41x41！',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.FORESTER),
@@ -119,7 +119,7 @@ seawater_reservoir = PageGroup(
     [
         TextPage(
             "海水蓄水池",
-            '抽取盐水！ <item id="{seawater_pump}">海水泵可以从<text color="§9" t="海水蓄水池">中抽取淡盐水。\n\n把蓄水池建到<text color="§9" t="宽阔海域的水底">！ 若建在水量不足的淡水区域， 海水泵将难以抽取盐水。 抽取速度与蓄水池所在水域盐水浓度有关； 海水泵界面上<img path="textures/ui/white_background" rgba=#B0B000 alpha=0.5 size_x=2 size_y=12>是抽取盐水所需最低海水浓度；浓度达到<img path="textures/ui/white_background" rgba=#00B000 alpha=0.5 size_x=2 size_y=12>时抽取速率最高。'.format(
+            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n抽取盐水！ <item id="{seawater_pump}">海水泵可以从<text color="§9" t="海水蓄水池">中抽取淡盐水。\n\n把蓄水池建到<text color="§9" t="宽阔海域的水底">！ 若建在水量不足的淡水区域， 海水泵将难以抽取盐水。 抽取速度与蓄水池所在水域盐水浓度有关； 海水泵界面上<img path="textures/ui/white_background" rgba=#B0B000 alpha=0.5 size_x=2 size_y=12>是抽取盐水所需最低海水浓度；浓度达到<img path="textures/ui/white_background" rgba=#00B000 alpha=0.5 size_x=2 size_y=12>时抽取速率最高。'.format(
                 seawater_pump=id_enum.Machinery.SEAWATER_PUMP
             ),
         ),

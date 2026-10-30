@@ -17,6 +17,7 @@ from . import (
     machinery_misc,
     machinery_production,
     machinery_source_extraction,
+    machinery_thermal,
 )
 
 machinery_production_toc = PageGroup(
@@ -53,10 +54,10 @@ machinery_production_toc = PageGroup(
                     machinery_production.electric_crafter,
                 ),
                 TOCPageSection(
-                    id_enum.Machinery.ELECTRIC_HEATER,
+                    id_enum.Machinery.FUEL_HEATER,
                     0,
                     None,
-                    machinery_production.electric_heater,
+                    machinery_production.fuel_heater,
                 ),
                 TOCPageSection(
                     id_enum.Machinery.ENGRAVER,
@@ -76,17 +77,17 @@ machinery_production_toc = PageGroup(
                     None,
                     machinery_production.freezer,
                 ),
+            ],
+            identifier="machinery_production_toc_1",
+        ),
+        TOCPage(
+            [
                 TOCPageSection(
                     id_enum.Machinery.HYDROPONIC_BASE,
                     0,
                     None,
                     machinery_production.hydroponic_base,
                 ),
-            ],
-            identifier="machinery_production_toc_1",
-        ),
-        TOCPage(
-            [
                 TOCPageSection(
                     id_enum.Machinery.HYDROPONIC_BED,
                     0,
@@ -135,22 +136,28 @@ machinery_production_toc = PageGroup(
                     None,
                     machinery_production.oil_extractor,
                 ),
-                TOCPageSection(
-                    id_enum.Machinery.REDSTONE_FURNACE,
-                    0,
-                    None,
-                    machinery_production.redstone_furnace,
-                ),
             ],
             identifier="machinery_production_toc_2",
         ),
         TOCPage(
             [
                 TOCPageSection(
+                    id_enum.Machinery.REDSTONE_FURNACE,
+                    0,
+                    None,
+                    machinery_production.redstone_furnace,
+                ),
+                TOCPageSection(
                     id_enum.Machinery.VACUUM_FREEZER,
                     0,
                     "真空冷却仓",
                     machinery_production.vacuum_freezer,
+                ),
+                TOCPageSection(
+                    id_enum.Machinery.BRINE_EVAPORATION_POND_CONTROLLER,
+                    0,
+                    "卤水池§c[实验性]",
+                    machinery_production.brine_evaporation_pond,
                 ),
             ],
             identifier="machinery_production_toc_3",
@@ -212,16 +219,17 @@ machinery_source_extraction_toc = PageGroup(
                 TOCPageSection(
                     id_enum.Machinery.SEAWATER_PUMP,
                     0,
-                    "海水蓄水池",
+                    "海水蓄水池§c[实验性]",
                     machinery_source_extraction.seawater_reservoir,
                 ),
             ],
+            identifier="machinery_source_extraction_toc",
         ),
     ],
 )
 
 machinery_generator_toc = PageGroup(
-    "machinery_generator_toc_1",
+    "machinery_generator_toc",
     [
         TextPage(
             "机器-发电设备",
@@ -272,6 +280,7 @@ machinery_generator_toc = PageGroup(
                     machinery_generator.wind_generator,
                 ),
             ],
+            identifier="machinery_generator_toc",
         ),
     ],
 )
@@ -310,6 +319,34 @@ machinery_energy_toc = PageGroup(
                     machinery_energy.rf_repeater_plant,
                 ),
             ],
+            identifier="machinery_energy_toc",
+        ),
+    ],
+)
+
+machinery_thermal_toc = PageGroup(
+    "machinery_thermal_toc",
+    [
+        TextPage(
+            "机器-热能",
+            "本章展示各种热能相关机器， 它们产热、 导热或对热能进行各种处理。",
+        ),
+        TOCPage(
+            [
+                TOCPageSection(
+                    id_enum.Machinery.ELECTRIC_HEATER,
+                    0,
+                    None,
+                    machinery_thermal.electric_heater,
+                ),
+                TOCPageSection(
+                    id_enum.Machinery.FUEL_HEATER,
+                    0,
+                    None,
+                    machinery_thermal.fuel_heater,
+                ),
+            ],
+            identifier="machinery_thermal_toc",
         ),
     ],
 )
@@ -319,7 +356,7 @@ machinery_misc_toc = PageGroup(
     [
         TextPage(
             "机器-杂项",
-            "本章展示主各种分组以外的设备。",
+            "本章展示各种主分组以外的设备。",
         ),
         TOCPage(
             [
@@ -342,6 +379,7 @@ machinery_misc_toc = PageGroup(
                     machinery_misc.lexical_transmuter,
                 ),
             ],
+            identifier="machinery_misc_toc",
         ),
     ],
 )
@@ -374,6 +412,7 @@ machinery_crafting_toc = PageGroup(
                     machinery_crafting.electric_machinery_workstation,
                 ),
             ],
+            identifier="machinery_crafting_toc",
         ),
     ],
 )
@@ -406,6 +445,7 @@ machinery_logistics_toc = PageGroup(
                     machinery_logistics.item_spreader,
                 ),
             ],
+            identifier="machinery_logistics_toc",
         ),
     ],
 )
@@ -456,12 +496,19 @@ machinery_toc = PageGroup(
                     machinery_generator_toc,
                 ),
                 MainTOCPageSection(
+                    id_enum.Machinery.ELECTRIC_HEATER,
+                    0,
+                    "热能",
+                    machinery_thermal_toc,
+                ),
+                MainTOCPageSection(
                     id_enum.Machinery.HOVER_TEXT_DISPLAYER,
                     0,
                     "杂项",
                     machinery_misc_toc,
                 ),
             ],
+            identifier="machinery_toc",
         ),
     ],
 )

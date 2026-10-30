@@ -63,8 +63,7 @@ def Build():  # type: () -> type or None
             # 在 __init__ 里取东西会撞上时序问题
             self.Registered = []  # type: list  # 已注册的类别 id，供 OnUnload 逐条撤
             self.Screens = []  # type: list  # 已挂上 MEI 的机器界面，供 OnUnload 逐个撤
-            self.Template = None  # type: any  # 合成样板界面接上 MEI 工具模式与配方转移的记录（crafting_template.Mount），OnUnload 撤
-            self.Selectors = None  # type: any  # 别的物品选择界面接上 MEI 工具模式的记录（selectors.Mount），OnUnload 撤
+            self.Template = None  # type: any  # 合成样板界面接上 MEI 配方转移的记录（crafting_template.Mount），OnUnload 撤
 
         def OnInit(self, ctx):
             bridge.Bind(ctx)
@@ -93,9 +92,8 @@ def Build():  # type: () -> type or None
             ctx.Log.info("已注册 {} 个机器配方类型".format(len(self.Registered)))
 
             self.MountScreens(ctx)
-            from . import crafting_template, selectors
+            from . import crafting_template
             self.Template = crafting_template.Mount(ctx)
-            self.Selectors = selectors.Mount(ctx)
 
         def MountScreens(self, ctx):
             """
@@ -177,11 +175,9 @@ def Build():  # type: () -> type or None
                 for screen_def in self.Screens:
                     screens.Unregister(screen_def)
             self.Screens = []
-            from . import crafting_template, selectors
+            from . import crafting_template
             crafting_template.Unmount(ctx, self.Template)
             self.Template = None
-            selectors.Unmount(ctx, self.Selectors)
-            self.Selectors = None
             bridge.Unbind()
 
     return SkyblueTechExtension

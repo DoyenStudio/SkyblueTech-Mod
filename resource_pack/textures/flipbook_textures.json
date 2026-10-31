@@ -61,12 +61,6 @@
         "blend_frames": false
     },
     {
-        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/heavy_compressor_front_active",
-        "atlas_tile": "skybluetech:heavy_compressor_front_active",
-        "ticks_per_frame": 4,
-        "blend_frames": false
-    },
-    {
         "flipbook_texture": "textures/blocks/machinery/flipbook_textures/magma_furnace_front_active",
         "atlas_tile": "skybluetech:magma_furnace_front_active",
         "ticks_per_frame": 4

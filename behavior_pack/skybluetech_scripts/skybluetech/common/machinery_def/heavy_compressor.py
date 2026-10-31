@@ -1,2 +1,0 @@
-# coding=utf-8
-STORE_RF_MAX = 8800

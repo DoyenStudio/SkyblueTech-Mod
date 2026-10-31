@@ -28,7 +28,6 @@ from .fuel_heater import FuelHeater
 from .fluid_splitter import FluidSplitter
 from .gas_burning_generator import GasBurningGenerator
 from .geothermal_generator import GeoThermalGenerator
-from .heavy_compressor import HeavyCompressor
 from .hover_text_displayer import HoverTextDisplayer
 from .hydroponic_base import HydroponicBase
 from .hydroponic_bed import HydroponicBed
@@ -56,7 +55,6 @@ from .resin_collector_outputer import ResinCollectorOutputer
 from .rf_repeater_plant import RFRepeaterPlant
 from .sawmill import Sawmill
 from .seawater_pump import SeawaterPump
-from .splitter import Splitter
 from .solar_panel import SolarPanel
 from .template_assembler import TemplateAssembler
 from .tesla_plant import TeslaPlant

@@ -569,12 +569,6 @@
         "skybluetech:gray_molten_metal_static": {
             "textures": "textures/fluid/gray_molten_metal_static"
         },
-        "skybluetech:heavy_compressor_front": {
-            "textures": "textures/blocks/machinery/heavy_compressor_front"
-        },
-        "skybluetech:heavy_compressor_front_active": {
-            "textures": "textures/blocks/machinery/flipbook_textures/heavy_compressor_front_active"
-        },
         "skybluetech:hover_text_displayer": {
             "textures": "textures/models/hover_text_displayer_texture"
         },
@@ -803,9 +797,6 @@
         },
         "skybluetech:solar_panel_top": {
             "textures": "textures/blocks/machinery/solar_panel_top"
-        },
-        "skybluetech:splitter_front": {
-            "textures": "textures/blocks/machinery/splitter_front"
         },
         "skybluetech:steel_block": {
             "textures": "textures/blocks/metal_block/steel_block"

@@ -26,7 +26,6 @@ from .fuel_heater import FuelHeaterUI
 from .gas_burning_generator import GasBurningGeneratorUI
 from .general_tank import GeneralTankUI
 from .geothermal_generator import GeoThermalGeneratorUI
-from .heavy_compressor import HeavyCompressorUI
 from .hover_text_displayer import HoverTextDisplayerUI
 from .hydroponic_base import HydroponicBaseUI
 from .hydroponic_bed import HydroponicBedUI
@@ -54,7 +53,6 @@ from .rf_repeater_plant import RFRepeaterPlantUI
 from .sawmill import SawmillUI
 from .seawater_pump import SeawaterPumpUI
 from .solar_panel import SolarPanelUI
-from .splitter import SplitterUI
 from .template_assembler import TemplateAssemblerUI
 from .tesla_plant_ui import TeslaPlantUI
 from .thermal_generator import ThermalGeneratorUI

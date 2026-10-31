@@ -69,9 +69,9 @@ OWN = (
         "assembler", "electric_machinery_workstation", "machinery_workstation")),
     ("skybluetech:group.machinery_production", "itemGroup.skybluetech.machinery_production", _ids(
         "alloy_furnace", "compressor", "distillation_chamber", "electric_crafter", "electric_heater", "electrolyzer",
-        "engraver", "fluid_condenser", "freezer", "heavy_compressor", "hydroponic_base", "hydroponic_bed",
+        "engraver", "fluid_condenser", "freezer", "hydroponic_base", "hydroponic_bed",
         "hydroponic_bed_sand", "macerator", "magma_centrifuge", "magma_furnace", "metal_press", "mixed_macerator", "mixer",
-        "oil_extractor", "precision_cutter", "redstone_furnace", "sawmill", "splitter", "template_assembler")),
+        "oil_extractor", "precision_cutter", "redstone_furnace", "sawmill", "template_assembler")),
     ("skybluetech:group.machinery_energy", "itemGroup.skybluetech.machinery_energy", _ids(
         "charger", "creative_power_acceptor", "redstoneflux_brake", "rf_repeater_plant")),
     ("skybluetech:group.machinery_logistics", "itemGroup.skybluetech.machinery_logistics", _ids(

@@ -594,16 +594,6 @@
     "skybluetech:geothermal_generator": {
         "sound": "copper"
     },
-    "skybluetech:heavy_compressor": {
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:heavy_compressor_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_top",
-            "west": "skybluetech:frame"
-        }
-    },
     "skybluetech:heavy_lava": {
         "blockshape": "water",
         "textures": {
@@ -1087,17 +1077,6 @@
     },
     "skybluetech:solar_panel": {
         "sound": "iron"
-    },
-    "skybluetech:splitter": {
-        "sound": "iron",
-        "textures": {
-            "down": "skybluetech:frame_bottom",
-            "east": "skybluetech:frame",
-            "north": "skybluetech:splitter_front",
-            "south": "skybluetech:frame",
-            "up": "skybluetech:frame_top",
-            "west": "skybluetech:frame"
-        }
     },
     "skybluetech:steel_block": {
         "textures": "skybluetech:steel_block"

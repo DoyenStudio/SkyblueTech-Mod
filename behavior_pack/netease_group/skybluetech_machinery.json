@@ -21,7 +21,6 @@
                 "skybluetech:engraver",
                 "skybluetech:fluid_condenser",
                 "skybluetech:freezer",
-                "skybluetech:heavy_compressor",
                 "skybluetech:hydroponic_base",
                 "skybluetech:hydroponic_bed",
                 "skybluetech:hydroponic_bed_sand",
@@ -35,7 +34,6 @@
                 "skybluetech:precision_cutter",
                 "skybluetech:redstone_furnace",
                 "skybluetech:sawmill",
-                "skybluetech:splitter",
                 "skybluetech:template_assembler"
             ]
         },

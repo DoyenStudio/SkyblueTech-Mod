@@ -6,108 +6,11 @@
     "PREVIEW@mei_recipe_common.preview": {
         "$recipe_content_template": "SkyblueMeiAirCompressor.content_panel"
     },
-    "content_panel": {
-        "type": "panel",
-        "size": [
-            93,
-            62
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "background": {
-                    "type": "image",
-                    "layer": 1,
-                    "texture": "textures/ui/mei/recipe/recipe_bg"
-                }
-            },
-            {
-                "power@SkyblueMeiCommon.energy_meter": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        4,
-                        4
-                    ],
-                    "size": [
-                        12,
-                        54
-                    ],
-                    "layer": 2
-                }
-            },
-            {
-                "body": {
-                    "type": "panel",
-                    "size": [
-                        "100%",
-                        "100%"
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "output": {
-                                "type": "panel",
-                                "size": [
-                                    "100%",
-                                    "100%"
-                                ],
-                                "layer": 10,
-                                "controls": [
-                                    {
-                                        "0@SkyblueMeiCommon.fluid_slot": {
-                                            "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_left",
-                                            "offset": [
-                                                53,
-                                                4
-                                            ],
-                                            "size": [
-                                                36,
-                                                54
-                                            ],
-                                            "layer": -5
-                                        }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "progress@SkybluePanelLib.progress_sprite": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    22,
-                                    24
-                                ],
-                                "size": [
-                                    22,
-                                    15
-                                ],
-                                "layer": 1
-                            }
-                        },
-                        {
-                            "progress_hover@SkyblueMeiCommon.progress_hover": {
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    22,
-                                    24
-                                ],
-                                "size": [
-                                    22,
-                                    15
-                                ],
-                                "layer": 9
-                            }
-                        }
-                    ]
-                }
-            }
-        ]
+    "content_panel@MachineRecipeLib.AirCompressor": {
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
     },
     "recipe@mei_recipe_common.recipe_panel": {
         "size": [

@@ -22,6 +22,7 @@ class RecipePageData:
         self.current_page = 0
         self.total_pages_num = 0
         self.recipes_per_page = 0
+        self.row_height = 0
 
     def set_page(self, page):
         # type: (int) -> None

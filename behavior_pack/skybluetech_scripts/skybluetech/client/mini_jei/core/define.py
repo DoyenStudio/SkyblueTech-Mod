@@ -17,6 +17,12 @@ class RecipeRenderer(object):
         # type: (RecipeBase) -> None
         self.recipe = recipe
 
+    @classmethod
+    def GetRenderHeight(cls, recipe):
+        # type: (RecipeBase) -> float | None
+        """内容随配方扩高时声明行高；普通模板由界面实际测量。"""
+        return None
+
     def RenderInit(self, panel_ctrl):
         # type: (UBaseCtrl) -> None
         """

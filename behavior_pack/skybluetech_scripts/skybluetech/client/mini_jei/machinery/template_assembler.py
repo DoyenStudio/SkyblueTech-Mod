@@ -24,7 +24,11 @@ class TemplateAssemblerRecipeRenderer(MachineRecipeRenderer):
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
         MachineRecipeRenderer.RenderInit(self, panel)
-        ItemDisplayer(panel["slot9"], Item(INSCRIBING_TEMPLATE))
+        ItemDisplayer(
+            self.GetCatalystControl(panel, 0, "slot9"),
+            Item(INSCRIBING_TEMPLATE),
+            not_consumed=True,
+        )
 
 
 TemplateAssemblerRecipe.SetRenderer(TemplateAssemblerRecipeRenderer)

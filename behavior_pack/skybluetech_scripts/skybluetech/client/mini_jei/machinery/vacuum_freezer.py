@@ -14,17 +14,8 @@ from .define import MachineRecipeRenderer
 class VacuumFreezerRecipeRenderer(MachineRecipeRenderer):
     """真空冷却仓配方页。
 
-    面板定义见 MiniJEI 的 `RecipeCheckerLib.vacuum_freezer_recipes`: 左半是流体/物品槽,
-    中间是进度条(由基类按 `tick_duration` 循环推进), 右侧板显示两个温度:
-
-        - 冷凝温度上限 `max_temperature`: 高于它配方完全不推进
-        - 最佳冷凝温度 `fit_temperature`: 到它以下按最快速度推进
-
-    两个温度都由配方自带, 每个配方可以不一样, 所以在这里按配方填数。
-
-    物品槽与流体槽由基类的 `RenderInit` 统一填: 物品走 `slot0`/`slot1`(带数量、概率、
-    点开查用途), 流体走 `fluid0`/`fluid1`。真空冷却仓的配方本身同时支持物品与流体,
-    只是现在还没有需要物品的配方 —— 物品这条链路要一直保留, 不能因为暂时用不到就省掉。
+    与 MEI 共用 MachineRecipeLib.VacuumFreezer 内容布局。
+    基类按真实槽位映射物品和流体；温度条件与升级要求显示在进度提示中。
     """
 
     recipe_icon_id = machinery.Machinery.VACUUM_FREEZER
@@ -51,9 +42,7 @@ class VacuumFreezerRecipeRenderer(MachineRecipeRenderer):
         return "§7耗能： §f随设定温度变化"
 
     def RenderPower(self, panel, p):
-        from ...ui.machinery.utils import UpdatePowerBar
-
-        UpdatePowerBar(panel["power_bar"], 1, 1, hover=self.PowerTip())
+        self.UpdatePower(panel, 1.0, self.PowerTip())
 
 
 VacuumFreezerRecipe.SetRenderer(VacuumFreezerRecipeRenderer)

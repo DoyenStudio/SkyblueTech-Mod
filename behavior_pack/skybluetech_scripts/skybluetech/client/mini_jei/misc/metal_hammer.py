@@ -22,10 +22,15 @@ class MetalHammerRecipeRenderer(RecipeRenderer):
 
     def RenderInit(self, panel_ctrl):
         # type: (UBaseCtrl) -> None
-        self.input_renderer = InputDisplayer(panel_ctrl["slot0"], self.recipe.hammer_in)
-        self.output_renderer = ItemDisplayer(
-            panel_ctrl["slot1"], Item(self.recipe.hammer_out)
+        self.input_renderer = InputDisplayer(
+            panel_ctrl["content/input/0"], self.recipe.hammer_in
         )
+        self.output_renderer = ItemDisplayer(
+            panel_ctrl["content/output/0"], Item(self.recipe.hammer_out)
+        )
+
+    def RenderUpdate(self, panel_ctrl, render_ticks):
+        self.input_renderer.tick(render_ticks)
 
 
 MetalHammerRecipe.SetRenderer(MetalHammerRecipeRenderer)

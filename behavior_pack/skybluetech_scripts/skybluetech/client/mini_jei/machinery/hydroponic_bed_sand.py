@@ -1,26 +1,27 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
-from skybluetech_scripts.tooldelta.define import UICtrlPosData, Item
+from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.hydroponic_bed_sand import (
     HydroponicBedSandRecipe,
 )
 from skybluetech_scripts.skybluetech.common.define.id_enum import machinery
-from ...ui.recipe_checker.render_utils import ItemDisplayer
-from ..core import RecipeRenderer
+from skybluetech_scripts.skybluetech.common.machinery_def.hydroponic_bed_sand import (
+    POWER_COST,
+)
+from .hydroponic_bed import HydroponicBedRecipeRenderer
 
 
-class HydroponicBedSandRecipeRenderer(RecipeRenderer):
+class HydroponicBedSandRecipeRenderer(HydroponicBedRecipeRenderer):
     render_progress = False
     recipe_icon_id = machinery.Machinery.HYDROPONIC_BED_SAND
     render_ui_def_name = "RecipeCheckerLib.hydroponic_bed_sand_recipes"
+    RETURN_SEED = False
+    POWER_COST = POWER_COST
 
     def __init__(self, recipe):
         # type: (HydroponicBedSandRecipe) -> None
-        RecipeRenderer.__init__(self, recipe)
-        self.recipe = recipe
-        self.crop_renderer = None
-        self.output_renderers = []
+        HydroponicBedRecipeRenderer.__init__(self, recipe)
         self.palette = CF.CreateBlock(LEVEL_ID).GetBlankBlockPalette()
         self.palette.DeserializeBlockPalette({
             "extra": {},
@@ -36,37 +37,21 @@ class HydroponicBedSandRecipeRenderer(RecipeRenderer):
         )
         self.view_grow_progress = 0
 
-    def RenderInit(self, panel):
-        # type: (UBaseCtrl) -> None
-        idx = 1
-        self.crop_renderer = panel["visualer/crop_disp"].asNeteasePaperDoll()
-        self.seed_item_disp = ItemDisplayer(
-            panel["seed_item"], Item(self.recipe.seed_item)
-        )
-        outputs_stack = panel["outputs_stack"]
-        # 物品格用 SkybluePanelLib.recipe_slot; 每格名字带序号, 避免重名
-        ctrl = outputs_stack.AddElement(
-            "SkybluePanelLib.recipe_slot", "crop_item_disp%s" % idx
-        )
-        self.output_seed_item_disp = ItemDisplayer(ctrl, Item(self.recipe.seed_item))
-        for output in self.recipe.harvest_outputs:
-            idx += 1
-            ctrl = outputs_stack.AddElement(
-                "SkybluePanelLib.recipe_slot", "crop_item_disp%s" % idx
-            )
-            self.output_renderers.append(
-                ItemDisplayer(ctrl, Item(output.id), prob=output.prob)
-            )
-        self.update_crop_model(0)
-
     def RenderUpdate(self, panel, ticks):
         # type: (UBaseCtrl, int) -> None
         self.view_grow_progress = min(
             1, self.view_grow_progress + self.recipe.once_grow_progress * 0.2
         )
+        self.update_animation(self.view_grow_progress)
         self.update_crop_model(self.view_grow_progress)
         if self.view_grow_progress >= 1:
             self.view_grow_progress = 0
+
+    def DeRender(self, panel):
+        # type: (UBaseCtrl) -> None
+        HydroponicBedRecipeRenderer.DeRender(self, panel)
+        self.palette = None
+        self.geo_id = None
 
     def update_crop_model(self, progress):
         # type: (float) -> None

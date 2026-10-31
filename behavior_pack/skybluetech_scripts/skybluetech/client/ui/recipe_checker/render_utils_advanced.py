@@ -11,6 +11,24 @@ if 0>1:
     from skybluetech_scripts.skybluetech.common.mini_jei.core import Input
 
 
+def UpdateRecipePower(ctrl, level, segments, hover):
+    # type: (UBaseCtrl, float, int, str) -> None
+    """共享配方布局的非平铺能量条；显示配方耗能，不显示机器储能。"""
+    from skybluetech_scripts.tooldelta.define import UICtrlPosData
+    from ..machinery.utils import _QuantizeEnergy, SetHoverText
+
+    cache = ctrl._vars
+    if "recipe_power_mask" not in cache:
+        cache["recipe_power_mask"] = ctrl["bar/mask"]
+    shown = _QuantizeEnergy(max(0.0, min(1.0, level)), segments)
+    if cache.get("recipe_power_shown") != shown:
+        cache["recipe_power_shown"] = shown
+        cache["recipe_power_mask"].SetFullSize(
+            "y", UICtrlPosData("parent", relative_value=shown)
+        )
+    SetHoverText(ctrl, hover)
+
+
 class FluidDisplayer(object):
     """
     配方行里的流体格 (SkybluePanelLib.fluid_tank):

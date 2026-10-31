@@ -97,6 +97,11 @@ class RecipeCheckerUI(ToolDeltaScreen):
             for ctrl, rcp in self.recipe_ctrls.items():
                 rcp.RenderUpdate(ctrl, self.update_ticks)
 
+    def OnDestroy(self):
+        for ctrl, renderer in self.recipe_ctrls.items():
+            renderer.DeRender(ctrl)
+        self.recipe_ctrls.clear()
+
     def PushRecipes(self, recipes, update=True):
         # type: (RecipeCategoriesData, bool) -> None
         if len(self.recipes_chain) > 64:
@@ -187,14 +192,26 @@ class RecipeCheckerUI(ToolDeltaScreen):
             )
             rcp_renderer.RenderInit(elem)
             rcp_renderer.RenderUpdate(elem, self.update_ticks)
-            _, size_y = elem.GetSize()
-            elem.SetPos((0, size_y * i))
+            size_x, size_y = elem.GetSize()
+            if self.recipes_per_page == 0:
+                # 同分类统一采用最大行高，多产物水培页不会与下一行重叠。
+                row_height = max(1, size_y)
+                for recipe in page_data.recipes:
+                    renderer_cls = recipe.GetRenderer()
+                    height_getter = getattr(renderer_cls, "GetRenderHeight", None)
+                    height = height_getter(recipe) if height_getter else None
+                    if height is not None:
+                        row_height = max(row_height, height)
+                page_data.row_height = row_height
+                self.recipes_per_page = max(1, int(display_max_sizey // row_height))
+                page_data.recipes_per_page = self.recipes_per_page
+            row_height = page_data.row_height or size_y
+            if size_y != row_height:
+                elem.SetSize((size_x, row_height))
+            elem.SetPos((0, row_height * i))
             self.recipe_ctrls[elem] = rcp_renderer
-            if size_y * (i + 2) > display_max_sizey:
+            if i + 1 >= self.recipes_per_page:
                 break
-        if self.recipes_per_page == 0:
-            self.recipes_per_page = i + 1
-            page_data.recipes_per_page = self.recipes_per_page
         if self.total_pages_num == 0:
             per_page = max(1, self.recipes_per_page)
             self.total_pages_num = int(

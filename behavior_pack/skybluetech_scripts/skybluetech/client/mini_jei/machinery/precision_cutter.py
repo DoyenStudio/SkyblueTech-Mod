@@ -40,7 +40,10 @@ class PrecisionCutterRecipeRenderer(MachineRecipeRenderer):
         MachineRecipeRenderer.RenderInit(self, panel)
         cutter_id = GetCutterIdForLevel(self.recipe.cutter_level)
         if cutter_id is not None:
-            ItemDisplayer(panel["cutter_slot"], Item(cutter_id))
+            ItemDisplayer(
+                self.GetCatalystControl(panel, 0, "cutter_slot"),
+                Item(cutter_id),
+            )
 
 
 PrecisionCutterRecipe.SetRenderer(PrecisionCutterRecipeRenderer)

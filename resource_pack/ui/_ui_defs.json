@@ -47,6 +47,7 @@
         "ui/LexicalTransmuterUI.json",
         "ui/MaceratorUI.json",
         "ui/MachinePanelExPages.json",
+        "ui/MachineRecipeLib.json",
         "ui/MachineryWorkstationUI.json",
         "ui/MagmaCentrifugeUI.json",
         "ui/MagmaFurnaceUI.json",

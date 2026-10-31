@@ -5,66 +5,11 @@
     "PREVIEW@mei_recipe_common.preview": {
         "$recipe_content_template": "SkyblueMeiWorkstation.content_panel"
     },
-    "content_panel": {
-        "type": "panel",
-        "size": [
-            134.0,
-            70.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "input@SkyblueMeiCommon.inputs_9": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        5,
-                        0
-                    ]
-                }
-            },
-            {
-                "progress@SkybluePanelLib.progress_sprite": {
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        68,
-                        16
-                    ],
-                    "size": [
-                        32,
-                        16
-                    ]
-                }
-            },
-            {
-                "side@SkyblueMeiCommon.side_slots": {
-                    "anchor_from": "top_right",
-                    "anchor_to": "top_right",
-                    "offset": [
-                        -4,
-                        5
-                    ]
-                }
-            },
-            {
-                "output@SkyblueMeiCommon.output": {
-                    "anchor_from": "bottom_right",
-                    "anchor_to": "bottom_right",
-                    "offset": [
-                        -4,
-                        -5
-                    ]
-                }
-            },
-            {
-                "background": {
-                    "type": "image",
-                    "layer": 1,
-                    "texture": "textures/ui/mei/recipe/recipe_bg"
-                }
-            }
-        ]
+    "content_panel@MachineRecipeLib.Workstation": {
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
     },
     "namespace": "SkyblueMeiWorkstation",
     "recipe@mei_recipe_common.recipe_panel": {
@@ -73,8 +18,8 @@
                 "wrapper": {
                     "type": "panel",
                     "size": [
-                        134.0,
-                        70.0
+                        134,
+                        70
                     ],
                     "layer": 1,
                     "controls": [

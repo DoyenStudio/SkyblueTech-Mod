@@ -323,10 +323,6 @@
             },
             {
                 "recipe_renderer@RecipeCheckerLib.machinery_workstation_recipes": {
-                    "$arrow_img_offset": [
-                        84,
-                        60
-                    ],
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [

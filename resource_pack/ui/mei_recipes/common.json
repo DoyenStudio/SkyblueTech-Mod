@@ -1,95 +1,5 @@
 {
-    "inputs_9": {
-        "type": "panel",
-        "size": [
-            60.0,
-            60.0
-        ],
-        "layer": 8,
-        "controls": [
-            {
-                "0@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input0",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
-                }
-            },
-            {
-                "1@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input1",
-                    "anchor_from": "top_middle",
-                    "anchor_to": "top_middle"
-                }
-            },
-            {
-                "2@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input2",
-                    "anchor_from": "top_right",
-                    "anchor_to": "top_right"
-                }
-            },
-            {
-                "3@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input3",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle"
-                }
-            },
-            {
-                "4@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input4"
-                }
-            },
-            {
-                "5@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input5",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle"
-                }
-            },
-            {
-                "6@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input6",
-                    "anchor_from": "bottom_left",
-                    "anchor_to": "bottom_left"
-                }
-            },
-            {
-                "7@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input7",
-                    "anchor_from": "bottom_middle",
-                    "anchor_to": "bottom_middle"
-                }
-            },
-            {
-                "8@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.input8",
-                    "anchor_from": "bottom_right",
-                    "anchor_to": "bottom_right"
-                }
-            }
-        ]
-    },
     "namespace": "SkyblueMeiCommon",
-    "output": {
-        "type": "panel",
-        "size": [
-            28.0,
-            28.0
-        ],
-        "layer": 7,
-        "controls": [
-            {
-                "0@mei_common.item_panel": {
-                    "$binding_name_prefix": "mei_ui.recipe.output",
-                    "size": [
-                        "default",
-                        "default"
-                    ]
-                }
-            }
-        ]
-    },
     "power_hover@mei_common.slot_base": {
         "$binding_name_prefix|default": "mei_ui.recipe.power",
         "controls": [
@@ -102,92 +12,6 @@
         "size": [
             "100%+0px",
             "100%+0px"
-        ]
-    },
-    "side_slots": {
-        "type": "panel",
-        "$side0_prefix|default": "mei_ui.recipe.side0",
-        "$side1_prefix|default": "mei_ui.recipe.side1",
-        "size": [
-            40.0,
-            20.0
-        ],
-        "layer": 8,
-        "controls": [
-            {
-                "0@mei_common.item_panel": {
-                    "$binding_name_prefix": "$side0_prefix",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle"
-                }
-            },
-            {
-                "1@mei_common.item_panel": {
-                    "$binding_name_prefix": "$side1_prefix",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle"
-                }
-            }
-        ]
-    },
-    "energy_meter": {
-        "type": "panel",
-        "size": [
-            12,
-            54
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "bar": {
-                    "type": "panel",
-                    "size": [
-                        "100%+-2px",
-                        "100%+-2px"
-                    ],
-                    "layer": 1,
-                    "controls": [
-                        {
-                            "bg": {
-                                "type": "image",
-                                "texture": "textures/ui/skybluetech/energy/classic_track",
-                                "tiled": "y",
-                                "layer": 1,
-                                "keep_ratio": false
-                            }
-                        },
-                        {
-                            "mask": {
-                                "type": "image",
-                                "texture": "textures/ui/skybluetech/energy_bar_top",
-                                "anchor_from": "bottom_middle",
-                                "anchor_to": "bottom_middle",
-                                "size": [
-                                    "100%",
-                                    "100%"
-                                ],
-                                "layer": 2,
-                                "keep_ratio": false
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "frame": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/frame_empty_slim",
-                    "nineslice_size": 1,
-                    "layer": 3,
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "hover@SkyblueMeiCommon.power_hover": {
-                    "layer": 4
-                }
-            }
         ]
     },
     "progress_hover@mei_common.slot_base": {
@@ -333,5 +157,29 @@
                 "overlay@mei_common.slot_overlay": {}
             }
         ]
+    },
+    "inputs_9@MachineRecipeLib.inputs_9": {
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
+    },
+    "side_slots@MachineRecipeLib.side_slots": {
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
+    },
+    "output@MachineRecipeLib.output": {
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
+    },
+    "energy_meter@MachineRecipeLib.energy_meter": {
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
     }
 }

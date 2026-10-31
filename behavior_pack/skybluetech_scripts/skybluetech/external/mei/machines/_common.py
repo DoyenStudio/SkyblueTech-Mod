@@ -2,10 +2,10 @@
 """
 通用机器配方页 —— 一台机器要的东西全在这里。
 
-**配方页照蔚蓝「UI 规范 v2」**：布局由蔚蓝仓 `.claude/ui-review/tools/gen_mei_recipes.py`
-从机器界面算出，同一次生成 `ui/mei_recipes/<机器>.json` 与给脚本的事实表 `_layouts.py`（格子顺序、能量条、进度方向）；
-`BuildMachine` 查到布局就用 `_LayoutScriptFor`，查不到的照旧走 `_UIScriptFor` / 各自的脚本（不改的三页：机件加工台、
-工业研究、金属锤；水培床两页用新控件 —— 排法写在生成器的 `emit_hydroponic`，脚本靠基类的 `LAYOUT` 走新版）。接一台机器 = 生成器里加一行 + 一个几行的模块。
+机器配方内容与 MiniJEI 共用 `ui/MachineRecipeLib.json`，`ui/mei_recipes/<机器>.json`
+仅保留 MEI 包装与槽位组件选择。事实表位于 `common/define/recipe_layouts.py`，
+本包 `_layouts.py` 保留原导入路径。`BuildMachine` 查到布局就用 `_LayoutScriptFor`；
+机件加工台、工业研究、金属锤与水培床两页保留各自的脚本。
 
 **槽位映射是唯一有实质逻辑的地方**：蔚蓝的槽位号可以是**稀疏**的
 （合金炉有 `{0: 铁粉, 2: 碳粉}` 这种，中间空一格），所以格子与输入
@@ -697,7 +697,7 @@ def BuildBase():  # type: () -> type
 def _LayoutScriptFor(category_id, layout, lores=None):
     # type: (str, dict, any) -> type
     """
-    照生成的布局画的配方页（`_layouts.py`，与 `ui/mei_recipes/<机器>.json` 同一次生成，规范 v2 §12）。
+    按共享布局表渲染配方页；控件位置由 `ui/MachineRecipeLib.json` 统一维护。
 
     格子：`input/<i>` / `output/<i>` / `cat/<i>`。第 i 格画布局表里第 i 个 `(种类, 槽位号)`，
     **按真实槽位号反查**（见模块头）；槽位号是 None 的是机器里有、配方从不用的格子，照画成空格（预留位置）。

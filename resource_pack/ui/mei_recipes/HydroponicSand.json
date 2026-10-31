@@ -1,19 +1,18 @@
 {
-    "namespace": "SkyblueMeiHydroponicSand",
-    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
-        "$recipe_ui_template": "SkyblueMeiHydroponicSand.recipe"
-    },
     "PREVIEW@mei_recipe_common.preview": {
         "$recipe_content_template": "SkyblueMeiHydroponicSand.content_panel"
     },
-    "content_panel@SkyblueMeiHydroponic.content_panel": {
-        "$shell_texture": "textures/models/hydroponic_bed_sand_texture"
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiHydroponicSand.recipe"
     },
+    "content_panel@MachineRecipeLib.HydroponicSand": {
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
+    },
+    "namespace": "SkyblueMeiHydroponicSand",
     "recipe@mei_recipe_common.recipe_panel": {
-        "size": [
-            178,
-            66
-        ],
         "controls": [
             {
                 "wrapper": {
@@ -35,6 +34,10 @@
                     ]
                 }
             }
+        ],
+        "size": [
+            178,
+            66
         ]
     }
 }

@@ -24,9 +24,10 @@ class IndustrialResearchingRecipeRenderer(RecipeRenderer):
     def RenderInit(self, panel_ctrl):
         # type: (UBaseCtrl) -> None
         self.input_renderers = []
+        content = panel_ctrl["content"]
         require_items = self.recipe.require_items[:9]
         for index in range(9):
-            slot_ctrl = panel_ctrl["slot%d" % index]
+            slot_ctrl = content["input/%d" % index]
             if index >= len(require_items):
                 slot_ctrl.SetVisible(False)
                 continue
@@ -38,12 +39,12 @@ class IndustrialResearchingRecipeRenderer(RecipeRenderer):
             self.input_renderers.append(input_renderer)
 
         self.template_renderer = ItemDisplayer(
-            panel_ctrl["inscribing_template_slot"], Item(INSCRIBING_TEMPLATE)
+            content["output/1"], Item(INSCRIBING_TEMPLATE)
         )
         self.result_renderer = ItemDisplayer(
-            panel_ctrl["inscribing_item_slot"], Item(self.recipe.result_item_id)
+            content["output/0"], Item(self.recipe.result_item_id)
         )
-        panel_ctrl["xp_cost_label"].asLabel().SetText(
+        content["xp_cost_label"].asLabel().SetText(
             "花费经验 Lv %s" % self.recipe.require_exp_level
         )
 

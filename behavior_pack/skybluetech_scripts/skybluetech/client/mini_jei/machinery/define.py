@@ -3,13 +3,14 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
 from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from skybluetech_scripts.skybluetech.common.mini_jei import Recipe
+from skybluetech_scripts.skybluetech.common.define.recipe_layouts import LAYOUTS
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     MachineRecipeBase,
     MachineRecipe,
     GeneratorRecipe,
 )
 from ...ui.recipe_checker.render_utils import ItemDisplayer
-from ...ui.recipe_checker.render_utils_advanced import FluidDisplayer
+from ...ui.recipe_checker.render_utils_advanced import FluidDisplayer, UpdateRecipePower
 from ..core import RecipeRenderer
 
 
@@ -18,6 +19,46 @@ class MachineRecipeRendererBase(RecipeRenderer):
         # type: (Recipe) -> None
         RecipeRenderer.__init__(self, recipe)
         self.recipe = recipe
+        self.controls = {}
+        # 仅本包已迁移的薄包装使用共享布局；附属自己的旧布局仍按原路径渲染。
+        prefix = "RecipeCheckerLib."
+        suffix = "_recipes"
+        name = self.render_ui_def_name
+        self.layout = None
+        if name.startswith(prefix) and name.endswith(suffix):
+            self.layout = LAYOUTS.get("skybluetech:" + name[len(prefix):-len(suffix)])
+
+    def GetControl(self, panel, name):
+        # type: (UBaseCtrl, str) -> UBaseCtrl
+        if self.layout is not None:
+            name = {
+                "power_bar": "content/power",
+                "progress": "content/body/progress",
+                "progress_tip": "content/body/progress_hover",
+                "flame": "content/body/flame",
+            }.get(name, name)
+        if name not in self.controls:
+            self.controls[name] = panel[name]
+        return self.controls[name]
+
+    def GetSlotControl(self, panel, kind, slot, outputs=False):
+        # type: (UBaseCtrl, str, int, bool) -> UBaseCtrl
+        if self.layout is None:
+            return self.GetControl(panel, ("fluid" if kind == "fluid" else "slot") + str(slot))
+        side = "outputs" if outputs else "inputs"
+        for index, (entry_kind, entry_slot) in enumerate(self.layout[side]):
+            if entry_kind == kind and entry_slot is not None and int(entry_slot) == int(slot):
+                path = "content/body/%s/%d" % ("output" if outputs else "input", index)
+                return self.GetControl(panel, path)
+        raise ValueError("No %s %s:%s in recipe layout %s" % (side, kind, slot, self.render_ui_def_name))
+
+    def GetCatalystControl(self, panel, index, legacy_name):
+        # type: (UBaseCtrl, int, str) -> UBaseCtrl
+        path = "content/body/cat/%d" % index if self.layout is not None else legacy_name
+        return self.GetControl(panel, path)
+
+    def DeRender(self, panel):
+        self.controls.clear()
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
@@ -36,7 +77,7 @@ class MachineRecipeRendererBase(RecipeRenderer):
                 item_id = item
                 item_aux = input.aux if input.aux != -1 else 0 # TODO: 如果 aux=-1, 应当渲染所有 aux 对应的方块
             ItemDisplayer(
-                panel["slot%d" % slot],
+                self.GetSlotControl(panel, "item", slot),
                 Item(item_id, item_aux, count=int(input.count)),
                 tag=item if is_tag else None,
                 not_consumed=input.count == 0,
@@ -45,8 +86,8 @@ class MachineRecipeRendererBase(RecipeRenderer):
         for slot, output in output_items.items():
             item_id = output.id
             ItemDisplayer(
-                panel["slot%d" % slot],
-                Item(item_id, 0, count=int(output.count)),
+                self.GetSlotControl(panel, "item", slot, outputs=True),
+                Item(item_id, output.aux, count=int(output.count)),
                 prob=output.prob,
             )
         input_fluids = recipe.inputs.get("fluid", {})
@@ -56,7 +97,7 @@ class MachineRecipeRendererBase(RecipeRenderer):
             ).count
         for slot, input in input_fluids.items():
             FluidDisplayer(
-                panel["fluid%d" % slot], input.id, input.count, max_input_fluid_volume
+                self.GetSlotControl(panel, "fluid", slot), input.id, input.count, max_input_fluid_volume
             )
         output_fluids = recipe.outputs.get("fluid", {})
         if output_fluids:
@@ -65,7 +106,7 @@ class MachineRecipeRendererBase(RecipeRenderer):
             ).count
         for slot, output in output_fluids.items():
             FluidDisplayer(
-                panel["fluid%d" % slot],
+                self.GetSlotControl(panel, "fluid", slot, outputs=True),
                 output.id,
                 output.count,
                 max_output_fluid_volume,
@@ -113,27 +154,48 @@ class _AnimatedRenderer(MachineRecipeRendererBase):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
-        from ...ui.machinery.utils import SetHoverText, UpdatePowerBar
+        from ...ui.machinery.utils import SetHoverText
 
         MachineRecipeRendererBase.RenderInit(self, panel)
         # 机器里有、这条配方不用的流体槽 (同 MEI: 照画成空槽), 悬停写明是空的
-        used = set(self.recipe.inputs.get("fluid", {})) | set(self.recipe.outputs.get("fluid", {}))
-        for i in range(8):
-            if i not in used and _has(panel, "fluid%d" % i):
-                SetHoverText(panel["fluid%d" % i], "§7空（这条配方不用）")
-        self.has_progress = _has(panel, "progress")
-        self.has_flame = _has(panel, "flame")
-        self.has_power = _has(panel, "power_bar") and self.PowerTip() is not None
-        if _has(panel, "progress_tip"):
+        if self.layout is not None:
+            for side, values in (("input", self.recipe.inputs), ("output", self.recipe.outputs)):
+                for index, (kind, slot) in enumerate(self.layout[side + "s"]):
+                    if kind == "fluid" and slot not in values.get("fluid", {}):
+                        SetHoverText(self.GetControl(panel, "content/body/%s/%d" % (side, index)), "§7空（这条配方不用）")
+            self.has_progress = self.layout["progress"] is not None
+            self.has_flame = self.layout["flame"]
+            has_power_bar = self.layout["power"] is not None
+            has_progress_tip = True
+        else:
+            used = set(self.recipe.inputs.get("fluid", {})) | set(self.recipe.outputs.get("fluid", {}))
+            for i in range(8):
+                if i not in used and _has(panel, "fluid%d" % i):
+                    SetHoverText(self.GetControl(panel, "fluid%d" % i), "§7空（这条配方不用）")
+            self.has_progress = _has(panel, "progress")
+            self.has_flame = _has(panel, "flame")
+            has_power_bar = _has(panel, "power_bar")
+            has_progress_tip = _has(panel, "progress_tip")
+        self.has_power = has_power_bar and self.PowerTip() is not None
+        if has_progress_tip:
             lines = []
             if self.recipe.tick_duration:
                 lines.append("§7耗时： §f%s 秒" % _secs(self.recipe.tick_duration))
             lines.extend(self.ProgressTip())
-            SetHoverText(panel["progress_tip"], "\n".join(lines) or "§7（只表示流向）")
+            SetHoverText(self.GetControl(panel, "progress_tip"), "\n".join(lines) or "§7（只表示流向）")
         if self.has_power:
-            self.RenderPower(panel, 0.0)
-        elif _has(panel, "power_bar"):
-            UpdatePowerBar(panel["power_bar"], 0, 1, hover="§7（不耗电）")
+            self.RenderPower(panel, 1.0 if self.recipe.tick_duration <= 1 and self.layout is not None and self.layout["power"] == "gen" else 0.0)
+        elif has_power_bar:
+            self.UpdatePower(panel, 0.0, "§7（不耗电）")
+
+    def UpdatePower(self, panel, level, hover):
+        # type: (UBaseCtrl, float, str) -> None
+        ctrl = self.GetControl(panel, "power_bar")
+        if self.layout is not None:
+            UpdateRecipePower(ctrl, level, self.layout["segments"], hover)
+        else:
+            from ...ui.machinery.utils import UpdatePowerBar
+            UpdatePowerBar(ctrl, level, 1, hover=hover)
 
     def RenderPower(self, panel, p):
         # type: (UBaseCtrl, float) -> None
@@ -141,16 +203,18 @@ class _AnimatedRenderer(MachineRecipeRendererBase):
 
     def RenderUpdate(self, panel, render_ticks):
         # type: (UBaseCtrl, int) -> None
-        from ...ui.machinery.utils import UpdateProgress
+        from ...ui.machinery.utils import UpdateProgress, UpdateFlame
 
         td = self.recipe.tick_duration * 3
-        if not self.render_progress or td <= 0:  # 连续过程 (蒸馏 / 蒸发) 只画静态箭头
+        if not self.render_progress or td <= 3:  # 连续过程 (蒸馏 / 蒸发) 只画静态箭头
+            if self.has_flame:
+                UpdateFlame(self.GetControl(panel, "flame"), 1.0)
             return
         p = (render_ticks * 2.0) % td / td
         if self.has_progress:
-            UpdateProgress(panel["progress"], p)
+            UpdateProgress(self.GetControl(panel, "progress"), p)
         if self.has_flame:
-            UpdateProgress(panel["flame"], 1 - p)
+            UpdateFlame(self.GetControl(panel, "flame"), 1 - p)
         if self.has_power:
             self.RenderPower(panel, p)
 
@@ -173,10 +237,7 @@ class MachineRecipeRenderer(_AnimatedRenderer):
 
     def RenderPower(self, panel, p):
         # 耗电: 从满格随进度扣 (同 MEI 配方页)
-        from ...ui.machinery.utils import UpdatePowerBar
-
-        total = max(1, self.PowerTotal())
-        UpdatePowerBar(panel["power_bar"], (1 - p) * total, total, hover=self.PowerTip())
+        self.UpdatePower(panel, 1 - p, self.PowerTip())
 
 
 class GeneratorRecipeRenderer(_AnimatedRenderer):
@@ -195,10 +256,7 @@ class GeneratorRecipeRenderer(_AnimatedRenderer):
 
     def RenderPower(self, panel, p):
         # 发电: 随进度充满 (同 MEI 配方页)
-        from ...ui.machinery.utils import UpdatePowerBar
-
-        total = max(1, self.PowerTotal())
-        UpdatePowerBar(panel["power_bar"], p * total, total, hover=self.PowerTip())
+        self.UpdatePower(panel, p, self.PowerTip())
 
 
 __all__ = [

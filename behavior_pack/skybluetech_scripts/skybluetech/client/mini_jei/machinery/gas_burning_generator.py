@@ -23,7 +23,7 @@ class GasBurningGeneratorRecipeRenderer(GeneratorRecipeRenderer):
         GeneratorRecipeRenderer.RenderInit(self, panel)
         # 没有废气产出的配方: 在废气槽 (fluid1) 的悬停里写明 (同 MEI 配方页)
         if self.recipe.output_gas_id is None:
-            SetHoverText(panel["fluid1"], "§7没有废气")
+            SetHoverText(self.GetSlotControl(panel, "fluid", 1, outputs=True), "§7没有废气")
 
 
 GasBurningGeneratorRecipe.SetRenderer(GasBurningGeneratorRecipeRenderer)

@@ -5,119 +5,11 @@
     "PREVIEW@mei_recipe_common.preview": {
         "$recipe_content_template": "SkyblueMeiMetalHammer.content_panel"
     },
-    "content_panel": {
-        "type": "panel",
-        "size": [
-            142.0,
-            40.0
-        ],
-        "layer": 1,
-        "controls": [
-            {
-                "input": {
-                    "type": "panel",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        12.0,
-                        0.0
-                    ],
-                    "size": [
-                        20.0,
-                        20.0
-                    ],
-                    "layer": 8,
-                    "controls": [
-                        {
-                            "0@mei_common.item_panel": {
-                                "$binding_name_prefix": "mei_ui.recipe.input0"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "arrow_img": {
-                    "type": "image",
-                    "offset": [
-                        6.0,
-                        0.0
-                    ],
-                    "size": [
-                        30.0,
-                        30.0
-                    ],
-                    "layer": 6,
-                    "texture": "textures/ui/skybluetech/progress/arrow_bg"
-                }
-            },
-            {
-                "hammer_img": {
-                    "type": "image",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        44.0,
-                        0.0
-                    ],
-                    "size": [
-                        20.0,
-                        20.0
-                    ],
-                    "layer": 7,
-                    "rotate_angle": -30.0,
-                    "texture": "textures/items/metal_hammer"
-                }
-            },
-            {
-                "ingot_img": {
-                    "type": "image",
-                    "anchor_from": "left_middle",
-                    "anchor_to": "left_middle",
-                    "offset": [
-                        56.0,
-                        3.0
-                    ],
-                    "size": [
-                        15.0,
-                        15.0
-                    ],
-                    "layer": 7,
-                    "rotate_angle": -15.0,
-                    "texture": "textures/items/ingots/tin_ingot"
-                }
-            },
-            {
-                "output": {
-                    "type": "panel",
-                    "anchor_from": "right_middle",
-                    "anchor_to": "right_middle",
-                    "offset": [
-                        -10.0,
-                        0.0
-                    ],
-                    "size": [
-                        28.0,
-                        28.0
-                    ],
-                    "layer": 7,
-                    "controls": [
-                        {
-                            "0@mei_common.item_panel": {
-                                "$binding_name_prefix": "mei_ui.recipe.output"
-                            }
-                        }
-                    ]
-                }
-            },
-            {
-                "background": {
-                    "type": "image",
-                    "layer": 1,
-                    "texture": "textures/ui/mei/recipe/recipe_bg"
-                }
-            }
-        ]
+    "content_panel@MachineRecipeLib.MetalHammer": {
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
     },
     "namespace": "SkyblueMeiMetalHammer",
     "recipe@mei_recipe_common.recipe_panel": {
@@ -128,12 +20,12 @@
                     "anchor_from": "top_middle",
                     "anchor_to": "top_middle",
                     "offset": [
-                        0.0,
-                        2.0
+                        0,
+                        2
                     ],
                     "size": [
-                        142.0,
-                        40.0
+                        142,
+                        40
                     ],
                     "layer": 1,
                     "controls": [

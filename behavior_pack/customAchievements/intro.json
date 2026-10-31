@@ -12,6 +12,6 @@
     },
     "goal_number": 1,
     "node_description": "欢迎游玩《蔚蓝科技》！ \n\n§8§o蔚空的第一朵白云， 于此启航。\n记得常看物品栏里的§7蔚蓝科技导览§8哦。",
-    "window_background": "textures/ui/achievement_bg",
+    "window_background": "textures/ui/skybluetech/achievement_bg",
     "finish_tip": true
 }

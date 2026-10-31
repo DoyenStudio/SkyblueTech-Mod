@@ -137,14 +137,14 @@
                                         "bg": {
                                             "type": "image",
                                             "layer": 1,
-                                            "texture": "textures/ui/battery_big_img"
+                                            "texture": "textures/ui/skybluetech/battery_big_img"
                                         }
                                     },
                                     {
                                         "mask": {
                                             "type": "image",
                                             "layer": 1,
-                                            "texture": "textures/ui/battery_big_mask"
+                                            "texture": "textures/ui/skybluetech/battery_big_mask"
                                         }
                                     },
                                     {
@@ -366,8 +366,8 @@
                                         "south_set_btn@common.button": {
                                             "type": "button",
                                             "$control_alpha": 1.0,
-                                            "$default_texture": "textures/ui/button_default",
-                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$default_texture": "textures/ui/skybluetech/button_default",
+                                            "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                             "$is_new_nine_slice": false,
                                             "$label_color": [
                                                 1,
@@ -393,7 +393,7 @@
                                                 1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
                                             "size": [
                                                 25,
@@ -436,7 +436,7 @@
                                                             12.0
                                                         ],
                                                         "layer": 3,
-                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "texture": "textures/ui/skybluetech/energy_io_in_or_out",
                                                         "uv_size": [
                                                             4.0,
                                                             4.0
@@ -497,8 +497,8 @@
                                         "top_set_btn@common.button": {
                                             "type": "button",
                                             "$control_alpha": 1.0,
-                                            "$default_texture": "textures/ui/button_default",
-                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$default_texture": "textures/ui/skybluetech/button_default",
+                                            "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                             "$is_new_nine_slice": false,
                                             "$label_color": [
                                                 1,
@@ -524,7 +524,7 @@
                                                 1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
                                                 25,
@@ -612,7 +612,7 @@
                                                             12.0
                                                         ],
                                                         "layer": 3,
-                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "texture": "textures/ui/skybluetech/energy_io_in_or_out",
                                                         "uv_size": [
                                                             4.0,
                                                             4.0
@@ -628,8 +628,8 @@
                                         "bottom_set_btn@common.button": {
                                             "type": "button",
                                             "$control_alpha": 1.0,
-                                            "$default_texture": "textures/ui/button_default",
-                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$default_texture": "textures/ui/skybluetech/button_default",
+                                            "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                             "$is_new_nine_slice": false,
                                             "$label_color": [
                                                 1,
@@ -655,7 +655,7 @@
                                                 1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
                                                 25,
@@ -743,7 +743,7 @@
                                                             12.0
                                                         ],
                                                         "layer": 3,
-                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "texture": "textures/ui/skybluetech/energy_io_in_or_out",
                                                         "uv_size": [
                                                             4.0,
                                                             4.0
@@ -759,8 +759,8 @@
                                         "west_set_btn@common.button": {
                                             "type": "button",
                                             "$control_alpha": 1.0,
-                                            "$default_texture": "textures/ui/button_default",
-                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$default_texture": "textures/ui/skybluetech/button_default",
+                                            "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                             "$is_new_nine_slice": false,
                                             "$label_color": [
                                                 1,
@@ -786,7 +786,7 @@
                                                 1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
                                                 0,
@@ -874,7 +874,7 @@
                                                             12.0
                                                         ],
                                                         "layer": 3,
-                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "texture": "textures/ui/skybluetech/energy_io_in_or_out",
                                                         "uv_size": [
                                                             4.0,
                                                             4.0
@@ -890,8 +890,8 @@
                                         "east_set_btn@common.button": {
                                             "type": "button",
                                             "$control_alpha": 1.0,
-                                            "$default_texture": "textures/ui/button_default",
-                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$default_texture": "textures/ui/skybluetech/button_default",
+                                            "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                             "$is_new_nine_slice": false,
                                             "$label_color": [
                                                 1,
@@ -917,7 +917,7 @@
                                                 1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
                                                 50,
@@ -1005,7 +1005,7 @@
                                                             12.0
                                                         ],
                                                         "layer": 3,
-                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "texture": "textures/ui/skybluetech/energy_io_in_or_out",
                                                         "uv_size": [
                                                             4.0,
                                                             4.0
@@ -1021,8 +1021,8 @@
                                         "north_set_btn@common.button": {
                                             "type": "button",
                                             "$control_alpha": 1.0,
-                                            "$default_texture": "textures/ui/button_default",
-                                            "$hover_texture": "textures/ui/button_hovered",
+                                            "$default_texture": "textures/ui/skybluetech/button_default",
+                                            "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                             "$is_new_nine_slice": false,
                                             "$label_color": [
                                                 1,
@@ -1048,7 +1048,7 @@
                                                 1
                                             ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                            "$pressed_texture": "textures/ui/button_pressed",
+                                            "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
                                             "offset": [
                                                 75,
@@ -1136,7 +1136,7 @@
                                                             12.0
                                                         ],
                                                         "layer": 3,
-                                                        "texture": "textures/ui/energy_io_in_or_out",
+                                                        "texture": "textures/ui/skybluetech/energy_io_in_or_out",
                                                         "uv_size": [
                                                             4.0,
                                                             4.0

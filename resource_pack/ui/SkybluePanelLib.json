@@ -25,7 +25,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/ui/white_with_smooth_edge"
+                    "texture": "textures/ui/skybluetech/white_with_smooth_edge"
                 }
             },
             {
@@ -42,7 +42,7 @@
                         12.0
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/warning_icon"
+                    "texture": "textures/ui/skybluetech/warning_icon"
                 }
             },
             {
@@ -136,7 +136,7 @@
             1.0,
             1.0
         ],
-        "texture": "textures/ui/white",
+        "texture": "textures/ui/white_background",
         "controls": [
             {
                 "text": {
@@ -651,7 +651,7 @@
                                                 2.0,
                                                 0.0
                                             ],
-                                            "texture": "textures/ui/upper_section_slim",
+                                            "texture": "textures/ui/skybluetech/upper_section_slim",
                                             "controls": [
                                                 {
                                                     "tip_text": {
@@ -684,8 +684,8 @@
                 "exit_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 0.2,
-                    "$default_texture": "textures/ui/white",
-                    "$hover_texture": "textures/ui/white",
+                    "$default_texture": "textures/ui/white_background",
+                    "$hover_texture": "textures/ui/white_background",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -711,7 +711,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/white",
+                    "$pressed_texture": "textures/ui/white_background",
                     "$texture_layer": 2,
                     "layer": 0,
                     "button_mappings": [],
@@ -762,8 +762,8 @@
     "ui_block_stack_desc_section_btn@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
         "$is_new_nine_slice": false,
         "$label_color": [
             1,
@@ -789,7 +789,7 @@
             1.0
         ],
         "$pressed_button_name": "%netease_editor_template_namespace.click",
-        "$pressed_texture": "textures/ui/button_pressed",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$texture_layer": 2,
         "size": [
             30.0,
@@ -916,7 +916,7 @@
     "upgrade_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/slot_upgrader_bg"
+        "texture": "textures/ui/skybluetech/slot_upgrader_bg"
     },
     "machine_screen": {
         "type": "panel",
@@ -1112,7 +1112,7 @@
             {
                 "core": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "size": [
                         3,
                         3
@@ -1136,7 +1136,7 @@
             {
                 "blink": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "color": [
                         0,
                         0,
@@ -1253,7 +1253,7 @@
             {
                 "hover": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "alpha": 0.25,
                     "fill": true,
                     "layer": 1,
@@ -1273,7 +1273,7 @@
             {
                 "pressed": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "alpha": 0.25,
                     "fill": true,
                     "layer": 1,
@@ -1475,9 +1475,9 @@
     "icon_button@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
-        "$pressed_texture": "textures/ui/button_pressed",
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$is_new_nine_slice": false,
         "$label_color": [
             1,
@@ -1504,7 +1504,7 @@
         ],
         "$pressed_button_name": "%netease_editor_template_namespace.click",
         "$texture_layer": 2,
-        "$icon_texture|default": "textures/ui/searcher",
+        "$icon_texture|default": "textures/ui/skybluetech/searcher",
         "size": [
             18,
             18
@@ -1560,9 +1560,9 @@
     "item_button@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
-        "$pressed_texture": "textures/ui/button_pressed",
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$is_new_nine_slice": false,
         "$label_color": [
             1,
@@ -1655,7 +1655,7 @@
             {
                 "bg": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "color": [
                         0.545,
                         0.545,
@@ -1724,7 +1724,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 4,
                     "keep_ratio": false,
@@ -1762,8 +1762,8 @@
             15
         ],
         "layer": 1,
-        "$bg_image|default": "textures/ui/arrow_img",
-        "$mask_image|default": "textures/ui/arrow_mask",
+        "$bg_image|default": "textures/ui/skybluetech/progress/arrow_bg",
+        "$mask_image|default": "textures/ui/skybluetech/progress/arrow_fill",
         "controls": [
             {
                 "bg": {
@@ -1799,7 +1799,7 @@
             {
                 "bg": {
                     "type": "image",
-                    "texture": "textures/ui/arrow_img",
+                    "texture": "textures/ui/skybluetech/progress/arrow_bg",
                     "layer": 1,
                     "keep_ratio": false,
                     "fill": true
@@ -1808,7 +1808,7 @@
             {
                 "mask": {
                     "type": "image",
-                    "texture": "textures/ui/arrow_mask",
+                    "texture": "textures/ui/skybluetech/progress/arrow_fill",
                     "clip_direction": "left",
                     "clip_ratio": 1.0,
                     "clip_pixelperfect": true,
@@ -1826,12 +1826,12 @@
             13
         ],
         "layer": 1,
-        "$mask_img|default": "textures/ui/flame_mask",
+        "$mask_img|default": "textures/ui/skybluetech/flame_mask",
         "controls": [
             {
                 "bg": {
                     "type": "image",
-                    "texture": "textures/ui/flame_img",
+                    "texture": "textures/ui/skybluetech/flame_img",
                     "layer": 1,
                     "keep_ratio": false,
                     "fill": true
@@ -1872,7 +1872,7 @@
             {
                 "bg": {
                     "type": "image",
-                    "texture": "textures/ui/sun_gray",
+                    "texture": "textures/ui/skybluetech/sun_gray",
                     "layer": 1,
                     "keep_ratio": false,
                     "fill": true
@@ -1881,7 +1881,7 @@
             {
                 "mask": {
                     "type": "image",
-                    "texture": "textures/ui/sun",
+                    "texture": "textures/ui/skybluetech/sun",
                     "clip_direction": "down",
                     "clip_ratio": 1.0,
                     "clip_pixelperfect": true,
@@ -1922,7 +1922,7 @@
             {
                 "bg": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "color": [
                         0.545,
                         0.545,
@@ -1956,7 +1956,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 3,
                     "keep_ratio": false,
@@ -1982,7 +1982,7 @@
             {
                 "bg": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "color": [
                         0.545,
                         0.545,
@@ -2016,7 +2016,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 3,
                     "keep_ratio": false,
@@ -2051,7 +2051,7 @@
             {
                 "bg": {
                     "type": "image",
-                    "texture": "textures/ui/bg_frame_01",
+                    "texture": "textures/ui/skybluetech/bg_frame_01",
                     "nineslice_size": [
                         2,
                         2,
@@ -2445,7 +2445,7 @@
                         {
                             "mask": {
                                 "type": "image",
-                                "texture": "textures/ui/energy_bar_top",
+                                "texture": "textures/ui/skybluetech/energy_bar_top",
                                 "tiled": "y",
                                 "anchor_from": "bottom_middle",
                                 "anchor_to": "bottom_middle",
@@ -2463,7 +2463,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 3,
                     "keep_ratio": false,
@@ -2574,7 +2574,7 @@
                         {
                             "bg": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "color": [
                                     0.545,
                                     0.545,
@@ -2603,7 +2603,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 3,
                     "keep_ratio": false,
@@ -2738,7 +2738,7 @@
                         {
                             "back": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "color": [
                                     0.545,
                                     0.545,
@@ -2796,7 +2796,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 4,
                     "keep_ratio": false,
@@ -2960,7 +2960,7 @@
                         {
                             "bg": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "color": [
                                     0.545,
                                     0.545,
@@ -2974,7 +2974,7 @@
                         {
                             "mask": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "clip_direction": "down",
                                 "clip_ratio": 1.0,
                                 "clip_pixelperfect": true,

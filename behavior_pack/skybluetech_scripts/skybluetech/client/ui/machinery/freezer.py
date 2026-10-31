@@ -28,8 +28,8 @@ PRGS_PATH = MAIN_PATH / "progress"
 FLUID_PATH = MAIN_PATH / "fluid_disp"
 # 产物分段按钮 mode_btn_0 … mode_btn_4, 选中项显示为按下态
 MODE_BTN_NAME = "mode_btn_%d"
-MODE_SELECTED_TEXTURE = "textures/ui/button_pressed"
-MODE_NORMAL_TEXTURE = "textures/ui/button_default"
+MODE_SELECTED_TEXTURE = "textures/ui/skybluetech/button_pressed"
+MODE_NORMAL_TEXTURE = "textures/ui/skybluetech/button_default"
 
 
 @RegistToolDeltaScreen("FreezerUI.main", is_proxy=True)

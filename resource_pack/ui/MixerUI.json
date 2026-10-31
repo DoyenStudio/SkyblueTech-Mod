@@ -1,16 +1,4 @@
 {
-    "mixer_progress@SkybluePanelLib.progress_sprite": {
-        "$bg_image": "textures/ui/mixer_arrow_img",
-        "$mask_image": "textures/ui/mixer_arrow_mask",
-        "offset": [
-            0,
-            -43
-        ],
-        "size": [
-            50,
-            25
-        ]
-    },
     "content": {
         "type": "panel",
         "controls": [

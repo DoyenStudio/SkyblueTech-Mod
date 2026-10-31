@@ -75,7 +75,7 @@
                         0.5450980392156862,
                         0.5450980392156862
                     ],
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "bindings": [
                         {
                             "binding_name_override": "#color",
@@ -147,7 +147,7 @@
                         0.5450980392156862,
                         0.5450980392156862
                     ],
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "bindings": [
                         {
                             "binding_name_override": "#color",
@@ -375,7 +375,7 @@
                         0.5450980392156862,
                         0.5450980392156862
                     ],
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "bindings": [
                         {
                             "binding_name_override": "#color",
@@ -476,8 +476,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_fill",
                     "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",

@@ -38,7 +38,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/white"
+                    "texture": "textures/ui/white_background"
                 }
             },
             {
@@ -170,7 +170,7 @@
                         22.0
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/arrow_img"
+                    "texture": "textures/ui/skybluetech/progress/arrow_bg"
                 }
             },
             {
@@ -247,7 +247,7 @@
                                     1.0,
                                     0.0
                                 ],
-                                "texture": "textures/ui/experience_orb",
+                                "texture": "textures/entity/experience_orb",
                                 "uv": [
                                     16.0,
                                     16.0

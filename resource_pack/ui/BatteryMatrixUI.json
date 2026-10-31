@@ -153,14 +153,14 @@
                                                                 "bg": {
                                                                     "type": "image",
                                                                     "layer": 1,
-                                                                    "texture": "textures/ui/battery_big_img"
+                                                                    "texture": "textures/ui/skybluetech/battery_big_img"
                                                                 }
                                                             },
                                                             {
                                                                 "mask": {
                                                                     "type": "image",
                                                                     "layer": 1,
-                                                                    "texture": "textures/ui/battery_big_mask"
+                                                                    "texture": "textures/ui/skybluetech/battery_big_mask"
                                                                 }
                                                             },
                                                             {
@@ -228,14 +228,14 @@
                                                 {
                                                     "input_switch@common_toggles.switch_toggle_collection": {
                                                         "type": "panel",
-                                                        "$checked_locked_texture": "textures/ui/simple_switch_on",
-                                                        "$default_texture": "textures/ui/simple_switch_off",
-                                                        "$hover_texture": "textures/ui/simple_switch_on",
-                                                        "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
-                                                        "$pressed_texture": "textures/ui/simple_switch_off",
+                                                        "$checked_locked_texture": "textures/ui/skybluetech/simple_switch_on",
+                                                        "$default_texture": "textures/ui/skybluetech/simple_switch_off",
+                                                        "$hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                                                        "$pressed_no_hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                                                        "$pressed_texture": "textures/ui/skybluetech/simple_switch_off",
                                                         "$toggle_name": "#BatteryMatrixUI.input_switch",
                                                         "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                                                        "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                                                        "$unchecked_locked_texture": "textures/ui/skybluetech/simple_switch_off",
                                                         "anchor_from": "right_middle",
                                                         "anchor_to": "right_middle",
                                                         "offset": [
@@ -259,15 +259,15 @@
                                                 {
                                                     "output_switch@common_toggles.switch_toggle_collection": {
                                                         "type": "panel",
-                                                        "$checked_locked_texture": "textures/ui/simple_switch_on",
+                                                        "$checked_locked_texture": "textures/ui/skybluetech/simple_switch_on",
                                                         "$default_border_visible|default": false,
-                                                        "$default_texture": "textures/ui/simple_switch_off",
-                                                        "$hover_texture": "textures/ui/simple_switch_on",
-                                                        "$pressed_no_hover_texture": "textures/ui/simple_switch_on",
-                                                        "$pressed_texture": "textures/ui/simple_switch_off",
+                                                        "$default_texture": "textures/ui/skybluetech/simple_switch_off",
+                                                        "$hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                                                        "$pressed_no_hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                                                        "$pressed_texture": "textures/ui/skybluetech/simple_switch_off",
                                                         "$toggle_name": "#BatteryMatrixUI.output_switch",
                                                         "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                                                        "$unchecked_locked_texture": "textures/ui/simple_switch_off",
+                                                        "$unchecked_locked_texture": "textures/ui/skybluetech/simple_switch_off",
                                                         "anchor_from": "right_middle",
                                                         "anchor_to": "right_middle",
                                                         "offset": [
@@ -340,8 +340,8 @@
                                                                 "push_storage_btn@common.button": {
                                                                     "type": "button",
                                                                     "$control_alpha": 1.0,
-                                                                    "$default_texture": "textures/ui/button_default",
-                                                                    "$hover_texture": "textures/ui/button_hovered",
+                                                                    "$default_texture": "textures/ui/skybluetech/button_default",
+                                                                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                                                     "$is_new_nine_slice": false,
                                                                     "$label_color": [
                                                                         0.2588235294117647,
@@ -367,7 +367,7 @@
                                                                         1.0
                                                                     ],
                                                                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                                                    "$pressed_texture": "textures/ui/button_pressed",
+                                                                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                                                     "$texture_layer": 2,
                                                                     "anchor_from": "bottom_right",
                                                                     "anchor_to": "bottom_right",
@@ -417,7 +417,7 @@
                                                                         2.0,
                                                                         2.0
                                                                     ],
-                                                                    "texture": "textures/ui/panel_bg_rect_slim"
+                                                                    "texture": "textures/ui/dialog_background_opaque"
                                                                 }
                                                             },
                                                             {
@@ -492,7 +492,7 @@
                                                                     "$is_box_nine_slice": false,
                                                                     "$is_track_nine_slice": false,
                                                                     "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                                                                    "$scroll_background_texture": "textures/ui/bg_frame_slim",
+                                                                    "$scroll_background_texture": "textures/ui/skybluetech/bg_frame_slim",
                                                                     "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
                                                                     "$scroll_box_texture": "textures/ui/newTouchScrollBox",
                                                                     "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
@@ -630,8 +630,8 @@
                                                     "open_storage_btn@common.button": {
                                                         "type": "button",
                                                         "$control_alpha": 1.0,
-                                                        "$default_texture": "textures/ui/button_default",
-                                                        "$hover_texture": "textures/ui/button_hovered",
+                                                        "$default_texture": "textures/ui/skybluetech/button_default",
+                                                        "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                                         "$is_new_nine_slice": false,
                                                         "$label_color": [
                                                             1,
@@ -656,7 +656,7 @@
                                                             1.0
                                                         ],
                                                         "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                                        "$pressed_texture": "textures/ui/button_pressed",
+                                                        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                                         "$texture_layer": 2,
                                                         "anchor_from": "top_right",
                                                         "anchor_to": "top_right",
@@ -696,7 +696,7 @@
                                                                         "100%x+0px"
                                                                     ],
                                                                     "layer": 4,
-                                                                    "texture": "textures/ui/storage_icon"
+                                                                    "texture": "textures/ui/skybluetech/storage_icon"
                                                                 }
                                                             },
                                                             {
@@ -736,8 +736,8 @@
                                                     "multi_block_structure_check_btn@common.button": {
                                                         "type": "button",
                                                         "$control_alpha": 1.0,
-                                                        "$default_texture": "textures/ui/multi_block_structure_check_button",
-                                                        "$hover_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$default_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
+                                                        "$hover_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
                                                         "$is_new_nine_slice": false,
                                                         "$label_color": [
                                                             1,
@@ -762,7 +762,7 @@
                                                             0
                                                         ],
                                                         "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                                        "$pressed_texture": "textures/ui/multi_block_structure_check_button",
+                                                        "$pressed_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
                                                         "$texture_layer": 2,
                                                         "anchor_from": "top_middle",
                                                         "anchor_to": "top_middle",
@@ -853,7 +853,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -903,7 +903,7 @@
                         0.0,
                         0.0
                     ],
-                    "texture": "textures/ui/azure_bar"
+                    "texture": "textures/ui/skybluetech/azure_bar"
                 }
             },
             {
@@ -921,7 +921,7 @@
                     ],
                     "layer": 1,
                     "clip_direction": "left",
-                    "texture": "textures/ui/azure_bar",
+                    "texture": "textures/ui/skybluetech/azure_bar",
                     "bindings": [
                         {
                             "binding_type": "collection_details",
@@ -1067,14 +1067,14 @@
                             "bg": {
                                 "type": "image",
                                 "layer": 1,
-                                "texture": "textures/ui/battery_big_img"
+                                "texture": "textures/ui/skybluetech/battery_big_img"
                             }
                         },
                         {
                             "mask": {
                                 "type": "image",
                                 "layer": 1,
-                                "texture": "textures/ui/battery_big_mask"
+                                "texture": "textures/ui/skybluetech/battery_big_mask"
                             }
                         },
                         {
@@ -1264,8 +1264,8 @@
                 "open_storage_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -1290,7 +1290,7 @@
                         1
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -1330,7 +1330,7 @@
                                     11
                                 ],
                                 "layer": 4,
-                                "texture": "textures/ui/storage_icon"
+                                "texture": "textures/ui/skybluetech/storage_icon"
                             }
                         },
                         {
@@ -1372,8 +1372,8 @@
                 "multi_block_structure_check_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/multi_block_structure_check_button",
-                    "$hover_texture": "textures/ui/multi_block_structure_check_button",
+                    "$default_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
+                    "$hover_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -1398,7 +1398,7 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/multi_block_structure_check_button",
+                    "$pressed_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
                     "$texture_layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -1450,8 +1450,8 @@
                             "push_storage_btn@common.button": {
                                 "type": "button",
                                 "$control_alpha": 1.0,
-                                "$default_texture": "textures/ui/button_default",
-                                "$hover_texture": "textures/ui/button_hovered",
+                                "$default_texture": "textures/ui/skybluetech/button_default",
+                                "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                 "$is_new_nine_slice": false,
                                 "$label_color": [
                                     0.2588235294117647,
@@ -1477,7 +1477,7 @@
                                     1.0
                                 ],
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                "$pressed_texture": "textures/ui/button_pressed",
+                                "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                 "$texture_layer": 2,
                                 "anchor_from": "bottom_right",
                                 "anchor_to": "bottom_right",
@@ -1521,13 +1521,7 @@
                         {
                             "bg": {
                                 "type": "image",
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
-                                "texture": "textures/ui/panel_bg_rect_slim"
+                                "texture": "textures/ui/dialog_background_opaque"
                             }
                         },
                         {
@@ -1602,7 +1596,7 @@
                                 "$is_box_nine_slice": false,
                                 "$is_track_nine_slice": false,
                                 "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                                "$scroll_background_texture": "textures/ui/bg_frame_slim",
+                                "$scroll_background_texture": "textures/ui/skybluetech/bg_frame_slim",
                                 "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
                                 "$scroll_box_texture": "textures/ui/newTouchScrollBox",
                                 "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",

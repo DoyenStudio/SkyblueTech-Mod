@@ -18,7 +18,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/frame_empty_slim"
+                    "texture": "textures/ui/skybluetech/frame_empty_slim"
                 }
             },
             {
@@ -224,7 +224,7 @@
                                     2.0,
                                     2.0
                                 ],
-                                "texture": "textures/ui/bg_frame_01"
+                                "texture": "textures/ui/skybluetech/bg_frame_01"
                             }
                         }
                     ]
@@ -247,7 +247,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/ui/panel_bg_rect"
+                    "texture": "textures/ui/dialog_background_opaque"
                 }
             },
             {
@@ -346,8 +346,8 @@
                 "confirm_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -373,7 +373,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "#FluidSplitterUI.fluid_selected_confirm",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
@@ -441,14 +441,14 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/frame_empty_slim"
+                    "texture": "textures/ui/skybluetech/frame_empty_slim"
                 }
             },
             {
                 "color_img": {
                     "type": "image",
                     "layer": 2,
-                    "texture": "textures/ui/white"
+                    "texture": "textures/ui/white_background"
                 }
             },
             {
@@ -584,7 +584,7 @@
                                     2.0,
                                     2.0
                                 ],
-                                "texture": "textures/ui/bg_2"
+                                "texture": "textures/ui/skybluetech/bg_2"
                             }
                         }
                     ]
@@ -603,7 +603,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/ui/panel_bg_rect"
+                    "texture": "textures/ui/dialog_background_opaque"
                 }
             },
             {
@@ -728,7 +728,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -745,7 +745,7 @@
                         20.0
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/black_white_rect"
+                    "texture": "textures/ui/skybluetech/black_white_rect"
                 }
             },
             {
@@ -788,7 +788,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/frame_empty_slim"
+                    "texture": "textures/ui/skybluetech/frame_empty_slim"
                 }
             },
             {
@@ -821,8 +821,8 @@
                 "del_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/trash_bin",
-                    "$hover_texture": "textures/ui/trash_bin",
+                    "$default_texture": "textures/ui/skybluetech/trash_bin",
+                    "$hover_texture": "textures/ui/skybluetech/trash_bin",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -848,7 +848,7 @@
                         0
                     ],
                     "$pressed_button_name": "#FluidSplitterUI.delete",
-                    "$pressed_texture": "textures/ui/trash_bin",
+                    "$pressed_texture": "textures/ui/skybluetech/trash_bin",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
@@ -1076,8 +1076,8 @@
                 "add_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -1103,7 +1103,7 @@
                         1
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "offset": [
                         7,
@@ -1177,7 +1177,7 @@
                     "$is_box_nine_slice": false,
                     "$is_track_nine_slice": false,
                     "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                    "$scroll_background_texture": "textures/ui/bg_frame_slim",
+                    "$scroll_background_texture": "textures/ui/skybluetech/bg_frame_slim",
                     "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
                     "$scroll_box_texture": "textures/ui/newTouchScrollBox",
                     "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",

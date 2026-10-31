@@ -16,7 +16,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -36,8 +36,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -107,7 +107,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -182,8 +182,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -259,7 +259,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -350,7 +350,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -403,8 +403,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/compressor_bg",
-                    "$mask_image": "textures/ui/compressor_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/compressor_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/compressor_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -469,7 +469,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -629,7 +629,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg",
+                    "texture": "textures/ui/skybluetech/rect_panel_bg",
                     "controls": [
                         {
                             "title": {
@@ -690,7 +690,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/grid_content"
+                    "texture": "textures/ui/skybluetech/grid_content"
                 }
             }
         ]
@@ -712,7 +712,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -798,7 +798,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -964,7 +964,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1060,8 +1060,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask_redstone",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_redstone_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -1126,7 +1126,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1222,7 +1222,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1318,7 +1318,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1352,8 +1352,8 @@
                         0,
                         -10
                     ],
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_fill",
                     "size": [
                         22,
                         15
@@ -1391,7 +1391,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1472,7 +1472,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1592,7 +1592,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1724,7 +1724,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -1753,7 +1753,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/white"
+                    "texture": "textures/ui/white_background"
                 }
             },
             {
@@ -1990,7 +1990,7 @@
                         1.0,
                         0.0
                     ],
-                    "texture": "textures/ui/experience_orb",
+                    "texture": "textures/entity/experience_orb",
                     "uv": [
                         16.0,
                         16.0
@@ -2038,7 +2038,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -2069,8 +2069,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/macerator_prgs_bg",
-                    "$mask_image": "textures/ui/macerator_prgs_top",
+                    "$bg_image": "textures/ui/skybluetech/progress/macerator_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/macerator_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -2140,7 +2140,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -2359,7 +2359,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -2539,7 +2539,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -2570,8 +2570,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_lava_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -2644,7 +2644,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -2739,7 +2739,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -2786,8 +2786,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/metal_press_bg",
-                    "$mask_image": "textures/ui/metal_press_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/metal_press_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/metal_press_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -2852,7 +2852,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -2905,8 +2905,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/macerator_prgs_bg",
-                    "$mask_image": "textures/ui/macerator_prgs_top",
+                    "$bg_image": "textures/ui/skybluetech/progress/macerator_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/macerator_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -2971,7 +2971,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3077,7 +3077,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3173,7 +3173,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3296,7 +3296,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3407,7 +3407,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3434,8 +3434,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_fill",
                     "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -3515,7 +3515,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3628,7 +3628,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3829,7 +3829,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {
@@ -3951,7 +3951,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/rect_panel_bg"
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {

@@ -132,7 +132,7 @@ ENERGY_CRITICAL = 0.05
 "低于此比例: 换红色贴图"
 # 带电部分: 蔚蓝原有材质 + 两张换色贴图 (gen_textures.py 按原材质的明暗逐像素重画, 不用 color 着色)
 _ENERGY_FILLS = (
-    "textures/ui/energy_bar_top",
+    "textures/ui/skybluetech/energy_bar_top",
     "textures/ui/skybluetech/energy/orig_fill_amber",
     "textures/ui/skybluetech/energy/orig_fill_red",
 )

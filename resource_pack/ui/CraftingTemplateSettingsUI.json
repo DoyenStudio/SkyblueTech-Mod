@@ -149,7 +149,7 @@
                         20.0
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/arrow_img"
+                    "texture": "textures/ui/skybluetech/progress/arrow_bg"
                 }
             },
             {
@@ -183,7 +183,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/bg_frame_01",
+                    "texture": "textures/ui/skybluetech/bg_frame_01",
                     "uv": [
                         0.0,
                         0.0
@@ -223,7 +223,7 @@
                         2.0,
                         2.0
                     ],
-                    "texture": "textures/ui/bg_frame_01"
+                    "texture": "textures/ui/skybluetech/bg_frame_01"
                 }
             },
             {

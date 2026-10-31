@@ -101,8 +101,8 @@
                         },
                         {
                             "progress@SkybluePanelLib.progress_sprite": {
-                                "$bg_image": "textures/ui/macerator_prgs_bg",
-                                "$mask_image": "textures/ui/macerator_prgs_top",
+                                "$bg_image": "textures/ui/skybluetech/progress/macerator_bg",
+                                "$mask_image": "textures/ui/skybluetech/progress/macerator_fill",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [

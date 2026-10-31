@@ -103,6 +103,7 @@
                         },
                         {
                             "progress@SkybluePanelLib.progress_sprite": {
+                                "$mask_image": "textures/ui/skybluetech/progress/arrow_lava_fill",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [

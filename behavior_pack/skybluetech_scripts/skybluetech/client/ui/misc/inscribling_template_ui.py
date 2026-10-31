@@ -70,7 +70,7 @@ class InscribingTemplateUI(ToolDeltaScreen):
     )
     def get_section_element_icon_texture(self, index):
         # type: (int) -> str
-        return "textures/ui/inscribing_element_icon_" + str(index + 1)
+        return "textures/ui/skybluetech/inscribing_element_icon_" + str(index + 1)
 
     @Binder.binding_collection(
         Binder.BF_BindBool,
@@ -89,9 +89,9 @@ class InscribingTemplateUI(ToolDeltaScreen):
     def get_graph_element_base_texture(self, index):
         # type: (int) -> str
         return (
-            "textures/ui/inscribing_template_ui_graph_element_base_focused"
+            "textures/ui/skybluetech/inscribing_template_ui_graph_element_base_focused"
             if index == self.current_graph_element_section
-            else "textures/ui/inscribing_template_ui_graph_element_base_unfocused"
+            else "textures/ui/skybluetech/inscribing_template_ui_graph_element_base_unfocused"
         )
 
     # @Binder.binding_collection(
@@ -111,7 +111,7 @@ class InscribingTemplateUI(ToolDeltaScreen):
     )
     def get_graph_element_icon_texture(self, index):
         # type: (int) -> str
-        return "textures/ui/inscribing_element_icon_" + str(self.graph[index] + 1)
+        return "textures/ui/skybluetech/inscribing_element_icon_" + str(self.graph[index] + 1)
 
     @ToolDeltaScreen.Listen(OnKeyPressInGame)
     def on_key_press(self, event):

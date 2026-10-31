@@ -17,7 +17,7 @@
     "pincer_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/slot_pincer_img"
+        "texture": "textures/ui/skybluetech/slot_pincer_img"
     },
     "recipes_grid": {
         "type": "grid",
@@ -215,7 +215,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/gray_alpha_mask"
+                    "texture": "textures/ui/skybluetech/gray_alpha_mask"
                 }
             }
         ]
@@ -223,7 +223,7 @@
     "wrench_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/slot_wrench_img"
+        "texture": "textures/ui/skybluetech/slot_wrench_img"
     },
     "content": {
         "type": "panel",
@@ -309,8 +309,8 @@
             },
             {
                 "progress@SkybluePanelLib.progress_sprite": {
-                    "$bg_image": "textures/ui/arrow_img",
-                    "$mask_image": "textures/ui/arrow_mask",
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_fill",
                     "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
@@ -343,8 +343,8 @@
                 "craft_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -369,7 +369,7 @@
                         1
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "offset": [
                         88,
@@ -416,7 +416,7 @@
                                     16
                                 ],
                                 "layer": 2,
-                                "texture": "textures/ui/workstation_craft_btn_icon",
+                                "texture": "textures/ui/skybluetech/workstation_craft_btn_icon",
                                 "anchor_from": "center",
                                 "anchor_to": "center"
                             }
@@ -564,7 +564,7 @@
                                     16
                                 ],
                                 "layer": 1,
-                                "texture": "textures/ui/warning_icon",
+                                "texture": "textures/ui/skybluetech/warning_icon",
                                 "offset": [
                                     2,
                                     1

@@ -101,7 +101,7 @@
                         },
                         {
                             "flame@SkybluePanelLib.burn_flame": {
-                                "$mask_img": "textures/ui/flame_redstone_mask",
+                                "$mask_img": "textures/ui/skybluetech/flame_redstone_mask",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [

@@ -6,7 +6,7 @@
             20.0
         ],
         "layer": 1,
-        "texture": "textures/ui/slot_drill_top_bg"
+        "texture": "textures/ui/skybluetech/slot_drill_top_bg"
     },
     "content": {
         "type": "panel",
@@ -181,8 +181,8 @@
                 "multi_block_structure_check_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/multi_block_structure_check_button",
-                    "$hover_texture": "textures/ui/multi_block_structure_check_button",
+                    "$default_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
+                    "$hover_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -207,7 +207,7 @@
                         0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/multi_block_structure_check_button",
+                    "$pressed_texture": "textures/ui/skybluetech/multi_block_structure_check_button",
                     "$texture_layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",

@@ -4,7 +4,7 @@
         "layer": 1,
         "clip_direction": "left",
         "clip_ratio": 0.0,
-        "texture": "textures/ui/slot_tool_upgrader_bg"
+        "texture": "textures/ui/skybluetech/slot_tool_upgrader_bg"
     },
     "upgrader_view_single": {
         "type": "panel",
@@ -17,8 +17,8 @@
                 "button@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -44,7 +44,7 @@
                         4
                     ],
                     "$pressed_button_name": "#upgrade_arg_click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "layer": 0,
                     "button_mappings": [
@@ -231,8 +231,8 @@
                 "push_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -258,7 +258,7 @@
                         1
                     ],
                     "$pressed_button_name": "",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "offset": [
                         28,
@@ -310,7 +310,7 @@
                             "image": {
                                 "type": "image",
                                 "layer": 2,
-                                "texture": "textures/ui/tool_upgrade_push",
+                                "texture": "textures/ui/skybluetech/tool_upgrade_push",
                                 "size": [
                                     16,
                                     16

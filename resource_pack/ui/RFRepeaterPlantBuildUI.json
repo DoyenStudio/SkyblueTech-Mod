@@ -30,7 +30,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "controls": [
                         {
                             "title_label": {
@@ -111,8 +111,8 @@
                 "esc_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/red_button_default",
-                    "$hover_texture": "textures/ui/red_button_default",
+                    "$default_texture": "textures/ui/skybluetech/red_button_default",
+                    "$hover_texture": "textures/ui/skybluetech/red_button_default",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -138,7 +138,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/red_button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/red_button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_middle",
                     "anchor_to": "bottom_middle",
@@ -184,7 +184,7 @@
                                     "100%+-4px"
                                 ],
                                 "layer": 3,
-                                "texture": "textures/ui/exit_img"
+                                "texture": "textures/ui/skybluetech/exit_img"
                             }
                         },
                         {
@@ -202,8 +202,8 @@
                 "finish_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -229,7 +229,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_middle",
                     "anchor_to": "bottom_middle",

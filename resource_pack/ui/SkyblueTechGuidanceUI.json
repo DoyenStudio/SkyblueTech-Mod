@@ -11,8 +11,8 @@
                 "close_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/guidance_bg_right",
-                    "$hover_texture": "textures/ui/guidance_bg_right",
+                    "$default_texture": "textures/ui/skybluetech/guidance_bg_right",
+                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_right",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -38,7 +38,7 @@
                         4.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/guidance_bg_right",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_right",
                     "$texture_layer": 2,
                     "anchor_from": "top_right",
                     "anchor_to": "top_left",
@@ -84,7 +84,7 @@
                                 "layer": 3,
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
-                                "texture": "textures/ui/guidance_exit_icon"
+                                "texture": "textures/ui/skybluetech/guidance_exit_icon"
                             }
                         }
                     ]
@@ -94,8 +94,8 @@
                 "prev_page_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/guidance_bg_left",
-                    "$hover_texture": "textures/ui/guidance_bg_left",
+                    "$default_texture": "textures/ui/skybluetech/guidance_bg_left",
+                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_left",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -121,7 +121,7 @@
                         4.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/guidance_bg_left",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_left",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_left",
                     "anchor_to": "bottom_right",
@@ -171,7 +171,7 @@
                                 "layer": 3,
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
-                                "texture": "textures/ui/guidance_prevpage_icon"
+                                "texture": "textures/ui/skybluetech/guidance_prevpage_icon"
                             }
                         }
                     ]
@@ -181,8 +181,8 @@
                 "next_page_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/guidance_bg_right",
-                    "$hover_texture": "textures/ui/guidance_bg_right",
+                    "$default_texture": "textures/ui/skybluetech/guidance_bg_right",
+                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_right",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -208,7 +208,7 @@
                         4.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/guidance_bg_right",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_right",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_right",
                     "anchor_to": "bottom_left",
@@ -258,7 +258,7 @@
                                 "layer": 3,
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
-                                "texture": "textures/ui/guidance_nextpage_icon"
+                                "texture": "textures/ui/skybluetech/guidance_nextpage_icon"
                             }
                         }
                     ]
@@ -268,8 +268,8 @@
                 "back_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/guidance_bg_left",
-                    "$hover_texture": "textures/ui/guidance_bg_left",
+                    "$default_texture": "textures/ui/skybluetech/guidance_bg_left",
+                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_left",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -294,7 +294,7 @@
                         4.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/guidance_bg_left",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_left",
                     "$texture_layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_right",
@@ -338,7 +338,7 @@
                                     "56%+0px"
                                 ],
                                 "layer": 2,
-                                "texture": "textures/ui/guidance_back_icon"
+                                "texture": "textures/ui/skybluetech/guidance_back_icon"
                             }
                         }
                     ]
@@ -359,7 +359,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/ui/guidance_bg"
+                    "texture": "textures/ui/skybluetech/guidance_bg"
                 }
             },
             {
@@ -386,7 +386,7 @@
                                     4.0,
                                     4.0
                                 ],
-                                "texture": "textures/ui/white_with_smooth_edge2"
+                                "texture": "textures/ui/skybluetech/white_with_smooth_edge2"
                             }
                         },
                         {
@@ -408,7 +408,7 @@
                                     2.0,
                                     2.0
                                 ],
-                                "texture": "textures/ui/white_with_smooth_edge3"
+                                "texture": "textures/ui/skybluetech/white_with_smooth_edge3"
                             }
                         },
                         {

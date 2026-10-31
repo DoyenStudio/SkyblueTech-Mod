@@ -81,7 +81,7 @@
             {
                 "legend_swatch_0": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -92,7 +92,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -137,7 +137,7 @@
             {
                 "legend_swatch_1": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -148,7 +148,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -193,7 +193,7 @@
             {
                 "legend_swatch_2": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -204,7 +204,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -356,7 +356,7 @@
             {
                 "legend_swatch_0": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -367,7 +367,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -412,7 +412,7 @@
             {
                 "legend_swatch_1": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -423,7 +423,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -468,7 +468,7 @@
             {
                 "legend_swatch_2": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -479,7 +479,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -631,7 +631,7 @@
             {
                 "legend_swatch_0": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -642,7 +642,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -687,7 +687,7 @@
             {
                 "legend_swatch_1": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -698,7 +698,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -743,7 +743,7 @@
             {
                 "legend_swatch_2": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -754,7 +754,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -906,7 +906,7 @@
             {
                 "legend_swatch_0": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -917,7 +917,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -962,7 +962,7 @@
             {
                 "legend_swatch_1": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -973,7 +973,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -1018,7 +1018,7 @@
             {
                 "legend_swatch_2": {
                     "type": "image",
-                    "texture": "textures/ui/button_default",
+                    "texture": "textures/ui/skybluetech/button_default",
                     "nineslice_size": 1,
                     "size": [
                         9,
@@ -1029,7 +1029,7 @@
                         {
                             "fill": {
                                 "type": "image",
-                                "texture": "textures/ui/white",
+                                "texture": "textures/ui/white_background",
                                 "size": [
                                     7,
                                     7
@@ -1102,9 +1102,9 @@
     "face_btn@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
-        "$pressed_texture": "textures/ui/button_pressed",
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$is_new_nine_slice": false,
         "$label_color": [
             1,
@@ -1172,7 +1172,7 @@
             {
                 "fill": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "size": [
                         16,
                         16
@@ -1191,7 +1191,7 @@
             {
                 "icon": {
                     "type": "image",
-                    "texture": "textures/ui/transmitter_pull_or_push",
+                    "texture": "textures/ui/skybluetech/transmitter_pull_or_push",
                     "size": [
                         9,
                         9

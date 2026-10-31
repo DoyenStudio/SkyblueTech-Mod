@@ -12,7 +12,7 @@ upgraders_machinery = PageGroup(
     [
         TextPage(
             "机器升级模块",
-            '在机器的<text color="§6" t="右上角">可以安装<item id="{upgrader}">升级模块， 只需要把升级模块放入带<img path="textures/ui/slot_upgrader_bg">图标的槽位里就可以直接生效了， 多余的升级模块会直接弹出为掉落物。\n\n目前一个机器对于每种类型的升级模块<text color="§c" t="最多只能接受一个">， 至多接受 4 个升级模块。'.format(
+            '在机器的<text color="§6" t="右上角">可以安装<item id="{upgrader}">升级模块， 只需要把升级模块放入带<img path="textures/ui/skybluetech/slot_upgrader_bg">图标的槽位里就可以直接生效了， 多余的升级模块会直接弹出为掉落物。\n\n目前一个机器对于每种类型的升级模块<text color="§c" t="最多只能接受一个">， 至多接受 4 个升级模块。'.format(
                 upgrader=id_enum.Upgraders.EMPTY
             ),
         ),

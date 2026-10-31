@@ -163,8 +163,8 @@
     "section_btn@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
         "$is_new_nine_slice": false,
         "$label_color": [
             1,
@@ -190,7 +190,7 @@
             1.0
         ],
         "$pressed_button_name": "#InscribingTemplateUI.template_section_button",
-        "$pressed_texture": "textures/ui/button_pressed",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$texture_layer": 2,
         "size": [
             20.0,
@@ -233,7 +233,7 @@
                         16.0
                     ],
                     "layer": 3,
-                    "texture": "textures/ui/inscribing_element_icons",
+                    "texture": "textures/ui/skybluetech/inscribing_element_icons",
                     "uv_size": [
                         16.0,
                         16.0
@@ -268,7 +268,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/border_line",
+                    "texture": "textures/ui/skybluetech/border_line",
                     "bindings": [
                         {
                             "binding_name_override": "#visible",
@@ -372,7 +372,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/inscribing_template_ui_graph_element_base_focused",
+                    "texture": "textures/ui/skybluetech/inscribing_template_ui_graph_element_base_focused",
                     "uv_size": [
                         0.0,
                         0.0
@@ -396,7 +396,7 @@
                         16.0
                     ],
                     "layer": 3,
-                    "texture": "textures/ui/inscribing_element_icons",
+                    "texture": "textures/ui/skybluetech/inscribing_element_icons",
                     "uv_size": [
                         16.0,
                         16.0

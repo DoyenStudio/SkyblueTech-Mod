@@ -238,8 +238,8 @@
                             "range_sub_btn@common.button": {
                                 "type": "button",
                                 "$control_alpha": 1.0,
-                                "$default_texture": "textures/ui/button_default",
-                                "$hover_texture": "textures/ui/button_hovered",
+                                "$default_texture": "textures/ui/skybluetech/button_default",
+                                "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                 "$is_new_nine_slice": false,
                                 "$label_color": [
                                     0.3333333333333333,
@@ -265,7 +265,7 @@
                                     1
                                 ],
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                "$pressed_texture": "textures/ui/button_pressed",
+                                "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                 "$texture_layer": 2,
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -316,8 +316,8 @@
                             "range_add_btn@common.button": {
                                 "type": "button",
                                 "$control_alpha": 1.0,
-                                "$default_texture": "textures/ui/button_default",
-                                "$hover_texture": "textures/ui/button_hovered",
+                                "$default_texture": "textures/ui/skybluetech/button_default",
+                                "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                 "$is_new_nine_slice": false,
                                 "$label_color": [
                                     0.3333333333333333,
@@ -343,7 +343,7 @@
                                     1
                                 ],
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                "$pressed_texture": "textures/ui/button_pressed",
+                                "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                 "$texture_layer": 2,
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -394,8 +394,8 @@
                             "range_preview_btn@common.button": {
                                 "type": "button",
                                 "$control_alpha": 1.0,
-                                "$default_texture": "textures/ui/button_default",
-                                "$hover_texture": "textures/ui/button_hovered",
+                                "$default_texture": "textures/ui/skybluetech/button_default",
+                                "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                 "$is_new_nine_slice": false,
                                 "$label_color": [
                                     0.3333333333333333,
@@ -421,7 +421,7 @@
                                     1
                                 ],
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                "$pressed_texture": "textures/ui/button_pressed",
+                                "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                 "$texture_layer": 2,
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
@@ -469,7 +469,7 @@
                                         "image": {
                                             "type": "image",
                                             "layer": 2,
-                                            "texture": "textures/ui/eye_icon",
+                                            "texture": "textures/ui/skybluetech/eye_icon",
                                             "size": [
                                                 16,
                                                 16

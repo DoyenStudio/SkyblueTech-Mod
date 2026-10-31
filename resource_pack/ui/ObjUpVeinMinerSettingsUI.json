@@ -48,7 +48,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/ui/panel_bg"
+                    "texture": "textures/ui/background_image"
                 }
             },
             {
@@ -77,7 +77,7 @@
                     "$is_box_nine_slice": false,
                     "$is_track_nine_slice": false,
                     "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                    "$scroll_background_texture": "textures/ui/bg_frame_slim",
+                    "$scroll_background_texture": "textures/ui/skybluetech/bg_frame_slim",
                     "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
                     "$scroll_box_texture": "textures/ui/newTouchScrollBox",
                     "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
@@ -133,8 +133,8 @@
                 "add_block_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -160,7 +160,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "#ObjUpVeinMinerSettingsUI.add_block_btn",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_left",
                     "anchor_to": "bottom_left",
@@ -211,8 +211,8 @@
                 "del_block_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -238,7 +238,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "#ObjUpVeinMinerSettingsUI.del_block_btn",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_right",
                     "anchor_to": "bottom_right",
@@ -306,8 +306,8 @@
                 "section_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -333,7 +333,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "#ObjUpVeinMinerSettingsUI.section_btn",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "layer": 0,
                     "button_mappings": [
@@ -405,7 +405,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/border_line",
+                    "texture": "textures/ui/skybluetech/border_line",
                     "bindings": [
                         {
                             "binding_name_override": "#visible",

@@ -2,9 +2,9 @@
     "combo_box": {
         "type": "panel",
         "$dropdown_background_alpha|default": 1.0,
-        "$dropdown_background_texture|default": "textures/ui/panel_bg_rect_slim",
-        "$option_default_texture|default": "textures/ui/button_default",
-        "$option_hover_texture|default": "textures/ui/button_hovered",
+        "$dropdown_background_texture|default": "textures/ui/dialog_background_opaque",
+        "$option_default_texture|default": "textures/ui/skybluetech/button_default",
+        "$option_hover_texture|default": "textures/ui/skybluetech/button_hovered",
         "$option_label_color|default": [
             0.2588235294117647,
             0.2588235294117647,
@@ -12,9 +12,9 @@
         ],
         "$option_label_font_scale_factor|default": 1.0,
         "$option_label_font_size|default": "normal",
-        "$option_pressed_texture|default": "textures/ui/button_pressed",
-        "$toggle_default_texture|default": "textures/ui/button_default",
-        "$toggle_hover_texture|default": "textures/ui/button_hovered",
+        "$option_pressed_texture|default": "textures/ui/skybluetech/button_pressed",
+        "$toggle_default_texture|default": "textures/ui/skybluetech/button_default",
+        "$toggle_hover_texture|default": "textures/ui/skybluetech/button_hovered",
         "$toggle_label_color|default": [
             0.2588235294117647,
             0.2588235294117647,
@@ -22,7 +22,7 @@
         ],
         "$toggle_label_font_scale_factor|default": 1.4,
         "$toggle_label_font_size|default": "normal",
-        "$toggle_pressed_texture|default": "textures/ui/button_pressed",
+        "$toggle_pressed_texture|default": "textures/ui/skybluetech/button_pressed",
         "size": [
             100.0,
             25.0
@@ -67,12 +67,6 @@
                                 "type": "image",
                                 "alpha": "$dropdown_background_alpha",
                                 "layer": 1,
-                                "nineslice_size": [
-                                    2,
-                                    2,
-                                    2,
-                                    2
-                                ],
                                 "texture": "$dropdown_background_texture"
                             }
                         },
@@ -103,7 +97,7 @@
                                 "$is_box_nine_slice": false,
                                 "$is_track_nine_slice": false,
                                 "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                                "$scroll_background_texture": "textures/ui/frame_empty_slim",
+                                "$scroll_background_texture": "textures/ui/skybluetech/frame_empty_slim",
                                 "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
                                 "$scroll_box_texture": "textures/ui/newTouchScrollBox",
                                 "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
@@ -215,7 +209,7 @@
                     "layer": 10,
                     "clip_direction": "left",
                     "clip_ratio": 0.0,
-                    "texture": "textures/ui/down_triangle"
+                    "texture": "textures/ui/skybluetech/down_triangle"
                 }
             }
         ]
@@ -300,8 +294,8 @@
         ]
     },
     "dropdown_option_standalone@tooldelta_lib.dropdown_option": {
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
         "$label_color": [
             0.2588235294117647,
             0.2588235294117647,
@@ -309,8 +303,8 @@
         ],
         "$label_font_scale_factor": 1.0,
         "$label_font_size": "normal",
-        "$option_pressed_texture|default": "textures/ui/button_pressed",
-        "$pressed_texture": "textures/ui/button_pressed"
+        "$option_pressed_texture|default": "textures/ui/skybluetech/button_pressed",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed"
     },
     "main": {
         "type": "screen",
@@ -362,12 +356,6 @@
                                             "type": "image",
                                             "alpha": "$dropdown_background_alpha",
                                             "layer": 1,
-                                            "nineslice_size": [
-                                                2,
-                                                2,
-                                                2,
-                                                2
-                                            ],
                                             "texture": "$dropdown_background_texture"
                                         }
                                     },
@@ -398,7 +386,7 @@
                                             "$is_box_nine_slice": false,
                                             "$is_track_nine_slice": false,
                                             "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                                            "$scroll_background_texture": "textures/ui/frame_empty_slim",
+                                            "$scroll_background_texture": "textures/ui/skybluetech/frame_empty_slim",
                                             "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
                                             "$scroll_box_texture": "textures/ui/newTouchScrollBox",
                                             "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",

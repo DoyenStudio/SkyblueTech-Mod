@@ -32,14 +32,14 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "controls": [
                         {
                             "close_btn@common.button": {
                                 "type": "button",
                                 "$control_alpha": 1.0,
-                                "$default_texture": "textures/ui/close_button_white",
-                                "$hover_texture": "textures/ui/close_button_white",
+                                "$default_texture": "textures/ui/close_button_default_light",
+                                "$hover_texture": "textures/ui/close_button_default_light",
                                 "$is_new_nine_slice": false,
                                 "$label_color": [
                                     1,
@@ -65,7 +65,7 @@
                                     0
                                 ],
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                "$pressed_texture": "textures/ui/close_button_white",
+                                "$pressed_texture": "textures/ui/close_button_default_light",
                                 "$texture_layer": 2,
                                 "anchor_from": "top_right",
                                 "anchor_to": "top_right",
@@ -105,8 +105,8 @@
                         {
                             "edit_box@common.text_edit_box": {
                                 "type": "edit_box",
-                                "$edit_box_default_texture": "textures/ui/gray_alpha_mask",
-                                "$edit_box_hover_texture": "textures/ui/gray_alpha_mask",
+                                "$edit_box_default_texture": "textures/ui/skybluetech/gray_alpha_mask",
+                                "$edit_box_hover_texture": "textures/ui/skybluetech/gray_alpha_mask",
                                 "$font_scale_factor": 1.0,
                                 "$font_size": "normal",
                                 "$is_new_nine_slice": false,
@@ -297,17 +297,17 @@
                         {
                             "category_combo@tooldelta_lib.combo_box": {
                                 "$dropdown_background_alpha": 0,
-                                "$dropdown_background_texture|default": "textures/ui/gray_alpha_mask",
-                                "$option_default_texture|default": "textures/ui/gray_alpha_mask",
-                                "$option_hover_texture|default": "textures/ui/gray_alpha_mask",
+                                "$dropdown_background_texture|default": "textures/ui/skybluetech/gray_alpha_mask",
+                                "$option_default_texture|default": "textures/ui/skybluetech/gray_alpha_mask",
+                                "$option_hover_texture|default": "textures/ui/skybluetech/gray_alpha_mask",
                                 "$option_label_color|default": [
                                     1,
                                     1,
                                     1
                                 ],
-                                "$option_pressed_texture|default": "textures/ui/gray_alpha_mask",
-                                "$toggle_default_texture|default": "textures/ui/gray_alpha_mask",
-                                "$toggle_hover_texture|default": "textures/ui/gray_alpha_mask",
+                                "$option_pressed_texture|default": "textures/ui/skybluetech/gray_alpha_mask",
+                                "$toggle_default_texture|default": "textures/ui/skybluetech/gray_alpha_mask",
+                                "$toggle_hover_texture|default": "textures/ui/skybluetech/gray_alpha_mask",
                                 "$toggle_label_color|default": [
                                     1,
                                     1,
@@ -315,7 +315,7 @@
                                 ],
                                 "$toggle_label_font_scale_factor": 1,
                                 "$toggle_label_font_scale_factor|default": 1,
-                                "$toggle_pressed_texture|default": "textures/ui/gray_alpha_mask",
+                                "$toggle_pressed_texture|default": "textures/ui/skybluetech/gray_alpha_mask",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "layer": 100,
@@ -440,13 +440,13 @@
                         1,
                         1
                     ],
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "controls": [
                         {
                             "edit_box@common.text_edit_box": {
                                 "type": "edit_box",
-                                "$edit_box_default_texture": "textures/ui/gray_alpha_mask",
-                                "$edit_box_hover_texture": "textures/ui/gray_alpha_mask",
+                                "$edit_box_default_texture": "textures/ui/skybluetech/gray_alpha_mask",
+                                "$edit_box_hover_texture": "textures/ui/skybluetech/gray_alpha_mask",
                                 "$font_scale_factor": 1,
                                 "$font_size": "normal",
                                 "$is_new_nine_slice": false,
@@ -704,6 +704,18 @@
             }
         ]
     },
+    "main@common.base_screen": {
+        "$screen_content": "MiniJEIItemListUI.screen_root"
+    },
+    "namespace": "MiniJEIItemListUI",
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@MiniJEIItemListUI.content": {}
+            }
+        ]
+    },
     "single_favourite_item@MiniJEIItemListUI.single_mjei_item": {
         "$item_collection_name": "minijei_favourites_grid",
         "$item_id_aux_binding_name": "#MiniJEIItemListUI.favourite_item_id_aux",
@@ -725,7 +737,7 @@
                     "type": "button",
                     "$control_alpha": 0.5,
                     "$default_texture": "",
-                    "$hover_texture": "textures/ui/white",
+                    "$hover_texture": "textures/ui/white_background",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -751,7 +763,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "$item_select_button_name",
-                    "$pressed_texture": "textures/ui/white",
+                    "$pressed_texture": "textures/ui/white_background",
                     "$texture_layer": 2,
                     "size": [
                         "100%+0px",
@@ -830,17 +842,5 @@
                 }
             }
         ]
-    },
-    "screen_root": {
-        "type": "panel",
-        "controls": [
-            {
-                "panel@MiniJEIItemListUI.content": {}
-            }
-        ]
-    },
-    "main@common.base_screen": {
-        "$screen_content": "MiniJEIItemListUI.screen_root"
-    },
-    "namespace": "MiniJEIItemListUI"
+    }
 }

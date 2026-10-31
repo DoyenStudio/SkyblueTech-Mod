@@ -117,8 +117,8 @@
                 "delete_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         1,
@@ -144,7 +144,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "right_middle",
                     "anchor_to": "right_middle",
@@ -187,7 +187,7 @@
                                     "100%+-4px"
                                 ],
                                 "layer": 2,
-                                "texture": "textures/ui/trash_bin"
+                                "texture": "textures/ui/skybluetech/trash_bin"
                             }
                         }
                     ]
@@ -280,7 +280,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/white"
+                    "texture": "textures/ui/white_background"
                 }
             }
         ]
@@ -763,8 +763,8 @@
                 "add_layer_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -790,7 +790,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_middle",
                     "anchor_to": "bottom_middle",
@@ -844,7 +844,7 @@
                                     0.0,
                                     0.0
                                 ],
-                                "texture": "textures/ui/add_icon"
+                                "texture": "textures/ui/skybluetech/add_icon"
                             }
                         }
                     ]
@@ -876,8 +876,8 @@
                 "sub_layer_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -903,7 +903,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_middle",
                     "anchor_to": "bottom_middle",
@@ -957,7 +957,7 @@
                                     0.0,
                                     0.0
                                 ],
-                                "texture": "textures/ui/sub_icon"
+                                "texture": "textures/ui/skybluetech/sub_icon"
                             }
                         }
                     ]
@@ -984,7 +984,7 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/white"
+                    "texture": "textures/ui/white_background"
                 }
             },
             {
@@ -1151,15 +1151,15 @@
                         1.0,
                         1.0
                     ],
-                    "texture": "textures/ui/white"
+                    "texture": "textures/ui/white_background"
                 }
             },
             {
                 "add_layer_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -1185,7 +1185,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
@@ -1239,7 +1239,7 @@
                                     0.0,
                                     0.0
                                 ],
-                                "texture": "textures/ui/add_icon"
+                                "texture": "textures/ui/skybluetech/add_icon"
                             }
                         }
                     ]
@@ -1275,8 +1275,8 @@
                 "sub_layer_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/button_default",
-                    "$hover_texture": "textures/ui/button_hovered",
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.2588235294117647,
@@ -1302,7 +1302,7 @@
                         1.0
                     ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/button_pressed",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
                     "anchor_from": "top_right",
                     "anchor_to": "top_right",
@@ -1356,7 +1356,7 @@
                                     0.0,
                                     0.0
                                 ],
-                                "texture": "textures/ui/sub_icon"
+                                "texture": "textures/ui/skybluetech/sub_icon"
                             }
                         }
                     ]
@@ -1414,7 +1414,7 @@
                         2.0,
                         0.0
                     ],
-                    "texture": "textures/ui/split_bar_left"
+                    "texture": "textures/ui/skybluetech/split_bar_left"
                 }
             },
             {
@@ -1430,7 +1430,7 @@
                         0.7647058823529411,
                         0.8980392156862745
                     ],
-                    "texture": "textures/ui/split_bar_center"
+                    "texture": "textures/ui/skybluetech/split_bar_center"
                 }
             },
             {
@@ -1454,7 +1454,7 @@
                         2.0,
                         0.0
                     ],
-                    "texture": "textures/ui/split_bar_right"
+                    "texture": "textures/ui/skybluetech/split_bar_right"
                 }
             }
         ]
@@ -1462,8 +1462,8 @@
     "structure_model_layer_button@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
-        "$default_texture": "textures/ui/button_default",
-        "$hover_texture": "textures/ui/button_hovered",
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
         "$is_new_nine_slice": false,
         "$label_color": [
             0.26,
@@ -1488,7 +1488,7 @@
             1
         ],
         "$pressed_button_name": "%netease_editor_template_namespace.click",
-        "$pressed_texture": "textures/ui/button_pressed",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$texture_layer": 1,
         "anchor_from": "bottom_middle",
         "anchor_to": "bottom_middle",

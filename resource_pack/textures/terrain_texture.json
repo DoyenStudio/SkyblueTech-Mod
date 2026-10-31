@@ -733,7 +733,7 @@
             "textures": "textures/blocks/machinery/reacting_thermal_generator_front_active"
         },
         "skybluetech:rect_panel_bg": {
-            "textures": "textures/ui/rect_panel_bg"
+            "textures": "textures/ui/skybluetech/rect_panel_bg"
         },
         "skybluetech:redstone_furnace_front": {
             "textures": "textures/blocks/machinery/redstone_furnace_front"

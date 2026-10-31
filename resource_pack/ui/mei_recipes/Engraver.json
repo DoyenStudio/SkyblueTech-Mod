@@ -183,8 +183,8 @@
                         },
                         {
                             "progress@SkybluePanelLib.progress_sprite": {
-                                "$bg_image": "textures/ui/arrow_img",
-                                "$mask_image": "textures/ui/arrow_mask_redstone",
+                                "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                                "$mask_image": "textures/ui/skybluetech/progress/arrow_redstone_fill",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "layer": 1,

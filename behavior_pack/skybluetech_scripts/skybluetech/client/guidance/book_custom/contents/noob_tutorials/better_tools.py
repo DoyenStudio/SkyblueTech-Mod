@@ -29,7 +29,7 @@ into_machinery = PageGroup(
     [
         TextPage(
             "第一台机器",
-            '将<item id="minecraft:iron_ingot">铁锭放进<item id="minecraft:blast_furnace"><text color="§9" t="高炉">可以烧制成<item id="{refined_iron_ingot}">精炼铁锭， 进而制作<item id="{machinery_workstation}"><link id="machinery_workstation" text="机件加工台">和<item id="{metal_hammer}"><link id="metal_hammer" text="金属锤">。 机件加工台能合成绝大多数你需要的机器。\n\n打开机件加工台界面， 点击<img path="textures/ui/searcher">按钮就可以看到机件加工台可以合成的所有配方。\n\n关于机件加工台的使用， <link id="lookup" text="看这里">。'.format(
+            '将<item id="minecraft:iron_ingot">铁锭放进<item id="minecraft:blast_furnace"><text color="§9" t="高炉">可以烧制成<item id="{refined_iron_ingot}">精炼铁锭， 进而制作<item id="{machinery_workstation}"><link id="machinery_workstation" text="机件加工台">和<item id="{metal_hammer}"><link id="metal_hammer" text="金属锤">。 机件加工台能合成绝大多数你需要的机器。\n\n打开机件加工台界面， 点击<img path="textures/ui/skybluetech/searcher">按钮就可以看到机件加工台可以合成的所有配方。\n\n关于机件加工台的使用， <link id="lookup" text="看这里">。'.format(
                 refined_iron_ingot=id_enum.Ingots.REFINED_IRON,
                 machinery_workstation=id_enum.Machinery.MACHINERY_WORKSTATION,
                 metal_hammer=id_enum.METAL_HAMMER,

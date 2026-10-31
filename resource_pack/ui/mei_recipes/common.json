@@ -159,7 +159,7 @@
                         {
                             "mask": {
                                 "type": "image",
-                                "texture": "textures/ui/energy_bar_top",
+                                "texture": "textures/ui/skybluetech/energy_bar_top",
                                 "anchor_from": "bottom_middle",
                                 "anchor_to": "bottom_middle",
                                 "size": [
@@ -176,7 +176,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 3,
                     "keep_ratio": false,
@@ -211,7 +211,7 @@
             {
                 "background": {
                     "type": "image",
-                    "texture": "textures/ui/white",
+                    "texture": "textures/ui/white_background",
                     "color": [
                         0.545,
                         0.545,
@@ -322,7 +322,7 @@
             {
                 "frame": {
                     "type": "image",
-                    "texture": "textures/ui/frame_empty_slim",
+                    "texture": "textures/ui/skybluetech/frame_empty_slim",
                     "nineslice_size": 1,
                     "layer": 5,
                     "keep_ratio": false,

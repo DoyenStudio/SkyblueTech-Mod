@@ -1,7 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui.elem_comp import UBaseCtrl
-from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from skybluetech_scripts.skybluetech.common.mini_jei import Recipe
 from skybluetech_scripts.skybluetech.common.define.recipe_layouts import LAYOUTS
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
@@ -10,7 +9,11 @@ from skybluetech_scripts.skybluetech.common.mini_jei.machinery import (
     GeneratorRecipe,
 )
 from ...ui.recipe_checker.render_utils import ItemDisplayer
-from ...ui.recipe_checker.render_utils_advanced import FluidDisplayer, UpdateRecipePower
+from ...ui.recipe_checker.render_utils_advanced import (
+    FluidDisplayer,
+    InputDisplayer,
+    UpdateRecipePower,
+)
 from ..core import RecipeRenderer
 
 
@@ -20,6 +23,7 @@ class MachineRecipeRendererBase(RecipeRenderer):
         RecipeRenderer.__init__(self, recipe)
         self.recipe = recipe
         self.controls = {}
+        self.input_displayers = []  # type: list[InputDisplayer]
         # 仅本包已迁移的薄包装使用共享布局；附属自己的旧布局仍按原路径渲染。
         prefix = "RecipeCheckerLib."
         suffix = "_recipes"
@@ -58,31 +62,26 @@ class MachineRecipeRendererBase(RecipeRenderer):
         return self.GetControl(panel, path)
 
     def DeRender(self, panel):
+        self.input_displayers = []
         self.controls.clear()
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
+        self.input_displayers = []
         inputs = self.GetDisplayInputs()
         outputs = self.GetDisplayOutputs()
         input_items = inputs.get("item", {})
         for slot, input in input_items.items():
-            item = input.id
-            is_tag = input.is_tag
-            if is_tag:
-                try:
-                    item_id = next(iter(GetItemsByTag(item)))
-                    item_aux = 0
-                except StopIteration:
-                    raise ValueError("tag2item not found: " + item)
+            ctrl = self.GetSlotControl(panel, "item", slot)
+            if input.is_tag:
+                self.input_displayers.append(InputDisplayer(ctrl, input))
             else:
-                item_id = item
                 item_aux = input.aux if input.aux != -1 else 0 # TODO: 如果 aux=-1, 应当渲染所有 aux 对应的方块
-            ItemDisplayer(
-                self.GetSlotControl(panel, "item", slot),
-                Item(item_id, item_aux, count=int(input.count)),
-                tag=item if is_tag else None,
-                not_consumed=input.count == 0,
-            )
+                ItemDisplayer(
+                    ctrl,
+                    Item(input.id, item_aux, count=int(input.count)),
+                    not_consumed=input.count == 0,
+                )
         output_items = outputs.get("item", {})
         for slot, output in output_items.items():
             item_id = output.id
@@ -114,6 +113,11 @@ class MachineRecipeRendererBase(RecipeRenderer):
                 max_output_fluid_volume,
                 prob=output.prob,
             )
+
+    def RenderUpdate(self, panel, render_ticks):
+        # type: (UBaseCtrl, int) -> None
+        for displayer in self.input_displayers:
+            displayer.tick(render_ticks)
 
 
 def _has(panel, name):
@@ -208,6 +212,7 @@ class _AnimatedRenderer(MachineRecipeRendererBase):
         # type: (UBaseCtrl, int) -> None
         from ...ui.machinery.utils import UpdateProgress, UpdateFlame
 
+        MachineRecipeRendererBase.RenderUpdate(self, panel, render_ticks)
         td = self.recipe.tick_duration * 3
         if not self.render_progress or td <= 3:  # 连续过程 (蒸馏 / 蒸发) 只画静态箭头
             if self.has_flame:

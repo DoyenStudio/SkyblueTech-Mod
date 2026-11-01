@@ -39,6 +39,7 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ItemSplitter, self).__init__(dim, x, y, z, block_entity_data)
         self._cached_recorded_settings = None
+        self._settings_sync_revision = 0
         self._sending_items = True
         self._ticking_t = 0
         self.handler.SubscribeOnTicking(self._item_splitter_on_ticking)
@@ -84,13 +85,16 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
 
     def _item_splitter_on_click(self, event, extra_datas=None):
         # type: (ServerBlockUseEvent, dict | None) -> None
-        ExecLater(
-            0.1,
-            lambda: ItemSplitterSettingsListUpdate(self.record_settings).send(
-                event.playerId
-            ),
-        )
+        ExecLater(0.1, self.sync_settings, event.playerId)
 
+    def sync_settings(self, player_id):
+        # 仅发送一次快照，版本号只用于防止旧回包覆盖新设置。
+        self._settings_sync_revision += 1
+        packet = ItemSplitterSettingsListUpdate(
+            self.record_settings, self.dim, self.x, self.y, self.z,
+            self._settings_sync_revision,
+        )
+        packet.send(player_id)
 
     def _item_splitter_on_slot_update(self, slot):
         if not self.InUpgradeSlot(slot):
@@ -128,10 +132,11 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     def on_add_setting(self, player_id):
         # type: (str) -> None
         if len(self.record_settings) >= self.settings_limit:
+            self.sync_settings(player_id)
             return
         self.record_settings.append((0, "minecraft:iron_ingot"))
         self.save_settings()
-        ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
+        self.sync_settings(player_id)
 
     def on_delete_setting(self, player_id, index):
         # type: (str, int) -> None
@@ -139,7 +144,7 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
             return
         self.record_settings.pop(index)
         self.save_settings()
-        ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
+        self.sync_settings(player_id)
 
     def on_set_item(self, player_id, index, item):
         # type: (str, int, str) -> None
@@ -147,7 +152,7 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
             return
         self.record_settings[index] = (self.record_settings[index][0], item)
         self.save_settings()
-        ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
+        self.sync_settings(player_id)
 
     def on_set_label(self, player_id, index, label):
         # type: (str, int, int) -> None
@@ -155,7 +160,7 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
             return
         self.record_settings[index] = (label, self.record_settings[index][1])
         self.save_settings()
-        ItemSplitterSettingsListUpdate(self.record_settings).send(player_id)
+        self.sync_settings(player_id)
 
     @property
     def settings_limit(self):

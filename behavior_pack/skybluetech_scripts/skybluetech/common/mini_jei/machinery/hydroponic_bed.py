@@ -46,6 +46,30 @@ class HydroponicBedRecipe(MachineRecipe):
         self.seed_output_probs = seed_output_probs
         self.harvest_outputs = harvest_outputs
 
+    def Marshal(self):
+        # type: () -> dict
+        result = {
+            "crop_block_id": self.crop_block_id,
+            "seed_item": self.seed_item,
+            "grow_stage_ticks": self.grow_stage_ticks,
+            "stages": self.stages,
+            "seed_output_probs": list(self.seed_output_probs),
+            "harvest_outputs": [output.to_dict() for output in self.harvest_outputs],
+        }
+        return result
+
+    @classmethod
+    def Unmarshal(cls, data):
+        # type: (dict) -> HydroponicBedRecipe
+        return cls(
+            crop_block_id=data["crop_block_id"],
+            seed_item=data["seed_item"],
+            grow_stage_ticks=data["grow_stage_ticks"],
+            stages=data["stages"],
+            seed_output_probs=list(data["seed_output_probs"]),
+            harvest_outputs=[Output.from_dict(output) for output in data["harvest_outputs"]],
+        )
+
     def rand_seed_count(self):
         r = random.random()
         for i, prob in enumerate(self.seed_output_probs):

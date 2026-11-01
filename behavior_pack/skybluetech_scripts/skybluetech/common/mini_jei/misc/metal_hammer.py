@@ -1,6 +1,14 @@
 # coding=utf-8
 from ...define.id_enum import METAL_HAMMER
-from ..core import CategoryType, RecipesCollection, Recipe, Input, Output
+from ..core import (
+    CategoryType,
+    RecipesCollection,
+    Recipe,
+    Input,
+    Output,
+    UnmarshalOrderedInputs,
+    UnmarshalOrderedOutputs,
+)
 
 
 class MetalHammerRecipesCollection(RecipesCollection):
@@ -15,7 +23,9 @@ class MetalHammerRecipe(Recipe):
     render_ui_def_name = "RecipeCheckerLib.metal_hammer_recipes"
     minijei_title = "金属锤锤锭获得"
 
-    def __init__(self, input, output_id):
+    def __init__(
+        self, input, output_id,
+    ):
         # type: (Input, str) -> None
         Recipe.__init__(
             self,
@@ -32,3 +42,12 @@ class MetalHammerRecipe(Recipe):
         if not isinstance(other, MetalHammerRecipe):
             return False
         return self.hammer_in == other.hammer_in and self.hammer_out == other.hammer_out
+
+    @classmethod
+    def Unmarshal(cls, data):
+        inputs = UnmarshalOrderedInputs(data["inputs"])
+        outputs = UnmarshalOrderedOutputs(data["outputs"])
+        return cls(
+            input=inputs[CategoryType.ITEM][0],
+            output_id=outputs[CategoryType.ITEM][0].id,
+        )

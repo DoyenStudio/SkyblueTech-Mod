@@ -1,9 +1,9 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.internal import InClientEnv
 
-_item_tags_cache = {}  # type: dict[str, set[str]]
+_item_tags_cache = {}  # type: dict[tuple[str, int], set[str]]
 
-if 0>1:
+if 0 > 1:
     import typing  # noqa: F401
     from skybluetech_scripts.skybluetech.client.mini_jei.core import RecipeRenderer
 
@@ -138,15 +138,16 @@ class Input(Element):
     def match_item_id(self, item_id, aux=0):
         # type: (str, int) -> bool
         if self.is_tag:
-            tags = _item_tags_cache.get(item_id)
+            key = (item_id, aux)
+            tags = _item_tags_cache.get(key)
             if tags is None:
                 if InClientEnv():
                     from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
                 else:
                     from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
-                tags = set(CF.CreateItem(LEVEL_ID).GetItemTags(item_id, self.aux))
-                _item_tags_cache[item_id] = tags
+                tags = set(CF.CreateItem(LEVEL_ID).GetItemTags(item_id, aux))
+                _item_tags_cache[key] = tags
             return self.id in tags
         else:
             return item_id == self.id and (self.aux == -1 or self.aux == aux)
@@ -185,7 +186,10 @@ class Output(Element):
             return cls(dct["tag"], dct.get("count", 1), prob=dct.get("prob", 1))
         else:
             return cls(
-                dct["id"], dct.get("count", 1), aux=dct.get("aux", 0), prob=dct.get("prob", 1)
+                dct["id"],
+                dct.get("count", 1),
+                aux=dct.get("aux", 0),
+                prob=dct.get("prob", 1),
             )
 
     def to_dict(self):
@@ -196,15 +200,22 @@ class Output(Element):
 
 
 class Recipe(RecipeBase):
-    shaped = False
-    "shaped 目前仅决定 collection_key 的生成方式。"
 
-    def __init__(self, inputs, outputs):
-        # type: (dict[str, dict[int, Input]], dict[str, dict[int, Output]]) -> None
+    def __init__(
+        self,
+        inputs=None,  # type: dict[str, dict[int, Input]] | None
+        outputs=None,  # type: dict[str, dict[int, Output]] | None
+        inputs_unordered=None,  # type: dict[str, dict[tuple[int, ...], list[Input]]] | None
+        outputs_unordered=None,  # type: dict[str, dict[tuple[int, ...], list[Output]]] | None
+    ):
         self.inputs = inputs
-        "配方输入: [配方类型: [槽位: 输入元素]]"
+        "固定槽位配方输入: [配方类型: [槽位: 输入元素]]"
         self.outputs = outputs
-        "配方输出: [配方类型: [槽位: 输出元素]]"
+        "固定槽位配方输出: [配方类型: [槽位: 输出元素]]"
+        self.inputs_unordered = inputs_unordered
+        "无序槽位配方输入: [配方类型: [槽位元组]: 输入元素列表]"
+        self.outputs_unordered = outputs_unordered
+        "无序槽位配方输出: [配方类型: [槽位元组]: 输出元素列表]"
         self._collection_key = None
         self._recipe_identifier = None
 
@@ -212,70 +223,88 @@ class Recipe(RecipeBase):
         # type: (Recipe | None) -> bool
         if other is None:
             return False
-        return self.inputs == other.inputs and self.outputs == other.outputs
+        return (
+            self.inputs == other.inputs
+            and self.outputs == other.outputs
+            and self.inputs_unordered == other.inputs_unordered
+            and self.outputs_unordered == other.outputs_unordered
+        )
 
     def GetInputs(self):
-        return {
+        inputs = {
             cat: [
                 ("tag:" + input.id if input.is_tag else input.id)
                 for input in slot2input.values()
             ]
-            for cat, slot2input in self.inputs.items()
+            for cat, slot2input in (self.inputs or {}).items()
         }
+        for cat, slot2input in (self.inputs_unordered or {}).items():
+            inputs.setdefault(cat, []).extend(
+                "tag:" + input.id if input.is_tag else input.id
+                for input_list in slot2input.values()
+                for input in input_list
+            )
+        return inputs
 
     def GetOutputs(self):
-        return {
+        # TODO: 支持 item aux
+        outputs = {
             category: [output.id for output in slot2output.values()]
-            for category, slot2output in self.outputs.items()
+            for category, slot2output in list((self.outputs or {}).items())
         }
+        for category, slot2output in (self.outputs_unordered or {}).items():
+            outputs.setdefault(category, []).extend(
+                output.id
+                for output_list in slot2output.values()
+                for output in output_list
+            )
+        return outputs
 
     def Marshal(self):
-        from .marshal_utils import MarshalInputs, MarshalOutputs
+        from .marshal_utils import (
+            MarshalOrderedInputs,
+            MarshalOrderedOutputs,
+            MarshalUnorderedInputs,
+            MarshalUnorderedOutputs,
+        )
 
         return {
-            "inputs": MarshalInputs(self.inputs),
-            "outputs": MarshalOutputs(self.outputs),
+            "inputs": MarshalOrderedInputs(self.inputs) if self.inputs else None,
+            "outputs": MarshalOrderedOutputs(self.outputs) if self.outputs else None,
+            "inputs_unordered": MarshalUnorderedInputs(self.inputs_unordered)
+            if self.inputs_unordered
+            else None,
+            "outputs_unordered": MarshalUnorderedOutputs(self.outputs_unordered)
+            if self.outputs_unordered
+            else None,
         }
 
     @classmethod
     def Unmarshal(cls, dct):
-        from .marshal_utils import UnmarshalInputs, UnmarshalOutputs
-
-        return cls(
-            UnmarshalInputs(dct["inputs"]),
-            UnmarshalOutputs(dct["outputs"]),
+        from .marshal_utils import (
+            UnmarshalOrderedInputs,
+            UnmarshalOrderedOutputs,
+            UnmarshalUnorderedInputs,
+            UnmarshalUnorderedOutputs,
         )
 
-    def __hash__(self):
-        return hash(self.collection_key)
+        inputs = dct["inputs"]
+        inputs_unordered = dct["inputs_unordered"]
+        outputs = dct["outputs"]
+        outputs_unordered = dct["outputs_unordered"]
 
-    @property
-    def collection_key(self):
-        if self._collection_key is None:
-            if self.shaped:
-                self._collection_key = tuple(
-                    sorted(
-                        (
-                            (
-                                category,
-                                tuple(sorted(inputs.items(), key=lambda x: x[0])),
-                            )
-                            for category, inputs in self.inputs.items()
-                        ),
-                        key=lambda x: x[0],
-                    )
-                )
-            else:
-                self._collection_key = tuple(
-                    sorted(
-                        (
-                            (
-                                category,
-                                tuple(sorted(inputs.values(), key=lambda x: x.id)),
-                            )
-                            for category, inputs in self.inputs.items()
-                        ),
-                        key=lambda x: x[0],
-                    )
-                )
-        return self._collection_key
+        if inputs is not None:
+            inputs = UnmarshalOrderedInputs(inputs)
+        if inputs_unordered is not None:
+            inputs_unordered = UnmarshalUnorderedInputs(inputs_unordered)
+        if outputs is not None:
+            outputs = UnmarshalOrderedOutputs(outputs)
+        if outputs_unordered is not None:
+            outputs_unordered = UnmarshalUnorderedOutputs(outputs_unordered)
+
+        return cls(
+            inputs=inputs,
+            outputs=outputs,
+            inputs_unordered=inputs_unordered,
+            outputs_unordered=outputs_unordered,
+        )

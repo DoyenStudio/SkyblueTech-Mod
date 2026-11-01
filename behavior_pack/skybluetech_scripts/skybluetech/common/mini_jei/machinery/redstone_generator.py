@@ -27,13 +27,14 @@ class RedstoneGeneratorRecipe(GeneratorRecipe):
         self.output_item_count = output_item_count
 
     def Marshal(self):
-        return {
+        result = {
             "input_item_id": self.input_item_id,
             "output_item_id": self.output_item_id,
             "output_item_count": self.output_item_count,
             "output_power": self.output_power,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

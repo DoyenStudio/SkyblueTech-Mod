@@ -41,3 +41,23 @@ class HydroponicBedSandRecipe(MachineRecipe):
         self.seed_item = seed_item
         self.once_grow_progress = once_grow_progress
         self.harvest_outputs = harvest_outputs
+
+    def Marshal(self):
+        # type: () -> dict
+        result = {
+            "crop_block_id": self.crop_block_id,
+            "seed_item": self.seed_item,
+            "once_grow_progress": self.once_grow_progress,
+            "harvest_outputs": [output.to_dict() for output in self.harvest_outputs],
+        }
+        return result
+
+    @classmethod
+    def Unmarshal(cls, data):
+        # type: (dict) -> HydroponicBedSandRecipe
+        return cls(
+            crop_block_id=data["crop_block_id"],
+            seed_item=data["seed_item"],
+            once_grow_progress=data["once_grow_progress"],
+            harvest_outputs=[Output.from_dict(output) for output in data["harvest_outputs"]],
+        )

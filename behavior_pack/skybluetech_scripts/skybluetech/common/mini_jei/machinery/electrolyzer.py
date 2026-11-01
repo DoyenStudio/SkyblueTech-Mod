@@ -65,7 +65,7 @@ class ElectrolyzerRecipe(MachineRecipe):
 
     def Marshal(self):
         # type: () -> dict
-        return {
+        result = {
             "input_fluid": self.input_fluid,
             "input_volume": self.input_volume,
             "output_fluid1": self.output_fluid1,
@@ -80,6 +80,7 @@ class ElectrolyzerRecipe(MachineRecipe):
             "output_item": self.output_item.to_dict() if self.output_item is not None else None,
             "byproduct": self.byproduct.to_dict() if self.byproduct is not None else None,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

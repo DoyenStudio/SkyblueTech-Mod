@@ -39,7 +39,7 @@ class FreezerRecipe(MachineRecipe):
         self.output_count = output_count
 
     def Marshal(self):
-        return {
+        result = {
             "index": self.index,
             "input_fluid": self.input_fluid,
             "input_volume": self.input_volume,
@@ -48,6 +48,7 @@ class FreezerRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

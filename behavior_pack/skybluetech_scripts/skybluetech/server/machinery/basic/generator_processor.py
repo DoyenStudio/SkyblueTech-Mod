@@ -1,7 +1,6 @@
 # coding=utf-8
-import random
-
 from skybluetech_scripts.skybluetech.common.define import flags
+from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_TICKS_LEFT
 from skybluetech_scripts.skybluetech.common.mini_jei.core import (
     CategoryType,
     RecipesCollection,
@@ -21,6 +20,7 @@ from .upgrade_control import UpgradeControl
 
 K_OUTPUT_POWER = "st:output_power"
 K_RECIPE_INDEX = "st:recipe_index"
+K_GENERATED_RF = "st:generated_rf"
 
 
 class GeneratorProcessor(ProcessorBase, BaseGenerator):
@@ -39,34 +39,83 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
     allow_upgraders = frozenset()
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        saved_ticks = block_entity_data[K_TICKS_LEFT]
         super(GeneratorProcessor, self).__init__(dim, x, y, z, block_entity_data)
-        self.SetOutputPower(self.generator_output_power)
         if self.recipe_index is not None:
-            self.origin_process_ticks = self.recipes[self.recipe_index].tick_duration
+            self.SetProcessTicks(self.current_recipe.tick_duration)
+            # 保留已付费批次的零进度，避免基类初始化或停机通知覆盖存档。
+            self.ticks_left = (
+                self.origin_process_ticks if saved_ticks is None
+                else max(0, min(self.origin_process_ticks, saved_ticks))
+            )
+            if self.generated_rf is None:
+                # 旧开发存档没有累计量，只能按已量化的进度估算一次。
+                self.generated_rf = self._generated_rf_target()
+        # 发电与进度必须在同一个回调内结算，不能先发电再判断配方是否完成。
+        self.handler.UnsubscribeOnTicking(self._base_generator_on_ticking)
         self.handler.SubscribeOnTicking(self._generator_processor_on_ticking)
         self.handler.SubscribeOnSlotUpdate(self._generator_processor_on_slot_update)
         self.handler.SubscribeOnAddedFluid(self._generator_processor_on_added_fluid)
         self.handler.SubscribeOnReducedFluid(self._generator_processor_on_reduced_fluid)
+        if self.current_recipe is not None:
+            self.start_next()
+        else:
+            self.SetOutputPower(0)
+
+    def _base_speed_control_set_deactive_flag(self, flag, flush=True):
+        # 输入已经扣除；任何停机原因都不能把这批燃料的进度重新充满。
+        if self.recipe_index is None:
+            BaseSpeedControl._base_speed_control_set_deactive_flag(self, flag, flush)
 
     def _generator_processor_on_ticking(self):
+        if not self.IsActive():
+            # 停机时仍允许基类向邻居输出已经储存的能量。
+            BaseGenerator._base_generator_on_ticking(self)
+            return
+        remaining = self.reduce_ticks
         while self.IsActive():
             if self.current_recipe is None:
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-                return
-            if BaseSpeedControl.ProcessOnce(self):
-                # 1tick 内有可能需要多次生产
-                self.run_once()
-                self.start_next()
-                self.CallSync()
-            else:
-                self.CallSync()
                 break
+            if self.ticks_left > 0:
+                if remaining <= 0:
+                    break
+                consumed = min(remaining, self.ticks_left)
+                self.ticks_left -= consumed
+                remaining -= consumed
+                # 进度重载会量化为 float32，不能用它反推上次实际已发出的整数 RF。
+                emitted = self.generated_rf
+                target = self._generated_rf_target()
+                generated = int(max(0, target - emitted))
+                self.generated_rf = emitted + generated
+                self.SetOutputPower(generated)
+                try:
+                    BaseGenerator._base_generator_on_ticking(self)
+                finally:
+                    self.SetOutputPower(self.generator_output_power)
+            if self.ticks_left <= 0:
+                if not self.run_once():
+                    break
+                self.start_next()
+            if remaining <= 0:
+                break
+        self.CallSync()
+
+    def _generated_rf_target(self):
+        recipe = self.current_recipe
+        budget = recipe.output_power * recipe.tick_duration
+        if self.ticks_left <= 0:
+            return budget
+        return min(
+            budget,
+            int(recipe.output_power * (recipe.tick_duration - self.ticks_left)),
+        )
 
 
     # === item processor special ===
     def _generator_processor_on_slot_update(self, slot_pos):
         # type: (int) -> None
-        if self.InUpgradeSlot(slot_pos):
+        if self._applying_recipe or self.InUpgradeSlot(slot_pos):
             return
         if self.process_item:
             if slot_pos in self.item_output_slots and self.HasDeactiveFlag(
@@ -94,18 +143,14 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
             return UpgradeControl.IsValidInput(self, slot, item)
         elif slot in self.item_output_slots:
             return False
-        for recipe in self.recipes:
-            slot_input = recipe.inputs.get(CategoryType.ITEM, {}).get(slot)
-            if slot_input is None:
-                continue
-            if slot_input.match_item_id(item.id):
-                return True
-        return False
+        return self._recipe_accepts_input(
+            CategoryType.ITEM, slot, item.id, item.newAuxValue
+        )
 
     # === fluid processor special ===
     def _generator_processor_on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
-        if not is_final or not isinstance(self, MultiFluidContainer):
+        if self._applying_recipe or not is_final or not isinstance(self, MultiFluidContainer):
             return
         if slot in self.fluid_input_slots and self.HasDeactiveFlag(
             flags.DEACTIVE_FLAG_NO_RECIPE
@@ -114,7 +159,7 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
 
     def _generator_processor_on_reduced_fluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
-        if not is_final or not isinstance(self, MultiFluidContainer):
+        if self._applying_recipe or not is_final or not isinstance(self, MultiFluidContainer):
             return
         if slot in self.fluid_output_slots:
             if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
@@ -136,31 +181,34 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             self.current_recipe = None
             self.ResetProgress()
-        elif not recipe.equals(self.current_recipe):
-            self.start_next(recipe_index, recipe)
-        elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-            self.start_next()
+        else:
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+            if self.recipe_index is None or not recipe.equals(self.current_recipe):
+                self.start_next(recipe_index, recipe)
+            elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
+                self.start_next()
 
     def run_once(self):
-        inputs = self.GetInputSlotItems()
-        outputs = self.GetOutputSlotItems()
         _, recipe = self.get_recipe()
         if recipe is None:
-            # cannot reach
-            raise ValueError("Recipe ERROR")
-        if not self.can_output(recipe):
-            return
-        inputs.update(outputs)
-        self.finish_recipe(recipe)
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+            return False
+        if not self.can_output(recipe) or not self.finish_recipe(recipe):
+            # 已完成但被堵住的批次仍保留索引，解堵只补产物，不再发一轮电。
+            self.ticks_left = 0
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+            return False
+        return True
 
     def start_next(self, recipe_index=0, _recipe=None):
         # type: (int, MachineRecipeBase | None) -> None
-        "开始运行配方"
+        "开始运行配方，已扣料的批次只恢复运行或补交产物。"
         if _recipe is None:
             recipe_index, recipe = self.get_recipe()
             if recipe is None:
                 self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
                 self.current_recipe = None
+                self.SetOutputPower(0)
                 return
         else:
             recipe = _recipe
@@ -170,59 +218,43 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
             )
         self.current_recipe = recipe
         self.SetProcessTicks(recipe.tick_duration)
-        self.ResetProgress()
+        if self.recipe_index is None:
+            self.ResetProgress()
+        self.generator_output_power = recipe.output_power
+        self.SetOutputPower(self.generator_output_power)
+        self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
         if not self.can_output(recipe):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
-        if self.recipe_index is None:
-            self.start_recipe(recipe_index, recipe)
-        self.ResetDeactiveFlags()
-        self.generator_output_power = recipe.output_power
-        self.SetOutputPower(self.generator_output_power)
+        if self.recipe_index is not None:
+            if self.ticks_left <= 0:
+                if self.run_once():
+                    self.start_next()
+                return
+        else:
+            if not self.start_recipe(recipe_index, recipe):
+                self.current_recipe = None
+                self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+                return
+        self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
         self.CallSync()
 
     def start_recipe(self, recipe_index, recipe):
-        # type: (int, MachineRecipeBase) -> None
+        # type: (int, MachineRecipeBase) -> bool
+        # 必须在扣料通知前标记已付费，恢复和重查都不能再匹配已消耗的输入。
         self.recipe_index = recipe_index
-        if self.process_item:
-            slotitems = self.GetInputSlotItems()
-            for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
-                slotitems[slot_pos].count -= int(input.count)
-            self.SetSlotItems(slotitems)
-        if self.process_fluid and isinstance(self, MultiFluidContainer):
-            slot_pos_and_inputs = list(
-                recipe.inputs.get(CategoryType.FLUID, {}).items()
-            )
-            last_index = len(slot_pos_and_inputs) - 1
-            for idx, (slot_pos, input) in enumerate(slot_pos_and_inputs):
-                self.fluids[slot_pos].volume -= input.count
-                self._on_reduced_fluid(
-                    slot_pos, input.id, input.count, idx == last_index
-                )
+        self.generated_rf = 0
+        if self._apply_recipe(recipe, produce_outputs=False):
+            return True
+        self.recipe_index = None
+        return False
 
     def finish_recipe(self, recipe):
-        # type: (MachineRecipeBase) -> None
-        if self.process_item:
-            slotitems = self.GetOutputSlotItems()
-            for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
-                if output.prob != 1 and random.random() > output.prob:
-                    continue
-                orig_item = slotitems.get(slot_pos, None)
-                if orig_item is None:
-                    orig_item = Item(output.id, 0, int(output.count))
-                else:
-                    orig_item.count += int(output.count)
-                slotitems[slot_pos] = orig_item
-            self.SetSlotItems(slotitems)
-            self.FlushOutputSlots(list(recipe.outputs.get(CategoryType.ITEM, {}).keys()))
-        if self.process_fluid and isinstance(self, MultiFluidContainer):
-            slots_and_outputs = list(recipe.outputs.get(CategoryType.FLUID, {}).items())
-            last_index = len(slots_and_outputs) - 1
-            for idx, (slot_pos, output) in enumerate(slots_and_outputs):
-                if output.prob != 1 and random.random() > output.prob:
-                    continue
-                self.OutputFluid(output.id, output.count, slot_pos, idx == last_index)
+        # type: (MachineRecipeBase) -> bool
+        if not self._apply_recipe(recipe, consume_inputs=False):
+            return False
         self.recipe_index = None
+        return True
 
     @property
     def generator_output_power(self):
@@ -233,6 +265,22 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
     def generator_output_power(self, value):
         # type: (int) -> None
         self.bdata[K_OUTPUT_POWER] = value
+
+    @property
+    def generated_rf(self):
+        record = self.bdata[K_GENERATED_RF]
+        if record is None:
+            return None
+        return (record["high"] << 31) + record["low"]
+
+    @generated_rf.setter
+    def generated_rf(self, value):
+        # 总量可在内存中成为 long；NBT 只接收两个合法的非负 int。
+        low = int(value & 0x7fffffff)
+        high = int(value >> 31)
+        if not (0 <= low <= 0x7fffffff and 0 <= high <= 0x7fffffff):
+            raise ValueError("Generated RF exceeds two 31-bit integers")
+        self.bdata[K_GENERATED_RF] = {"low": low, "high": high}
 
     @property
     def recipe_index(self):

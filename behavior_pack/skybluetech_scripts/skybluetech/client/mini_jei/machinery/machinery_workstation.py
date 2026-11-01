@@ -57,7 +57,7 @@ class MachineryWorkstationRecipeRenderer(MachineRecipeRendererBase):
         # type: (UBaseCtrl) -> None
         self.dyn_item_renderers = []  # type: list[InputDisplayer | MultiItemsDisplayer]
         content = panel["content"]
-        input_items = self.recipe.inputs.get("item", {})
+        input_items = self.GetDisplayInputs().get("item", {})
         for slot, input in input_items.items():
             displayer = InputDisplayer(content["input/%d" % slot], input)
             if input.count not in (0, 1):
@@ -79,7 +79,14 @@ class MachineryWorkstationRecipeRenderer(MachineRecipeRendererBase):
                     "钳", self.LEVEL_MAPPING.get(self.recipe.pincer_level, str(self.recipe.pincer_level)),
                 )
             )
-        ItemDisplayer(content["output/0"], Item(self.recipe.output_item_id))
+        output = self.GetDisplayOutputs().get("item", {}).get(0)
+        output_ctrl = content["output/0"]
+        output_ctrl.SetVisible(output is not None)
+        if output is not None:
+            ItemDisplayer(
+                output_ctrl, Item(output.id, output.aux, count=int(output.count)),
+                prob=output.prob,
+            )
 
     def RenderUpdate(self, panel, render_ticks):
         # type: (UBaseCtrl, int) -> None

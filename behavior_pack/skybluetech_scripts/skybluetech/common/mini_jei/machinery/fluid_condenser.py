@@ -30,7 +30,7 @@ class FluidCondenserRecipe(MachineRecipe):
         self.output_item_count = output_item_count
 
     def Marshal(self):
-        return {
+        result = {
             "input_fluid": self.input_fluid,
             "input_fluid_volume": self.input_fluid_volume,
             "output_item": self.output_item,
@@ -38,6 +38,7 @@ class FluidCondenserRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):
@@ -51,7 +52,9 @@ class FluidCondenserRecipe(MachineRecipe):
         )
 
 
-def recipe_molten2ingot(metal_id, power_cost=80, tick_duration=180):
+def recipe_molten2ingot(
+    metal_id, power_cost=80, tick_duration=180,
+):
     # type: (str, int, int) -> FluidCondenserRecipe
     return FluidCondenserRecipe(
         "skybluetech:molten_" + metal_id,

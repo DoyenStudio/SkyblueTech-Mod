@@ -36,7 +36,7 @@ class ReactingThermalGeneratorRecipe(GeneratorRecipe):
         self.output_fluid_volume = output_fluid_volume
 
     def Marshal(self):
-        return {
+        result = {
             "input_item_id": self.input_item_id,
             "input_fluid_id": self.input_fluid_id,
             "input_fluid_volume": self.input_fluid_volume,
@@ -45,6 +45,7 @@ class ReactingThermalGeneratorRecipe(GeneratorRecipe):
             "output_power": self.output_power,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

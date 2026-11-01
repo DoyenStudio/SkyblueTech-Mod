@@ -9,7 +9,7 @@
 典型配方：**升级基板 + 2 通量核心 + 2 铜棒 + 金板 + 橡胶 + 基础电路 + 焊锡锭（刻印模版不消耗）→ 基础能效升级**
 """
 from .._common import BuildMachine
-from ... import exports
+from ... import convert, exports
 
 CATEGORY_ID = "skybluetech:template_assembler"
 RECIPE_CLS = "TemplateAssemblerRecipe"
@@ -66,7 +66,8 @@ def _TemplateId(sb_recipe):  # type: (any) -> str or None
     if get_inputs is None:
         return None
     declared = set(("tag:" + e.id) if getattr(e, "is_tag", False) else e.id
-                   for e in (getattr(sb_recipe, "inputs", None) or {}).get("item", {}).values())
+                   for _, e, kind in convert.split_inputs(sb_recipe)[0]
+                   if kind == convert.CATEGORY_ITEM)
     for item_id in (get_inputs() or {}).get("item", []):
         if item_id not in declared and not item_id.startswith("tag:"):
             return item_id

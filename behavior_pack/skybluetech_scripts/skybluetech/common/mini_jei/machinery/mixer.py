@@ -37,7 +37,7 @@ class MixerRecipe(MachineRecipe):
         self.output_count = output_count
 
     def Marshal(self):
-        return {
+        result = {
             "input_fluid_id": self.input_fluid_id,
             "input_volume": self.input_volume,
             "input_item_id": self.input_item_id,
@@ -47,6 +47,7 @@ class MixerRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

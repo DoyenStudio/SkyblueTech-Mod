@@ -39,7 +39,7 @@ class BrineEvaporationPondRecipe(MachineRecipe):
 
     def Marshal(self):
         # type: () -> dict
-        return {
+        result = {
             "input_fluid": self.collection_name,
             "input_volume": self.consume,
             "output_fluid": self.produce_matter,
@@ -48,6 +48,7 @@ class BrineEvaporationPondRecipe(MachineRecipe):
             "fit_temperature": self.fit_temperature,
             "heat_cost": self.heat_cost,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

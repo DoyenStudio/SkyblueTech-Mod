@@ -27,7 +27,7 @@ def MachineIsMatchInput(machine, recipe, cached_slotitems=None):
     from ..basic import ItemContainer, MultiFluidContainer
 
     if isinstance(machine, ItemContainer):
-        input_items = recipe.GetMachineInputs().get(CategoryType.ITEM, {})
+        input_items = (recipe.GetMachineInputs() or {}).get(CategoryType.ITEM, {})
         for slot, item_input in input_items.items():
             if cached_slotitems is not None:
                 machine_slot = cached_slotitems.get(slot, MISSING)
@@ -44,7 +44,7 @@ def MachineIsMatchInput(machine, recipe, cached_slotitems=None):
             ):
                 return False
     if isinstance(machine, MultiFluidContainer):
-        input_fluids = recipe.GetMachineInputs().get(CategoryType.FLUID, {})
+        input_fluids = (recipe.GetMachineInputs() or {}).get(CategoryType.FLUID, {})
         for slot, input_fluid in input_fluids.items():
             if (
                 machine.fluids[slot].fluid_id != input_fluid.id
@@ -69,7 +69,7 @@ def MachineRecipeCanOutput(machine, recipe):
     from ..basic import ItemContainer, MultiFluidContainer
 
     if isinstance(machine, ItemContainer):
-        output_items = recipe.GetMachineOutputs().get(CategoryType.ITEM, {})
+        output_items = (recipe.GetMachineOutputs() or {}).get(CategoryType.ITEM, {})
         for slot, output in output_items.items():
             machine_slot = machine.GetSlotItem(slot, get_user_data=True)
             if machine_slot is None:
@@ -82,7 +82,7 @@ def MachineRecipeCanOutput(machine, recipe):
             ):
                 return False
     if isinstance(machine, MultiFluidContainer):
-        output_fluids = recipe.GetMachineOutputs().get(CategoryType.FLUID, {})
+        output_fluids = (recipe.GetMachineOutputs() or {}).get(CategoryType.FLUID, {})
         for slot, fluid in output_fluids.items():
             target = machine.fluids[slot]
             if (
@@ -110,7 +110,7 @@ def OutputRecipe(machine, recipe):
     )
 
     if isinstance(machine, ItemContainer):
-        output_items = recipe.GetMachineOutputs().get(CategoryType.ITEM, {})
+        output_items = (recipe.GetMachineOutputs() or {}).get(CategoryType.ITEM, {})
         for slot, output in output_items.items():
             machine_slot = machine.GetSlotItem(slot, get_user_data=True)
             if machine_slot is None:
@@ -121,7 +121,7 @@ def OutputRecipe(machine, recipe):
         if isinstance(machine, UpgradeControl):
             machine.FlushOutputSlots(list(output_items.keys()))
     if isinstance(machine, MultiFluidContainer):
-        output_fluids = recipe.GetMachineOutputs().get(CategoryType.FLUID, {})
+        output_fluids = (recipe.GetMachineOutputs() or {}).get(CategoryType.FLUID, {})
         slots_and_fluids = sorted(output_fluids.items())
         last_index = len(slots_and_fluids) - 1
         for i, (slot, fluid) in enumerate(slots_and_fluids):

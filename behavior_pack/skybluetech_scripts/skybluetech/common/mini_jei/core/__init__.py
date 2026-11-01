@@ -2,9 +2,13 @@
 from .collection_define import *
 from .define import *
 from .marshal_utils import (
-    MarshalInputs,
-    MarshalOutputs,
-    UnmarshalInputs,
-    UnmarshalOutputs,
+    MarshalOrderedInputs,
+    MarshalOrderedOutputs,
+    UnmarshalOrderedInputs,
+    UnmarshalOrderedOutputs,
+    MarshalUnorderedInputs,
+    MarshalUnorderedOutputs,
+    UnmarshalUnorderedInputs,
+    UnmarshalUnorderedOutputs,
 )
 from .register import RegisterRecipe

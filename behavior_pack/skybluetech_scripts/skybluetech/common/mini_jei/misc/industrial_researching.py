@@ -1,6 +1,13 @@
 # coding=utf-8
 from ...define.id_enum import INSCRIBING_TEMPLATE
-from ..core import Recipe, Input, Output, CategoryType
+from ..core import (
+    Recipe,
+    Input,
+    Output,
+    CategoryType,
+    UnmarshalOrderedInputs,
+    UnmarshalOrderedOutputs,
+)
 
 
 class IndustrialResearchingRecipe(Recipe):
@@ -26,3 +33,28 @@ class IndustrialResearchingRecipe(Recipe):
         self.require_items = require_items
         self.require_exp_level = require_exp_level
         self.result_item_id = result_item_id
+
+    def __hash__(self):
+        return hash(
+            (
+                tuple(
+                    (item.id, item.count, item.aux, item.is_tag)
+                    for item in self.require_items
+                ),
+                self.require_exp_level,
+                self.result_item_id,
+            )
+        )
+
+    @classmethod
+    def Unmarshal(cls, data):
+        inputs = UnmarshalOrderedInputs(data["inputs"])
+        outputs = UnmarshalOrderedOutputs(data["outputs"])
+        require_items = [
+            item for slot, item in sorted(inputs[CategoryType.ITEM].items())
+        ]
+        return cls(
+            require_items=require_items,
+            require_exp_level=inputs[CategoryType.EXP_LV][0].count,
+            result_item_id=outputs[CategoryType.ITEM][len(require_items)].id,
+        )

@@ -8,6 +8,7 @@
 两边模型的差别就三条：
 
   1. 蔚蓝的 inputs/outputs 是 `{类别: {槽位: 元素}}` 双层 dict，
+     无序组按条目顺序填入组内槽位，再与固定槽合并。
      MEI 是两个**有序 list**。⇒ 按槽位号升序摊平，槽位号另存进 Data 备查。
   2. 蔚蓝的类别里除了 item 还有 fluid / energy / exp，MEI 只认物品。
      ⇒ 目前只转 item，其余类别原样落进 Data，等概念物品接入后再处理。
@@ -207,14 +208,28 @@ def split_inputs(sb_recipe):  # type: (any) -> tuple
     其余类别（energy / exp）**原样带走而不是丢掉** —— 它们要落进
     `Recipe.Data`，由配方页自己画成 label（不是槽位，见 SLOT_KINDS 的说明）。
     """
-    return _split(getattr(sb_recipe, "inputs", None) or {})
+    return _split(
+        getattr(sb_recipe, "inputs", None),
+        getattr(sb_recipe, "inputs_unordered", None),
+    )
 
 
 def split_outputs(sb_recipe):  # type: (any) -> tuple
-    return _split(getattr(sb_recipe, "outputs", None) or {})
+    return _split(
+        getattr(sb_recipe, "outputs", None),
+        getattr(sb_recipe, "outputs_unordered", None),
+    )
 
 
-def _split(by_category):  # type: (dict) -> tuple
+def _split(by_category, unordered=None):  # type: (dict | None, dict | None) -> tuple
+    by_category = {
+        category: dict(slot_map) for category, slot_map in (by_category or {}).items()
+    }
+    for category, groups in (unordered or {}).items():
+        slot_map = by_category.setdefault(category, {})
+        for slots, elements in groups.items():
+            slot_map.update(zip(slots, elements))
+
     entries = []
     others = {}
     for category, slot_map in (by_category or {}).items():

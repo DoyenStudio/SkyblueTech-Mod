@@ -26,13 +26,14 @@ class OilExtractorRecipe(MachineRecipe):
         self.output_fluid_volume = output_fluid_volume
 
     def Marshal(self):
-        return {
+        result = {
             "input_item_id": self.input_item_id,
             "output_fluid_id": self.output_fluid_id,
             "output_fluid_volume": self.output_fluid_volume,
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

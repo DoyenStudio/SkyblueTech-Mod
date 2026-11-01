@@ -36,7 +36,7 @@ class CyroHeatMeltingChamberRecipe(MachineRecipe):
 
     def Marshal(self):
         # type: () -> dict
-        return {
+        result = {
             "input_item_id": self.input_item_id,
             "output_fluid": self.output_fluid,
             "output_volume": self.output_volume,
@@ -47,11 +47,12 @@ class CyroHeatMeltingChamberRecipe(MachineRecipe):
             "max_tick_speed": self.max_tick_speed,
             "waste": self.waste,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):
         # type: (dict) -> CyroHeatMeltingChamberRecipe
-        return CyroHeatMeltingChamberRecipe(
+        return cls(
             input_item_id=data["input_item_id"],
             output_fluid=data["output_fluid"],
             output_volume=data["output_volume"],

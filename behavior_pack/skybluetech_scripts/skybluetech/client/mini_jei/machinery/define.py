@@ -62,8 +62,9 @@ class MachineRecipeRendererBase(RecipeRenderer):
 
     def RenderInit(self, panel):
         # type: (UBaseCtrl) -> None
-        recipe = self.recipe
-        input_items = recipe.inputs.get("item", {})
+        inputs = self.GetDisplayInputs()
+        outputs = self.GetDisplayOutputs()
+        input_items = inputs.get("item", {})
         for slot, input in input_items.items():
             item = input.id
             is_tag = input.is_tag
@@ -82,7 +83,7 @@ class MachineRecipeRendererBase(RecipeRenderer):
                 tag=item if is_tag else None,
                 not_consumed=input.count == 0,
             )
-        output_items = recipe.outputs.get("item", {})
+        output_items = outputs.get("item", {})
         for slot, output in output_items.items():
             item_id = output.id
             ItemDisplayer(
@@ -90,16 +91,17 @@ class MachineRecipeRendererBase(RecipeRenderer):
                 Item(item_id, output.aux, count=int(output.count)),
                 prob=output.prob,
             )
-        input_fluids = recipe.inputs.get("fluid", {})
+        input_fluids = inputs.get("fluid", {})
         if input_fluids:
             max_input_fluid_volume = max(
                 input_fluids.values(), key=lambda x: x.count
             ).count
         for slot, input in input_fluids.items():
             FluidDisplayer(
-                self.GetSlotControl(panel, "fluid", slot), input.id, input.count, max_input_fluid_volume
+                self.GetSlotControl(panel, "fluid", slot), input.id, input.count,
+                max_input_fluid_volume, not_consumed=input.count == 0,
             )
-        output_fluids = recipe.outputs.get("fluid", {})
+        output_fluids = outputs.get("fluid", {})
         if output_fluids:
             max_output_fluid_volume = max(
                 output_fluids.values(), key=lambda x: x.count
@@ -110,6 +112,7 @@ class MachineRecipeRendererBase(RecipeRenderer):
                 output.id,
                 output.count,
                 max_output_fluid_volume,
+                prob=output.prob,
             )
 
 
@@ -159,7 +162,7 @@ class _AnimatedRenderer(MachineRecipeRendererBase):
         MachineRecipeRendererBase.RenderInit(self, panel)
         # 机器里有、这条配方不用的流体槽 (同 MEI: 照画成空槽), 悬停写明是空的
         if self.layout is not None:
-            for side, values in (("input", self.recipe.inputs), ("output", self.recipe.outputs)):
+            for side, values in (("input", self.GetDisplayInputs()), ("output", self.GetDisplayOutputs())):
                 for index, (kind, slot) in enumerate(self.layout[side + "s"]):
                     if kind == "fluid" and slot not in values.get("fluid", {}):
                         SetHoverText(self.GetControl(panel, "content/body/%s/%d" % (side, index)), "§7空（这条配方不用）")
@@ -168,7 +171,7 @@ class _AnimatedRenderer(MachineRecipeRendererBase):
             has_power_bar = self.layout["power"] is not None
             has_progress_tip = True
         else:
-            used = set(self.recipe.inputs.get("fluid", {})) | set(self.recipe.outputs.get("fluid", {}))
+            used = set(self.GetDisplayInputs().get("fluid", {})) | set(self.GetDisplayOutputs().get("fluid", {}))
             for i in range(8):
                 if i not in used and _has(panel, "fluid%d" % i):
                     SetHoverText(self.GetControl(panel, "fluid%d" % i), "§7空（这条配方不用）")

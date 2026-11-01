@@ -2,7 +2,7 @@
 
 [返回手册](../README.md) · [配方扩展教程](../tutorials/06-extensions.md)
 
-下面的类型均从 `common.export.recipes` 直接重导出。它们保留原构造签名、类身份与已有渲染器；按源码中各类的 `__init__` 传参，不将 `MachineRecipe` 的通用签名套到所有子类。
+下面的类型均从 `common.export.recipes` 直接重导出。它们保留原位置参数、类身份与已有渲染器；按源码中各类的 `__init__` 传参，不将 `MachineRecipe` 的通用签名套到所有子类。
 
 ## 基础能力
 
@@ -10,8 +10,74 @@
 - `RecipeBase`、`Recipe`、`MachineRecipeBase`、`MachineRecipe`、`GeneratorRecipe` 用于自定义类型。
 - `RecipesCollection.get_collection(name)` 取原集合，缺少名称会抛 KeyError；`add_recipe(recipe)` 追加到原列表并注册 MiniJEI 查询。
 - `GetRecipesByInput`、`GetRecipesByOutput`、`GetRecipesByCategory` 与 `RegisterRecipe` 是已有查询/登记接口。
-- `MarshalInputs`、`MarshalOutputs`、`UnmarshalInputs`、`UnmarshalOutputs` 为现有配方序列化工具。
+- `MarshalOrderedInputs`、`MarshalOrderedOutputs`、`UnmarshalOrderedInputs`、`UnmarshalOrderedOutputs` 用于固定槽（Ordered）配方数据。
+- `MarshalUnorderedInputs`、`MarshalUnorderedOutputs`、`UnmarshalUnorderedInputs`、`UnmarshalUnorderedOutputs` 用于允许槽位组形式的无序（Unordered）配方数据。
 - `gen_preset_recipe`、`gen_tagged_preset_recipe` 是磨粉配方工厂；`Description` 与 `RegisterDescription` 用于说明页。
+
+## 固定槽与无序槽位组
+
+`Recipe`、`MachineRecipeBase`、`MachineRecipe`、`GeneratorRecipe` 通用类提供可选的 `inputs_unordered=None`、`outputs_unordered=None`。已定义的具体机型配方和预设工厂保持各自原有参数，不接收这两个附加关键字。原版工作台/熔炉资源包装和 `Description` 不使用此结构。
+
+四个字段分别为：
+
+| 字段 | 结构 |
+| --- | --- |
+| `inputs` | `{CategoryStr: {Slot: Input}}` |
+| `outputs` | `{CategoryStr: {Slot: Output}}` |
+| `inputs_unordered` | `{CategoryStr: {tuple[int, ...]: list[Input]}}` |
+| `outputs_unordered` | `{CategoryStr: {tuple[int, ...]: list[Output]}}` |
+
+tuple 表示这一组材料或产物允许使用的真实槽位集合，不与材料列表一一对应。每组需求都必须满足；数量允许在组内跨槽凑齐，同一槽也可以提供多个需求，但同一份库存只能计算一次。例如下面的数据表示：槽位 0、1、2 合计提供 3 圆石和 1 煤，产物允许放入槽位 3、4。
+
+```python
+recipe = MachineRecipe(
+    inputs={},
+    outputs={},
+    power_cost=20,
+    tick_duration=100,
+    inputs_unordered={
+        "item": {(0, 1, 2): [Input("minecraft:cobblestone", 3), Input("minecraft:coal")]},
+    },
+    outputs_unordered={
+        "item": {(3, 4): [Output("minecraft:stone", 3)]},
+    },
+)
+```
+
+允许槽位使用非空 tuple，成员使用不重复的非负 `int`。组内列表保留重复条目，概率产物也不会自动合并。组之间及与固定槽之间可以表达重叠的槽位限制，处理器会统一分配库存和容量。
+
+`GetMachineInputs()` / `GetMachineOutputs()` 返回固定槽字典；`GetMachineUnorderedInputs()` / `GetMachineUnorderedOutputs()` 返回分组字典，不将无序条目伪装为固定槽。
+
+MiniJEI 和 MEI 展示时将每组条目按列表顺序填入 tuple 所列槽位，与固定槽一起渲染，不另加分组区域或槽位编号说明。配方需保证条目放得下，且展示槽位不重叠；渲染器不额外校验这些约束。此展示映射不改变配方的无序匹配语义。
+
+### 序列化格式
+
+tuple 不能作为 JSON 对象键，因此无序槽位组编码为逗号分隔的槽号字符串，解码后恢复为 tuple。例如上面的输入字段编码为：
+
+```json
+{
+  "inputs_unordered": {
+    "item": {
+      "0,1,2": [
+        {"item": "minecraft:cobblestone", "count": 3, "aux": 0},
+        {"item": "minecraft:coal", "count": 1, "aux": 0}
+      ]
+    }
+  }
+}
+```
+
+输出字段 `outputs_unordered` 使用相同的槽号字符串键。通用配方通过 `Recipe.Marshal()` / `Recipe.Unmarshal()` 处理四个字段，未提供的侧使用 `None`；固定槽号也编码为字符串，解码后恢复为整数。具体机型的专用编解码只处理各自已有的固定配方数据。
+
+`Processor` 与 `GeneratorProcessor` 已接入物品、流体的无序匹配、插入许可、跨槽扣料和产出。固定槽与无序组统一分配，标签需求与具体物品需求不会重复计算同一份库存；零数量输入需要存在匹配材料，但不扣除数量。输出根据当前内容和容量分配，物品还检查 aux 与合并条件，空槽只接收一种产物。概率产物预留完整容量，每个原始条目只抽取一次概率，拆到多个槽也不会重复抽取。
+
+普通处理器在完工时扣料并产出；发电机在开工时扣料，完工时产出。发电机沿用存档中的配方索引恢复已扣料批次，输出阻塞时保留该批次；完成但未交付的批次解堵后只补交产物，不重新扣料或再发一轮电。
+
+执行器懒缓存配方条目、按槽输入索引、身份匹配结果及物品最大堆叠信息；一轮选方共用一次物品库存读取。缓存核对配方对象、缓存类身份及四个输入输出字段的内容，字段或元素修改、浅拷贝与缓存类更新后会重新编译；标签缓存按实际物品 ID 与 aux 区分。库存、分配结果和随机结果不跨调用缓存，实际加工前按最新库存重新分配。配方应在初始化阶段完成登记，新增配方可继续通过集合的 `add_recipe()` 登记；运行中修改配方内容不会自动重建 MiniJEI/MEI 的登记索引。自定义匹配/结算的专用机器仍按各自流程执行，例如电动机件加工台；通用处理器的适配不会替代它们的专用逻辑。
+
+合金炉的全部 20 条内置配方使用无序输入组 `(0, 1, 2, 3)`，输出保持有序并固定使用槽 4。`AlloyFurnaceRecipe` 保留原构造器、工厂参数与专用序列化格式；输入字典键只决定展示顺序，输出字典键仍指定实际产出槽位。材料可以换位或拆到多个输入槽；槽 4 容量不足时停止加工，不占用第二输出槽 5。
+
+压缩机的 17 条单材料配方使用无序输入组 `(0, 1, 2)`，支持任一输入槽或跨槽凑量；4 条多材料配方保留固定输入槽，产物仍放入槽 3。`CompressorRecipe` 根据输入条目数量选择单材料无序或多材料有序，构造器、工厂参数和专用序列化格式保持一致。其他内置配方仍使用各自的固定槽定义。
 
 ## 类型与原实现
 

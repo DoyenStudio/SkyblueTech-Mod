@@ -8,6 +8,18 @@ if 0>1:
     import typing  # noqa: F401
 
 
+def _get_display_slots(ordered, unordered):
+    # type: (dict | None, dict | None) -> dict
+    display_slots = {
+        category: dict(slots) for category, slots in (ordered or {}).items()
+    }
+    for category, groups in (unordered or {}).items():
+        category_slots = display_slots.setdefault(category, {})
+        for slots, elements in groups.items():
+            category_slots.update(zip(slots, elements))
+    return display_slots
+
+
 class RecipeRenderer(object):
     recipe_icon_id = "minecraft:barrier"
     render_ui_def_name = "???"
@@ -16,6 +28,12 @@ class RecipeRenderer(object):
     def __init__(self, recipe):
         # type: (RecipeBase) -> None
         self.recipe = recipe
+
+    def GetDisplayInputs(self):
+        return _get_display_slots(self.recipe.inputs, self.recipe.inputs_unordered)
+
+    def GetDisplayOutputs(self):
+        return _get_display_slots(self.recipe.outputs, self.recipe.outputs_unordered)
 
     @classmethod
     def GetRenderHeight(cls, recipe):

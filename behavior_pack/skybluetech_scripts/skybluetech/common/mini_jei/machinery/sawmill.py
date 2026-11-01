@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define.id_enum import machinery
+from ..core import UnmarshalOrderedOutputs
 from .define import MachineRecipe, Input, Output, CategoryType
 
 
@@ -26,7 +27,7 @@ class SawmillRecipe(MachineRecipe):
 
     def Marshal(self):
         # type: () -> dict
-        return {
+        result = {
             "input_item": self.input_item.to_dict(),
             "output_items": {
                 str(k): v.to_dict() for k, v in self.output_items.items()
@@ -34,16 +35,16 @@ class SawmillRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):
         # type: (dict) -> SawmillRecipe
-        return SawmillRecipe(
+        return cls(
             input_item=Input.from_dict(data["input_item"]),
-            output_items={
-                int(slot_index): Output.from_dict(item_data)
-                for slot_index, item_data in data["output_items"].items()
-            },
+            output_items=UnmarshalOrderedOutputs(
+                {CategoryType.ITEM: data["output_items"]}
+            )[CategoryType.ITEM],
             power_cost=data["power_cost"],
             tick_duration=data["tick_duration"],
         )

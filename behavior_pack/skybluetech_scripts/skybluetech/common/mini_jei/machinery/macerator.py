@@ -6,7 +6,9 @@ from .define import CategoryType, MachineRecipe, Input, Output
 class MaceratorRecipe(MachineRecipe):
     recipe_icon_id = machinery.Machinery.MACERATOR
 
-    def __init__(self, input_id, output_id, output_count, power_cost, tick_duration):
+    def __init__(
+        self, input_id, output_id, output_count, power_cost, tick_duration,
+    ):
         # type: (Input, str, int, int, int) -> None
         MachineRecipe.__init__(
             self,
@@ -20,7 +22,7 @@ class MaceratorRecipe(MachineRecipe):
         self.output_count = output_count
 
     def Marshal(self):
-        return {
+        result = {
             "input_id": self.input_id.to_dict(),
             "output": {
                 "id": self.output_id,
@@ -29,6 +31,7 @@ class MaceratorRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):
@@ -52,7 +55,7 @@ def gen_preset_recipe(
         output_count,  # type: int
     ):
         return MaceratorRecipe(
-            Input(input, input_count), output, output_count, power_cost, tick_duration
+            Input(input, input_count), output, output_count, power_cost, tick_duration,
         )
 
     return generate_recipe

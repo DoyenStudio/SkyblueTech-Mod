@@ -2,7 +2,9 @@
 """配方数据接口。集合与原实现共用，初始化时在两端分别扩展。"""
 from ..mini_jei.core import (
     RecipesCollection, CategoryType, RecipeBase, Recipe, Input, Output,
-    RegisterRecipe, MarshalInputs, MarshalOutputs, UnmarshalInputs, UnmarshalOutputs,
+    RegisterRecipe, MarshalOrderedInputs, MarshalOrderedOutputs, UnmarshalOrderedInputs, UnmarshalOrderedOutputs,
+    MarshalUnorderedInputs, MarshalUnorderedOutputs,
+    UnmarshalUnorderedInputs, UnmarshalUnorderedOutputs,
 )
 from ..mini_jei.machinery.define import MachineRecipeBase, MachineRecipe, GeneratorRecipe
 from ..mini_jei.machinery.macerator import (
@@ -45,8 +47,10 @@ from ..mini_jei.core.helper import GetRecipesByInput, GetRecipesByOutput, GetRec
 
 __all__ = [
     "RecipesCollection", "CategoryType", "RecipeBase", "Recipe", "Input", "Output",
-    "RegisterRecipe", "MarshalInputs", "MarshalOutputs", "UnmarshalInputs",
-    "UnmarshalOutputs", "MachineRecipeBase", "MachineRecipe", "GeneratorRecipe",
+    "RegisterRecipe", "MarshalOrderedInputs", "MarshalOrderedOutputs", "UnmarshalOrderedInputs",
+    "UnmarshalOrderedOutputs", "MachineRecipeBase", "MachineRecipe", "GeneratorRecipe",
+    "MarshalUnorderedInputs", "MarshalUnorderedOutputs",
+    "UnmarshalUnorderedInputs", "UnmarshalUnorderedOutputs",
     "MaceratorRecipe", "MagmaFurnaceRecipe", "RedstoneGeneratorRecipe",
     "gen_preset_recipe", "gen_tagged_preset_recipe",
     "GetRecipesByInput", "GetRecipesByOutput", "GetRecipesByCategory",

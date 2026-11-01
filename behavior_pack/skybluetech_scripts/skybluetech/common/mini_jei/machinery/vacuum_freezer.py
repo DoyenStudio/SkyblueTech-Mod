@@ -45,7 +45,7 @@ class VacuumFreezerRecipe(MachineRecipe):
         if output_fluid is not None:
             outputs[CategoryType.FLUID] = {1: output_fluid}
         MachineRecipe.__init__(
-            self, inputs, outputs, power_cost=0, tick_duration=max_tick_duration
+            self, inputs, outputs, power_cost=0, tick_duration=max_tick_duration,
         )
         self.input_item = input_item
         self.input_fluid = input_fluid
@@ -88,7 +88,7 @@ class VacuumFreezerRecipe(MachineRecipe):
         return min(max(rate, -1.0), 1.0)
 
     def Marshal(self):
-        return {
+        result = {
             "input_item": self.input_item.to_dict() if self.input_item else None,
             "input_fluid": self.input_fluid.to_dict() if self.input_fluid else None,
             "output_item": self.output_item.to_dict() if self.output_item else None,
@@ -99,6 +99,7 @@ class VacuumFreezerRecipe(MachineRecipe):
             "tick_heat_value_add": self.tick_heat_value_add,
             "extra_upgrader_id": self.extra_upgrader_id,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, dct):

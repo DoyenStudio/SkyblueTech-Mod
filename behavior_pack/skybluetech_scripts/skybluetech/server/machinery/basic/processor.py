@@ -1,6 +1,4 @@
 # coding=utf-8
-import random
-
 from skybluetech_scripts.skybluetech.common.define import flags
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery, Upgraders
 from skybluetech_scripts.skybluetech.common.mini_jei.core import (
@@ -74,7 +72,7 @@ class Processor(ProcessorBase):
     # === item processor special ===
     def _processor_on_slot_update(self, slot_pos):
         # type: (int) -> None
-        if self.InUpgradeSlot(slot_pos):
+        if self._applying_recipe or self.InUpgradeSlot(slot_pos):
             return
         if self.process_item:
             if slot_pos in self.item_output_slots and self.HasDeactiveFlag(
@@ -100,18 +98,14 @@ class Processor(ProcessorBase):
             return UpgradeControl.IsValidInput(self, slot, item)
         elif slot in self.item_output_slots:
             return False
-        for recipe in self.recipes:
-            slot_input = recipe.inputs.get(CategoryType.ITEM, {}).get(slot)
-            if slot_input is None:
-                continue
-            if slot_input.match_item_id(item.id):
-                return True
-        return False
+        return self._recipe_accepts_input(
+            CategoryType.ITEM, slot, item.id, item.newAuxValue
+        )
 
     # === fluid processor special ===
     def _processor_on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
-        if not is_final or not isinstance(self, MultiFluidContainer):
+        if self._applying_recipe or not is_final or not isinstance(self, MultiFluidContainer):
             return
         if slot in self.fluid_input_slots and self.HasDeactiveFlag(
             flags.DEACTIVE_FLAG_NO_RECIPE
@@ -120,7 +114,7 @@ class Processor(ProcessorBase):
 
     def _processor_on_reduced_fluid(self, slot, fluid_id, reduced_fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
-        if not is_final or not isinstance(self, MultiFluidContainer):
+        if self._applying_recipe or not is_final or not isinstance(self, MultiFluidContainer):
             return
         if slot in self.fluid_output_slots:
             if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
@@ -147,11 +141,17 @@ class Processor(ProcessorBase):
         "进行一次配方产出"
         _, recipe = self.get_recipe()
         if recipe is None:
-            # cannot reach
-            raise ValueError("Recipe ERROR")
+            # 原生槽位变更通知延后一帧；结算可能早于通知到达。
+            self.current_recipe = None
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+            return False
+        if not recipe.equals(self.current_recipe):
+            # 换料后不能沿用上一配方的进度直接产出，交给 start_next 开新批。
+            return False
         if not self.can_output(recipe):
-            return
-        self.finish_recipe(recipe)
+            return False
+        # 专用机器的 finish_recipe 仍可能沿用无返回值的旧接口。
+        return self.finish_recipe(recipe) is not False
 
     def start_next(self, _recipe=None):
         # type: (MachineRecipeBase | None) -> None
@@ -184,40 +184,5 @@ class Processor(ProcessorBase):
         self.CallSync()
 
     def finish_recipe(self, recipe):
-        # type: (MachineRecipeBase) -> None
-        slotitems = self.GetInputSlotItems()
-        slotitems.update(self.GetOutputSlotItems())
-        if self.process_item:
-            for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
-                slotitems[slot_pos].count -= int(input.count)
-            for slot_pos, output in recipe.outputs.get(CategoryType.ITEM, {}).items():
-                if output.prob != 1 and random.random() > output.prob:
-                    continue
-                orig_item = slotitems.get(slot_pos, None)
-                if orig_item is None:
-                    orig_item = Item(output.id, 0, int(output.count))
-                else:
-                    orig_item.count += int(output.count)
-                slotitems[slot_pos] = orig_item
-            self.SetSlotItems(slotitems)
-            self.FlushOutputSlots(
-                list(recipe.outputs.get(CategoryType.ITEM, {}).keys())
-            )
-        if self.process_fluid and isinstance(self, MultiFluidContainer):
-            slot_pos_and_inputs = list(
-                recipe.inputs.get(CategoryType.FLUID, {}).items()
-            )
-            last_index = len(slot_pos_and_inputs) - 1
-            for idx, (slot_pos, input) in enumerate(slot_pos_and_inputs):
-                self.fluids[slot_pos].volume -= input.count
-                self._on_reduced_fluid(
-                    slot_pos, input.id, input.count, idx == last_index
-                )
-            slots_pos_and_outputs = list(
-                recipe.outputs.get(CategoryType.FLUID, {}).items()
-            )
-            last_index = len(slots_pos_and_outputs) - 1
-            for idx, (slot_pos, output) in enumerate(slots_pos_and_outputs):
-                if output.prob != 1 and random.random() > output.prob:
-                    continue
-                self.OutputFluid(output.id, output.count, slot_pos, idx == last_index)
+        # type: (MachineRecipeBase) -> bool
+        return self._apply_recipe(recipe)

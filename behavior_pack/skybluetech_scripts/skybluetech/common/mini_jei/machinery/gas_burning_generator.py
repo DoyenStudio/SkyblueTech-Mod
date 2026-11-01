@@ -35,13 +35,14 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
 
     def Marshal(self):
         # type: () -> dict
-        return {
+        result = {
             "gas_id": self.gas_id,
             "once_burning_volume": self.once_burning_volume,
             "output_power": self.output_power,
             "output_gas_id": self.output_gas_id,
             "output_gas_volume": self.output_gas_volume,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

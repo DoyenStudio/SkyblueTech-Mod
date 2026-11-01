@@ -29,39 +29,60 @@ def UpdateRecipePower(ctrl, level, segments, hover):
     SetHoverText(ctrl, hover)
 
 
+def _format_recipe_fluid_volume(volume):
+    # type: (float) -> str
+    if volume == float("inf"):
+        return "无限"
+    if volume >= 10000:
+        value, unit = volume / 1000.0, "B"
+    else:
+        value, unit = volume, "mB"
+    text = str(value)
+    if text.endswith(".0"):
+        text = text[:-2]
+    return text + " " + unit
+
+
 class FluidDisplayer(object):
     """
     配方行里的流体格 (SkybluePanelLib.fluid_tank):
     液面按同一行同方向里最大的用量画; 悬停写配方用量 (不写储罐容量); 点击 (悬停层 info 是按钮) 弹出说明, 同物品格。
     """
 
-    def __init__(self, ctrl, fluid_id, fluid_volume, max_volume):
-        # type: (UBaseCtrl, str, float, float) -> None
+    def __init__(self, ctrl, fluid_id, fluid_volume, max_volume, prob=1.0, not_consumed=False):
+        # type: (UBaseCtrl, str, float, float, float, bool) -> None
         self.ctrl = ctrl
         self.fluid_id = fluid_id
         self.volume = fluid_volume
         self.max_volume = max_volume
+        self.prob = prob
+        self.not_consumed = not_consumed
         self.check_btn = ctrl["info"].asButton()
         self.check_btn.SetCallback(self.onBtnReleased)
         self.update()
 
     def update(self):
-        from ..machinery.utils import FluidDisplayer, FormatFluidVolume, SetHoverText
+        from ..machinery.utils import FluidDisplayer, SetHoverText
 
         FluidDisplayer(self.ctrl, enable_interact=False).update(
-            self.fluid_id, self.volume, self.max_volume
+            self.fluid_id, self.volume, self.max_volume or 1.0
         )
         SetHoverText(
             self.ctrl,
             "§d流体类型： §f"
             + (CF.CreateItem(LEVEL_ID).GetItemHoverName(self.fluid_id) or self.fluid_id)
-            + "\n§a体积： §f"
-            + FormatFluidVolume(self.volume),
+            + self._get_detail_text(),
         )
 
-    def onBtnReleased(self, params):
-        from ..machinery.utils import FormatFluidVolume
+    def _get_detail_text(self):
+        text = "\n§a体积： §f" + _format_recipe_fluid_volume(self.volume)
+        if self.not_consumed:
+            text += "\n§e不被消耗。"
+        if self.prob != 1.0:
+            text += "\n§e产出概率： %.1f%%%%" % (self.prob * 100)
+        return text
 
+    def onBtnReleased(self, params):
         x, y = self.ctrl.GetRootPos()
         sizex, sizey = self.ctrl.GetSize()
         CreateDescBoard(
@@ -72,9 +93,7 @@ class FluidDisplayer(object):
             self.fluid_id,
             "§d流体类型： §f"
             + (CF.CreateItem(LEVEL_ID).GetItemFormattedHoverText(self.fluid_id) or self.fluid_id)
-            + "\n"
-            + "§a体积： §f"
-            + FormatFluidVolume(self.volume),
+            + self._get_detail_text(),
         )
 
 
@@ -82,6 +101,8 @@ class InputDisplayer(object):
     def __init__(self, ctrl, input):
         # type: (UBaseCtrl, Input) -> None
         self.ctrl = ctrl
+        self.count = input.count
+        self.aux = 0 if input.is_tag or input.aux == -1 else input.aux
         self.not_consumed = input.count == 0
         if input.is_tag:
             self.enable_carousel = True
@@ -105,7 +126,12 @@ class InputDisplayer(object):
         self.item_renderer.SetVisible(True)
 
     def update(self):
-        self.item_renderer.SetUiItem(Item(self.get_current_carousel_item()))
+        self.item_renderer.SetUiItem(
+            Item(self.get_current_carousel_item(), self.aux, count=int(self.count))
+        )
+        self.item_count_label.SetText(
+            str(int(self.count)) if self.count not in (0, 1) else ""
+        )
 
     def tick(self, ui_ticks):
         # type: (int) -> None

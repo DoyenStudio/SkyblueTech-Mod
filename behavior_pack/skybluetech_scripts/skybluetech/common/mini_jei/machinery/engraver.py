@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define.id_enum import machinery
+from ..core import UnmarshalOrderedInputs
 
 from .define import CategoryType, Input, MachineRecipe, Output
 
@@ -39,7 +40,7 @@ class EngraverRecipe(MachineRecipe):
         self.output_count = output_count
 
     def Marshal(self):
-        return {
+        result = {
             "item_inputs": {
                 str(slot): item.to_dict() for slot, item in self.item_inputs.items()
             },
@@ -54,15 +55,15 @@ class EngraverRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):
         extra_fluid_input = data.get("extra_fluid_input")
         return cls(
-            item_inputs={
-                int(slot): Input.from_dict(item_data)
-                for slot, item_data in data["item_inputs"].items()
-            },
+            item_inputs=UnmarshalOrderedInputs(
+                {CategoryType.ITEM: data["item_inputs"]}
+            )[CategoryType.ITEM],
             fluid_input=Input.from_dict(data["fluid_input"]),
             output_item_id=data["output_item_id"],
             output_count=data["output_count"],

@@ -20,6 +20,8 @@ dust_rcp = gen_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 ingot_rcp = gen_preset_recipe(L_POWER, L_TICK_DURATION)
 
 
+# AlloyFurnaceRecipe 将全部材料归入无序输入组 (0, 1, 2, 3)，
+# 输入键仅决定展示顺序；产物保持有序，固定使用输出槽 4。
 recipes = RecipesCollection(
     Machinery.ALLOY_FURNACE,
     # Alloy

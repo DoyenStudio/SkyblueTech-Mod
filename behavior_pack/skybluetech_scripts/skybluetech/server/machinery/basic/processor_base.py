@@ -1,4 +1,6 @@
 # coding=utf-8
+import random
+
 from skybluetech_scripts.skybluetech.common.define import flags as flags
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
@@ -9,6 +11,9 @@ from skybluetech_scripts.skybluetech.common.mini_jei.core import (
 )
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery import MachineRecipeBase
 from skybluetech_scripts.tooldelta.define import Item
+from skybluetech_scripts.skybluetech.server.machinery.utils.recipe_plan import (
+    get_recipe_plan,
+)
 
 from .gui_ctrl import GUIControl
 from .multi_fluid_container import MultiFluidContainer
@@ -31,6 +36,7 @@ class ProcessorBase(WorkRenderer, UpgradeControl, GUIControl):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ProcessorBase, self).__init__(dim, x, y, z, block_entity_data)
+        self._applying_recipe = False
         _, self.current_recipe = self.get_recipe()
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
@@ -50,13 +56,13 @@ class ProcessorBase(WorkRenderer, UpgradeControl, GUIControl):
 
     def _processor_base_is_valid_fluid_input(self, slot, fluid_id):
         # type: (int, str) -> bool
-        for recipe in self.recipes:
-            slot_input = recipe.inputs.get("fluid", {}).get(slot)
-            if slot_input is None:
-                continue
-            if slot_input.match_item_id(fluid_id):
-                return True
-        return False
+        return self._recipe_accepts_input(CategoryType.FLUID, slot, fluid_id)
+
+    def _recipe_accepts_input(self, category, slot, item_id, aux=0):
+        return any(
+            get_recipe_plan(recipe).input_matches(category, slot, item_id, aux)
+            for recipe in self.recipes
+        )
 
     def update_gui(self):
         if self.current_recipe is not None:
@@ -64,67 +70,109 @@ class ProcessorBase(WorkRenderer, UpgradeControl, GUIControl):
 
     def get_recipe(self):
         # type: () -> tuple[int, MachineRecipeBase | None]
+        # 原生容器读取较贵；一轮选方只读取一次，所有候选共用快照。
+        items = self.GetInputSlotItems() if self.process_item else {}
         for recipe_idx, recipe in enumerate(self.recipes):
-            cont = False
-            if self.process_item:
-                inputs = self.GetInputSlotItems()
-                for slot_pos, input in recipe.inputs.get(CategoryType.ITEM, {}).items():
-                    item = inputs.get(slot_pos, None)
-                    if item is None:
-                        cont = True
-                        break
-                    if not input.match_item_id(item.id) or item.count < input.count:
-                        cont = True
-                        break
-            if self.process_fluid and isinstance(self, MultiFluidContainer):
-                for slot_pos, input in recipe.inputs.get(
-                    CategoryType.FLUID, {}
-                ).items():
-                    fluid = self.fluids[slot_pos]
-                    if fluid.fluid_id is None:
-                        cont = True
-                        break
-                    if (
-                        not input.match_item_id(fluid.fluid_id)
-                        or fluid.volume < input.count
-                    ):
-                        cont = True
-                        break
-            if cont:
+            plan = get_recipe_plan(recipe)
+            if self.process_item and plan.plan_item_inputs(items) is None:
                 continue
-            else:
-                return recipe_idx, recipe
+            if self.process_fluid and isinstance(self, MultiFluidContainer):
+                if plan.plan_fluid_inputs(self.fluids) is None:
+                    continue
+            return recipe_idx, recipe
         return (0, None)
 
     def can_output(self, recipe):
         # type: (MachineRecipeBase) -> bool
-        outputs = recipe.outputs
+        plan = get_recipe_plan(recipe)
         if self.process_item:
-            item_output_slots = self.GetOutputSlotItems()
-            for slot_pos, output in outputs.get(CategoryType.ITEM, {}).items():
-                item = item_output_slots.get(slot_pos, None)
-                if item is None:
-                    # TODO: 假设输出不可能超过物品最大堆叠数
-                    item_count = output.count
-                    continue
-                elif item.newItemName != output.id:
-                    # TODO: auxValue and nbt comparison
-                    return False
-                else:
-                    item_count = item.count + output.count
-                if item_count > item.GetBasicInfo().maxStackSize:
-                    return False
+            if plan.plan_item_outputs(
+                self.GetOutputSlotItems(), self.item_output_slots
+            ) is None:
+                return False
         if self.process_fluid and isinstance(self, MultiFluidContainer):
-            for slot_pos, output in outputs.get(CategoryType.FLUID, {}).items():
-                fluid = self.fluids[slot_pos]
-                if fluid.fluid_id is None:
-                    # TODO: 假设输出不可能超过流体槽最大容量
-                    fluid_volume = output.count
-                    continue
-                elif fluid.fluid_id != output.id:
+            if plan.plan_fluid_outputs(self.fluids, self.fluid_output_slots) is None:
+                return False
+        return True
+
+    def _apply_recipe(self, recipe, consume_inputs=True, produce_outputs=True):
+        "按当前库存重新分配，全部检查成功后才扣料/产出，不缓存库存或随机结果。"
+        plan = get_recipe_plan(recipe)
+        item_inputs, item_outputs, fluid_inputs, fluid_outputs = [], [], [], []
+        items = {}
+        if self.process_item:
+            if consume_inputs:
+                items = self.GetInputSlotItems()
+                item_inputs = plan.plan_item_inputs(items)
+                if item_inputs is None:
                     return False
+            if produce_outputs:
+                outputs = self.GetOutputSlotItems()
+                item_outputs = plan.plan_item_outputs(outputs, self.item_output_slots)
+                if item_outputs is None:
+                    return False
+                items.update(outputs)
+        if self.process_fluid and isinstance(self, MultiFluidContainer):
+            if consume_inputs:
+                fluid_inputs = plan.plan_fluid_inputs(self.fluids)
+                if fluid_inputs is None:
+                    return False
+            if produce_outputs:
+                fluid_outputs = plan.plan_fluid_outputs(self.fluids, self.fluid_output_slots)
+                if fluid_outputs is None:
+                    return False
+
+        changed_items = {}
+        output_slots = set()
+        reduced_fluids, added_fluids = {}, {}
+        for allocation in item_inputs:
+            for slot, count in allocation.items():
+                items[slot].count -= int(count)
+                changed_items[slot] = items[slot]
+        for (_, output), allocation in zip(plan.outputs.get(CategoryType.ITEM, ()), item_outputs):
+            if not allocation or (output.prob != 1 and random.random() > output.prob):
+                continue
+            # 概率属于原始产物条目，拆到多个槽时也只抽一次。
+            for slot, count in allocation.items():
+                item = items.get(slot)
+                if item is None or item.count <= 0:
+                    item = items[slot] = Item(output.id, output.aux, int(count))
                 else:
-                    fluid_volume = fluid.volume + output.count
-                if fluid_volume > fluid.max_volume:
-                    return False
+                    item.count += int(count)
+                changed_items[slot] = item
+                output_slots.add(slot)
+        for allocation in fluid_inputs:
+            for slot, count in allocation.items():
+                reduced_fluids[slot] = reduced_fluids.get(slot, 0) + count
+        for (_, output), allocation in zip(plan.outputs.get(CategoryType.FLUID, ()), fluid_outputs):
+            if not allocation or (output.prob != 1 and random.random() > output.prob):
+                continue
+            for slot, count in allocation.items():
+                previous = added_fluids.get(slot)
+                added_fluids[slot] = (output.id, count + (previous[1] if previous else 0))
+
+        # 流体回调是同步的；先完成所有写入，再发批量通知，避免中途重入选方。
+        self._applying_recipe = True
+        try:
+            if changed_items:
+                self.SetSlotItems(changed_items)
+            reduced_events = []
+            for slot, count in reduced_fluids.items():
+                fluid = self.fluids[slot]
+                reduced_events.append((slot, fluid.fluid_id, count))
+                fluid.volume -= count
+            added_events = []
+            for slot, (fluid_id, count) in added_fluids.items():
+                fluid = self.fluids[slot]
+                fluid.fluid_id = fluid_id
+                fluid.volume += count
+                added_events.append((slot, fluid_id, count))
+            for index, (slot, fluid_id, count) in enumerate(reduced_events):
+                self._on_reduced_fluid(slot, fluid_id, count, index == len(reduced_events) - 1)
+            for index, (slot, fluid_id, count) in enumerate(added_events):
+                self._on_added_fluid(slot, fluid_id, count, index == len(added_events) - 1)
+            if output_slots:
+                self.FlushOutputSlots(sorted(output_slots))
+        finally:
+            self._applying_recipe = False
         return True

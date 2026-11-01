@@ -61,7 +61,6 @@ class RecipesCollection(Generic[RT]):
         # type: (str, RT) -> None
         self.collection_name = collection_name
         self._recipes = list(recipes)
-        self._recipes_mapping = {}  # type: dict[tuple, RT]
 
         from .register import RegisterRecipe
 
@@ -80,15 +79,6 @@ class RecipesCollection(Generic[RT]):
     def remove_recipe(self, recipe):
         # type: (RT) -> None
         self._recipes.remove(recipe)
-
-    def check_recipe(self, collection_key):
-        # type: (tuple) -> RT | None
-        "WIP"
-        if not self._recipes_mapping:
-            self._recipes_mapping = {
-                recipe.collection_key: recipe for recipe in self._recipes
-            }
-        return self._recipes_mapping.get(collection_key)
 
     def copy(self):
         return RecipesCollection(self.collection_name, *self._recipes)

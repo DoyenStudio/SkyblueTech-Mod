@@ -35,7 +35,7 @@ class MagmaFurnaceRecipe(MachineRecipe):
 
     def Marshal(self):
         # type: () -> dict
-        return {
+        result = {
             "input_item_id": self.input_item_id,
             "is_tag": self.is_tag,
             "output_fluid_id": self.output_fluid_id,
@@ -43,6 +43,7 @@ class MagmaFurnaceRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

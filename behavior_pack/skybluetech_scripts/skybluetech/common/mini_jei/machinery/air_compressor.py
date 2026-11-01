@@ -7,7 +7,12 @@ class AirCompressorRecipe(MachineRecipe):
     recipe_icon_id = machinery.Machinery.AIR_COMPRESSOR
 
     def __init__(
-        self, dimension, output_fluid_id, output_fluid_volume, power_cost, tick_duration
+        self,
+        dimension,
+        output_fluid_id,
+        output_fluid_volume,
+        power_cost,
+        tick_duration,
     ):
         # type: (int, str, float, int, int) -> None
         MachineRecipe.__init__(
@@ -28,13 +33,14 @@ class AirCompressorRecipe(MachineRecipe):
         )
 
     def Marshal(self):
-        return {
+        result = {
             "dimension": self.dimension,
             "output_fluid_id": self.output_fluid_id,
             "output_fluid_volume": self.output_fluid_volume,
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):

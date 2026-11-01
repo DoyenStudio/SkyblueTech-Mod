@@ -77,8 +77,8 @@ class PrecisionCutter(Processor, MultiFluidContainer):
             self.current_recipe = None
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return
-        Processor.run_once(self)
-        self.consume_cutter_durability(recipe)
+        if Processor.run_once(self):
+            self.consume_cutter_durability(recipe)
 
     def cutter_meets_requirement(self, recipe):
         # type: (PrecisionCutterRecipe) -> bool

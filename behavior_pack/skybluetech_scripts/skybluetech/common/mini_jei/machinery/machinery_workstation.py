@@ -7,8 +7,8 @@ from ..core import (
     Recipe,
     Input,
     Output,
-    MarshalInputs,
-    UnmarshalInputs,
+    MarshalOrderedInputs,
+    UnmarshalOrderedInputs,
 )
 from .define import MachineRecipe
 
@@ -30,7 +30,7 @@ class MachineryWorkstationRecipe(MachineRecipe):
     }
 
     def __init__(
-        self, input_items, output_item_id, wrench_level, pincer_level, craft_times
+        self, input_items, output_item_id, wrench_level, pincer_level, craft_times,
     ):
         # type: (dict[int, Input], str, int, int, int) -> None
         MachineRecipe.__init__(
@@ -53,18 +53,19 @@ class MachineryWorkstationRecipe(MachineRecipe):
 
     def Marshal(self):
         # type: () -> dict
-        return {
-            "input_items": MarshalInputs({CategoryType.ITEM: self.input_items}),
+        result = {
+            "input_items": MarshalOrderedInputs({CategoryType.ITEM: self.input_items}),
             "output_item_id": self.output_item_id,
             "wrench_level": self.wrench_level,
             "pincer_level": self.pincer_level,
             "craft_times": self.craft_times,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):
         return cls(
-            input_items=UnmarshalInputs(data["input_items"])[CategoryType.ITEM],
+            input_items=UnmarshalOrderedInputs(data["input_items"])[CategoryType.ITEM],
             output_item_id=data["output_item_id"],
             wrench_level=data["wrench_level"],
             pincer_level=data["pincer_level"],
@@ -92,7 +93,7 @@ class MachineryWorkstationRecipe(MachineRecipe):
             return getted_recipe
         else:
             return cls(
-                {int(k): Input.from_dict(v) for k, v in data["inputs"].items()},
+                UnmarshalOrderedInputs({CategoryType.ITEM: data["inputs"]})[CategoryType.ITEM],
                 data["output"],
                 data.get("wrench_level", 1),
                 data.get("pincer_level", 1),

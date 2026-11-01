@@ -1,6 +1,7 @@
 # coding=utf-8
 from ...define.id_enum import machinery, INSCRIBING_TEMPLATE
 from ...define.tag_enum import IngotTag
+from ..core import UnmarshalOrderedInputs
 from .define import CategoryType, RecipesCollection, MachineRecipe, Input, Output
 
 
@@ -36,19 +37,12 @@ class TemplateAssemblerRecipe(MachineRecipe):
         self.output_item_id = output_item_id
 
     def GetInputs(self):
-        inputs = self.inputs.copy()
-        input_items = inputs[CategoryType.ITEM] = self.inputs[CategoryType.ITEM].copy()
-        input_items[9] = Input(INSCRIBING_TEMPLATE)
-        return {
-            cat: [
-                ("tag:" + input.id if input.is_tag else input.id)
-                for input in slot2input.values()
-            ]
-            for cat, slot2input in inputs.items()
-        }
+        inputs = MachineRecipe.GetInputs(self)
+        inputs.setdefault(CategoryType.ITEM, []).append(INSCRIBING_TEMPLATE)
+        return inputs
 
     def Marshal(self):
-        return {
+        result = {
             "input_items": {
                 slot: input.to_dict() for slot, input in self.input_items.items()
             },
@@ -56,14 +50,14 @@ class TemplateAssemblerRecipe(MachineRecipe):
             "power_cost": self.power_cost,
             "tick_duration": self.tick_duration,
         }
+        return result
 
     @classmethod
     def Unmarshal(cls, data):
         return cls(
-            input_items={
-                slot: Input.from_dict(input_dict)
-                for slot, input_dict in data["input_items"].items()
-            },
+            input_items=UnmarshalOrderedInputs(
+                {CategoryType.ITEM: data["input_items"]}
+            )[CategoryType.ITEM],
             output_item_id=data["output_item_id"],
             power_cost=data["power_cost"],
             tick_duration=data["tick_duration"],

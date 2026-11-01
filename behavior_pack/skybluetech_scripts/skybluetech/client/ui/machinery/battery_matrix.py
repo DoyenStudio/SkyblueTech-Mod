@@ -55,7 +55,6 @@ INPUT_POWER_LABEL_PATH = MAIN_PATH / "input_power"
 OUTPUT_POWER_LABEL_PATH = MAIN_PATH / "output_power"
 STRUCTURE_NOT_FINISHED_TIP_PATH = MAIN_PATH / "structure_not_finished_tip"
 STRUCTURE_DESC_LABEL_PATH = STRUCTURE_NOT_FINISHED_TIP_PATH / "desc_label"
-MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_btn"
 
 
 @RegistToolDeltaScreen("BatteryMatrixUI.main", is_proxy=True)
@@ -74,28 +73,19 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         )
         self.structure_desc_label = self.GetElement(STRUCTURE_DESC_LABEL_PATH).asLabel()
         self.open_storage_btn = (
-            self
-            .GetElement(OPEN_STORAGE_BTN_PATH)
+            self.GetElement(OPEN_STORAGE_BTN_PATH)
             .asButton()
             .SetCallback(self.onOpenStorageWindow)
         )
         self.push_storage_btn = (
-            self
-            .GetElement(PUSH_STORAGE_BTN_PATH)
+            self.GetElement(PUSH_STORAGE_BTN_PATH)
             .asButton()
             .SetCallback(self.onStoreBatteries)
         )
         self.close_storage_btn = (
-            self
-            .GetElement(STORAGE_CLOSE_BTN_PATH)
+            self.GetElement(STORAGE_CLOSE_BTN_PATH)
             .asButton()
             .SetCallback(self.onCloseStorageWindow)
-        )
-        self.multiblock_structute_check_btn = (
-            self
-            .GetElement(MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH)
-            .asButton()
-            .SetCallback(self.onCheckMultiBlockStructure)
         )
         self.storage_window.SetVisible(False)
         self.last_destroy_flag = None
@@ -119,7 +109,9 @@ class BatteryMatrixUI(MachinePanelUIProxy):
         self.output_power_label.SetText("输出 %s/t" % FormatRF(output_power))
         self.energy_label.SetText("{:.1f}%%".format(float(storage_rf * 100) / rf_max))
         if rf_max != 1.0:
-            self.total_power.SetText("%s / %s" % (FormatRF(storage_rf), FormatRF(rf_max)))
+            self.total_power.SetText(
+                "%s / %s" % (FormatRF(storage_rf), FormatRF(rf_max))
+            )
         else:
             self.total_power.SetText("请打开仓储界面放入电池")
         UpdateGenericProgressL2R(self.battery_icon, float(storage_rf) / rf_max)
@@ -163,10 +155,6 @@ class BatteryMatrixUI(MachinePanelUIProxy):
     def onStoreBatteries(self, _):
         _, x, y, z = self.pos
         BatteryMatrixStoreBatteryRequest(x, y, z).send()
-
-    def onCheckMultiBlockStructure(self, _):
-        _, x, y, z = self.pos
-        MultiBlockStructureCheckRequest(x, y, z).send()
 
     @MachinePanelUIProxy.Listen(BatteryMatrixStatesUpdate)
     def onStateUpdate(self, event):

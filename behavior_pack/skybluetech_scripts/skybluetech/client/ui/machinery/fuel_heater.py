@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
-from skybluetech_scripts.tooldelta.define import UICtrlPosData
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_HEAT_VALUE
@@ -14,10 +13,10 @@ from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
 
 from ..machinery_extra_pages import ItemPipeSettingsPage
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
-from .utils import FormatKelvin, UpdateFlame
+from .utils import FormatKelvin, SetHoverText, UpdateFlame, UpdateProgress
 
-TEMPERATURE_LABEL_PATH = MAIN_PATH / "temperature/temperature_label"
-TEMPERATURE_CLIP_PATH = MAIN_PATH / "temperature/bar/clip_panel"
+TEMPERATURE_LABEL_PATH = MAIN_PATH / "temperature_label"
+TEMPERATURE_PATH = MAIN_PATH / "temperature"
 FLAME_PATH = MAIN_PATH / "flame"
 
 
@@ -27,14 +26,8 @@ class FuelHeaterUI(MachinePanelUIProxyEx):
 
     def OnCreate(self):
         self.temperature_label = self.GetElement(TEMPERATURE_LABEL_PATH).asLabel()
-        self.temperature_clip = self.GetElement(TEMPERATURE_CLIP_PATH)
-        self.temperature_clip["mask"].asImage().SetSpriteClipRatio(
-            "fromTopToBottom", 0.0
-        )
-        self.temperature_clip.SetFullSize(
-            "y", UICtrlPosData("parent", relative_value=0.0)
-        )
-        self.last_temperature_ratio = 0.0
+        self.temperature = self.GetElement(TEMPERATURE_PATH)
+        self.last_temperature_ratio = None
         self.flame = self.GetElement(FLAME_PATH)
 
     def OnTicking(self):
@@ -47,7 +40,9 @@ class FuelHeaterUI(MachinePanelUIProxyEx):
         current_temperature = Thermal.GetKelvin(
             GetValue(data, K_HEAT_VALUE, Thermal.ENV_HEAT)
         )
-        self.temperature_label.SetText(FormatKelvin(current_temperature))
+        temperature_text = FormatKelvin(current_temperature)
+        self.temperature_label.SetText(temperature_text)
+        SetHoverText(self.temperature, temperature_text)
         temperature_ratio = max(
             0.0,
             min(
@@ -56,14 +51,7 @@ class FuelHeaterUI(MachinePanelUIProxyEx):
             ),
         )
         if temperature_ratio != self.last_temperature_ratio:
-            # 温度条外框 80px、内条 78px；300 K 全空，900 K 全满。
-            self.temperature_clip.SetFullSize(
-                "y", UICtrlPosData(
-                    "parent",
-                    relative_value=temperature_ratio,
-                    absolute_value=-2.0 * temperature_ratio,
-                )
-            )
+            UpdateProgress(self.temperature, temperature_ratio)
             self.last_temperature_ratio = temperature_ratio
         burn_seconds_left = GetValue(data, K_BURN_SEC_LEFT, 0.0)
         max_burn_seconds = GetValue(data, K_MAX_BURN_SEC, 1.0)

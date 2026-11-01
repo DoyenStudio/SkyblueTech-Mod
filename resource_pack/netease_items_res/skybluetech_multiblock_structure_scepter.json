@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:multiblock_structure_scepter"
+        },
+        "description": {
+            "identifier": "skybluetech:multiblock_structure_scepter"
+        }
+    }
+}

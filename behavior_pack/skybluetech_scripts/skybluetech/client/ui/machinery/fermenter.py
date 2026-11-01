@@ -1,6 +1,5 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
-from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.skybluetech.common.define.flags import (
     DEACTIVE_FLAG_NO_RECIPE,
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
@@ -9,9 +8,6 @@ from skybluetech_scripts.skybluetech.common.define.flags import (
 from skybluetech_scripts.skybluetech.common.events.machinery.fermenter import (
     FermenterSeMaxVolumeEvent,
     FermenterSetTemperatureEvent,
-)
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_DESTROY_FLAG,
@@ -75,7 +71,6 @@ FERMENTATION_GAUGE_PATH = MAIN_PATH / "fermentation_gauge"
 TEMPERATURE_SLIDER_PATH = MAIN_PATH / "slider"
 MAX_VOLUME_BAR_PATH = MAIN_PATH / "pool/max_volume_bar"
 VOLUME_SLIDER_PATH = MAIN_PATH / "volume_slider"
-MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_btn"
 
 
 @RegistToolDeltaScreen("FermenterUI.main", is_proxy=True)
@@ -99,12 +94,6 @@ class FermenterUI(MachinePanelUIProxy):
         self.temperature_slider = self.GetElement(TEMPERATURE_SLIDER_PATH).asSlider()
         self.volume_slider = self.GetElement(VOLUME_SLIDER_PATH).asSlider()
         self.volume_bar = self.GetElement(MAX_VOLUME_BAR_PATH).asImage()
-        self.multiblock_structute_check_btn = (
-            self
-            .GetElement(MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH)
-            .asButton()
-            .SetCallback(self.onCheckMultiBlockStructure)
-        )
         self.output_gas_displayer = FluidDisplayer(self.output_gas_display)
         self.output_fluid_displayer = FluidDisplayer(self.output_fluid_display)
 
@@ -226,11 +215,6 @@ class FermenterUI(MachinePanelUIProxy):
                     )
                 )
             self.lack_blocks_tip.SetText(fmt)
-
-    def onCheckMultiBlockStructure(self, _):
-        _, x, y, z = self.pos
-        MultiBlockStructureCheckRequest(x, y, z).send()
-        ExecLater(0.1, self.RemoveUI)
 
     @Binder.binding(
         Binder.BF_SliderFinished | Binder.BF_SliderFinished,

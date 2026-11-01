@@ -373,6 +373,9 @@
         "skybluetech:molten_tin_bucket": {
             "textures": "textures/items/buckets/molten_tin_bucket"
         },
+        "skybluetech:multiblock_structure_scepter": {
+            "textures": "textures/items/multiblock_structure_scepter"
+        },
         "skybluetech:nickel_dust": {
             "textures": "textures/items/dusts/nickel_dust"
         },

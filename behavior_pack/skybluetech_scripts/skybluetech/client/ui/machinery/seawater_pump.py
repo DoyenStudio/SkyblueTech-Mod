@@ -6,9 +6,6 @@ from skybluetech_scripts.skybluetech.common.define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
 )
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
-)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
     K_DESTROY_FLAG,
@@ -45,7 +42,6 @@ FLUID_PATH = MAIN_PATH / "fluid_display"
 # 水源占比条 = SkybluePanelLib.gauge_h (通用计量条, 30% / 60% 两道刻度在 JSON 里), 由 UpdateProgress 驱动
 WATER_RATIO_PATH = MAIN_PATH / "salt_thickness_bar"
 STRUCTURE_TIP_PATH = MAIN_PATH / "structure_not_finished_tip"
-STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_btn"
 
 
 @RegistToolDeltaScreen("SeawaterPumpUI.main", is_proxy=True)

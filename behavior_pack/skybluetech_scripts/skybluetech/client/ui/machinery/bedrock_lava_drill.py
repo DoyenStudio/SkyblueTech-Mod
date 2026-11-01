@@ -4,9 +4,6 @@ from skybluetech_scripts.skybluetech.common.define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
 )
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
-)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_DESTROY_FLAG,
     K_STORE_RF,
@@ -41,7 +38,6 @@ DRILL_PROGRESS_PATH = MAIN_PATH / "drill_progress"
 STORAGE_LEFT_PATH = MAIN_PATH / "storage_left"
 STRUCTURE_NOT_FINISHED_TIP_PATH = MAIN_PATH / "structure_not_finished_tip"
 STRUCTURE_DESC_LABEL_PATH = STRUCTURE_NOT_FINISHED_TIP_PATH / "desc_label"
-MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_btn"
 
 
 @RegistToolDeltaScreen("BedrockLavaDrillUI.main", is_proxy=True)
@@ -55,12 +51,6 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
             STRUCTURE_NOT_FINISHED_TIP_PATH
         )
         self.structure_desc_label = self.GetElement(STRUCTURE_DESC_LABEL_PATH).asLabel()
-        self.multiblock_structute_check_btn = (
-            self
-            .GetElement(MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH)
-            .asButton()
-            .SetCallback(self.onCheckMultiBlockStructure)
-        )
         self.fluid_displayer = FluidDisplayer(
             self.fluid_display,
         )
@@ -117,7 +107,3 @@ class BedrockLavaDrillUI(MachinePanelUIProxy):
                 )
             else:
                 self.structure_desc_label.SetText("多方块结构未完成")
-
-    def onCheckMultiBlockStructure(self, _):
-        _, x, y, z = self.pos
-        MultiBlockStructureCheckRequest(x, y, z).send()

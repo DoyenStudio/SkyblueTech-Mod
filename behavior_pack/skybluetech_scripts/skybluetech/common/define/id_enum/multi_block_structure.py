@@ -31,7 +31,7 @@ class Fermenter:
     FRAME = "minecraft:mud_bricks"
     GLASS = "minecraft:glass"
     IO_ENERGY = "skybluetech:fermenter_io_energy"
-    IO_ITEM = "skybluetech:fermenter_io_item"
+    IO_ITEM = "skybluetech:fermenter_io_item1"
     IO_FLUID1 = "skybluetech:fermenter_io_fluid1"
     IO_FLUID2 = "skybluetech:fermenter_io_fluid2"
     IO_GAS = "skybluetech:fermenter_io_gas"

@@ -1,0 +1,15 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:max_stack_size": 1,
+            "netease:customtips": {
+                "value": "\n§7对§f多方块结构§7的控制器使用， 可自动完成结构搭建。\n§8§o我需要蓝图码， 你们谁可以分享给我吗？"
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:multiblock_structure_scepter"
+        }
+    }
+}

@@ -7,9 +7,6 @@ from skybluetech_scripts.skybluetech.common.define.flags import (
 from skybluetech_scripts.skybluetech.common.events.machinery.vacuum_freezer import (
     VacuumFreezerSubmitModifiesEvent,
 )
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
-)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_DESTROY_FLAG,
     K_HEAT_VALUE,
@@ -53,7 +50,6 @@ KELVIN_INPUT_PATH = MAIN_PATH / "databoard/input_kelvin"
 POWER_INPUT_PATH = MAIN_PATH / "databoard/input_power"
 STRUCTURE_NOT_FINISHED_TIP_PATH = MAIN_PATH / "structure_not_finished_tip"
 STRUCTURE_DESC_LABEL_PATH = STRUCTURE_NOT_FINISHED_TIP_PATH / "desc_label"
-MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH = MAIN_PATH / "multi_block_structure_check_btn"
 RECIPE_CHECK_BTN_PATH = MAIN_PATH / "recipe_check_btn"
 
 # 与 VacuumFreezerUI.json 里两个编辑框的 $text_box_name 保持一致
@@ -86,12 +82,6 @@ class VacuumFreezerUI(MachinePanelUIProxy):
             STRUCTURE_NOT_FINISHED_TIP_PATH
         )
         self.structure_desc_label = self.GetElement(STRUCTURE_DESC_LABEL_PATH).asLabel()
-        self.multiblock_structute_check_btn = (
-            self
-            .GetElement(MULTIBLOCK_STRUCTURE_CHECK_BTN_PATH)
-            .asButton()
-            .SetCallback(self.onCheckMultiBlockStructure)
-        )
         # 打开本机的配方页, 与 MaceratorUI 等机器一致; 用的是全量配方组, 需要升级卡的
         # 配方也列出来(配方页上会标"需要机器升级")
         AsRecipeCheckerBtn(
@@ -201,10 +191,6 @@ class VacuumFreezerUI(MachinePanelUIProxy):
                 )
             else:
                 self.structure_desc_label.SetText("多方块结构未完成")
-
-    def onCheckMultiBlockStructure(self, _):
-        _, x, y, z = self.pos
-        MultiBlockStructureCheckRequest(x, y, z).send()
 
     def onSubmit(self):
         # type: () -> None

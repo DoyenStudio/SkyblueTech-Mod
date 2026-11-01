@@ -2,6 +2,9 @@
 from skybluetech_scripts.tooldelta.srv import CF
 "游戏事件入口: 查找机器、处理交互并派发实例事件。"
 from skybluetech_scripts.tooldelta.utils.timer import Delay
+from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
+    MULTIBLOCK_STRUCTURE_SCEPTER,
+)
 
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -73,6 +76,12 @@ def on_click(event):
     if reject_banned_machine(event.playerId, event.blockName):
         event.cancel()
         return
+    if event.item.id == MULTIBLOCK_STRUCTURE_SCEPTER:
+        from ...tools.multiblock_structure_scepter import try_build
+
+        if try_build(event.playerId, event.blockName, event.dimensionId, (event.x, event.y, event.z)):
+            event.cancel()
+            return
     m = pool.GetLoadedMachine(event.dimensionId, event.x, event.y, event.z)
     if (
         isinstance(m, MultiFluidContainer)
@@ -98,6 +107,12 @@ def on_use_item(event):
     if reject_banned_machine(event.entityId, event.blockName):
         event.cancel()
         return
+    if event.item.id == MULTIBLOCK_STRUCTURE_SCEPTER:
+        from ...tools.multiblock_structure_scepter import try_build
+
+        if try_build(event.entityId, event.blockName, event.dimensionId, (event.x, event.y, event.z)):
+            event.cancel()
+            return
     m = pool.GetLoadedMachine(event.dimensionId, event.x, event.y, event.z)
     if (
         isinstance(m, MultiFluidContainer)

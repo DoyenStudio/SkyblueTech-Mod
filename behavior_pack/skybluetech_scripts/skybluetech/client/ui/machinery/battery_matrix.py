@@ -13,9 +13,6 @@ from skybluetech_scripts.skybluetech.common.events.machinery.battery_matrix impo
     BatteryMatrixStatesUpdate,
     BatteryMatrixStoreBatteryRequest,
 )
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
-)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_DESTROY_FLAG,
 )

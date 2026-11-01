@@ -10,7 +10,7 @@
 
 structure_palette 必须提供；functional_block_ids 指定可查找的接口方块。
 
-StructureFinished()、GetExpectedStructure()、GetStructureLackedBlocks()、GetFunctionalBlockPoses()、GetAllMachines(cls,block_id=None)、GetLoadedMachine/ TryGetLoadedMachine。
+StructureFinished()、GetStructureLackedBlocks()、GetFunctionalBlockPoses()、GetAllMachines(cls,block_id=None)、GetLoadedMachine/ TryGetLoadedMachine。
 
 ## 事件与组合
 
@@ -144,3 +144,34 @@ STRUCTURE_PALETTE = GenerateSimpleStructureTemplate(
   `require_blocks_count`, 它只统计**落在允许该方块的位置上**的数量。
 - 功能性方块(接口)只能放在调色板允许的位置上: 藏进结构内部空腔的接口不会出现在
   `GetFunctionalBlockPoses()` 里, `GetLoadedMachine()` 取不到, 而且结构会被判定为破损。
+
+## 多方块结构手杖
+
+公共注册表位于 `skybluetech_scripts.skybluetech.common.machinery_def.multi_block_structures`：
+
+```python
+CONTROLLER_STRUCTURE_PALETTES = {
+    CONTROLLER_ID: STRUCTURE_PALETTE,
+}
+```
+
+表中存放朝北的原始调色板，当前登记电池仓、基岩熔岩钻、卤水池、发酵池、海水蓄水池和真空冷却仓。
+新增结构时，在此表增加控制器 ID 与对应调色板即可接入手杖。
+
+手杖在工作台合成，消耗 3 个轻质蔚蓝锭（A）和 2 根钢棒（B），`.` 表示空格：
+
+```text
+.AA
+.BA
+B..
+```
+
+玩家手持 `skybluetech:multiblock_structure_scepter` 点击控制器后：
+
+1. 按控制器朝向旋转调色板，分帧扫描整个结构，收集通过 `MayPlace` 检查的未匹配位置。
+2. 扫描完成后，按背包中的同名、aux=0 方块生成建造计划。优先满足接口最低数量，再使用剩余材料搭建其他位置；材料不足时仍搭建可完成的部分。
+3. 每帧最多尝试放置 8 个方块。每次先复核位置和 `MayPlace`，再扣除当前背包中的一份材料并放置；放置失败返还该份材料。
+4. 全部尝试结束后重新检查整个结构，汇总显示实际不匹配总数，在聊天栏每帧发送一条消息，最多列出前 20 处不匹配坐标、期望方块和当前方块，方块名称使用本地化名称。没有材料或没有可放置位置也会执行这一步。最低接口数量不足时另列缺额，不显示可放置位置列表。
+
+手杖不会拆除障碍物、清空空腔或替换已经合法的外壳。水等没有同名背包方块的材料需要手动准备，手杖不进行水桶转换。
+同一玩家或同一控制器同时只处理一个任务；玩家离线、切换维度或控制器改变时停止后续建造，未使用材料保留在背包中。

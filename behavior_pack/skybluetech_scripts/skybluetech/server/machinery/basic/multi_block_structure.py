@@ -8,10 +8,6 @@ from skybluetech_scripts.skybluetech.common.define.flags import (
     DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK,
     DEACTIVE_FLAG_STRUCTURE_BROKEN,
 )
-from skybluetech_scripts.skybluetech.common.events.misc.multi_block_structure_check import (
-    MultiBlockStructureCheckRequest,
-    MultiBlockStructureCheckResponse,
-)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.multi_block_structure import (
     K_DESTROY_FLAG,
     K_STRUCTURE_LACKED_BLOCK_POSES,
@@ -22,17 +18,13 @@ from skybluetech_scripts.skybluetech.common.utils.structure_palette import (
     StructureBlockPalette,
 )
 
-from skybluetech_scripts.tooldelta.utils.timer import Delay, ExecLater
+from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 
 from skybluetech_scripts.tooldelta.events.server import (
     BlockRemoveServerEvent,
     ChunkAcquireDiscardedServerEvent,
     ChunkLoadedServerEvent,
     EntityPlaceBlockAfterServerEvent,
-)
-from skybluetech_scripts.tooldelta.extensions.singleblock_model_loader import (
-    CreateBlankModel,
-    GeometryModel,
 )
 from skybluetech_scripts.tooldelta.general import (
     ServerInitCallback,
@@ -240,19 +232,6 @@ class DetectArea(object):
                 for x, y, z in self.rotated_palette.air_poses
             }
         return self._air_poses_in_world
-
-    def get_expected_structure(self):
-        spalette = self.rotated_palette
-        return (
-            {
-                k: [
-                    (x + self.center_x, y + self.center_y, z + self.center_z)
-                    for x, y, z in v
-                ]
-                for k, v in spalette.posblock_data.items()
-            },
-            self.palette.palette_data,
-        )
 
     def flush_status(self):
         flag = self.detect()
@@ -542,9 +521,6 @@ class MultiBlockStructure(BaseMachine):
 
     # StructureUtils
 
-    def GetExpectedStructure(self):
-        return self.area.get_expected_structure()
-
     def GetAllMachines(self, cls, block_id=None):
         # type: (type[MT], str | None) -> list[MT]
         # 一次性获取当前多方块结构中指定方块 ID 的所有已加载功能性机器。
@@ -767,119 +743,3 @@ def onChunkDiscarded(event):
         return
     for area in areas:
         area.discard_loaded_chunk(pos[1:])
-
-
-@MultiBlockStructureCheckRequest.Listen()
-def onCheckRequest(event):
-    # type: (MultiBlockStructureCheckRequest) -> None
-    from ..utils.action_commit import SafeGetLoadedMachine
-
-    m = SafeGetLoadedMachine(event.x, event.y, event.z, event.player_id)
-    if not isinstance(m, MultiBlockStructure):
-        return
-    posblock_data, palette = m.GetExpectedStructure()
-    MultiBlockStructureCheckResponse(
-        event.x, event.y, event.z, palette, posblock_data
-    ).send(event.player_id)
-
-
-# CLIENT PART
-if False:
-    from skybluetech_scripts.tooldelta.cli import CF as CLIENT_CF, LEVEL_ID as CLIENT_LEVEL_ID
-
-    multi_block_model_displaying = False
-
-    @MultiBlockStructureCheckResponse.Listen()
-    def onRecvResponse(event):
-        # type: (MultiBlockStructureCheckResponse) -> None
-        global multi_block_model_displaying
-        if multi_block_model_displaying:
-            return
-        posblock_data = event.pos_block_data
-        palette = event.palette
-        min_x = 1 << 31
-        max_x = -1 << 31
-        min_y = 1 << 31
-        max_y = -1 << 31
-        min_z = 1 << 31
-        max_z = -1 << 31
-        for x, y, z in (
-            (_x, _y, _z) for v in posblock_data.values() for _x, _y, _z in v
-        ):
-            if x < min_x:
-                min_x = x
-            if x > max_x:
-                max_x = x
-            if y < min_y:
-                min_y = y
-            if y > max_y:
-                max_y = y
-            if z < min_z:
-                min_z = z
-            if z > max_z:
-                max_z = z
-        size_x = max_x - min_x + 1
-        size_y = max_y - min_y + 1
-        size_z = max_z - min_z + 1
-        volume = size_x * size_y * size_z
-        if volume > 48 * 48 * 48:
-            logger.error(
-                "[Error] display multi block structure model too large: %d" % volume
-            )
-            return
-        palette_display = {
-            k: (v if isinstance(v, str) else v[0]) for k, v in palette.items()
-        }
-        pal_dict = {}  # type: dict[tuple[str, int], list[int]]
-        for pal_index, posblocks in posblock_data.items():
-            for x, y, z in posblocks:
-                pal_dict.setdefault((palette_display[pal_index], 0), []).append(
-                    (y - min_y) * size_x * size_z + (x - min_x) * size_z + (z - min_z)
-                )
-        pal = CLIENT_CF.CreateBlock(CLIENT_LEVEL_ID).GetBlankBlockPalette()
-        pal.DeserializeBlockPalette(
-            {
-                "extra": {},
-                "void": False,
-                "actor": {},
-                "volume": (size_x, size_y, size_z),
-                "common": pal_dict,
-                "eliminateAir": True,
-            }
-        )
-        multi_block_model_displaying = True
-        geo_model = CreateBlankModel((min_x, min_y, min_z))
-        geo_model.SetBlockPaletteModel(pal, "skybluetech_multi_block_model_display")
-        remove_get_model_later(geo_model)
-
-    @Delay(4)
-    def remove_get_model_later(geo_model):
-        # type: (GeometryModel) -> None
-        global multi_block_model_displaying
-        geo_model.Destroy()
-        multi_block_model_displaying = False
-
-    def debug_show_diff(
-        dim,  # type: int
-        x,  # type: int
-        y,  # type: int
-        z,  # type: int
-        expected,  # type: set[tuple[int, int, int]]
-        actual,  # type: set[tuple[int, int, int]]
-        expected_block_ids,
-    ):
-        print("====== Structure not equal ======")
-        print("Expected blocks: {}".format(expected_block_ids))
-        print(
-            "No equal poses ({} < {}) :".format(len(actual & expected), len(expected))
-        )
-        for _x, _y, _z in expected.difference(actual):
-            print(
-                " ({} {} {}) : {}".format(
-                    x + _x, y + _y, z + _z, (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
-                        (x + _x, y + _y, z + _z),
-                        dim,
-                    ) or {}).get("name")
-                )
-            )
-        print("====== Structure debug end ======")

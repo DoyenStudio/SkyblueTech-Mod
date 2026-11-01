@@ -12,5 +12,5 @@
     },
     "goal_number": 1,
     "depend_parent": true,
-    "node_description": "制造能源中继塔， 进行远距离输电。\n\n§8§o拉电线的咕咕嘎嘎~"
+    "node_description": "制造能源中继塔， 进行远距离输电。\n\n§8§o————怎么只能拉64格？\n————这还是直线距离， 知足吧。"
 }

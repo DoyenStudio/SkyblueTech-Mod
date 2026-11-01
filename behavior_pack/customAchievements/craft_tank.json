@@ -12,5 +12,5 @@
     },
     "goal_number": 1,
     "depend_parent": true,
-    "node_description": "合成一个青铜流体储罐， 用于暂存流体。\n\n§8§o不一定是储罐， 还有可能是坦克！"
+    "node_description": "合成一个青铜流体储罐， 用于暂存流体。\n\n§8§o这是水缸， 不是坦克！"
 }

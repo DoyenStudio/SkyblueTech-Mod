@@ -1,6 +1,6 @@
 {
     "node_ID": "skybluetech:resin_collect",
-    "title": "橡树之胶",
+    "title": "树脂拾拣",
     "parent_node": "skybluetech:intro",
     "unfinished_icon": "textures/items/resin",
     "finished_icon": "textures/items/resin",

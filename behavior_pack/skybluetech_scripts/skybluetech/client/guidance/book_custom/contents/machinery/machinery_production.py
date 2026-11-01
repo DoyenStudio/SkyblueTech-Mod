@@ -35,7 +35,10 @@ brine_evaporation_pond = PageGroup(
     [
         TextPage(
             "卤水池",
-            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n<text color="§9" t="卤水池">多方块结构是海水化工中的核心设施之一， 可以使用热能浓缩盐水。\n\n在受热口放置热源， 即可浓缩输入的<text color="§3" t="淡盐水">。',
+            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n<text color="§9" t="卤水池">多方块结构是海水化工中的核心设施之一， 可以使用热能浓缩盐水。\n使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n在受热口放置热源， 即可浓缩输入的<text color="§3" t="淡盐水">。',
+            hyperlink_cbs={
+                "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
+            },
         ),
         MultiBlockStructureModelPage(
             id_enum.BrineEvaporationPond.CONTROLLER, BRINE_EVAPORATION_POND_SP
@@ -93,21 +96,6 @@ electric_crafter = PageGroup(
     ],
 )
 
-
-fuel_heater = PageGroup(
-    "fuel_heater_description",
-    [
-        TextPage(
-            UnfinishedItemName(id_enum.Machinery.FUEL_HEATER),
-            '燃料加热机消耗燃料直接产生<text color="§c" t="热能">， 无需接入电力。\n可用燃料与火力发电机相同， <text color="§4" t="不能使用熔岩桶">。\n\n同等燃料的理论产热量是先经火力发电机发电、 再由电力加热仓转为热量的<text color="§9" t="400%">， 当前产热速率为每 tick 20 热值。',
-        ),
-        TextPage(
-            "供热与温度",
-            '燃料加热机最高加热至<text color="§c" t="900K">， 向相邻热机或受热口传递热量， 并按通常规则与环境换热。\n\n达到温度上限时暂停燃烧与添料， 降温后继续供热。接近上限的单次加热会舍弃超出目标温度的热量， 实际输出还会受到散热和用热负载影响。\n\n主界面的温度条范围为<text color="§9" t="300K 至 900K">， 火焰显示当前燃料的剩余燃烧比例。',
-        ),
-        MachineryWorkstationRecipePage(id_enum.Machinery.FUEL_HEATER),
-    ],
-)
 
 engraver = PageGroup(
     "engraver_description",
@@ -271,12 +259,15 @@ vacuum_freezer = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.VACUUM_FREEZER),
-            '真空冷却仓是一种<text color="§b" t="多方块结构机器">， 可以消耗能量提供低温或超低温环境对气体<item id="{compressed_air}">进行液化<item id="{liquid_air}">或者对液体<item id="{water}">进行固化<item id="{ice}">的处理。\n\n<text color="§c" t="注意， ">冷却仓进行超低温冷却需要消耗大量电力， 一旦提供的输入功率不足， 不仅会使配方减速， 甚至会使得配方运行进度倒流！'.format(
+            '真空冷却仓是一种<text color="§b" t="多方块结构机器">， 可以消耗能量提供低温或超低温环境对气体<item id="{compressed_air}">进行液化<item id="{liquid_air}">或者对液体<item id="{water}">进行固化<item id="{ice}">的处理； 使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n<text color="§c" t="注意， ">冷却仓进行超低温冷却需要消耗大量电力， 一旦提供的输入功率不足， 不仅会使配方减速， 甚至会使得配方运行进度倒流！'.format(
                 compressed_air=id_enum.CommonGas.COMPRESSED_AIR,
                 liquid_air=id_enum.CommonLiquid.LIQUID_AIR,
                 water=id_enum.Vanilla.WATER,
                 ice="minecraft:ice",
             ),
+            hyperlink_cbs={
+                "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
+            },
         ),
         MultiBlockStructureRenderPage(
             id_enum.VacuumFreezer.CONTROLLER, VACUUM_FREEZER_SP

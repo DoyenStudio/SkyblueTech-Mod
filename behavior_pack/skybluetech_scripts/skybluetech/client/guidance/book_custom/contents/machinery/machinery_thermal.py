@@ -24,7 +24,7 @@ fuel_heater = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.FUEL_HEATER),
-            '燃料加热器直接<text color="§c" t="燃烧燃料">来产生<text color="§c" t="热能">， 供一些需热机器使用。\n\n干烧时可达到 900K 的温度。',
+            '燃料加热器直接<text color="§c" t="燃烧燃料">来产生<text color="§c" t="热能">， 供一些需热机器使用， 相对于先发电后产热， 燃料加热器直接消耗燃料产热效率可以高数倍。\n\n干烧时可达到 900K 的温度。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.FUEL_HEATER),
     ],

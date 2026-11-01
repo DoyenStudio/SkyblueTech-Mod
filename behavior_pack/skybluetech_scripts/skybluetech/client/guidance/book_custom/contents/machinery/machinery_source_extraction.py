@@ -33,7 +33,10 @@ bedrock_lava_drill = PageGroup(
     [
         TextPage(
             "基岩熔岩钻",
-            '基岩熔岩钻是一种<text color="§b" t="多方块结构机器">， 可以在基岩层处开采<text color="§4" t="深层熔岩">。 深层熔岩可以进一步被离心成几种熔岩， 进而被离心为熔融金属和其它成分。 它的钻头必须对准一块基岩。',
+            '基岩熔岩钻是一种<text color="§b" t="多方块结构机器">， 可以在基岩层处开采<text color="§4" t="深层熔岩">； 使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n深层熔岩可以进一步被离心成几种熔岩， 进而被离心为熔融金属和其它成分。 它的钻头必须对准一块基岩。',
+            hyperlink_cbs={
+                "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
+            },
         ),
         TextPage(
             "",
@@ -121,9 +124,12 @@ seawater_reservoir = PageGroup(
     [
         TextPage(
             "海水蓄水池",
-            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n抽取盐水！ <item id="{seawater_pump}">海水泵可以从<text color="§9" t="海水蓄水池">中抽取淡盐水。\n\n把蓄水池建到<text color="§9" t="宽阔海域的水底">！ 若建在水量不足的淡水区域， 海水泵将难以抽取盐水。 抽取速度与蓄水池所在水域盐水浓度有关； 海水泵界面上<img path="textures/ui/white_background" rgba=#B0B000 alpha=0.5 size_x=2 size_y=12>是抽取盐水所需最低海水浓度；浓度达到<img path="textures/ui/white_background" rgba=#00B000 alpha=0.5 size_x=2 size_y=12>时抽取速率最高。'.format(
+            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n抽取盐水！ <item id="{seawater_pump}">海水泵可以从<text color="§9" t="海水蓄水池">中抽取淡盐水； 使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n把蓄水池建到<text color="§9" t="宽阔海域的水底">！ 若建在水量不足的淡水区域， 海水泵将难以抽取盐水。 抽取速度与蓄水池所在水域盐水浓度有关； 海水泵界面上<img path="textures/ui/white_background" rgba=#B0B000 alpha=0.5 size_x=2 size_y=12>是抽取盐水所需最低海水浓度；浓度达到<img path="textures/ui/white_background" rgba=#00B000 alpha=0.5 size_x=2 size_y=12>时抽取速率最高。'.format(
                 seawater_pump=id_enum.Machinery.SEAWATER_PUMP
             ),
+            hyperlink_cbs={
+                "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
+            },
         ),
         MultiBlockStructureModelPage(
             id_enum.Machinery.SEAWATER_PUMP, SEAWATER_RESERVOIR_SP

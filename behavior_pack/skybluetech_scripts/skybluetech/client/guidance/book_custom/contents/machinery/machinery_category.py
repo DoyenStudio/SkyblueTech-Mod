@@ -54,12 +54,6 @@ machinery_production_toc = PageGroup(
                     machinery_production.electric_crafter,
                 ),
                 TOCPageSection(
-                    id_enum.Machinery.FUEL_HEATER,
-                    0,
-                    None,
-                    machinery_production.fuel_heater,
-                ),
-                TOCPageSection(
                     id_enum.Machinery.ENGRAVER,
                     0,
                     None,
@@ -77,11 +71,6 @@ machinery_production_toc = PageGroup(
                     None,
                     machinery_production.freezer,
                 ),
-            ],
-            identifier="machinery_production_toc_1",
-        ),
-        TOCPage(
-            [
                 TOCPageSection(
                     id_enum.Machinery.HYDROPONIC_BASE,
                     0,
@@ -94,6 +83,11 @@ machinery_production_toc = PageGroup(
                     None,
                     machinery_production.hydroponic_bed,
                 ),
+            ],
+            identifier="machinery_production_toc_1",
+        ),
+        TOCPage(
+            [
                 TOCPageSection(
                     id_enum.Machinery.MACERATOR,
                     0,

@@ -1,4 +1,7 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.client.ui.recipe_checker import (
+    CheckRecipe,
+)
 from skybluetech_scripts.skybluetech.common.define import id_enum
 from skybluetech_scripts.skybluetech.common.machinery_def.battery_matrix import (
     STRUCTURE_PALETTE,
@@ -17,7 +20,10 @@ battery_matrix = PageGroup(
     [
         TextPage(
             "电池仓",
-            '电池仓是一种<text color="§b" t="多方块结构机器">， 可以存入电池以用作<text color="§c" t="存储能源">。\n\n电池仓本身并没有储能容量， 它的储能能力完全由放置在其中的<text color="§5" t="电池">决定。\n\n电池仓可通过<text color="§c" t="多个输入输出口">同时进行能量输入或输出。',
+            '电池仓是一种<text color="§b" t="多方块结构机器">， 可以存入电池以用作<text color="§c" t="存储能源">； 使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n电池仓本身并没有储能容量， 它的储能能力完全由放置在其中的<text color="§5" t="电池">决定。\n\n电池仓可通过<text color="§c" t="多个输入输出口">同时进行能量输入或输出。',
+            hyperlink_cbs={
+                "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
+            },
         ),
         TextPage(
             "",

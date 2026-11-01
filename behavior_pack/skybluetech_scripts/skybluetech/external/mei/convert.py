@@ -148,11 +148,9 @@ def to_ingredient(element, kind=CATEGORY_ITEM):  # type: (any, str) -> any
     除此之外与物品一模一样 —— 流体本来就是个隐藏 Item。
 
     **标签必须走 `from_tag(tag_id=...)`，不能自己展开成字面多候选。**
-    理由是 `GetItemsByTag` 的数据是**异步**从服务端拉来的（allitems_getter 走
-    C2S/S2C 一个来回）：字面展开的话，「标签还没到」与「标签到了」两个时刻
-    会算出两个不同的 `Recipe.Id`，索引会把同一条配方当成两条。
-    `from_tag` 给的 Ingredient 在算身份时只发标签引用、不展开成员，因此免疫。
-    （MEI 的 mei:fuels 踩过同一个坑，见其 tasks_s2b.md §2。）
+    `GetItemsByTag` 直接合并原生物品标签与方块标签的成员，不依赖全物品列表请求。
+    `from_tag` 在算身份时只发标签引用、不展开成员，使 `Recipe.Id` 保持按标签定义，
+    不随候选成员变化。
     """
     Ingredient = bridge.Types.Ingredient
     amount = _amount_of(element)
@@ -160,8 +158,7 @@ def to_ingredient(element, kind=CATEGORY_ITEM):  # type: (any, str) -> any
 
     if getattr(element, "is_tag", False):
         tag = element.id
-        # 成员为空是正常的中间态(标签表还没从服务端到), 不是错误 ——
-        # Id 不受影响, 只是这一刻还查不到"哪些物品能用"
+        # 即使标签无成员或 ItemFactory 暂时造不出候选，也保留标签引用与配方身份。
         candidates = stacks_of(sorted(GetItemsByTag(tag)))
         return Ingredient.from_tag(candidates, amount, tag_id=tag)
 
@@ -189,9 +186,8 @@ def is_resolved(ingredient):  # type: (any) -> bool
     """
     这个 Ingredient 的候选是不是已经落实了。
 
-    只对**标签**有意义：标签表异步到达，先建出来的 Ingredient 候选是空的。
-    候选为空 ⇒ `StaticRecipeSource` 按 `get_stacks()` 建的「按材料查用途」索引
-    会漏掉这一格。来源据此判断要不要重建表，见 runtime.py 的自愈。
+    对**标签**检查是否有候选物品堆；原生查询无成员，或 ItemFactory 尚未提供
+    对应物品时，候选可能为空。空候选无法进入「按材料查用途」索引。
     """
     if ingredient is None:
         return False

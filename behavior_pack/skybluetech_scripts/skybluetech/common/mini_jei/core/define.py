@@ -1,7 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.internal import InClientEnv
-
-_item_tags_cache = {}  # type: dict[tuple[str, int], set[str]]
+from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 
 if 0 > 1:
     import typing  # noqa: F401
@@ -138,17 +136,7 @@ class Input(Element):
     def match_item_id(self, item_id, aux=0):
         # type: (str, int) -> bool
         if self.is_tag:
-            key = (item_id, aux)
-            tags = _item_tags_cache.get(key)
-            if tags is None:
-                if InClientEnv():
-                    from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
-                else:
-                    from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
-
-                tags = set(CF.CreateItem(LEVEL_ID).GetItemTags(item_id, aux))
-                _item_tags_cache[key] = tags
-            return self.id in tags
+            return item_id in GetItemsByTag(self.id)
         else:
             return item_id == self.id and (self.aux == -1 or self.aux == aux)
 

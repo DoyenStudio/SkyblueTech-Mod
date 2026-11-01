@@ -3,7 +3,6 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
     GetCraftingRecipe,
     GetFurnaceRecipe,
 )
-from skybluetech_scripts.tooldelta.extensions.allitems_getter import GetItemsByTag
 from ..core.register import RegisterRecipe
 from .common_recipe_cls import (
     GenericCraftingTableRecipe,

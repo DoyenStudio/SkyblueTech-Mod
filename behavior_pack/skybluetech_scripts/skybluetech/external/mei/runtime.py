@@ -69,14 +69,12 @@ def _BuildSource():  # type: () -> type
         """
         把一个蔚蓝 `RecipesCollection` 喂给 MEI。
 
-        **惰性建表 + 自愈**，不是构造时一次性转换。两个原因：
+        **惰性建表 + 自愈**，不是构造时一次性转换：转换要经 `ItemFactory` 造 Item，
+        而 OnRegister 时物品表未必齐。建表早了，候选物品可能造不出来，
+        「按材料查用途」的索引也会缺失对应条目。
 
-          1. 转换要经 `ItemFactory` 造 Item，而 OnRegister 时物品表未必齐；
-          2. 标签成员是**异步**从服务端拉来的（allitems_getter 走一个 C2S/S2C 来回）。
-             建表早了，标签格的候选是空的 —— `Recipe.Id` 不受影响
-             （标签在算身份时是折叠的），但**「按材料查用途」的索引会漏掉那一格**。
-
-        自愈判据取 `GetAllItems()` 非空：那是标签表填好的唯一信号。
+        标签成员已由原生接口直接查询，不再等待全物品列表请求或标签扫描。
+        仍以 `GetAllItems()` 非空作为现有的物品表就绪信号。
         没到之前每次查询重建一次（查询是玩家点出来的，不是每帧路径，代价可接受），
         到了之后重建最后一次就封盘。
         """
@@ -121,7 +119,7 @@ def _BuildSource():  # type: () -> type
             return StaticRecipeSource.GetAll(self)
 
         def IsAllComplete(self):
-            # 封盘之前报不完整: 那时"全部配方"里标签格还是空的
+            # 物品表就绪前报不完整，避免把缺少候选物品的配方表当成最终结果。
             return self._sealed
 
         # 内部
@@ -131,7 +129,7 @@ def _BuildSource():  # type: () -> type
                 return
             items_ready = bool(GetAllItems())
             self._Rebuild()
-            # 物品表已到 ⇒ 标签表也已到(loadAllItems 里是同一趟填的), 就此封盘
+            # 物品表已到，完成最后一次重建；标签成员查询不依赖这次全物品请求。
             self._sealed = items_ready
 
         def _Rebuild(self):

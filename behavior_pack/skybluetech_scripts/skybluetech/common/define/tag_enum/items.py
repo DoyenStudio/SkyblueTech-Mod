@@ -118,6 +118,7 @@ class DiamondTag:
 
 
 POLISHED_DIAMOND = "common:polished_diamond"
+RAW_PAPER = "common:raw_paper"
 
 RUBBER = "common:rubber"
 SAWDUST = "common:sawdust"

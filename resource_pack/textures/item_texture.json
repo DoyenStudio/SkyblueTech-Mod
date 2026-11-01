@@ -475,6 +475,9 @@
         "skybluetech:raw_oil_bucket": {
             "textures": "textures/items/buckets/raw_oil_bucket"
         },
+        "skybluetech:raw_paper": {
+            "textures": "textures/items/raw_paper"
+        },
         "skybluetech:raw_platinum": {
             "textures": "textures/items/raw_ore/raw_platinum"
         },

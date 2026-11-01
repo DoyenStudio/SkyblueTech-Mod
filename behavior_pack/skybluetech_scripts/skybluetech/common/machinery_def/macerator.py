@@ -4,6 +4,8 @@ from ..define.id_enum import Machinery, Dusts, SULFUR
 from ..define.tag_enum.items import IngotTag, RawTag
 from ..mini_jei.machinery.macerator import (
     MachineRecipe,
+    MaceratorRecipe,
+    Input,
     gen_preset_recipe,
     gen_tagged_preset_recipe,
 )
@@ -19,6 +21,13 @@ preset_tagged = gen_tagged_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 recipes = RecipesCollection(
     Machinery.MACERATOR,
     # Minecraft
+    MaceratorRecipe(
+        Input("log", 1, is_tag=True),
+        Dusts.SAWDUST,
+        16,
+        power_cost=30,
+        tick_duration=20 * 6,
+    ),
     preset("minecraft:bone", 1, "minecraft:bone_meal", 5),
     preset("minecraft:clay", 1, "minecraft:clay_ball", 4),
     preset("minecraft:stone", 1, "minecraft:sand", 1),

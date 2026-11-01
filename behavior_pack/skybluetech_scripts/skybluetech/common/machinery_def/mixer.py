@@ -67,6 +67,16 @@ recipes = RecipesCollection(
         power_cost=30,
     ),
     MixerRecipe(
+        "minecraft:water",
+        100,
+        id_enum.Dusts.SAWDUST,
+        2,
+        id_enum.RAW_PAPER,
+        1,
+        tick_duration=40,
+        power_cost=30,
+    ),
+    MixerRecipe(
         id_enum.fluids.CommonGas.COMPRESSED_AIR,
         200,
         id_enum.Dusts.LEAD,

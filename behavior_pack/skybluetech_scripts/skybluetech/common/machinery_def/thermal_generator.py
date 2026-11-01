@@ -254,6 +254,8 @@ FUEL_TICK_MAP = {
     "minecraft:wooden_sword": 200,  # 木剑
     "minecraft:stick": 100,  # 木棍
     "minecraft:bamboo": 50,  # 竹子
+    # 自定义燃料
+    "skybluetech:sawdust": 150,  # 锯末，木板燃烧时长的一半
 }
 
 FUEL_SECONDS_MAP = {k: v / 20.0 for k, v in FUEL_TICK_MAP.items()}

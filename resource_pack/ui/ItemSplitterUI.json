@@ -131,12 +131,6 @@
                         "100%sm+10px",
                         "100%sm+20px"
                     ],
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
                     "texture": "textures/ui/dialog_background_opaque"
                 }
             },
@@ -438,12 +432,6 @@
                         "100%sm+10px",
                         "100%sm+20px"
                     ],
-                    "nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
                     "texture": "textures/ui/dialog_background_opaque"
                 }
             },
@@ -590,7 +578,16 @@
                         20.0
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/skybluetech/black_white_rect"
+                    "texture": "textures/ui/skybluetech/black_white_rect",
+                    "bindings": [
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "$collection_name",
+                            "binding_name": "#ItemSplitterUI.setting_color",
+                            "binding_name_override": "#color",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ]
                 }
             },
             {
@@ -610,7 +607,16 @@
                     "layer": 1,
                     "property_bag": {
                         "#item_id_aux": 17301504
-                    }
+                    },
+                    "bindings": [
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "$collection_name",
+                            "binding_name": "#ItemSplitterUI.setting_item_id_aux",
+                            "binding_name_override": "#item_id_aux",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ]
                 }
             },
             {
@@ -662,7 +668,15 @@
                         1.0,
                         0.0
                     ],
-                    "text": "未知物品"
+                    "text": "#ItemSplitterUI.setting_name",
+                    "bindings": [
+                        {
+                            "binding_type": "collection",
+                            "binding_collection_name": "$collection_name",
+                            "binding_name": "#ItemSplitterUI.setting_name",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ]
                 }
             },
             {

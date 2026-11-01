@@ -1,175 +1,114 @@
 {
-    "fuel_heater_ui": {
+    "content": {
         "type": "panel",
-        "size": [
-            0.0,
-            0.0
-        ],
         "controls": [
             {
-                "flying_item_renderer@common.flying_item_renderer": {
-                    "layer": 11,
-                    "size": [
-                        0,
-                        0
+                "flame@SkybluePanelLib.burn_flame": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        52,
+                        20
                     ]
                 }
             },
             {
-                "container_gamepad_helpers@common.container_gamepad_helpers": {
-                    "layer": 3
-                }
-            },
-            {
-                "selected_item_details_factory@common.selected_item_details_factory": {
-                    "layer": 4,
-                    "size": [
-                        0,
-                        0
+                "gen_slot@netease_container.custom_grid_item": {
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        37
                     ]
                 }
             },
             {
-                "item_lock_notification_factory@common.item_lock_notification_factory": {}
-            },
-            {
-                "root_panel@common.root_panel": {
-                    "controls": [
-                        {
-                            "bg@common.dialog_background_opaque": {
-                                "controls": [
-                                    {
-                                        "inventory_selected_icon_button@common.inventory_selected_icon_button": {}
-                                    },
-                                    {
-                                        "gamepad_cursor_button@common.gamepad_cursor_button": {
-                                            "visible": true
-                                        }
-                                    },
-                                    {
-                                        "close@common.close_button": {}
-                                    },
-                                    {
-                                        "main": {
-                                            "type": "panel",
-                                            "controls": [
-                                                {
-                                                    "machine_label": {
-                                                        "type": "label",
-                                                        "anchor_from": "top_middle",
-                                                        "anchor_to": "top_middle",
-                                                        "offset": [
-                                                            0.0,
-                                                            4.0
-                                                        ],
-                                                        "font_scale_factor": 1.4,
-                                                        "font_type": "default",
-                                                        "shadow": true,
-                                                        "text": "燃料加热机",
-                                                        "text_alignment": "center"
-                                                    }
-                                                },
-                                                {
-                                                    "flame@SkybluePanelLib.burn_flame": {
-                                                        "layer": 3,
-                                                        "offset": [
-                                                            0,
-                                                            -19
-                                                        ],
-                                                        "size": [
-                                                            20,
-                                                            20
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "gen_slot@netease_container.custom_grid_item": {
-                                                        "layer": 2,
-                                                        "offset": [
-                                                            0,
-                                                            -43
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "temperature@SkybluePanelLib.gauge_v": {
-                                                        "$gauge_fill": "textures/ui/skybluetech/gauge/fill_heat_v",
-                                                        "layer": 0,
-                                                        "offset": [
-                                                            -72,
-                                                            -40
-                                                        ],
-                                                        "size": [
-                                                            14,
-                                                            80
-                                                        ]
-                                                    }
-                                                },
-                                                {
-                                                    "temperature_label": {
-                                                        "type": "label",
-                                                        "offset": [
-                                                            -72,
-                                                            7
-                                                        ],
-                                                        "layer": 1,
-                                                        "font_scale_factor": 1.2,
-                                                        "font_type": "unicode",
-                                                        "shadow": true,
-                                                        "text": "-- K",
-                                                        "text_alignment": "center"
-                                                    }
-                                                }
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "backpack@SkybluePanelLib.player_backpack": {
-                                            "offset": [
-                                                0,
-                                                46
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "left_sections@SkybluePanelLib.simple_panel_left_sections": {
-                                            "anchor_from": "top_left",
-                                            "anchor_to": "top_right",
-                                            "layer": 4,
-                                            "offset": [
-                                                -2,
-                                                0
-                                            ]
-                                        }
-                                    },
-                                    {
-                                        "ex_panel": {
-                                            "type": "panel",
-                                            "anchor_from": "top_middle",
-                                            "anchor_to": "top_middle",
-                                            "size": [
-                                                "default",
-                                                "56%+0px"
-                                            ],
-                                            "layer": 1
-                                        }
-                                    }
-                                ],
-                                "layer": 0
-                            }
-                        }
+                "ring_in_gen_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        37
                     ],
-                    "layer": 0,
                     "size": [
-                        180,
-                        200
+                        18,
+                        18
                     ]
+                }
+            },
+            {
+                "temperature@SkybluePanelLib.gauge_v": {
+                    "layer": 1,
+                    "$gauge_fill": "textures/ui/skybluetech/gauge/fill_heat_v",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "temperature_label": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        129,
+                        39
+                    ],
+                    "size": [
+                        40,
+                        12
+                    ],
+                    "layer": 1,
+                    "font_scale_factor": 0.9,
+                    "font_type": "default",
+                    "color": [
+                        0.18,
+                        0.18,
+                        0.18
+                    ],
+                    "shadow": false,
+                    "text": "-- K",
+                    "text_alignment": "left"
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "text": "",
+                    "visible": false,
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "FuelHeaterUI.fuel_heater_ui"
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "FuelHeaterUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            54
+        ],
+        "$title_text": "燃料加热机",
+        "$has_tabs": true,
+        "$has_upgrades": false,
+        "$show_led": true
     },
     "namespace": "FuelHeaterUI"
 }

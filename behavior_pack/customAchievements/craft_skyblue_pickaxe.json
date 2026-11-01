@@ -2,8 +2,8 @@
     "node_ID": "skybluetech:craft_skyblue_pickaxe",
     "parent_node": "skybluetech:craft_charger",
     "title": "这是电钻吗？",
-    "unfinished_icon": "textures/items/skyblue_pickaxe",
-    "finished_icon": "textures/items/skyblue_pickaxe",
+    "unfinished_icon": "textures/items/charged_tools/skyblue_pickaxe",
+    "finished_icon": "textures/items/charged_tools/skyblue_pickaxe",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:skyblue_pickaxe"

@@ -309,28 +309,31 @@
             "textures": "textures/blocks/multi_block_structure/battery_matrix/frame"
         },
         "skybluetech:bedrock_lava_drill_controller": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/controller_front"
         },
         "skybluetech:bedrock_lava_drill_controller_active": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front_active"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/controller_front_active"
         },
         "skybluetech:bedrock_lava_drill_controller_front": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/controller_front"
         },
         "skybluetech:bedrock_lava_drill_controller_front_active": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_front_active"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/controller_front_active"
         },
         "skybluetech:bedrock_lava_drill_controller_side": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_controller_side"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/controller_side"
         },
         "skybluetech:bedrock_lava_drill_energy_interface": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_energy_interface"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/energy_interface"
+        },
+        "skybluetech:bedrock_lava_drill_frame_edgeless": {
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/frame_edgeless"
         },
         "skybluetech:bedrock_lava_drill_frame": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_frame"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/frame"
         },
         "skybluetech:bedrock_lava_drill_io_fluid": {
-            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/bedrock_lava_drill_io_fluid"
+            "textures": "textures/blocks/multi_block_structure/bedrock_lava_drill/io_fluid"
         },
         "skybluetech:brick": {
             "textures": "textures/blocks/brick"

@@ -1,9 +1,9 @@
 {
-    "format_version": "1.21.70",
+    "format_version": "1.21.90",
     "minecraft:block": {
         "components": {
             "minecraft:destructible_by_mining": {
-                "seconds_to_destroy": 3.0
+                "seconds_to_destroy": 3
             },
             "minecraft:light_dampening": 0,
             "netease:block_entity": {},
@@ -17,11 +17,143 @@
             "tag:minecraft:iron_tier_destructible": {},
             "tag:piston_denier": {},
             "tag:redstoneflux_accepter": {},
-            "tag:redstoneflux_connectable": {}
+            "tag:redstoneflux_connectable": {},
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.bedrock_lava_drill_connected",
+                "culling": "skybluetech:culling.bedrock_lava_drill",
+                "culling_layer": "skybluetech:culling_layer.bedrock_lava_drill",
+                "bone_visibility": {
+                    "center_isolated": "!(q.block_state('skybluetech:connection_north') || q.block_state('skybluetech:connection_south') || q.block_state('skybluetech:connection_east') || q.block_state('skybluetech:connection_west') || q.block_state('skybluetech:connection_up') || q.block_state('skybluetech:connection_down'))",
+                    "center_joined": "(q.block_state('skybluetech:connection_north') || q.block_state('skybluetech:connection_south') || q.block_state('skybluetech:connection_east') || q.block_state('skybluetech:connection_west') || q.block_state('skybluetech:connection_up') || q.block_state('skybluetech:connection_down'))",
+                    "edge_east_isolated": "!q.block_state('skybluetech:connection_east')",
+                    "edge_east_joined": "q.block_state('skybluetech:connection_east')",
+                    "edge_west_isolated": "!q.block_state('skybluetech:connection_west')",
+                    "edge_west_joined": "q.block_state('skybluetech:connection_west')",
+                    "edge_up_isolated": "!q.block_state('skybluetech:connection_up')",
+                    "edge_up_joined": "q.block_state('skybluetech:connection_up')",
+                    "edge_down_isolated": "!q.block_state('skybluetech:connection_down')",
+                    "edge_down_joined": "q.block_state('skybluetech:connection_down')",
+                    "corner_east_isolated_up_isolated": "!q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_up')",
+                    "corner_east_isolated_up_joined": "!q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_up')",
+                    "corner_east_joined_up_isolated": "q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_up')",
+                    "corner_east_joined_up_joined": "q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_up')",
+                    "corner_down_isolated_east_isolated": "!q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_east_isolated": "!q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_down')",
+                    "corner_down_isolated_east_joined": "q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_east_joined": "q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_down')",
+                    "corner_up_isolated_west_isolated": "!q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_up')",
+                    "corner_up_joined_west_isolated": "!q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_up')",
+                    "corner_up_isolated_west_joined": "q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_up')",
+                    "corner_up_joined_west_joined": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_up')",
+                    "corner_down_isolated_west_isolated": "!q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_west_isolated": "!q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_down')",
+                    "corner_down_isolated_west_joined": "q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_west_joined": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_down')",
+                    "edge_south_isolated": "!q.block_state('skybluetech:connection_south')",
+                    "edge_south_joined": "q.block_state('skybluetech:connection_south')",
+                    "edge_north_isolated": "!q.block_state('skybluetech:connection_north')",
+                    "edge_north_joined": "q.block_state('skybluetech:connection_north')",
+                    "corner_south_isolated_up_isolated": "!q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up')",
+                    "corner_south_isolated_up_joined": "!q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_up')",
+                    "corner_south_joined_up_isolated": "q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_up')",
+                    "corner_south_joined_up_joined": "q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_up')",
+                    "corner_down_isolated_south_isolated": "!q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_south_isolated": "!q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_down')",
+                    "corner_down_isolated_south_joined": "q.block_state('skybluetech:connection_south') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_south_joined": "q.block_state('skybluetech:connection_south') && q.block_state('skybluetech:connection_down')",
+                    "corner_north_isolated_up_isolated": "!q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_up')",
+                    "corner_north_isolated_up_joined": "!q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_up')",
+                    "corner_north_joined_up_isolated": "q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_up')",
+                    "corner_north_joined_up_joined": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_up')",
+                    "corner_down_isolated_north_isolated": "!q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_north_isolated": "!q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_down')",
+                    "corner_down_isolated_north_joined": "q.block_state('skybluetech:connection_north') && !q.block_state('skybluetech:connection_down')",
+                    "corner_down_joined_north_joined": "q.block_state('skybluetech:connection_north') && q.block_state('skybluetech:connection_down')",
+                    "corner_east_isolated_south_isolated": "!q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south')",
+                    "corner_east_isolated_south_joined": "!q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_south')",
+                    "corner_east_joined_south_isolated": "q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_south')",
+                    "corner_east_joined_south_joined": "q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_south')",
+                    "corner_east_isolated_north_isolated": "!q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north')",
+                    "corner_east_isolated_north_joined": "!q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_north')",
+                    "corner_east_joined_north_isolated": "q.block_state('skybluetech:connection_east') && !q.block_state('skybluetech:connection_north')",
+                    "corner_east_joined_north_joined": "q.block_state('skybluetech:connection_east') && q.block_state('skybluetech:connection_north')",
+                    "corner_south_isolated_west_isolated": "!q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_south')",
+                    "corner_south_joined_west_isolated": "!q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_south')",
+                    "corner_south_isolated_west_joined": "q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_south')",
+                    "corner_south_joined_west_joined": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_south')",
+                    "corner_north_isolated_west_isolated": "!q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_north')",
+                    "corner_north_joined_west_isolated": "!q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_north')",
+                    "corner_north_isolated_west_joined": "q.block_state('skybluetech:connection_west') && !q.block_state('skybluetech:connection_north')",
+                    "corner_north_joined_west_joined": "q.block_state('skybluetech:connection_west') && q.block_state('skybluetech:connection_north')"
+                }
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:bedrock_lava_drill_energy_interface",
+                    "render_method": "opaque"
+                },
+                "side": {
+                    "texture": "skybluetech:bedrock_lava_drill_energy_interface",
+                    "render_method": "opaque"
+                },
+                "front": {
+                    "texture": "skybluetech:bedrock_lava_drill_energy_interface",
+                    "render_method": "opaque"
+                },
+                "edgeless": {
+                    "texture": "skybluetech:bedrock_lava_drill_frame_edgeless",
+                    "render_method": "opaque"
+                },
+                "side_center": {
+                    "texture": "skybluetech:bedrock_lava_drill_energy_interface",
+                    "render_method": "opaque"
+                },
+                "front_center": {
+                    "texture": "skybluetech:bedrock_lava_drill_energy_interface",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "minecraft:geometry.full_block",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:bedrock_lava_drill_energy_interface"
+                    }
+                }
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            }
         },
         "description": {
             "category": "skybluetech",
-            "identifier": "skybluetech:bedrock_lava_drill_io_energy"
+            "identifier": "skybluetech:bedrock_lava_drill_io_energy",
+            "states": {
+                "skybluetech:connection_north": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_south": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_west": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_up": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_down": [
+                    false,
+                    true
+                ]
+            }
         }
     }
 }

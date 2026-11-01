@@ -1,5 +1,5 @@
 # coding=utf-8
-"""通过自定义方块状态维护电池仓六向连接，完全由脚本驱动。"""
+"""通过自定义方块状态维护电池仓和基岩熔岩钻各自的六向连接。"""
 
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -16,15 +16,29 @@ from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.skybluetech.common.define.id_enum.multi_block_structure import (
     BatteryMatrix,
+    BedrockLavaDrill,
 )
 
 
-SHELL_BLOCKS = frozenset((
-    BatteryMatrix.FRAME,
-    BatteryMatrix.CONTROLLER,
-    BatteryMatrix.IO_ENERGY_INPUT,
-    BatteryMatrix.IO_ENERGY_OUTPUT,
-))
+SHELL_GROUPS = (
+    frozenset((
+        BatteryMatrix.FRAME,
+        BatteryMatrix.CONTROLLER,
+        BatteryMatrix.IO_ENERGY_INPUT,
+        BatteryMatrix.IO_ENERGY_OUTPUT,
+    )),
+    frozenset((
+        BedrockLavaDrill.FRAME,
+        BedrockLavaDrill.CONTROLLER,
+        BedrockLavaDrill.IO_ENERGY,
+        BedrockLavaDrill.IO_FLUID,
+    )),
+)
+# 共用事件和加载索引，但不同机器的外壳不能互相连接。
+SHELL_GROUP_BY_BLOCK = dict(
+    (block_name, group) for group in SHELL_GROUPS for block_name in group
+)
+SHELL_BLOCKS = frozenset(SHELL_GROUP_BY_BLOCK)
 NEIGHBOR_STATES = (
     ((0, 1, 0), "skybluetech:connection_up"),
     ((0, -1, 0), "skybluetech:connection_down"),
@@ -46,7 +60,8 @@ def _refresh_connections(dimension, x, y, z):
     if block is None:
         return
     chunk_key = (dimension, x // 16, z // 16)
-    if block.get("name") not in SHELL_BLOCKS:
+    shell_group = SHELL_GROUP_BY_BLOCK.get(block.get("name"))
+    if shell_group is None:
         positions = _loaded_shells.get(chunk_key)
         if positions is not None:
             positions.discard(pos)
@@ -64,7 +79,7 @@ def _refresh_connections(dimension, x, y, z):
         # 读取失败不是空气，不覆盖尚未加载/不可读取位置的已有状态。
         if neighbor is None:
             continue
-        connected = neighbor.get("name") in SHELL_BLOCKS
+        connected = neighbor.get("name") in shell_group
         if states.get(state_name) != connected:
             states[state_name] = connected
             changed = True

@@ -32,7 +32,7 @@
 node tools/generate_battery_matrix_connections.cjs
 ```
 
-生成器只处理四个电池仓外壳定义、共享模型、剔除规则和公共无边框材质注册；不运行模组 Python。修改连接区域或条件时先修改生成器，再生成 JSON。
+该入口只处理四个电池仓外壳定义、共享模型、剔除规则和公共无边框材质注册；不运行模组 Python。分区与条件实现位于 `tools/lib/generate_multiblock_connections.cjs`，与基岩熔岩钻复用；修改后分别执行两个生成入口。服务端也共享原有事件与队列，但按机器类型分组，电池仓与基岩熔岩钻不互相连接。
 
 ## 版本与游戏内验收
 

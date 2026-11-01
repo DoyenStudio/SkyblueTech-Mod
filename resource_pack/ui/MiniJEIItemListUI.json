@@ -154,6 +154,10 @@
                                     120.0,
                                     16.0
                                 ],
+                                "max_size": [
+                                    "100%+-156px",
+                                    "default"
+                                ],
                                 "layer": 1,
                                 "max_length": 512
                             }

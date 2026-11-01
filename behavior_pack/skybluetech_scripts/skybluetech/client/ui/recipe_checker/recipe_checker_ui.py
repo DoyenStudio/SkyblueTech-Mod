@@ -51,42 +51,33 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.title = self.GetElement(MIDDLE_CONTENT_PATH / "title").asLabel()
         self.recipes_display = self.GetElement(MIDDLE_CONTENT_PATH / "recipes_display")
         self.prev_page_btn = (
-            self
-            .GetElement(MIDDLE_CONTENT_PATH / "prev_page_btn")
+            self.GetElement(MIDDLE_CONTENT_PATH / "prev_page_btn")
             .asButton()
             .SetCallback(self.onPrevPage)
         )
         self.next_page_btn = (
-            self
-            .GetElement(MIDDLE_CONTENT_PATH / "next_page_btn")
+            self.GetElement(MIDDLE_CONTENT_PATH / "next_page_btn")
             .asButton()
             .SetCallback(self.onNextPage)
         )
         self.close_btn = (
-            self
-            .GetElement(MIDDLE_CONTENT_PATH / "close_btn")
+            self.GetElement(MIDDLE_CONTENT_PATH / "close_panel/close_btn")
             .asButton()
             .SetCallback(self.onClose)
         )
-        self.back_btn = (
-            self
-            .GetElement(MIDDLE_CONTENT_PATH / "back_btn")
-            .asButton()
-            .SetCallback(self.onBack)
-        )
+        self.back_panel = self.GetElement(MIDDLE_CONTENT_PATH / "back_panel")
+        self.back_btn = self.back_panel["back_btn"].asButton().SetCallback(self.onBack)
         self.category_prev_btn = (
-            self
-            .GetElement(MIDDLE_CONTENT_PATH / "category_prev_btn")
+            self.GetElement(MIDDLE_CONTENT_PATH / "category_prev_btn")
             .asButton()
             .SetCallback(self.onCategoryPrev)
         )
         self.category_next_btn = (
-            self
-            .GetElement(MIDDLE_CONTENT_PATH / "category_next_btn")
+            self.GetElement(MIDDLE_CONTENT_PATH / "category_next_btn")
             .asButton()
             .SetCallback(self.onCategoryNext)
         )
-        self.back_btn.SetVisible(False)
+        self.back_panel.SetVisible(False)
         self.update_left_content_size()
         self.update_all()
         self.inited = True
@@ -129,9 +120,9 @@ class RecipeCheckerUI(ToolDeltaScreen):
         self.update_recipe_categories()
         self.update_current_recipe_page()
         if len(self.recipes_chain) > 1:
-            self.back_btn.SetVisible(True)
+            self.back_panel.SetVisible(True)
         else:
-            self.back_btn.SetVisible(False)
+            self.back_panel.SetVisible(False)
 
     def update_recipe_categories(self):
         def after():

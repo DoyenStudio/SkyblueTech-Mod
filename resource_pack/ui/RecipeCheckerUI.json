@@ -70,6 +70,156 @@
                             }
                         },
                         {
+                            "back_panel": {
+                                "type": "panel",
+                                "anchor_from": "bottom_right",
+                                "anchor_to": "bottom_left",
+                                "offset": [
+                                    -4.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "layer": 2,
+                                "controls": [
+                                    {
+                                        "bg": {
+                                            "type": "image",
+                                            "texture": "textures/ui/TabRightFrontBottomMost"
+                                        }
+                                    },
+                                    {
+                                        "back_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/skybluetech/back_button_icon",
+                                            "$hover_texture": "textures/ui/skybluetech/back_button_icon",
+                                            "$is_new_nine_slice": false,
+                                            "$label_layer": 3,
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                0,
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/skybluetech/back_button_icon",
+                                            "$texture_layer": 2,
+                                            "size": [
+                                                "100%+-6px",
+                                                "100%+-6px"
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "close_panel": {
+                                "type": "panel",
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    -4.0,
+                                    0.0
+                                ],
+                                "size": [
+                                    20.0,
+                                    20.0
+                                ],
+                                "layer": 2,
+                                "controls": [
+                                    {
+                                        "bg": {
+                                            "type": "image",
+                                            "texture": "textures/ui/TabRightFrontTopMost"
+                                        }
+                                    },
+                                    {
+                                        "close_btn@common.button": {
+                                            "type": "button",
+                                            "$control_alpha": 1.0,
+                                            "$default_texture": "textures/ui/close_button_default",
+                                            "$hover_texture": "textures/ui/close_button_default",
+                                            "$is_new_nine_slice": false,
+                                            "$label_layer": 3,
+                                            "$nine_slice_buttom": 0,
+                                            "$nine_slice_left": 0,
+                                            "$nine_slice_right": 0,
+                                            "$nine_slice_top": 0,
+                                            "$nineslice_size": [
+                                                0,
+                                                0,
+                                                0,
+                                                0
+                                            ],
+                                            "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                            "$pressed_texture": "textures/ui/close_button_default",
+                                            "$texture_layer": 2,
+                                            "size": [
+                                                18.0,
+                                                18.0
+                                            ],
+                                            "layer": 2,
+                                            "button_mappings": [],
+                                            "default_control": "default",
+                                            "hover_control": "hover",
+                                            "is_handle_button_move_event": true,
+                                            "pressed_control": "pressed",
+                                            "bindings": [
+                                                {
+                                                    "binding_type": "collection_details",
+                                                    "binding_collection_name": "",
+                                                    "binding_condition": "always_when_visible"
+                                                }
+                                            ],
+                                            "controls": [
+                                                {
+                                                    "default@netease_editor_template_namespace.default": {}
+                                                },
+                                                {
+                                                    "hover@netease_editor_template_namespace.hover": {}
+                                                },
+                                                {
+                                                    "pressed@netease_editor_template_namespace.pressed": {}
+                                                }
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
                             "recipes_display": {
                                 "type": "panel",
                                 "anchor_from": "top_middle",
@@ -91,7 +241,7 @@
                                 "anchor_from": "top_middle",
                                 "anchor_to": "top_middle",
                                 "offset": [
-                                    "-50%+-9px",
+                                    "-50%+-7px",
                                     0.0
                                 ],
                                 "collection_name": "recipe_left_sections",
@@ -112,7 +262,7 @@
                                     5.0
                                 ],
                                 "size": [
-                                    128.0,
+                                    "100%+-38px",
                                     14.0
                                 ],
                                 "layer": 2,
@@ -141,7 +291,7 @@
                                     6.0
                                 ],
                                 "size": [
-                                    128.0,
+                                    "100%+-38px",
                                     12.0
                                 ],
                                 "layer": 3,
@@ -190,10 +340,10 @@
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
                                 "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                 "$texture_layer": 2,
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
                                 "offset": [
-                                    -70.0,
+                                    6.0,
                                     5.0
                                 ],
                                 "size": [
@@ -264,10 +414,10 @@
                                 "$pressed_button_name": "%netease_editor_template_namespace.click",
                                 "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                 "$texture_layer": 2,
-                                "anchor_from": "top_middle",
-                                "anchor_to": "top_middle",
+                                "anchor_from": "top_right",
+                                "anchor_to": "top_right",
                                 "offset": [
-                                    70.0,
+                                    -6.0,
                                     5.0
                                 ],
                                 "size": [
@@ -301,150 +451,6 @@
                                         "button_label@netease_editor_template_namespace.button_label": {
                                             "shadow": true
                                         }
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "close_btn@common.button": {
-                                "type": "button",
-                                "$control_alpha": 1.0,
-                                "$default_texture": "textures/ui/close_button_default",
-                                "$hover_texture": "textures/ui/close_button_default",
-                                "$is_new_nine_slice": false,
-                                "$label_color": [
-                                    1,
-                                    1,
-                                    1
-                                ],
-                                "$label_font_scale_factor": 1.0,
-                                "$label_font_size": "large",
-                                "$label_layer": 3,
-                                "$label_offset": [
-                                    0,
-                                    0
-                                ],
-                                "$label_text": "",
-                                "$nine_slice_buttom": 0,
-                                "$nine_slice_left": 0,
-                                "$nine_slice_right": 0,
-                                "$nine_slice_top": 0,
-                                "$nineslice_size": [
-                                    0,
-                                    0,
-                                    0,
-                                    0
-                                ],
-                                "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                "$pressed_texture": "textures/ui/close_button_default",
-                                "$texture_layer": 2,
-                                "anchor_from": "top_right",
-                                "anchor_to": "top_right",
-                                "offset": [
-                                    -2.0,
-                                    3.0
-                                ],
-                                "size": [
-                                    18.0,
-                                    18.0
-                                ],
-                                "layer": 2,
-                                "button_mappings": [],
-                                "default_control": "default",
-                                "hover_control": "hover",
-                                "is_handle_button_move_event": true,
-                                "pressed_control": "pressed",
-                                "bindings": [
-                                    {
-                                        "binding_type": "collection_details",
-                                        "binding_collection_name": "",
-                                        "binding_condition": "always_when_visible"
-                                    }
-                                ],
-                                "controls": [
-                                    {
-                                        "default@netease_editor_template_namespace.default": {}
-                                    },
-                                    {
-                                        "hover@netease_editor_template_namespace.hover": {}
-                                    },
-                                    {
-                                        "pressed@netease_editor_template_namespace.pressed": {}
-                                    },
-                                    {
-                                        "button_label@netease_editor_template_namespace.button_label": {}
-                                    }
-                                ]
-                            }
-                        },
-                        {
-                            "back_btn@common.button": {
-                                "type": "button",
-                                "$control_alpha": 1.0,
-                                "$default_texture": "textures/ui/skybluetech/back_button",
-                                "$hover_texture": "textures/ui/skybluetech/back_button",
-                                "$is_new_nine_slice": false,
-                                "$label_color": [
-                                    1,
-                                    1,
-                                    1
-                                ],
-                                "$label_font_scale_factor": 1.0,
-                                "$label_font_size": "large",
-                                "$label_layer": 3,
-                                "$label_offset": [
-                                    0,
-                                    0
-                                ],
-                                "$label_text": "",
-                                "$nine_slice_buttom": 0,
-                                "$nine_slice_left": 0,
-                                "$nine_slice_right": 0,
-                                "$nine_slice_top": 0,
-                                "$nineslice_size": [
-                                    0,
-                                    0,
-                                    0,
-                                    0
-                                ],
-                                "$pressed_button_name": "%netease_editor_template_namespace.click",
-                                "$pressed_texture": "textures/ui/skybluetech/back_button",
-                                "$texture_layer": 2,
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    4.0,
-                                    3.0
-                                ],
-                                "size": [
-                                    18.0,
-                                    18.0
-                                ],
-                                "layer": 3,
-                                "button_mappings": [],
-                                "default_control": "default",
-                                "hover_control": "hover",
-                                "is_handle_button_move_event": true,
-                                "pressed_control": "pressed",
-                                "bindings": [
-                                    {
-                                        "binding_type": "collection_details",
-                                        "binding_collection_name": "",
-                                        "binding_condition": "always_when_visible"
-                                    }
-                                ],
-                                "controls": [
-                                    {
-                                        "default@netease_editor_template_namespace.default": {}
-                                    },
-                                    {
-                                        "hover@netease_editor_template_namespace.hover": {}
-                                    },
-                                    {
-                                        "pressed@netease_editor_template_namespace.pressed": {}
-                                    },
-                                    {
-                                        "button_label@netease_editor_template_namespace.button_label": {}
                                     }
                                 ]
                             }
@@ -1172,13 +1178,13 @@
     "left_section": {
         "type": "panel",
         "size": [
-            26.0,
+            28.0,
             26.0
         ],
         "layer": 5,
         "controls": [
             {
-                "image": {
+                "bg": {
                     "type": "image",
                     "nineslice_size": [
                         0.0,
@@ -1193,8 +1199,14 @@
                 "item_renderer": {
                     "type": "custom",
                     "renderer": "inventory_item_renderer",
+                    "anchor_from": "left_middle",
+                    "anchor_to": "left_middle",
+                    "offset": [
+                        3.0,
+                        0.0
+                    ],
                     "size": [
-                        "100%+-7px",
+                        "100%+-9px",
                         "100%+-7px"
                     ],
                     "layer": 1,

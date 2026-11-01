@@ -3,6 +3,13 @@
 .claude
 .*
 
+# Keep the project's connected-texture skill under version control.
+!/.codex/
+/.codex/*
+!/.codex/skills/
+/.codex/skills/*
+!/.codex/skills/skybluetech-connected-textures/
+
 work.mcscfg
 studio.json
 editor.name

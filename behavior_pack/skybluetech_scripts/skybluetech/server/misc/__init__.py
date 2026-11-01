@@ -1,5 +1,6 @@
 from . import (
     battery,
+    battery_matrix_connections,
     crafting_template,
     drop_fix,
     famicom,

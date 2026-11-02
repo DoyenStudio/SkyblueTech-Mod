@@ -4,7 +4,7 @@
 
 配方页照蔚蓝 UI 规范 v2：格子顺序、能量条、进度都在 `_layouts.py`（生成器从机器界面算出，
 与 `ui/mei_recipes/PrecisionCutter.json` 同一次生成），`BuildMachine` 自动取 —— 本模块只声明身份。
-> 切割刀是工具：画成催化剂格（`cat/0`），候选是等级够的全部切割刀（等级表 `CUTTER_LEVEL_MAPPING` 顺着配方集合找到，
+> 切割刀是工具：画成催化剂格（`cat/0`），候选是等级够的全部切割刀（等级表 `CUTTER_LEVEL_MAPPING` 经 exports 从机器定义模块取，
 > 同机件加工台的工具）；等级与耐久消耗写进它的悬停。冷却液储罐是机器自己的（配方类只有物品），不画。
 > 产物在 2 号槽 = 三个产出格最上面那格（内凹管道的箭头指着中间那格，机器界面本身就这样）。
 典型配方：**海晶石 → 4 海晶碎片**（切割刀 1 级以上，每次耗 1 点耐久）
@@ -55,6 +55,7 @@ def Build():  # type: () -> tuple
         name_key="skybluetech.mei.category.precision_cutter",
         recipes=recipes,
         sort_index=SORT_INDEX,
-        decorate=_MakeDecorate(exports.OwnerConstant(recipes, "CUTTER_LEVEL_MAPPING", {}) or {}),
+        decorate=_MakeDecorate(exports.OwnerConstant(
+            "common.machinery_def.precision_cutter", "CUTTER_LEVEL_MAPPING", {}) or {}),
         lores=_Lore,
     )

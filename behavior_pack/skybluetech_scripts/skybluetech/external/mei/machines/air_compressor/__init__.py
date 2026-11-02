@@ -4,7 +4,7 @@
 
 配方页照蔚蓝 UI 规范 v2：格子顺序、能量条、进度都在 `_layouts.py`（生成器从机器界面算出，
 与 `ui/mei_recipes/AirCompressor.json` 同一次生成），`BuildMachine` 自动取 —— 本模块只声明身份。
-> 零输入配方：只能按产物查（点压缩空气），查用途查不到它。维度写进箭头的悬停（名字表 `DIMENSION_NAMES` 顺着配方集合找到）。
+> 零输入配方：只能按产物查（点压缩空气），查用途查不到它。维度写进箭头的悬停（名字表 `DIMENSION_NAMES` 经 exports 从机器定义模块取）。
 典型配方：**（无输入）→ 50 mB 压缩空气**（主世界，40 RF/t × 10 刻）
 """
 from .._common import BuildMachine
@@ -36,5 +36,6 @@ def Build():  # type: () -> tuple
         name_key="skybluetech.mei.category.air_compressor",
         recipes=recipes,
         sort_index=SORT_INDEX,
-        decorate=_MakeDecorate(exports.OwnerConstant(recipes, "DIMENSION_NAMES", {}) or {}),
+        decorate=_MakeDecorate(exports.OwnerConstant(
+            "common.machinery_def.air_compressor", "DIMENSION_NAMES", {}) or {}),
     )

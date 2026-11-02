@@ -114,9 +114,6 @@ def _BuildStack():  # type: () -> type
         而 `FormatVolume` 在 <10000 时本来就是 `"%.0f mB"` ⇒ 取整无显示损失。
         """
 
-        __slots__ = ()
-        """ 不加实例属性；漏写会让子类多出一个 __dict__ """
-
         KIND = "fluid"
         """ 必须与模块级的 KIND 一致 —— 注册面板与打标记是同一个字符串。
             这里不写 `KIND = KIND`: py2 的 class 体看不见外层函数的局部变量,

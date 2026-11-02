@@ -14,6 +14,7 @@
 而第三方写不出这一行 —— 类型是运行期从组件上取到的对象，
 `RecipeCategory(...)` 与 `class X(RecipeUIScript)` 都只能发生在函数里。
 """
+from mod.client.extraClientApi import ImportModule
 
 MACHINES = (
     # 纯物品
@@ -78,7 +79,10 @@ def Import(name):  # type: (str) -> any
     """ 惰性导入一台机器的模块；失败返回 None（一台机器坏了不该带走其余的）"""
     from .. import bridge
     try:
-        return __import__(_PACKAGE + name, {}, {}, ["Build"])
+        module = ImportModule(_PACKAGE + name)
     except Exception as e:  # noqa
         bridge.Error("机器模块 {} 导入失败: {}".format(name, bridge.ErrorText(e)))
         return None
+    if module is None:
+        bridge.Error("机器模块 {} 不存在".format(name))
+    return module

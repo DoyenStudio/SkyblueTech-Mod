@@ -49,6 +49,7 @@ def Build():  # type: () -> tuple
         recipes=recipes,
         sort_index=SORT_INDEX,
         # POWER_COST 是**模块级常量**，不在配方对象上，见 _hydroponic.Decorate
-        decorate=MakeDecorate(RETURN_SEED, exports.OwnerConstant(recipes, "POWER_COST", 0)),
+        decorate=MakeDecorate(RETURN_SEED, exports.OwnerConstant(
+            "common.machinery_def.hydroponic_bed_sand", "POWER_COST", 0)),
         ui_script=_UI_SCRIPT,
     )

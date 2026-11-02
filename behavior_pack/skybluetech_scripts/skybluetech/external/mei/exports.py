@@ -10,7 +10,7 @@ next 框架的重构里内部结构已经换过一次（`machinery.MACERATOR` �
 导出没覆盖到的东西（机件加工台的工具等级表）也收在这里：顺着导出类找，
 找不到就返回空、那一格留空，**不悄悄退回写死的内部路径**。
 """
-import sys
+from mod.client.extraClientApi import ImportModule
 
 WORKSTATION_RECIPE = "MachineryWorkstationRecipe"
 """ 机件加工台的导出配方类名；工具等级表挂在它所在的模块上 """
@@ -124,16 +124,13 @@ def _RecipeKey(recipe):  # type: (any) -> tuple
         return [], []
 
 
-def OwnerConstant(collection, name, default=None):  # type: (any, str, any) -> any
-    """ 建出这个集合的模块上的常量；导出没给的机器级常量（如水培床的 POWER_COST）从这里取 """
-    # 顺着集合对象找它的模块，而不是写死 machinery_def 的路径 —— 表搬家时常量大概率跟着走
-    for module in list(sys.modules.values()):
-        try:
-            if module is not None and getattr(module, "recipes", None) is collection:
-                return getattr(module, name, default)
-        except Exception:  # noqa  个别模块的属性访问有副作用, 跳过即可
-            continue
-    return default
+def OwnerConstant(relative, name, default=None):  # type: (str, str, any) -> any
+    """ 从指定模块取导出没覆盖的机器级常量；模块或常量不存在时返回默认值 """
+    try:
+        module = InternalModule(relative)
+    except LookupError:
+        return default
+    return getattr(module, name, default)
 
 
 def InternalModule(relative):  # type: (str) -> any
@@ -143,13 +140,13 @@ def InternalModule(relative):  # type: (str) -> any
     取不到抛 LookupError（那一台不注册，日志点名）。导出补上之后换回导出，见 `skybluetech.md` §8.11。
     """
     name = "skybluetech_scripts.skybluetech." + relative
-    module = sys.modules.get(name)
-    if module is not None:
-        return module
     try:
-        return __import__(name, {}, {}, ["__name__"])
+        module = ImportModule(name)
     except Exception as e:  # noqa
         raise LookupError("蔚蓝内部模块 {} 取不到: {}".format(name, e))
+    if module is None:
+        raise LookupError("蔚蓝内部模块 {} 不存在".format(name))
+    return module
 
 
 def WorkstationTools(kind, level):  # type: (str, int) -> list
@@ -157,7 +154,10 @@ def WorkstationTools(kind, level):  # type: (str, int) -> list
     # 导出只给了配方类，等级 -> 工具的表在它所在模块的 WRENCH_LEVEL2ITEM / PINCER_LEVEL2ITEM 上，
     # 与蔚蓝自己的 get_spec_level_avail_* 同规则（等级 >= level 都认）
     cls = getattr(Recipes(), WORKSTATION_RECIPE, None)
-    module = sys.modules.get(getattr(cls, "__module__", None) or "")
+    module_name = getattr(cls, "__module__", None)
+    if not module_name:
+        return []
+    module = ImportModule(module_name)
     table = getattr(module, kind.upper() + "_LEVEL2ITEM", None)
     if not isinstance(table, dict):
         return []

@@ -6,7 +6,7 @@
 上路的输入槽这几条配方都不用，但双路管道通着它，照画成空格。布局在 `_layouts.py`。
 
   · **配方取全表**：蔚蓝的配方集合只登记了不要升级的两条，要装特化升级的那条（氮气）在同一个模块的 `ALL_RECIPES` 里，
-    顺着集合找到（`exports.OwnerConstant`）；要装的升级写进进度的悬停。
+    经 `exports.OwnerConstant` 从机器定义模块取；要装的升级写进进度的悬停。
   · 配方功率是 0：耗电看机器里设定的温度，能量条照画、悬停写「随设定温度」。
 
 典型配方：**16 mB 压缩空气 → 1 mB 液态空气**（≤ 100 K）；另有 1000 mB 水 → 冰、24 mB 压缩空气 → 1 mB 氮气（要装特化升级）。
@@ -27,7 +27,7 @@ UPGRADER_NAMES = {"skybluetech:upgrader_spec_nitrogen_ext": "特化升级： 氮
 
 def Build():  # type: () -> tuple
     icon_id, recipes = exports.Collection(RECIPE_CLS)
-    every = exports.OwnerConstant(recipes, "ALL_RECIPES", None)
+    every = exports.OwnerConstant("common.machinery_def.vacuum_freezer", "ALL_RECIPES", None)
 
     return BuildMachine(
         category_id=CATEGORY_ID,

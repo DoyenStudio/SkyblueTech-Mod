@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:tin_ingot"
+                "tag": "common:tin_ingot"
             },
             "B": {
                 "item": "minecraft:iron_ingot"

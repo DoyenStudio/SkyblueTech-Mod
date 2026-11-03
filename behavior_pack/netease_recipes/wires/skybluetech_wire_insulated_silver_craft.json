@@ -9,7 +9,7 @@
                 "item": "skybluetech:wire_silver"
             },
             {
-                "item": "skybluetech:rough_rubber"
+                "tag": "common:rubber"
             }
         ],
         "result": {

@@ -6,10 +6,10 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:rough_rubber"
+                "tag": "common:rubber"
             },
             "B": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             }
         },
         "pattern": [

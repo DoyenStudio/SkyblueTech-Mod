@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:bronze_ingot"
+                "tag": "common:bronze_ingot"
             }
         },
         "pattern": [

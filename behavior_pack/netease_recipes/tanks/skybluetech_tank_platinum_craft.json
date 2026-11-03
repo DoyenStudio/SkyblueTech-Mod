@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:platinum_plate"
+                "tag": "common:platinum_plate"
             },
             "B": {
                 "item": "minecraft:glass_pane"

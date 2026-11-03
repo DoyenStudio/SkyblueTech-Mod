@@ -9,7 +9,7 @@
                 "item": "skybluetech:skyblue_core"
             },
             "B": {
-                "item": "skybluetech:superconduct_stick"
+                "tag": "common:superconduct_stick"
             }
         },
         "pattern": [

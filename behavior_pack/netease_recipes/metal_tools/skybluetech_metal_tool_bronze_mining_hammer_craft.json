@@ -6,10 +6,10 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:bronze_ingot"
+                "tag": "common:bronze_ingot"
             },
             "B": {
-                "item": "skybluetech:bronze_plate"
+                "tag": "common:bronze_plate"
             },
             "C": {
                 "item": "minecraft:stick"

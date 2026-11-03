@@ -9,7 +9,7 @@
                 "item": "skybluetech:control_circuit_basic"
             },
             "B": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             }
         },
         "pattern": [

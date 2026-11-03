@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:raw_titanium"
+            "tag": "common:raw_titanium"
         },
         "output": {
             "count": 1,

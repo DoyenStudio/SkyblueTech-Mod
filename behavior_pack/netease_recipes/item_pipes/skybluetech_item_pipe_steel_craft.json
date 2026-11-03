@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:steel_plate"
+                "tag": "common:steel_plate"
             },
             "B": {
                 "item": "minecraft:dropper"

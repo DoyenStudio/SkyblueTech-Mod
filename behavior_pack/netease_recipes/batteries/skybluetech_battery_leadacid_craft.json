@@ -6,16 +6,16 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             },
             "B": {
-                "item": "skybluetech:lead_sulfate_dust"
+                "tag": "common:lead_sulfate_dust"
             },
             "C": {
                 "item": "skybluetech:wire_insulated_tin"
             },
             "D": {
-                "item": "skybluetech:copper_plate"
+                "tag": "common:copper_plate"
             }
         },
         "pattern": [

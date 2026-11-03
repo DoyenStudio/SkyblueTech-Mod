@@ -7,10 +7,10 @@
         "assume_symmetry": false,
         "key": {
             "L": {
-                "item": "skybluetech:light_skyblue_ingot"
+                "tag": "common:light_skyblue_ingot"
             },
             "T": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             },
             "W": {
                 "item": "skybluetech:wire_insulated_silver"

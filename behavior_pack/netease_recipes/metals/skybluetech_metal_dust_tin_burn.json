@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:tin_dust"
+            "tag": "common:tin_dust"
         },
         "output": {
             "count": 1,

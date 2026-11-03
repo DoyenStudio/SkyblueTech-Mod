@@ -9,10 +9,10 @@
                 "item": "minecraft:diamond_block"
             },
             "B": {
-                "item": "skybluetech:lead_plate"
+                "tag": "common:lead_plate"
             },
             "C": {
-                "item": "skybluetech:invar_plate"
+                "tag": "common:invar_plate"
             }
         },
         "pattern": [

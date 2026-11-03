@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:iron_dust"
+            "tag": "common:iron_dust"
         },
         "output": {
             "count": 1,

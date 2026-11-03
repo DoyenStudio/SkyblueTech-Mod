@@ -6,7 +6,7 @@
         },
         "key": {
             "P": {
-                "item": "skybluetech:ultraheatinum_plate"
+                "tag": "common:ultraheatinum_plate"
             },
             "W": {
                 "item": "skybluetech:wire_silver"

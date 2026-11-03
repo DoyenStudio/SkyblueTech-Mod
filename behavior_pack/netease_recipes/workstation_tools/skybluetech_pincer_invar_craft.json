@@ -9,7 +9,7 @@
                 "item": "minecraft:stick"
             },
             "B": {
-                "item": "skybluetech:invar_ingot"
+                "tag": "common:invar_ingot"
             }
         },
         "pattern": [

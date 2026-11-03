@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:steel_ingot"
+                "tag": "common:steel_ingot"
             }
         },
         "pattern": [

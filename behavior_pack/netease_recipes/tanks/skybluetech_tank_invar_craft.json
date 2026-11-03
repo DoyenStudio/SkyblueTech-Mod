@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:invar_plate"
+                "tag": "common:invar_plate"
             },
             "B": {
                 "item": "minecraft:glass_pane"

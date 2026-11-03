@@ -6,10 +6,10 @@
         },
         "key": {
             "C": {
-                "item": "skybluetech:light_skyblue_ingot"
+                "tag": "common:light_skyblue_ingot"
             },
             "E": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             }
         },
         "pattern": [

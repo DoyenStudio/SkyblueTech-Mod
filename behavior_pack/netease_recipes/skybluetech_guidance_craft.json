@@ -9,7 +9,7 @@
         ],
         "ingredients": [
             {
-                "item": "skybluetech:tin_ingot"
+                "tag": "common:tin_ingot"
             },
             {
                 "item": "minecraft:book"

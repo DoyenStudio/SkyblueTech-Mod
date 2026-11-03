@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:raw_nickel"
+            "tag": "common:raw_nickel"
         },
         "output": {
             "count": 1,

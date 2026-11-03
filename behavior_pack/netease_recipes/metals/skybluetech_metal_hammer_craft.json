@@ -6,7 +6,7 @@
         },
         "key": {
             "F": {
-                "item": "skybluetech:refined_iron_ingot"
+                "tag": "common:refined_iron_ingot"
             },
             "G": {
                 "item": "minecraft:stick"

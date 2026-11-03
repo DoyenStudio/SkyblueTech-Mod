@@ -12,7 +12,7 @@
                 "item": "skybluetech:low_purity_silicon_panel"
             },
             "F": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             },
             "I": {
                 "item": "minecraft:lapis_lazuli"

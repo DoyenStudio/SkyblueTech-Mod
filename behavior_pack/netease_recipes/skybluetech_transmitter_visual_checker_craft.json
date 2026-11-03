@@ -9,7 +9,7 @@
                 "item": "minecraft:oak_sign"
             },
             "B": {
-                "item": "skybluetech:light_skyblue_ingot"
+                "tag": "common:light_skyblue_ingot"
             },
             "C": {
                 "item": "minecraft:redstone_torch"

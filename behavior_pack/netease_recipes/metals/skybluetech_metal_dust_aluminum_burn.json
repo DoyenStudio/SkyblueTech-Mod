@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:aluminum_dust"
+            "tag": "common:aluminum_dust"
         },
         "output": {
             "count": 1,

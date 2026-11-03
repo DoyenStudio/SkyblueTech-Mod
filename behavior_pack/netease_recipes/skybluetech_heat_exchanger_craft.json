@@ -6,13 +6,13 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:silver_plate"
+                "tag": "common:silver_plate"
             },
             "B": {
-                "item": "skybluetech:invar_stick"
+                "tag": "common:invar_stick"
             },
             "C": {
-                "item": "skybluetech:copper_stick"
+                "tag": "common:copper_stick"
             }
         },
         "pattern": [

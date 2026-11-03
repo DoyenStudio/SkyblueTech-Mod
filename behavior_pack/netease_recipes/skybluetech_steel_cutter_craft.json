@@ -9,7 +9,7 @@
                 "item": "minecraft:iron_nugget"
             },
             "B": {
-                "item": "skybluetech:steel_plate"
+                "tag": "common:steel_plate"
             }
         },
         "pattern": [

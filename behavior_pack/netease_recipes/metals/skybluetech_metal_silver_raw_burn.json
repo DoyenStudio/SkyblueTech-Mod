@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:raw_silver"
+            "tag": "common:raw_silver"
         },
         "output": {
             "count": 1,

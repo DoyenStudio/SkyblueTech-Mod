@@ -6,13 +6,13 @@
         },
         "key": {
             "C": {
-                "item": "skybluetech:refined_iron_ingot"
+                "tag": "common:refined_iron_ingot"
             },
             "E": {
                 "item": "minecraft:crafting_table"
             },
             "H": {
-                "item": "skybluetech:tin_ingot"
+                "tag": "common:tin_ingot"
             }
         },
         "pattern": [

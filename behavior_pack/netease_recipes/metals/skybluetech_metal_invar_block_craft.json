@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:invar_ingot"
+                "tag": "common:invar_ingot"
             }
         },
         "pattern": [

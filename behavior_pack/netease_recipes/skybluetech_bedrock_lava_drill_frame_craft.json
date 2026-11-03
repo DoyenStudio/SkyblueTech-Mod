@@ -6,10 +6,10 @@
         },
         "key": {
             "C": {
-                "item": "skybluetech:steel_plate"
+                "tag": "common:steel_plate"
             },
             "E": {
-                "item": "skybluetech:ultraheatinum_plate"
+                "tag": "common:ultraheatinum_plate"
             }
         },
         "pattern": [

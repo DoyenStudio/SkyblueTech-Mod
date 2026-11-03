@@ -6,10 +6,10 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:superconduct_stick"
+                "tag": "common:superconduct_stick"
             },
             "B": {
-                "item": "skybluetech:light_skyblue_ingot"
+                "tag": "common:light_skyblue_ingot"
             },
             "C": {
                 "item": "skybluetech:skyblue_core"

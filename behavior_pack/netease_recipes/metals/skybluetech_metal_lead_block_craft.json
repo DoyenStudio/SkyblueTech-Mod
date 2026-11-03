@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:lead_ingot"
+                "tag": "common:lead_ingot"
             }
         },
         "pattern": [

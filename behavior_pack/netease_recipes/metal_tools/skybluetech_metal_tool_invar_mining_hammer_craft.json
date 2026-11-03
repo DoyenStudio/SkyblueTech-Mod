@@ -6,10 +6,10 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:invar_ingot"
+                "tag": "common:invar_ingot"
             },
             "B": {
-                "item": "skybluetech:invar_plate"
+                "tag": "common:invar_plate"
             },
             "C": {
                 "item": "minecraft:stick"

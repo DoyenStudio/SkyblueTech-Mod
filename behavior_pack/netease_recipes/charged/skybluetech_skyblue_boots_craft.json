@@ -9,7 +9,7 @@
                 "item": "skybluetech:skyblue_core"
             },
             "B": {
-                "item": "skybluetech:light_skyblue_ingot"
+                "tag": "common:light_skyblue_ingot"
             }
         },
         "pattern": [

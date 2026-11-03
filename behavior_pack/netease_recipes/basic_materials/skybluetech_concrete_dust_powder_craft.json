@@ -6,7 +6,7 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:concrete_dust"
+                "tag": "common:concrete_dust"
             }
         },
         "pattern": [

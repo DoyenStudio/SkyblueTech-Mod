@@ -15,7 +15,7 @@
                 "item": "skybluetech:fan_blade"
             },
             "D": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             }
         },
         "pattern": [

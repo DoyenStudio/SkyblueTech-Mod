@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:nickel_dust"
+            "tag": "common:nickel_dust"
         },
         "output": {
             "count": 1,

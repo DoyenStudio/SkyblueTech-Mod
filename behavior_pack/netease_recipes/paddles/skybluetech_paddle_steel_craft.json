@@ -6,10 +6,10 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:steel_stick"
+                "tag": "common:steel_stick"
             },
             "B": {
-                "item": "skybluetech:steel_plate"
+                "tag": "common:steel_plate"
             }
         },
         "pattern": [

@@ -6,10 +6,10 @@
         },
         "key": {
             "A": {
-                "item": "skybluetech:copper_stick"
+                "tag": "common:copper_stick"
             },
             "B": {
-                "item": "skybluetech:bronze_plate"
+                "tag": "common:bronze_plate"
             },
             "C": {
                 "item": "skybluetech:redstoneflux_core"

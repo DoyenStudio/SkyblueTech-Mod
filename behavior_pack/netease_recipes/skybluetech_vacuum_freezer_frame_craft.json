@@ -6,10 +6,10 @@
         },
         "key": {
             "C": {
-                "item": "skybluetech:aluminum_plate"
+                "tag": "common:aluminum_plate"
             },
             "E": {
-                "item": "skybluetech:light_skyblue_ingot"
+                "tag": "common:light_skyblue_ingot"
             }
         },
         "pattern": [

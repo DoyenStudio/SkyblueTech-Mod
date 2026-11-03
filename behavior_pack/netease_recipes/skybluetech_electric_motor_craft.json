@@ -6,16 +6,16 @@
         },
         "key": {
             "D": {
-                "item": "skybluetech:tin_plate"
+                "tag": "common:tin_plate"
             },
             "E": {
                 "item": "minecraft:copper_ingot"
             },
             "F": {
-                "item": "skybluetech:tin_ingot"
+                "tag": "common:tin_ingot"
             },
             "I": {
-                "item": "skybluetech:iron_plate"
+                "tag": "common:iron_plate"
             }
         },
         "pattern": [

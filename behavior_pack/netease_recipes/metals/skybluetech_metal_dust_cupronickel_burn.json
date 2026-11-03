@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:cupronickel_dust"
+            "tag": "common:cupronickel_dust"
         },
         "output": {
             "count": 1,

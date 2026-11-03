@@ -9,7 +9,7 @@
                 "item": "skybluetech:wire_superconduct"
             },
             {
-                "item": "skybluetech:rough_rubber"
+                "tag": "common:rubber"
             }
         ],
         "result": {

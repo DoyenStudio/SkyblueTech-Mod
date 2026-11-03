@@ -9,7 +9,7 @@
                 "item": "minecraft:brick"
             },
             "P": {
-                "item": "skybluetech:copper_plate"
+                "tag": "common:copper_plate"
             }
         },
         "pattern": [

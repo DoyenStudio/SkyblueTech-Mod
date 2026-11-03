@@ -7,7 +7,7 @@
         "input": {
             "count": 1,
             "data": 0,
-            "item": "skybluetech:raw_lead"
+            "tag": "common:raw_lead"
         },
         "output": {
             "count": 1,

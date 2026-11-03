@@ -23,8 +23,8 @@ class Electrolyzer(Processor, MultiFluidContainer):
     fluid_input_slots = (0,)
     fluid_output_slots = (1, 2, 3)
     fluid_output_slots_by_face = {
-        RelativeFacingStrEnum.LEFT: (2,),
-        RelativeFacingStrEnum.RIGHT: (1,),
+        RelativeFacingStrEnum.LEFT: (1,),
+        RelativeFacingStrEnum.RIGHT: (2,),
         RelativeFacingStrEnum.DOWN: (3,),
     }
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES

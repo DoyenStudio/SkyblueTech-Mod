@@ -112,7 +112,7 @@ LAYOUTS = {
         "file": "Electrolyzer",
         "control_def": "SkyblueMeiElectrolyzer.RECIPES_GRID",
         "inputs": (("fluid", 0), ("item", 0)),
-        "outputs": (("fluid", 1), ("fluid", 3), ("item", 1), ("fluid", 2), ("item", 2)),
+        "outputs": (("fluid", 1), ("fluid", 2), ("item", 1), ("fluid", 3), ("item", 2)),
         "catalysts": 0,
         "power": "use",
         "segments": 23,

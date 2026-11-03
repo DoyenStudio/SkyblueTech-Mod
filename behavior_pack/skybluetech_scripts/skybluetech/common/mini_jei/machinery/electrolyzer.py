@@ -25,7 +25,7 @@ class ElectrolyzerRecipe(MachineRecipe):
         output_volume3=0,
     ):
         # type: (str, float, str, float, str, float, int, int, Input | None, Output | None, Output | None, str | None, float) -> None
-        # Fluid slots: 1 cathode upper, 2 anode, 3 cathode lower (optional).
+        # Output fluid slots: 1 upper left, 2 upper right, 3 lower (optional).
         inputs = {CategoryType.FLUID: {0: Input(input_fluid, input_volume)}}
         outputs = {CategoryType.FLUID: {
             1: Output(output_fluid1, output_volume1),

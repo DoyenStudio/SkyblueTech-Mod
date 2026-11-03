@@ -156,7 +156,7 @@
                 }
             },
             {
-                "fluid3@SkybluePanelLib.fluid_tank": {
+                "fluid2@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
                     "anchor_from": "top_left",
@@ -172,7 +172,7 @@
                 }
             },
             {
-                "ring_tout_fluid3@SkybluePanelLib.status_ring": {
+                "ring_tout_fluid2@SkybluePanelLib.status_ring": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -224,7 +224,7 @@
                 }
             },
             {
-                "fluid2@SkybluePanelLib.fluid_tank": {
+                "fluid3@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
                     "anchor_from": "top_left",
@@ -240,7 +240,7 @@
                 }
             },
             {
-                "ring_tout_fluid2@SkybluePanelLib.status_ring": {
+                "ring_tout_fluid3@SkybluePanelLib.status_ring": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [

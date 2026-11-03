@@ -112,7 +112,7 @@
                     ],
                     "size": [
                         162,
-                        28
+                        34
                     ],
                     "layer": 1,
                     "nineslice_size": 1,
@@ -139,7 +139,7 @@
                                 "type": "label",
                                 "size": [
                                     156,
-                                    10
+                                    20
                                 ],
                                 "color": [
                                     0.18,
@@ -155,7 +155,7 @@
                                 "anchor_to": "top_left",
                                 "offset": [
                                     3,
-                                    15
+                                    12
                                 ]
                             }
                         }

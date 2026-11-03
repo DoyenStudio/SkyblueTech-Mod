@@ -1,9 +1,13 @@
 {
+    "main@common.base_screen": {
+        "$screen_content": "RedstoneFluxBrakeUI.screen_root"
+    },
+    "namespace": "RedstoneFluxBrakeUI",
     "redstone_flux_brake_ui": {
         "type": "panel",
         "size": [
-            176,
-            167
+            178.0,
+            148.0
         ],
         "layer": 1,
         "controls": [
@@ -22,11 +26,11 @@
                         6
                     ],
                     "layer": 2,
+                    "color": "$title_text_color",
                     "font_type": "default",
                     "shadow": false,
                     "text": "能源控制闸",
-                    "text_alignment": "center",
-                    "color": "$title_text_color"
+                    "text_alignment": "center"
                 }
             },
             {
@@ -115,6 +119,7 @@
                         34
                     ],
                     "layer": 1,
+                    "fill": true,
                     "nineslice_size": 1,
                     "texture": "textures/ui/skybluetech/info_bg",
                     "controls": [
@@ -127,16 +132,22 @@
                                     3,
                                     3
                                 ],
+                                "color": "$title_text_color",
                                 "font_type": "default",
                                 "shadow": false,
                                 "text": "邻接电网功率",
-                                "text_alignment": "center",
-                                "color": "$title_text_color"
+                                "text_alignment": "center"
                             }
                         },
                         {
                             "label": {
                                 "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    3,
+                                    12
+                                ],
                                 "size": [
                                     156,
                                     20
@@ -150,30 +161,23 @@
                                 "font_type": "default",
                                 "shadow": false,
                                 "text": "220.42 MRF/s",
-                                "text_alignment": "center",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    3,
-                                    12
-                                ]
+                                "text_alignment": "center"
                             }
                         }
-                    ],
-                    "fill": true
+                    ]
                 }
             },
             {
                 "graphics": {
                     "type": "panel",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
+                    "anchor_from": "top_middle",
+                    "anchor_to": "top_middle",
                     "offset": [
-                        7,
-                        70
+                        0.0,
+                        50.0
                     ],
                     "size": [
-                        162,
+                        172.0,
                         70
                     ],
                     "layer": 1,
@@ -188,7 +192,7 @@
                                     15.0
                                 ],
                                 "size": [
-                                    "100%+-6px",
+                                    "100%+0px",
                                     10.0
                                 ],
                                 "layer": 1,
@@ -325,19 +329,19 @@
             {
                 "redstone_mode_switch@common_toggles.switch_toggle_collection": {
                     "type": "panel",
-                    "$checked_locked_texture": "textures/ui/toggle_on",
-                    "$default_texture": "textures/ui/toggle_off",
-                    "$hover_texture": "textures/ui/toggle_off_hover",
-                    "$pressed_no_hover_texture": "textures/ui/toggle_on",
-                    "$pressed_texture": "textures/ui/toggle_on_hover",
+                    "$checked_locked_texture": "textures/ui/skybluetech/simple_switch_on",
+                    "$default_texture": "textures/ui/skybluetech/simple_switch_off",
+                    "$hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                    "$pressed_no_hover_texture": "textures/ui/skybluetech/simple_switch_on_hovered",
+                    "$pressed_texture": "textures/ui/skybluetech/simple_switch_off_hovered",
                     "$toggle_name": "#RedstoneFluxBrakeUI.redstone_mode_switch",
                     "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                    "$unchecked_locked_texture": "textures/ui/toggle_off",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
+                    "$unchecked_locked_texture": "textures/ui/skybluetech/simple_switch_off",
+                    "anchor_from": "bottom_left",
+                    "anchor_to": "bottom_left",
                     "offset": [
-                        7,
-                        144
+                        4.0,
+                        -14.0
                     ],
                     "size": [
                         30,
@@ -356,21 +360,41 @@
             {
                 "redstone_mode_tip": {
                     "type": "label",
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
+                    "anchor_from": "bottom_left",
+                    "anchor_to": "bottom_left",
                     "offset": [
-                        41,
-                        147
+                        4.0,
+                        -4.0
                     ],
                     "size": [
-                        128,
-                        10
+                        72.0,
+                        10.0
                     ],
                     "layer": 1,
                     "color": "$title_text_color",
                     "font_type": "default",
-                    "text": "反相红石信号",
-                    "shadow": false
+                    "shadow": false,
+                    "text": "是否反相红石信号"
+                }
+            },
+            {
+                "redstone_mode_tip2": {
+                    "type": "label",
+                    "anchor_from": "bottom_right",
+                    "anchor_to": "bottom_right",
+                    "offset": [
+                        -4.0,
+                        -4.0
+                    ],
+                    "size": [
+                        70.0,
+                        20.0
+                    ],
+                    "layer": 1,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "当前状态：\n[有红石信号=启用]"
                 }
             }
         ]
@@ -382,9 +406,5 @@
                 "panel@RedstoneFluxBrakeUI.redstone_flux_brake_ui": {}
             }
         ]
-    },
-    "main@common.base_screen": {
-        "$screen_content": "RedstoneFluxBrakeUI.screen_root"
-    },
-    "namespace": "RedstoneFluxBrakeUI"
+    }
 }

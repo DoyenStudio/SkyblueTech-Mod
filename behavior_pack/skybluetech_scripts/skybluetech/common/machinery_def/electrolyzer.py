@@ -24,7 +24,7 @@ recipes = RecipesCollection(
         output_volume1=20,
         output_fluid2=id_enum.CommonGas.HYDROGEN,
         output_volume2=40,
-        power_cost=480,
+        power_cost=200,
         tick_duration=10,
     ),
 )  # type: RecipesCollection[ElectrolyzerRecipe]

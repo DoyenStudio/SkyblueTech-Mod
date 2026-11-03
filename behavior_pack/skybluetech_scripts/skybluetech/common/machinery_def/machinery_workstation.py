@@ -212,6 +212,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # distillation column
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            1: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            2: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            3: Input(id_enum.HEAT_EXCHANGER),
+            4: Input(id_enum.DistillationColumn.FRAME, 1),
+            5: Input(id_enum.HEAT_EXCHANGER),
+            6: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            7: Input("minecraft:glass_pane"),
+            8: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+        },
+        id_enum.DistillationColumn.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
+    ),
     # electric crafter
     MRecipe(
         {

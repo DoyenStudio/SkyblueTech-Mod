@@ -5,21 +5,21 @@
             "identifier": "skybluetech:distillation_column_frame_craft"
         },
         "key": {
-            "S": {
-                "tag": "common:steel_plate"
+            "A": {
+                "tag": "common:invar_plate"
             },
-            "I": {
-                "item": "minecraft:iron_ingot"
+            "B": {
+                "tag": "common:copper_plate"
             }
         },
         "pattern": [
-            "SIS",
-            "I I",
-            "SIS"
+            " A ",
+            "ABA",
+            " A "
         ],
         "result": {
             "item": "skybluetech:distillation_column_frame",
-            "count": 8,
+            "count": 4,
             "data": 0
         },
         "tags": [

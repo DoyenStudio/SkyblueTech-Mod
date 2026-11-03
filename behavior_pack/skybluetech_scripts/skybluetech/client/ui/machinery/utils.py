@@ -50,30 +50,30 @@ def FormatNum(n, fmt="%.2f %s"):
     return fmt % (n, suffixes[d])
 
 
-def FormatRF(rf):
-    # type: (float) -> str
+def FormatRF(rf, formatter="%.2f %sRF"):
+    # type: (float, str) -> str
     suffixes = ("", "k", "M", "G", "T", "P", "E", "Z", "Y")
     d = 0
     if rf == INFINITY:
-        return "无限 RF"
+        return "无限"
     while d < len(suffixes) and rf >= 1000:
         d += 1
         rf /= 1000.0
-    return "%.2f %sRF" % (rf, suffixes[d])
+    return formatter % (rf, suffixes[d])
 
 
-def FormatFluidVolume(vol):
-    # type: (float) -> str
+def FormatFluidVolume(vol, b_formatter="%.2f %s", mb_formatter="%.0f %s"):
+    # type: (float, str, str) -> str
     if vol == INFINITY:
         return "无限"
     elif vol >= 10000:
-        return "%.2f B" % (float(vol) / 1000)
+        return b_formatter % (float(vol) / 1000, "B")
     else:
-        return "%.0f mB" % vol
+        return mb_formatter % (vol, "mB")
 
 
-def FormatKelvin(k):
-    # type: (float) -> str
+def FormatKelvin(k, formatter="%.2f %sK"):
+    # type: (float, str) -> str
     if k == INFINITY:
         return "Inf"
     suffixes = ("", "k", "M", "G", "T", "P", "E", "Z", "Y")
@@ -81,7 +81,7 @@ def FormatKelvin(k):
     while d < len(suffixes) and k >= 1000:
         d += 1
         k /= 1000.0
-    return "%.2f %sK" % (k, suffixes[d])
+    return formatter % (k, suffixes[d])
 
 
 def SetHoverText(ctrl, text):

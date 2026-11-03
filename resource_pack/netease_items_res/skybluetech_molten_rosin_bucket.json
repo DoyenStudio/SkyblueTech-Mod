@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:molten_rosin_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:molten_rosin_bucket"
+        }
+    }
+}

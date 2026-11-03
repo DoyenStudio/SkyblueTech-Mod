@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:tree_oil_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:tree_oil_bucket"
+        }
+    }
+}

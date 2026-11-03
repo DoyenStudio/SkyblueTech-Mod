@@ -1,6 +1,12 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:molten_polyethylene_bucket": {
+            "textures": "textures/items/buckets/molten_polyethylene_bucket"
+        },
+        "skybluetech:molten_rosin_bucket": {
+            "textures": "textures/items/buckets/molten_rosin_bucket"
+        },
         "skybluetech:pure_methane_bucket": {
             "textures": "textures/items/buckets/pure_methane_bucket"
         },
@@ -684,6 +690,9 @@
         },
         "skybluetech:transmitter_wrench": {
             "textures": "textures/items/transmitter_wrench"
+        },
+        "skybluetech:tree_oil_bucket": {
+            "textures": "textures/items/buckets/tree_oil_bucket"
         },
         "skybluetech:ultraheatinum_ingot": {
             "textures": "textures/items/ingots/ultraheatinum_ingot"

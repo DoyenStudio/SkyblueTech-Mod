@@ -26,6 +26,8 @@
                 "skybluetech:molten_lead_bucket",
                 "skybluetech:molten_nickel_bucket",
                 "skybluetech:molten_platinum_bucket",
+                "skybluetech:molten_polyethylene_bucket",
+                "skybluetech:molten_rosin_bucket",
                 "skybluetech:molten_silver_bucket",
                 "skybluetech:molten_tin_bucket",
                 "skybluetech:pure_methane_bucket",
@@ -33,6 +35,7 @@
                 "skybluetech:saturated_brine_bucket",
                 "skybluetech:sodium_hydroxide_solution_bucket",
                 "skybluetech:sulfuric_acid_bucket",
+                "skybluetech:tree_oil_bucket",
                 "skybluetech:vegetable_oil_bucket",
                 "skybluetech:water_vapor_bucket"
             ]

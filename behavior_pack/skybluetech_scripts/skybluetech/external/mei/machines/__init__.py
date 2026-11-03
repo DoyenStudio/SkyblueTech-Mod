@@ -17,6 +17,7 @@
 from mod.client.extraClientApi import ImportModule
 
 MACHINES = (
+    "distillation_column",
     # 纯物品
     "macerator",
     "compressor",

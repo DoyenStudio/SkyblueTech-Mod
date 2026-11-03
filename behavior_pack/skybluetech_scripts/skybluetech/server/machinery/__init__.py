@@ -14,6 +14,7 @@ from .fluid_condenser import FluidCondenser
 from .deepslate_lava_vibrator import DeepslateLavaVibrator
 from .digger import Digger
 from .distillation_chamber import DistillationChamber
+from . import distillation_column
 from .electric_heater import ElectricHeater
 from .electric_crafter import ElectricCrafter
 from .electrolyzer import Electrolyzer

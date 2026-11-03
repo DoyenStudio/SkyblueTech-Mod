@@ -10,6 +10,12 @@ control_def 是 MEI 外壳的注册名，内容布局本身不依赖 MEI。
 """
 
 LAYOUTS = {
+    "skybluetech:distillation_column": {
+        "file": "DistillationColumn", "control_def": "SkyblueMeiDistillationColumn.RECIPES_GRID",
+        "inputs": (("fluid", 0),), "outputs": (("fluid", 1), ("fluid", 2), ("fluid", 3), ("fluid", 4),),
+        "catalysts": 0, "power": None, "segments": 0,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
     "skybluetech:air_compressor": {
         "file": "AirCompressor",
         "control_def": "SkyblueMeiAirCompressor.RECIPES_GRID",

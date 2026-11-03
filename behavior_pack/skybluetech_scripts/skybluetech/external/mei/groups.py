@@ -65,6 +65,9 @@ SHARED = (
 """
 
 OWN = (
+    ("skybluetech:group.distillation_column", "itemGroup.skybluetech.distillation_column", _ids(
+        "distillation_column_controller", "distillation_column_frame", "distillation_column_io_heat",
+        "distillation_column_io_fluid1", "distillation_column_io_fluid2")),
     ("skybluetech:group.machinery_crafting", "itemGroup.skybluetech.machinery_crafting", _ids(
         "assembler", "electric_machinery_workstation", "machinery_workstation")),
     ("skybluetech:group.machinery_production", "itemGroup.skybluetech.machinery_production", _ids(

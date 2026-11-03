@@ -5,6 +5,7 @@ from . import (
     charger,
     default,
     distillation_chamber,
+    distillation_column,
     freezer,
     gas_burning_generator,
     hydroponic_bed,

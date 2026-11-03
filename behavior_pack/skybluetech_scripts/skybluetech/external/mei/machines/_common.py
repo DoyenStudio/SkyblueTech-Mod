@@ -73,7 +73,7 @@ def BuildMachine(
     if source is None:
         source = runtime.Build().MachineRecipeSource(category_id, recipes, decorate)
     if ui_script is None and layout is not None:
-        ui_script = _LayoutScriptFor(category_id, layout, lores)
+        ui_script = _LayoutScriptFor(category_id, layout, lores, labels)
     # ui_script 显式传入 = 这台机器的界面**不是** N 进 1 出那个形状,
     # 自己另写一份(机件加工台就是: 3x3 + 工具 + 等级文字)
     return category, source, ui_script or _UIScriptFor(
@@ -694,8 +694,8 @@ def BuildBase():  # type: () -> type
 
 
 
-def _LayoutScriptFor(category_id, layout, lores=None):
-    # type: (str, dict, any) -> type
+def _LayoutScriptFor(category_id, layout, lores=None, labels=None):
+    # type: (str, dict, any, any) -> type
     """
     按共享布局表渲染配方页；控件位置由 `ui/MachineRecipeLib.json` 统一维护。
 
@@ -732,6 +732,7 @@ def _LayoutScriptFor(category_id, layout, lores=None):
         INPUT_TABLE = inputs
         OUTPUT_TABLE = outputs
         CATALYSTS = catalysts
+        LABELS = staticmethod(labels) if labels else None
         LORES = staticmethod(lores) if lores else None
         """ **必须 staticmethod**，理由同 `_UIScriptFor` """
 

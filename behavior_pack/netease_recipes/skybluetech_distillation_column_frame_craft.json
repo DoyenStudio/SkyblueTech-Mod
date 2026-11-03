@@ -1,0 +1,32 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:distillation_column_frame_craft"
+        },
+        "key": {
+            "S": {
+                "tag": "common:steel_plate"
+            },
+            "I": {
+                "item": "minecraft:iron_ingot"
+            }
+        },
+        "pattern": [
+            "SIS",
+            "I I",
+            "SIS"
+        ],
+        "result": {
+            "item": "skybluetech:distillation_column_frame",
+            "count": 8,
+            "data": 0
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

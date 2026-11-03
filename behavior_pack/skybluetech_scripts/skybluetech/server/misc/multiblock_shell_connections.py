@@ -1,5 +1,5 @@
 # coding=utf-8
-"""通过自定义方块状态维护电池仓和基岩熔岩钻各自的六向连接。"""
+"""通过自定义方块状态维护各类多方块外壳各自的六向连接。"""
 
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -17,10 +17,18 @@ from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.skybluetech.common.define.id_enum.multi_block_structure import (
     BatteryMatrix,
     BedrockLavaDrill,
+    DistillationColumn,
 )
 
 
 SHELL_GROUPS = (
+    frozenset((
+        DistillationColumn.FRAME,
+        DistillationColumn.CONTROLLER,
+        DistillationColumn.IO_HEAT,
+        DistillationColumn.IO_FLUID1,
+        DistillationColumn.IO_FLUID2,
+    )),
     frozenset((
         BatteryMatrix.FRAME,
         BatteryMatrix.CONTROLLER,

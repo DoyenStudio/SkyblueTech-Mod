@@ -332,6 +332,24 @@
         "skybluetech:battery_matrix_frame_edgeless": {
             "textures": "textures/blocks/multi_block_structure/battery_matrix/frame_edgeless"
         },
+        "skybluetech:distillation_column_frame_edgeless": {
+            "textures": "textures/blocks/multi_block_structure/distillation_column/frame_edgeless"
+        },
+        "skybluetech:distillation_column_io_heat": {
+            "textures": "textures/blocks/multi_block_structure/distillation_column/io_heat"
+        },
+        "skybluetech:distillation_column_io_fluid1": {
+            "textures": "textures/blocks/multi_block_structure/distillation_column/io_fluid1"
+        },
+        "skybluetech:distillation_column_io_fluid2": {
+            "textures": "textures/blocks/multi_block_structure/distillation_column/io_fluid2"
+        },
+        "skybluetech:distillation_column_controller": {
+            "textures": "textures/blocks/multi_block_structure/distillation_column/controller"
+        },
+        "skybluetech:distillation_column_frame": {
+            "textures": "textures/blocks/multi_block_structure/distillation_column/frame"
+        },
         "skybluetech:battery_matrix_frame": {
             "textures": "textures/blocks/multi_block_structure/battery_matrix/frame"
         },

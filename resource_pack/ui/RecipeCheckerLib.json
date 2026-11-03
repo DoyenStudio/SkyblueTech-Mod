@@ -521,5 +521,12 @@
             62
         ]
     },
-    "namespace": "RecipeCheckerLib"
+    "namespace": "RecipeCheckerLib",
+    "distillation_column_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.DistillationColumn",
+        "size": [
+            180,
+            62
+        ]
+    }
 }

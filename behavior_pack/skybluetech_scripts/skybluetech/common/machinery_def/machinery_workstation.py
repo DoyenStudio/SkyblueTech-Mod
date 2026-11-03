@@ -17,6 +17,53 @@ K_NEED_TOOL = "st:need_tool"
 
 recipes = RecipesCollection(
     id_enum.Machinery.MACHINERY_WORKSTATION,
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
+            1: Input(id_enum.ControlCircuit.ADVANCED, 2),
+            2: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
+            3: Input(id_enum.HEAT_EXCHANGER, 2),
+            4: Input(id_enum.DistillationColumn.FRAME, 1),
+            6: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
+            8: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
+        },
+        id_enum.DistillationColumn.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
+    ),
+    MRecipe(
+        {
+            1: Input(id_enum.FluidPipe.CUPRONICKEL, 2),
+            4: Input(id_enum.DistillationColumn.FRAME, 1),
+        },
+        id_enum.DistillationColumn.IO_FLUID1,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            1: Input(id_enum.FluidPipe.CUPRONICKEL, 4),
+            4: Input(id_enum.DistillationColumn.FRAME, 1),
+        },
+        id_enum.DistillationColumn.IO_FLUID2,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
+            1: Input(id_enum.HEAT_EXCHANGER, 1),
+            2: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
+            4: Input(id_enum.DistillationColumn.FRAME, 1),
+        },
+        id_enum.DistillationColumn.IO_HEAT,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
     # air compressor
     MRecipe(
         {

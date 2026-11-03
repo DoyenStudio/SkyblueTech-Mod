@@ -44,6 +44,33 @@
     "skybluetech:battery_matrix_core": {
         "textures": "skybluetech:battery_matrix_core"
     },
+    "skybluetech:distillation_column_io_heat": {
+        "sound": "iron",
+        "textures": "skybluetech:distillation_column_io_heat"
+    },
+    "skybluetech:distillation_column_io_fluid1": {
+        "sound": "iron",
+        "textures": "skybluetech:distillation_column_io_fluid1"
+    },
+    "skybluetech:distillation_column_io_fluid2": {
+        "sound": "iron",
+        "textures": "skybluetech:distillation_column_io_fluid2"
+    },
+    "skybluetech:distillation_column_controller": {
+        "sound": "iron",
+        "textures": {
+            "north": "skybluetech:distillation_column_controller",
+            "south": "skybluetech:distillation_column_frame",
+            "east": "skybluetech:distillation_column_frame",
+            "west": "skybluetech:distillation_column_frame",
+            "up": "skybluetech:distillation_column_frame",
+            "down": "skybluetech:distillation_column_frame"
+        }
+    },
+    "skybluetech:distillation_column_frame": {
+        "sound": "iron",
+        "textures": "skybluetech:distillation_column_frame"
+    },
     "skybluetech:battery_matrix_frame": {
         "textures": "skybluetech:battery_matrix_frame"
     },

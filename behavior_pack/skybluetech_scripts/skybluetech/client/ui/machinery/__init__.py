@@ -4,6 +4,7 @@ from .alloy_furnace import AlloyFurnaceUI
 from .assembler import AssemblerUI
 from .battery_matrix import BatteryMatrixUI
 from .bedrock_lava_drill import BedrockLavaDrillUI
+from .distillation_column import DistillationColumnUI
 from .brine_evaporation_pond import BrineEvaporationPondUI
 from .charger import ChargerUI
 from .compressor import CompressorUI

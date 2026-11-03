@@ -14,6 +14,14 @@ class BedrockLavaDrill:
     IO_FLUID = "skybluetech:bedrock_lava_drill_io_fluid"
 
 
+class DistillationColumn:
+    FRAME = "skybluetech:distillation_column_frame"
+    CONTROLLER = "skybluetech:distillation_column_controller"
+    IO_HEAT = "skybluetech:distillation_column_io_heat"
+    IO_FLUID1 = "skybluetech:distillation_column_io_fluid1"
+    IO_FLUID2 = "skybluetech:distillation_column_io_fluid2"
+
+
 class BrineEvaporationPond:
     CONTROLLER = "skybluetech:brine_evaporation_pond_controller"
     IO_FLUID1 = "skybluetech:brine_evaporation_pond_io_fluid1"

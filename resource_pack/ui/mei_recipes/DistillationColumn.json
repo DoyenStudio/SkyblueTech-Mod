@@ -1,0 +1,43 @@
+{
+    "PREVIEW@mei_recipe_common.preview": {
+        "$recipe_content_template": "SkyblueMeiDistillationColumn.content_panel"
+    },
+    "RECIPES_GRID@mei_recipe_common.recipes_grid": {
+        "$recipe_ui_template": "SkyblueMeiDistillationColumn.recipe"
+    },
+    "content_panel@MachineRecipeLib.DistillationColumn": {
+        "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_item_slot": "mei_common.item_panel",
+        "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
+        "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
+    },
+    "namespace": "SkyblueMeiDistillationColumn",
+    "recipe@mei_recipe_common.recipe_panel": {
+        "controls": [
+            {
+                "wrapper": {
+                    "type": "panel",
+                    "size": [
+                        154,
+                        62
+                    ],
+                    "layer": 1,
+                    "controls": [
+                        {
+                            "content@SkyblueMeiDistillationColumn.content_panel": {}
+                        },
+                        {
+                            "buttons@mei_recipe_common.buttons_panel_vertical": {
+                                "$tree_button_ignored": false
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "size": [
+            180,
+            66
+        ]
+    }
+}

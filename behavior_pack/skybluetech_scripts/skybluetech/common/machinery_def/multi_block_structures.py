@@ -4,6 +4,7 @@ from skybluetech_scripts.skybluetech.common.define.id_enum.multi_block_structure
     BatteryMatrix,
     BedrockLavaDrill,
     BrineEvaporationPond,
+    DistillationColumn,
     Fermenter,
     SeawaterReservoir,
     VacuumFreezer,
@@ -20,6 +21,9 @@ from skybluetech_scripts.skybluetech.common.machinery_def.brine_evaporation_pond
 from skybluetech_scripts.skybluetech.common.machinery_def.fermenter import (
     STRUCTURE_PALETTE as FERMENTER_PALETTE,
 )
+from skybluetech_scripts.skybluetech.common.machinery_def.distillation_column import (
+    STRUCTURE_PALETTE as DISTILLATION_COLUMN_PALETTE,
+)
 from skybluetech_scripts.skybluetech.common.machinery_def.seawater_pump import (
     STRUCTURE_PALETTE as SEAWATER_RESERVOIR_PALETTE,
 )
@@ -33,6 +37,7 @@ CONTROLLER_STRUCTURE_PALETTES = {
     BatteryMatrix.CONTROLLER: BATTERY_MATRIX_PALETTE,
     BedrockLavaDrill.CONTROLLER: BEDROCK_LAVA_DRILL_PALETTE,
     BrineEvaporationPond.CONTROLLER: BRINE_EVAPORATION_POND_PALETTE,
+    DistillationColumn.CONTROLLER: DISTILLATION_COLUMN_PALETTE,
     Fermenter.CONTROLLER: FERMENTER_PALETTE,
     SeawaterReservoir.CONTROLLER: SEAWATER_RESERVOIR_PALETTE,
     VacuumFreezer.CONTROLLER: VACUUM_FREEZER_PALETTE,

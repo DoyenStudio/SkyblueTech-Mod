@@ -1,6 +1,17 @@
 {
     "groups": [
         {
+            "group_name": "itemGroup.skybluetech.distillation_column",
+            "icon": "skybluetech:distillation_column_controller",
+            "list": [
+                "skybluetech:distillation_column_frame",
+                "skybluetech:distillation_column_controller",
+                "skybluetech:distillation_column_io_heat",
+                "skybluetech:distillation_column_io_fluid1",
+                "skybluetech:distillation_column_io_fluid2"
+            ]
+        },
+        {
             "group_name": "itemGroup.skybluetech.seawater_reservoir",
             "icon": "skybluetech:seawater_pump",
             "list": [

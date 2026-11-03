@@ -13,9 +13,7 @@
             }
         },
         "pattern": [
-            " W ",
-            " F ",
-            "   "
+            "W","F"
         ],
         "result": {
             "count": 1,

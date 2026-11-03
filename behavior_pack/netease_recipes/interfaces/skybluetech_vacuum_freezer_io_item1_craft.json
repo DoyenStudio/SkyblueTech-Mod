@@ -13,9 +13,8 @@
             }
         },
         "pattern": [
-            " P ",
-            " F ",
-            "   "
+            "P",
+            "F"
         ],
         "result": {
             "count": 1,

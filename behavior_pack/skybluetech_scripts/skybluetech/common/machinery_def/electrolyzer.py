@@ -20,9 +20,9 @@ recipes = RecipesCollection(
     ElectrolyzerRecipe(
         input_fluid=id_enum.CommonLiquid.WATER,
         input_volume=4,
-        output_fluid1=id_enum.CommonGas.OXYGEN,
+        output_fluid1=id_enum.CommonGas.HYDROGEN,
         output_volume1=20,
-        output_fluid2=id_enum.CommonGas.HYDROGEN,
+        output_fluid2=id_enum.CommonGas.OXYGEN,
         output_volume2=40,
         power_cost=200,
         tick_duration=10,

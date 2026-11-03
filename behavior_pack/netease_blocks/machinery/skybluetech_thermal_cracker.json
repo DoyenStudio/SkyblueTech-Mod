@@ -61,7 +61,7 @@
                             "texture": "skybluetech:thermal_cracker_front_active"
                         },
                         "down": {
-                            "texture": "skybluetech:frame_bottom"
+                            "texture": "skybluetech:thermal_cracker_bottom"
                         },
                         "east": {
                             "texture": "skybluetech:frame"
@@ -87,7 +87,7 @@
                             "texture": "skybluetech:thermal_cracker_front"
                         },
                         "down": {
-                            "texture": "skybluetech:frame_bottom"
+                            "texture": "skybluetech:thermal_cracker_bottom"
                         },
                         "east": {
                             "texture": "skybluetech:frame"

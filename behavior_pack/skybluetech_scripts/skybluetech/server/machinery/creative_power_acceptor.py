@@ -18,6 +18,9 @@ class CreativePowerAcceptor(BaseMachine):
         self.bdata[K_POWER] = 0
         self.handler.SubscribeOnTicking(self._creative_power_acceptor_on_ticking)
 
+    def GetEnergyTransferLimits(self, period_ticks):
+        return None, 0
+
     def AddPower(self, rf):
         self.power += rf
         return True, 0

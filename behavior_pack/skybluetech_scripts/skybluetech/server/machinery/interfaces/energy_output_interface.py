@@ -11,6 +11,10 @@ class EnergyOutputInterface(BasePowerProvider, BaseInterface):
     def __init__(self, dim, x, y, z, block_entity_data):
         super(EnergyOutputInterface, self).__init__(dim, x, y, z, block_entity_data)
 
+    def GetEnergyTransferLimits(self, period_ticks):
+        machine = self.getMachineRef()
+        return machine.GetEnergyTransferLimits(period_ticks) if machine is not None else (0, 0)
+
     def TakeoutPower(self, rf):
         m = self.getMachineRef()
         if m is None:

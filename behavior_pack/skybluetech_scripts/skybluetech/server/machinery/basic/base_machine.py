@@ -98,6 +98,10 @@ class BaseMachine(object):
         allowed_slots = slots_by_face.get(relative_face, ())
         return tuple(slot for slot in slots if slot in allowed_slots)
 
+    def GetEnergyTransferLimits(self, period_ticks):
+        """返回本次调度的输入、输出 RF 上限；None 表示没有额外限速。"""
+        return max(0, int(self.store_rf_max - self.store_rf)), max(0, int(self.store_rf))
+
     def AddPower(self, rf):
         # type: (int) -> tuple[bool, int]
         """

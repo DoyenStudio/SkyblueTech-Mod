@@ -5,7 +5,9 @@ from collections import deque
 from skybluetech_scripts.tooldelta.events.server import (
     OnEntityInsideBlockServerEvent,
 )
-from ...machinery.core.pool import GetLoadedMachine, GetMachineWithoutCls
+from ...export import energy
+from ...machinery.core.pool import GetMachineWithoutCls
+from ....common.define.facing import OPPOSITE_FACING
 
 from ..base import LogicModule
 from .define import WireNetwork, WireAccessPoint, TRANSFER_SPEED_MAPPING
@@ -41,7 +43,8 @@ def isRFMachine(blockName, dim=None, xyz=None):
         tags = _block_tags_cache[blockName] = set(
             CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
         )
-    return "redstoneflux_accepter" in tags or "redstoneflux_provider" in tags
+    return (energy.IsExternalEnergyBlock(blockName) or
+            "redstoneflux_accepter" in tags or "redstoneflux_provider" in tags)
 
 
 def isSkyblueMachine(block_tags):
@@ -49,36 +52,25 @@ def isSkyblueMachine(block_tags):
     return "skybluetech_machine" in block_tags
 
 
+def _allowsPower(block_name, dim, posdata, mode):
+    if energy.IsExternalEnergyBlock(block_name):
+        handler = energy.GetEnergyHandler(posdata[:3], dim, posdata[3])
+        return handler is not None and (handler.canExtract() if mode == 1 else handler.canReceive())
+    tags = _block_tags_cache.get(block_name)
+    if tags is None:
+        tags = _block_tags_cache[block_name] = set(CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(block_name))
+    if isSkyblueMachine(tags):
+        machine = GetMachineWithoutCls(dim, *posdata[:3])
+        return machine is not None and machine.energy_io_mode[posdata[3]] == mode
+    return ("redstoneflux_provider" if mode == 1 else "redstoneflux_accepter") in tags
+
+
 def isPowerProvider(block_name, dim, posdata):
-    # type: (str, int, tuple[int, int, int, int]) -> bool
-    block_tags = _block_tags_cache.get(block_name)
-    if block_tags is None:
-        block_tags = _block_tags_cache[block_name] = set(
-            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(block_name)
-        )
-    if isSkyblueMachine(block_tags):
-        m = GetMachineWithoutCls(dim, *posdata[:3])
-        if m is None:
-            print("[ERROR] isPowerProvider get machine failed @ {}".format(posdata[:3]))
-        else:
-            return m.energy_io_mode[posdata[3]] == 1
-    return "redstoneflux_provider" in block_tags
+    return _allowsPower(block_name, dim, posdata, 1)
 
 
 def isPowerAccepter(block_name, dim, posdata):
-    # type: (str, int, tuple[int, int, int, int]) -> bool
-    block_tags = _block_tags_cache.get(block_name)
-    if block_tags is None:
-        block_tags = _block_tags_cache[block_name] = set(
-            CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(block_name)
-        )
-    if isSkyblueMachine(block_tags):
-        m = GetMachineWithoutCls(dim, *posdata[:3])
-        if m is None:
-            print("[ERROR] isPowerAccepter get machine failed @ {}".format(posdata[:3]))
-        else:
-            return m.energy_io_mode[posdata[3]] == 0
-    return "redstoneflux_accepter" in block_tags
+    return _allowsPower(block_name, dim, posdata, 0)
 
 
 def onMachineryPlacedLater(dim, x, y, z):
@@ -89,35 +81,45 @@ def onMachineryPlacedLater(dim, x, y, z):
 def onNetworkTick(network):
     # type: (WireNetwork) -> None
     tick_capacity = network.transfer_speed
-    inputs = deque(network.get_input_access_points())
+    inputs = tuple(network.get_input_access_points())
     outputs = network.get_output_access_points()
     transfered_rf = 0
     for output in outputs:
-        om = GetLoadedMachine(network.dim, *output.target_pos)
-        if om is None:
+        source = energy.GetEnergyHandler(output.target_pos, network.dim, OPPOSITE_FACING[output.access_facing])
+        if source is None or not source.canExtract():
             continue
-        # 大预算在 Python 2 中可能为 long；预算降到 int 范围后及时归一化，
-        # 避免一次小额提取把机器的原生整数存档污染成 long。
-        rf_output = om.TakeoutPower(int(tick_capacity))
-        if rf_output <= 0:
+        ticket = source.prepareExtract(int(tick_capacity))
+        if ticket is None:
             continue
-        rf_taken = rf_output
-        while inputs:
-            input = inputs[0]
-            im = GetLoadedMachine(network.dim, *input.target_pos)
-            if im is None:
-                inputs.popleft()
-                continue
-            ok, rf_rest = im.AddPower(rf_output)
-            transfered_rf += rf_output - rf_rest
-            # AddPower 的中间加法也可能溢出为 long；余量不超过原提取量。
-            rf_output = int(rf_rest)
-            if not ok:
-                inputs.popleft()
-            elif rf_output == 0:
-                break
-        om.GivebackPower(rf_output)
-        tick_capacity -= rf_taken - rf_output
+        remaining = ticket.amount
+        candidates = deque(inputs)
+        try:
+            while candidates and remaining:
+                access = candidates[0]
+                if access.target_pos == output.target_pos:
+                    candidates.popleft()
+                    continue
+                target = energy.GetEnergyHandler(access.target_pos, network.dim, OPPOSITE_FACING[access.access_facing])
+                if target is None or not target.canReceive():
+                    candidates.popleft()
+                    continue
+                if energy.SameEnergyStorage(source, target):
+                    candidates.popleft()
+                    continue
+                accepted = energy._quantity(target.insert(remaining))
+                if accepted > remaining:
+                    raise RuntimeError("energy receiver exceeded offer")
+                remaining -= accepted
+                if remaining:
+                    candidates.popleft()
+        except Exception:
+            # 对端可能已入账，结果不明时不能退款再次发放。
+            ticket.finish(ticket.amount)
+            raise
+        ticket.finish(ticket.amount - remaining)
+        moved = ticket.amount - remaining
+        transfered_rf += moved
+        tick_capacity -= moved
         if tick_capacity <= 0:
             break
     network.trigger_shock(transfered_rf)

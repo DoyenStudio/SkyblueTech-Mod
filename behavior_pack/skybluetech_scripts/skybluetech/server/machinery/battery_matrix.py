@@ -130,6 +130,18 @@ class BatteryMatrix(
         # type: (int, Item) -> bool
         return BatteryTag.COMMON in item.GetBasicInfo().tags
 
+    def GetEnergyTransferLimits(self, period_ticks):
+        if self.GetStructureDestroyFlag() != 0:
+            return 0, 0
+        core = self.get_core()
+        if core is None:
+            return 0, 0
+        incoming = sum(min(max(0, int(slot.store_rf_max - slot.store_rf)),
+                           int(slot.input_power * period_ticks // 5)) for slot in core.slots)
+        outgoing = sum(min(max(0, int(slot.store_rf)),
+                           int(slot.output_power * period_ticks // 5)) for slot in core.slots)
+        return incoming, outgoing
+
     def AddPower(self, rf):
         # type: (int) -> tuple[bool, int]
         if self.GetStructureDestroyFlag() != 0:

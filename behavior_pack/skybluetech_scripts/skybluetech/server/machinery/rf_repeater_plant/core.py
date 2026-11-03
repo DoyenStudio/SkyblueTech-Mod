@@ -163,6 +163,9 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
     def _rf_repeater_plant_on_unload(self):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
+    def GetEnergyTransferLimits(self, period_ticks):
+        return None, 0
+
     def AddPower(self, rf):
         # type: (int) -> tuple[bool, int]
         ok = False
@@ -171,7 +174,9 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
             if not isinstance(plant, RFRepeaterPlant):
                 continue
             if io_mode == MODE_OUTPUT:
-                _ok, rf = plant.recv_energy(rf)
+                offered = min(rf, max(0, int(plant.store_rf_max - plant.store_rf)))
+                _ok, remaining = plant.recv_energy(offered)
+                rf -= offered - remaining
                 ok = ok or _ok
                 if rf == 0:
                     return ok, 0

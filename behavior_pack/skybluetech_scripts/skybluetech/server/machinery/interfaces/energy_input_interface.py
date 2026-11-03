@@ -7,6 +7,10 @@ from .base_interface import BaseInterface
 class EnergyInputInterface(BaseInterface):
     store_rf_max = 1
 
+    def GetEnergyTransferLimits(self, period_ticks):
+        machine = self.getMachineRef()
+        return machine.GetEnergyTransferLimits(period_ticks) if machine is not None else (0, 0)
+
     def AddPower(self, rf):
         # type: (int) -> tuple[bool, int]
         m = self.getMachineRef()

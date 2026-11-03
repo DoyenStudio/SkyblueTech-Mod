@@ -59,13 +59,24 @@ class BasePowerProvider(BaseMachine):
 
     def _output_nearby(self, output_rf):
         # type: (int) -> tuple[bool, int]
+        from ...export.energy import GetEnergyHandler
+        from ....common.define.facing import FACING_DXYZ
+
         ok = False
-        for machine, facing in self._get_output_neighbors():
-            io_mode = machine.energy_io_mode[OPPOSITE_FACING[facing]]
-            if io_mode != 0:
+        for facing in self._power_output_faces:
+            dx, dy, dz = FACING_DXYZ[facing]
+            pos = (self.x + dx, self.y + dy, self.z + dz)
+            target = GetEnergyHandler(pos, self.dim, OPPOSITE_FACING[facing])
+            if target is None or not target.canReceive() or not target.acceptsActivePush():
                 continue
-            _ok, output_rf = machine.AddPower(output_rf)
-            ok = ok or _ok
+            try:
+                accepted = target.insert(int(output_rf))
+            except Exception as error:
+                # 接收方可能已经入账，不能把结果不明的电量再次放回发电机。
+                print("[skybluetech] uncertain adjacent energy transfer: %s" % error)
+                return True, 0
+            output_rf -= accepted
+            ok = ok or accepted > 0
             if output_rf <= 0:
                 break
         return ok, output_rf

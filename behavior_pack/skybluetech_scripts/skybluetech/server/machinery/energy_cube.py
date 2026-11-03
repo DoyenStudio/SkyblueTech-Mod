@@ -93,6 +93,10 @@ class EnergyCubeJunior(OperationListener, GUIControl, BasePowerProvider, BaseCli
             block_state_comp.SetBlockStates((self.x, self.y, self.z), block_states, self.dim)
 
 
+    def GetEnergyTransferLimits(self, period_ticks):
+        incoming, outgoing = BasePowerProvider.GetEnergyTransferLimits(self, period_ticks)
+        return min(incoming, MAX_INPUT_POWER * period_ticks), min(outgoing, MAX_OUTPUT_POWER * period_ticks)
+
     def AddPower(self, rf):
         if not self.enable_input:
             return False, rf

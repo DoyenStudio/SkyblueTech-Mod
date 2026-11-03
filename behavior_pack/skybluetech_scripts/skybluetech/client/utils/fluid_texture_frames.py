@@ -101,7 +101,7 @@ FLUID_TEXTURE_FRAMES = {
     "textures/fluid/baked/skybluetech.sulfuric_acid/flowing_block_static": (32, 10.0),
     "textures/fluid/baked/skybluetech.sulfuric_acid/static": (32, 10.0),
     "textures/fluid/baked/skybluetech.vegetable_oil/static": (32, 10.0),
-    "textures/fluid/baked/skybluetech.water_vapor/static": (1, 0.0),
+    "textures/fluid/baked/skybluetech.water_vapor/static": (32, 10.0),
     "textures/fluid/basic_water_static": (32, 10.0),
     "textures/fluid/deepslate_lava_static": (20, 4.0),
     "textures/fluid/gas_static": (32, 10.0),

@@ -543,6 +543,11 @@
         "replicate": 2
     },
     {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.water_vapor/static",
+        "atlas_tile": "skybluetech:baked_water_vapor_static",
+        "ticks_per_frame": 2
+    },
+    {
         "flipbook_texture": "textures/fluid/baked/skybluetech.tree_oil/static",
         "atlas_tile": "skybluetech:baked_tree_oil_static",
         "ticks_per_frame": 2

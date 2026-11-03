@@ -14,12 +14,13 @@ BASIC_FLUID = BasicFluidTexture("textures/fluid/basic_fluid", 1)
 LIQUID_RESIN_STATIC = BasicFluidTexture("textures/fluid/liquid_resin_static", 39, 2)
 
 FLUID_TEXTURES = {
+    fluids.Molten.ROSIN: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_rosin/static", 32, 2),
     fluids.CommonLiquid.DISTILLED_WATER: BasicFluidTexture("textures/fluid/baked/skybluetech.distilled_water/static", 32, 2),
     fluids.CommonGas.COMPRESSED_AIR: BasicFluidTexture("textures/fluid/baked/skybluetech.compressed_air/ui", 32, 2),
     fluids.CommonGas.HYDROGEN: BasicFluidTexture("textures/fluid/baked/skybluetech.hydrogen/ui", 32, 2),
     fluids.CommonGas.NITROGEN: BasicFluidTexture("textures/fluid/baked/skybluetech.nitrogen/ui", 32, 2),
     fluids.CommonGas.METHANE: BasicFluidTexture("textures/fluid/baked/skybluetech.methane/ui", 32, 2),
-    fluids.CommonGas.WATER_VAPOR: BasicFluidTexture("textures/fluid/baked/skybluetech.water_vapor/static", 1, 1),
+    fluids.CommonGas.WATER_VAPOR: BasicFluidTexture("textures/fluid/baked/skybluetech.water_vapor/static", 32, 2),
     fluids.CommonOil.LUBRICANT: BasicFluidTexture("textures/fluid/baked/skybluetech.lubricant/static", 32, 2),
     fluids.CommonOil.RAW_OIL: BasicFluidTexture("textures/fluid/baked/skybluetech.raw_oil/static", 32, 2),
     fluids.CommonOil.VEGETABLE_OIL: BasicFluidTexture("textures/fluid/baked/skybluetech.vegetable_oil/static", 32, 2),

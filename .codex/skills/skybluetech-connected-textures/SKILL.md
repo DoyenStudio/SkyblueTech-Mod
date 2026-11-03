@@ -14,7 +14,7 @@ description: 为 SkyBlueTech／网易基岩版多方块外壳制作或修复脚�
 | 工作 | 入口 |
 | --- | --- |
 | 分区、UV、可见性、材质、物品展示 | `tools/generate_battery_matrix_connections.cjs` |
-| 六向状态与更新事件 | `behavior_pack/skybluetech_scripts/skybluetech/server/misc/battery_matrix_connections.py` |
+| 六向状态与更新事件 | `behavior_pack/skybluetech_scripts/skybluetech/server/misc/multiblock_shell_connections.py` |
 | 规则、版本、手工验收 | `docs/reference/battery_matrix_connections.md` |
 | 四种外壳 | `behavior_pack/netease_blocks/multiblock/skybluetech_battery_matrix_{frame,controller,io_energy1,io_energy2}.json` |
 | 模型和剔除 | `resource_pack/models/blocks/battery_matrix_connected.geo.json`、`resource_pack/block_culling/battery_matrix.json` |

@@ -21,7 +21,7 @@
 
 ## 状态与资源生成
 
-沿用 `server/misc/battery_matrix_connections.py` 的放置、移除、邻块变化和区块事件，以及六个 `skybluetech:connection_*` 布尔状态。两类机器共享延迟更新队列和已加载位置索引，按当前方块所属集合判断连接，不互相连接。只在值变化时更新，保留朝向及 active；不可读取邻块时不清空原有连接状态。
+沿用 `server/misc/multiblock_shell_connections.py` 的放置、移除、邻块变化和区块事件，以及六个 `skybluetech:connection_*` 布尔状态。两类机器共享延迟更新队列和已加载位置索引，按当前方块所属集合判断连接，不互相连接。只在值变化时更新，保留朝向及 active；不可读取邻块时不清空原有连接状态。
 
 控制器保留 `y_rotation_offset: 180` 和原有四向旋转，世界模型正面为 north，物品栏完整方块的可见 south 面使用前面板。方向条件采用显式括号，兼容 manifest 的 Molang 1.18.0 语义。
 

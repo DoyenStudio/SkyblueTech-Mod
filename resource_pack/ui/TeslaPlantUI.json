@@ -4,9 +4,9 @@
         "controls": [
             {
                 "power_bar@SkybluePanelLib.energy_meter": {
-                    "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         7,
                         17
@@ -61,21 +61,21 @@
                                 ],
                                 "color": "$title_text_color",
                                 "font_type": "default",
-                                "text": "普通生物",
-                                "shadow": false
+                                "shadow": false,
+                                "text": "普通生物"
                             }
                         },
                         {
                             "switch1@common_toggles.switch_toggle_collection": {
                                 "type": "panel",
-                                "$checked_locked_texture": "textures/ui/toggle_on",
-                                "$default_texture": "textures/ui/toggle_off",
-                                "$hover_texture": "textures/ui/toggle_off_hover",
-                                "$pressed_no_hover_texture": "textures/ui/toggle_on",
-                                "$pressed_texture": "textures/ui/toggle_on_hover",
+                                "$checked_locked_texture": "textures/ui/skybluetech/simple_switch_on",
+                                "$default_texture": "textures/ui/skybluetech/simple_switch_off",
+                                "$hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                                "$pressed_no_hover_texture": "textures/ui/skybluetech/simple_switch_on_hovered",
+                                "$pressed_texture": "textures/ui/skybluetech/simple_switch_off_hovered",
                                 "$toggle_name": "#TeslaPlantUI.switch_1",
                                 "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                                "$unchecked_locked_texture": "textures/ui/toggle_off",
+                                "$unchecked_locked_texture": "textures/ui/skybluetech/simple_switch_off",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -111,21 +111,21 @@
                                 ],
                                 "color": "$title_text_color",
                                 "font_type": "default",
-                                "text": "玩家[除你]",
-                                "shadow": false
+                                "shadow": false,
+                                "text": "玩家[除你]"
                             }
                         },
                         {
                             "switch2@common_toggles.switch_toggle_collection": {
                                 "type": "panel",
-                                "$checked_locked_texture": "textures/ui/toggle_on",
-                                "$default_texture": "textures/ui/toggle_off",
-                                "$hover_texture": "textures/ui/toggle_off_hover",
-                                "$pressed_no_hover_texture": "textures/ui/toggle_on",
-                                "$pressed_texture": "textures/ui/toggle_on_hover",
+                                "$checked_locked_texture": "textures/ui/skybluetech/simple_switch_on",
+                                "$default_texture": "textures/ui/skybluetech/simple_switch_off",
+                                "$hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                                "$pressed_no_hover_texture": "textures/ui/skybluetech/simple_switch_on_hovered",
+                                "$pressed_texture": "textures/ui/skybluetech/simple_switch_off_hovered",
                                 "$toggle_name": "#TeslaPlantUI.switch_2",
                                 "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                                "$unchecked_locked_texture": "textures/ui/toggle_off",
+                                "$unchecked_locked_texture": "textures/ui/skybluetech/simple_switch_off",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -161,21 +161,21 @@
                                 ],
                                 "color": "$title_text_color",
                                 "font_type": "default",
-                                "text": "怪物",
-                                "shadow": false
+                                "shadow": false,
+                                "text": "怪物"
                             }
                         },
                         {
                             "switch3@common_toggles.switch_toggle_collection": {
                                 "type": "panel",
-                                "$checked_locked_texture": "textures/ui/toggle_on",
-                                "$default_texture": "textures/ui/toggle_off",
-                                "$hover_texture": "textures/ui/toggle_off_hover",
-                                "$pressed_no_hover_texture": "textures/ui/toggle_on",
-                                "$pressed_texture": "textures/ui/toggle_on_hover",
+                                "$checked_locked_texture": "textures/ui/skybluetech/simple_switch_on",
+                                "$default_texture": "textures/ui/skybluetech/simple_switch_off",
+                                "$hover_texture": "textures/ui/skybluetech/simple_switch_on",
+                                "$pressed_no_hover_texture": "textures/ui/skybluetech/simple_switch_on_hovered",
+                                "$pressed_texture": "textures/ui/skybluetech/simple_switch_off_hovered",
                                 "$toggle_name": "#TeslaPlantUI.switch_3",
                                 "$toggle_state_binding_name": "#netease_editor_template_namespace.toggle_state",
-                                "$unchecked_locked_texture": "textures/ui/toggle_off",
+                                "$unchecked_locked_texture": "textures/ui/skybluetech/simple_switch_off",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
@@ -211,8 +211,8 @@
                                 ],
                                 "color": "$title_text_color",
                                 "font_type": "default",
-                                "text": "攻击范围",
-                                "shadow": false
+                                "shadow": false,
+                                "text": "攻击范围"
                             }
                         },
                         {
@@ -228,10 +228,10 @@
                                     18,
                                     18
                                 ],
-                                "texture": "textures/ui/skybluetech/info_bg",
-                                "nineslice_size": 1,
                                 "fill": true,
-                                "keep_ratio": false
+                                "keep_ratio": false,
+                                "nineslice_size": 1,
+                                "texture": "textures/ui/skybluetech/info_bg"
                             }
                         },
                         {
@@ -468,14 +468,14 @@
                                     {
                                         "image": {
                                             "type": "image",
-                                            "layer": 2,
-                                            "texture": "textures/ui/skybluetech/eye_icon",
+                                            "anchor_from": "center",
+                                            "anchor_to": "center",
                                             "size": [
                                                 16,
                                                 16
                                             ],
-                                            "anchor_from": "center",
-                                            "anchor_to": "center"
+                                            "layer": 2,
+                                            "texture": "textures/ui/skybluetech/eye_icon"
                                         }
                                     }
                                 ]
@@ -520,14 +520,14 @@
                                     "default"
                                 ],
                                 "layer": 1,
+                                "visible": false,
                                 "color": [
                                     0.6313725490196078,
                                     0.6313725490196078,
                                     0.6313725490196078
                                 ],
                                 "texture": "textures/ui/white_background",
-                                "tiled": true,
-                                "visible": false
+                                "tiled": true
                             }
                         }
                     ]
@@ -536,32 +536,32 @@
             {
                 "machine_label": {
                     "type": "label",
-                    "text": "",
-                    "visible": false,
                     "size": [
                         0,
                         0
                     ],
-                    "layer": 1
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$content_size": [
+            162,
+            54
+        ],
+        "$has_tabs": false,
+        "$has_upgrades": false,
         "$machine_content": "TeslaPlantUI.content",
         "$panel_size": [
             176,
             166
         ],
-        "$content_size": [
-            162,
-            54
-        ],
-        "$title_text": "特斯拉电塔",
-        "$has_tabs": false,
-        "$has_upgrades": false,
-        "$show_led": false
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": false,
+        "$title_text": "特斯拉电塔"
     },
     "namespace": "TeslaPlantUI"
 }

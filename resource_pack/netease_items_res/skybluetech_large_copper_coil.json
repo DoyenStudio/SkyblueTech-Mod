@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:large_copper_coil"
+        },
+        "description": {
+            "identifier": "skybluetech:large_copper_coil"
+        }
+    }
+}

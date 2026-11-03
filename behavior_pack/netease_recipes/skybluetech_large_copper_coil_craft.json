@@ -1,0 +1,33 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:large_copper_coil_craft"
+        },
+        "ingredients": [
+            {
+                "item": "skybluetech:coil_copper"
+            },
+            {
+                "item": "skybluetech:coil_copper"
+            },
+            {
+                "item": "skybluetech:coil_copper"
+            },
+            {
+                "item": "skybluetech:coil_copper"
+            },
+            {
+                "tag": "common:iron_stick"
+            }
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:large_copper_coil"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

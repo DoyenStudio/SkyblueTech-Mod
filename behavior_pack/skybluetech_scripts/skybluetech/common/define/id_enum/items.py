@@ -9,6 +9,7 @@ class Batteries(SimpleEnum):
 
 class Coils(SimpleEnum):
     COPPER = "skybluetech:coil_copper"
+    LARGE_COPPER = "skybluetech:large_copper_coil"
 
 
 class ControlCircuit(SimpleEnum):

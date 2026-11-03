@@ -106,6 +106,9 @@
         "skybluetech:coil_copper": {
             "textures": "textures/items/coil_copper"
         },
+        "skybluetech:large_copper_coil": {
+            "textures": "textures/items/large_copper_coil"
+        },
         "skybluetech:concrete_dust": {
             "textures": "textures/items/dusts/concrete_dust"
         },

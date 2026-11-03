@@ -1,4 +1,9 @@
 # coding: utf-8
+from skybluetech_scripts.tooldelta.extensions.facing_utils import (
+    RelativeFacingStrEnum as RelFacEnum,
+)
+
+
 NEIGHBOR_BLOCKS_ENUM = (
     (0, -1, 0),
     (0, 1, 0),

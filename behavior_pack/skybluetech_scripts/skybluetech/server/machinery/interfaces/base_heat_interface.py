@@ -1,13 +1,16 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.server.machinery.basic.heat_ctrl import HeatCtrl
+from skybluetech_scripts.skybluetech.server.machinery.basic.heat_ports import HeatPorts
 from skybluetech_scripts.skybluetech.server.machinery.core.pool import GetLoadedMachine
 from skybluetech_scripts.skybluetech.server.machinery.interfaces.base_interface import BaseInterface
 
 
-class BaseHeatInterface(BaseInterface):
+class BaseHeatInterface(HeatPorts, BaseInterface):
     """只代理控制器的热量, 不持有热容、热值或环境换热状态。"""
 
     is_non_energy_machine = True
+    heat_input_faces = ()
+    heat_output_faces = ()
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(BaseHeatInterface, self).__init__(dim, x, y, z, block_entity_data)

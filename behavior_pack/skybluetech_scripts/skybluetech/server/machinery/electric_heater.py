@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from ...common.define import flags
+from skybluetech_scripts.skybluetech.common.define.facing import RelFacEnum
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.electric_heater import ElectricHeaterSubmitModifiesEvent
 from ...common.machinery_def.electric_heater import (
@@ -43,6 +44,14 @@ class ElectricHeater(OperationListener, PowerControl, GUIControl, HeatCtrl):
     store_rf_max = STORE_RF_MAX
     max_heat_value = MAX_HEAT_VALUE
     spread_heat = True
+    heat_faces_follow_rotation = False
+    heat_output_faces = (
+        RelFacEnum.TOP,
+        RelFacEnum.FRONT,
+        RelFacEnum.BACK,
+        RelFacEnum.LEFT,
+        RelFacEnum.RIGHT,
+    )
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ElectricHeater, self).__init__(dim, x, y, z, block_entity_data)

@@ -1,15 +1,17 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define.facing import (
     FACING_DXYZ,
+    DXYZ_FACING,
     OPPOSITE_FACING,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_HEAT_VALUE
 from skybluetech_scripts.skybluetech.common.utils.phys_math import Thermal
 
 from .base_machine import BaseMachine
+from .heat_ports import HeatPorts
 
 
-class HeatCtrl(BaseMachine):
+class HeatCtrl(HeatPorts, BaseMachine):
     """
     热机机器类, 表示产热或吸热的机器。
     具有属性:
@@ -210,9 +212,12 @@ class HeatCtrl(BaseMachine):
         "普通热机直接接收热量。"
         return self
 
-    def TransferHeatTo(self, target, dt=None):
-        # type: (BaseMachine | None, float | None) -> float
-        "向热机或受热口单向导热, 返回实际传递的热量(RF)。"
+    def TransferHeatTo(self, target, dt=None, source_interface=None):
+        # type: (BaseMachine | None, float | None, BaseHeatInterface | None) -> float
+        """向相邻热机或受热口单向导热，返回实际传递热量(RF)。
+
+        经供热口输出时传入 source_interface，按接口而非控制器的接触面校验。
+        """
         from ..core.pool import GetLoadedMachine
         from ..interfaces.base_heat_interface import BaseHeatInterface
 
@@ -222,6 +227,23 @@ class HeatCtrl(BaseMachine):
         if GetLoadedMachine(self.dim, self.x, self.y, self.z) is not self:
             return 0.0
         if GetLoadedMachine(target.dim, target.x, target.y, target.z) is not target:
+            return 0.0
+        source = self
+        if source_interface is not None:
+            if not isinstance(source_interface, BaseHeatInterface):
+                return 0.0
+            source = source_interface
+            if GetLoadedMachine(source.dim, source.x, source.y, source.z) is not source:
+                return 0.0
+            if source.getMachineRef() is not self:
+                return 0.0
+        if source.dim != self.dim or target.dim != source.dim:
+            return 0.0
+        # 从实际接触方块坐标推导面，直接调用也不能绕过邻接与分面限制。
+        face = DXYZ_FACING.get((target.x - source.x, target.y - source.y, target.z - source.z))
+        if face is None:
+            return 0.0
+        if not source.CanOutputHeat(face) or not target.CanInputHeat(OPPOSITE_FACING[face]):
             return 0.0
         receiver = target.GetHeatInputTarget()
         if not isinstance(receiver, HeatCtrl) or receiver is self:

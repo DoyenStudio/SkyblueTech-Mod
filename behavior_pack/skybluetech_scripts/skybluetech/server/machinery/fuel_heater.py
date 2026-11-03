@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.skybluetech.common.define import flags
+from skybluetech_scripts.skybluetech.common.define.facing import RelFacEnum
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.machinery_def.fuel_heater import (
     FUEL_HEAT_MULTIPLIER,
@@ -32,6 +33,12 @@ class FuelHeater(WorkRenderer, GUIControl, ItemContainer, HeatCtrl):
     item_input_slots = (0,)
     max_heat_value = MAX_HEAT_VALUE
     spread_heat = True
+    heat_output_faces = (
+        RelFacEnum.TOP,
+        RelFacEnum.BACK,
+        RelFacEnum.LEFT,
+        RelFacEnum.RIGHT,
+    )
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(FuelHeater, self).__init__(dim, x, y, z, block_entity_data)

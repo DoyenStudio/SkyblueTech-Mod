@@ -1,5 +1,6 @@
 # coding=utf-8
 from ...common.define import flags
+from skybluetech_scripts.skybluetech.common.define.facing import RelFacEnum
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.heat_melting_chamber import (
     CHAMBER_HEAT_CAPACITY, OUTPUT_MAX_VOLUME, K_PROGRESS, K_RECIPE_INPUT,
@@ -16,6 +17,8 @@ IDLE_FLAGS = (flags.DEACTIVE_FLAG_NO_INPUT, flags.DEACTIVE_FLAG_NO_RECIPE,
 @RegisterMachine
 class HeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.HEAT_MELTING_CHAMBER
+    heat_faces_follow_rotation = False
+    heat_input_faces = (RelFacEnum.DOWN,)
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
     item_input_slots = (0,)

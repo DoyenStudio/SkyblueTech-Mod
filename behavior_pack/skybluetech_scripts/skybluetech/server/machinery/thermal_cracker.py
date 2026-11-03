@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import flags
+from skybluetech_scripts.skybluetech.common.define.facing import RelFacEnum
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.machinery_def.thermal_cracker import (
     CHAMBER_HEAT_CAPACITY, FLUID_SLOT_MAX_VOLUMES, recipes,
@@ -20,6 +21,7 @@ for _flag in IDLE_FLAGS:
 @RegisterMachine
 class ThermalCracker(WorkRenderer, GUIControl, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.THERMAL_CRACKER
+    heat_input_faces = (RelFacEnum.DOWN,)
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
     fluid_input_slots = (0, 1)

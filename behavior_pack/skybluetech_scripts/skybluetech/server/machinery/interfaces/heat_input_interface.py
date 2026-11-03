@@ -7,6 +7,8 @@ from skybluetech_scripts.skybluetech.server.machinery.interfaces.base_heat_inter
 class HeatInputInterface(BaseHeatInterface):
     """外部热机经此接口向控制器传热; 不主动输出。"""
 
+    heat_input_faces = None
+
     def GetHeatInputTarget(self):
         # type: () -> HeatCtrl | None
         return self.getMachineRef()

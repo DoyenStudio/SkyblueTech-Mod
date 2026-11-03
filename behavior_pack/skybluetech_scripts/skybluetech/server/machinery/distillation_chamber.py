@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from ...common.define import flags
+from skybluetech_scripts.skybluetech.common.define.facing import RelFacEnum
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.distillation_chamber import (
     CHAMBER_HEAT_CAPACITY,
@@ -38,6 +39,8 @@ IDLE_FLAGS = (
 @RegisterMachine
 class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.DISTILLATION_CHAMBER
+    heat_faces_follow_rotation = False
+    heat_input_faces = (RelFacEnum.DOWN,)
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
     # 本机热容远大于默认值, 产油扣热才不会把仓温踹穿, 见 CHAMBER_HEAT_CAPACITY

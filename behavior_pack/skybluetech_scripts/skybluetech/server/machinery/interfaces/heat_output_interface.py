@@ -9,9 +9,10 @@ from skybluetech_scripts.skybluetech.server.machinery.interfaces.base_heat_inter
 
 @RegisterMachine
 class HeatOutputInterface(BaseHeatInterface):
-    """每个热周期将控制器热量导向六面邻居; 拒绝外部输入。"""
+    """每个热周期经允许的接触面向邻居供热; 拒绝外部输入。"""
 
     WORK_INTERVAL = 5
+    heat_output_faces = None
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(HeatOutputInterface, self).__init__(dim, x, y, z, block_entity_data)
@@ -29,4 +30,4 @@ class HeatOutputInterface(BaseHeatInterface):
         if machine is None:
             return
         for neighbor, _ in GetNearbyMachines(self.dim, self.x, self.y, self.z):
-            machine.TransferHeatTo(neighbor, dt=self.WORK_INTERVAL)
+            machine.TransferHeatTo(neighbor, dt=self.WORK_INTERVAL, source_interface=self)

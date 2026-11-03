@@ -15,115 +15,9 @@ K_CRAFTING_PROGRESS = "st:crafting_progress"
 K_OUTPUT_ITEM_ID = "st:output_item_id"
 K_NEED_TOOL = "st:need_tool"
 
+# SORTED BY MACHINE NAME
 recipes = RecipesCollection(
     id_enum.Machinery.MACHINERY_WORKSTATION,
-    # Polyethylene chain equipment.
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
-            1: Input(id_enum.ControlCircuit.ADVANCED, 2),
-            2: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
-            3: Input(id_enum.HEAT_EXCHANGER, 2),
-            4: Input(id_enum.DistillationColumn.FRAME, 1),
-            6: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
-            8: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
-        },
-        id_enum.DistillationColumn.CONTROLLER,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        24,
-    ),
-    MRecipe(
-        {
-            1: Input(id_enum.FluidPipe.CUPRONICKEL, 2),
-            4: Input(id_enum.DistillationColumn.FRAME, 1),
-        },
-        id_enum.DistillationColumn.IO_FLUID1,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            1: Input(id_enum.FluidPipe.CUPRONICKEL, 4),
-            4: Input(id_enum.DistillationColumn.FRAME, 1),
-        },
-        id_enum.DistillationColumn.IO_FLUID2,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
-            1: Input(id_enum.HEAT_EXCHANGER, 1),
-            2: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
-            4: Input(id_enum.DistillationColumn.FRAME, 1),
-        },
-        id_enum.DistillationColumn.IO_HEAT,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        8,
-    ),
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            1: Input(id_enum.HEAT_EXCHANGER, 1),
-            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            3: Input(id_enum.ControlCircuit.BASIC, 1),
-            4: Input(id_enum.MACHINERY_FRAME, 1),
-            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-        },
-        id_enum.Machinery.HEAT_MELTING_CHAMBER,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        16,
-    ),
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
-            1: Input(id_enum.HEAT_PLATE, 4),
-            2: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
-            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
-            4: Input(id_enum.Machinery.ELECTRIC_HEATER, 1),
-        },
-        id_enum.Machinery.INFRARED_HEAT_GENERATOR,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        24,
-    ),
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
-            1: Input(id_enum.HEAT_EXCHANGER, 2),
-            2: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
-            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
-            4: Input(id_enum.MACHINERY_FRAME, 1),
-            6: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
-            8: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
-        },
-        id_enum.Machinery.THERMAL_CRACKER,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        24,
-    ),
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            1: Input(id_enum.ELECTRIC_MOTOR, 1),
-            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            3: Input(id_enum.HEAT_EXCHANGER, 1),
-            4: Input(id_enum.MACHINERY_FRAME, 1),
-            5: Input(id_enum.ControlCircuit.ADVANCED, 2),
-            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-        },
-        id_enum.Machinery.SMALL_CHEMICAL_REACTOR,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        24,
-    ),
     # air compressor
     MRecipe(
         {
@@ -174,24 +68,6 @@ recipes = RecipesCollection(
             8: Input(tag_enum.PlateTag.STEEL, is_tag=True),
         },
         id_enum.Machinery.ASSEMBLER,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        16,
-    ),
-    # electric machinery workstation
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.INVAR, is_tag=True),
-            1: Input(id_enum.ControlCircuit.ADVANCED),
-            2: Input(tag_enum.PlateTag.INVAR, is_tag=True),
-            3: Input(id_enum.Wrench.SKYBLUE),
-            4: Input(id_enum.Machinery.MACHINERY_WORKSTATION),
-            5: Input(id_enum.Pincer.SKYBLUE),
-            6: Input(tag_enum.PlateTag.STEEL, is_tag=True),
-            7: Input(id_enum.MACHINERY_FRAME),
-            8: Input(tag_enum.PlateTag.STEEL, is_tag=True),
-        },
-        id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION,
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
         16,
@@ -370,6 +246,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # electric machinery workstation
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            1: Input(id_enum.ControlCircuit.ADVANCED),
+            2: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            3: Input(id_enum.Wrench.SKYBLUE),
+            4: Input(id_enum.Machinery.MACHINERY_WORKSTATION),
+            5: Input(id_enum.Pincer.SKYBLUE),
+            6: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            7: Input(id_enum.MACHINERY_FRAME),
+            8: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+        },
+        id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # energy cube : junior
     MRecipe(
         {
@@ -533,6 +427,22 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # heat melting chamber
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            1: Input(id_enum.HEAT_EXCHANGER, 1),
+            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            3: Input(id_enum.ControlCircuit.BASIC, 1),
+            4: Input(id_enum.MACHINERY_FRAME, 1),
+            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+        },
+        id_enum.Machinery.HEAT_MELTING_CHAMBER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # hover text displayer
     MRecipe(
         {
@@ -596,6 +506,20 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
         8,
+    ),
+    # infrared heat generator
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
+            1: Input(id_enum.HEAT_PLATE, 4),
+            2: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
+            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
+            4: Input(id_enum.Machinery.ELECTRIC_HEATER, 1),
+        },
+        id_enum.Machinery.INFRARED_HEAT_GENERATOR,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
     ),
     # item splitter
     MRecipe(
@@ -911,6 +835,23 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         16,
     ),
+    # small chemical reactor
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            1: Input(id_enum.ELECTRIC_MOTOR, 1),
+            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            3: Input(id_enum.HEAT_EXCHANGER, 1),
+            4: Input(id_enum.MACHINERY_FRAME, 1),
+            5: Input(id_enum.ControlCircuit.ADVANCED, 2),
+            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+        },
+        id_enum.Machinery.SMALL_CHEMICAL_REACTOR,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
+    ),
     # solar panel
     MRecipe(
         {
@@ -940,6 +881,22 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
         16,
+    ),
+    # thermal cracker
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+            1: Input(id_enum.HEAT_EXCHANGER, 2),
+            2: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
+            4: Input(id_enum.MACHINERY_FRAME, 1),
+            6: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+            8: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+        },
+        id_enum.Machinery.THERMAL_CRACKER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
     ),
     # thermal generator
     MRecipe(

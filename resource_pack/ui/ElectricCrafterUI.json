@@ -179,6 +179,21 @@
                 }
             },
             {
+                "ring_in_crafting_grid@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        35
+                    ],
+                    "size": [
+                        54,
+                        54
+                    ]
+                }
+            },
+            {
                 "progress@SkybluePanelLib.progress_icon_gear": {
                     "layer": 1,
                     "anchor_from": "top_left",
@@ -192,6 +207,7 @@
             {
                 "output_slots": {
                     "type": "stack_panel",
+                    "orientation": "vertical",
                     "offset": [
                         115,
                         35
@@ -221,6 +237,21 @@
                     ],
                     "anchor_from": "top_left",
                     "anchor_to": "top_left"
+                }
+            },
+            {
+                "ring_out_output_slots@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        115,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
                 }
             },
             {

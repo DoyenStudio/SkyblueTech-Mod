@@ -30,6 +30,7 @@ FLUID_DISP_PATH = MAIN_PATH / "fluid_display"
 class FluidSplitterUI(MachinePanelUIProxyEx):
     available_extra_pages = (FluidPipeSettingsPageIndirectional,)
     STATUS_TEXTS = {DEACTIVE_FLAG_OUTPUT_FULL: "送不出去（没有对应标签的出口或出口已满）"}
+    STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_tin_fluid_display",)}
 
     def OnCreate(self):
         self.settings_view = self.GetElement(SETTINGS_VIEW_PATH).asScrollView()

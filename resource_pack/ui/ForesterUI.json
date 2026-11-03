@@ -18,6 +18,21 @@
         "type": "panel",
         "controls": [
             {
+                "ring_out_container@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        17
+                    ],
+                    "size": [
+                        144,
+                        54
+                    ]
+                }
+            },
+            {
                 "power_bar@SkybluePanelLib.energy_meter": {
                     "layer": 1,
                     "anchor_from": "top_left",

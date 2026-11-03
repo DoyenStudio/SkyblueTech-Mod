@@ -1,5 +1,9 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_NO_INPUT,
+    DEACTIVE_FLAG_NO_RECIPE,
+)
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_PROGRESS,
     K_STORE_RF,
@@ -27,6 +31,10 @@ PREVIEW_SLOT_COUNT = 9
 @RegistToolDeltaScreen("ElectricCrafterUI.main", is_proxy=True)
 class ElectricCrafterUI(MachinePanelUIProxyEx):
     available_extra_pages = (ItemPipeSettingsPageIndirectional,)
+    STATUS_RINGS = {
+        DEACTIVE_FLAG_NO_INPUT: ("ring_in_crafting_grid",),
+        DEACTIVE_FLAG_NO_RECIPE: ("ring_in_template_slot",),
+    }
 
     def OnCreate(self):
         self.power = self.GetElement(POWER_PATH)

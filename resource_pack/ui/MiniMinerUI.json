@@ -132,6 +132,21 @@
                 }
             },
             {
+                "ring_out_container@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        25,
+                        71
+                    ],
+                    "size": [
+                        144,
+                        18
+                    ]
+                }
+            },
+            {
                 "machine_label": {
                     "type": "label",
                     "text": "",

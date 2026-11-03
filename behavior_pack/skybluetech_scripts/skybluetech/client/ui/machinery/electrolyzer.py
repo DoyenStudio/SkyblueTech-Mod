@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_OUTPUT_FULL
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF, FluidSlotClient,
 )
@@ -23,6 +24,7 @@ from skybluetech_scripts.skybluetech.client.ui.machinery.utils import (
 @RegistToolDeltaScreen("ElectrolyzerUI.main", is_proxy=True)
 class ElectrolyzerUI(MachinePanelUIProxyEx):
     available_extra_pages = (FluidPipeSettingsPage,)
+    STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_out_", "ring_tout_")}
 
     def OnCreate(self):
         self.power_bar = self.GetElement(MAIN_PATH / "power_bar")

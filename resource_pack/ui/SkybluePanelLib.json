@@ -1299,7 +1299,7 @@
         "nineslice_size": 1,
         "visible": false,
         "alpha": "@SkybluePanelLib.anim_pulse_out",
-        "layer": 9,
+        "layer": 10,
         "keep_ratio": false,
         "fill": true
     },

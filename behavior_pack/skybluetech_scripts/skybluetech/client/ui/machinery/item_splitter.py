@@ -23,6 +23,7 @@ ADD_BTN_PATH = MAIN_PATH / "add_btn"
 class ItemSplitterUI(MachinePanelUIProxyEx):
     available_extra_pages = (ItemPipeSettingsPageIndirectional,)
     STATUS_TEXTS = {DEACTIVE_FLAG_OUTPUT_FULL: "送不出去（没有对应标签的出口或出口已满）"}
+    STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_in_container_slots",)}
 
     def OnCreate(self):
         self.settings = []

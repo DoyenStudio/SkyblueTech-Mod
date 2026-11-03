@@ -1073,6 +1073,21 @@
                 }
             },
             {
+                "ring_tin_fluid_display@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
                 "add_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,

@@ -68,7 +68,7 @@ OWN = (
     ("skybluetech:group.machinery_crafting", "itemGroup.skybluetech.machinery_crafting", _ids(
         "assembler", "electric_machinery_workstation", "machinery_workstation")),
     ("skybluetech:group.machinery_production", "itemGroup.skybluetech.machinery_production", _ids(
-        "alloy_furnace", "compressor", "distillation_chamber", "electric_crafter", "electric_heater", "electrolyzer",
+        "alloy_furnace", "compressor", "distillation_chamber", "electric_crafter", "electrolyzer",
         "engraver", "fluid_condenser", "freezer", "hydroponic_base", "hydroponic_bed",
         "hydroponic_bed_sand", "macerator", "magma_centrifuge", "magma_furnace", "metal_press", "mixed_macerator", "mixer",
         "oil_extractor", "precision_cutter", "redstone_furnace", "sawmill", "template_assembler")),
@@ -81,6 +81,8 @@ OWN = (
     ("skybluetech:group.machinery_generator", "itemGroup.skybluetech.machinery_generator", _ids(
         "creative_generator", "gas_burning_generator", "geothermal_generator", "reacting_thermal_generator",
         "redstone_generator", "solar_panel", "thermal_generator", "wind_generator")),
+    ("skybluetech:group.machinery_thermal", "itemGroup.skybluetech.machinery_thermal", _ids(
+        "electric_heater", "infrared_heat_generator", "fuel_heater")),
     ("skybluetech:group.machinery_misc", "itemGroup.skybluetech.machinery_misc", _ids(
         "deepslate_lava_vibrator", "hover_text_displayer", "lexical_transmuter")),
     ("skybluetech:group.plates", "itemGroup.skybluetech.plates", _ids(

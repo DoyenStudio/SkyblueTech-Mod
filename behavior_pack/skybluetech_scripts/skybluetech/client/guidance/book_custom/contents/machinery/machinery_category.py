@@ -334,6 +334,12 @@ machinery_thermal_toc = PageGroup(
                     machinery_thermal.electric_heater,
                 ),
                 TOCPageSection(
+                    id_enum.Machinery.INFRARED_HEAT_GENERATOR,
+                    0,
+                    None,
+                    machinery_thermal.infrared_heat_generator,
+                ),
+                TOCPageSection(
                     id_enum.Machinery.FUEL_HEATER,
                     0,
                     None,

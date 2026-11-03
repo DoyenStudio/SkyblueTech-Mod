@@ -19,6 +19,16 @@ electric_heater = PageGroup(
     ],
 )
 
+infrared_heat_generator = PageGroup(
+    "infrared_heat_generator_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.INFRARED_HEAT_GENERATOR),
+            '红外高热发生器通电后可按照设置的温度向上前后左右五个铜盘面输出<text color="§c" t="热能">， 最高加热至 <text color="§c" t="2300 K">。\n\n与电力加热仓一样， 可以调节输入功率和目标温度。',
+        ),
+    ],
+)
+
 fuel_heater = PageGroup(
     "fuel_heater_description",
     [

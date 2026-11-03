@@ -30,6 +30,7 @@ from .hover_text_displayer import HoverTextDisplayerUI
 from .hydroponic_base import HydroponicBaseUI
 from .hydroponic_bed import HydroponicBedUI
 from .hydroponic_bed_sand import HydroponicBedSandUI
+from .infrared_heat_generator import InfraredHeatGeneratorUI
 from .item_splitter import ItemSplitterUI
 from .item_spreader import ItemSpreaderUI
 from .lexical_transmuter import LexicalTransmuterUI

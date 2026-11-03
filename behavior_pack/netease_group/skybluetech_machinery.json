@@ -87,6 +87,7 @@
             "icon": "skybluetech:electric_heater",
             "list": [
                 "skybluetech:electric_heater",
+                "skybluetech:infrared_heat_generator",
                 "skybluetech:fuel_heater"
             ]
         },

@@ -40,6 +40,8 @@ KELVIN_LIMIT_BOX_NAME = "#electric_heater.kelvin_limit"
 
 @RegistToolDeltaScreen("ElectricHeaterUI.main", is_proxy=True)
 class ElectricHeaterUI(MachinePanelUIProxy):
+    max_kelvin = MAX_KELVIN
+
     # 服务端的待机原因: 未设定功率 = NO_INPUT, 已达到设定温度 = NO_RECIPE
     STATUS_TEXTS = {
         DEACTIVE_FLAG_NO_INPUT: "未设定功率",
@@ -121,5 +123,5 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         except ValueError:
             self.kelvin_limit_input.SetText("")
             return
-        # 夹紧到本机能力范围: 低于环境温度没意义, 高于 MAX_KELVIN 永远到不了
-        self.kelvin_limit_input.SetText(str(min(max(value, MIN_KELVIN), MAX_KELVIN)))
+        # 夹紧到本机能力范围: 低于环境温度没意义, 高于本机温度上限永远到不了
+        self.kelvin_limit_input.SetText(str(min(max(value, MIN_KELVIN), self.max_kelvin)))

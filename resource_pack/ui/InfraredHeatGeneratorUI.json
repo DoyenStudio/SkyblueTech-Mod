@@ -1,0 +1,6 @@
+{
+    "namespace": "InfraredHeatGeneratorUI",
+    "main@ElectricHeaterUI.main": {
+        "$title_text": "红外高热发生器"
+    }
+}

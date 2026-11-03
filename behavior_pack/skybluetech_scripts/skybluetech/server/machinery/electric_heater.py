@@ -8,7 +8,6 @@ from ...common.machinery_def.electric_heater import (
     K_KELVIN_LIMIT,
     K_MAX_POWER,
     MAX_HEAT_VALUE,
-    MAX_KELVIN,
     MAX_POWER,
     MIN_KELVIN,
     STORE_RF_MAX,
@@ -101,7 +100,7 @@ class ElectricHeater(OperationListener, PowerControl, GUIControl, HeatCtrl):
 
     def set_kelvin_limit(self, limit):
         # type: (int) -> None
-        self.kelvin_limit = min(max(limit, MIN_KELVIN), MAX_KELVIN)
+        self.kelvin_limit = min(max(limit, MIN_KELVIN), int(self.max_kelvin))
 
     @property
     def max_power(self):

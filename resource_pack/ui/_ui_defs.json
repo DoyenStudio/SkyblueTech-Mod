@@ -38,6 +38,7 @@
         "ui/HydroponicBedSandUI.json",
         "ui/HydroponicBedUI.json",
         "ui/IndustrialResearchProgressUI.json",
+        "ui/InfraredHeatGeneratorUI.json",
         "ui/InscribingTemplateUI.json",
         "ui/ItemInputInterfaceUI.json",
         "ui/ItemOutputInterfaceUI.json",

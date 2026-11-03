@@ -620,6 +620,9 @@
         "skybluetech:hydroponic_bed_sand": {
             "textures": "textures/models/hydroponic_bed_sand_texture"
         },
+        "skybluetech:infrared_heat_generator": {
+            "textures": "textures/models/infrared_heat_generator_texture"
+        },
         "skybluetech:invar_block": {
             "textures": "textures/blocks/metal_block/invar_block"
         },

@@ -37,6 +37,7 @@ class Machinery(SimpleEnum):
     HYDROPONIC_BASE = "skybluetech:hydroponic_base"
     HYDROPONIC_BED = "skybluetech:hydroponic_bed"
     HYDROPONIC_BED_SAND = "skybluetech:hydroponic_bed_sand"
+    INFRARED_HEAT_GENERATOR = "skybluetech:infrared_heat_generator"
     ITEM_SPLITTER = "skybluetech:item_splitter"
     ITEM_SPREADER = "skybluetech:item_spreader"
     LEXICAL_TRANSMUTER = "skybluetech:lexical_transmuter"

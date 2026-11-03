@@ -53,12 +53,13 @@ period_ticks 只接受 1 或 5；外部逐 tick 调度传 1，线缆传 5。
 
 ## 验证
 
-只在游戏服务端执行：
+自检脚本位于仓库 `tools/energy_selftest.py`，不随行为包发布，也不由正式代码导入。将文件完整内容交给游戏内代码执行工具，在服务端执行，再在同一执行上下文调用：
 
 ```python
-from skybluetech_scripts.skybluetech.server.export.energy_selftest import run
 _result = run()
 ```
+
+不要在外部 Python 解释器中执行此文件。`tools/` 无需加入游戏脚本搜索路径。
 
 用独立替身端点检查部分接收、拒收、空源、周期限制、重入保护及登记撤销，不依赖任何外部模组，不修改世界方块。
 游戏内通用自检现覆盖 10 组场景，并检查实际电缆运输回调不会将能量送回同一储能的其他端口。

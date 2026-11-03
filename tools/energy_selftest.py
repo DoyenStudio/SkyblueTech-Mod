@@ -3,8 +3,8 @@
 
 
 def run():
-    from . import energy
-    from ..machinery.basic.base_machine import BaseMachine
+    from skybluetech_scripts.skybluetech.server.export import energy
+    from skybluetech_scripts.skybluetech.server.machinery.basic.base_machine import BaseMachine
 
     class Machine(BaseMachine):
         dim, xyz = 0, (0, 0, 0)
@@ -96,7 +96,7 @@ def run():
 
 def _check_network_transport(energy, machine_cls, handler_cls):
     """两个不同坐标的端口属于同一储能时，真实运输循环必须跳过自我回送。"""
-    from ..transmitters.wire.logic import onNetworkTick
+    from skybluetech_scripts.skybluetech.server.transmitters.wire.logic import onNetworkTick
 
     class Access(object):
         access_facing = 1

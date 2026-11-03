@@ -1025,6 +1025,9 @@
         },
         "skybluetech:small_chemical_reactor_front_active": {
             "textures": "textures/blocks/machinery/flipbook_textures/small_chemical_reactor_front_active"
+        },
+        "skybluetech:thermal_cracker_casing": {
+            "textures": "textures/blocks/machinery/thermal_cracker_casing"
         }
     },
     "texture_name": "atlas.terrain"

@@ -29,3 +29,5 @@ world_resource_packs.json
 
 # The web application is maintained as an independent Git repository.
 /web/
+
+/tools/

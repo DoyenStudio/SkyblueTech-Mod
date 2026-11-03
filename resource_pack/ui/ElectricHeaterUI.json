@@ -4,9 +4,9 @@
         "controls": [
             {
                 "power_bar@SkybluePanelLib.energy_meter": {
-                    "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         7,
                         17
@@ -34,6 +34,8 @@
             {
                 "databar": {
                     "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         24,
                         17
@@ -43,15 +45,22 @@
                         22
                     ],
                     "layer": 1,
+                    "fill": true,
                     "nineslice_size": 1,
                     "texture": "textures/ui/skybluetech/info_bg",
                     "controls": [
                         {
                             "text": {
                                 "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    2.0,
+                                    1.0
+                                ],
                                 "size": [
-                                    139,
-                                    20
+                                    141.0,
+                                    20.0
                                 ],
                                 "color": [
                                     0.18,
@@ -59,20 +68,11 @@
                                     0.18
                                 ],
                                 "font_type": "default",
-                                "text": "最大功率： 0.0 RF/t\n当前温度： 0.0 K",
-                                "anchor_from": "top_left",
-                                "anchor_to": "top_left",
-                                "offset": [
-                                    3,
-                                    2
-                                ],
-                                "shadow": false
+                                "shadow": false,
+                                "text": "最大功率： 0.0 RF/t\n当前温度： 0.0 K"
                             }
                         }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "fill": true
+                    ]
                 }
             },
             {
@@ -117,6 +117,8 @@
                         "default",
                         "default"
                     ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         24,
                         45
@@ -126,9 +128,7 @@
                         20
                     ],
                     "layer": 1,
-                    "max_length": 512,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
+                    "max_length": 512
                 }
             },
             {
@@ -173,6 +173,8 @@
                         "default",
                         "default"
                     ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         92,
                         45
@@ -182,9 +184,7 @@
                         20
                     ],
                     "layer": 1,
-                    "max_length": 512,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
+                    "max_length": 512
                 }
             },
             {
@@ -220,6 +220,8 @@
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         142,
                         45
@@ -258,40 +260,38 @@
                         {
                             "button_label@netease_editor_template_namespace.button_label": {}
                         }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
+                    ]
                 }
             },
             {
                 "machine_label": {
                     "type": "label",
-                    "text": "",
-                    "visible": false,
                     "size": [
                         0,
                         0
                     ],
-                    "layer": 1
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$content_size": [
+            162,
+            54
+        ],
+        "$has_tabs": false,
+        "$has_upgrades": false,
         "$machine_content": "ElectricHeaterUI.content",
         "$panel_size": [
             176,
             166
         ],
-        "$content_size": [
-            162,
-            54
-        ],
-        "$title_text": "电力加热仓",
-        "$has_tabs": false,
-        "$has_upgrades": false,
-        "$show_led": true
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": true,
+        "$title_text": "电力加热仓"
     },
     "namespace": "ElectricHeaterUI"
 }

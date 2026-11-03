@@ -86,7 +86,7 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         current_power = GetValue(data, K_CURRENT_POWER, 0.0)
         UpdatePowerBar(self.power_bar, GetValue(data, K_STORE_RF, 0), STORE_RF_MAX)
         self.databar_text.SetText(
-            "当前温度： %.1f K\n设定温度： %.1f K\n当前功率： %.1f RF/t\n"
+            "当前温度： %.1f K； 设定温度： %.1f K\n当前功率： %.1f RF/t"
             % (current_temperature, kelvin_limit, current_power)
         )
 

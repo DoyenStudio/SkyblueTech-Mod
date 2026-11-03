@@ -8,7 +8,8 @@ def create_build_plan(candidates, available_counts, required_counts):
 
     candidates 为 ``[(坐标三元组, 按模板优先级排列的方块 ID 元组)]``；
     每个世界坐标只能出现一次。库存和最低缺额均为非负整数计数。
-    先尽可能满足最低缺额，再在不降低已分配材料数量的前提下填满其余位置。
+    先尽可能满足最低缺额并填满其余位置，再按位置顺序优先选择列表靠前的材料；
+    调整时保留已满足的最低数量和已填位置，避免挤占必需材料或其允许位置。
     """
     options = {}
     capacity = {}
@@ -102,5 +103,65 @@ def create_build_plan(candidates, available_counts, required_counts):
     for pos in positions:
         if pos not in assigned:
             fill_position(pos)
+
+    minimum_counts = {
+        block_id: min(required_counts.get(block_id, 0), used_counts.get(block_id, 0))
+        for block_id in capacity
+    }
+    fixed_positions = set()
+
+    def prefer_block(start_pos, preferred_id):
+        """试换成更靠前的材料，通过换位或剩余库存补回原材料的缺额。"""
+        old_id = assigned[start_pos]
+        queue = [preferred_id]
+        seen = {preferred_id}
+        previous = {}
+        for current_id in queue:
+            if current_id == old_id:
+                # 找到完整调整路径后才改计划；找不到时原计划保持不变。
+                assigned[start_pos] = preferred_id
+                used_counts[old_id] -= 1
+                used_counts[preferred_id] = used_counts.get(preferred_id, 0) + 1
+                while current_id != preferred_id:
+                    parent_id, move_pos = previous[current_id]
+                    if move_pos is not None:
+                        assigned[move_pos] = current_id
+                        used_counts[parent_id] -= 1
+                        used_counts[current_id] = used_counts.get(current_id, 0) + 1
+                    current_id = parent_id
+                return True
+
+            if current_id is None:
+                # None 连接库存余量与超出必需数量的材料，允许两者交换一份。
+                moves = [
+                    (block_id, None) for block_id in sorted(capacity)
+                    if used_counts.get(block_id, 0) > minimum_counts[block_id]
+                ]
+            else:
+                moves = []
+                for move_pos in allowed_positions[current_id]:
+                    if (move_pos in fixed_positions
+                            or assigned.get(move_pos) != current_id):
+                        continue
+                    for block_id in options[move_pos]:
+                        moves.append((block_id, move_pos))
+                if used_counts.get(current_id, 0) < capacity[current_id]:
+                    moves.append((None, None))
+            for next_id, move_pos in moves:
+                if next_id not in seen:
+                    seen.add(next_id)
+                    previous[next_id] = (current_id, move_pos)
+                    queue.append(next_id)
+        return False
+
+    # 固定前面已选好的位置；后面的位置可换位，但不能减少必需方块或已填格数。
+    # 例如两个位置均允许 [外壳, 接口] 且必须有一个接口时，优先把外壳放在前面。
+    for pos in positions:
+        if pos not in assigned:
+            continue
+        fixed_positions.add(pos)
+        for block_id in options[pos]:
+            if block_id == assigned[pos] or prefer_block(pos, block_id):
+                break
 
     return [(pos, assigned[pos]) for pos in positions if pos in assigned]

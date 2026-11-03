@@ -117,7 +117,7 @@ OWN = (
     ("skybluetech:group.debuggers", "itemGroup.skybluetech.debuggers", _ids(
         "simple_block_debugger", "simple_blocknbt_debugger", "simple_machine_checker")),
     ("skybluetech:group.cartidges", "itemGroup.skybluetech.cartidges", _ids(
-        "famicom_cartidge_1", "famicom_cartidge_2", "famicom_cartidge_3", "famicom_cartidge_4", "famicom_cartidge_5")),
+        "famicom_cartidge_1", "famicom_cartidge_2", "famicom_cartidge_3", "famicom_cartidge_4", "famicom_cartidge_5", "famicom_cartidge_6")),
     ("skybluetech:group.brine_evaporation_pond", "itemGroup.skybluetech.brine_evaporation_pond", _ids(
         "brine_evaporation_pond_controller", "brine_evaporation_pond_io_fluid1", "brine_evaporation_pond_io_fluid2",
         "brine_evaporation_pond_io_heat")),

@@ -15,6 +15,7 @@ def handle_monster_room(
     # - id_enum.FamicomCartidges.BLUE
     # - id_enum.FamicomCartidges.RED
     # - id_enum.FamicomCartidges.CYAN
+    # - id_enum.FamicomCartidges.TEAL
     if DoRand(0.5):
         return [
             Item(
@@ -24,6 +25,7 @@ def handle_monster_room(
                     id_enum.FamicomCartidges.BLUE,
                     id_enum.FamicomCartidges.RED,
                     id_enum.FamicomCartidges.CYAN,
+                    id_enum.FamicomCartidges.TEAL,
                 ])
             )
         ]

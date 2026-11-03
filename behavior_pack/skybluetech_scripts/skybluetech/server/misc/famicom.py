@@ -19,6 +19,7 @@ STATE_MAPPING = {
     FamicomCartidges.BLUE: 3,
     FamicomCartidges.RED: 4,
     FamicomCartidges.CYAN: 5,
+    FamicomCartidges.TEAL: 6,
 }
 K_CARTIDGE_TYPE_STATE = "skybluetech:fc_rom_type"
 K_UD_SONG = "song_included"

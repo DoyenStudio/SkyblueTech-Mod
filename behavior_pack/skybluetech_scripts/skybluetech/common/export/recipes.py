@@ -17,6 +17,7 @@ from ..mini_jei.machinery.alloy_furnace import AlloyFurnaceRecipe
 from ..mini_jei.machinery.charger import ChargerRecipe
 from ..mini_jei.machinery.compressor import CompressorRecipe
 from ..mini_jei.machinery.cyro_heat_melting_chamber import CyroHeatMeltingChamberRecipe
+from ..mini_jei.machinery.heat_melting_chamber import HeatMeltingChamberRecipe
 from ..mini_jei.machinery.distillation_chamber import DistillationChamberRecipe
 from ..mini_jei.machinery.distillation_column import DistillationColumnRecipe, DistillationFraction
 from ..mini_jei.machinery.engraver import EngraverRecipe
@@ -57,7 +58,7 @@ __all__ = [
     "gen_preset_recipe", "gen_tagged_preset_recipe",
     "GetRecipesByInput", "GetRecipesByOutput", "GetRecipesByCategory",
     "AirCompressorRecipe", "AlloyFurnaceRecipe", "ChargerRecipe", "CompressorRecipe",
-    "CyroHeatMeltingChamberRecipe", "DistillationChamberRecipe", "EngraverRecipe",
+    "HeatMeltingChamberRecipe", "CyroHeatMeltingChamberRecipe", "DistillationChamberRecipe", "EngraverRecipe",
     "ElectrolyzerRecipe", "FluidCondenserRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
     "HydroponicBedRecipe", "HydroponicBedSandRecipe", "MachineryWorkstationRecipe",
     "MagmaCentrifugeRecipe", "MetalPressRecipe", "MixedMaceratorRecipe", "MixerRecipe",

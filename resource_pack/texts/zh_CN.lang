@@ -540,3 +540,8 @@ tile.skybluetech:flowing_molten_polyethylene.name=流动熔融聚乙烯
 tile.skybluetech:tree_oil.name=树油
 tile.skybluetech:flowing_tree_oil.name=流动树油
 skybluetech.mei.category.distillation_column=蒸馏塔
+
+tile.skybluetech:heat_melting_chamber.name=熔化仓
+skybluetech.mei.category.heat_melting_chamber=熔化仓
+item.skybluetech:rosin.name=松香
+tile.skybluetech:molten_rosin.name=熔融松香

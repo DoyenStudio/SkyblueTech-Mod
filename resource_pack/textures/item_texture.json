@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:rosin": {
+            "textures": "textures/items/rosin"
+        },
         "skybluetech:pure_methane_bucket": {
             "textures": "textures/items/buckets/pure_methane_bucket"
         },

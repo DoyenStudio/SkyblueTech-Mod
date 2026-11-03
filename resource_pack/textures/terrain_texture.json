@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:heat_melting_chamber": {
+            "textures": "textures/models/heat_melting_chamber_texture"
+        },
         "skybluetech:baked_molten_polyethylene_flowing": {
             "quad": 1,
             "textures": "textures/fluid/baked/skybluetech.molten_polyethylene/flowing"

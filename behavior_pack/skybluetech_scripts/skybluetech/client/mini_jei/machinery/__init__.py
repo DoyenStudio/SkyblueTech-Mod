@@ -7,6 +7,7 @@ from . import (
     distillation_chamber,
     distillation_column,
     freezer,
+    heat_melting_chamber,
     gas_burning_generator,
     hydroponic_bed,
     hydroponic_bed_sand,

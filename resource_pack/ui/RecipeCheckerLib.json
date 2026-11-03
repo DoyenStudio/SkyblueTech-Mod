@@ -528,5 +528,12 @@
             180,
             62
         ]
+    },
+    "heat_melting_chamber_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.HeatMeltingChamber",
+        "size": [
+            180,
+            62
+        ]
     }
 }

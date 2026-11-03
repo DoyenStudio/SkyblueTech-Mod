@@ -1,0 +1,193 @@
+{
+    "content": {
+        "type": "panel",
+        "controls": [
+            {
+                "input_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28.0,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "output_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        83,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_in_input_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        28,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "ring_out_output_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        83,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "$bg_image": "textures/ui/skybluetech/progress/arrow_bg",
+                    "$mask_image": "textures/ui/skybluetech/progress/arrow_lava_fill",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "offset": [
+                        54,
+                        37
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 4,
+                    "offset": [
+                        54,
+                        36
+                    ],
+                    "size": [
+                        24,
+                        17
+                    ]
+                }
+            },
+            {
+                "fluid_display@SkybluePanelLib.fluid_tank": {
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "offset": [
+                        108,
+                        23
+                    ],
+                    "size": [
+                        24,
+                        42
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid_display@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        108,
+                        23
+                    ],
+                    "size": [
+                        24,
+                        42
+                    ]
+                }
+            },
+            {
+                "temperature@SkybluePanelLib.gauge_v": {
+                    "$gauge_fill": "textures/ui/skybluetech/gauge/fill_heat_v",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "offset": [
+                        153,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$content_size": [
+            162,
+            54
+        ],
+        "$has_tabs": true,
+        "$has_upgrades": false,
+        "$machine_content": "HeatMeltingChamberUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": true,
+        "$title_text": "熔化仓"
+    },
+    "namespace": "HeatMeltingChamberUI"
+}

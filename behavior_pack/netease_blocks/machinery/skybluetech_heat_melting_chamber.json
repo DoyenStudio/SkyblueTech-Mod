@@ -1,0 +1,46 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.heat_melting_chamber"
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.5
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "alpha_test",
+                    "texture": "skybluetech:heat_melting_chamber"
+                }
+            },
+            "netease:block_container": {
+                "container_size": 2,
+                "custom_description": "熔化仓",
+                "screen_name": "HeatMeltingChamberUI.main"
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7使用外部热源熔化物品，不消耗电力。\n配方速度随温度升高，最高 1.0x。\n超过配方最高温度后不再产出流体。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_fluid_container": {},
+            "tag:skybluetech_machine": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:heat_melting_chamber"
+        }
+    }
+}

@@ -40,6 +40,7 @@ from .lexical_transmuter import LexicalTransmuter
 from .macerator import Macerator
 from .machinery_workstation import MachineryWorkstation
 from .electric_machinery_workstation import ElectricMachineryWorkstation
+from .heat_melting_chamber import HeatMeltingChamber
 from .magma_furnace import MagmaFurnace
 from .magma_centrifuge import MagmaCentrifuge
 from .metal_press import MetalPress

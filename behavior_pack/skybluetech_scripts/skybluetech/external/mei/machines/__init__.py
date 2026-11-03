@@ -47,6 +47,7 @@ MACHINES = (
     "electrolyzer",
     # 无电
     "distillation_chamber",
+    "heat_melting_chamber",
     "industrial_researching",
     "brine_evaporation_pond",
     # 产电

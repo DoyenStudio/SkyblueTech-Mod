@@ -5531,5 +5531,142 @@
                 }
             }
         ]
+    },
+    "HeatMeltingChamber@MachineRecipeLib.content_base": {
+        "type": "panel",
+        "size": [
+            138,
+            62
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "nineslice_size": [
+                        2,
+                        2,
+                        2,
+                        2
+                    ],
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input0",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                8,
+                                                21
+                                            ],
+                                            "size": [
+                                                20,
+                                                20
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "output": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output0",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                76,
+                                                21
+                                            ],
+                                            "size": [
+                                                20,
+                                                20
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "1@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output1",
+                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                104,
+                                                4
+                                            ],
+                                            "size": [
+                                                26,
+                                                54
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.progress_sprite": {
+                                "$mask_image": "textures/ui/skybluetech/progress/arrow_lava_fill",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 1,
+                                "offset": [
+                                    42,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "progress_hover@$recipe_progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 9,
+                                "offset": [
+                                    42,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
     }
 }

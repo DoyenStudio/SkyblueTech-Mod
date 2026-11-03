@@ -34,6 +34,7 @@ class Machinery(SimpleEnum):
     GAS_BURNING_GENERATOR = "skybluetech:gas_burning_generator"
     GEO_THERMAL_GENERATOR = "skybluetech:geothermal_generator"
     HOVER_TEXT_DISPLAYER = "skybluetech:hover_text_displayer"
+    HEAT_MELTING_CHAMBER = "skybluetech:heat_melting_chamber"
     HYDROPONIC_BASE = "skybluetech:hydroponic_base"
     HYDROPONIC_BED = "skybluetech:hydroponic_bed"
     HYDROPONIC_BED_SAND = "skybluetech:hydroponic_bed_sand"

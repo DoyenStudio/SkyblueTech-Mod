@@ -60,3 +60,5 @@ from .tesla_plant_ui import TeslaPlantUI
 from .thermal_generator import ThermalGeneratorUI
 from .vacuum_freezer import VacuumFreezerUI
 from .wind_generator import WindGeneratorUI
+
+from .heat_melting_chamber import HeatMeltingChamberUI

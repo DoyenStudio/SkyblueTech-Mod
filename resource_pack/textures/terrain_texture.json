@@ -1,6 +1,33 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:baked_molten_polyethylene_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_polyethylene/flowing"
+        },
+        "skybluetech:baked_molten_polyethylene_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_polyethylene/static"
+        },
+        "skybluetech:baked_tree_oil_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.tree_oil/flowing"
+        },
+        "skybluetech:baked_tree_oil_static": {
+            "textures": "textures/fluid/baked/skybluetech.tree_oil/static"
+        },
+        "skybluetech:molten_pe_static": {
+            "textures": "textures/fluid/molten_pe_static"
+        },
+        "skybluetech:molten_pe_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/molten_pe_flowing"
+        },
+        "skybluetech:baked_ethylene_static": {
+            "textures": "textures/fluid/baked/skybluetech.ethylene/static"
+        },
+        "skybluetech:baked_pure_methane_static": {
+            "textures": "textures/fluid/baked/skybluetech.pure_methane/static"
+        },
         "skybluetech:air_compressor": {
             "textures": "textures/models/air_compressor_texture"
         },

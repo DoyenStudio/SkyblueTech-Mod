@@ -236,6 +236,10 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:ethylene": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_ethylene_static"
+    },
     "skybluetech:famicom": {
         "sound": "iron"
     },
@@ -322,6 +326,10 @@
             "side": "skybluetech:baked_distilled_water_flowing",
             "up": "skybluetech:baked_distilled_water_flowing"
         }
+    },
+    "skybluetech:flowing_ethylene": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_ethylene_static"
     },
     "skybluetech:flowing_heavy_lava": {
         "blockshape": "water",
@@ -451,6 +459,14 @@
             "up": "skybluetech:baked_molten_platinum_static"
         }
     },
+    "skybluetech:flowing_molten_polyethylene": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_molten_polyethylene_static",
+            "side": "skybluetech:baked_molten_polyethylene_flowing",
+            "up": "skybluetech:baked_molten_polyethylene_flowing"
+        }
+    },
     "skybluetech:flowing_molten_rosin": {
         "blockshape": "water",
         "textures": {
@@ -482,6 +498,10 @@
     "skybluetech:flowing_oxygen": {
         "blockshape": "water",
         "textures": "skybluetech:baked_oxygen_static"
+    },
+    "skybluetech:flowing_pure_methane": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_pure_methane_static"
     },
     "skybluetech:flowing_raw_oil": {
         "blockshape": "water",
@@ -521,6 +541,14 @@
             "down": "skybluetech:baked_sulfuric_acid_flowing_block_static",
             "side": "skybluetech:baked_sulfuric_acid_flowing_block_flowing",
             "up": "skybluetech:baked_sulfuric_acid_flowing_block_flowing"
+        }
+    },
+    "skybluetech:flowing_tree_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tree_oil_static",
+            "side": "skybluetech:baked_tree_oil_flowing",
+            "up": "skybluetech:baked_tree_oil_flowing"
         }
     },
     "skybluetech:flowing_vegetable_oil": {
@@ -860,6 +888,14 @@
             "up": "skybluetech:baked_molten_platinum_static"
         }
     },
+    "skybluetech:molten_polyethylene": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_molten_polyethylene_static",
+            "side": "skybluetech:baked_molten_polyethylene_flowing",
+            "up": "skybluetech:baked_molten_polyethylene_static"
+        }
+    },
     "skybluetech:molten_rosin": {
         "blockshape": "water",
         "textures": {
@@ -946,6 +982,10 @@
     },
     "skybluetech:pump": {
         "sound": "stone"
+    },
+    "skybluetech:pure_methane": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_pure_methane_static"
     },
     "skybluetech:raw_lead_block": {
         "textures": "skybluetech:raw_lead_block"
@@ -1139,6 +1179,14 @@
     "skybluetech:transmit_belt": {
         "client_entity": {},
         "textures": "skybluetech:transmit_belt"
+    },
+    "skybluetech:tree_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tree_oil_static",
+            "side": "skybluetech:baked_tree_oil_flowing",
+            "up": "skybluetech:baked_tree_oil_static"
+        }
     },
     "skybluetech:ultraheatinum_block": {
         "sound": "copper",

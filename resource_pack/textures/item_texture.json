@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:pure_methane_bucket": {
+            "textures": "textures/items/buckets/pure_methane_bucket"
+        },
         "skybluetech:air_compress_unit": {
             "textures": "textures/items/air_compress_unit"
         },

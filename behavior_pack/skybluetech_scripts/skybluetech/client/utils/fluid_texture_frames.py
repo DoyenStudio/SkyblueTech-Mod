@@ -19,6 +19,12 @@ FLUID_TEXTURE_TINTS = {
 }
 
 FLUID_TEXTURE_FRAMES = {
+    "textures/fluid/baked/skybluetech.tree_oil/static": (39, 10.0),
+    "textures/fluid/baked/skybluetech.tree_oil/flowing": (39, 10.0),
+    "textures/fluid/baked/skybluetech.molten_polyethylene/static": (39, 10.0),
+    "textures/fluid/baked/skybluetech.molten_polyethylene/flowing": (39, 10.0),
+    "textures/fluid/baked/skybluetech.pure_methane/static": (32, 10.0),
+    "textures/fluid/baked/skybluetech.ethylene/static": (32, 10.0),
     "textures/fluid_models/minecraft.lava": (1, 0.0),
     "textures/fluid_models/minecraft.water": (1, 0.0),
     "textures/fluid_models/skybluetech.brine": (1, 0.0),

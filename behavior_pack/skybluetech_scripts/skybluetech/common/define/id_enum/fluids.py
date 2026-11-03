@@ -56,10 +56,12 @@ class CommonGas(Common, Gas):
 
     CHLORINE = "skybluetech:chlorine"
     COMPRESSED_AIR = "skybluetech:compressed_air"
+    ETHYLENE = "skybluetech:ethylene"
     HYDROGEN = "skybluetech:hydrogen"
     NITROGEN = "skybluetech:nitrogen"
     METHANE = "skybluetech:methane"
     OXYGEN = "skybluetech:oxygen"
+    PURE_METHANE = "skybluetech:pure_methane"
     WATER_VAPOR = "skybluetech:water_vapor"
 
 
@@ -67,6 +69,7 @@ class CommonOil(Common, Oil):
     "对流体管道无特殊要求的油类"
 
     RAW_OIL = "skybluetech:raw_oil"
+    TREE_OIL = "skybluetech:tree_oil"
     VEGETABLE_OIL = "skybluetech:vegetable_oil"
     LUBRICANT = "skybluetech:lubricant"
 
@@ -88,6 +91,7 @@ class HotFluid(Fluids):
     "需要白铜流体管道运输的流体"
 
     pass
+    MOLTEN_POLYETHYLENE = "skybluetech:molten_polyethylene"
 
 
 class ExtremeHotFluid(Fluids):

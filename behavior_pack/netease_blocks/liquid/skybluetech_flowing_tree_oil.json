@@ -1,0 +1,17 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "spread_delay": 8,
+                "spread_range": 8,
+                "can_float_boat": false
+            }
+        },
+        "description": {
+            "base_block": "flowing_liquid",
+            "category": "none",
+            "identifier": "skybluetech:flowing_tree_oil"
+        }
+    }
+}

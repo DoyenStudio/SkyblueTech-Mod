@@ -509,5 +509,48 @@
         "atlas_tile": "skybluetech:baked_dilute_brine_flowing",
         "replicate": 2,
         "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.ethylene/static",
+        "atlas_tile": "skybluetech:baked_ethylene_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.pure_methane/static",
+        "atlas_tile": "skybluetech:baked_pure_methane_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/molten_pe_static",
+        "atlas_tile": "skybluetech:molten_pe_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/molten_pe_flowing",
+        "atlas_tile": "skybluetech:molten_pe_flowing",
+        "ticks_per_frame": 2,
+        "replicate": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_polyethylene/static",
+        "atlas_tile": "skybluetech:baked_molten_polyethylene_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.molten_polyethylene/flowing",
+        "atlas_tile": "skybluetech:baked_molten_polyethylene_flowing",
+        "ticks_per_frame": 2,
+        "replicate": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.tree_oil/static",
+        "atlas_tile": "skybluetech:baked_tree_oil_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.tree_oil/flowing",
+        "atlas_tile": "skybluetech:baked_tree_oil_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
     }
 ]

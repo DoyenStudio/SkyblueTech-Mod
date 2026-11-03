@@ -282,6 +282,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         16,
     ),
+    # electrolyzer
+    MRecipe(
+        {
+            0: Input(tag_enum.StickTag.COPPER, is_tag=True),
+            1: Input(id_enum.ELECTROLYTIC_PANE),
+            2: Input(tag_enum.StickTag.COPPER, is_tag=True),
+            3: Input(id_enum.Tank.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.Tank.STEEL),
+            6: Input(id_enum.REDSTONEFLUX_CORE),
+            7: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            8: Input(id_enum.ControlCircuit.BASIC),
+        },
+        id_enum.Machinery.ELECTROLYZER,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # energy cube : junior
     MRecipe(
         {
@@ -448,13 +466,15 @@ recipes = RecipesCollection(
     # heat melting chamber
     MRecipe(
         {
-            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            1: Input(id_enum.HEAT_EXCHANGER, 1),
-            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            3: Input(id_enum.ControlCircuit.BASIC, 1),
-            4: Input(id_enum.MACHINERY_FRAME, 1),
-            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            0: Input(tag_enum.PlateTag.SKYBLUE, is_tag=True),
+            1: Input(tag_enum.PlateTag.SKYBLUE, is_tag=True),
+            2: Input(tag_enum.PlateTag.SKYBLUE, is_tag=True),
+            3: Input("minecraft:glass_pane"),
+            4: Input("minecraft:iron_trapdoor"),
+            5: Input("minecraft:glass_pane"),
+            6: Input(tag_enum.PlateTag.SKYBLUE, is_tag=True),
+            7: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            8: Input(tag_enum.PlateTag.SKYBLUE, is_tag=True),
         },
         id_enum.Machinery.HEAT_MELTING_CHAMBER,
         MRecipe.LEVEL_INVAR,
@@ -528,16 +548,20 @@ recipes = RecipesCollection(
     # infrared heat generator
     MRecipe(
         {
-            0: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
-            1: Input(id_enum.HEAT_PLATE, 4),
-            2: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
-            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
-            4: Input(id_enum.Machinery.ELECTRIC_HEATER, 1),
+            0: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            1: Input(tag_enum.PlateTag.CUPRONICKEL, is_tag=True),
+            2: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            3: Input(id_enum.Coils.LARGE_COPPER),
+            4: Input(id_enum.Machinery.ELECTRIC_HEATER),
+            5: Input(id_enum.Coils.LARGE_COPPER),
+            6: Input(tag_enum.PlateTag.CUPRONICKEL, is_tag=True),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(tag_enum.PlateTag.CUPRONICKEL, is_tag=True),
         },
         id_enum.Machinery.INFRARED_HEAT_GENERATOR,
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
-        24,
+        8,
     ),
     # item splitter
     MRecipe(
@@ -856,19 +880,20 @@ recipes = RecipesCollection(
     # small chemical reactor
     MRecipe(
         {
-            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            1: Input(id_enum.ELECTRIC_MOTOR, 1),
-            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            3: Input(id_enum.HEAT_EXCHANGER, 1),
-            4: Input(id_enum.MACHINERY_FRAME, 1),
-            5: Input(id_enum.ControlCircuit.ADVANCED, 2),
-            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
-            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            0: Input(tag_enum.StickTag.STEEL, is_tag=True),
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            2: Input(tag_enum.StickTag.STEEL, is_tag=True),
+            3: Input(id_enum.Tank.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.Tank.STEEL),
+            6: Input(tag_enum.PlateTag.TIN, is_tag=True),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(tag_enum.PlateTag.TIN, is_tag=True),
         },
         id_enum.Machinery.SMALL_CHEMICAL_REACTOR,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        24,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
     ),
     # solar panel
     MRecipe(
@@ -903,18 +928,18 @@ recipes = RecipesCollection(
     # thermal cracker
     MRecipe(
         {
-            0: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
-            1: Input(id_enum.HEAT_EXCHANGER, 2),
-            2: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
-            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
-            4: Input(id_enum.MACHINERY_FRAME, 1),
-            6: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
-            8: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+            1: Input("minecraft:brewing_stand"),
+            3: Input(id_enum.FluidPipe.ULTRAHEATINUM),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.FluidPipe.ULTRAHEATINUM),
+            6: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            7: Input(tag_enum.PlateTag.COPPER, is_tag=True),
+            8: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
         },
         id_enum.Machinery.THERMAL_CRACKER,
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
-        24,
+        8,
     ),
     # thermal generator
     MRecipe(

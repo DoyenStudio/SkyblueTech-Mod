@@ -1,11 +1,11 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
-        "skybluetech:rosin": {
-            "textures": "textures/items/rosin"
-        },
         "skybluetech:pure_methane_bucket": {
             "textures": "textures/items/buckets/pure_methane_bucket"
+        },
+        "skybluetech:rosin": {
+            "textures": "textures/items/rosin"
         },
         "skybluetech:air_compress_unit": {
             "textures": "textures/items/air_compress_unit"
@@ -288,6 +288,9 @@
         },
         "skybluetech:iron_plate": {
             "textures": "textures/items/plates/iron_plate"
+        },
+        "skybluetech:hdpe_nugget": {
+            "textures": "textures/items/nuggets/hdpe_nugget"
         },
         "skybluetech:hdpe_plate": {
             "textures": "textures/items/plates/hdpe_plate"

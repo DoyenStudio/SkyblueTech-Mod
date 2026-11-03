@@ -9,6 +9,7 @@ from ...define import (
     TOCPage,
     TOCPageSection,
 )
+from . import polyethylene
 from . import (
     machinery_crafting,
     machinery_energy,
@@ -135,6 +136,12 @@ machinery_production_toc = PageGroup(
         ),
         TOCPage(
             [
+                TOCPageSection(
+                    id_enum.Machinery.THERMAL_CRACKER, 0, "聚乙烯板生产链", polyethylene.chain,
+                ),
+                TOCPageSection(
+                    id_enum.Machinery.SMALL_CHEMICAL_REACTOR, 0, None, polyethylene.reactor,
+                ),
                 TOCPageSection(
                     id_enum.Machinery.REDSTONE_FURNACE,
                     0,

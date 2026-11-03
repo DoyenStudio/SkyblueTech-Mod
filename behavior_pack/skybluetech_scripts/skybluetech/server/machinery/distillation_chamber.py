@@ -31,6 +31,7 @@ IDLE_FLAGS = (
     flags.DEACTIVE_FLAG_NO_INPUT,
     flags.DEACTIVE_FLAG_NO_RECIPE,
     flags.DEACTIVE_FLAG_FLUID_FULL,
+    flags.DEACTIVE_FLAG_FLUID_NOT_MATCH,
 )
 
 
@@ -129,10 +130,16 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
         else:
             produce_rate = 1.0
             consume_rate = float(T_max - T_min) / (T_fit - T_min)
-        consume = rcp.consume * consume_rate
-        produce = rcp.produce * produce_rate
-        if in_fluid.volume < consume:
+        consume = rcp.consume * consume_rate / float(rcp.tick_duration)
+        produce = rcp.produce * produce_rate / float(rcp.tick_duration)
+        # Fractional feed (e.g. 0.1 mB/t steam) must not strand its final tick
+        # because repeated subtraction rounded a few ulps below the requirement.
+        tolerance = min(1e-9, consume * 1e-9)
+        if in_fluid.volume < consume - tolerance:
             return flags.DEACTIVE_FLAG_NO_INPUT
+        consume = min(consume, in_fluid.volume)
+        if out_fluid.fluid_id not in (None, rcp.produce_matter):
+            return flags.DEACTIVE_FLAG_FLUID_NOT_MATCH
         if out_fluid.max_volume - out_fluid.volume < produce:
             return flags.DEACTIVE_FLAG_FLUID_FULL
         in_fluid.volume -= consume

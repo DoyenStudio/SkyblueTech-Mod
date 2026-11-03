@@ -10,17 +10,29 @@ control_def 是 MEI 外壳的注册名，内容布局本身不依赖 MEI。
 """
 
 LAYOUTS = {
+    "skybluetech:distillation_column": {
+        "file": "DistillationColumn", "control_def": "SkyblueMeiDistillationColumn.RECIPES_GRID",
+        "inputs": (("fluid", 0),), "outputs": (("fluid", 1), ("fluid", 2), ("fluid", 3), ("fluid", 4),),
+        "catalysts": 0, "power": None, "segments": 0,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
+    "skybluetech:small_chemical_reactor": {
+        "file": "SmallChemicalReactor", "control_def": "SkyblueMeiSmallChemicalReactor.RECIPES_GRID",
+        "inputs": (("fluid", 0), ("fluid", 1),), "outputs": (("fluid", 2),),
+        "catalysts": 0, "power": "use", "segments": 17,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
+    "skybluetech:thermal_cracker": {
+        "file": "ThermalCracker", "control_def": "SkyblueMeiThermalCracker.RECIPES_GRID",
+        "inputs": (("fluid", 0), ("fluid", 1),), "outputs": (("fluid", 2), ("fluid", 3),),
+        "catalysts": 0, "power": None, "segments": 0,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
     "skybluetech:heat_melting_chamber": {
         "file": "HeatMeltingChamber",
         "control_def": "SkyblueMeiHeatMeltingChamber.RECIPES_GRID",
         "inputs": (("item", 0),),
         "outputs": (("item", 1), ("fluid", 0)),
-        "catalysts": 0, "power": None, "segments": 0,
-        "progress": "fromRightToLeft", "static": False, "flame": False,
-    },
-    "skybluetech:distillation_column": {
-        "file": "DistillationColumn", "control_def": "SkyblueMeiDistillationColumn.RECIPES_GRID",
-        "inputs": (("fluid", 0),), "outputs": (("fluid", 1), ("fluid", 2), ("fluid", 3), ("fluid", 4),),
         "catalysts": 0, "power": None, "segments": 0,
         "progress": "fromRightToLeft", "static": False, "flame": False,
     },

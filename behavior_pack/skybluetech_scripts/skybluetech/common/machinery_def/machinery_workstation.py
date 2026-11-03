@@ -17,6 +17,7 @@ K_NEED_TOOL = "st:need_tool"
 
 recipes = RecipesCollection(
     id_enum.Machinery.MACHINERY_WORKSTATION,
+    # Polyethylene chain equipment.
     MRecipe(
         {
             0: Input(tag_enum.PlateTag.COPPER, 1, is_tag=True),
@@ -63,6 +64,65 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
         8,
+    ),
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            1: Input(id_enum.HEAT_EXCHANGER, 1),
+            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            3: Input(id_enum.ControlCircuit.BASIC, 1),
+            4: Input(id_enum.MACHINERY_FRAME, 1),
+            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+        },
+        id_enum.Machinery.HEAT_MELTING_CHAMBER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
+            1: Input(id_enum.HEAT_PLATE, 4),
+            2: Input(tag_enum.PlateTag.CUPRONICKEL, 1, is_tag=True),
+            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
+            4: Input(id_enum.Machinery.ELECTRIC_HEATER, 1),
+        },
+        id_enum.Machinery.INFRARED_HEAT_GENERATOR,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
+    ),
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+            1: Input(id_enum.HEAT_EXCHANGER, 2),
+            2: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+            3: Input(id_enum.ControlCircuit.ADVANCED, 2),
+            4: Input(id_enum.MACHINERY_FRAME, 1),
+            6: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+            8: Input(tag_enum.PlateTag.INVAR, 1, is_tag=True),
+        },
+        id_enum.Machinery.THERMAL_CRACKER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
+    ),
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            1: Input(id_enum.ELECTRIC_MOTOR, 1),
+            2: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            3: Input(id_enum.HEAT_EXCHANGER, 1),
+            4: Input(id_enum.MACHINERY_FRAME, 1),
+            5: Input(id_enum.ControlCircuit.ADVANCED, 2),
+            6: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+            8: Input(tag_enum.PlateTag.STEEL, 1, is_tag=True),
+        },
+        id_enum.Machinery.SMALL_CHEMICAL_REACTOR,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        24,
     ),
     # air compressor
     MRecipe(

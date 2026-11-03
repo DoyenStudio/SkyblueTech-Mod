@@ -1,0 +1,172 @@
+{
+    "content": {
+        "type": "panel",
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "controls": [
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tin_fluid0@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tin_fluid1@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        52,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid2@SkybluePanelLib.status_ring": {
+                    "layer": 10,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        120,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        52,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        120,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        78,
+                        36
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        76,
+                        30
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ]
+                }
+            },
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$content_size": [
+            162,
+            72
+        ],
+        "$has_tabs": true,
+        "$has_upgrades": false,
+        "$machine_content": "SmallChemicalReactorUI.content",
+        "$panel_size": [
+            176,
+            184
+        ],
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": true,
+        "$title_text": "小型化学反应釜"
+    },
+    "namespace": "SmallChemicalReactorUI"
+}

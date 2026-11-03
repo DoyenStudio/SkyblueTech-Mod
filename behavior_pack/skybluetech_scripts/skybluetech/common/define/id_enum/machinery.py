@@ -3,6 +3,8 @@ from .utils import SimpleEnum
 
 
 class Machinery(SimpleEnum):
+    THERMAL_CRACKER = "skybluetech:thermal_cracker"
+    SMALL_CHEMICAL_REACTOR = "skybluetech:small_chemical_reactor"
     ALLOY_FURNACE = "skybluetech:alloy_furnace"
     AIR_COMPRESSOR = "skybluetech:air_compressor"
     ASSEMBLER = "skybluetech:assembler"

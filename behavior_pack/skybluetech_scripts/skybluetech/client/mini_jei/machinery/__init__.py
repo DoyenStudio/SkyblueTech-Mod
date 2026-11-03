@@ -16,3 +16,5 @@ from . import (
     template_assembler,
     vacuum_freezer,
 )
+
+from . import polyethylene

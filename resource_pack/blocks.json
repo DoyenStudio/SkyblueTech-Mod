@@ -1302,5 +1302,27 @@
     },
     "skybluetech:wire_tin": {
         "sound": "cloth"
+    },
+    "skybluetech:thermal_cracker": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:thermal_cracker_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
+    },
+    "skybluetech:small_chemical_reactor": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:small_chemical_reactor_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
     }
 }

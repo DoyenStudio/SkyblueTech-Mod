@@ -1,9 +1,6 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
-        "skybluetech:heat_melting_chamber": {
-            "textures": "textures/models/heat_melting_chamber_texture"
-        },
         "skybluetech:baked_molten_polyethylene_flowing": {
             "quad": 1,
             "textures": "textures/fluid/baked/skybluetech.molten_polyethylene/flowing"
@@ -30,6 +27,9 @@
         },
         "skybluetech:baked_pure_methane_static": {
             "textures": "textures/fluid/baked/skybluetech.pure_methane/static"
+        },
+        "skybluetech:heat_melting_chamber": {
+            "textures": "textures/models/heat_melting_chamber_texture"
         },
         "skybluetech:air_compressor": {
             "textures": "textures/models/air_compressor_texture"
@@ -1010,6 +1010,18 @@
         },
         "skybluetech:wire_tin_item": {
             "textures": "textures/transmitters/wire_tin_item"
+        },
+        "skybluetech:thermal_cracker_front": {
+            "textures": "textures/blocks/machinery/thermal_cracker_front"
+        },
+        "skybluetech:thermal_cracker_front_active": {
+            "textures": "textures/blocks/machinery/thermal_cracker_front_active"
+        },
+        "skybluetech:small_chemical_reactor_front": {
+            "textures": "textures/blocks/machinery/small_chemical_reactor_front"
+        },
+        "skybluetech:small_chemical_reactor_front_active": {
+            "textures": "textures/blocks/machinery/flipbook_textures/small_chemical_reactor_front_active"
         }
     },
     "texture_name": "atlas.terrain"

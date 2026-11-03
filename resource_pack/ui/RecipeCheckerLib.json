@@ -522,15 +522,29 @@
         ]
     },
     "namespace": "RecipeCheckerLib",
-    "distillation_column_recipes@MachineRecipeLib.mini_row": {
-        "$recipe_content": "MachineRecipeLib.DistillationColumn",
+    "heat_melting_chamber_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.HeatMeltingChamber",
         "size": [
             180,
             62
         ]
     },
-    "heat_melting_chamber_recipes@MachineRecipeLib.mini_row": {
-        "$recipe_content": "MachineRecipeLib.HeatMeltingChamber",
+    "thermal_cracker_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.ThermalCracker",
+        "size": [
+            180,
+            62
+        ]
+    },
+    "small_chemical_reactor_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.SmallChemicalReactor",
+        "size": [
+            180,
+            62
+        ]
+    },
+    "distillation_column_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.DistillationColumn",
         "size": [
             180,
             62

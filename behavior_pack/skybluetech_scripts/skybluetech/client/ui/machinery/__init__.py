@@ -62,3 +62,5 @@ from .vacuum_freezer import VacuumFreezerUI
 from .wind_generator import WindGeneratorUI
 
 from .heat_melting_chamber import HeatMeltingChamberUI
+
+from .polyethylene import ThermalCrackerUI, SmallChemicalReactorUI

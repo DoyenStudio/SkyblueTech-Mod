@@ -47,7 +47,11 @@ from ..mini_jei.common.common_recipe_cls import (
 from ..mini_jei.common.description import Description, RegisterDescription
 from ..mini_jei.core.helper import GetRecipesByInput, GetRecipesByOutput, GetRecipesByCategory
 
+from ..mini_jei.machinery.thermal_cracker import ThermalCrackerRecipe
+from ..mini_jei.machinery.small_chemical_reactor import SmallChemicalReactorRecipe
+
 __all__ = [
+    "ThermalCrackerRecipe", "SmallChemicalReactorRecipe",
     "DistillationColumnRecipe", "DistillationFraction",
     "RecipesCollection", "CategoryType", "RecipeBase", "Recipe", "Input", "Output",
     "RegisterRecipe", "MarshalOrderedInputs", "MarshalOrderedOutputs", "UnmarshalOrderedInputs",

@@ -35,7 +35,9 @@
                 "skybluetech:precision_cutter",
                 "skybluetech:redstone_furnace",
                 "skybluetech:sawmill",
-                "skybluetech:template_assembler"
+                "skybluetech:template_assembler",
+                "skybluetech:thermal_cracker",
+                "skybluetech:small_chemical_reactor"
             ]
         },
         {

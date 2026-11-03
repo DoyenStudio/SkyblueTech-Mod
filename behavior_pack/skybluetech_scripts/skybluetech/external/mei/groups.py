@@ -39,7 +39,7 @@ SHARED = (
     ("mei:group.bucket", "mei.group.bucket", _ids(
         "brine_bucket", "chlorine_bucket", "deepslate_lava_bucket", "dilute_brine_bucket", "distilled_water_bucket",
         "heavy_lava_bucket", "hydrogen_bucket", "light_lava_bucket", "liquid_air_bucket", "liquid_resin_bucket",
-        "lubricant_bucket", "methane_bucket", "methane_mud_bucket", "mid_lava_bucket", "molten_copper_bucket",
+        "lubricant_bucket", "methane_bucket", "pure_methane_bucket", "methane_mud_bucket", "mid_lava_bucket", "molten_copper_bucket",
         "molten_earth_bucket", "molten_gold_bucket", "molten_impurity_bucket", "molten_iron_bucket", "molten_lead_bucket",
         "molten_nickel_bucket", "molten_platinum_bucket", "molten_silver_bucket", "molten_tin_bucket", "raw_oil_bucket",
         "saturated_brine_bucket", "sodium_hydroxide_solution_bucket", "sulfuric_acid_bucket", "vegetable_oil_bucket",
@@ -72,7 +72,7 @@ OWN = (
         "assembler", "electric_machinery_workstation", "machinery_workstation")),
     ("skybluetech:group.machinery_production", "itemGroup.skybluetech.machinery_production", _ids(
         "alloy_furnace", "compressor", "distillation_chamber", "electric_crafter", "electrolyzer",
-        "engraver", "fluid_condenser", "freezer", "heat_melting_chamber", "hydroponic_base", "hydroponic_bed",
+        "engraver", "fluid_condenser", "freezer", "heat_melting_chamber", "thermal_cracker", "small_chemical_reactor", "hydroponic_base", "hydroponic_bed",
         "hydroponic_bed_sand", "macerator", "magma_centrifuge", "magma_furnace", "metal_press", "mixed_macerator", "mixer",
         "oil_extractor", "precision_cutter", "redstone_furnace", "sawmill", "template_assembler")),
     ("skybluetech:group.machinery_energy", "itemGroup.skybluetech.machinery_energy", _ids(

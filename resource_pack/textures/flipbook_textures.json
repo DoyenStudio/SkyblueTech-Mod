@@ -557,5 +557,10 @@
         "atlas_tile": "skybluetech:baked_tree_oil_flowing",
         "replicate": 2,
         "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/small_chemical_reactor_front_active",
+        "atlas_tile": "skybluetech:small_chemical_reactor_front_active",
+        "ticks_per_frame": 4
     }
 ]

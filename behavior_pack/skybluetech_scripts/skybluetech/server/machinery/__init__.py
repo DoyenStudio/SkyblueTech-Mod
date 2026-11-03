@@ -65,6 +65,9 @@ from .thermal_generator import ThermalGenerator
 from .vacuum_freezer import VacuumFreezer
 from .wind_generator import WindGenerator
 
+from .thermal_cracker import ThermalCracker
+from .small_chemical_reactor import SmallChemicalReactor
+
 # collections
 from .interfaces import *
 from .tanks import *

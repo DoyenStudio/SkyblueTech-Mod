@@ -23,6 +23,7 @@ preset_tagged = gen_preset_tagged_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 
 recipes = RecipesCollection(
     Machinery.COMPRESSOR,
+    CompressorRecipe({0: Input(id_enum.HDPE_NUGGET, 9)}, Output(Plates.HDPE), 80, 160),
     # Minecraft
     # Ingot 2 Plate
     preset("minecraft:copper_ingot", Plates.COPPER),

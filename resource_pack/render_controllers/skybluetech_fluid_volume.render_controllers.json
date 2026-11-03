@@ -7,7 +7,15 @@
                     "Array.volume_textures": [
                         "Texture.volume",
                         "Texture.volume_dilute_brine",
-                        "Texture.volume_saturated_brine"
+                        "Texture.volume_saturated_brine",
+                        "Texture.volume_water",
+                        "Texture.volume_distilled_water",
+                        "Texture.volume_water_vapor",
+                        "Texture.volume_raw_oil",
+                        "Texture.volume_lubricant",
+                        "Texture.volume_vegetable_oil",
+                        "Texture.volume_liquid_resin",
+                        "Texture.volume_molten_rosin"
                     ]
                 }
             },

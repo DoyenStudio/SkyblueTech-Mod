@@ -8,6 +8,14 @@
 FLUID_VOLUME_TEXTURE_INDICES = {
     "textures/fluid/baked/skybluetech.dilute_brine/static": 1,
     "textures/fluid/baked/skybluetech.saturated_brine/static": 2,
+    "textures/blocks/water_still_grey": 3,
+    "textures/fluid/baked/skybluetech.distilled_water/static": 4,
+    "textures/fluid/baked/skybluetech.water_vapor/static": 5,
+    "textures/fluid/baked/skybluetech.raw_oil/static": 6,
+    "textures/fluid/baked/skybluetech.lubricant/static": 7,
+    "textures/fluid/baked/skybluetech.vegetable_oil/static": 8,
+    "textures/fluid/baked/skybluetech.liquid_resin/static": 9,
+    "textures/fluid/baked/skybluetech.molten_rosin/static": 10,
 }
 
 # 只有依赖引擎额外着色的灰度源图才登记；已烘焙颜色的流体保持原色。

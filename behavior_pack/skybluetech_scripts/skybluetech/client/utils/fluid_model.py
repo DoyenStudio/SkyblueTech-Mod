@@ -142,7 +142,7 @@ class FluidVolumeModel(object):
             texture_key = texture_key[:-4]
         actor_render = CF.CreateActorRender(self.ceid)
         texture_index = FLUID_VOLUME_TEXTURE_INDICES.get(texture_key, 0)
-        # 蒸发池贴图预先声明，由渲染控制器选择。首次动态替换贴图在重进后
+        # 已登记的容器流体贴图预先声明，由渲染控制器选择。首次动态替换贴图在重进后
         # 可能只更新可查询路径、实际仍采样初始占位图，不能靠返回值判定成功。
         if texture_index == 0:
             if not CF.CreateActorRender(LEVEL_ID).AddTextureToOneActor(

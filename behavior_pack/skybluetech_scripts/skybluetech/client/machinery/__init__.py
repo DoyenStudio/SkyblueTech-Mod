@@ -1,6 +1,7 @@
 from . import (
     bans,
     brine_evaporation_pond,
+    chamber_fluid,
     charger,
     creative_power_acceptor,
     deepslate_lava_vibrator,

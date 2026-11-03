@@ -214,6 +214,11 @@
         }
     },
     "skybluetech:distillation_chamber": {
+        "client_entity": {},
+        "sound": "glass"
+    },
+    "skybluetech:heat_melting_chamber": {
+        "client_entity": {},
         "sound": "glass"
     },
     "skybluetech:distilled_water": {

@@ -27,7 +27,15 @@
                 "default": "textures/models/model_entity_texture",
                 "volume": "textures/models/model_entity_texture",
                 "volume_dilute_brine": "textures/fluid/baked/skybluetech.dilute_brine/static",
-                "volume_saturated_brine": "textures/fluid/baked/skybluetech.saturated_brine/static"
+                "volume_saturated_brine": "textures/fluid/baked/skybluetech.saturated_brine/static",
+                "volume_water": "textures/blocks/water_still_grey",
+                "volume_distilled_water": "textures/fluid/baked/skybluetech.distilled_water/static",
+                "volume_water_vapor": "textures/fluid/baked/skybluetech.water_vapor/static",
+                "volume_raw_oil": "textures/fluid/baked/skybluetech.raw_oil/static",
+                "volume_lubricant": "textures/fluid/baked/skybluetech.lubricant/static",
+                "volume_vegetable_oil": "textures/fluid/baked/skybluetech.vegetable_oil/static",
+                "volume_liquid_resin": "textures/fluid/baked/skybluetech.liquid_resin/static",
+                "volume_molten_rosin": "textures/fluid/baked/skybluetech.molten_rosin/static"
             },
             "animations": {
                 "y_scale": "animation.skybluetech.fluid_model_entity.y_scale",

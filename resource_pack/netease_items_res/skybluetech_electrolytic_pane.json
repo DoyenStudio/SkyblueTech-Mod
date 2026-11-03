@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:electrolytic_pane"
+        },
+        "description": {
+            "identifier": "skybluetech:electrolytic_pane"
+        }
+    }
+}

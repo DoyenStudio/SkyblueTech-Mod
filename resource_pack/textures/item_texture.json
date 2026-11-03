@@ -100,6 +100,9 @@
         "skybluetech:chlorine_bucket": {
             "textures": "textures/items/buckets/chlorine_bucket"
         },
+        "skybluetech:electrolytic_pane": {
+            "textures": "textures/items/electrolytic_pane"
+        },
         "skybluetech:circuit_base_plate": {
             "textures": "textures/items/circuit_base_plate"
         },

@@ -431,6 +431,7 @@ tile.skybluetech:flowing_so3.name=流动三氧化硫
 item.skybluetech:sulfuric_acid_bucket.name=硫酸桶
 tile.skybluetech:steel_block.name=钢块
 item.skybluetech:circuit_base_plate.name=电路板基片
+item.skybluetech:electrolytic_pane.name=电解片
 item.skybluetech:light_skyblue_ingot.name=轻质蔚蓝锭
 item.skybluetech:bronze_axe.name=青铜斧
 item.skybluetech:bronze_pickaxe.name=青铜镐

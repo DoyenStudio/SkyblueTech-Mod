@@ -1,0 +1,18 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "common:skyblue_plate",
+                    "c:skyblue_plate",
+                    "plates/skyblue"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:skyblue_plate"
+        }
+    }
+}

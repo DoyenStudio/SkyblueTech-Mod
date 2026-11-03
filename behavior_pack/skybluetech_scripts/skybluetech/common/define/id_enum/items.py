@@ -130,6 +130,7 @@ class Plates(SimpleEnum):
     COPPER = "skybluetech:copper_plate"
 
     TIN = "skybluetech:tin_plate"
+    SKYBLUE = "skybluetech:skyblue_plate"
     LEAD = "skybluetech:lead_plate"
     SILVER = "skybluetech:silver_plate"
     NICKEL = "skybluetech:nickel_plate"

@@ -69,6 +69,7 @@ class PlateTag:
     ALUMITE = "common:alumite_plate"
 
     TIN = "common:tin_plate"
+    SKYBLUE = "plates/skyblue"
     LEAD = "common:lead_plate"
     NICKEL = "common:nickel_plate"
     SILVER = "common:silver_plate"

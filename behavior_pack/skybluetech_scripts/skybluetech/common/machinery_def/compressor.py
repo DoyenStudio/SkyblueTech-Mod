@@ -31,6 +31,7 @@ recipes = RecipesCollection(
     preset("minecraft:gold_ingot", Plates.GOLD),
     preset_tagged(IngotTag.ALUMINUM, Plates.ALUMINUM),
     preset_tagged(IngotTag.TIN, Plates.TIN),
+    preset(id_enum.Ingots.LIGHT_SKYBLUE, Plates.SKYBLUE),
     preset_tagged(IngotTag.LEAD, Plates.LEAD),
     preset_tagged(IngotTag.SILVER, Plates.SILVER),
     preset_tagged(IngotTag.PLATINUM, Plates.PLATINUM),

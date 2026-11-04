@@ -8,9 +8,9 @@
         "controls": [
             {
                 "ring_energy@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
                         7,
                         17
@@ -23,11 +23,11 @@
             },
             {
                 "ring_tin_fluid0@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
-                        28,
+                        24,
                         17
                     ],
                     "size": [
@@ -38,11 +38,11 @@
             },
             {
                 "ring_tin_fluid1@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
-                        52,
+                        44,
                         17
                     ],
                     "size": [
@@ -53,11 +53,11 @@
             },
             {
                 "ring_tout_fluid2@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
-                        120,
+                        140,
                         17
                     ],
                     "size": [
@@ -71,7 +71,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        28,
+                        24,
                         17
                     ],
                     "size": [
@@ -85,7 +85,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        52,
+                        44,
                         17
                     ],
                     "size": [
@@ -99,7 +99,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        120,
+                        140,
                         17
                     ],
                     "size": [
@@ -113,7 +113,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        78,
+                        90,
                         36
                     ],
                     "size": [
@@ -127,7 +127,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        76,
+                        88,
                         30
                     ],
                     "size": [
@@ -149,6 +149,84 @@
                         54
                     ]
                 }
+            },
+            {
+                "item_input_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        68,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_in_item@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        68,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "item_output_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        116,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_out_item@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        116,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
             }
         ]
     },
@@ -162,11 +240,15 @@
         "$machine_content": "SmallChemicalReactorUI.content",
         "$panel_size": [
             176,
-            184
+            166
         ],
         "$screen_content": "SkybluePanelLib.machine_screen",
         "$show_led": true,
-        "$title_text": "小型化学反应釜"
+        "$title_text": "小型化学反应釜",
+        "$upgrade_slot0": 2,
+        "$upgrade_slot1": 3,
+        "$upgrade_slot2": 4,
+        "$upgrade_slot3": 5
     },
     "namespace": "SmallChemicalReactorUI"
 }

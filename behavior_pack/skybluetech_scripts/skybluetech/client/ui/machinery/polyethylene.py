@@ -52,4 +52,4 @@ class ThermalCrackerUI(ChemicalFluidUI):
 @RegistToolDeltaScreen("SmallChemicalReactorUI.main", is_proxy=True)
 class SmallChemicalReactorUI(ChemicalFluidUI):
     definition = small_chemical_reactor
-    STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_tout_",)}
+    STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_tout_", "ring_out_")}

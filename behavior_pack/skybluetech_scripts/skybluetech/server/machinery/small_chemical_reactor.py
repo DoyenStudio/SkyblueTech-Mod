@@ -18,9 +18,9 @@ class SmallChemicalReactor(Processor, MultiFluidContainer):
     fluid_output_slots = (2,)
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
-    item_input_slots = (0,)
+    item_input_slots = (0, 2)
     item_output_slots = (1,)
-    upgrade_slot_start = 2
+    upgrade_slot_start = 3
     upgrade_slots = 0
     allow_upgraders = frozenset()
 

@@ -18,8 +18,8 @@ LAYOUTS = {
     },
     "skybluetech:small_chemical_reactor": {
         "file": "SmallChemicalReactor", "control_def": "SkyblueMeiSmallChemicalReactor.RECIPES_GRID",
-        "inputs": (("fluid", 0), ("fluid", 1),), "outputs": (("fluid", 2),),
-        "catalysts": 0, "power": "use", "segments": 17,
+        "inputs": (("fluid", 0), ("fluid", 1), ("item", 0),), "outputs": (("fluid", 2), ("item", 1),),
+        "catalysts": 1, "power": "use", "segments": 17,
         "progress": "fromRightToLeft", "static": False, "flame": False,
     },
     "skybluetech:thermal_cracker": {

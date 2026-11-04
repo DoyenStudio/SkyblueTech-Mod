@@ -227,6 +227,45 @@
                         18
                     ]
                 }
+            },
+            {
+                "catalyst_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        68,
+                        53.0
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 2
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_in_catalyst@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        68,
+                        53
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
             }
         ]
     },
@@ -245,10 +284,10 @@
         "$screen_content": "SkybluePanelLib.machine_screen",
         "$show_led": true,
         "$title_text": "小型化学反应釜",
-        "$upgrade_slot0": 2,
-        "$upgrade_slot1": 3,
-        "$upgrade_slot2": 4,
-        "$upgrade_slot3": 5
+        "$upgrade_slot0": 3,
+        "$upgrade_slot1": 4,
+        "$upgrade_slot2": 5,
+        "$upgrade_slot3": 6
     },
     "namespace": "SmallChemicalReactorUI"
 }

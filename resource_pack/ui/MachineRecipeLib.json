@@ -4917,6 +4917,21 @@
                                                 54
                                             ]
                                         }
+                                    },
+                                    {
+                                        "2@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input2",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                64,
+                                                22
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ]
+                                        }
                                     }
                                 ]
                             }
@@ -4938,12 +4953,27 @@
                                             "anchor_to": "top_left",
                                             "layer": -5,
                                             "offset": [
-                                                116,
+                                                132,
                                                 4
                                             ],
                                             "size": [
                                                 18,
                                                 54
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "1@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output1",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                112,
+                                                23
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
                                             ]
                                         }
                                     }
@@ -4956,7 +4986,7 @@
                                 "anchor_to": "top_left",
                                 "layer": 1,
                                 "offset": [
-                                    72,
+                                    86,
                                     24
                                 ],
                                 "size": [
@@ -4971,12 +5001,39 @@
                                 "anchor_to": "top_left",
                                 "layer": 9,
                                 "offset": [
-                                    72,
+                                    86,
                                     24
                                 ],
                                 "size": [
                                     22,
                                     15
+                                ]
+                            }
+                        },
+                        {
+                            "cat": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.cat0",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                64,
+                                                40
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ]
+                                        }
+                                    }
                                 ]
                             }
                         }

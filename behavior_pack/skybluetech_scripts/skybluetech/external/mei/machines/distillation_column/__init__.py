@@ -7,9 +7,15 @@ from ... import exports
 def Decorate(recipe, parts):
     for name in ("min_temperature", "max_temperature", "fit_temperature"):
         parts["data"][name] = getattr(recipe, name)
+    if getattr(recipe, "chamber_multiplier", None):
+        parts["data"]["conditions"] = [
+            "§7[§bi§7] 小型蒸馏仓§f适用配方\n§7[§6!§7] 过高的温度将导致原料§6损耗加剧\n§f批次耗时： %.2f s"
+            % (recipe.tick_duration / 20.0),
+        ]
+        return
     parts["data"]["conditions"] = [
-        "§7[§bi§7] §f充分回收§7时的每批产量\n§7[§bi§7] §7实际产率§f随温度变化§7\n§f批次耗时： %.1f s"
-        % (recipe.tick_duration),
+        "§7[§bi§7] §f充分蒸馏§7时的每批产量\n§7[§bi§7] §7实际产率§f随温度变化§7\n§f批次耗时： %.1f s"
+        % (recipe.tick_duration / 20.0),
     ]
 
 

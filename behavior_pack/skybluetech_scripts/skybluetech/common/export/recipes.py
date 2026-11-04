@@ -20,6 +20,7 @@ from ..mini_jei.machinery.cyro_heat_melting_chamber import CyroHeatMeltingChambe
 from ..mini_jei.machinery.heat_melting_chamber import HeatMeltingChamberRecipe
 from ..mini_jei.machinery.distillation_chamber import DistillationChamberRecipe
 from ..mini_jei.machinery.distillation_column import DistillationColumnRecipe, DistillationFraction
+from ..mini_jei.machinery.distillation_column_chamber import DistillationColumnChamberRecipe
 from ..mini_jei.machinery.engraver import EngraverRecipe
 from ..mini_jei.machinery.electrolyzer import ElectrolyzerRecipe
 from ..mini_jei.machinery.fluid_condenser import FluidCondenserRecipe
@@ -52,7 +53,7 @@ from ..mini_jei.machinery.small_chemical_reactor import SmallChemicalReactorReci
 
 __all__ = [
     "ThermalCrackerRecipe", "SmallChemicalReactorRecipe",
-    "DistillationColumnRecipe", "DistillationFraction",
+    "DistillationColumnRecipe", "DistillationFraction", "DistillationColumnChamberRecipe",
     "RecipesCollection", "CategoryType", "RecipeBase", "Recipe", "Input", "Output",
     "RegisterRecipe", "MarshalOrderedInputs", "MarshalOrderedOutputs", "UnmarshalOrderedInputs",
     "UnmarshalOrderedOutputs", "MachineRecipeBase", "MachineRecipe", "GeneratorRecipe",

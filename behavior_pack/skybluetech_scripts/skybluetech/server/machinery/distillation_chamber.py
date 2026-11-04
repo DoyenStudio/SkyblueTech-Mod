@@ -119,22 +119,11 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
 
     def work_with_recipe(self, rcp, in_fluid, out_fluid):
         # type: (DistillationChamberRecipe, FluidSlotServer, FluidSlotServer) -> int
-        T = self.kelvin
-        T_min = rcp.min_temperature
-        T_fit = rcp.fit_temperature
-        T_max = rcp.max_temperature
-        if T <= T_min:
+        plan = rcp.evaluate(self.kelvin)
+        if plan is None:
             return flags.DEACTIVE_FLAG_NO_RECIPE
-        if T <= T_fit:
-            produce_rate = consume_rate = float(T - T_min) / (T_fit - T_min)
-        elif T <= T_max:
-            produce_rate = 1.0
-            consume_rate = float(T - T_min) / (T_fit - T_min)
-        else:
-            produce_rate = 1.0
-            consume_rate = float(T_max - T_min) / (T_fit - T_min)
-        consume = rcp.consume * consume_rate / float(rcp.tick_duration)
-        produce = rcp.produce * produce_rate / float(rcp.tick_duration)
+        consume = plan.feed_volume
+        produce = plan.output_volumes[0]
         # Fractional feed (e.g. 0.1 mB/t steam) must not strand its final tick
         # because repeated subtraction rounded a few ulps below the requirement.
         tolerance = min(1e-9, consume * 1e-9)
@@ -148,7 +137,7 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
         in_fluid.volume -= consume
         self._produce_accum += produce
         self.OutputFluid(rcp.produce_matter, produce, 1, True)
-        self.heat_value -= produce * rcp.heat_per_produce
+        self.heat_value -= plan.heat_cost
         if in_fluid.volume <= 0:
             in_fluid.fluid_id = None
         return 0

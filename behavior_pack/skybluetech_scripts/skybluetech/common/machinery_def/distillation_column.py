@@ -1,6 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define.id_enum import DistillationColumn, fluids
 from skybluetech_scripts.skybluetech.common.mini_jei.core import RecipesCollection
+from skybluetech_scripts.skybluetech.common.machinery_def.distillation_chamber import recipes as chamber_recipes
+from skybluetech_scripts.skybluetech.common.mini_jei.machinery.distillation_column_chamber import DistillationColumnChamberRecipe
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.distillation_column import (
     DistillationColumnRecipe, DistillationFraction,
 )
@@ -28,6 +30,10 @@ recipes = RecipesCollection(
         fluids.Molten.ROSIN, tick_duration=200,
     ),
 )
+
+# 原生分馏配方优先，兼容配方随小型蒸馏仓配方表在两端加载时生成。
+for chamber_recipe in chamber_recipes:
+    recipes.add_recipe(DistillationColumnChamberRecipe(chamber_recipe))
 
 FRAME = DistillationColumn.FRAME
 IO_HEAT = DistillationColumn.IO_HEAT

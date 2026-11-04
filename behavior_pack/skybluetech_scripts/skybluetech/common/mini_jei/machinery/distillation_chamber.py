@@ -1,7 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define.id_enum import machinery
 from .define import CategoryType, MachineRecipe, Input, Output
-from .distillation_column import integer_volume
+from .distillation_column import DistillationPlan, integer_volume
 
 
 class DistillationChamberRecipe(MachineRecipe):
@@ -40,6 +40,16 @@ class DistillationChamberRecipe(MachineRecipe):
         # 每产出 1 mB 产物要从本机热值里扣掉多少 RF 热, 单位 RF热/mB, 默认 1.0。
         # 调大它 = 同样产量要多掏热, 也就需要加热仓比最适温度高出一截才推得动。
         self.heat_per_produce = heat_per_produce
+
+    def evaluate(self, temperature):
+        if temperature <= self.min_temperature:
+            return None
+        consume_rate = float(min(temperature, self.max_temperature) - self.min_temperature) / (
+            self.fit_temperature - self.min_temperature)
+        produce_rate = min(1.0, consume_rate)
+        consume = self.consume * consume_rate / float(self.tick_duration)
+        produce = self.produce * produce_rate / float(self.tick_duration)
+        return DistillationPlan(consume, [produce], produce * self.heat_per_produce)
 
     def Marshal(self):
         # type: () -> dict

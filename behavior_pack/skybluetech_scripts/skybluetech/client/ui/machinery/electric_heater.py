@@ -25,7 +25,7 @@ from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 
 from .define import MAIN_PATH, MachinePanelUIProxy
-from .utils import UpdatePowerBar
+from .utils import UpdatePowerBar, FormatKelvin
 
 POWER_BAR_PATH = MAIN_PATH / "power_bar"
 DATABAR_TEXT_PATH = MAIN_PATH / "databar/text"
@@ -86,8 +86,12 @@ class ElectricHeaterUI(MachinePanelUIProxy):
         current_power = GetValue(data, K_CURRENT_POWER, 0.0)
         UpdatePowerBar(self.power_bar, GetValue(data, K_STORE_RF, 0), STORE_RF_MAX)
         self.databar_text.SetText(
-            "当前温度： %.1f K； 设定温度： %.1f K\n当前功率： %.1f RF/t"
-            % (current_temperature, kelvin_limit, current_power)
+            "当前温度： %s； 设定温度： %s\n当前功率： %.1f RF/t"
+            % (
+                FormatKelvin(current_temperature, "%.1f %sK"),
+                FormatKelvin(kelvin_limit, "%.1f %sK"),
+                current_power,
+            )
         )
 
     def onSubmit(self, _):
@@ -124,4 +128,6 @@ class ElectricHeaterUI(MachinePanelUIProxy):
             self.kelvin_limit_input.SetText("")
             return
         # 夹紧到本机能力范围: 低于环境温度没意义, 高于本机温度上限永远到不了
-        self.kelvin_limit_input.SetText(str(min(max(value, MIN_KELVIN), self.max_kelvin)))
+        self.kelvin_limit_input.SetText(
+            str(min(max(value, MIN_KELVIN), self.max_kelvin))
+        )

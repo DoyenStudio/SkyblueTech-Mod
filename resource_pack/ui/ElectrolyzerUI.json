@@ -4,9 +4,9 @@
         "controls": [
             {
                 "power_bar@SkybluePanelLib.energy_meter": {
-                    "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         7,
                         17
@@ -33,10 +33,10 @@
             },
             {
                 "fluid0@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_70",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         25,
                         17
@@ -64,6 +64,8 @@
             {
                 "anode_input_slot": {
                     "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         63,
                         44
@@ -72,6 +74,7 @@
                         18,
                         18
                     ],
+                    "layer": 1,
                     "collection_name": "netease_container",
                     "controls": [
                         {
@@ -79,10 +82,7 @@
                                 "collection_index": 0
                             }
                         }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1
+                    ]
                 }
             },
             {
@@ -101,9 +101,9 @@
             },
             {
                 "flow_arrow@SkybluePanelLib.progress_arrow": {
-                    "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         85,
                         46
@@ -112,9 +112,9 @@
             },
             {
                 "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
-                    "layer": 4,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 4,
                     "offset": [
                         84,
                         45
@@ -127,16 +127,16 @@
             },
             {
                 "fluid1@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         111,
                         17
                     ],
                     "size": [
-                        18,
+                        19,
                         36
                     ]
                 }
@@ -157,16 +157,16 @@
             },
             {
                 "fluid2@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
-                        131,
+                        130,
                         17
                     ],
                     "size": [
-                        18,
+                        19,
                         36
                     ]
                 }
@@ -188,6 +188,8 @@
             {
                 "cathode_output_slot": {
                     "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         151,
                         26
@@ -196,6 +198,7 @@
                         18,
                         18
                     ],
+                    "layer": 1,
                     "collection_name": "netease_container",
                     "controls": [
                         {
@@ -203,10 +206,7 @@
                                 "collection_index": 1
                             }
                         }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1
+                    ]
                 }
             },
             {
@@ -225,10 +225,10 @@
             },
             {
                 "fluid3@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         111,
                         53
@@ -256,6 +256,8 @@
             {
                 "anode_output_slot": {
                     "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         151,
                         62
@@ -264,6 +266,7 @@
                         18,
                         18
                     ],
+                    "layer": 1,
                     "collection_name": "netease_container",
                     "controls": [
                         {
@@ -271,10 +274,7 @@
                                 "collection_index": 2
                             }
                         }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1
+                    ]
                 }
             },
             {
@@ -294,32 +294,32 @@
             {
                 "machine_label": {
                     "type": "label",
-                    "text": "",
-                    "visible": false,
                     "size": [
                         0,
                         0
                     ],
-                    "layer": 1
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$content_size": [
+            162,
+            72
+        ],
+        "$has_tabs": true,
+        "$has_upgrades": true,
         "$machine_content": "ElectrolyzerUI.content",
         "$panel_size": [
             176,
             184
         ],
-        "$content_size": [
-            162,
-            72
-        ],
-        "$title_text": "电解机",
-        "$has_tabs": true,
-        "$has_upgrades": true,
+        "$screen_content": "SkybluePanelLib.machine_screen",
         "$show_led": true,
+        "$title_text": "电解机",
         "$upgrade_slot0": 3,
         "$upgrade_slot1": 4,
         "$upgrade_slot2": 5,

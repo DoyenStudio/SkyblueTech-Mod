@@ -177,7 +177,7 @@
         "$machine_content": "ThermalCrackerUI.content",
         "$panel_size": [
             176,
-            184
+            166
         ],
         "$screen_content": "SkybluePanelLib.machine_screen",
         "$show_led": true,

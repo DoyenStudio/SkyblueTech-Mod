@@ -4,9 +4,9 @@
         "controls": [
             {
                 "ring_tin_input_fluid_disp@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
                         12,
                         17
@@ -19,70 +19,70 @@
             },
             {
                 "ring_tout_output_fluid_disp1@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
                         92,
                         17
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "ring_tout_output_fluid_disp2@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
                         92,
-                        36
+                        35
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "ring_tout_output_fluid_disp3@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
                         92,
-                        55
+                        53
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "ring_tout_output_fluid_disp4@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
                         92,
-                        74
+                        71
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "input_fluid_disp@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         12,
                         17
@@ -95,9 +95,9 @@
             },
             {
                 "flow_arrow@SkybluePanelLib.progress_arrow": {
-                    "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         58,
                         45
@@ -106,83 +106,89 @@
             },
             {
                 "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
-                    "layer": 4,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
-                    "offset": [57, 44],
-                    "size": [24, 17]
+                    "layer": 4,
+                    "offset": [
+                        57,
+                        44
+                    ],
+                    "size": [
+                        24,
+                        17
+                    ]
                 }
             },
             {
                 "output_fluid_disp1@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         92,
                         17
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "output_fluid_disp2@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         92,
-                        36
+                        35
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "output_fluid_disp3@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         92,
-                        55
+                        53
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "output_fluid_disp4@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         92,
-                        74
+                        71
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
             {
                 "temperature@SkybluePanelLib.gauge_v": {
-                    "layer": 1,
                     "$gauge_fill": "textures/ui/skybluetech/gauge/fill_heat_v",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         151,
                         17
@@ -197,6 +203,7 @@
                 "structure_not_finished_tip@SkybluePanelLib.structure_not_finished_tip": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 50,
                     "offset": [
                         5,
                         17
@@ -205,39 +212,38 @@
                         166,
                         72
                     ],
-                    "visible": false,
-                    "layer": 50
+                    "visible": false
                 }
             },
             {
                 "machine_label": {
                     "type": "label",
-                    "text": "",
-                    "visible": false,
                     "size": [
                         0,
                         0
                     ],
-                    "layer": 1
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$content_size": [
+            162,
+            72
+        ],
+        "$has_tabs": false,
+        "$has_upgrades": false,
         "$machine_content": "DistillationColumnUI.content",
         "$panel_size": [
             176,
             184
         ],
-        "$content_size": [
-            162,
-            72
-        ],
-        "$title_text": "蒸馏塔",
-        "$has_tabs": false,
-        "$has_upgrades": false,
-        "$show_led": true
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": true,
+        "$title_text": "蒸馏塔"
     },
     "namespace": "DistillationColumnUI",
     "recipe": {
@@ -271,7 +277,7 @@
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
@@ -281,11 +287,11 @@
                     "anchor_to": "top_left",
                     "offset": [
                         104,
-                        31
+                        30
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
@@ -295,11 +301,11 @@
                     "anchor_to": "top_left",
                     "offset": [
                         104,
-                        50
+                        48
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
@@ -309,11 +315,11 @@
                     "anchor_to": "top_left",
                     "offset": [
                         104,
-                        69
+                        66
                     ],
                     "size": [
                         42,
-                        15
+                        18
                     ]
                 }
             },
@@ -335,6 +341,7 @@
                 "progress_tip@SkybluePanelLib.recipe_overlay_btn": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 4,
                     "offset": [
                         60,
                         39
@@ -342,8 +349,7 @@
                     "size": [
                         24,
                         18
-                    ],
-                    "layer": 4
+                    ]
                 }
             }
         ]

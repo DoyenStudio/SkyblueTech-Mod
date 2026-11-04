@@ -17,4 +17,4 @@ from . import (
     vacuum_freezer,
 )
 
-from . import polyethylene
+from . import thermal_cracker, small_chemical_reactor

@@ -1,6 +1,5 @@
 # coding=utf-8
 from ....common.mini_jei.machinery.thermal_cracker import ThermalCrackerRecipe
-from ....common.mini_jei.machinery.small_chemical_reactor import SmallChemicalReactorRecipe
 from .define import MachineRecipeRenderer
 
 
@@ -16,13 +15,4 @@ class ThermalCrackerRecipeRenderer(MachineRecipeRenderer):
                 "每批耗热 %g RF热；外部供热；两路副产物均不能堵塞" % recipe.heat_cost]
 
 
-class SmallChemicalReactorRecipeRenderer(MachineRecipeRenderer):
-    recipe_icon_id = SmallChemicalReactorRecipe.recipe_icon_id
-    render_ui_def_name = "RecipeCheckerLib.small_chemical_reactor_recipes"
-
-    def ProgressTip(self):
-        return ["乙烯与氧气的游戏化聚合配方；不支持升级"]
-
-
 ThermalCrackerRecipe.SetRenderer(ThermalCrackerRecipeRenderer)
-SmallChemicalReactorRecipe.SetRenderer(SmallChemicalReactorRecipeRenderer)

@@ -1,5 +1,6 @@
 # coding=utf-8
 from ..define.id_enum import Machinery, fluids, items
+from ..define.resin import RESIN_FLUID_VOLUME
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.heat_melting_chamber import HeatMeltingChamberRecipe
 
@@ -17,7 +18,7 @@ K_OVERHEATED = "st:melting_overheated"
 recipes = RecipesCollection(
     Machinery.HEAT_MELTING_CHAMBER,
     HeatMeltingChamberRecipe(
-        items.RESIN, fluids.CommonLiquid.LIQUID_RESIN, 244,
+        items.RESIN, fluids.CommonLiquid.LIQUID_RESIN, RESIN_FLUID_VOLUME,
         tick_duration=200, min_temperature=333, fit_temperature=343,
         max_temperature=373, heat_per_produce=1.0,
     ),

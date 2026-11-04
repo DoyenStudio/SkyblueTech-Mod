@@ -12,11 +12,12 @@ from skybluetech_scripts.tooldelta.events.server import (
     ServerEntityTryPlaceBlockEvent,
     ServerItemUseOnEvent,
 )
-from skybluetech_scripts.tooldelta.extensions.rate_limiter import PlayerRateLimiter
-
 from ...common.define.facing import FACING_DXZ, FACING_EN, FACING_EN2NUM
 from ...common.define.id_enum import RESIN_COLLECTOR, Machinery
 from ...common.define.id_enum.items import RESIN, RESIN_SPOON
+from ...common.define.resin import MAX_RESIN_STORAGE
+from ..machinery.core.pool import GetLoadedMachine
+from ..machinery.resin_collector_outputer import ResinCollectorOutputer
 
 
 @ServerEntityTryPlaceBlockEvent.Listen()
@@ -58,6 +59,8 @@ def onBlockRandomTick(event):
         (event.posX, event.posY, event.posZ),
         event.dimensionId,
     )
+    if blockstates is None:
+        return
     facing = FACING_EN2NUM[blockstates["minecraft:cardinal_direction"]]
     dx, dz = FACING_DXZ[facing - 2]
     res = log_is_in_tree(
@@ -66,7 +69,26 @@ def onBlockRandomTick(event):
     if res != 0:
         return
     resin_storage = blockstates["skybluetech:resin_storage"]
-    if resin_storage >= 6:
+    if resin_storage >= MAX_RESIN_STORAGE:
+        return
+    outputer_pos = (event.posX - dx, event.posY, event.posZ - dz)
+    if (
+        blockstates.get("skybluetech:is_connect_outputer", False)
+        and not CF.CreateChunkSource(LEVEL_ID).CheckChunkState(event.dimensionId, outputer_pos)
+    ):
+        return
+    outputer_block = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(outputer_pos, event.dimensionId) or {}
+    if (
+        outputer_block.get("name") == Machinery.RESIN_COLLECTOR_OUTPUTER
+        and GetLoadedMachine(event.dimensionId, *outputer_pos) is None
+    ):
+        # 等待相邻区块中的液槽加载，不能把暂不可读误判为满槽硬化。
+        return
+    outputer = get_linked_outputer(
+        event.dimensionId, (event.posX, event.posY, event.posZ), blockstates,
+    )
+    # 只把新生成的树脂送入液槽；已有 state 树脂全部视为硬化。
+    if resin_storage == 0 and outputer is not None and outputer.TryCollectResin():
         return
     blockstates.update({"skybluetech:resin_storage": resin_storage + 1})
     CF.CreateBlockState(LEVEL_ID).SetBlockStates(
@@ -74,17 +96,50 @@ def onBlockRandomTick(event):
         blockstates,
         event.dimensionId,
     )
+    if outputer is not None:
+        outputer.SyncResinStorage()
+
+
+def get_linked_outputer(dim, collector_pos, collector_states):
+    # type: (int, tuple[int, int, int], dict) -> ResinCollectorOutputer | None
+    facing = FACING_EN2NUM[collector_states["minecraft:cardinal_direction"]]
+    dx, dz = FACING_DXZ[facing - 2]
+    x, y, z = collector_pos
+    outputer = GetLoadedMachine(dim, x - dx, y, z - dz)
+    if not isinstance(outputer, ResinCollectorOutputer):
+        return None
+    outputer.flush_resin_collector_pos()
+    if outputer.linked_resin_collector_pos != collector_pos:
+        return None
+    if not collector_states.get("skybluetech:is_connect_outputer", False):
+        collector_states["skybluetech:is_connect_outputer"] = True
+        CF.CreateBlockState(LEVEL_ID).SetBlockStates(collector_pos, collector_states, dim)
+    return outputer
 
 
 @ServerItemUseOnEvent.ListenWithUserData()
 def onItemUseOnEvent(event):
     # type: (ServerItemUseOnEvent) -> None
-    if event.item.id != RESIN_SPOON or event.blockName != RESIN_COLLECTOR:
+    if event.item.id != RESIN_SPOON or event.blockName not in (RESIN_COLLECTOR, Machinery.RESIN_COLLECTOR_OUTPUTER):
         return
+    collector_pos = (event.x, event.y, event.z)
+    if event.blockName == Machinery.RESIN_COLLECTOR_OUTPUTER:
+        outputer = GetLoadedMachine(event.dimensionId, event.x, event.y, event.z)
+        if not isinstance(outputer, ResinCollectorOutputer):
+            return
+        outputer.flush_resin_collector_pos()
+        collector_pos = outputer.linked_resin_collector_pos
+        if (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(collector_pos, event.dimensionId) or {}).get("name") != RESIN_COLLECTOR:
+            return
     collector_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
-        (event.x, event.y, event.z),
+        collector_pos,
         event.dimensionId,
     )
+    if collector_states is None:
+        return
+    linked_outputer = get_linked_outputer(event.dimensionId, collector_pos, collector_states)
+    if event.blockName == Machinery.RESIN_COLLECTOR_OUTPUTER and linked_outputer is not outputer:
+        return
     resin_store = collector_states["skybluetech:resin_storage"]
     if resin_store <= 0:
         return
@@ -93,10 +148,12 @@ def onItemUseOnEvent(event):
     event.item.durability = durability
     collector_states.update({"skybluetech:resin_storage": resin_store - 1})
     CF.CreateBlockState(LEVEL_ID).SetBlockStates(
-        (event.x, event.y, event.z),
+        collector_pos,
         collector_states,
         event.dimensionId,
     )
+    if linked_outputer is not None:
+        linked_outputer.SyncResinStorage()
     if event.item.durability == 0:
         CF.CreateItem(event.entityId).SpawnItemToPlayerCarried(
             Item("minecraft:air").marshal(),
@@ -142,27 +199,29 @@ def onNeighborChanged(event):
             and event.toAuxValue == event.fromBlockAuxValue
         ):
             return
-        disconnect = False
+        prev_facing = FACING_EN2NUM[
+            CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(
+                Machinery.RESIN_COLLECTOR_OUTPUTER,
+                event.fromBlockAuxValue,
+            )["minecraft:cardinal_direction"]
+        ]
+        dx, dz = FACING_DXZ[prev_facing - 2]
+        if (
+            event.neighborPosX + dx != event.posX
+            or event.neighborPosY != event.posY
+            or event.neighborPosZ + dz != event.posZ
+        ):
+            return
         if event.toBlockName == Machinery.RESIN_COLLECTOR_OUTPUTER:
-            prev_facing = FACING_EN2NUM[
-                CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(
-                    Machinery.RESIN_COLLECTOR_OUTPUTER,
-                    event.fromBlockAuxValue,
-                )["minecraft:cardinal_direction"]
-            ]
             current_facing = FACING_EN2NUM[
                 CF.CreateBlockState(LEVEL_ID).GetBlockStatesFromAuxValue(
                     Machinery.RESIN_COLLECTOR_OUTPUTER,
                     event.toAuxValue,
                 )["minecraft:cardinal_direction"]
             ]
-            dx, dz = FACING_DXZ[prev_facing - 2]
             dx2, dz2 = FACING_DXZ[current_facing - 2]
             # 原连接到此树脂采集斗的树脂输出器被诸如机械动力扳手这样的东西调整方向
             disconnect = (
-                event.neighborPosX + dx == event.posX
-                and event.neighborPosZ + dz == event.posZ
-            ) and (
                 event.neighborPosX + dx2 != event.posX
                 or event.neighborPosZ + dz2 != event.posZ
             )

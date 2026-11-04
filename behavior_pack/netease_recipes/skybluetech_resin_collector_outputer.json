@@ -1,0 +1,33 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:resin_collector_outputer_craft"
+        },
+        "key": {
+            "A": {
+                "item": "minecraft:oak_slab"
+            },
+            "B": {
+                "item": "minecraft:trapdoor"
+            },
+            "C": {
+                "item": "minecraft:hopper"
+            },
+            "D": {
+                "item": "minecraft:stick"
+            }
+        },
+        "pattern": [
+            "A A",
+            "ABA",
+            "DCD"
+        ],
+        "result": {
+            "item": "skybluetech:resin_collector_outputer"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

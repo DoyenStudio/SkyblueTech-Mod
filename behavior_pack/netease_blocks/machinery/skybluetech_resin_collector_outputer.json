@@ -7,7 +7,7 @@
             },
             "minecraft:geometry": {
                 "bone_visibility": {
-                    "item_pipe": "q.block_state('skybluetech:down_cable_connection')",
+                    "cable": "q.block_state('skybluetech:down_pipe_connection')",
                     "resin_level_1": "q.block_state('skybluetech:resin_storage') == 1",
                     "resin_level_2": "q.block_state('skybluetech:resin_storage') == 2",
                     "resin_level_3": "q.block_state('skybluetech:resin_storage') == 3",
@@ -50,20 +50,9 @@
                     ]
                 }
             },
-            "netease:block_container": {
-                "container_size": 1,
-                "screen_name": "",
-                "hopper": {
-                    "input": false,
-                    "output": true,
-                    "output_slot": [
-                        0
-                    ]
-                }
-            },
             "netease:block_entity": {},
             "netease:custom_tips": {
-                "value": "\n§7置于§f树脂采集斗§7的侧面。"
+                "value": "\n§7置于§f树脂采集斗§7的前方。\n产出§f液态生树脂§7， 可被流体管道抽取。\n§7容量不足时树脂将溢出并在空气中§6硬化§7。"
             },
             "netease:fuel": {
                 "duration": 8
@@ -79,19 +68,15 @@
                 "digger": "hatchet",
                 "level": 0
             },
-            "netease:random_tick": {
-                "enable": true,
-                "tick_to_script": true
-            },
             "tag:piston_denier": {},
-            "tag:skybluetech_container": {},
+            "tag:skybluetech_fluid_container": {},
             "tag:skybluetech_machine": {}
         },
         "description": {
-            "category": "none",
+            "category": "skybluetech",
             "identifier": "skybluetech:resin_collector_outputer",
             "states": {
-                "skybluetech:down_cable_connection": [
+                "skybluetech:down_pipe_connection": [
                     false,
                     true
                 ],

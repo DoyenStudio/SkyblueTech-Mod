@@ -189,19 +189,19 @@
 					]
 				},
 				{
-					"name": "item_pipe",
+					"name": "cable",
 					"parent": "root",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
-							"origin": [-6, 0, -6],
-							"size": [12, 1, 12],
+							"origin": [-4, 0, -4],
+							"size": [8, 1, 8],
 							"uv": {
 								"north": {"uv": [0, 1], "uv_size": [12, 1]},
 								"east": {"uv": [0, 1], "uv_size": [12, 1]},
 								"south": {"uv": [0, 1], "uv_size": [12, 1]},
 								"west": {"uv": [0, 1], "uv_size": [12, 1]},
-								"down": {"uv": [12, 12], "uv_size": [-12, -12]}
+								"down": {"uv": [11, 12], "uv_size": [-8, -8]}
 							}
 						}
 					]

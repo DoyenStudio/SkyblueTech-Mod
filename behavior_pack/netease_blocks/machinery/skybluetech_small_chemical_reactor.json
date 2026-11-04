@@ -14,7 +14,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7乙烯 + 氧气 → 熔融聚乙烯。\n§7需要外部供电，不支持升级。"
+                "value": "\n§7可运行简单的§f化合反应§7配方。"
             },
             "netease:listen_block_remove": {
                 "value": true

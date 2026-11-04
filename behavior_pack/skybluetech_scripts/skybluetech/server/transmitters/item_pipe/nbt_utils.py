@@ -43,6 +43,20 @@ def _nbt_entry_to_item(entry):
     if tag:
         # Item.userData 和容器 tag 都是带类型的 NBT, 必须保留 Long 等类型。
         item.userData = deepcopy(tag)
+        # 存入事件的监听者通过物品字段判断附魔, 不会自行解析 userData。
+        enchant_data = []
+        mod_enchant_data = []
+        for enchant in tag.get("ench", []):
+            level = _get_nbt_scalar(enchant.get("lvl"), 0)
+            mod_enchant = _get_nbt_scalar(enchant.get("modEnchant"), "")
+            if mod_enchant:
+                mod_enchant_data.append((mod_enchant, level))
+            else:
+                enchant_id = _get_nbt_scalar(enchant.get("id"))
+                if enchant_id is not None:
+                    enchant_data.append((enchant_id, level))
+        item.enchantData = enchant_data or None
+        item.modEnchantData = mod_enchant_data or None
     return item
 
 

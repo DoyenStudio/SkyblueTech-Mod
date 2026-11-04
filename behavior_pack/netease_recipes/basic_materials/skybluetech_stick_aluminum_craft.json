@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:aluminum_stick_craft"
+        },
+        "key": {
+            "A": {
+                "tag": "common:aluminum_plate"
+            }
+        },
+        "pattern": [
+            "A",
+            "A"
+        ],
+        "result": {
+            "count": 2,
+            "data": 0,
+            "item": "skybluetech:aluminum_stick"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

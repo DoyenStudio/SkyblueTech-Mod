@@ -93,7 +93,7 @@ OWN = (
         "nickel_plate", "platinum_plate", "titanium_plate", "alumite_plate", "bronze_plate", "invar_plate", "steel_plate",
         "cupronickel_plate", "ultraheatinum_plate", "superconduct_plate")),
     ("skybluetech:group.metal_sticks", "itemGroup.name.metal_sticks", _ids(
-        "copper_stick", "tin_stick", "silver_stick", "platinum_stick", "bronze_stick", "invar_stick", "cupronickel_stick",
+        "aluminum_stick", "copper_stick", "tin_stick", "silver_stick", "platinum_stick", "bronze_stick", "invar_stick", "cupronickel_stick",
         "steel_stick", "iron_stick", "superconduct_stick")),
     ("skybluetech:group.tanks", "itemGroup.skybluetech.tanks", _ids(
         "tank_bronze", "tank_invar", "tank_steel", "tank_platinum", "tank_creative")),

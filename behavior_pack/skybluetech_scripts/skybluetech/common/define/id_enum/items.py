@@ -170,6 +170,7 @@ class SkyblueTools(SimpleEnum):
 class Sticks(SimpleEnum):
     COPPER = "skybluetech:copper_stick"
     IRON = "skybluetech:iron_stick"
+    ALUMINUM = "skybluetech:aluminum_stick"
     TIN = "skybluetech:tin_stick"
     SILVER = "skybluetech:silver_stick"
     PLATINUM = "skybluetech:platinum_stick"

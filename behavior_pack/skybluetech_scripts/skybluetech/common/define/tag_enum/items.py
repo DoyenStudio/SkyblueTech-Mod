@@ -89,6 +89,7 @@ class StickTag:
     IRON = "common:iron_stick"
     GOLD = "common:gold_stick"
 
+    ALUMINUM = "common:aluminum_stick"
     TIN = "common:tin_stick"
     LEAD = "common:lead_stick"
     NICKEL = "common:nickel_stick"

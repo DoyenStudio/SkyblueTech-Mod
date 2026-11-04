@@ -682,6 +682,9 @@
         "skybluetech:skyblue_plate": {
             "textures": "textures/items/plates/skyblue_plate"
         },
+        "skybluetech:aluminum_stick": {
+            "textures": "textures/items/sticks/aluminum_stick"
+        },
         "skybluetech:tin_stick": {
             "textures": "textures/items/sticks/tin_stick"
         },

@@ -32,6 +32,16 @@ recipes = RecipesCollection(
     MetalPressRecipe(
         fluids.CommonOil.LUBRICANT,
         10,
+        Ingots.ALUMINUM,
+        1,
+        Sticks.ALUMINUM,
+        2,
+        tick_duration=60,
+        power_cost=40,
+    ),
+    MetalPressRecipe(
+        fluids.CommonOil.LUBRICANT,
+        10,
         Ingots.TIN,
         1,
         Sticks.TIN,

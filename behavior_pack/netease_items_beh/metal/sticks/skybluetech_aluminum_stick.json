@@ -1,0 +1,17 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:tags": {
+                "tags": [
+                    "common:aluminum_stick",
+                    "c:aluminum_stick"
+                ]
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:aluminum_stick"
+        }
+    }
+}

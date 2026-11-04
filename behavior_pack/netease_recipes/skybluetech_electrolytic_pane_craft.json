@@ -1,0 +1,44 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:electrolytic_pane_craft"
+        },
+        "key": {
+            "A": {
+                "tag": "common:aluminum_plate"
+            },
+            "B": {
+                "tag": "common:tin_plate"
+            },
+            "C": {
+                "tag": "common:silver_plate"
+            },
+            "D": {
+                "tag": "common:platinum_plate"
+            },
+            "E": {
+                "tag": "common:aluminum_stick"
+            },
+            "F": {
+                "item": "minecraft:redstone"
+            }
+        },
+        "pattern": [
+            "AAA",
+            "FBF",
+            "DEC"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:electrolytic_pane"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

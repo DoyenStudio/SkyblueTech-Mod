@@ -20,19 +20,26 @@ CHAMBER_HEAT_CAPACITY = 50.0
 recipes = RecipesCollection(
     Machinery.DISTILLATION_CHAMBER,
     DistillationChamberRecipe(
-        fluids.CommonLiquid.DISTILLED_WATER, 20,
-        fluids.CommonGas.WATER_VAPOR, 200,
-        373, 393, 423, heat_per_produce=2, tick_duration=200,
+        fluids.CommonLiquid.DISTILLED_WATER,
+        2,
+        fluids.CommonGas.WATER_VAPOR,
+        20,
+        373,
+        393,
+        423,
+        heat_per_produce=80,
+        tick_duration=20,
     ),
     DistillationChamberRecipe(
         "minecraft:water",
-        50,
+        10,
         fluids.CommonLiquid.DISTILLED_WATER,
-        45,
+        10,
         c2k(30),
         c2k(80),
         c2k(100),
-        heat_per_produce=80,
+        heat_per_produce=4,
+        tick_duration=10
     ),
     DistillationChamberRecipe(
         fluids.CommonOil.RAW_OIL,

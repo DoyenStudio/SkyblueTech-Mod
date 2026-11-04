@@ -352,6 +352,12 @@ machinery_thermal_toc = PageGroup(
                     None,
                     machinery_thermal.fuel_heater,
                 ),
+                TOCPageSection(
+                    id_enum.Machinery.HEAT_CONDUCTOR,
+                    0,
+                    None,
+                    machinery_thermal.heat_conductor,
+                ),
             ],
             identifier="machinery_thermal_toc",
         ),

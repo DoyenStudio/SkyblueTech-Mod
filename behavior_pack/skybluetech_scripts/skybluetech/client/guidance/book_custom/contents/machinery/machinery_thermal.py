@@ -39,3 +39,22 @@ fuel_heater = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.FUEL_HEATER),
     ],
 )
+
+heat_conductor = PageGroup(
+    "heat_conductor_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.HEAT_CONDUCTOR),
+            '导热块可在<item id="{provider}"><text color="§c" t="产热机器">和<item id="{accepter}"><text color="§9" t="需热机器">间传递热量。\n\n导热块本身具有较高热容， 热能在导热块上传递需要一定时间。\n\n热能在导热块上按物理规律进行热交换， 所以你也可以在导热块路径上制造<text color="§2" t="支路">以分散热力。'.format(
+                provider=id_enum.Machinery.ELECTRIC_HEATER,
+                accepter=id_enum.Machinery.DISTILLATION_CHAMBER,
+            ),
+        ),
+        TextPage(
+            "",
+            '在工作台以 4 份<item id="{steel_plate}">钢板、 4 份<item id="{copper_plate}">铜板和 1 个<item id="minecraft:copper_ingot">铜锭即可制作导热块。'.format(
+                steel_plate=id_enum.Plates.STEEL, copper_plate=id_enum.Plates.COPPER
+            ),
+        )
+    ],
+)

@@ -57,6 +57,9 @@ class HeatCtrl(HeatPorts, BaseMachine):
     移热速率)同样会随热容放大, 需要一起检查, 否则温度变化速度会跟着变慢。
     """
 
+    heat_conductance = Thermal.THERMAL_CONDUCTANCE
+    "同材质接触热导；异材质接触按两侧各占一半热阻计算。"
+
     WORK_INTERVAL = 5
     "热力结算间隔, 单位 tick; 同时作为传热的 dt"
 
@@ -252,9 +255,16 @@ class HeatCtrl(HeatPorts, BaseMachine):
             return 0.0
         if dt is None:
             dt = self.WORK_INTERVAL
+        source_conductance = self.heat_conductance
+        target_conductance = receiver.heat_conductance
+        if source_conductance <= 0 or target_conductance <= 0:
+            return 0.0
+        conductance = (2.0 * source_conductance * target_conductance
+                       / (source_conductance + target_conductance))
         res = Thermal.ConductHeat(
             self.heat_value,
             receiver.heat_value,
+            conductance=conductance,
             dt=dt,
             capacity_hot=self.heat_capacity,
             capacity_cold=receiver.heat_capacity,

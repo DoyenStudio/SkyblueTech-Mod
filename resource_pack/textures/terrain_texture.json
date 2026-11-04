@@ -1,6 +1,12 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:heat_conductor_edgeless": {
+            "textures": "textures/blocks/machinery/heat_conductor_edgeless"
+        },
+        "skybluetech:heat_conductor": {
+            "textures": "textures/blocks/machinery/heat_conductor"
+        },
         "skybluetech:baked_molten_polyethylene_flowing": {
             "quad": 1,
             "textures": "textures/fluid/baked/skybluetech.molten_polyethylene/flowing"

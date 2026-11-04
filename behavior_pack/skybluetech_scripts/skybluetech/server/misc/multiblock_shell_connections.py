@@ -1,5 +1,5 @@
 # coding=utf-8
-"""通过自定义方块状态维护各类多方块外壳各自的六向连接。"""
+"""通过自定义方块状态维护多方块外壳和导热块各自的六向连接。"""
 
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -19,9 +19,11 @@ from skybluetech_scripts.skybluetech.common.define.id_enum.multi_block_structure
     BedrockLavaDrill,
     DistillationColumn,
 )
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 
 
 SHELL_GROUPS = (
+    frozenset((Machinery.HEAT_CONDUCTOR,)),
     frozenset((
         DistillationColumn.FRAME,
         DistillationColumn.CONTROLLER,

@@ -559,3 +559,4 @@ skybluetech.mei.category.distillation_column=蒸馏塔
 item.skybluetech:molten_rosin_bucket.name=熔融松香桶
 item.skybluetech:molten_polyethylene_bucket.name=熔融聚乙烯桶
 item.skybluetech:tree_oil_bucket.name=树油桶
+tile.skybluetech:heat_conductor.name=导热块

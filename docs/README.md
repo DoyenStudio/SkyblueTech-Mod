@@ -29,6 +29,7 @@
 - [机器事件与生命周期](reference/lifecycle.md)
 - [管线注册与运行中更新](reference/transmitters.md)
 - [通用 RF 能源端点](reference/energy.md)
+- [导热块与连接纹理](reference/heat_conductor.md)
 - [管道网络可视化检查器](reference/transmitter_visual_checker.md)
 - [原生存档约定](reference/persistence.md)
 - [验收与常见故障](reference/validation.md)

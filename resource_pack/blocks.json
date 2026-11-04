@@ -221,6 +221,9 @@
         "client_entity": {},
         "sound": "glass"
     },
+    "skybluetech:heat_conductor": {
+        "sound": "copper"
+    },
     "skybluetech:distilled_water": {
         "blockshape": "water",
         "textures": {

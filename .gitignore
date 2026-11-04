@@ -31,3 +31,8 @@ world_resource_packs.json
 /web/
 
 /tools/
+
+# Keep tutorials and their entry point; ignore other documentation.
+/docs/*
+!/docs/README.md
+!/docs/tutorials/

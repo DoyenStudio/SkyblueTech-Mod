@@ -9,7 +9,6 @@ from ...define import (
     TOCPage,
     TOCPageSection,
 )
-from . import polyethylene
 from . import (
     machinery_crafting,
     machinery_energy,
@@ -21,446 +20,431 @@ from . import (
     machinery_thermal,
 )
 
-machinery_production_toc = PageGroup(
+if 0 > 1:
+    from ...define.base_page import BasePage
+
+
+def _split_toc(prefix, first_pages=None, *sections):
+    # type: (str, list[BasePage] | None, *TOCPageSection) -> PageGroup
+    res = list(first_pages) if first_pages is not None else []
+    for index, start in enumerate(range(0, len(sections), 9)):
+        res.append(
+            TOCPage(
+                list(sections[start : start + 9]),
+                identifier=prefix + "_%d" % (index + 1),
+            )
+        )
+    return PageGroup(prefix, res)
+
+
+machinery_production_toc = _split_toc(
     "machinery_production_toc",
     [
         TextPage(
             "机器-工业生产",
             '本章展示适合进行<text color="§9" t="工业生产">的机器， 这些机器适用于产出材料或对材料进行进一步加工。',
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.ALLOY_FURNACE,
-                    0,
-                    None,
-                    machinery_production.alloy_furnace,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.COMPRESSOR,
-                    0,
-                    None,
-                    machinery_production.compressor,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.DISTILLATION_CHAMBER,
-                    0,
-                    None,
-                    machinery_production.distillation_chamber,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.ELECTRIC_CRAFTER,
-                    0,
-                    None,
-                    machinery_production.electric_crafter,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.ENGRAVER,
-                    0,
-                    None,
-                    machinery_production.engraver,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.FLUID_CONDENSER,
-                    0,
-                    None,
-                    machinery_production.fluid_condenser,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.FREEZER,
-                    0,
-                    None,
-                    machinery_production.freezer,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.HYDROPONIC_BASE,
-                    0,
-                    None,
-                    machinery_production.hydroponic_base,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.HYDROPONIC_BED,
-                    0,
-                    None,
-                    machinery_production.hydroponic_bed,
-                ),
-            ],
-            identifier="machinery_production_toc_1",
-        ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.MACERATOR,
-                    0,
-                    None,
-                    machinery_production.macerator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.MAGMA_CENTRIFUGE,
-                    0,
-                    None,
-                    machinery_production.magma_centrifuge,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.MAGMA_FURNACE,
-                    0,
-                    None,
-                    machinery_production.magma_furnace,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.METAL_PRESS,
-                    0,
-                    None,
-                    machinery_production.metal_press,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.MIXED_MACERATOR,
-                    0,
-                    None,
-                    machinery_production.mixed_macerator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.MIXER,
-                    0,
-                    None,
-                    machinery_production.mixer,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.OIL_EXTRACTOR,
-                    0,
-                    None,
-                    machinery_production.oil_extractor,
-                ),
-            ],
-            identifier="machinery_production_toc_2",
-        ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.THERMAL_CRACKER, 0, "聚乙烯板生产链", polyethylene.chain,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.SMALL_CHEMICAL_REACTOR, 0, None, polyethylene.reactor,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.REDSTONE_FURNACE,
-                    0,
-                    None,
-                    machinery_production.redstone_furnace,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.VACUUM_FREEZER,
-                    0,
-                    "真空冷却仓",
-                    machinery_production.vacuum_freezer,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.BRINE_EVAPORATION_POND_CONTROLLER,
-                    0,
-                    "卤水池§c[实验性]",
-                    machinery_production.brine_evaporation_pond,
-                ),
-            ],
-            identifier="machinery_production_toc_3",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.ALLOY_FURNACE,
+        0,
+        None,
+        machinery_production.alloy_furnace,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.BRINE_EVAPORATION_POND_CONTROLLER,
+        0,
+        "卤水池§c[实验性]",
+        machinery_production.brine_evaporation_pond,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.COMPRESSOR,
+        0,
+        None,
+        machinery_production.compressor,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.DISTILLATION_CHAMBER,
+        0,
+        None,
+        machinery_production.distillation_chamber,
+    ),
+    TOCPageSection(
+        id_enum.DistillationColumn.CONTROLLER,
+        0,
+        "蒸馏塔",
+        machinery_production.distillation_column,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.ELECTRIC_CRAFTER,
+        0,
+        None,
+        machinery_production.electric_crafter,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.ELECTROLYZER,
+        0,
+        None,
+        machinery_production.electrolyzer,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.ENGRAVER,
+        0,
+        None,
+        machinery_production.engraver,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.FLUID_CONDENSER,
+        0,
+        None,
+        machinery_production.fluid_condenser,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.FREEZER,
+        0,
+        None,
+        machinery_production.freezer,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.HYDROPONIC_BASE,
+        0,
+        None,
+        machinery_production.hydroponic_base,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.HYDROPONIC_BED,
+        0,
+        None,
+        machinery_production.hydroponic_bed,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.MACERATOR,
+        0,
+        None,
+        machinery_production.macerator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.MAGMA_CENTRIFUGE,
+        0,
+        None,
+        machinery_production.magma_centrifuge,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.MAGMA_FURNACE,
+        0,
+        None,
+        machinery_production.magma_furnace,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.METAL_PRESS,
+        0,
+        None,
+        machinery_production.metal_press,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.MIXED_MACERATOR,
+        0,
+        None,
+        machinery_production.mixed_macerator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.MIXER,
+        0,
+        None,
+        machinery_production.mixer,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.OIL_EXTRACTOR,
+        0,
+        None,
+        machinery_production.oil_extractor,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.REDSTONE_FURNACE,
+        0,
+        None,
+        machinery_production.redstone_furnace,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.SMALL_CHEMICAL_REACTOR,
+        0,
+        None,
+        machinery_production.smmall_chemical_reactor,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.THERMAL_CRACKER,
+        0,
+        None,
+        machinery_production.thermal_cracker,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.VACUUM_FREEZER,
+        0,
+        "真空冷却仓",
+        machinery_production.vacuum_freezer,
+    ),
 )
 
-machinery_source_extraction_toc = PageGroup(
+machinery_source_extraction_toc = _split_toc(
     "machinery_source_extraction_toc",
     [
         TextPage(
             "机器-资源开采",
             '本章展示适合进行<text color="§2" t="资源开采">的机器， 这些机器可以从环境中开采流水线生产所需的资源。',
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.AIR_COMPRESSOR,
-                    0,
-                    None,
-                    machinery_source_extraction.air_compressor,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER,
-                    0,
-                    "基岩熔岩钻",
-                    machinery_source_extraction.bedrock_lava_drill,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.DIGGER,
-                    0,
-                    None,
-                    machinery_source_extraction.digger,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.FARMING_STATION,
-                    0,
-                    None,
-                    machinery_source_extraction.farming_station,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.FORESTER,
-                    0,
-                    None,
-                    machinery_source_extraction.forester,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.MINI_MINER,
-                    0,
-                    None,
-                    machinery_source_extraction.mini_miner,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.PUMP,
-                    0,
-                    None,
-                    machinery_source_extraction.pump,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.SEAWATER_PUMP,
-                    0,
-                    "海水蓄水池§c[实验性]",
-                    machinery_source_extraction.seawater_reservoir,
-                ),
-            ],
-            identifier="machinery_source_extraction_toc",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.AIR_COMPRESSOR,
+        0,
+        None,
+        machinery_source_extraction.air_compressor,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER,
+        0,
+        "基岩熔岩钻",
+        machinery_source_extraction.bedrock_lava_drill,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.DIGGER,
+        0,
+        None,
+        machinery_source_extraction.digger,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.FARMING_STATION,
+        0,
+        None,
+        machinery_source_extraction.farming_station,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.FORESTER,
+        0,
+        None,
+        machinery_source_extraction.forester,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.MINI_MINER,
+        0,
+        None,
+        machinery_source_extraction.mini_miner,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.PUMP,
+        0,
+        None,
+        machinery_source_extraction.pump,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.SEAWATER_PUMP,
+        0,
+        "海水蓄水池§c[实验性]",
+        machinery_source_extraction.seawater_reservoir,
+    ),
 )
 
-machinery_generator_toc = PageGroup(
+machinery_generator_toc = _split_toc(
     "machinery_generator_toc",
     [
         TextPage(
             "机器-发电设备",
             '本章展示所有可以产出能量的机器设备， 它们是蔚蓝科技工业运行所需能量<text color="§c" t="“红石能”">的核心来源。',
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.CREATIVE_GENERATOR,
-                    0,
-                    None,
-                    machinery_generator.creative_generator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.GEO_THERMAL_GENERATOR,
-                    0,
-                    None,
-                    machinery_generator.geothermal_generator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.REACTING_THERMAL_GENERATOR,
-                    0,
-                    None,
-                    machinery_generator.reacting_thermal_generator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.REDSTONE_GENERATOR,
-                    0,
-                    None,
-                    machinery_generator.redstone_generator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.SOLAR_PANEL,
-                    0,
-                    "太阳能电池板",
-                    machinery_generator.solar_panel,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.THERMAL_GENERATOR,
-                    0,
-                    "火力发电机",
-                    machinery_generator.thermal_generator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.WIND_GENERATOR,
-                    0,
-                    None,
-                    machinery_generator.wind_generator,
-                ),
-            ],
-            identifier="machinery_generator_toc",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.CREATIVE_GENERATOR,
+        0,
+        None,
+        machinery_generator.creative_generator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.GEO_THERMAL_GENERATOR,
+        0,
+        None,
+        machinery_generator.geothermal_generator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.REACTING_THERMAL_GENERATOR,
+        0,
+        None,
+        machinery_generator.reacting_thermal_generator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.REDSTONE_GENERATOR,
+        0,
+        None,
+        machinery_generator.redstone_generator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.SOLAR_PANEL,
+        0,
+        None,
+        machinery_generator.solar_panel,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.THERMAL_GENERATOR,
+        0,
+        None,
+        machinery_generator.thermal_generator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.WIND_GENERATOR,
+        0,
+        None,
+        machinery_generator.wind_generator,
+    ),
 )
 
-machinery_energy_toc = PageGroup(
+machinery_energy_toc = _split_toc(
     "machinery_energy_toc",
     [
         TextPage(
             "机器-能源利用",
             "本章展示可存储、 传输红石能或以其它方式处理能源的机器。",
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.BATTERY_MATRIX_CONTROLLER,
-                    0,
-                    "电池仓",
-                    machinery_energy.battery_matrix,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.CHARGER,
-                    0,
-                    None,
-                    machinery_energy.charger,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.CREATIVE_POWER_ACCEPTOR,
-                    0,
-                    None,
-                    machinery_energy.creative_power_acceptor,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.RF_REPEATER_PLANT,
-                    0,
-                    None,
-                    machinery_energy.rf_repeater_plant,
-                ),
-            ],
-            identifier="machinery_energy_toc",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.BATTERY_MATRIX_CONTROLLER,
+        0,
+        "电池仓",
+        machinery_energy.battery_matrix,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.CHARGER,
+        0,
+        None,
+        machinery_energy.charger,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.CREATIVE_POWER_ACCEPTOR,
+        0,
+        None,
+        machinery_energy.creative_power_acceptor,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.RF_REPEATER_PLANT,
+        0,
+        None,
+        machinery_energy.rf_repeater_plant,
+    ),
 )
 
-machinery_thermal_toc = PageGroup(
+machinery_thermal_toc = _split_toc(
     "machinery_thermal_toc",
     [
         TextPage(
             "机器-热能",
             "本章展示各种热能相关机器， 它们产热、 导热或对热能进行各种处理。",
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.ELECTRIC_HEATER,
-                    0,
-                    None,
-                    machinery_thermal.electric_heater,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.INFRARED_HEAT_GENERATOR,
-                    0,
-                    None,
-                    machinery_thermal.infrared_heat_generator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.FUEL_HEATER,
-                    0,
-                    None,
-                    machinery_thermal.fuel_heater,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.HEAT_CONDUCTOR,
-                    0,
-                    None,
-                    machinery_thermal.heat_conductor,
-                ),
-            ],
-            identifier="machinery_thermal_toc",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.ELECTRIC_HEATER,
+        0,
+        None,
+        machinery_thermal.electric_heater,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.INFRARED_HEAT_GENERATOR,
+        0,
+        None,
+        machinery_thermal.infrared_heat_generator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.FUEL_HEATER,
+        0,
+        None,
+        machinery_thermal.fuel_heater,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.HEAT_CONDUCTOR,
+        0,
+        None,
+        machinery_thermal.heat_conductor,
+    ),
 )
 
-machinery_misc_toc = PageGroup(
+machinery_misc_toc = _split_toc(
     "machinery_misc_toc",
     [
         TextPage(
             "机器-杂项",
             "本章展示各种主分组以外的设备。",
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.DEEPSLATE_LAVA_VIBRATOR,
-                    0,
-                    None,
-                    machinery_misc.deepslate_lava_vibrator,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.HOVER_TEXT_DISPLAYER,
-                    0,
-                    None,
-                    machinery_misc.hover_text_displayer,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.LEXICAL_TRANSMUTER,
-                    0,
-                    None,
-                    machinery_misc.lexical_transmuter,
-                ),
-            ],
-            identifier="machinery_misc_toc",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.DEEPSLATE_LAVA_VIBRATOR,
+        0,
+        None,
+        machinery_misc.deepslate_lava_vibrator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.HOVER_TEXT_DISPLAYER,
+        0,
+        None,
+        machinery_misc.hover_text_displayer,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.LEXICAL_TRANSMUTER,
+        0,
+        None,
+        machinery_misc.lexical_transmuter,
+    ),
 )
 
-machinery_crafting_toc = PageGroup(
+machinery_crafting_toc = _split_toc(
     "machinery_crafting_toc",
     [
         TextPage(
             "机器-合成制造",
             "本章展示所有可以进行机械加工的机器。",
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.ASSEMBLER,
-                    0,
-                    None,
-                    machinery_crafting.assembler,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.MACHINERY_WORKSTATION,
-                    0,
-                    None,
-                    machinery_crafting.machinery_workstation,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION,
-                    0,
-                    None,
-                    machinery_crafting.electric_machinery_workstation,
-                ),
-            ],
-            identifier="machinery_crafting_toc",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.ASSEMBLER,
+        0,
+        None,
+        machinery_crafting.assembler,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.MACHINERY_WORKSTATION,
+        0,
+        None,
+        machinery_crafting.machinery_workstation,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.ELECTRIC_MACHINERY_WORKSTATION,
+        0,
+        None,
+        machinery_crafting.electric_machinery_workstation,
+    ),
 )
 
-machinery_logistics_toc = PageGroup(
+machinery_logistics_toc = _split_toc(
     "machinery_logistics_toc",
     [
         TextPage(
             "机器-物流",
             "本章展示物流相关的机器。",
         ),
-        TOCPage(
-            [
-                TOCPageSection(
-                    id_enum.Machinery.ITEM_SPLITTER,
-                    0,
-                    None,
-                    machinery_logistics.item_splitter,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.FLUID_SPLITTER,
-                    0,
-                    None,
-                    machinery_logistics.fluid_splitter,
-                ),
-                TOCPageSection(
-                    id_enum.Machinery.ITEM_SPREADER,
-                    0,
-                    None,
-                    machinery_logistics.item_spreader,
-                ),
-            ],
-            identifier="machinery_logistics_toc",
-        ),
     ],
+    TOCPageSection(
+        id_enum.Machinery.ITEM_SPLITTER,
+        0,
+        None,
+        machinery_logistics.item_splitter,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.FLUID_SPLITTER,
+        0,
+        None,
+        machinery_logistics.fluid_splitter,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.ITEM_SPREADER,
+        0,
+        None,
+        machinery_logistics.item_spreader,
+    ),
 )
 
 machinery_toc = PageGroup(

@@ -4,6 +4,9 @@ from skybluetech_scripts.skybluetech.common.define import id_enum
 from skybluetech_scripts.skybluetech.common.machinery_def.brine_evaporation_pond import (
     STRUCTURE_PALETTE as BRINE_EVAPORATION_POND_SP,
 )
+from skybluetech_scripts.skybluetech.common.machinery_def.distillation_column import (
+    STRUCTURE_PALETTE as DISTILLATION_COLUMN_SP,
+)
 from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import (
     STRUCTURE_PALETTE as VACUUM_FREEZER_SP,
 )
@@ -79,6 +82,29 @@ distillation_chamber = PageGroup(
     ],
 )
 
+distillation_column = PageGroup(
+    "distillation_column_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.DistillationColumn.CONTROLLER),
+            '蒸馏仓可以使用<text color="§c" t="热能">对其中的流体进行<text color="§9" t="蒸馏">。 对比小型蒸馏仓， 其具有<text color="§d" t="更高的蒸馏速率">， 也能收集到蒸馏时的<text color="§d" t="副产物">。 \n\n蒸馏塔的受热口需要<text color="§4" t="热源">为其供热， 如<link text="电力加热仓" id="electric_heater">。',
+            hyperlink_cbs={
+                "electric_heater": lambda _: (
+                    _get_machinery_thermal_module().electric_heater.FastJump()
+                )
+            },
+        ),
+        TextPage(
+            "",
+            '馏分会按液体输出口高低进行输出； <text color="§6" t="最高处">的输出口将产生最上层馏分， 越往下的输出口就输出<text color="§5" t="越下层:>的馏分。\n\n如果输出口数量不足， 下层的馏分将被直接<text color="§4" t="丢弃">； 同一层有多个输出口， 馏分容易混合输出。 所以每层只有一个液体输出口是最妥当的。',
+        ),
+        MultiBlockStructureRenderPage(
+            id_enum.DistillationColumn.CONTROLLER, DISTILLATION_COLUMN_SP
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.DISTILLATION_CHAMBER),
+    ],
+)
+
 electric_crafter = PageGroup(
     "electric_crafter_description",
     [
@@ -93,6 +119,17 @@ electric_crafter = PageGroup(
             },
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.ELECTRIC_CRAFTER),
+    ],
+)
+
+electrolyzer = PageGroup(
+    "electrolyzer_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.ELECTROLYZER),
+            '电解机消耗能量对液体进行电解， 也可以对不活泼金属进行精炼处理。\n\n电解机的流体输出模式<text color="§2" t="较为特殊">： 左输出槽的流体从机器<text color="§c" t="左侧">的管道输出； 右输出槽从机器<text color="§9" t="右侧">输出； 下输出槽从机器<text color="§5" t="底部">输出。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.ELECTROLYZER),
     ],
 )
 
@@ -251,6 +288,33 @@ redstone_furnace = PageGroup(
             '红石炉将红石能这种能源作为燃料， 和熔炉<item id="minecraft:furnace">一样<text color="§c" t="烧制物品">。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.REDSTONE_FURNACE),
+    ],
+)
+
+smmall_chemical_reactor = PageGroup(
+    "smmall_chemical_reactor_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.SMALL_CHEMICAL_REACTOR),
+            '小型化学反应釜可消耗能量进行不复杂的化学反应。\n\n部分配方可能需要<text color="§d" t="催化剂">。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.SMALL_CHEMICAL_REACTOR),
+    ],
+)
+
+thermal_cracker = PageGroup(
+    "thermal_cracker_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.THERMAL_CRACKER),
+            '热裂解机可以使用高热对液体进行化学裂解， 建议使用<link id="heater" text="红外高热发生器">\n\n热裂解机的流体输出模式<text color="§a" t="较为特殊">： 左输出槽的流体从机器<text color="§c" t="左侧">的管道输出； 右输出槽从机器<text color="§9" t="右侧">的管道输出。',
+            hyperlink_cbs={
+                "heater": lambda _: (
+                    _get_machinery_thermal_module().infrared_heat_generator.FastJump()
+                )
+            },
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.THERMAL_CRACKER),
     ],
 )
 

@@ -14,7 +14,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7外部供热；树油 + 蒸汽 → 乙烯 + 纯甲烷。\n§7面向正面：左侧抽乙烯，右侧抽甲烷。"
+                "value": "\n§7使用§f高热§7热能对液体组分进行§f裂解§7。"
             },
             "netease:listen_block_remove": {
                 "value": true

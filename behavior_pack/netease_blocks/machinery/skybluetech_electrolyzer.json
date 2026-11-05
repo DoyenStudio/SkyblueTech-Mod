@@ -23,7 +23,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7可电解液体或精炼金属。\n不耐高温。"
+                "value": "\n§7消耗能量电解液体或精炼金属。"
             },
             "netease:listen_block_remove": {
                 "value": true

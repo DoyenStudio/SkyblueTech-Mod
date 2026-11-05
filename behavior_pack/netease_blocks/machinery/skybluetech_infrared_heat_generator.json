@@ -20,7 +20,7 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7通电后可从五个面的铜盘输出热能， 最高加热至 §f2300 K§7。"
+                "value": "\n§7通电后可从五个面的铜盘输出热能。\n能提供§f高温§7， 最高加热至 §f2300 K§7。"
             },
             "netease:listen_block_remove": {
                 "value": true

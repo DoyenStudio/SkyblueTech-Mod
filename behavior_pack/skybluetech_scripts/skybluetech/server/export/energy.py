@@ -70,7 +70,13 @@ def GetEnergyHandler(position, dimension, face, native_only=False, period_ticks=
     machine = GetLoadedMachine(dimension, *position)
     if machine is not None and not machine.is_non_energy_machine:
         return _MachineHandler(machine, face, period_ticks)
-    if native_only or not _providers:
+    if native_only:
+        return None
+    return _get_external_energy_handler(position, dimension, face)
+
+
+def _get_external_energy_handler(position, dimension, face):
+    if not _providers:
         return None
     from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
     if not CF.CreateChunkSource(LEVEL_ID).CheckChunkState(dimension, tuple(position)):

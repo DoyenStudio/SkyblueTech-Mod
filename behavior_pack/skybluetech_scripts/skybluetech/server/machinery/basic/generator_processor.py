@@ -16,6 +16,7 @@ from .base_generator import BaseGenerator
 from .base_speed_control import BaseSpeedControl
 from .multi_fluid_container import MultiFluidContainer
 from .processor_base import ProcessorBase
+from .slot_reads import SlotReads, accepts_slot_reads
 from .upgrade_control import UpgradeControl
 
 K_OUTPUT_POWER = "st:output_power"
@@ -169,11 +170,12 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
             self.recheck_recipe()
 
     # ======
-    def get_recipe(self):
+    @accepts_slot_reads
+    def get_recipe(self, slot_reads=None):
         if self.recipe_index is not None:
             return self.recipe_index, self.recipes[self.recipe_index]
         else:
-            return ProcessorBase.get_recipe(self)
+            return ProcessorBase.get_recipe(self, slot_reads)
 
     def recheck_recipe(self):
         recipe_index, recipe = self.get_recipe()
@@ -188,12 +190,14 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
             elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
                 self.start_next()
 
-    def run_once(self):
-        _, recipe = self.get_recipe()
+    @accepts_slot_reads
+    def run_once(self, slot_reads=None):
+        reads = slot_reads or SlotReads(self)
+        _, recipe = reads.call(self.get_recipe)
         if recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             return False
-        if not self.can_output(recipe) or not self.finish_recipe(recipe):
+        if not reads.call(self.can_output, recipe) or not reads.call(self.finish_recipe, recipe):
             # 已完成但被堵住的批次仍保留索引，解堵只补产物，不再发一轮电。
             self.ticks_left = 0
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
@@ -223,12 +227,13 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
         self.generator_output_power = recipe.output_power
         self.SetOutputPower(self.generator_output_power)
         self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-        if not self.can_output(recipe):
+        reads = SlotReads(self)
+        if not reads.call(self.can_output, recipe):
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
             return
         if self.recipe_index is not None:
             if self.ticks_left <= 0:
-                if self.run_once():
+                if reads.call(self.run_once):
                     self.start_next()
                 return
         else:
@@ -249,9 +254,10 @@ class GeneratorProcessor(ProcessorBase, BaseGenerator):
         self.recipe_index = None
         return False
 
-    def finish_recipe(self, recipe):
-        # type: (MachineRecipeBase) -> bool
-        if not self._apply_recipe(recipe, consume_inputs=False):
+    @accepts_slot_reads
+    def finish_recipe(self, recipe, slot_reads=None):
+        reads = slot_reads or SlotReads(self)
+        if not reads.call(self._apply_recipe, recipe, consume_inputs=False):
             return False
         self.recipe_index = None
         return True

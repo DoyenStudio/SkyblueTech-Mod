@@ -14,6 +14,7 @@ from .basic import (
     WorkRenderer,
 )
 from .core import RegisterMachine
+from .basic.slot_reads import SlotReads
 
 
 @RegisterMachine
@@ -61,15 +62,15 @@ class RedstoneFurnace(WorkRenderer, UpgradeControl, GUIControl):
 
     def run_once(self):
         input_item = self.GetSlotItem(0)
-        output_item = self.GetSlotItem(1)
         if input_item is None:
             raise ValueError("No input")
         expected_output = get_furnace_output_by_input(input_item.newItemName)
         if expected_output is None:
             raise ValueError("Recipe ERROR")
-        if not self.CanOutputItems([Item(expected_output)]):
+        reads = SlotReads(self)
+        if not reads.call(self.CanOutputItems, [Item(expected_output)]):
             return
-        self.finish_once(input_item, output_item, expected_output)
+        self.finish_once(input_item, reads.outputs().get(1), expected_output)
 
     def finish_once(self, input, output, expected_output):
         # type: (Item, Item | None, str) -> None

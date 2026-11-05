@@ -14,6 +14,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from .item_container import ItemContainer
 from .multi_fluid_container import MultiFluidContainer
 from .processor_base import ProcessorBase
+from .slot_reads import SlotReads, accepts_slot_reads
 from .upgrade_control import UpgradeControl
 
 
@@ -139,7 +140,8 @@ class Processor(ProcessorBase):
 
     def run_once(self):
         "进行一次配方产出"
-        _, recipe = self.get_recipe()
+        reads = SlotReads(self)
+        _, recipe = reads.call(self.get_recipe)
         if recipe is None:
             # 原生槽位变更通知延后一帧；结算可能早于通知到达。
             self.current_recipe = None
@@ -148,10 +150,10 @@ class Processor(ProcessorBase):
         if not recipe.equals(self.current_recipe):
             # 换料后不能沿用上一配方的进度直接产出，交给 start_next 开新批。
             return False
-        if not self.can_output(recipe):
+        if not reads.call(self.can_output, recipe):
             return False
         # 专用机器的 finish_recipe 仍可能沿用无返回值的旧接口。
-        return self.finish_recipe(recipe) is not False
+        return reads.call(self.finish_recipe, recipe) is not False
 
     def start_next(self, _recipe=None):
         # type: (MachineRecipeBase | None) -> None
@@ -183,6 +185,6 @@ class Processor(ProcessorBase):
             return
         self.CallSync()
 
-    def finish_recipe(self, recipe):
-        # type: (MachineRecipeBase) -> bool
-        return self._apply_recipe(recipe)
+    @accepts_slot_reads
+    def finish_recipe(self, recipe, slot_reads=None):
+        return (slot_reads or SlotReads(self)).call(self._apply_recipe, recipe)

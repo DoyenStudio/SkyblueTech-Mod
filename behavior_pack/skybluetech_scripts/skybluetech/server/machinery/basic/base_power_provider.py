@@ -1,6 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import flags
-from skybluetech_scripts.skybluetech.common.define.facing import OPPOSITE_FACING
+from skybluetech_scripts.skybluetech.common.define.facing import FACING_DXYZ, OPPOSITE_FACING
 from .base_machine import BaseMachine
 
 
@@ -29,18 +29,16 @@ class BasePowerProvider(BaseMachine):
         "邻居机缓存失效: 邻居方块放置/移除/变化后调用, 下一个 tick 惰性重建。"
         self._output_neighbors_cache = None
 
-    def _get_output_neighbors(self):
-        "输出方向的邻居机列表(含朝向), 结构固定时缓存, 仅邻居变化时重建。"
-        cache = self._output_neighbors_cache
-        if cache is None:
-            from ..core import pool
+    def _resolve_output_face(self, facing):
+        from ...export.energy import GetEnergyHandler
 
-            cache = self._output_neighbors_cache = list(
-                pool.GetNearbyMachines(
-                    self.dim, self.x, self.y, self.z, self._power_output_faces
-                )
-            )
-        return cache
+        dx, dy, dz = FACING_DXYZ[facing]
+        pos = (self.x + dx, self.y + dy, self.z + dz)
+        face = OPPOSITE_FACING[facing]
+        target = GetEnergyHandler(pos, self.dim, face, native_only=True)
+        entry = (pos, face, target)
+        self._output_neighbors_cache[facing] = entry
+        return entry
 
     def GeneratePower(self, rf):
         # type: (int) -> tuple[bool, int]
@@ -59,14 +57,19 @@ class BasePowerProvider(BaseMachine):
 
     def _output_nearby(self, output_rf):
         # type: (int) -> tuple[bool, int]
-        from ...export.energy import GetEnergyHandler
-        from ....common.define.facing import FACING_DXYZ
+        from ...export.energy import _get_external_energy_handler
 
         ok = False
         for facing in self._power_output_faces:
-            dx, dy, dz = FACING_DXYZ[facing]
-            pos = (self.x + dx, self.y + dy, self.z + dz)
-            target = GetEnergyHandler(pos, self.dim, OPPOSITE_FACING[facing])
+            if self._output_neighbors_cache is None:
+                self._output_neighbors_cache = {}
+            entry = self._output_neighbors_cache.get(facing)
+            if entry is None or (entry[2] is not None and not entry[2].valid()):
+                entry = self._resolve_output_face(facing)
+            pos, face, target = entry
+            if target is None:
+                # 外部 resolver 可随时改变端点；只缓存本包机器或其缺席。
+                target = _get_external_energy_handler(pos, self.dim, face)
             if target is None or not target.canReceive() or not target.acceptsActivePush():
                 continue
             try:

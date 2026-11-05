@@ -16,6 +16,7 @@ from skybluetech_scripts.skybluetech.server.machinery.utils.recipe_plan import (
 )
 
 from .gui_ctrl import GUIControl
+from .slot_reads import SlotReads, accepts_slot_reads
 from .multi_fluid_container import MultiFluidContainer
 from .upgrade_control import UpgradeControl
 from .work_renderer import WorkRenderer
@@ -68,60 +69,60 @@ class ProcessorBase(WorkRenderer, UpgradeControl, GUIControl):
         if self.current_recipe is not None:
             self.bdata[K_PROGRESS] = self.GetProcessProgress()
 
-    def get_recipe(self):
-        # type: () -> tuple[int, MachineRecipeBase | None]
+    @accepts_slot_reads
+    def get_recipe(self, slot_reads=None):
         # 原生容器读取较贵；一轮选方只读取一次，所有候选共用快照。
-        items = self.GetInputSlotItems() if self.process_item else {}
+        reads = slot_reads or SlotReads(self)
         for recipe_idx, recipe in enumerate(self.recipes):
-            plan = get_recipe_plan(recipe)
-            if self.process_item and plan.plan_item_inputs(items) is None:
+            if self.process_item and reads.allocate_inputs(recipe) is None:
                 continue
             if self.process_fluid and isinstance(self, MultiFluidContainer):
-                if plan.plan_fluid_inputs(self.fluids) is None:
+                if reads.allocate_fluid_inputs(recipe) is None:
                     continue
             return recipe_idx, recipe
         return (0, None)
 
-    def can_output(self, recipe):
-        # type: (MachineRecipeBase) -> bool
-        plan = get_recipe_plan(recipe)
+    @accepts_slot_reads
+    def can_output(self, recipe, slot_reads=None):
+        reads = slot_reads or SlotReads(self)
         if self.process_item:
-            if plan.plan_item_outputs(
-                self.GetOutputSlotItems(), self.item_output_slots
-            ) is None:
+            if reads.allocate_outputs(recipe) is None:
                 return False
         if self.process_fluid and isinstance(self, MultiFluidContainer):
-            if plan.plan_fluid_outputs(self.fluids, self.fluid_output_slots) is None:
+            if reads.allocate_fluid_outputs(recipe) is None:
                 return False
         return True
 
-    def _apply_recipe(self, recipe, consume_inputs=True, produce_outputs=True):
+    @accepts_slot_reads
+    def _apply_recipe(self, recipe, consume_inputs=True, produce_outputs=True, slot_reads=None):
         "按当前库存重新分配，全部检查成功后才扣料/产出，不缓存库存或随机结果。"
-        plan = get_recipe_plan(recipe)
+        reads = slot_reads or SlotReads(self)
+        plan = reads.plan_for(recipe)
         item_inputs, item_outputs, fluid_inputs, fluid_outputs = [], [], [], []
-        items = {}
+        items, outputs = {}, {}
         if self.process_item:
             if consume_inputs:
-                items = self.GetInputSlotItems()
-                item_inputs = plan.plan_item_inputs(items)
+                items = reads.inputs()
+                item_inputs = reads.allocate_inputs(recipe)
                 if item_inputs is None:
                     return False
             if produce_outputs:
-                outputs = self.GetOutputSlotItems()
-                item_outputs = plan.plan_item_outputs(outputs, self.item_output_slots)
+                item_outputs = reads.allocate_outputs(recipe)
                 if item_outputs is None:
                     return False
-                items.update(outputs)
+                outputs = reads.outputs()
         if self.process_fluid and isinstance(self, MultiFluidContainer):
             if consume_inputs:
-                fluid_inputs = plan.plan_fluid_inputs(self.fluids)
+                fluid_inputs = reads.allocate_fluid_inputs(recipe)
                 if fluid_inputs is None:
                     return False
             if produce_outputs:
-                fluid_outputs = plan.plan_fluid_outputs(self.fluids, self.fluid_output_slots)
+                fluid_outputs = reads.allocate_fluid_outputs(recipe)
                 if fluid_outputs is None:
                     return False
 
+        reads.clear()
+        items.update(outputs)
         changed_items = {}
         output_slots = set()
         reduced_fluids, added_fluids = {}, {}

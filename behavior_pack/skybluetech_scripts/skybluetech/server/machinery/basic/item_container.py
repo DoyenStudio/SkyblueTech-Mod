@@ -9,6 +9,7 @@ from skybluetech_scripts.tooldelta.events import (
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
 
 from .base_machine import BaseMachine
+from .slot_reads import accepts_slot_reads
 
 
 class ItemContainer(BaseMachine):
@@ -204,8 +205,8 @@ class ItemContainer(BaseMachine):
         if not self.IsValidInput(event.collectionIndex, event.item):
             event.cancel()
 
-    def CanOutputItems(self, items):
-        # type: (list[Item]) -> bool
+    @accepts_slot_reads
+    def CanOutputItems(self, items, slot_reads=None):
         """
         机器是否可以输出物品。
 
@@ -215,11 +216,8 @@ class ItemContainer(BaseMachine):
         Returns:
             bool
         """
-        _c = [
-            self.GetSlotItem(slot_pos, get_user_data=True)
-            for slot_pos in self.item_output_slots
-        ]
-        current_items = [i for i in _c if i is not None]
+        outputs = slot_reads.outputs() if slot_reads is not None else self.GetOutputSlotItems()
+        current_items = [outputs[slot] for slot in self.item_output_slots if slot in outputs]
         items_sorted = SortItems(items + current_items)
         return len(items_sorted) <= len(self.item_output_slots)
 

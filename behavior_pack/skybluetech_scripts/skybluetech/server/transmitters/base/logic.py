@@ -238,12 +238,44 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             return transferlib.has_port(self.transfer_capability, dim, pos, face)
         return False
 
+    def discover_energy_faces(self, dim, xyz):
+        """Adopt each previously unknown external FE face once, including old saves."""
+        from ... import transferlib
+        if self.transfer_capability != "radium:energy" or transferlib.api is None:
+            return False
+        data = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(dim, xyz)
+        if data is None:
+            return False
+        known = dict(data["radium_energy_faces"] or {})
+        states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(xyz, dim)
+        if states is None:
+            return False
+        found = False
+        for face, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+            pos = (xyz[0] + dx, xyz[1] + dy, xyz[2] + dz)
+            name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(pos, dim) or {}).get("name")
+            side = FACING_EN[face]
+            if (not name or name == "minecraft:air" or known.get(side) == name
+                    or self.native_block_check(name, dim, pos)
+                    or not transferlib.has_port("radium:energy", dim, pos, OPPOSITE_FACING[face])):
+                continue
+            states["skybluetech:connection_" + side] = True
+            known[side] = name
+            found = True
+        if found and CF.CreateBlockState(LEVEL_ID).SetBlockStates(xyz, states, dim):
+            data["radium_energy_faces"] = known
+            return True
+        return False
+
     def refresh_transfer_ports(self, capability):
         from ... import transferlib
         blocks = CF.CreateBlockInfo(LEVEL_ID)
         for network in list(self.networks_pool):
             changed = False
             for x, y, z in network.nodes:
+                if capability == "radium:energy":
+                    changed = self.discover_energy_faces(network.dim, (x, y, z)) or changed
+                    continue
                 for face, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
                     pos = (x + dx, y + dy, z + dz)
                     name = (blocks.GetBlockNew(pos, network.dim) or {}).get("name")
@@ -707,6 +739,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             blockName = block_entity_posdata["blockName"]
             if not self.transmitter_check_func(blockName):
                 continue
+            self.discover_energy_faces(dim, (x, y, z))
             self.refresh_transmitter_connections(dim, x, y, z, blockName)
             self.refresh_nearby_transmitter_connections(dim, x, y, z)
             if (x, y, z) in rebuilt_nodes:

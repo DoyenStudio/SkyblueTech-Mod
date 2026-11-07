@@ -10,6 +10,7 @@ from .machinery.core.registry import registered_machines
 api = None
 _probe_ticks = 0
 _refresh_pending = False
+_energy_revision = None
 
 
 def loaded(machine):
@@ -259,8 +260,14 @@ def has_port(capability, dim, pos, face=None):
 
 @OnSimTickServerEvent.Listen()
 def discover(_):
-    global api, _probe_ticks, _refresh_pending
+    global api, _probe_ticks, _refresh_pending, _energy_revision
     if api is not None:
+        revision_of = getattr(api, "get_provider_revision", None)
+        revision = revision_of(api.ENERGY) if revision_of is not None else None
+        if not _refresh_pending and revision != _energy_revision:
+            from .transmitters.wire.logic import logic_module as wires
+            wires.refresh_transfer_ports(api.ENERGY)
+        _energy_revision = revision
         if _refresh_pending:
             _refresh_pending = False
             refresh_networks()

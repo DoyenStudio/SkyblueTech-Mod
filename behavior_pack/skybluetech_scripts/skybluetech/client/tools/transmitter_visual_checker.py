@@ -87,7 +87,8 @@ def displayModel(event):
                 box = draw_comp.AddBoxShape(
                     (min_x + 0.4, min_y + 1, min_z + 0.4), (ddx, ddy, ddz), (0, 1, 1)
                 )
-                shapes.append(box)
+                if box is not None:
+                    shapes.append(box)
     text_map = {} # type: dict[tuple[int, int, int], list[tuple[str, tuple]]]
     for input_node in event.inputs:
         text_map.setdefault(input_node, []).append((event.input_label, (0, 1, 0)))
@@ -102,10 +103,11 @@ def displayModel(event):
             text = u"\n".join((u"§a" if c == (0, 1, 0) else u"§c") + t for t, c in labels)
         shape = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
-            text,
+            text.encode("utf-8"),
             (1, 1, 1),
         )
-        shapes.append(shape)
+        if shape is not None:
+            shapes.append(shape)
     g_shapes.append(shapes)
     removeAfter(shapes)
 
@@ -152,7 +154,8 @@ def displayMultiModel(event):
                         (ddx, ddy, ddz),
                         box_color,
                     )
-                    shapes.append(box)
+                    if box is not None:
+                        shapes.append(box)
         for input_node in inputs:
             label = response.display_name + u"： " + response.input_label
             text_map.setdefault(input_node, []).append((label, (0, 1, 0)))
@@ -177,10 +180,11 @@ def displayMultiModel(event):
             color = (1, 1, 1)
         shape = draw_comp.AddTextShape(
             (x + 0.5, y + 0.5, z + 0.5),
-            text,
+            text.encode("utf-8"),
             color,
         )
-        shapes.append(shape)
+        if shape is not None:
+            shapes.append(shape)
     g_multi_shapes.append(shapes)
     removeMultiAfter(shapes)
 

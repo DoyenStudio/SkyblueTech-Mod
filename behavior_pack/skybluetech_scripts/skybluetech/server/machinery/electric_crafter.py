@@ -9,7 +9,6 @@ from skybluetech_scripts.tooldelta.extensions.recipe_obj import (
 )
 from skybluetech_scripts.tooldelta.utils.nbt import NBT2Py
 
-from .basic.item_container import ItemContainer
 from ...common.define import flags
 from ...common.define.id_enum import CRAFTING_TEMPLATE, Machinery, Upgraders
 from ...common.machinery_def.electric_crafter import (
@@ -56,21 +55,11 @@ class ElectricCrafter(UpgradeControl, GUIControl):
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
-        results = (
-            ItemContainer.IsValidInput(self, slot, item),
-            UpgradeControl.IsValidInput(self, slot, item),
-            self._electric_crafter_is_valid_input(slot, item),
-        )
-        return all(results)
-
-    def _electric_crafter_is_valid_input(self, slot, item):
-        # type: (int, Item) -> bool
         if self.InUpgradeSlot(slot):
             return UpgradeControl.IsValidInput(self, slot, item)
-        elif slot == TEMPLATE_SLOT:
+        if slot == TEMPLATE_SLOT:
             return item.id == CRAFTING_TEMPLATE
-        else:
-            return self.check_crafting_input_valid(slot, item)
+        return slot in self.item_input_slots and self.check_crafting_input_valid(slot, item)
 
     def _electric_crafter_on_slot_update(self, slot):
         # type: (int) -> None

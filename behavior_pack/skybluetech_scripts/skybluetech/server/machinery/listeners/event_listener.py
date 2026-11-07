@@ -194,8 +194,8 @@ def on_item_push_in(event):
     if not isinstance(m, ItemContainer):
         return
     if (
-        not m.IsValidInput(event.collectionIndex, event.item)
-        or event.collectionIndex not in m.item_input_slots
+        event.collectionIndex not in m.item_input_slots
+        or not m.IsValidInput(event.collectionIndex, event.item)
     ):
         event.cancel()
 

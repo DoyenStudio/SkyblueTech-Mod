@@ -18,8 +18,12 @@ class BaseInterface(BaseMachine):
 
     def SetMachineRef(self, machine):
         # type: (BaseMachine) -> None
+        from ... import transferlib
+        transferlib.invalidate()
         self.machine_ref = ref(machine)
 
     def UnsetMachineRef(self):
         # type: () -> None
+        from ... import transferlib
+        transferlib.invalidate()
         self.machine_ref = None

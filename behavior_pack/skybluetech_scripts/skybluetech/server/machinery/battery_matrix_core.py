@@ -131,6 +131,9 @@ class BatteryMatrixCore(BaseMachine):
                 BatterySlotAbstract.load_from_item_userdata(item.id, userdata)
             )
 
+        from .. import transferlib
+        transferlib.prepare_batteries(self)
+
     def save_core_data(self):
         block_nbt = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(
             self.dim,

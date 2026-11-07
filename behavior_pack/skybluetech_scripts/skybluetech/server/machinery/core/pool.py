@@ -111,6 +111,8 @@ def PopMachine(dimension, x, y, z, machine_cls):
     # type: (int, int, int, int, type[BaseMachine]) -> BaseMachine
     k = (dimension, x, y, z)
     if k in cached_machines:
+        from ... import transferlib
+        transferlib.invalidate()
         return cached_machines.pop(k)
     else:
         bdata = CF.CreateBlockEntityData(LEVEL_ID).GetBlockEntityData(dimension, (x, y, z))
@@ -121,7 +123,11 @@ def PopMachine(dimension, x, y, z, machine_cls):
 
 def PopMachineStrict(dimension, x, y, z):
     # type: (int, int, int, int) -> BaseMachine | None
-    return cached_machines.pop((dimension, x, y, z), None)
+    machine = cached_machines.pop((dimension, x, y, z), None)
+    if machine is not None:
+        from ... import transferlib
+        transferlib.invalidate()
+    return machine
 
 
 def LoadMachine(dimension, x, y, z, machine_cls):
@@ -134,5 +140,7 @@ def LoadMachine(dimension, x, y, z, machine_cls):
         )
     machine = machine_cls(dimension, x, y, z, bdata)
     cached_machines[(dimension, x, y, z)] = machine
+    from ... import transferlib
+    transferlib.prepare(machine)
     InvalidateNearbyCaches(dimension, x, y, z)
     return machine

@@ -127,6 +127,8 @@ def RefreshPowerConnections(dim, x, y, z):
     """
     from ..transmitters.wire.logic import logic_module
 
+    from .. import transferlib
+    transferlib.invalidate()
     logic_module.clean_container_networks(dim, x, y, z)
 
 

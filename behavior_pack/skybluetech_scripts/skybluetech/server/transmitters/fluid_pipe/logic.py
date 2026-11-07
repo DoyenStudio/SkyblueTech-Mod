@@ -2,6 +2,7 @@
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 
 
+from ... import transferlib
 from ...machinery.basic.multi_fluid_container import MultiFluidContainer
 from ...machinery.core.pool import GetLoadedMachine
 from ..base import LogicModule
@@ -59,6 +60,8 @@ def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
             .values()
         )
     for network in networks:
+        if not fluid_pipe_can_transfer_fluid(network.transmitter_id, fluid_id):
+            continue
         once_transfer_vol_max = network.transfer_speed
         for ap in sorted(
             network.group_inputs,
@@ -74,9 +77,12 @@ def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
                 ap, fluid_id, transfer_vol
             )
             fluid_volume += transfer_vol_rest
+            once_transfer_vol_max -= transfer_vol - transfer_vol_rest
             ok = ok or _ok
             if fluid_volume <= 0:
                 return ok, fluid_volume
+            if once_transfer_vol_max <= 0:
+                break
     return ok, fluid_volume
 
 
@@ -88,6 +94,17 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
     cxyz = ap.target_pos
     m = GetLoadedMachine(ap.dim, *cxyz)
     if not isinstance(m, MultiFluidContainer):
+        api = transferlib.api
+        if api is not None:
+            try:
+                target = transferlib.at_access(api.FLUID, ap)
+                if target is not None and transferlib.plain(fluid_id):
+                    with api.open_transaction() as tx:
+                        moved = target.insert(fluid_id, fluid_volume, tx)
+                        tx.commit()
+                    return moved > 0, fluid_volume - moved
+            except api.TransactionError:
+                pass
         return False, fluid_volume
     if m.fluid_input_slots_by_face is None:
         ok, rest_fluid_volume = m.AddFluid(fluid_id, fluid_volume)
@@ -106,6 +123,50 @@ def onMachineryPlacedLater(dim, x, y, z):
     pass
 
 
+def buffer_port(network):
+    if not hasattr(network, "_radium_buffer"):
+        api = transferlib.api
+
+        def apply(state):
+            network.fluid_id, network.fluid_volume = state
+
+        cell = api.create_cell((None, 0.0), read=lambda: (network.fluid_id, network.fluid_volume),
+                               apply=apply, persist=network.save_network_data,
+                               valid=lambda: network in logic_module.networks_pool)
+        network._radium_buffer = api.create_fluid_handler(
+            {0: cell}, lambda _: network.capacity,
+            accepts=lambda _, r: transferlib.plain(r) and fluid_pipe_can_transfer_fluid(network.transmitter_id, r))
+    return network._radium_buffer
+
+
+def transfer_external(network, access, budget, pulling):
+    api = transferlib.api
+    if api is None:
+        return 0.0
+    try:
+        endpoint = transferlib.at_access(api.FLUID, access)
+        if endpoint is None:
+            return 0.0
+        buffer = buffer_port(network)
+        with api.open_transaction() as tx:
+            if pulling:
+                moved = 0.0
+                for slot in endpoint.get_slots():
+                    resource = endpoint.get_resource(slot, tx)
+                    if not transferlib.plain(resource):
+                        continue
+                    # Bulk extraction can span all slots containing this exact identity.
+                    moved = api.move_fluid(endpoint, buffer, resource, budget, tx)
+                    if moved:
+                        break
+            else:
+                moved = api.move_fluid(buffer, endpoint, network.fluid_id, budget, tx)
+            tx.commit()
+        return moved
+    except api.TransactionError:
+        return 0.0
+
+
 def onNetworkTick(network):
     # type: (FluidPipeNetwork) -> None
     transfer_speed = network.transfer_speed
@@ -117,20 +178,30 @@ def onNetworkTick(network):
         fluid_pipe_fluid_volume = 0.0
     if fluid_pipe_fluid_id is not None and fluid_pipe_fluid_volume > 0:
         volume_output = min(transfer_speed, fluid_pipe_fluid_volume)
-        fluid_pipe_fluid_volume -= volume_output
+        # Keep the network fields current for transactional external endpoints.
         for input in network.get_input_access_points():
-            ok, volume_output = PushFluidToFluidContainer(
-                input, fluid_pipe_fluid_id, volume_output
-            )
+            if not isinstance(GetLoadedMachine(input.dim, *input.target_pos), MultiFluidContainer):
+                moved = transfer_external(network, input, volume_output, False)
+                volume_output -= moved
+            else:
+                _, rest = PushFluidToFluidContainer(input, fluid_pipe_fluid_id, volume_output)
+                network.fluid_volume -= volume_output - rest
+                volume_output = rest
             if volume_output <= 0:
                 break
-        fluid_pipe_fluid_volume += volume_output
+        fluid_pipe_fluid_volume = network.fluid_volume
+        if not fluid_pipe_fluid_volume:
+            fluid_pipe_fluid_id = network.fluid_id = None
     out_capacity = max(0, min(transfer_speed, capacity - fluid_pipe_fluid_volume))
     for output in network.get_output_access_points():
         if out_capacity <= 0:
             break
         om = GetLoadedMachine(output.dim, *output.target_pos)
-        if isinstance(om, MultiFluidContainer):
+        if not isinstance(om, MultiFluidContainer):
+            network.fluid_id, network.fluid_volume = fluid_pipe_fluid_id, fluid_pipe_fluid_volume
+            out_capacity -= transfer_external(network, output, out_capacity, True)
+            fluid_pipe_fluid_id, fluid_pipe_fluid_volume = network.fluid_id, network.fluid_volume
+        else:
             do_break = False
             relative_face = None
             if om.fluid_output_slots_by_face is not None:
@@ -185,3 +256,4 @@ logic_module = LogicModule(
     transmittable_block_check_func=isFluidContainer,
     on_network_tick=onNetworkTick,
 )
+logic_module.transfer_capability = "radium:fluid"

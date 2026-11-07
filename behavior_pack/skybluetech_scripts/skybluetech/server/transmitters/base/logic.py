@@ -61,7 +61,8 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         self.access_point_cls = access_point_cls
         self.transmitter_check_func = transmitter_check_func
         "方块是否为传输管线方块。"
-        self.transmittable_block_check_func = transmittable_block_check_func
+        self.native_block_check = transmittable_block_check_func
+        self.transfer_capability = None
         "方块是否为传输目标方块。传入(方块ID, 维度, 方块坐标), 坐标可为None(仅按名称判断, 用于被移除的方块)"
         self.provider_check_func = provider_check_func
         "目标方块是否为传输源检测函数, 传入(方块ID, 维度, 方块坐标+朝向)"
@@ -229,17 +230,47 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
             self.transmitter_check_func(block_name) and block_name == other_block_name
         )
 
+    def transmittable_block_check_func(self, name, dim=None, pos=None, face=None):
+        if self.native_block_check(name, dim, pos):
+            return True
+        if self.transfer_capability and name != "minecraft:air":
+            from ... import transferlib
+            return transferlib.has_port(self.transfer_capability, dim, pos, face)
+        return False
+
+    def refresh_transfer_ports(self, capability):
+        from ... import transferlib
+        blocks = CF.CreateBlockInfo(LEVEL_ID)
+        for network in list(self.networks_pool):
+            changed = False
+            for x, y, z in network.nodes:
+                for face, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
+                    pos = (x + dx, y + dy, z + dz)
+                    name = (blocks.GetBlockNew(pos, network.dim) or {}).get("name")
+                    if (not name or name == "minecraft:air" or self.native_block_check(name, network.dim, pos)
+                            or not transferlib.has_port(capability, network.dim, pos, OPPOSITE_FACING[face])):
+                        continue
+                    self.connect_around_placed(network.dim, pos[0], pos[1], pos[2], name)
+                    changed = True
+            if changed:
+                self.delete_network(network)
+                rebuilt = self.GetNetworkByTransmitter(network.dim, x, y, z, disable_cache=True)
+                if rebuilt is not None:
+                    self.apply_network_to_pool(rebuilt)
+
     def can_connect(self, dim, block_name, block_pos, other_block_name, other_pos):
         # type: (int, str, tuple[int, int, int], str, tuple[int, int, int]) -> bool
         return (
             self.transmitter_can_connect(block_name, other_block_name)
             or (
-                self.transmittable_block_check_func(block_name, dim, block_pos)
-                and self.transmitter_check_func(other_block_name)
+                self.transmitter_check_func(other_block_name)
+                and self.transmittable_block_check_func(block_name, dim, block_pos,
+                    DXYZ_FACING[tuple(b-a for a, b in zip(block_pos, other_pos))])
             )
             or (
-                self.transmittable_block_check_func(other_block_name, dim, other_pos)
-                and self.transmitter_check_func(block_name)
+                self.transmitter_check_func(block_name)
+                and self.transmittable_block_check_func(other_block_name, dim, other_pos,
+                    DXYZ_FACING[tuple(a-b for a, b in zip(block_pos, other_pos))])
             )
         )
 
@@ -296,7 +327,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                     walked.add(xyz)
                     queue.append(xyz)
                     continue
-                elif self.transmittable_block_check_func(block_name, dim, xyz):
+                elif self.transmittable_block_check_func(block_name, dim, xyz, OPPOSITE_FACING[facing]):
                     custom_provider_checker = self.provider_check_func
                     custom_accepter_checker = self.accepter_check_func
                     if (
@@ -766,9 +797,8 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 states[facing_key] = (
                     self.transmitter_check_func(bname) and bname == event.fullName
                 ) or self.transmittable_block_check_func(
-                    bname,
-                    event.dimensionId,
-                    (event.x + dx, event.y + dy, event.z + dz),
+                    bname, event.dimensionId, (event.x + dx, event.y + dy, event.z + dz),
+                    OPPOSITE_FACING[DXYZ_FACING[(dx, dy, dz)]],
                 )
             _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
                 (event.x, event.y, event.z),

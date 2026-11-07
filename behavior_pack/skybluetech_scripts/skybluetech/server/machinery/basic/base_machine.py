@@ -269,7 +269,8 @@ class BaseMachine(object):
     @property
     def store_rf(self):
         # type: () -> int
-        return self.bdata[K_STORE_RF] or 0
+        pending = getattr(self, "_pending_transfer_rf", None)
+        return pending if pending is not None else (self.bdata[K_STORE_RF] or 0)
 
     @store_rf.setter
     def store_rf(self, value):
@@ -277,6 +278,17 @@ class BaseMachine(object):
         "值比对早退: 能量值没变化时跳过 bdata 写入, 避免每 tick 无谓触发引擎同步写(实测 __setitem__ 约 50us/次)。"
         if (self.bdata[K_STORE_RF] or 0) != value:
             self.bdata[K_STORE_RF] = value
+
+        self._pending_transfer_rf = None
+
+    def StageTransferPower(self, whole_rf):
+        # Preserve fractional RF from legacy generators while exposing integer RF.
+        stored = self.store_rf
+        self._pending_transfer_rf = whole_rf + (stored - int(stored))
+
+    def PersistTransferPower(self):
+        if self._pending_transfer_rf is not None:
+            self.store_rf = self._pending_transfer_rf
 
     def __hash__(self):
         return hash((self.dim, self.x, self.y, self.z))

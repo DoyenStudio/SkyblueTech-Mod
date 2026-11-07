@@ -220,20 +220,32 @@ def onMachineryPlacedLater(dim, x, y, z):
 
 
 def onNetworkTick(network):
-    # type: (ItemPipeNetwork) -> None
-    tick_capacity = network.transfer_speed
+    from ... import transferlib
+    if transferlib.supports_items():
+        from .transfer import tick
+        tick(network)
+    else:
+        _legacy_network_tick(network)
+
+
+def _legacy_network_tick(network, inputs=None, outputs=None, budget=None):
+    # type: (ItemPipeNetwork, tuple | None, tuple | None, int | None) -> int
+    tick_capacity = network.transfer_speed if budget is None else budget
+    initial_capacity = tick_capacity
     slotitem_changed = {}  # type: dict[tuple[int, int, int], set[int]]
-    inputs = network.get_input_access_points()
-    outputs = network.get_output_access_points()
+    inputs = network.get_input_access_points() if inputs is None else inputs
+    outputs = network.get_output_access_points() if outputs is None else outputs
 
     if tick_capacity <= 0 or not outputs or not inputs:
         # 没有输出端或没有输入端时不会发生任何搬运, 也就不必广播验证事件
-        return
+        return 0
 
     # 输出端轮询游标: 每次 tick 从下一个接入点开始扫描, 避免单个输出端长期独占容量
     output_count = len(outputs)
-    start = network._output_cursor % output_count
-    network._output_cursor = (start + 1) % output_count
+    start = 0
+    if budget is None:
+        start = network._output_cursor % output_count
+        network._output_cursor = (start + 1) % output_count
 
     break_flag1 = False
     # 大箱子两个半箱经容器 API 暴露同一份 0-53 全局槽位, 同一 tick 内
@@ -429,6 +441,8 @@ def onNetworkTick(network):
         # 自己写回后同样标记失效, 下次 tick 与引擎实际状态重新对齐
         _invalidate_container(network, pos)
 
+    return initial_capacity - tick_capacity
+
 
 def _get_container_item(network, xyz, slot):
     # type: (ItemPipeNetwork, tuple[int, int, int], int) -> Item | None
@@ -559,6 +573,7 @@ logic_module = LogicModule(
     on_transmittable_block_placed_later=onMachineryPlacedLater,
     on_network_tick=onNetworkTick,
 )
+logic_module.transfer_capability = "radium:item"
 
 
 @ContainerItemChangedServerEvent.Listen()

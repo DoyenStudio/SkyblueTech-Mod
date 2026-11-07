@@ -121,6 +121,8 @@ class EnergyCubeJunior(OperationListener, GUIControl, BasePowerProvider, BaseCli
 
     def set_io_mode(self, face, io_mode):
         # type: (int, int) -> None
+        from .. import transferlib
+        transferlib.invalidate()
         self.io_modes._modes[face] = io_mode
         self.io_modes.save()
         self.energy_io_mode = self.io_modes.modes()

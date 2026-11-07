@@ -1,11 +1,12 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
-from collections import deque
+from itertools import groupby
 
 from skybluetech_scripts.tooldelta.events.server import (
     OnEntityInsideBlockServerEvent,
 )
 from ...export import energy
+from ... import transferlib
 from ...machinery.core.pool import GetMachineWithoutCls
 from ....common.define.facing import OPPOSITE_FACING
 
@@ -55,14 +56,18 @@ def isSkyblueMachine(block_tags):
 def _allowsPower(block_name, dim, posdata, mode):
     if energy.IsExternalEnergyBlock(block_name):
         handler = energy.GetEnergyHandler(posdata[:3], dim, posdata[3])
-        return handler is not None and (handler.canExtract() if mode == 1 else handler.canReceive())
+        if handler is not None and (handler.canExtract() if mode == 1 else handler.canReceive()):
+            return True
+        return transferlib.has_port("radium:energy", dim, posdata[:3], posdata[3])
     tags = _block_tags_cache.get(block_name)
     if tags is None:
         tags = _block_tags_cache[block_name] = set(CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(block_name))
     if isSkyblueMachine(tags):
         machine = GetMachineWithoutCls(dim, *posdata[:3])
         return machine is not None and machine.energy_io_mode[posdata[3]] == mode
-    return ("redstoneflux_provider" if mode == 1 else "redstoneflux_accepter") in tags
+    if ("redstoneflux_provider" if mode == 1 else "redstoneflux_accepter") in tags:
+        return True
+    return transferlib.has_port("radium:energy", dim, posdata[:3], posdata[3])
 
 
 def isPowerProvider(block_name, dim, posdata):
@@ -85,39 +90,12 @@ def onNetworkTick(network):
     outputs = network.get_output_access_points()
     transfered_rf = 0
     for output in outputs:
-        source = energy.GetEnergyHandler(output.target_pos, network.dim, OPPOSITE_FACING[output.access_facing])
-        if source is None or not source.canExtract():
-            continue
-        ticket = source.prepareExtract(int(tick_capacity))
-        if ticket is None:
-            continue
-        remaining = ticket.amount
-        candidates = deque(inputs)
         try:
-            while candidates and remaining:
-                access = candidates[0]
-                if access.target_pos == output.target_pos:
-                    candidates.popleft()
-                    continue
-                target = energy.GetEnergyHandler(access.target_pos, network.dim, OPPOSITE_FACING[access.access_facing])
-                if target is None or not target.canReceive():
-                    candidates.popleft()
-                    continue
-                if energy.SameEnergyStorage(source, target):
-                    candidates.popleft()
-                    continue
-                accepted = energy._quantity(target.insert(remaining))
-                if accepted > remaining:
-                    raise RuntimeError("energy receiver exceeded offer")
-                remaining -= accepted
-                if remaining:
-                    candidates.popleft()
-        except Exception:
-            # 对端可能已入账，结果不明时不能退款再次发放。
-            ticket.finish(ticket.amount)
-            raise
-        ticket.finish(ticket.amount - remaining)
-        moved = ticket.amount - remaining
+            moved = transfer_from_port(output, inputs, int(tick_capacity))
+        except Exception as exc:
+            if transferlib.api is None or not isinstance(exc, transferlib.api.TransactionError):
+                raise
+            continue
         transfered_rf += moved
         tick_capacity -= moved
         if tick_capacity <= 0:
@@ -131,6 +109,79 @@ def onNetworkTick(network):
         network.power_through_sum = 0.0
 
 
+def distribute_legacy(source, targets, budget):
+    if source is None or not source.canExtract():
+        return 0
+    ticket = source.prepareExtract(budget)
+    if ticket is None:
+        return 0
+    remaining = ticket.amount
+    try:
+        for target in targets:
+            if not target.canReceive() or energy.SameEnergyStorage(source, target):
+                continue
+            accepted = energy._quantity(target.insert(remaining))
+            if accepted > remaining:
+                raise RuntimeError("energy receiver exceeded offer")
+            remaining -= accepted
+            if not remaining:
+                break
+    except Exception:
+        ticket.finish(ticket.amount)
+        raise
+    moved = ticket.amount - remaining
+    ticket.finish(moved)
+    return moved
+
+
+def transfer_from_port(output, inputs, budget):
+    api = transferlib.api
+    native = energy.GetEnergyHandler(output.target_pos, output.dim, OPPOSITE_FACING[output.access_facing])
+    source = transferlib.at_access(api.ENERGY, output) if api is not None else None
+    if source is None and native is None:
+        return 0
+
+    def targets():
+        for access in inputs:
+            if access.target_pos == output.target_pos:
+                continue
+            if source is not None:
+                target = transferlib.at_access(api.ENERGY, access)
+                if target is not None:
+                    yield True, target
+                    continue
+            if native is not None:
+                target = energy.GetEnergyHandler(access.target_pos, access.dim, OPPOSITE_FACING[access.access_facing])
+                if target is not None:
+                    yield False, target
+
+    remaining = budget
+    if source is not None:
+        # Keep the source limit across protocol groups, including legacy-only targets.
+        try:
+            with api.open_transaction() as probe:
+                remaining = source.extract(budget, probe)
+        except api.TransactionError:
+            return 0
+    available = remaining
+    # Resolve endpoints before the first commit, so a lookup failure has no partial effects.
+    for transactional, group in groupby(list(targets()), lambda pair: pair[0]):
+        if not remaining:
+            break
+        endpoints = [target for _, target in group]
+        if transactional:
+            try:
+                with api.open_transaction() as tx:
+                    moved = api.distribute_energy(source, endpoints, remaining, tx)
+                    tx.commit()
+            except api.TransactionError:
+                break
+        else:
+            moved = distribute_legacy(native, endpoints, remaining)
+        remaining -= moved
+    return available - remaining
+
+
 logic_module = LogicModule(
     WireNetwork,
     WireAccessPoint,
@@ -141,6 +192,9 @@ logic_module = LogicModule(
     provider_check_func=isPowerProvider,
     accepter_check_func=isPowerAccepter,
 )
+
+
+logic_module.transfer_capability = "radium:energy"
 
 
 @OnEntityInsideBlockServerEvent.Listen()

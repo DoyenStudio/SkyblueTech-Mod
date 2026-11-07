@@ -13,6 +13,7 @@ from ...common.events.machinery.fluid_splitter import (
 from ...common.machinery_def.fluid_splitter import MAX_FLUID_VOLUME
 from ..transmitters.fluid_pipe.logic import (
     PushFluidToFluidContainer,
+    fluid_pipe_can_transfer_fluid,
 )
 from ..transmitters.fluid_pipe.logic import (
     logic_module as fluid_pipe_logic,
@@ -77,9 +78,8 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
                 fluid.volume = 0.0
                 continue
             if fluid_id is not None and fluid_volume > 0:
-                rest_volume = self.try_post_fluid_by_label(fluid_id, fluid_volume)
+                rest_volume = self.try_post_fluid_by_label(fluid_id, fluid_volume, slot)
                 ok = ok or rest_volume != fluid_volume
-                fluid.volume = rest_volume
             if fluid.volume <= 0:
                 fluid.fluid_id = None
         return ok
@@ -94,7 +94,7 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
         )
 
 
-    def try_post_fluid_by_label(self, fluid_id, fluid_volume):
+    def try_post_fluid_by_label(self, fluid_id, fluid_volume, source_slot=None):
         # type: (str, float) -> float
         if fluid_id is None or fluid_volume is None or fluid_volume <= 0:
             return fluid_volume
@@ -105,15 +105,43 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
             .get_outputs()
             .values()
         )
-        for network in networks:
-            for ap in network.group_inputs:
+        from .. import transferlib
+        from .core.pool import GetLoadedMachine
+        for network in set(networks):
+            if not fluid_pipe_can_transfer_fluid(network.transmitter_id, fluid_id):
+                continue
+            budget = network.transfer_speed
+            for ap in network.get_input_access_points():
                 ap_label = ap.get_label()
-                if ap_label == matched_label:
-                    _, fluid_volume = PushFluidToFluidContainer(
-                        ap, fluid_id, fluid_volume
-                    )
-                    if fluid_volume <= 0:
+                if ap_label != matched_label or ap.target_pos == self.xyz:
+                    continue
+                offered = min(fluid_volume, budget)
+                api = transferlib.api
+                target_machine = GetLoadedMachine(ap.dim, *ap.target_pos)
+                if source_slot is not None and api is not None and not isinstance(target_machine, MultiFluidContainer):
+                    try:
+                        target = transferlib.at_access(api.FLUID, ap)
+                        if target is None:
+                            continue
+                        source = api.create_fluid_handler(
+                            {source_slot: self._radium_fluids[source_slot]},
+                            lambda i: self.fluids[i].max_volume, input_slots=())
+                        with api.open_transaction() as tx:
+                            moved = api.move_fluid(source, target, fluid_id, offered, tx)
+                            tx.commit()
+                    except api.TransactionError:
                         break
+                else:
+                    _, rest = PushFluidToFluidContainer(ap, fluid_id, offered)
+                    moved = offered - rest
+                    if source_slot is not None and moved:
+                        self.fluids[source_slot].volume -= moved
+                fluid_volume -= moved
+                budget -= moved
+                if fluid_volume <= 0 or budget <= 0:
+                    break
+            if fluid_volume <= 0:
+                break
         return fluid_volume
 
     def get_label_by_fluid(self, fluid_id):

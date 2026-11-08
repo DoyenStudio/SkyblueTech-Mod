@@ -1,12 +1,19 @@
 # coding=utf-8
+from mod.server.extraServerApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.events.server import (
     OnEntityInsideBlockServerEvent,
     ServerPlaceBlockEntityEvent,
 )
 
-from ...common.define.facing import CARDINAL_DIRECTION_TO_DXZ
-from ...common.define.id_enum import TransmitBelt
+from ....common.define.facing import CARDINAL_DIRECTION_TO_DXZ
+from ....common.define.id_enum import TransmitBelt
+from .utils import get_forward_offset
+
+EntityType = GetMinecraftEnum().EntityType
+
+BELTS = frozenset({TransmitBelt.BELT, TransmitBelt.EXTRACTOR, TransmitBelt.INSERTER})
+OUTPUT_BELTS = frozenset({TransmitBelt.BELT, TransmitBelt.EXTRACTOR})
 
 
 class BeltState:
@@ -26,24 +33,23 @@ def get_left_direction(facing):
     # type: (str) -> str
     return {"north": "west", "west": "south", "south": "east", "east": "north"}[facing]
 
+
 def is_middle(num):
     # type: (float) -> bool
     return abs(num % 1.0 - 0.5) < 0.0625
 
+
 def get_motion_by_facing_str(cardinal_direction):
     # type: (str) -> tuple[float, float, float]
-    return {
-        "north": (0, 0, -MOTION),
-        "south": (0, 0, MOTION),
-        "east": (MOTION, 0, 0),
-        "west": (-MOTION, 0, 0),
-    }[cardinal_direction]
+    dx, dz = CARDINAL_DIRECTION_TO_DXZ[cardinal_direction]
+    return (dx * MOTION, 0, dz * MOTION)
+
 
 def get_motion(dim, block_pos, entity_pos):
     # type: (int, tuple[int, int, int], tuple[float, float, float]) -> tuple[float, float, float]
     blockstates = CF.CreateBlockState(LEVEL_ID).GetBlockStates(block_pos, dim)
-    cardinal_direction = blockstates["minecraft:cardinal_direction"] # type: str
-    belt_state = blockstates["skybluetech:transmit_belt_status"] # type: str
+    cardinal_direction = blockstates["minecraft:cardinal_direction"]  # type: str
+    belt_state = blockstates.get("skybluetech:transmit_belt_status", BeltState.STRAIGHT)  # type: str
 
     if belt_state == BeltState.STRAIGHT:
         return get_motion_by_facing_str(cardinal_direction)
@@ -64,14 +70,17 @@ def get_motion(dim, block_pos, entity_pos):
                 return get_motion_by_facing_str(get_left_direction(cardinal_direction))
             else:
                 raise ValueError("Error belt state support")
-    
+
     else:
         raise ValueError("Unknown transmitelt state: " + belt_state)
 
+
 MOTION = 0.05
+INSERTER_STOP_OFFSET = 0.25
+
 
 @ServerPlaceBlockEntityEvent.Listen()
-def onTransmitBeltPlaced(event):
+def on_belt_placed(event):
     # type: (ServerPlaceBlockEntityEvent) -> None
     if event.blockName != TransmitBelt.BELT:
         return
@@ -84,39 +93,20 @@ def onTransmitBeltPlaced(event):
 
     left_dir = get_left_direction(cardinal_direction)
     right_dir = get_right_direction(cardinal_direction)
-    ldx, ldz = CARDINAL_DIRECTION_TO_DXZ[left_dir]
-    rdx, rdz = CARDINAL_DIRECTION_TO_DXZ[right_dir]
-
-    # 左边检测
-    if (
-        (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
-            (event.posX + ldx, event.posY, event.posZ + ldz),
-            event.dimension,
-        ) or {}).get("name")
-        == TransmitBelt.BELT
+    for side, incoming, corner_state in (
+        (left_dir, right_dir, BeltState.CORNER_LEFT),
+        (right_dir, left_dir, BeltState.CORNER_RIGHT),
     ):
-        lcardinal_direction = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
-            (event.posX + ldx, event.posY, event.posZ + ldz),
-            event.dimension,
+        dx, dz = CARDINAL_DIRECTION_TO_DXZ[side]
+        neighbor_pos = (event.posX + dx, event.posY, event.posZ + dz)
+        neighbor = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(neighbor_pos, event.dimension) or {}
+        if neighbor.get("name") not in OUTPUT_BELTS:
+            continue
+        neighbor_direction = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
+            neighbor_pos, event.dimension,
         )["minecraft:cardinal_direction"]
-        if lcardinal_direction == right_dir:
-            state = BeltState.CORNER_LEFT
-
-    # 右边检测
-    if (
-        (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(
-            (event.posX + rdx, event.posY, event.posZ + rdz),
-            event.dimension,
-        ) or {}).get("name")
-        == TransmitBelt.BELT
-    ):
-        rcardinal_direction = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
-            (event.posX + rdx, event.posY, event.posZ + rdz),
-            event.dimension,
-        )["minecraft:cardinal_direction"]
-        if rcardinal_direction == left_dir:
-            state = BeltState.CORNER_RIGHT
-
+        if neighbor_direction == incoming:
+            state = corner_state
 
     _block_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
         (event.posX, event.posY, event.posZ),
@@ -130,15 +120,31 @@ def onTransmitBeltPlaced(event):
             event.dimension,
         )
 
+
 @OnEntityInsideBlockServerEvent.Listen()
-def onEntityInsideBlock(event):
+def _on_entity_inside_belt(event):
     # type: (OnEntityInsideBlockServerEvent) -> None
-    if event.blockName != TransmitBelt.BELT:
+    if event.blockName not in BELTS:
         return
     x, y, z = CF.CreatePos(event.entityId).GetFootPos()
     if y % 1.0 > 0.125:
         return
     dim = CF.CreateDimension(event.entityId).GetEntityDimensionId()
-    CF.CreateActorMotion(event.entityId).SetMotion(
-        get_motion(dim, (event.blockX, event.blockY, event.blockZ), (x, y, z)),
-    )
+    motion = get_motion(dim, (event.blockX, event.blockY, event.blockZ), (x, y, z))
+    motion_comp = CF.CreateActorMotion(event.entityId)
+    entity_type = CF.CreateEngineType(event.entityId).GetEngineType()
+    if entity_type is None:
+        return
+    type_id = entity_type & EntityType.TypeMask
+    if event.blockName == TransmitBelt.INSERTER and type_id == EntityType.ItemEntity:
+        # 沿输送方向计算距中心的偏移，掉落物在存货口前等待入库。
+        forward_offset = get_forward_offset(
+            (event.blockX, event.blockY, event.blockZ), (x, y, z),
+            (motion[0] / MOTION, motion[2] / MOTION),
+        )
+        if forward_offset >= INSERTER_STOP_OFFSET - 1e-6:
+            motion = (0, 0, 0)
+    if type_id == (EntityType.Player & EntityType.TypeMask):
+        motion_comp.SetPlayerMotion(motion)
+    else:
+        motion_comp.SetMotion(motion)

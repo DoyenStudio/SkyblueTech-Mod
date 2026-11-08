@@ -34,7 +34,7 @@
             "+states": ["Blending"]
         },
         "skybluetech_transmit_belt:entity": {
-            "+defines": ["USE_UV_ANIM"]
+            "vertexShader": "shaders/glsl/skybluetech_transmit_belt_vertex.glsl"
         }
     }
 }

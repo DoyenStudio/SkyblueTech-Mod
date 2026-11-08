@@ -79,3 +79,5 @@ class Machinery(SimpleEnum):
 
 class TransmitBelt(SimpleEnum):
     BELT = "skybluetech:transmit_belt"
+    EXTRACTOR = "skybluetech:extractor_belt"
+    INSERTER = "skybluetech:inserter_belt"

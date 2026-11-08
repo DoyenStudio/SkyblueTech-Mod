@@ -1,0 +1,24 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:extractor_belt_craft"
+        },
+        "ingredients": [
+            {
+                "item": "skybluetech:transmit_belt"
+            },
+            {
+                "item": "minecraft:hopper"
+            }
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:extractor_belt"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

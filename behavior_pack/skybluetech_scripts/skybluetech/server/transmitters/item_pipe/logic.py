@@ -576,14 +576,9 @@ logic_module = LogicModule(
 logic_module.transfer_capability = "radium:item"
 
 
-@ContainerItemChangedServerEvent.Listen()
-def onContainerItemChanged(event):
-    # type: (ContainerItemChangedServerEvent) -> None
-    "容器内容变化时, 使连接到该容器的所有电缆网络的缓存失效"
-    pos = event.pos
-    if pos is None:
-        return
-    dim = event.dimensionId
+def InvalidateContainerCaches(dim, pos):
+    # type: (int, tuple[int, int, int]) -> None
+    "使连接到该容器及其配对半箱的物品管网络缓存失效。"
     # 大箱子: 物品变化事件只携带实际发生变化的半箱坐标, 而管道可能只连接了
     # 另一个半箱。若事件半箱不在连接池中, 沿 pairx/pairz 找到配对半箱, 让连接
     # 在配对半箱上的网络缓存一并失效, 否则另一侧半箱的物品永远读不到。
@@ -609,6 +604,15 @@ def onContainerItemChanged(event):
             if network is not None and network not in invalidated_networks:
                 _invalidate_container(network, p)
                 invalidated_networks.add(network)
+
+
+@ContainerItemChangedServerEvent.Listen()
+def onContainerItemChanged(event):
+    # type: (ContainerItemChangedServerEvent) -> None
+    pos = event.pos
+    if pos is None:
+        return
+    InvalidateContainerCaches(event.dimensionId, pos)
 
 
 BlockRemoveServerEvent.AddExtraBlocks(COMMON_CONTAINERS)

@@ -1,0 +1,31 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:transmit_belt_craft"
+        },
+        "key": {
+            "A": {
+                "item": "minecraft:leather"
+            },
+            "B": {
+                "tag": "common:steel_plate"
+            },
+            "C": {
+                "item": "minecraft:redstone"
+            }
+        },
+        "pattern": [
+            "AAA",
+            "CBC"
+        ],
+        "result": {
+            "count": 3,
+            "data": 0,
+            "item": "skybluetech:transmit_belt"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

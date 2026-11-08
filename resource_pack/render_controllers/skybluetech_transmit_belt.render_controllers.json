@@ -26,16 +26,6 @@
             "textures": [
                 "Texture.default"
             ],
-            "uv_anim": {
-                "offset": [
-                    0.625,
-                    "math.mod((query.mod.skybluetech_time_offset+query.life_time)*0.5, 0.5)"
-                ],
-                "scale": [
-                    1,
-                    1
-                ]
-            },
             "part_visibility": [
                 {
                     "straight": "query.mod.skybluetech_transmit_belt_state==0"
@@ -62,7 +52,7 @@
                     "corner_right_belt_smaller": "query.mod.skybluetech_transmit_belt_state==2"
                 }
             ],
-            "ignore_lighting": true
+            "ignore_lighting": false
         }
     }
 }

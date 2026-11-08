@@ -1,0 +1,21 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:extractor_belt_entity",
+            "geometry": {
+                "default": "geometry.skybluetech.extractor_belt"
+            },
+            "textures": {
+                "default": "textures/models/transmit_belt/extractor_belt_texture"
+            },
+            "materials": {
+                "default": "entity",
+                "straight_belt": "skybluetech_transmit_belt"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.extractor_belt"
+            ]
+        }
+    }
+}

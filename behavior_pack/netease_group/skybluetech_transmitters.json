@@ -1,6 +1,15 @@
 {
     "groups": [
         {
+            "group_name": "itemGroup.skybluetech.transmit_belt",
+            "icon": "skybluetech:transmit_belt",
+            "list": [
+                "skybluetech:transmit_belt",
+                "skybluetech:extractor_belt",
+                "skybluetech:inserter_belt"
+            ]
+        },
+        {
             "group_name": "itemGroup.skybluetech.wire",
             "icon": "skybluetech:wire_tin",
             "list": [

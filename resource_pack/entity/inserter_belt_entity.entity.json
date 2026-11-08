@@ -1,0 +1,21 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:inserter_belt_entity",
+            "geometry": {
+                "default": "geometry.skybluetech.inserter_belt"
+            },
+            "textures": {
+                "default": "textures/models/transmit_belt/inserter_belt_texture"
+            },
+            "materials": {
+                "default": "entity",
+                "straight_belt": "skybluetech_transmit_belt"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.inserter_belt"
+            ]
+        }
+    }
+}

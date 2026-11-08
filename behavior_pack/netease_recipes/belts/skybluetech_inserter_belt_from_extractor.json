@@ -1,0 +1,21 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:inserter_belt_from_extractor"
+        },
+        "ingredients": [
+            {
+                "item": "skybluetech:extractor_belt"
+            }
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:inserter_belt"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

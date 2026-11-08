@@ -30,4 +30,3 @@ WIRE_CONNECT_SOUTH = ClientMolang("query.mod.skybluetech_wire_connect_south")
 
 TRANSMIT_BELT_STATE = ClientMolang("query.mod.skybluetech_transmit_belt_state")
 TRANSMIT_BELT_FACING = ClientMolang("query.mod.transmit_belt_facing") # enum: 0=north 1=east 2=south 3=west
-TIME_OFFSET = ClientMolang("query.mod.skybluetech_time_offset")

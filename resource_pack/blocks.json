@@ -1215,6 +1215,14 @@
         "client_entity": {},
         "textures": "skybluetech:transmit_belt"
     },
+    "skybluetech:extractor_belt": {
+        "client_entity": {},
+        "textures": "skybluetech:extractor_belt_texture"
+    },
+    "skybluetech:inserter_belt": {
+        "client_entity": {},
+        "textures": "skybluetech:inserter_belt_texture"
+    },
     "skybluetech:tree_oil": {
         "blockshape": "water",
         "textures": {

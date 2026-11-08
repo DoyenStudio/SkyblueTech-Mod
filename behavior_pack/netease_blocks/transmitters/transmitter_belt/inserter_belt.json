@@ -8,14 +8,14 @@
             "minecraft:material_instances": {
                 "*": {
                     "render_method": "opaque",
-                    "texture": "skybluetech:transmit_belt_texture"
+                    "texture": "skybluetech:inserter_belt_texture"
                 }
             },
             "minecraft:item_visual": {
-                "geometry": "geometry.skybluetech.transmit_belt_item",
+                "geometry": "geometry.skybluetech.inserter_belt_item",
                 "material_instances": {
                     "*": {
-                        "texture": "skybluetech:transmit_belt_texture"
+                        "texture": "skybluetech:inserter_belt_texture"
                     }
                 }
             },
@@ -28,9 +28,11 @@
                     }
                 ]
             },
-            "netease:block_entity": {},
+            "netease:block_entity": {
+                "tick": true
+            },
             "netease:custom_tips": {
-                "value": "\n§7可在发电机与机器间传输能量。\n§b功率： §a512 RF/t"
+                "value": "\n§7将传送带上的物品存入存货口相邻的容器；存不下的物品停留在原地。"
             },
             "netease:listen_block_remove": {
                 "value": true
@@ -66,30 +68,21 @@
                     ],
                     "max": [
                         1,
-                        0.5,
+                        0.8125,
                         1
                     ]
                 }
             }
         },
         "description": {
-            "category": "none",
-            "identifier": "skybluetech:transmit_belt",
+            "category": "skybluetech",
+            "identifier": "skybluetech:inserter_belt",
             "traits": {
                 "minecraft:placement_direction": {
                     "enabled_states": [
                         "minecraft:cardinal_direction"
                     ]
                 }
-            },
-            "states": {
-                "skybluetech:transmit_belt_status": [
-                    "straight",
-                    "corner_left",
-                    "corner_right",
-                    "diagonal_up",
-                    "diagonal_down"
-                ]
             }
         }
     }

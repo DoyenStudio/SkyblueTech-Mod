@@ -10,5 +10,4 @@ from . import (
     object_upgraders,
     piston_denier,
     resin_collector,
-    transmit_belt,
 )

@@ -39,6 +39,7 @@ class Processor(ProcessorBase):
     })
 
     def __init__(self, dim, x, y, z, block_entity_data):
+        self._output_dirty = True
         super(Processor, self).__init__(dim, x, y, z, block_entity_data)
         if self.current_recipe is not None:
             self.SetProcessTicks(self.current_recipe.tick_duration)
@@ -49,14 +50,16 @@ class Processor(ProcessorBase):
         self.handler.SubscribeOnSlotUpdate(self._processor_on_slot_update)
         self.handler.SubscribeOnAddedFluid(self._processor_on_added_fluid)
         self.handler.SubscribeOnReducedFluid(self._processor_on_reduced_fluid)
+        self.handler.SubscribeOnFluidSlotUpdate(self._processor_on_fluid_slot_update)
 
     def _processor_on_ticking(self):
+        # 堵塞中的机器也必须重检，才能在输出腾空后恢复；无更新时不读取槽位。
+        if self._output_dirty and self.current_recipe is not None:
+            self._check_output()
         if not self.IsActive():
             return
         if self.current_recipe is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-            return
-        if not self._check_output():
             return
         # 每 tick 只推进、扣电一次；已完成但尚未结算的批次不再扣电。
         if self.ticks_left > 0 and not self.ProcessOnce():
@@ -67,6 +70,7 @@ class Processor(ProcessorBase):
             self.ticks_left = 0
             if not self.run_once():
                 # 同配方结算失败保留完成进度；换料则重新开批。
+                self._output_dirty = True
                 self.recheck_recipe()
                 break
             self.start_next(check_power=remaining <= 0)
@@ -85,6 +89,7 @@ class Processor(ProcessorBase):
         return self.ticks_left <= 0
 
     def _check_output(self):
+        self._output_dirty = False
         can_output = self.can_output(self.current_recipe)
         self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL, not can_output)
         return can_output
@@ -98,16 +103,12 @@ class Processor(ProcessorBase):
     # === item processor special ===
     def _processor_on_slot_update(self, slot_pos):
         # type: (int) -> None
+        if self.process_item and slot_pos in self.item_output_slots:
+            self._output_dirty = True
         if self._applying_recipe or self.InUpgradeSlot(slot_pos):
             return
-        if self.process_item:
-            if slot_pos in self.item_output_slots and self.HasDeactiveFlag(
-                flags.DEACTIVE_FLAG_OUTPUT_FULL
-            ):
-                self.recheck_recipe()
-                return
-            elif slot_pos in self.item_input_slots:
-                self.recheck_recipe()
+        if self.process_item and slot_pos in self.item_input_slots:
+            self.recheck_recipe()
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool
@@ -129,6 +130,12 @@ class Processor(ProcessorBase):
         )
 
     # === fluid processor special ===
+    def _processor_on_fluid_slot_update(self, slot, is_final):
+        # type: (int, bool) -> None
+        # 每个输出槽更新都标脏，包括批量操作中非最后一个槽位及配方内部写入。
+        if self.process_fluid and slot in self.fluid_output_slots:
+            self._output_dirty = True
+
     def _processor_on_added_fluid(self, slot, fluid_id, fluid_volume, is_final):
         # type: (int, str, float, bool) -> None
         if self._applying_recipe or not is_final or not isinstance(self, MultiFluidContainer):
@@ -142,11 +149,7 @@ class Processor(ProcessorBase):
         # type: (int, str, float, bool) -> None
         if self._applying_recipe or not is_final or not isinstance(self, MultiFluidContainer):
             return
-        if slot in self.fluid_output_slots:
-            if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-                self.recheck_recipe()
-                return
-        elif slot in self.fluid_input_slots:
+        if slot in self.fluid_input_slots:
             self.recheck_recipe()
 
     # ======
@@ -160,8 +163,6 @@ class Processor(ProcessorBase):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             if not recipe.equals(self.current_recipe):
                 self.start_next(recipe)
-            else:
-                self._check_output()
 
     def run_once(self):
         "进行一次配方产出，返回是否成功；失败不得开始下一批。"

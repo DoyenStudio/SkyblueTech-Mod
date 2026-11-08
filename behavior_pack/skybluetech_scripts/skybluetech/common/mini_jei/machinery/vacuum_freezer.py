@@ -16,7 +16,7 @@ class VacuumFreezerRecipe(MachineRecipe):
     #       折扣), 这份热量不是白给的, 由机器的制冷机搬走, 温度越低搬走它越费电。
 
     # 计时方式: `ticks_left` 每 tick 减少"本 tick 的推进速率"(0~1), 所以 `max_tick_duration`
-    # 就是温度足够低时的最少耗时; 跑完一次后 `ticks_left` 会加上原时长重新开始, 也就是
+    # 就是温度足够低时的最少耗时; 成功产出后由 Processor 重置下一批的时长, 也就是
     # 这个配方是"一份原料一份产出"循环执行, 而不是一直烧。
 
     # 注意 `power_cost` 恒为 0: 配方本身不直接吃电, 耗电全部体现在制冷机搬热上。

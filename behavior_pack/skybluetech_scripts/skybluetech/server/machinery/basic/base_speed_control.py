@@ -24,7 +24,9 @@ class BaseSpeedControl(BaseMachine):
     def __init__(self, dim, x, y, z, block_entity_data):
         super(BaseSpeedControl, self).__init__(dim, x, y, z, block_entity_data)
         self.reduce_ticks = 1
-        self._cached_ticks_left = self.bdata[K_TICKS_LEFT] or self.origin_process_ticks
+        # 0 表示加工已完成、等待结算，不能当作没有存档进度。
+        ticks_left = self.bdata[K_TICKS_LEFT]
+        self._cached_ticks_left = self.origin_process_ticks if ticks_left is None else ticks_left
         self.handler.SubscribeOnSetDeactiveFlag(self._base_speed_control_set_deactive_flag)
 
     def SetSpeedRelative(self, speed):

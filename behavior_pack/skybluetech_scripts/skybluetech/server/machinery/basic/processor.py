@@ -43,6 +43,7 @@ class Processor(ProcessorBase):
         if self.current_recipe is not None:
             self.SetProcessTicks(self.current_recipe.tick_duration)
             self.SetPower(self.current_recipe.power_cost)
+            self._check_output()
             self.update_gui()
         self.handler.SubscribeOnTicking(self._processor_on_ticking)
         self.handler.SubscribeOnSlotUpdate(self._processor_on_slot_update)
@@ -50,19 +51,43 @@ class Processor(ProcessorBase):
         self.handler.SubscribeOnReducedFluid(self._processor_on_reduced_fluid)
 
     def _processor_on_ticking(self):
-        while self.IsActive():
-            if self.current_recipe is None:
-                self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
-                return
-            if self.ProcessOnce():
-                # 1tick 内有可能需要多次生产
-                self.run_once()
-                self.start_next()
-                self.CallSync()
-            else:
-                self.CallSync()
+        if not self.IsActive():
+            return
+        if self.current_recipe is None:
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
+            return
+        if not self._check_output():
+            return
+        # 每 tick 只推进、扣电一次；已完成但尚未结算的批次不再扣电。
+        if self.ticks_left > 0 and not self.ProcessOnce():
+            self.CallSync()
+            return
+        while self.IsActive() and self.ticks_left <= 0:
+            remaining = -self.ticks_left
+            self.ticks_left = 0
+            if not self.run_once():
+                # 同配方结算失败保留完成进度；换料则重新开批。
+                self.recheck_recipe()
                 break
+            self.start_next(check_power=remaining <= 0)
+            if remaining <= 0 or not self.IsActive() or self.current_recipe is None:
+                break
+            # 剩余加工量已在本 tick 付过电费，下一批不能再次扣电。
+            self.ticks_left -= remaining
+        self.CallSync()
 
+    def ProcessOnce(self):
+        """每 tick 调用一次，推进并返回是否可结算；覆写时不得重置批次进度。"""
+        if not self.PowerEnough():
+            return False
+        self.ReducePower()
+        self.ticks_left -= self.reduce_ticks
+        return self.ticks_left <= 0
+
+    def _check_output(self):
+        can_output = self.can_output(self.current_recipe)
+        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL, not can_output)
+        return can_output
 
     def GetProgressPercent(self):
         r = self.current_recipe
@@ -79,7 +104,7 @@ class Processor(ProcessorBase):
             if slot_pos in self.item_output_slots and self.HasDeactiveFlag(
                 flags.DEACTIVE_FLAG_OUTPUT_FULL
             ):
-                self.start_next()
+                self.recheck_recipe()
                 return
             elif slot_pos in self.item_input_slots:
                 self.recheck_recipe()
@@ -119,7 +144,7 @@ class Processor(ProcessorBase):
             return
         if slot in self.fluid_output_slots:
             if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-                self.start_next()
+                self.recheck_recipe()
                 return
         elif slot in self.fluid_input_slots:
             self.recheck_recipe()
@@ -135,11 +160,11 @@ class Processor(ProcessorBase):
             self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE)
             if not recipe.equals(self.current_recipe):
                 self.start_next(recipe)
-            elif self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-                self.start_next(recipe)
+            else:
+                self._check_output()
 
     def run_once(self):
-        "进行一次配方产出"
+        "进行一次配方产出，返回是否成功；失败不得开始下一批。"
         reads = SlotReads(self)
         _, recipe = reads.call(self.get_recipe)
         if recipe is None:
@@ -155,9 +180,9 @@ class Processor(ProcessorBase):
         # 专用机器的 finish_recipe 仍可能沿用无返回值的旧接口。
         return reads.call(self.finish_recipe, recipe) is not False
 
-    def start_next(self, _recipe=None):
-        # type: (MachineRecipeBase | None) -> None
-        "开始运行配方"
+    def start_next(self, _recipe=None, check_power=True):
+        # type: (MachineRecipeBase | None, bool) -> None
+        "开始运行配方；仅在使用本 tick 已付费的剩余加工量时跳过电量检查。"
         if _recipe is None:
             _, recipe = self.get_recipe()
             if recipe is None:
@@ -176,12 +201,9 @@ class Processor(ProcessorBase):
         self.current_recipe = recipe
         self.SetProcessTicks(recipe.tick_duration)
         self.ResetProgress()
-        if not self.can_output(recipe):
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
-        else:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+        self._check_output()
         self.SetPower(recipe.power_cost)
-        if not self.PowerEnough():
+        if check_power and not self.PowerEnough():
             return
         self.CallSync()
 

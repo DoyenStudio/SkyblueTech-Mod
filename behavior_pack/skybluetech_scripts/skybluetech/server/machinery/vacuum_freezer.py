@@ -283,11 +283,7 @@ class VacuumFreezer(
         else:
             self.ticks_left = max(0, self.ticks_left - reduce)
             self.heat_value += recipe.tick_heat_value_add * reduce
-        if self.ticks_left <= 0:
-            self.ticks_left += self.origin_process_ticks
-            return True
-        else:
-            return False
+        return self.ticks_left <= 0
 
     def freeze(self):
         # type: () -> None

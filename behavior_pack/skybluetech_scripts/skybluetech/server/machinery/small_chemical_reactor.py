@@ -23,16 +23,3 @@ class SmallChemicalReactor(Processor, MultiFluidContainer):
     upgrade_slot_start = 3
     upgrade_slots = 0
     allow_upgraders = frozenset()
-
-    def _processor_on_ticking(self):
-        # Check output space before spending power or advancing progress.
-        if not self.IsActive() or self.current_recipe is None:
-            return
-        if not self.can_output(self.current_recipe) or not self.PowerEnough():
-            return
-        self.ReducePower()
-        self.ticks_left = max(0, self.ticks_left - 1)
-        if self.ticks_left == 0:
-            if self.run_once():
-                self.start_next()
-        self.CallSync()

@@ -31,24 +31,3 @@ class Electrolyzer(Processor, MultiFluidContainer):
     fluid_io_mode = (-1, -1, -1, -1, -1, -1)
     upgrade_slot_start = 3
     upgrade_slots = 4
-
-    def _processor_on_ticking(self):
-        # Charge once per powered tick and finish on the final processing tick.
-        # The generic processor otherwise charges a further completion tick.
-        if not self.IsActive() or self.current_recipe is None:
-            return
-        if not self.PowerEnough():
-            return
-        self.ReducePower()
-        remaining = self.reduce_ticks
-        while remaining > 0 and self.current_recipe is not None:
-            consumed = min(remaining, self.ticks_left)
-            self.ticks_left -= consumed
-            remaining -= consumed
-            if self.ticks_left > 0:
-                break
-            self.run_once()
-            self.start_next()
-            if not self.IsActive():
-                break
-        self.CallSync()

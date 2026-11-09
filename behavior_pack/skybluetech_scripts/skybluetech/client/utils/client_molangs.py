@@ -28,5 +28,7 @@ WIRE_CONNECT_WEST = ClientMolang("query.mod.skybluetech_wire_connect_west")
 WIRE_CONNECT_NORTH = ClientMolang("query.mod.skybluetech_wire_connect_north")
 WIRE_CONNECT_SOUTH = ClientMolang("query.mod.skybluetech_wire_connect_south")
 
-TRANSMIT_BELT_STATE = ClientMolang("query.mod.skybluetech_transmit_belt_state")
+TRANSMIT_BELT_CONNECT_LEFT = ClientMolang("query.mod.skybluetech_transmit_belt_connect_left")
+TRANSMIT_BELT_CONNECT_RIGHT = ClientMolang("query.mod.skybluetech_transmit_belt_connect_right")
+TRANSMIT_BELT_CONNECT_BACK = ClientMolang("query.mod.skybluetech_transmit_belt_connect_back")
 TRANSMIT_BELT_FACING = ClientMolang("query.mod.transmit_belt_facing") # enum: 0=north 1=east 2=south 3=west

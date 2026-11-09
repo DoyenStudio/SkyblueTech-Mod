@@ -8,19 +8,16 @@
                     "*": "Material.default"
                 },
                 {
-                    "straight_belt": "Material.straight_belt"
+                    "fixed_belt": "Material.connected_belt"
                 },
                 {
-                    "corner_left_belt": "Material.straight_belt"
+                    "back_belt": "Material.connected_belt"
                 },
                 {
-                    "corner_right_belt": "Material.straight_belt"
+                    "left_belt": "Material.connected_belt_side"
                 },
                 {
-                    "corner_left_belt_smaller": "Material.straight_belt"
-                },
-                {
-                    "corner_right_belt_smaller": "Material.straight_belt"
+                    "right_belt": "Material.connected_belt_side"
                 }
             ],
             "textures": [
@@ -28,28 +25,31 @@
             ],
             "part_visibility": [
                 {
-                    "straight": "query.mod.skybluetech_transmit_belt_state==0"
+                    "left_conn": "query.mod.skybluetech_transmit_belt_connect_left"
                 },
                 {
-                    "straight_belt": "query.mod.skybluetech_transmit_belt_state==0"
+                    "left_belt": "query.mod.skybluetech_transmit_belt_connect_left"
                 },
                 {
-                    "corner_left": "query.mod.skybluetech_transmit_belt_state==1"
+                    "no_left_conn": "!query.mod.skybluetech_transmit_belt_connect_left"
                 },
                 {
-                    "corner_left_belt": "query.mod.skybluetech_transmit_belt_state==1"
+                    "right_conn": "query.mod.skybluetech_transmit_belt_connect_right"
                 },
                 {
-                    "corner_left_belt_smaller": "query.mod.skybluetech_transmit_belt_state==1"
+                    "right_belt": "query.mod.skybluetech_transmit_belt_connect_right"
                 },
                 {
-                    "corner_right": "query.mod.skybluetech_transmit_belt_state==2"
+                    "no_right_conn": "!query.mod.skybluetech_transmit_belt_connect_right"
                 },
                 {
-                    "corner_right_belt": "query.mod.skybluetech_transmit_belt_state==2"
+                    "back_conn": "query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right)"
                 },
                 {
-                    "corner_right_belt_smaller": "query.mod.skybluetech_transmit_belt_state==2"
+                    "back_belt": "query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right)"
+                },
+                {
+                    "no_back_conn": "!(query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right))"
                 }
             ],
             "ignore_lighting": false

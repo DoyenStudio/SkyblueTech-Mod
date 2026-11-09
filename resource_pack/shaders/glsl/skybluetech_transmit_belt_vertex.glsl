@@ -16,8 +16,8 @@ void main() {
     calculateGlint();
     entityCommonVert();
     light = getLightColor(entitySpacePosition, entitySpaceNormal);
-    // The 32px atlas belt starts at U=20px and repeats every 16px in V.
-    uv = TEXCOORD_0 + vec2(0.625, mod(TIME * 0.5, 0.5));
+    // Keep the model's U=0..10px range; the atlas repeats every 16px in V.
+    uv = TEXCOORD_0 + vec2(0.0, mod(TIME * 0.5, 0.5));
     calculateSpecificProcess(entitySpacePosition, entitySpaceNormal);
     POS4 projSpacePos = WORLDVIEWPROJ * entitySpacePosition;
     gl_Position = projSpacePos;

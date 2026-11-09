@@ -35,6 +35,10 @@
         },
         "skybluetech_transmit_belt:entity": {
             "vertexShader": "shaders/glsl/skybluetech_transmit_belt_vertex.glsl"
-        }
+        },
+        "skybluetech_connected_belt:entity": {
+            "vertexShader": "shaders/glsl/skybluetech_connected_belt_vertex.glsl"
+        },
+        "skybluetech_connected_belt_side:skybluetech_connected_belt": {}
     }
 }

@@ -11,13 +11,8 @@
             },
             "materials": {
                 "default": "entity",
-                "straight_belt": "skybluetech_transmit_belt"
-            },
-            "scripts": {
-                "initialize": [
-                    "variable.working=false;",
-                    "variable.skybluetech_transmit_belt_state=0;"
-                ]
+                "connected_belt": "skybluetech_connected_belt",
+                "connected_belt_side": "skybluetech_connected_belt_side"
             },
             "render_controllers": [
                 "controller.render.skybluetech.transmit_belt"

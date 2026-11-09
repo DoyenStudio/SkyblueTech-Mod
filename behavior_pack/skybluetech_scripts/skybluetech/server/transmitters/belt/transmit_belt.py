@@ -34,45 +34,43 @@ def get_left_direction(facing):
     return {"north": "west", "west": "south", "south": "east", "east": "north"}[facing]
 
 
-def is_middle(num):
-    # type: (float) -> bool
-    return abs(num % 1.0 - 0.5) < 0.0625
-
-
 def get_motion_by_facing_str(cardinal_direction):
     # type: (str) -> tuple[float, float, float]
     dx, dz = CARDINAL_DIRECTION_TO_DXZ[cardinal_direction]
     return (dx * MOTION, 0, dz * MOTION)
 
 
-def get_motion(dim, block_pos, entity_pos):
-    # type: (int, tuple[int, int, int], tuple[float, float, float]) -> tuple[float, float, float]
+def get_motion(dim, block_pos, entity_pos, block_name=TransmitBelt.BELT):
+    # type: (int, tuple[int, int, int], tuple[float, float, float], str) -> tuple[float, float, float]
     blockstates = CF.CreateBlockState(LEVEL_ID).GetBlockStates(block_pos, dim)
     cardinal_direction = blockstates["minecraft:cardinal_direction"]  # type: str
-    belt_state = blockstates.get("skybluetech:transmit_belt_status", BeltState.STRAIGHT)  # type: str
+    forward_motion = get_motion_by_facing_str(cardinal_direction)
+    if block_name != TransmitBelt.BELT:
+        return forward_motion
 
-    if belt_state == BeltState.STRAIGHT:
-        return get_motion_by_facing_str(cardinal_direction)
+    axis = 0 if cardinal_direction in {"north", "south"} else 2
+    offset = entity_pos[axis] - block_pos[axis] - 0.5
+    if abs(offset) <= 0.0625:
+        return forward_motion
 
-    elif belt_state in {BeltState.CORNER_LEFT, BeltState.CORNER_RIGHT}:
-        if cardinal_direction in {"north", "south"}:
-            is_mid = is_middle(entity_pos[0])
-        else:
-            is_mid = is_middle(entity_pos[2])
-        if is_mid:
-            return get_motion_by_facing_str(cardinal_direction)
-        else:
-            if belt_state == BeltState.CORNER_LEFT:
-                # print "GOTO", get_right_direction(cardinal_direction)
-                return get_motion_by_facing_str(get_right_direction(cardinal_direction))
-            elif belt_state == BeltState.CORNER_RIGHT:
-                # print "GOTO", get_left_direction(cardinal_direction)
-                return get_motion_by_facing_str(get_left_direction(cardinal_direction))
-            else:
-                raise ValueError("Error belt state support")
+    side = 1 if offset > 0 else -1
+    dx, dz = (side, 0) if axis == 0 else (0, side)
+    neighbor_pos = (block_pos[0] + dx, block_pos[1], block_pos[2] + dz)
+    neighbor = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(neighbor_pos, dim) or {}
+    if neighbor.get("name") not in OUTPUT_BELTS:
+        return forward_motion
+    neighbor_states = (
+        CF.CreateBlockState(LEVEL_ID).GetBlockStates(neighbor_pos, dim) or {}
+    )
+    incoming = CARDINAL_DIRECTION_TO_DXZ.get(
+        neighbor_states.get("minecraft:cardinal_direction")
+    )
+    if incoming != (-dx, -dz):
+        return forward_motion
 
-    else:
-        raise ValueError("Unknown transmitelt state: " + belt_state)
+    # 同时有左右输入时，按实体所在侧汇入，不能用单一转角状态选择方向。
+    step = min(MOTION, abs(offset))
+    return (-dx * step, 0, -dz * step)
 
 
 MOTION = 0.05
@@ -99,11 +97,15 @@ def on_belt_placed(event):
     ):
         dx, dz = CARDINAL_DIRECTION_TO_DXZ[side]
         neighbor_pos = (event.posX + dx, event.posY, event.posZ + dz)
-        neighbor = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(neighbor_pos, event.dimension) or {}
+        neighbor = (
+            CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(neighbor_pos, event.dimension)
+            or {}
+        )
         if neighbor.get("name") not in OUTPUT_BELTS:
             continue
         neighbor_direction = CF.CreateBlockState(LEVEL_ID).GetBlockStates(
-            neighbor_pos, event.dimension,
+            neighbor_pos,
+            event.dimension,
         )["minecraft:cardinal_direction"]
         if neighbor_direction == incoming:
             state = corner_state
@@ -126,11 +128,21 @@ def _on_entity_inside_belt(event):
     # type: (OnEntityInsideBlockServerEvent) -> None
     if event.blockName not in BELTS:
         return
-    x, y, z = CF.CreatePos(event.entityId).GetFootPos()
-    if y % 1.0 > 0.125:
+    pos = CF.CreatePos(event.entityId).GetFootPos()
+    if pos is None:
+        return
+    x, y, z = pos
+    # 碰撞盒可能横跨多条带，仅脚点所在格控制移动，避免相邻带争抢速度。
+    if not (
+        event.blockX <= x < event.blockX + 1
+        and event.blockZ <= z < event.blockZ + 1
+        and event.blockY <= y <= event.blockY + 0.125
+    ):
         return
     dim = CF.CreateDimension(event.entityId).GetEntityDimensionId()
-    motion = get_motion(dim, (event.blockX, event.blockY, event.blockZ), (x, y, z))
+    motion = get_motion(
+        dim, (event.blockX, event.blockY, event.blockZ), pos, event.blockName
+    )
     motion_comp = CF.CreateActorMotion(event.entityId)
     entity_type = CF.CreateEngineType(event.entityId).GetEngineType()
     if entity_type is None:
@@ -139,12 +151,20 @@ def _on_entity_inside_belt(event):
     if event.blockName == TransmitBelt.INSERTER and type_id == EntityType.ItemEntity:
         # 沿输送方向计算距中心的偏移，掉落物在存货口前等待入库。
         forward_offset = get_forward_offset(
-            (event.blockX, event.blockY, event.blockZ), (x, y, z),
+            (event.blockX, event.blockY, event.blockZ),
+            (x, y, z),
             (motion[0] / MOTION, motion[2] / MOTION),
         )
         if forward_offset >= INSERTER_STOP_OFFSET - 1e-6:
             motion = (0, 0, 0)
     if type_id == (EntityType.Player & EntityType.TypeMask):
-        motion_comp.SetPlayerMotion(motion)
+        player_motion = motion_comp.GetMotion()
+        motion_comp.SetPlayerMotion(
+            (
+                motion[0],
+                player_motion[1],
+                motion[2],
+            )
+        )
     else:
         motion_comp.SetMotion(motion)

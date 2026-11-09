@@ -5,6 +5,7 @@ from skybluetech_scripts.tooldelta.utils.timer import Delay
 from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
     MULTIBLOCK_STRUCTURE_SCEPTER,
 )
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 
 from skybluetech_scripts.tooldelta.events.server import (
     BlockNeighborChangedServerEvent,
@@ -188,6 +189,9 @@ def on_item_push_in(event):
     from ..interfaces import FluidInputInterface, FluidOutputInterface
 
     m = pool.GetLoadedMachine(event.dimension, event.x, event.y, event.z)
+    if m is not None and m.block_name == Machinery.SPECIALIZED_GROWTH_CHAMBER:
+        event.cancel()
+        return
     if isinstance(m, (FluidInputInterface, FluidOutputInterface)):
         event.cancel()
         return
@@ -204,6 +208,9 @@ def on_item_push_in(event):
 def on_item_pull_out(event):
     # type: (ItemPullOutCustomContainerServerEvent) -> None
     m = pool.GetLoadedMachine(event.dimension, event.x, event.y, event.z)
+    if m is not None and m.block_name == Machinery.SPECIALIZED_GROWTH_CHAMBER:
+        event.cancel()
+        return
     if not isinstance(m, ItemContainer):
         return
     if event.collectionIndex not in m.item_output_slots:

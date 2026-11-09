@@ -55,6 +55,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         on_network_tick,  # type: typing.Callable[[_NT], None]
         provider_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
         accepter_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
+        blocked_block_names=(),  # type: typing.Iterable[str]
     ):
         EventListenerService.__init__(self, GetMCServerEventBus())
         self.network_cls = network_cls
@@ -62,8 +63,9 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         self.transmitter_check_func = transmitter_check_func
         "方块是否为传输管线方块。"
         self.native_block_check = transmittable_block_check_func
-        self.transfer_capability = None
         "方块是否为传输目标方块。传入(方块ID, 维度, 方块坐标), 坐标可为None(仅按名称判断, 用于被移除的方块)"
+        self.transfer_capability = None
+        self.blocked_block_names = frozenset(blocked_block_names)
         self.provider_check_func = provider_check_func
         "目标方块是否为传输源检测函数, 传入(方块ID, 维度, 方块坐标+朝向)"
         self.accepter_check_func = accepter_check_func
@@ -231,12 +233,27 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         )
 
     def transmittable_block_check_func(self, name, dim=None, pos=None, face=None):
+        if name in self.blocked_block_names:
+            return False
         if self.native_block_check(name, dim, pos):
             return True
         if self.transfer_capability and name != "minecraft:air":
             from ... import transferlib
             return transferlib.has_port(self.transfer_capability, dim, pos, face)
         return False
+
+    def is_blocked_target(self, dim, pos):
+        # type: (int, PosData) -> bool
+        "同时约束旧接入点和绕过原生容器判断的外部端口。"
+        if not self.blocked_block_names:
+            return False
+        from ...machinery.core.pool import GetLoadedMachine
+
+        machine = GetLoadedMachine(dim, *pos)
+        if machine is not None:
+            return machine.block_name in self.blocked_block_names
+        name = (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(pos, dim) or {}).get("name")
+        return name in self.blocked_block_names
 
     def discover_energy_faces(self, dim, xyz):
         """Adopt each previously unknown external FE face once, including old saves."""
@@ -279,7 +296,8 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
                 for face, (dx, dy, dz) in enumerate(NEIGHBOR_BLOCKS_ENUM):
                     pos = (x + dx, y + dy, z + dz)
                     name = (blocks.GetBlockNew(pos, network.dim) or {}).get("name")
-                    if (not name or name == "minecraft:air" or self.native_block_check(name, network.dim, pos)
+                    if (not name or name == "minecraft:air" or name in self.blocked_block_names
+                            or self.native_block_check(name, network.dim, pos)
                             or not transferlib.has_port(capability, network.dim, pos, OPPOSITE_FACING[face])):
                         continue
                     self.connect_around_placed(network.dim, pos[0], pos[1], pos[2], name)

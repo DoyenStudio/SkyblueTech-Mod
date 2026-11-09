@@ -55,6 +55,8 @@ from .rf_repeater_plant import RFRepeaterPlantUI
 from .sawmill import SawmillUI
 from .seawater_pump import SeawaterPumpUI
 from .solar_panel import SolarPanelUI
+from .specialized_growth_base import SpecializedGrowthBaseUI
+from .specialized_growth_chamber import SpecializedGrowthChamberUI
 from .template_assembler import TemplateAssemblerUI
 from .tesla_plant_ui import TeslaPlantUI
 from .thermal_generator import ThermalGeneratorUI

@@ -1,0 +1,2 @@
+# coding=utf-8
+FLUID_SLOT_MAX_VOLUMES = {0: 1000, 1: 1000}

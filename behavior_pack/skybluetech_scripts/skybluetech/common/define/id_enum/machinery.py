@@ -68,6 +68,8 @@ class Machinery(SimpleEnum):
     SAWMILL = "skybluetech:sawmill"
     SEAWATER_PUMP = "skybluetech:seawater_pump"
     SOLAR_PANEL = "skybluetech:solar_panel"
+    SPECIALIZED_GROWTH_BASE = "skybluetech:specialized_growth_base"
+    SPECIALIZED_GROWTH_CHAMBER = "skybluetech:specialized_growth_chamber"
     TEMPLATE_ASSEMBLER = "skybluetech:template_assembler"
     TESLA_PLANT = "skybluetech:tesla_plant"
     THERMAL_GENERATOR = "skybluetech:thermal_generator"

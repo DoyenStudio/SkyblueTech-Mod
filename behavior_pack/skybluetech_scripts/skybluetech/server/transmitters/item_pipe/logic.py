@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from copy import deepcopy
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 
 
 from skybluetech_scripts.tooldelta.define.item import Item
@@ -53,6 +54,7 @@ if 0 > 1:
 #       2. 如果找到了可投递的容器, 下次优先向此容器进行投递, 提高命中率
 
 _block_tags_cache = {}  # type: dict[str, set[str]]
+_BLOCKED_BLOCK_NAMES = frozenset((Machinery.SPECIALIZED_GROWTH_CHAMBER,))
 
 
 def is_item_pipe(blockName):
@@ -68,6 +70,8 @@ def is_item_pipe(blockName):
 def isContainer(blockName, dim=None, xyz=None):
     # type: (str, int | None, tuple[int, int, int] | None) -> bool
     "方块是否为可连接的物品容器: 只要能获取到容器大小即可连接。"
+    if blockName in _BLOCKED_BLOCK_NAMES:
+        return False
     if dim is not None and xyz is not None:
         size = CF.CreateItem(LEVEL_ID).GetContainerSize(xyz, dim)
         if size is not None and size > 0:
@@ -135,6 +139,8 @@ def _calc_move_count(source_item, target_item):
 def PostItemIntoNetworks(dim, xyz, item, networks):
     # type: (int, tuple[int, int, int], Item, set[ItemPipeNetwork] | None) -> None | Item
     "向网络发送物品, 返回剩余物品"
+    if logic_module.is_blocked_target(dim, xyz):
+        return item
     item = item.copy()
     if networks is None:
         x, y, z = xyz
@@ -165,6 +171,8 @@ def _push_item_to_container(dim, xyz, face, item, limit_count=None):
     不区分机器与普通容器: 逐个槽位读出物品, 能放下的槽位先广播存入事件, 被否决就跳过;
     只放入 limit_count 个物品, 超出 limit_count 的部分与没放下的部分一并作为剩余物品返回。
     """
+    if logic_module.is_blocked_target(dim, xyz):
+        return item
     rest = item.copy()
     if limit_count is not None:
         rest.count = int(min(rest.count, limit_count))
@@ -235,6 +243,14 @@ def _legacy_network_tick(network, inputs=None, outputs=None, budget=None):
     slotitem_changed = {}  # type: dict[tuple[int, int, int], set[int]]
     inputs = network.get_input_access_points() if inputs is None else inputs
     outputs = network.get_output_access_points() if outputs is None else outputs
+    inputs = tuple(
+        ap for ap in inputs
+        if not logic_module.is_blocked_target(ap.dim, ap.target_pos)
+    )
+    outputs = tuple(
+        ap for ap in outputs
+        if not logic_module.is_blocked_target(ap.dim, ap.target_pos)
+    )
 
     if tick_capacity <= 0 or not outputs or not inputs:
         # 没有输出端或没有输入端时不会发生任何搬运, 也就不必广播验证事件
@@ -572,6 +588,7 @@ logic_module = LogicModule(
     transmittable_block_check_func=isContainer,
     on_transmittable_block_placed_later=onMachineryPlacedLater,
     on_network_tick=onNetworkTick,
+    blocked_block_names=_BLOCKED_BLOCK_NAMES,
 )
 logic_module.transfer_capability = "radium:item"
 

@@ -57,11 +57,17 @@ def _move(api, source, target, budget):
 
 
 def tick(network):
-    from .logic import _legacy_network_tick
+    from .logic import _legacy_network_tick, logic_module
     api = transferlib.api
     budget = network.transfer_speed
-    inputs = network.get_input_access_points()
-    outputs = network.get_output_access_points()
+    inputs = tuple(
+        ap for ap in network.get_input_access_points()
+        if not logic_module.is_blocked_target(ap.dim, ap.target_pos)
+    )
+    outputs = tuple(
+        ap for ap in network.get_output_access_points()
+        if not logic_module.is_blocked_target(ap.dim, ap.target_pos)
+    )
     if budget <= 0 or not inputs or not outputs:
         return
 

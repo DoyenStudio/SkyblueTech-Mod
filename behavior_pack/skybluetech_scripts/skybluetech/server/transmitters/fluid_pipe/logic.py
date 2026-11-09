@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 
 
 from ... import transferlib
@@ -9,6 +10,7 @@ from ..base import LogicModule
 from .define import FluidPipeNetwork, FluidPipeAccessPoint, FLUID_PIPE_CAN_TRANSMIT_FLUID_MAPPING
 
 _block_tags_cache = {}  # type: dict[str, set[str]]
+_BLOCKED_BLOCK_NAMES = frozenset((Machinery.SPECIALIZED_GROWTH_CHAMBER,))
 
 
 def is_fluid_pipe(blockName):
@@ -23,6 +25,8 @@ def is_fluid_pipe(blockName):
 
 def isFluidContainer(blockName, dim=None, xyz=None):
     # type: (str, int | None, tuple[int, int, int] | None) -> bool
+    if blockName in _BLOCKED_BLOCK_NAMES:
+        return False
     tags = _block_tags_cache.get(blockName)
     if tags is None:
         tags = _block_tags_cache[blockName] = set(
@@ -49,6 +53,8 @@ def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
         tuple[bool, float]: 是否输送出流体, 剩余体积
     """
     if fluid_id is None or fluid_volume is None or fluid_volume <= 0:
+        return False, fluid_volume
+    if logic_module.is_blocked_target(dim, xyz):
         return False, fluid_volume
     ok = False
     if networks is None:
@@ -90,6 +96,8 @@ def PushFluidToFluidContainer(ap, fluid_id, fluid_volume):
     # type: (FluidPipeAccessPoint, str, float) -> tuple[bool, float]
     "向容器内装流体, 返回是否添加成功和剩余流体体积"
     if fluid_id is None or fluid_volume is None or fluid_volume <= 0:
+        return False, fluid_volume
+    if logic_module.is_blocked_target(ap.dim, ap.target_pos):
         return False, fluid_volume
     cxyz = ap.target_pos
     m = GetLoadedMachine(ap.dim, *cxyz)
@@ -140,6 +148,8 @@ def buffer_port(network):
 
 
 def transfer_external(network, access, budget, pulling):
+    if logic_module.is_blocked_target(access.dim, access.target_pos):
+        return 0.0
     api = transferlib.api
     if api is None:
         return 0.0
@@ -180,6 +190,8 @@ def onNetworkTick(network):
         volume_output = min(transfer_speed, fluid_pipe_fluid_volume)
         # Keep the network fields current for transactional external endpoints.
         for input in network.get_input_access_points():
+            if logic_module.is_blocked_target(input.dim, input.target_pos):
+                continue
             if not isinstance(GetLoadedMachine(input.dim, *input.target_pos), MultiFluidContainer):
                 moved = transfer_external(network, input, volume_output, False)
                 volume_output -= moved
@@ -194,6 +206,8 @@ def onNetworkTick(network):
             fluid_pipe_fluid_id = network.fluid_id = None
     out_capacity = max(0, min(transfer_speed, capacity - fluid_pipe_fluid_volume))
     for output in network.get_output_access_points():
+        if logic_module.is_blocked_target(output.dim, output.target_pos):
+            continue
         if out_capacity <= 0:
             break
         om = GetLoadedMachine(output.dim, *output.target_pos)
@@ -255,5 +269,6 @@ logic_module = LogicModule(
     on_transmittable_block_placed_later=onMachineryPlacedLater,
     transmittable_block_check_func=isFluidContainer,
     on_network_tick=onNetworkTick,
+    blocked_block_names=_BLOCKED_BLOCK_NAMES,
 )
 logic_module.transfer_capability = "radium:fluid"

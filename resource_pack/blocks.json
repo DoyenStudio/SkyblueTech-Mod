@@ -1169,6 +1169,20 @@
     "skybluetech:solar_panel": {
         "sound": "iron"
     },
+    "skybluetech:specialized_growth_base": {
+        "textures": {
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:specialized_growth_base_upside_fluid_side",
+            "north": "skybluetech:specialized_growth_base_item_side",
+            "south": "skybluetech:specialized_growth_base_item_side",
+            "up": "skybluetech:specialized_growth_base_upside",
+            "west": "skybluetech:specialized_growth_base_upside_fluid_side"
+        }
+    },
+    "skybluetech:specialized_growth_chamber": {
+        "client_entity": {},
+        "sound": "iron"
+    },
     "skybluetech:steel_block": {
         "textures": "skybluetech:steel_block"
     },

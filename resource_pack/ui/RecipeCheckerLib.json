@@ -536,6 +536,13 @@
             62
         ]
     },
+    "specialized_growth_chamber_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.SpecializedGrowthChamber",
+        "size": [
+            180,
+            62
+        ]
+    },
     "small_chemical_reactor_recipes@MachineRecipeLib.mini_row": {
         "$recipe_content": "MachineRecipeLib.SmallChemicalReactor",
         "size": [

@@ -1,0 +1,54 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "minecraft:light_dampening": 0,
+            "netease:block_container": {
+                "container_size": 5,
+                "custom_description": "特种培养基座",
+                "screen_name": "SpecializedGrowthBaseUI.main",
+                "hopper": {
+                    "input": true,
+                    "output": true,
+                    "input_slot": [
+                        {"face": 0, "slot": [0]},
+                        {"face": 1, "slot": [0]},
+                        {"face": 2, "slot": [0]},
+                        {"face": 3, "slot": [0]},
+                        {"face": 4, "slot": [0]},
+                        {"face": 5, "slot": [0]}
+                    ],
+                    "output_slot": [
+                        1,
+                        2,
+                        3,
+                        4
+                    ]
+                }
+            },
+            "netease:block_entity": {},
+            "netease:custom_tips": {
+                "value": "\n§7置于§f特种培养仓§7下方，自动补充消耗材料和输入流体，\n并收集物品及流体产物。不会补充培养仓的绿色保留材料槽。\n可连接物品和流体管道，无需供能。"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_container": {},
+            "tag:skybluetech_fluid_container": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "skybluetech",
+            "identifier": "skybluetech:specialized_growth_base"
+        }
+    }
+}

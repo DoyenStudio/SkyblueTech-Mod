@@ -26,6 +26,7 @@ MACHINES = (
     "machinery_workstation",
     "hydroponic_bed",
     "hydroponic_bed_sand",
+    "specialized_growth_chamber",
     "template_assembler",
     "sawmill",
     "precision_cutter",

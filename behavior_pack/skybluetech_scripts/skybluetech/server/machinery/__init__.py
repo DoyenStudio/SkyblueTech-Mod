@@ -60,6 +60,8 @@ from .rf_repeater_plant import RFRepeaterPlant
 from .sawmill import Sawmill
 from .seawater_pump import SeawaterPump
 from .solar_panel import SolarPanel
+from .specialized_growth_base import SpecializedGrowthBase
+from .specialized_growth_chamber import SpecializedGrowthChamber
 from .template_assembler import TemplateAssembler
 from .tesla_plant import TeslaPlant
 from .thermal_generator import ThermalGenerator

@@ -871,6 +871,18 @@
         "skybluetech:solar_panel_top": {
             "textures": "textures/blocks/machinery/solar_panel_top"
         },
+        "skybluetech:specialized_growth_base_item_side": {
+            "textures": "textures/blocks/machinery/specialized_growth_base_item_side"
+        },
+        "skybluetech:specialized_growth_base_upside": {
+            "textures": "textures/blocks/machinery/specialized_growth_base_upside"
+        },
+        "skybluetech:specialized_growth_base_upside_fluid_side": {
+            "textures": "textures/blocks/machinery/specialized_growth_base_upside_fluid_side"
+        },
+        "skybluetech:specialized_growth_chamber": {
+            "textures": "textures/models/specialized_growth_chamber_texture"
+        },
         "skybluetech:steel_block": {
             "textures": "textures/blocks/metal_block/steel_block"
         },

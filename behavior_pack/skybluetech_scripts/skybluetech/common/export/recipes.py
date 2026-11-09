@@ -50,9 +50,10 @@ from ..mini_jei.core.helper import GetRecipesByInput, GetRecipesByOutput, GetRec
 
 from ..mini_jei.machinery.thermal_cracker import ThermalCrackerRecipe
 from ..mini_jei.machinery.small_chemical_reactor import SmallChemicalReactorRecipe
+from ..mini_jei.machinery.specialized_growth_chamber import SpecializedGrowthChamberRecipe
 
 __all__ = [
-    "ThermalCrackerRecipe", "SmallChemicalReactorRecipe",
+    "ThermalCrackerRecipe", "SmallChemicalReactorRecipe", "SpecializedGrowthChamberRecipe",
     "DistillationColumnRecipe", "DistillationFraction", "DistillationColumnChamberRecipe",
     "RecipesCollection", "CategoryType", "RecipeBase", "Recipe", "Input", "Output",
     "RegisterRecipe", "MarshalOrderedInputs", "MarshalOrderedOutputs", "UnmarshalOrderedInputs",

@@ -46,6 +46,8 @@ class Dusts(SimpleEnum):
     OBSIDIAN = "skybluetech:obsidian_dust"
     SAWDUST = "skybluetech:sawdust"
     SULFUR = "skybluetech:sulfur_dust"
+    UNDEAD = "skybluetech:undead_dust"
+    EVIL_UNDEAD = "skybluetech:evil_undead_dust"
 
 
 class FamicomCartidges(SimpleEnum):

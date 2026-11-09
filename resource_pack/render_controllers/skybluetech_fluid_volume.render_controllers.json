@@ -15,7 +15,8 @@
                         "Texture.volume_lubricant",
                         "Texture.volume_vegetable_oil",
                         "Texture.volume_liquid_resin",
-                        "Texture.volume_molten_rosin"
+                        "Texture.volume_molten_rosin",
+                        "Texture.volume_evil_undead"
                     ]
                 }
             },

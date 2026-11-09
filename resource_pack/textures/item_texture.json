@@ -712,6 +712,12 @@
         "skybluetech:ultraheatinum_plate": {
             "textures": "textures/items/plates/ultraheatinum_plate"
         },
+        "skybluetech:evil_undead_dust": {
+            "textures": "textures/items/dusts/evil_undead_dust"
+        },
+        "skybluetech:undead_dust": {
+            "textures": "textures/items/dusts/undead_dust"
+        },
         "skybluetech:upgrader_basic_energy": {
             "textures": "textures/items/upgraders/upgrader_basic_energy"
         },

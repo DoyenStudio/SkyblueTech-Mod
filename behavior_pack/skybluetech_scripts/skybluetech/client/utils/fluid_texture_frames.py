@@ -16,6 +16,7 @@ FLUID_VOLUME_TEXTURE_INDICES = {
     "textures/fluid/baked/skybluetech.vegetable_oil/static": 8,
     "textures/fluid/baked/skybluetech.liquid_resin/static": 9,
     "textures/fluid/baked/skybluetech.molten_rosin/static": 10,
+    "textures/fluid/baked/skybluetech.evil_undead/static": 11,
 }
 
 # 只有依赖引擎额外着色的灰度源图才登记；已烘焙颜色的流体保持原色。
@@ -76,6 +77,7 @@ FLUID_TEXTURE_FRAMES = {
     "textures/fluid/baked/skybluetech.deepslate_lava/static": (20, 4.0),
     "textures/fluid/baked/skybluetech.dilute_brine/static": (32, 10.0),
     "textures/fluid/baked/skybluetech.distilled_water/static": (32, 10.0),
+    "textures/fluid/baked/skybluetech.evil_undead/static": (32, 10.0),
     "textures/fluid/baked/skybluetech.heavy_lava/static": (20, 4.0),
     "textures/fluid/baked/skybluetech.hydrogen/static": (1, 0.0),
     "textures/fluid/baked/skybluetech.light_lava/flowing_block_static": (20, 4.0),

@@ -562,5 +562,16 @@
         "flipbook_texture": "textures/blocks/machinery/flipbook_textures/small_chemical_reactor_front_active",
         "atlas_tile": "skybluetech:small_chemical_reactor_front_active",
         "ticks_per_frame": 4
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.evil_undead/static",
+        "atlas_tile": "skybluetech:baked_evil_undead_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.evil_undead/flowing",
+        "atlas_tile": "skybluetech:baked_evil_undead_flowing",
+        "replicate": 2,
+        "ticks_per_frame": 2
     }
 ]

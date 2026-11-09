@@ -79,6 +79,7 @@ class CommonLiquid(Common):
 
     BRINE = "skybluetech:brine"
     DILUTE_BRINE = "skybluetech:dilute_brine"
+    EVIL_UNDEAD = "skybluetech:evil_undead"
     LIQUID_AIR = "skybluetech:liquid_air"
     LIQUID_RESIN = "skybluetech:liquid_resin"
     SATURATED_BRINE = "skybluetech:saturated_brine"

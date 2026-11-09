@@ -58,6 +58,7 @@ FLUID_TEXTURES = {
     fluids.CommonGas.PURE_METHANE: BasicFluidTexture("textures/fluid/baked/skybluetech.pure_methane/static", 32, 2),
     fluids.HotFluid.MOLTEN_POLYETHYLENE: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_polyethylene/static", 39, 2),
     fluids.CommonOil.TREE_OIL: BasicFluidTexture("textures/fluid/baked/skybluetech.tree_oil/static", 39, 2),
+    fluids.CommonLiquid.EVIL_UNDEAD: BasicFluidTexture("textures/fluid/baked/skybluetech.evil_undead/static", 32, 2),
 }
 
 

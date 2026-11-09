@@ -35,7 +35,8 @@
                 "volume_lubricant": "textures/fluid/baked/skybluetech.lubricant/static",
                 "volume_vegetable_oil": "textures/fluid/baked/skybluetech.vegetable_oil/static",
                 "volume_liquid_resin": "textures/fluid/baked/skybluetech.liquid_resin/static",
-                "volume_molten_rosin": "textures/fluid/baked/skybluetech.molten_rosin/static"
+                "volume_molten_rosin": "textures/fluid/baked/skybluetech.molten_rosin/static",
+                "volume_evil_undead": "textures/fluid/baked/skybluetech.evil_undead/static"
             },
             "animations": {
                 "y_scale": "animation.skybluetech.fluid_model_entity.y_scale",

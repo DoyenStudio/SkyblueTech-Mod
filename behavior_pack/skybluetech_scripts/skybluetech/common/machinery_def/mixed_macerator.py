@@ -31,4 +31,22 @@ recipes = RecipesCollection(
         40,
         160,
     ),
+    MixedMaceratorRecipe(
+        {
+            0: Input("minecraft:bone"),
+            1: Input("minecraft:rotten_flesh", 2),
+        },
+        Output(id_enum.Dusts.UNDEAD),
+        40,
+        80,
+    ),
+    MixedMaceratorRecipe(
+        {
+            0: Input(id_enum.Dusts.UNDEAD, 3),
+            1: Input("minecraft:black_dye"),
+        },
+        Output(id_enum.Dusts.EVIL_UNDEAD, 3),
+        40,
+        80,
+    ),
 )  # type: RecipesCollection[MachineRecipe]

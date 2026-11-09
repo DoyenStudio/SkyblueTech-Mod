@@ -217,6 +217,22 @@
         "client_entity": {},
         "sound": "glass"
     },
+    "skybluetech:evil_undead": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_evil_undead_static",
+            "side": "skybluetech:baked_evil_undead_flowing",
+            "up": "skybluetech:baked_evil_undead_static"
+        }
+    },
+    "skybluetech:flowing_evil_undead": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_evil_undead_static",
+            "side": "skybluetech:baked_evil_undead_flowing",
+            "up": "skybluetech:baked_evil_undead_flowing"
+        }
+    },
     "skybluetech:heat_melting_chamber": {
         "client_entity": {},
         "sound": "glass"

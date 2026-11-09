@@ -48,6 +48,8 @@ class DustTag:
     BIO = "common:bio_dust"
     ANCIENT_DEBRIS = "common:ancient_debris_dust"
     OBSIDIAN = "common:obsidian_dust"
+    UNDEAD = "common:undead_dust"
+    EVIL_UNDEAD = "common:evil_undead_dust"
 
 
 class RawTag:

@@ -214,7 +214,7 @@
                     ],
                     "layer": 4,
                     "enabled_newline": true,
-                    "max_length": 256
+                    "max_length": 512
                 }
             }
         ]

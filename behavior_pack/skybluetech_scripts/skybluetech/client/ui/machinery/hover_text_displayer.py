@@ -9,6 +9,7 @@ from skybluetech_scripts.skybluetech.common.events.machinery.hover_text_displaye
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import K_STORE_RF
 from skybluetech_scripts.skybluetech.common.machinery_def.hover_text_displayer import (
+    MAX_TEXT_LENGTH,
     STORE_RF_MAX,
 )
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
@@ -58,5 +59,5 @@ class HoverTextDisplayerUI(MachinePanelUI):
     def oneEditedText(self, params):
         text = params["Text"]  # type: str
         HoverTextDisplayerContentUpload(
-            self.x, self.y, self.z, py2_unicode(text)[:512]
+            self.x, self.y, self.z, py2_unicode(text)[:MAX_TEXT_LENGTH]
         ).send()

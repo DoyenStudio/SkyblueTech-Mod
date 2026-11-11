@@ -1,4 +1,6 @@
 # coding=utf-8
+import re
+
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_unicode
 from skybluetech_scripts.tooldelta.srv import CF
 
@@ -8,7 +10,11 @@ from ...common.events.machinery.hover_text_displayer import (
     HoverTextDisplayerContentUpdate,
     HoverTextDisplayerContentUpload,
 )
-from ...common.machinery_def.hover_text_displayer import K_TEXT, STORE_RF_MAX
+from ...common.machinery_def.hover_text_displayer import (
+    K_TEXT,
+    MAX_TEXT_LENGTH,
+    STORE_RF_MAX,
+)
 from ...common.utils.block_sync import BlockSync, BlockSyncC2S
 from .basic import (
     BaseClicker,
@@ -20,6 +26,7 @@ from .core import RegisterMachine
 from .core.pool import GetMachineWithoutCls
 
 block_sync = BlockSync(Machinery.HOVER_TEXT_DISPLAYER, side=BlockSync.SIDE_SERVER)
+TEXT_TOKEN_RE = re.compile(u"\u00a7[0-9a-fk-or]|.", re.IGNORECASE | re.DOTALL)
 
 
 @RegisterMachine
@@ -86,7 +93,9 @@ class HoverTextDisplayer(OperationListener, PowerControl, GUIControl, BaseClicke
 
 
     def calcuate_power_cost(self):
-        cost = len(self.text) * 0.2 * (1.5 if "搂" in self.text else 1)
+        cost = len(self.text) * 0.2 * (
+            1.5 if u"\u00a7" in py2_unicode(self.text) else 1
+        )
         if cost % 1 > 0:
             return int(cost) + 1
         else:
@@ -121,24 +130,24 @@ def on_display_loaded(event):
 def onTextUploaded(event, machine):
     # type: (HoverTextDisplayerContentUpload, HoverTextDisplayer) -> None
     text = py2_unicode(event.new_text.strip())
-    if len(text) > 256:
-        text = text[:256]
-    text_list = []
-    cached_text = ""
+    text_parts = []
     length = 0
-    for char in text:
-        if char == "\n":
-            text_list.append(cached_text)
-            cached_text = ""
+    total_length = 0
+    for match in TEXT_TOKEN_RE.finditer(text):
+        token = match.group()
+        is_format_code = len(token) == 2
+        needs_wrap = length >= 40 and token != "\n" and not is_format_code
+        # 总限长包括完整格式码、原有换行和自动添加的换行。
+        added_length = len(token) + (1 if needs_wrap else 0)
+        if total_length + added_length > MAX_TEXT_LENGTH:
+            break
+        if needs_wrap:
+            text_parts.append(u"\n")
             length = 0
-        else:
-            if char != "搂":
-                length += 1
-            if length > 40:
-                text_list.append(cached_text)
-                cached_text = ""
-                length = 0
-            cached_text += char
-    if cached_text != "":
-        text_list.append(cached_text)
-    machine.set_text("\n".join(text_list))
+        text_parts.append(token)
+        total_length += added_length
+        if token == "\n":
+            length = 0
+        elif not is_format_code:
+            length += 1
+    machine.set_text(u"".join(text_parts))

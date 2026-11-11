@@ -201,8 +201,10 @@ class Wrench(SimpleEnum):
     INVAR = "skybluetech:wrench_invar"
     SKYBLUE = "skybluetech:wrench_skyblue"
 
+
 class Cutter(SimpleEnum):
     STEEL = "skybluetech:steel_cutter"
+
 
 AIR_COMPRESS_UNIT = "skybluetech:air_compress_unit"
 CIRCUIT_BASE_PLATE = "skybluetech:circuit_base_plate"
@@ -213,12 +215,14 @@ DRILL_TOP_STEEL = "skybluetech:drill_top_steel"
 DRILL_TOP_ULTRAHEATINUM = "skybluetech:drill_top_ultraheatinum"
 ELECTRIC_MOTOR = "skybluetech:electric_motor"
 ELECTROLYTIC_PANE = "skybluetech:electrolytic_pane"
+FAN_BLADE = "skybluetech:fan_blade"
 GLASS_TUBE = "skybluetech:glass_tube"
 HDPE_NUGGET = "skybluetech:hdpe_nugget"
 HEAT_EXCHANGER = "skybluetech:heat_exchanger"
 HEAT_PLATE = "skybluetech:heat_plate"
 INSCRIBING_TEMPLATE = "skybluetech:inscribing_template"
 LASER_PROBE = "skybluetech:laser_probe"
+MACHINERY_BASE_LIGHT = "skybluetech:machinery_base_light"
 METAL_HAMMER = "skybluetech:metal_hammer"
 MULTIBLOCK_STRUCTURE_SCEPTER = "skybluetech:multiblock_structure_scepter"
 POLISHED_DIAMOND = "skybluetech:polished_diamond"

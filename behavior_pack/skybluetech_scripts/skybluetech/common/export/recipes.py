@@ -16,7 +16,6 @@ from ..mini_jei.machinery.air_compressor import AirCompressorRecipe
 from ..mini_jei.machinery.alloy_furnace import AlloyFurnaceRecipe
 from ..mini_jei.machinery.charger import ChargerRecipe
 from ..mini_jei.machinery.compressor import CompressorRecipe
-from ..mini_jei.machinery.cyro_heat_melting_chamber import CyroHeatMeltingChamberRecipe
 from ..mini_jei.machinery.heat_melting_chamber import HeatMeltingChamberRecipe
 from ..mini_jei.machinery.distillation_chamber import DistillationChamberRecipe
 from ..mini_jei.machinery.distillation_column import DistillationColumnRecipe, DistillationFraction

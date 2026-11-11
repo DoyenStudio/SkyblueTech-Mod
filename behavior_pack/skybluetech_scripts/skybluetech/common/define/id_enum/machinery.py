@@ -16,7 +16,6 @@ class Machinery(SimpleEnum):
     COMPRESSOR = "skybluetech:compressor"
     CREATIVE_GENERATOR = "skybluetech:creative_generator"
     CREATIVE_POWER_ACCEPTOR = "skybluetech:creative_power_acceptor"
-    CYRO_HEAT_MELTING_CHAMBER = "skybluetech:cyro_heat_melting_chamber"
     DEEPSLATE_LAVA_VIBRATOR = "skybluetech:deepslate_lava_vibrator"
     DIGGER = "skybluetech:digger"
     DISTILLATION_CHAMBER = "skybluetech:distillation_chamber"

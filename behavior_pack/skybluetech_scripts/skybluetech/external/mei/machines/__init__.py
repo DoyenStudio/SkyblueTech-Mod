@@ -69,8 +69,6 @@ MACHINES = (
 ⥠ 但**不等于蔚蓝的合成方式都在这了**：另有三处数据形状不同的没接
 （发酵池的 `FermenterRecipe`、热力发电机的 `FUEL_TICK_MAP` 224 项燃料、
 地热发电机的四个硬编码常量），暂不做，见 §7.13。
-⥠ 第 21 台 `cyro_heat_melting_chamber` **不在待办里**：
-蔚蓝自己就没启用它（`machinery_def/` 下只有 `.pyi` 存根，无 `.py`）。
 
 逐台的形状、坑、典型配方，见 MEI 的
 docs/thirdparty/skybluetech.md **§7.11 / §7.12 / §7.13**。

@@ -65,4 +65,5 @@ from .wind_generator import WindGeneratorUI
 
 from .heat_melting_chamber import HeatMeltingChamberUI
 
-from .polyethylene import ThermalCrackerUI, SmallChemicalReactorUI
+from .thermal_cracker import ThermalCrackerUI
+from .small_chemical_reactor import SmallChemicalReactorUI

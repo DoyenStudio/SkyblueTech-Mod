@@ -30,7 +30,7 @@ LAYOUTS = {
     },
     "skybluetech:thermal_cracker": {
         "file": "ThermalCracker", "control_def": "SkyblueMeiThermalCracker.RECIPES_GRID",
-        "inputs": (("fluid", 0), ("fluid", 1),), "outputs": (("fluid", 2), ("fluid", 3),),
+        "inputs": (("item", 0), ("fluid", 0), ("fluid", 1)), "outputs": (("fluid", 2), ("fluid", 3),),
         "catalysts": 0, "power": None, "segments": 0,
         "progress": "fromRightToLeft", "static": False, "flame": False,
     },

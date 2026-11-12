@@ -5588,19 +5588,17 @@
                                 "layer": 10,
                                 "controls": [
                                     {
-                                        "0@$recipe_fluid_slot": {
+                                        "0@$recipe_item_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
-                                            "layer": -5,
                                             "offset": [
-                                                22,
-                                                4
+                                                52,
+                                                21
                                             ],
                                             "size": [
-                                                18,
-                                                54
+                                                20,
+                                                20
                                             ]
                                         }
                                     },
@@ -5612,7 +5610,24 @@
                                             "anchor_to": "top_left",
                                             "layer": -5,
                                             "offset": [
-                                                44,
+                                                8,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "2@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input2",
+                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                26,
                                                 4
                                             ],
                                             "size": [
@@ -5641,7 +5656,7 @@
                                             "anchor_to": "top_left",
                                             "layer": -5,
                                             "offset": [
-                                                100,
+                                                104,
                                                 4
                                             ],
                                             "size": [
@@ -5658,7 +5673,7 @@
                                             "anchor_to": "top_left",
                                             "layer": -5,
                                             "offset": [
-                                                124,
+                                                122,
                                                 4
                                             ],
                                             "size": [
@@ -5676,7 +5691,7 @@
                                 "anchor_to": "top_left",
                                 "layer": 1,
                                 "offset": [
-                                    72,
+                                    76,
                                     24
                                 ],
                                 "size": [
@@ -5691,7 +5706,7 @@
                                 "anchor_to": "top_left",
                                 "layer": 9,
                                 "offset": [
-                                    72,
+                                    76,
                                     24
                                 ],
                                 "size": [

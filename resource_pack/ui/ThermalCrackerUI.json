@@ -7,10 +7,25 @@
         ],
         "controls": [
             {
-                "ring_tin_fluid0@SkybluePanelLib.status_ring": {
-                    "layer": 10,
+                "ring_in_item@SkybluePanelLib.status_ring": {
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        70,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "ring_tin_fluid0@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
                         28,
                         17
@@ -23,11 +38,11 @@
             },
             {
                 "ring_tin_fluid1@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
-                        52,
+                        46,
                         17
                     ],
                     "size": [
@@ -38,11 +53,11 @@
             },
             {
                 "ring_tout_fluid2@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
-                        108,
+                        120,
                         17
                     ],
                     "size": [
@@ -53,11 +68,11 @@
             },
             {
                 "ring_tout_fluid3@SkybluePanelLib.status_ring": {
-                    "layer": 10,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 10,
                     "offset": [
-                        132,
+                        138,
                         17
                     ],
                     "size": [
@@ -85,7 +100,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        52,
+                        46,
                         17
                     ],
                     "size": [
@@ -99,7 +114,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        108,
+                        120,
                         17
                     ],
                     "size": [
@@ -113,7 +128,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        132,
+                        138,
                         17
                     ],
                     "size": [
@@ -127,7 +142,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        78,
+                        94,
                         36
                     ],
                     "size": [
@@ -141,12 +156,36 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        76,
+                        92,
                         30
                     ],
                     "size": [
                         26,
                         26
+                    ]
+                }
+            },
+            {
+                "item_input_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        70.0,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
                     ]
                 }
             },

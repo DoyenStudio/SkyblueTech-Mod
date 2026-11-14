@@ -44,7 +44,10 @@ from ..mini_jei.common.common_recipe_cls import (
     GenericCraftingTableRecipe, GenericFurnaceRecipe,
     GenericBlastFurnaceRecipe, GenericSmokerRecipe,
 )
-from ..mini_jei.common.description import Description, RegisterDescription
+from ..mini_jei.common.description import (
+    SourceDescription, UsageDescription,
+    RegisterSourceDescription, RegisterUsageDescription,
+)
 from ..mini_jei.core.helper import GetRecipesByInput, GetRecipesByOutput, GetRecipesByCategory
 
 from ..mini_jei.machinery.thermal_cracker import ThermalCrackerRecipe
@@ -71,5 +74,6 @@ __all__ = [
     "SawmillRecipe", "TemplateAssemblerRecipe", "VacuumFreezerRecipe",
     "IndustrialResearchingRecipe", "MetalHammerRecipe", "GenericCraftingTableRecipe",
     "GenericFurnaceRecipe", "GenericBlastFurnaceRecipe", "GenericSmokerRecipe",
-    "Description", "RegisterDescription",
+    "SourceDescription", "UsageDescription",
+    "RegisterSourceDescription", "RegisterUsageDescription",
 ]

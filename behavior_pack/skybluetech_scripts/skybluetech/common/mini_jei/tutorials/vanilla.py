@@ -1,10 +1,10 @@
 # coding: utf-8
 from ..core import CategoryType
-from ..common import RegisterDescription
+from ..common import RegisterSourceDescription
 
 content = "使用§2剪刀§r对草丛进行挖掘可得到矮草丛或高草丛。"
 
-RegisterDescription(
+RegisterSourceDescription(
     {CategoryType.ITEM: ["minecraft:short_grass", "minecraft:tall_grass"]},
     "草丛的获取方法",
     content.strip(),

@@ -1,7 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.ui import UBaseCtrl
 from skybluetech_scripts.skybluetech.common.mini_jei.common.description import (
-    Description,
+    SourceDescription,
+    UsageDescription,
 )
 from ..core import RecipeRenderer
 
@@ -11,7 +12,7 @@ class DescriptionRenderer(RecipeRenderer):
     render_ui_def_name = "RecipeCheckerLib.description_page"
 
     def __init__(self, desc):
-        # type: (Description) -> None
+        # type: (SourceDescription | UsageDescription) -> None
         super(DescriptionRenderer, self).__init__(desc)
         self.desc = desc
 
@@ -23,4 +24,5 @@ class DescriptionRenderer(RecipeRenderer):
         )
 
 
-Description.SetRenderer(DescriptionRenderer)
+SourceDescription.SetRenderer(DescriptionRenderer)
+UsageDescription.SetRenderer(DescriptionRenderer)

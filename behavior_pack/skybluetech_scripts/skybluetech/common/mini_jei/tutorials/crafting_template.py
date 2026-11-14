@@ -4,7 +4,7 @@ from skybluetech_scripts.skybluetech.common.define.id_enum.items import (
     CRAFTING_TEMPLATE,
 )
 
-from ..common import RegisterDescription
+from ..common import RegisterSourceDescription
 from ..core import CategoryType
 
 content = (
@@ -19,7 +19,7 @@ content = (
     "自动合成台可以智能过滤掉非原料物品、 自动均摊原料。"
 )
 
-RegisterDescription(
+RegisterSourceDescription(
     {CategoryType.ITEM: [CRAFTING_TEMPLATE, Machinery.ELECTRIC_CRAFTER]},
     "自动合成台与合成样板",
     content.strip(),

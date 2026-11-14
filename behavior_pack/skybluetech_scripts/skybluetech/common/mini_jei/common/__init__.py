@@ -1,2 +1,2 @@
 # coding=utf-8
-from .description import RegisterDescription
+from .description import RegisterSourceDescription, RegisterUsageDescription

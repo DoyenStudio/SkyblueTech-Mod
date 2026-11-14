@@ -68,7 +68,7 @@ class RecipeRenderer(object):
         return self.__class__.__name__
 
 
-# class Description(RecipeRenderer):
+# class SourceDescription(RecipeRenderer):
 #     recipe_icon_id = "skybluetech:description_icon"
 #     render_ui_def_name = "RecipeCheckerLib.description_page"
 

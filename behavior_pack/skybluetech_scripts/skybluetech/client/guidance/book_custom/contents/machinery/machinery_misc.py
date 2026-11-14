@@ -34,6 +34,18 @@ hover_text_displayer = PageGroup(
     ],
 )
 
+industrial_fan = PageGroup(
+    "industrial_fan_description",
+    [
+        TextPage(
+            "工业风扇",
+            '工业风扇可以消耗能量<text color="§9" t="吹飞面前的实体">。\n\n使用不同强度的<item id="minecraft:redstone"><text color="§4" t="红石信号">可控制<text color="§9" t="风扇功率">， 进而获得不同的鼓风范围与风力强度。 不提供红石信号时风扇<text color="§9" t="完全不工作">。\n\n风道会被实心方块<text color="§6" t="阻挡">， 只能吹动障碍前的实体。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.INDUSTRIAL_FAN),
+    ],
+)
+
+
 lexical_transmuter = PageGroup(
     "lexical_transmuter_description",
     [

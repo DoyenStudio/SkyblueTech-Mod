@@ -389,6 +389,12 @@ machinery_misc_toc = _split_toc(
         None,
         machinery_misc.lexical_transmuter,
     ),
+    TOCPageSection(
+        id_enum.Machinery.INDUSTRIAL_FAN,
+        0,
+        None,
+        machinery_misc.industrial_fan,
+    ),
 )
 
 machinery_crafting_toc = _split_toc(

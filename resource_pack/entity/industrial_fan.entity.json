@@ -1,0 +1,38 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:industrial_fan",
+            "geometry": {
+                "default": "geometry.skybluetech.industrial_fan_block_entity"
+            },
+            "textures": {
+                "default": "textures/models/industrial_fan_texture"
+            },
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "scripts": {
+                "initialize": [
+                    "variable.rotation_x=0;",
+                    "variable.rotation_y=0;",
+                    "variable.skybluetech_fan_speed=0;",
+                    "variable.skybluetech_fan_render_speed=0;"
+                ],
+                "pre_animation": [
+                    "variable.skybluetech_fan_target_speed = variable.skybluetech_fan_speed > 0 ? 1 + (variable.skybluetech_fan_speed - 1) * 4 / 14 : 0;",
+                    "variable.skybluetech_fan_render_speed = math.lerp(variable.skybluetech_fan_render_speed, variable.skybluetech_fan_target_speed, 1.0 - math.pow(0.5, math.clamp(query.delta_time, 0.0, 0.1) * 6.0));",
+                    "variable.skybluetech_fan_render_speed = math.abs(variable.skybluetech_fan_render_speed - variable.skybluetech_fan_target_speed) < 0.001 ? variable.skybluetech_fan_target_speed : variable.skybluetech_fan_render_speed;"
+                ],
+                "animate": ["facing", "rot"]
+            },
+            "animations": {
+                "facing": "animation.skybluetech.industrial_fan.facing",
+                "rot": "animation.skybluetech.industrial_fan.rot"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.industrial_fan"
+            ]
+        }
+    }
+}

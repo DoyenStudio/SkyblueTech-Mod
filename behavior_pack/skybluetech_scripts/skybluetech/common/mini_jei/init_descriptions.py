@@ -2,7 +2,7 @@
 from ...common.define import id_enum
 from ...common.define import tag_enum
 from .core import CategoryType
-from .common import RegisterSourceDescription
+from .common import RegisterSourceDescription, RegisterUsageDescription
 
 # RegisterSourceDescription(
 #     {CategoryType.FLUID: [RAW_OIL]},
@@ -24,6 +24,12 @@ RegisterSourceDescription(
         # "\n对于工业研究里没有的升级模块， 你可以在一些遗迹的藏宝箱里找到刻录有正确电路格式的刻印模版。"
         "\n§c注意！§r不要修改已刻录好正确格式的刻印模版， 如果你不知道怎么将模版图改回正确的格式， 它就没办法再拿去按模版制造对应物品了。"
     ),
+)
+
+RegisterUsageDescription(
+    {CategoryType.ITEM: [id_enum.Machinery.INDUSTRIAL_FAN]},
+    "工业风扇",
+    "储存 8800 RF，仅背面输入能量，无操作界面。\n红石 0 级停机，1～15 级对应 1～15 格/秒风速、10～150 RF/t 功耗，叶片转速从 1 倍线性增加至 5 倍。\n正面 1×1 格风道内的生物、玩家和掉落物会沿朝向吹动；射程随信号从 10 格线性增加至 20 格。实心方块会阻挡风道，只能吹动障碍前的实体。能量不足时停机。",
 )
 
 RegisterSourceDescription(

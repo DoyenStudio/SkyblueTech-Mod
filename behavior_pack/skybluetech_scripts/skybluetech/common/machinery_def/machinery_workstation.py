@@ -545,6 +545,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # industrial_fan
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            1: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            2: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            3: Input(id_enum.ELECTRIC_MOTOR),
+            4: Input(id_enum.FAN_BLADE),
+            5: Input(tag_enum.StickTag.STEEL, is_tag=True),
+            6: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            7: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+            8: Input(tag_enum.PlateTag.ALUMINUM, is_tag=True),
+        },
+        id_enum.Machinery.INDUSTRIAL_FAN,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # infrared heat generator
     MRecipe(
         {

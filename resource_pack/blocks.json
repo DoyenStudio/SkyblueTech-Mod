@@ -7,6 +7,12 @@
     "skybluetech:air_compressor": {
         "sound": "iron"
     },
+    "skybluetech:industrial_fan": {
+        "client_entity": {
+            "identifier": "skybluetech:industrial_fan"
+        },
+        "sound": "iron"
+    },
     "skybluetech:alloy_furnace": {
         "textures": {
             "down": "skybluetech:frame_bottom",

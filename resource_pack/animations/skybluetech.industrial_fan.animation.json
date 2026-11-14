@@ -1,0 +1,26 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.skybluetech.industrial_fan.rot": {
+			"loop": true,
+			"animation_length": 1,
+			"anim_time_update": "query.anim_time + query.delta_time * variable.skybluetech_fan_render_speed",
+			"bones": {
+				"fan_core": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"1.0": [0, 0, 360]
+					}
+				}
+			}
+		},
+		"animation.skybluetech.industrial_fan.facing": {
+			"loop": true,
+			"bones": {
+				"root": {
+					"rotation": ["variable.rotation_x", "variable.rotation_y", 0]
+				}
+			}
+		}
+	}
+}

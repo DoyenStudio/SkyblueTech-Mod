@@ -34,6 +34,7 @@ from .hydroponic_base import HydroponicBase
 from .hydroponic_bed import HydroponicBed
 from .hydroponic_bed_sand import HydroponicBedSand
 from .infrared_heat_generator import InfraredHeatGenerator
+from .industrial_fan import IndustrialFan
 from .item_splitter import ItemSplitter
 from .item_spreader import ItemSpreader
 from .lexical_transmuter import LexicalTransmuter

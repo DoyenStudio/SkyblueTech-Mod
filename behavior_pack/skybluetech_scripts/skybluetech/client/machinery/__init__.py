@@ -9,6 +9,7 @@ from . import (
     hover_text_displayer,
     hydroponic_bed,
     hydroponic_bed_sand,
+    industrial_fan,
     rf_repeater_plant,
     tesla_plant,
     wind_generator,

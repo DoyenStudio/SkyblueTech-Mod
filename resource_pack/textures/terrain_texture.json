@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:industrial_fan": {
+            "textures": "textures/models/industrial_fan_texture"
+        },
         "skybluetech:baked_evil_undead_flowing": {
             "quad": 1,
             "textures": "textures/fluid/baked/skybluetech.evil_undead/flowing"

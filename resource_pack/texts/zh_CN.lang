@@ -336,6 +336,7 @@ tile.skybluetech:tesla_plant.name=特斯拉电塔
 tile.skybluetech:wind_generator.name=风力发电机
 tile.skybluetech:hover_text_displayer.name=悬浮文本投影器
 tile.skybluetech:industrial_fan.name=工业风扇
+tile.skybluetech:shocker.name=电击器
 item.skybluetech:sunflower_seeds.name=葵花籽
 tile.skybluetech:oil_extractor.name=榨油机
 tile.skybluetech:vegetable_oil.name=植物油

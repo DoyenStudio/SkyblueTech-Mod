@@ -60,6 +60,7 @@ from .resin_collector_outputer import ResinCollectorOutputer
 from .rf_repeater_plant import RFRepeaterPlant
 from .sawmill import Sawmill
 from .seawater_pump import SeawaterPump
+from .shocker import Shocker
 from .solar_panel import SolarPanel
 from .specialized_growth_base import SpecializedGrowthBase
 from .specialized_growth_chamber import SpecializedGrowthChamber

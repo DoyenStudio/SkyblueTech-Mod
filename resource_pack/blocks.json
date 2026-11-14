@@ -7,6 +7,9 @@
     "skybluetech:air_compressor": {
         "sound": "iron"
     },
+    "skybluetech:shocker": {
+        "sound": "iron"
+    },
     "skybluetech:industrial_fan": {
         "client_entity": {
             "identifier": "skybluetech:industrial_fan"

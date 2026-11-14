@@ -56,3 +56,18 @@ lexical_transmuter = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.LEXICAL_TRANSMUTER),
     ],
 )
+
+shocker = PageGroup(
+    "shocker_description",
+    [
+        TextPage(
+            "电击器",
+            '将两台电击器尖端<text color="§3" t="面对面放置">， 可组成一对电击器， 此时可对生命值少于 40 的生物进行<text color="§4" t="昏死电击">， 使其无法自主行动， 但仍能被重力、 水流和传送带推动。\n\n两台电击器都需要供电， 可从各自后面或上面输入能量。 其中一台被红石激活时即可自动电击这对电击器放电尖端之间的生物。',
+        ),
+        TextPage(
+            "",
+            '一对电击器之间可以留出 1~3 格空间， 耗电倍率与距离成正比。 如果中间有实心方块， 两台电击器就<text color="§4" t="无法再进行配对">了。\n\n电击器目前不会电击玩家， 放心穿过两个电击器中间吧。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.SHOCKER),
+    ],
+)

@@ -11,6 +11,7 @@ from . import (
     hydroponic_bed_sand,
     industrial_fan,
     rf_repeater_plant,
+    shocker,
     tesla_plant,
     wind_generator,
 )

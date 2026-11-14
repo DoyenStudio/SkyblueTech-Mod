@@ -895,6 +895,20 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         16,
     ),
+    # shocker
+    MRecipe(
+        {
+            1: Input(id_enum.Coils.LARGE_COPPER),
+            3: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            4: Input("minecraft:cyan_terracotta"),
+            5: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            7: Input(id_enum.MACHINERY_BASE_LIGHT),
+        },
+        id_enum.Machinery.SHOCKER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        8,
+    ),
     # small chemical reactor
     MRecipe(
         {

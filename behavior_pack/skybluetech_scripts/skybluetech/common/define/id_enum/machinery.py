@@ -67,6 +67,7 @@ class Machinery(SimpleEnum):
     RF_REPEATER_PLANT = "skybluetech:rf_repeater_plant"
     SAWMILL = "skybluetech:sawmill"
     SEAWATER_PUMP = "skybluetech:seawater_pump"
+    SHOCKER = "skybluetech:shocker"
     SOLAR_PANEL = "skybluetech:solar_panel"
     SPECIALIZED_GROWTH_BASE = "skybluetech:specialized_growth_base"
     SPECIALIZED_GROWTH_CHAMBER = "skybluetech:specialized_growth_chamber"

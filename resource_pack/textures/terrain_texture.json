@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:shocker": {
+            "textures": "textures/models/shocker_texture"
+        },
         "skybluetech:industrial_fan": {
             "textures": "textures/models/industrial_fan_texture"
         },

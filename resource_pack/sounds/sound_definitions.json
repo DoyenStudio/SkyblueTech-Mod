@@ -113,6 +113,14 @@
                 }
             ]
         },
+        "sfx.skybluetech.shocker.shock": {
+            "category": "block",
+            "sounds": [
+                {
+                    "name": "sounds/skybluetech/sfx/shocker/shocker1"
+                }
+            ]
+        },
         "sfx.skybluetech.tesla_plant.shock": {
             "category": "ambient",
             "sounds": [

@@ -395,6 +395,12 @@ machinery_misc_toc = _split_toc(
         None,
         machinery_misc.industrial_fan,
     ),
+    TOCPageSection(
+        id_enum.Machinery.SHOCKER,
+        0,
+        None,
+        machinery_misc.shocker,
+    ),
 )
 
 machinery_crafting_toc = _split_toc(

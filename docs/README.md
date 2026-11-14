@@ -34,6 +34,7 @@
 - [管道网络可视化检查器](reference/transmitter_visual_checker.md)
 - [原生存档约定](reference/persistence.md)
 - [验收与常见故障](reference/validation.md)
+- [电击器验收记录](reference/shocker_validation.md)
 - [模型设计资料](design/README.md)
 
 ## 示例来源与使用边界

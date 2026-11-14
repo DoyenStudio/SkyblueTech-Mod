@@ -1,0 +1,134 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "description": {
+            "identifier": "skybluetech:shocker",
+            "category": "skybluetech",
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": ["minecraft:facing_direction"]
+                }
+            }
+        },
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.shocker"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:shocker",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.shocker",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:shocker",
+                        "render_method": "alpha_test"
+                    }
+                }
+            },
+            "minecraft:collision_box": {
+                "origin": [-3, 0, -8],
+                "size": [6, 16, 16]
+            },
+            "minecraft:selection_box": {
+                "origin": [-3, 0, -8],
+                "size": [6, 16, 16]
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:solid": {
+                "value": false
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "netease:block_entity": {
+                "tick": true,
+                "client_tick": false,
+                "movable": false
+            },
+            "netease:redstone": {
+                "type": "consumer"
+            },
+            "netease:random_tick": {
+                "enable": true,
+                "tick_to_script": true
+            },
+            "netease:water_destory": {
+                "value": true
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7与面对面的另一台电击器配对后， 红石激活时\n可放电§f击昏前方生物§7， 使其失去行动能力。\n§b配对最大有效间距： 3 格； 两侧电击器都需耗能。"
+            },
+            "tag:piston_denier": {},
+            "tag:redstoneflux_accepter": {},
+            "tag:redstoneflux_appliance": {},
+            "tag:redstoneflux_connectable": {},
+            "tag:skybluetech_appliance": {},
+            "tag:skybluetech_machine": {}
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('minecraft:facing_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [0, 0, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:facing_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [0, 180, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:facing_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [0, -90, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:facing_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [0, 90, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:facing_direction') == 'up'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [90, 0, 0]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:facing_direction') == 'down'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [-90, 0, 0]
+                    }
+                }
+            }
+        ]
+    }
+}

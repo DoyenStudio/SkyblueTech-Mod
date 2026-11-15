@@ -13,7 +13,7 @@
                         17
                     ],
                     "size": [
-                        36,
+                        18,
                         54
                     ]
                 }
@@ -27,7 +27,37 @@
                         17
                     ],
                     "size": [
-                        36,
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "gas_aux_input@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        54,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tin_gas_aux_input@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        54,
+                        17
+                    ],
+                    "size": [
+                        18,
                         54
                     ]
                 }

@@ -14,7 +14,16 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
         output_power,  # type: int
         output_gas_id=None,  # type: str | None
         output_gas_volume=0,  # type: float
+        second_gas_id=None,  # type: str | None
+        second_burning_volume=0,  # type: float
     ):
+        inputs = {CategoryType.FLUID: {0: Input(gas_id, once_burning_volume)}}
+        if second_gas_id is not None:
+            if second_burning_volume <= 0:
+                raise ValueError("second_burning_volume must be positive")
+            inputs[CategoryType.FLUID][2] = Input(second_gas_id, second_burning_volume)
+        elif second_burning_volume != 0:
+            raise ValueError("second_gas_id is required for a second input")
         outputs = (
             {CategoryType.FLUID: {1: Output(output_gas_id, output_gas_volume)}}
             if output_gas_id is not None
@@ -22,7 +31,7 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
         )
         GeneratorRecipe.__init__(
             self,
-            {CategoryType.FLUID: {0: Input(gas_id, once_burning_volume)}},
+            inputs,
             output_power,
             1,
             outputs,
@@ -32,6 +41,8 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
         self.output_power = output_power
         self.output_gas_id = output_gas_id
         self.output_gas_volume = output_gas_volume
+        self.second_gas_id = second_gas_id
+        self.second_burning_volume = second_burning_volume
 
     def Marshal(self):
         # type: () -> dict
@@ -41,6 +52,8 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
             "output_power": self.output_power,
             "output_gas_id": self.output_gas_id,
             "output_gas_volume": self.output_gas_volume,
+            "second_gas_id": self.second_gas_id,
+            "second_burning_volume": self.second_burning_volume,
         }
         return result
 
@@ -53,4 +66,6 @@ class GasBurningGeneratorRecipe(GeneratorRecipe):
             output_power=data["output_power"],
             output_gas_id=data["output_gas_id"],
             output_gas_volume=data["output_gas_volume"],
+            second_gas_id=data.get("second_gas_id"),
+            second_burning_volume=data.get("second_burning_volume", 0),
         )

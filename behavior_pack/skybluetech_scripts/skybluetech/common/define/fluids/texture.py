@@ -14,6 +14,7 @@ BASIC_FLUID = BasicFluidTexture("textures/fluid/basic_fluid", 1)
 LIQUID_RESIN_STATIC = BasicFluidTexture("textures/fluid/liquid_resin_static", 39, 2)
 
 FLUID_TEXTURES = {
+    fluids.Acid.HYDROGEN_CHLORIDE: BasicFluidTexture("textures/fluid/baked/skybluetech.hydrogen_chloride/static", 32, 2),
     fluids.Molten.PALLADIUM: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_palladium/static", 49, 5),
     fluids.Molten.ROSIN: BasicFluidTexture("textures/fluid/baked/skybluetech.molten_rosin/static", 32, 2),
     fluids.CommonLiquid.DISTILLED_WATER: BasicFluidTexture("textures/fluid/baked/skybluetech.distilled_water/static", 32, 2),

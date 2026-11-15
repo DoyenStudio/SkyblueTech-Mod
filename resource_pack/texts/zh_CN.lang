@@ -579,3 +579,5 @@ tile.skybluetech:heat_conductor.name=导热块
 tile.skybluetech:molten_palladium.name=熔融钯
 tile.skybluetech:flowing_molten_palladium.name=流动熔融钯
 item.skybluetech:molten_palladium_bucket.name=熔融钯桶
+tile.skybluetech:hydrogen_chloride.name=氯化氢气体
+tile.skybluetech:flowing_hydrogen_chloride.name=流动氯化氢气体

@@ -80,6 +80,7 @@ FLUID_TEXTURE_FRAMES = {
     "textures/fluid/baked/skybluetech.evil_undead/static": (32, 10.0),
     "textures/fluid/baked/skybluetech.heavy_lava/static": (20, 4.0),
     "textures/fluid/baked/skybluetech.hydrogen/static": (1, 0.0),
+    "textures/fluid/baked/skybluetech.hydrogen_chloride/static": (32, 10.0),
     "textures/fluid/baked/skybluetech.light_lava/flowing_block_static": (20, 4.0),
     "textures/fluid/baked/skybluetech.light_lava/static": (20, 4.0),
     "textures/fluid/baked/skybluetech.liquid_air/static": (1, 0.0),

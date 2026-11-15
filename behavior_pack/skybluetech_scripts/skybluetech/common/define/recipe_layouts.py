@@ -177,7 +177,7 @@ LAYOUTS = {
     "skybluetech:gas_burning_generator": {
         "file": "GasBurningGenerator",
         "control_def": "SkyblueMeiGasBurningGenerator.RECIPES_GRID",
-        "inputs": (("fluid", 0),),
+        "inputs": (("fluid", 0), ("fluid", 2)),
         "outputs": (("fluid", 1),),
         "catalysts": 0,
         "power": "gen",

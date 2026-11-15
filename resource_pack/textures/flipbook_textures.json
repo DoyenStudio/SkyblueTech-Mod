@@ -584,5 +584,10 @@
         "atlas_tile": "skybluetech:baked_molten_palladium_flowing",
         "replicate": 2,
         "ticks_per_frame": 5
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.hydrogen_chloride/static",
+        "atlas_tile": "skybluetech:baked_hydrogen_chloride_static",
+        "ticks_per_frame": 2
     }
 ]

@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:baked_hydrogen_chloride_static": {
+            "textures": "textures/fluid/baked/skybluetech.hydrogen_chloride/static"
+        },
         "skybluetech:air_vent": {
             "textures": "textures/models/air_vine_texture"
         },

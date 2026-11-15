@@ -20,6 +20,7 @@ from .utils import FluidDisplayer, UpdateFlame, UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 GAS_INPUT_PATH = MAIN_PATH / "gas_input"
+GAS_AUX_INPUT_PATH = MAIN_PATH / "gas_aux_input"
 GAS_OUTPUT_PATH = MAIN_PATH / "gas_output"
 FLAME_PATH = MAIN_PATH / "flame"
 
@@ -32,9 +33,11 @@ class GasBurningGeneratorUI(MachinePanelUIProxyEx):
     def OnCreate(self):
         self.power_bar = self.GetElement(POWER_PATH)
         self.gas_input = self.GetElement(GAS_INPUT_PATH)
+        self.gas_aux_input = self.GetElement(GAS_AUX_INPUT_PATH)
         self.gas_output = self.GetElement(GAS_OUTPUT_PATH)
         self.flame = self.GetElement(FLAME_PATH)
         self.input_gas_displayer = FluidDisplayer(self.gas_input)
+        self.aux_input_gas_displayer = FluidDisplayer(self.gas_aux_input)
         self.output_gas_displayer = FluidDisplayer(self.gas_output)
         AsRecipeCheckerBtn(
             self.GetElement(MAIN_PATH / "recipe_check_btn").asButton(),
@@ -49,10 +52,14 @@ class GasBurningGeneratorUI(MachinePanelUIProxyEx):
         store_rf = GetValue(data, K_STORE_RF, 0)
         input_gas = FluidSlotClient(data, 0)
         output_gas = FluidSlotClient(data, 1)
+        aux_input_gas = FluidSlotClient(data, 2)
         UpdatePowerBar(self.power_bar, store_rf, STORE_RF_MAX)
         UpdateFlame(self.flame, input_gas.volume * 1.0 / MAX_INPUT_GAS_VOLUME)
         self.input_gas_displayer.update(
             input_gas.fluid_id, input_gas.volume, MAX_INPUT_GAS_VOLUME
+        )
+        self.aux_input_gas_displayer.update(
+            aux_input_gas.fluid_id, aux_input_gas.volume, MAX_INPUT_GAS_VOLUME
         )
         self.output_gas_displayer.update(
             output_gas.fluid_id, output_gas.volume, MAX_OUTPUT_GAS_VOLUME

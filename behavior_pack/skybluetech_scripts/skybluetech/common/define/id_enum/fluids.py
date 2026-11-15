@@ -9,6 +9,7 @@ class Fluids(SimpleEnum):
 class Acid(Fluids):
     "酸性流体"
 
+    HYDROGEN_CHLORIDE = "skybluetech:hydrogen_chloride"
     SULFURIC_ACID = "skybluetech:sulfuric_acid"
     CONCENTRATED_SULFURIC_ACID = "skybluetech:concentrated_sulfuric_acid"
     SO3 = "skybluetech:so3"

@@ -1,4 +1,12 @@
 {
+    "skybluetech:hydrogen_chloride": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_hydrogen_chloride_static"
+    },
+    "skybluetech:flowing_hydrogen_chloride": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_hydrogen_chloride_static"
+    },
     "skybluetech:air_vent": {
         "client_entity": {
             "identifier": "skybluetech:air_vent"

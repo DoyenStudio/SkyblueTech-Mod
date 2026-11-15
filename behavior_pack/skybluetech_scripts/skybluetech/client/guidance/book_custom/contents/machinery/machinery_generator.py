@@ -23,7 +23,7 @@ gas_burning_generator = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.GAS_BURNING_GENERATOR),
-            '燃气发电机可以燃烧<text color="§d" t="气体">用于发电。\n\n一些气体在经过燃烧后会产生<text color="§7" t="废气">， 需要进行处理， 否则将堆积在燃气发电机内使其无法继续燃烧。',
+            '燃气发电机可以燃烧<text color="§d" t="气体">用于发电。\n\n一些气体在经过燃烧后会产生<text color="§7" t="废气">，需要导出，否则会堵住后续燃烧。\n\n氢气从侧面或底面进入主槽，氯气从<text color="§b" t="顶面">进入辅助槽：每次消耗各 3 mB，产出 6 mB 氯化氢废气和 200 RF，返还对应标准氯碱电解耗能的 2/3。氯化氢属于酸性流体，需用耐酸管道导出。\n\n普通甲烷或单氢发电仍使用主槽；原顶面燃气管应改接其他面。两气充足时优先进行氢氯反应；氯气不足时，主槽氢气仍可独立燃烧。手动用桶或试管供料时，先倒氯气，再倒氢气。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.GAS_BURNING_GENERATOR),
     ],

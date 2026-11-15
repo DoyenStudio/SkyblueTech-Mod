@@ -63,4 +63,16 @@ recipes = RecipesCollection(
         power_cost=80,
         tick_duration=20 * 5,
     ),
+    MagmaCentrifugeRecipe(
+        Molten.IMPURITY,
+        100,
+        {
+            1: Output(Molten.EARTH, 90),
+            2: Output(Molten.LEAD, 5),
+            3: Output(Molten.PLATINUM, 4),
+            4: Output(Molten.PALLADIUM, 1),
+        },
+        power_cost=80,
+        tick_duration=20 * 5,
+    ),
 )  # type: RecipesCollection[MachineRecipe]

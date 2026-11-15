@@ -24,6 +24,7 @@ POWER_AVG_LABEL_PATH = SCREEN_BASE_PATH / "panel/power_board/label"
 ENERGY_SCROLL_PATH = SCREEN_BASE_PATH / "panel/graphics/wire/energy_scroll"
 REDSTONE_WIRE_PATH = SCREEN_BASE_PATH / "panel/graphics/redstone_wire"
 REDSTONE_MODE_SWITCH_PATH = SCREEN_BASE_PATH / "panel/redstone_mode_switch"
+REDSTONE_MODE_TIP_PATH = SCREEN_BASE_PATH / "panel/redstone_mode_tip2"
 
 
 @RegistToolDeltaScreen("RedstoneFluxBrakeUI.main", key=REDSTONEFLUX_BRAKE_UI)
@@ -39,7 +40,8 @@ class RedstoneFluxBrakeUI(MachinePanelUI):
         self.energy_scroll_offset = 0
         self.redstone_wire = self.GetElement(REDSTONE_WIRE_PATH).asImage()
         self.redstone_mode_switch = self.GetElement(REDSTONE_MODE_SWITCH_PATH).asSwitch()
-        self.invert_redstone = False
+        self.redstone_mode_tip = self.GetElement(REDSTONE_MODE_TIP_PATH).asLabel()
+        self.invert_redstone = None
 
     def OnTicking(self):
         if not self.inited:
@@ -52,6 +54,10 @@ class RedstoneFluxBrakeUI(MachinePanelUI):
         if invert_redstone != self.invert_redstone:
             self.invert_redstone = invert_redstone
             self.redstone_mode_switch.SetState(invert_redstone)
+            self.redstone_mode_tip.SetText(
+                "当前状态：\n[有红石信号=禁用]" if invert_redstone
+                else "当前状态：\n[有红石信号=启用]"
+            )
         if GetValue(data, K_ENABLE, False):
             self.energy_scroll_offset = (self.energy_scroll_offset + 1) % 16
             self.energy_scroll.SetPos((

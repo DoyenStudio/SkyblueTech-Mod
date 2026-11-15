@@ -16,6 +16,7 @@ from ...common.machinery_def.distillation_chamber import (
 from .basic import (
     GUIControl,
     HeatCtrl,
+    ItemContainer,
     MultiFluidContainer,
 )
 from .core import RegisterMachine
@@ -37,12 +38,15 @@ IDLE_FLAGS = (
 
 
 @RegisterMachine
-class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
+class DistillationChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.DISTILLATION_CHAMBER
     heat_faces_follow_rotation = False
     heat_input_faces = (RelFacEnum.DOWN,)
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
+    item_input_slots = ()
+    # 保留旧容器的五个槽位供管道取回误存物品；本机不接收物品或升级。
+    item_output_slots = (0, 1, 2, 3, 4)
     # 本机热容远大于默认值, 产油扣热才不会把仓温踹穿, 见 CHAMBER_HEAT_CAPACITY
     fluid_io_fix_mode = 0
     fluid_input_slots = (0,)
@@ -72,6 +76,9 @@ class DistillationChamber(GUIControl, MultiFluidContainer, HeatCtrl):
     def _distillation_chamber_on_sync(self):
         # type: () -> None
         self.bdata[K_OUTPUT_RATE] = self.output_rate
+
+    def IsValidInput(self, slot, item):
+        return False
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool

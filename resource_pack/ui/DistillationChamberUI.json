@@ -220,10 +220,10 @@
         "$has_tabs": true,
         "$has_upgrades": true,
         "$show_led": true,
-        "$upgrade_slot0": 2,
-        "$upgrade_slot1": 3,
-        "$upgrade_slot2": 4,
-        "$upgrade_slot3": 5
+        "$upgrade_slot0": 0,
+        "$upgrade_slot1": 1,
+        "$upgrade_slot2": 2,
+        "$upgrade_slot3": 3
     },
     "namespace": "DistillationChamberUI"
 }

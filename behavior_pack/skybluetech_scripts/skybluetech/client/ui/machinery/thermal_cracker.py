@@ -11,7 +11,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
 )
 
-from ..machinery_extra_pages import FluidPipeSettingsPage
+from ..machinery_extra_pages import ItemPipeSettingsPage, FluidPipeSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdateProgress, SetHoverText, FormatKelvin
@@ -19,7 +19,7 @@ from .utils import FluidDisplayer, UpdateProgress, SetHoverText, FormatKelvin
 
 @RegistToolDeltaScreen("ThermalCrackerUI.main", is_proxy=True)
 class ThermalCrackerUI(MachinePanelUIProxyEx):
-    available_extra_pages = (FluidPipeSettingsPage,)
+    available_extra_pages = (ItemPipeSettingsPage, FluidPipeSettingsPage)
     definition = thermal_cracker
     STATUS_RINGS = {DEACTIVE_FLAG_FLUID_NOT_MATCH: ("ring_tout_",)}
 
@@ -48,13 +48,7 @@ class ThermalCrackerUI(MachinePanelUIProxyEx):
                 self.definition.FLUID_SLOT_MAX_VOLUMES[slot],
             )
         temperature = GetValue(data, K_HEAT_VALUE, 300.0)
-        UpdateProgress(
-            self.meter, max(0.0, min(1.0, (temperature - 300.0) / 1100.0))
-        )
-        SetHoverText(
-            self.meter,
-            "%s\n1000 K < T ≤ 1300 K；1100 K 满速\n红外热源建议 1200 K\n左侧抽乙烯；右侧抽纯甲烷"
-            % FormatKelvin(temperature),
-        )
+        UpdateProgress(self.meter, max(0.0, min(1.0, (temperature - 300.0) / 1100.0)))
+        SetHoverText(self.meter, FormatKelvin(temperature) + "\n§71000 K < T ≤ 1300 K")
         # Continuous processing has no batch progress; hide the animated fill.
         UpdateProgress(self.progress, 0)

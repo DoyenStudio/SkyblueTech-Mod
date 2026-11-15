@@ -6,7 +6,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.thermal_cracker import
     CHAMBER_HEAT_CAPACITY, FLUID_SLOT_MAX_VOLUMES, recipes,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.multi_fluid_container import FLUID_VOLUME_EPSILON
-from skybluetech_scripts.skybluetech.server.machinery.basic import GUIControl, HeatCtrl, MultiFluidContainer
+from skybluetech_scripts.skybluetech.server.machinery.basic import GUIControl, HeatCtrl, ItemContainer, MultiFluidContainer
 from skybluetech_scripts.skybluetech.server.machinery.basic.work_renderer import WorkRenderer
 from skybluetech_scripts.skybluetech.server.machinery.core import RegisterMachine
 from skybluetech_scripts.tooldelta.extensions.facing_utils import RelativeFacingStrEnum
@@ -19,11 +19,12 @@ for _flag in IDLE_FLAGS:
 
 
 @RegisterMachine
-class ThermalCracker(WorkRenderer, GUIControl, MultiFluidContainer, HeatCtrl):
+class ThermalCracker(WorkRenderer, GUIControl, ItemContainer, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.THERMAL_CRACKER
     heat_input_faces = (RelFacEnum.DOWN,)
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
+    item_input_slots = (0,)
     fluid_input_slots = (0, 1)
     fluid_output_slots = (2, 3)
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES

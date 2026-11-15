@@ -4,6 +4,12 @@ from ...common.define import tag_enum
 from .core import CategoryType
 from .common import RegisterSourceDescription, RegisterUsageDescription
 
+RegisterSourceDescription(
+    {CategoryType.ITEM: [id_enum.Machinery.AIR_VENT]},
+    "排气口",
+    "支持六面向放置，仅底座面接受管道输入 CommonGas 分组的普通气体。\n单槽容量 400 mB，不能混装气体；以 20 mB/t 排气，每 5 tick 消耗最多 100 mB，余量不足时排空。\n无需能量或红石，无操作界面，不支持桶、试管交互和流体输出。排气烟雾使用所排气体的贴图。",
+)
+
 # RegisterSourceDescription(
 #     {CategoryType.FLUID: [RAW_OIL]},
 #     "原油获取",

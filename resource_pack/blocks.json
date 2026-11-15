@@ -1,4 +1,10 @@
 {
+    "skybluetech:air_vent": {
+        "client_entity": {
+            "identifier": "skybluetech:air_vent"
+        },
+        "sound": "iron"
+    },
     "skybluetech:molten_palladium": {
         "blockshape": "water",
         "textures": {

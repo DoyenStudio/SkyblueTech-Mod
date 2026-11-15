@@ -1,0 +1,32 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:air_vent",
+            "geometry": {
+                "default": "geometry.skybluetech.air_vent_block_entity"
+            },
+            "textures": {
+                "default": "textures/models/air_vine_texture"
+            },
+            "materials": {
+                "default": "entity_alphatest"
+            },
+            "scripts": {
+                "initialize": [
+                    "variable.rotation_x=0;",
+                    "variable.rotation_y=0;"
+                ],
+                "animate": [
+                    "facing"
+                ]
+            },
+            "animations": {
+                "facing": "animation.skybluetech.air_vent.facing"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.air_vent"
+            ]
+        }
+    }
+}

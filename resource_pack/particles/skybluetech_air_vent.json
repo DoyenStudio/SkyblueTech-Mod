@@ -1,0 +1,69 @@
+{
+    "particle_effect": {
+        "description": {
+            "basic_render_parameters": {
+                "material": "particles_blend",
+                "texture": "atlas.terrain"
+            },
+            "identifier": "skybluetech:air_vent"
+        },
+        "components": {
+            "minecraft:particle_lifetime_expression": {
+                "max_lifetime": 0.8
+            },
+            "minecraft:particle_appearance_tinting": {
+                "color": [
+                    1,
+                    1,
+                    1,
+                    "0.7 * (1 - variable.particle_age / variable.particle_lifetime)"
+                ]
+            },
+            "minecraft:emitter_rate_instant": {
+                "num_particles": 1
+            },
+            "minecraft:particle_initial_speed": 0.8,
+            "minecraft:emitter_lifetime_once": {
+                "active_time": 0.05
+            },
+            "minecraft:particle_motion_dynamic": {
+                "linear_acceleration": [
+                    0,
+                    0,
+                    0
+                ],
+                "linear_drag_coefficient": 0.8
+            },
+            "minecraft:emitter_shape_point": {
+                "direction": [
+                    "variable.particle_random_1 * 0.5 - 0.25",
+                    1,
+                    "variable.particle_random_2 * 0.5 - 0.25"
+                ]
+            },
+            "minecraft:particle_appearance_billboard": {
+                "facing_camera_mode": "lookat_xyz",
+                "uv": {
+                    "texture_width": 1,
+                    "texture_height": 1,
+                    "uv": [
+                        "variable.gas_u",
+                        "variable.gas_v"
+                    ],
+                    "uv_size": [
+                        "variable.gas_w",
+                        "variable.gas_h"
+                    ]
+                },
+                "size": [
+                    "0.07 + variable.particle_age * 0.20",
+                    "0.07 + variable.particle_age * 0.20"
+                ]
+            },
+            "minecraft:emitter_initialization": {
+                "creation_expression": "variable.gas_u = 0; variable.gas_v = 0; variable.gas_w = 0; variable.gas_h = 0;"
+            }
+        }
+    },
+    "format_version": "1.10.0"
+}

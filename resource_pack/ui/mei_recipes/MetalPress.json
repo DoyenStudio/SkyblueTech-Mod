@@ -14,7 +14,7 @@
     },
     "recipe@mei_recipe_common.recipe_panel": {
         "size": [
-            163,
+            183,
             66
         ],
         "controls": [
@@ -22,7 +22,7 @@
                 "wrapper": {
                     "type": "panel",
                     "size": [
-                        129,
+                        149,
                         62
                     ],
                     "layer": 1,

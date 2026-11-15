@@ -32,12 +32,15 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7将传送带上的物品存入存货口相邻的容器；存不下的物品停留在原地。"
+                "value": "\n§7将传送带上的物品§f存入§7紧贴存货口的的容器。"
             },
             "netease:listen_block_remove": {
                 "value": true
             },
             "netease:pathable": {
+                "value": false
+            },
+            "netease:solid": {
                 "value": false
             },
             "netease:tier": {

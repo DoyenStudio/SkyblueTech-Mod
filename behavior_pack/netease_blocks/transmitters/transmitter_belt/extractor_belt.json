@@ -32,12 +32,15 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7每2秒从取货口相邻的容器中取出1个物品，放到传送带上。"
+                "value": "\n§7从紧贴取货口的容器中§f取出物品§7到传送带上。"
             },
             "netease:listen_block_remove": {
                 "value": true
             },
             "netease:pathable": {
+                "value": false
+            },
+            "netease:solid": {
                 "value": false
             },
             "netease:tier": {

@@ -7,7 +7,7 @@ from ...define import (
     PageGroup,
 )
 
-from . import item_pipe, general_settings, fluid_pipe
+from . import item_pipe, general_settings, fluid_pipe, transmit_belt
 
 transmitters_toc = PageGroup(
     "transmitters",
@@ -35,6 +35,12 @@ transmitters_toc = PageGroup(
                     0,
                     "流体管道",
                     fluid_pipe.fluid_pipe_entry,
+                ),
+                TOCPageSection(
+                    id_enum.TransmitBelt.BELT,
+                    0,
+                    "传送带",
+                    transmit_belt.transmit_belt_entry,
                 ),
             ],
         ),

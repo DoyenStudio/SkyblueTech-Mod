@@ -12,8 +12,13 @@ from .utils import get_forward_offset
 
 EntityType = GetMinecraftEnum().EntityType
 
-BELTS = frozenset({TransmitBelt.BELT, TransmitBelt.EXTRACTOR, TransmitBelt.INSERTER})
-OUTPUT_BELTS = frozenset({TransmitBelt.BELT, TransmitBelt.EXTRACTOR})
+BELTS = frozenset({
+    TransmitBelt.BELT, TransmitBelt.EXTRACTOR, TransmitBelt.INSERTER,
+    TransmitBelt.DETECTOR,
+})
+OUTPUT_BELTS = frozenset({
+    TransmitBelt.BELT, TransmitBelt.EXTRACTOR, TransmitBelt.DETECTOR,
+})
 
 
 class BeltState:

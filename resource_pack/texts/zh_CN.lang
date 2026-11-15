@@ -504,6 +504,7 @@ skybluetech.mei.category.fermenter=发酵池
 skybluetech.mei.category.thermal_generator=火力发电机
 skybluetech.mei.category.geothermal_generator=地热发电机
 tile.skybluetech:transmit_belt.name=传送带
+tile.skybluetech:detector_belt.name=感应传送带
 tile.skybluetech:extractor_belt.name=取货传送带
 tile.skybluetech:inserter_belt.name=存货传送带
 itemGroup.skybluetech.transmit_belt=传送带

@@ -5,6 +5,7 @@
             "icon": "skybluetech:transmit_belt",
             "list": [
                 "skybluetech:transmit_belt",
+                "skybluetech:detector_belt",
                 "skybluetech:extractor_belt",
                 "skybluetech:inserter_belt"
             ]

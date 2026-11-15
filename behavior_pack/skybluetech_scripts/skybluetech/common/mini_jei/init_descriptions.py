@@ -33,6 +33,12 @@ RegisterUsageDescription(
 )
 
 RegisterSourceDescription(
+    {CategoryType.ITEM: [id_enum.TransmitBelt.DETECTOR]},
+    "感应传送带",
+    "沿放置朝向输送生物和掉落物，无需能量。\n生物或玩家站在带上时输出 15 级红石信号，全部离开后信号归零；掉落物和盔甲架不会触发感应。",
+)
+
+RegisterSourceDescription(
     {CategoryType.FLUID: [id_enum.DeepLava.DEEPSLATE_LAVA]},
     "深层熔岩",
     (

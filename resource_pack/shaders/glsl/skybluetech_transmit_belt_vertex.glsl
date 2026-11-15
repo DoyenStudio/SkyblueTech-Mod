@@ -17,7 +17,11 @@ void main() {
     entityCommonVert();
     light = getLightColor(entitySpacePosition, entitySpaceNormal);
     // Keep the model's U=0..10px range; the atlas repeats every 16px in V.
+#ifdef REVERSE_BELT_UV
+    uv = vec2(TEXCOORD_0.x, 0.5 - TEXCOORD_0.y + mod(TIME * 0.5, 0.5));
+#else
     uv = TEXCOORD_0 + vec2(0.0, mod(TIME * 0.5, 0.5));
+#endif
     calculateSpecificProcess(entitySpacePosition, entitySpaceNormal);
     POS4 projSpacePos = WORLDVIEWPROJ * entitySpacePosition;
     gl_Position = projSpacePos;

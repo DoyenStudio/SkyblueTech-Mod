@@ -1,0 +1,94 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.empty"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "render_method": "opaque",
+                    "texture": "skybluetech:detector_belt_texture"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.detector_belt",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:detector_belt_texture"
+                    }
+                }
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "liquid_type": "water",
+                        "can_contain_liquid": true,
+                        "on_liquid_touches": "no_reaction"
+                    }
+                ]
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§f生物§7经过此传送带时§f发出红石信号§7。"
+            },
+            "netease:redstone": {
+                "type": "producer",
+                "strength": 0
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:pathable": {
+                "value": false
+            },
+            "netease:solid": {
+                "value": false
+            },
+            "netease:tier": {
+                "digger": "pickaxe"
+            },
+            "tag:piston_denier": {},
+            "netease:on_entity_inside": {
+                "send_python_event": true
+            },
+            "netease:aabb": {
+                "collision": {
+                    "min": [0.0, 0.0, 0.0],
+                    "max": [1, 0.0625, 1]
+                },
+                "clip": {
+                    "min": [0.0, 0.0, 0.0],
+                    "max": [1, 0.4375, 1]
+                }
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:detector_belt",
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ]
+                }
+            },
+            "states": {
+                "skybluetech:detector_belt_powered": [false, true]
+            }
+        },
+        "permutations": [
+            {
+                "condition": "query.block_state('skybluetech:detector_belt_powered')",
+                "components": {
+                    "netease:redstone": {
+                        "type": "producer",
+                        "strength": 15
+                    }
+                }
+            }
+        ]
+    }
+}

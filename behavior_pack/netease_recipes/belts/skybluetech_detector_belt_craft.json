@@ -1,0 +1,24 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:detector_belt_craft"
+        },
+        "ingredients": [
+            {
+                "item": "skybluetech:transmit_belt"
+            },
+            {
+                "item": "minecraft:stone_pressure_plate"
+            }
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:detector_belt"
+        },
+        "tags": [
+            "crafting_table"
+        ]
+    }
+}

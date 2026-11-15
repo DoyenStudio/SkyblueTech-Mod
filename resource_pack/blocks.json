@@ -1274,6 +1274,11 @@
         "client_entity": {},
         "textures": "skybluetech:extractor_belt_texture"
     },
+    "skybluetech:detector_belt": {
+        "client_entity": {},
+        "sound": "iron",
+        "textures": "skybluetech:detector_belt_texture"
+    },
     "skybluetech:inserter_belt": {
         "client_entity": {},
         "textures": "skybluetech:inserter_belt_texture"

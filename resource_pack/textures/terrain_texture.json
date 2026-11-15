@@ -947,6 +947,9 @@
         "skybluetech:transmit_belt_texture": {
             "textures": "textures/models/transmit_belt/transmit_belt_texture"
         },
+        "skybluetech:detector_belt_texture": {
+            "textures": "textures/models/transmit_belt/detector_belt_texture"
+        },
         "skybluetech:extractor_belt_texture": {
             "textures": "textures/models/transmit_belt/extractor_belt_texture"
         },

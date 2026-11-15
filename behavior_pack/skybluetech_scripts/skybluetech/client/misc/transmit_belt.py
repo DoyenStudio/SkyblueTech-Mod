@@ -22,8 +22,9 @@ ENTITY_TYPES = {
     TransmitBelt.BELT: "skybluetech:transmit_belt_entity",
     TransmitBelt.EXTRACTOR: "skybluetech:extractor_belt_entity",
     TransmitBelt.INSERTER: "skybluetech:inserter_belt_entity",
+    TransmitBelt.DETECTOR: "skybluetech:detector_belt_entity",
 }
-OUTPUT_BELTS = frozenset((TransmitBelt.BELT, TransmitBelt.EXTRACTOR))
+OUTPUT_BELTS = frozenset((TransmitBelt.BELT, TransmitBelt.EXTRACTOR, TransmitBelt.DETECTOR))
 # aux 的低两位依次为南、西、北、东。
 FACING_OFFSETS = ((0, 1), (-1, 0), (0, -1), (1, 0))
 CONNECTION_MOLANGS = (
@@ -151,6 +152,7 @@ def _remove_model(key):
 @asModBlockLoadedListener(TransmitBelt.BELT)
 @asModBlockLoadedListener(TransmitBelt.EXTRACTOR)
 @asModBlockLoadedListener(TransmitBelt.INSERTER)
+@asModBlockLoadedListener(TransmitBelt.DETECTOR)
 def onTransmitBeltLoaded(event):
     # type: (ModBlockEntityLoadedClientEvent) -> None
     _sync_dimension()
@@ -163,6 +165,7 @@ def onTransmitBeltLoaded(event):
 @asModBlockRemovedListener(TransmitBelt.BELT)
 @asModBlockRemovedListener(TransmitBelt.EXTRACTOR)
 @asModBlockRemovedListener(TransmitBelt.INSERTER)
+@asModBlockRemovedListener(TransmitBelt.DETECTOR)
 def onTransmitBeltRemoved(event):
     # type: (ModBlockEntityRemoveClientEvent) -> None
     _sync_dimension()

@@ -96,6 +96,7 @@ FLUID_TEXTURE_FRAMES = {
     "textures/fluid/baked/skybluetech.molten_gold/static": (49, 4.0),
     "textures/fluid/baked/skybluetech.molten_impurity/static": (20, 4.0),
     "textures/fluid/baked/skybluetech.molten_iron/static": (49, 4.0),
+    "textures/fluid/baked/skybluetech.molten_palladium/static": (49, 4.0),
     "textures/fluid/baked/skybluetech.molten_lead/static": (49, 4.0),
     "textures/fluid/baked/skybluetech.molten_nickel/static": (49, 4.0),
     "textures/fluid/baked/skybluetech.molten_platinum/static": (49, 4.0),

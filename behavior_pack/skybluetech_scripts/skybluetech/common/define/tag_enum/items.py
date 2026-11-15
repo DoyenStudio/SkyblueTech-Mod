@@ -8,6 +8,7 @@ class IngotTag:
     NICKEL = "common:nickel_ingot"
     SILVER = "common:silver_ingot"
     PLATINUM = "common:platinum_ingot"
+    PALLADIUM = "common:palladium_ingot"
     TITANIUM = "common:titanium_ingot"
     BRONZE = "common:bronze_ingot"
     INVAR = "common:invar_ingot"

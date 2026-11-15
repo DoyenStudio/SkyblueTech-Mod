@@ -1,6 +1,12 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:palladium_ingot": {
+            "textures": "textures/items/ingots/palladium_ingot"
+        },
+        "skybluetech:molten_palladium_bucket": {
+            "textures": "textures/items/buckets/molten_palladium_bucket"
+        },
         "skybluetech:platinum_catalyst_mesh": {
             "textures": "textures/items/platinum_catalyst_mesh"
         },

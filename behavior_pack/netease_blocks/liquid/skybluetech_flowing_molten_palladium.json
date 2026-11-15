@@ -1,0 +1,17 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "bucket_name": "skybluetech:molten_palladium_bucket",
+                "spread_delay": 16,
+                "spread_range": 5
+            }
+        },
+        "description": {
+            "base_block": "flowing_liquid",
+            "category": "none",
+            "identifier": "skybluetech:flowing_molten_palladium"
+        }
+    }
+}

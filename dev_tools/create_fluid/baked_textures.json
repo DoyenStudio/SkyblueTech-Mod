@@ -1,0 +1,795 @@
+{
+    "textures/fluid/baked/skybluetech.hydrogen_chloride/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [224, 255, 250, 64]
+    },
+    "textures/fluid/baked/skybluetech.molten_palladium/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [180, 180, 180, 255]
+    },
+    "textures/fluid/baked/skybluetech.molten_palladium/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [180, 180, 180, 255]
+    },
+    "textures/fluid/baked/skybluetech.compressed_air/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            240,
+            240,
+            240,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.concentrated_sulfuric_acid/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            216,
+            216,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.concentrated_sulfuric_acid/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            216,
+            216,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.deepslate_lava/static": {
+        "source": "textures/fluid/deepslate_lava_static",
+        "rgba": [
+            192,
+            38,
+            26,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.deepslate_lava/flowing": {
+        "source": "textures/fluid/deepslate_lava_flowing",
+        "rgba": [
+            192,
+            38,
+            26,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.distilled_water/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            0,
+            229,
+            255,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.distilled_water/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            0,
+            229,
+            255,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.heavy_lava/static": {
+        "source": "textures/fluid/gray_lava_static",
+        "rgba": [
+            168,
+            36,
+            36,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.heavy_lava/flowing": {
+        "source": "textures/fluid/gray_lava_flowing",
+        "rgba": [
+            168,
+            36,
+            36,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.hydrogen/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            220,
+            240,
+            255,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.light_lava/static": {
+        "source": "textures/fluid/gray_lava_static",
+        "rgba": [
+            255,
+            60,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.light_lava/flowing": {
+        "source": "textures/fluid/gray_lava_flowing",
+        "rgba": [
+            255,
+            60,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.liquid_air/static": {
+        "source": "textures/fluid/basic_fluid",
+        "rgba": [
+            205,
+            218,
+            238,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.liquid_resin/static": {
+        "source": "textures/fluid/liquid_resin_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.liquid_resin/flowing": {
+        "source": "textures/fluid/liquid_resin_flowing",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.liquid_soldering_tin/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            0,
+            0,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.liquid_soldering_tin/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            0,
+            0,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.lubricant/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            207,
+            0,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.lubricant/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            207,
+            0,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.methane/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            255,
+            240,
+            200,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.methane_mud/static": {
+        "source": "textures/fluid/methane_mud",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.mid_lava/static": {
+        "source": "textures/fluid/gray_lava_static",
+        "rgba": [
+            255,
+            0,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.mid_lava/flowing": {
+        "source": "textures/fluid/gray_lava_flowing",
+        "rgba": [
+            255,
+            0,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_rosin/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            230,
+            185,
+            45,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_rosin/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            230,
+            185,
+            45,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_copper/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            231,
+            124,
+            86,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_copper/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            231,
+            124,
+            86,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_earth/static": {
+        "source": "textures/fluid/gray_lava_static",
+        "rgba": [
+            127,
+            54,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_earth/flowing": {
+        "source": "textures/fluid/gray_lava_flowing",
+        "rgba": [
+            127,
+            54,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_gold/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            255,
+            255,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_gold/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            255,
+            255,
+            0,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_impurity/static": {
+        "source": "textures/fluid/gray_lava_static",
+        "rgba": [
+            74,
+            47,
+            21,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_impurity/flowing": {
+        "source": "textures/fluid/gray_lava_flowing",
+        "rgba": [
+            74,
+            47,
+            21,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_iron/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            200,
+            200,
+            200,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_iron/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            200,
+            200,
+            200,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_lead/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            163,
+            153,
+            229,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_lead/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            163,
+            153,
+            229,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_nickel/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            197,
+            197,
+            145,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_nickel/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            197,
+            197,
+            145,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_platinum/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            158,
+            235,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_platinum/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            158,
+            235,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_silver/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            239,
+            248,
+            249,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_silver/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            239,
+            248,
+            249,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_tin/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            233,
+            233,
+            233,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_tin/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            233,
+            233,
+            233,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.nitrogen/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            240,
+            255,
+            240,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.raw_oil/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            44,
+            39,
+            28,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.raw_oil/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            44,
+            39,
+            28,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.so3/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            216,
+            216,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.so3/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            216,
+            216,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.sulfuric_acid/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            216,
+            216,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.sulfuric_acid/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            216,
+            216,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.vegetable_oil/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            170,
+            255,
+            0,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.vegetable_oil/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            170,
+            255,
+            0,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.water_vapor/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            32
+        ]
+    },
+    "textures/fluid/baked/skybluetech.deepslate_lava/flowing_block_static": {
+        "source": "textures/fluid/deepslate_lava_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.deepslate_lava/flowing_block_flowing": {
+        "source": "textures/fluid/deepslate_lava_flowing",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.light_lava/flowing_block_static": {
+        "source": "textures/fluid/gray_lava_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.light_lava/flowing_block_flowing": {
+        "source": "textures/fluid/gray_lava_flowing",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.lubricant/flowing_block_static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            207,
+            0,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.lubricant/flowing_block_flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            207,
+            0,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.mid_lava/flowing_block_static": {
+        "source": "textures/fluid/gray_lava_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.mid_lava/flowing_block_flowing": {
+        "source": "textures/fluid/gray_lava_flowing",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.sulfuric_acid/flowing_block_static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            216,
+            216,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.sulfuric_acid/flowing_block_flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            216,
+            216,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.compressed_air/ui": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            240,
+            240,
+            240,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.hydrogen/ui": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            220,
+            240,
+            255,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.nitrogen/ui": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            240,
+            255,
+            240,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.methane/ui": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            255,
+            240,
+            200,
+            64
+        ]
+    },
+    "textures/fluid/baked/minecraft.water/ui": {
+        "source": "textures/fluid/water_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            128
+        ]
+    },
+    "textures/fluid/baked/minecraft.lava/ui": {
+        "source": "textures/fluid/lava_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.oxygen/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            160,
+            216,
+            255,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.brine/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            250,
+            255,
+            240,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.brine/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            250,
+            255,
+            240,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.saturated_brine/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            255,
+            230,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [255, 255, 245, 128]
+    },
+    "textures/fluid/baked/skybluetech.sodium_hydroxide_solution/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [255, 255, 245, 128]
+    },
+    "textures/fluid/baked/skybluetech.chlorine/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            225,
+            255,
+            200,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.dilute_brine/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [150, 180, 245, 128]
+    },
+    "textures/fluid/baked/skybluetech.dilute_brine/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [150, 180, 245, 128]
+    },
+    "textures/fluid/baked/skybluetech.saturated_brine/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            255,
+            230,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.ethylene/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            255,
+            232,
+            255,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.pure_methane/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            255,
+            250,
+            240,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_polyethylene/static": {
+        "source": "textures/fluid/molten_pe_static",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_polyethylene/flowing": {
+        "source": "textures/fluid/molten_pe_flowing",
+        "rgba": [
+            255,
+            255,
+            255,
+            255
+        ]
+    },
+    "textures/fluid/baked/skybluetech.evil_undead/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            72,
+            48,
+            32,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.evil_undead/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            72,
+            48,
+            32,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tree_oil/static": {
+        "source": "textures/fluid/liquid_resin_static",
+        "rgba": [
+            230,
+            185,
+            45,
+            64
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tree_oil/flowing": {
+        "source": "textures/fluid/liquid_resin_flowing",
+        "rgba": [
+            230,
+            185,
+            45,
+            64
+        ]
+    }
+}

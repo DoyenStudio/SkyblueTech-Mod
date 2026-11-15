@@ -38,5 +38,6 @@ recipes = RecipesCollection(
     recipe_molten2ingot("lead"),
     recipe_molten2ingot("silver"),
     recipe_molten2ingot("platinum"),
+    recipe_molten2ingot("palladium"),
     recipe_molten2ingot("nickel"),
 )  # type: RecipesCollection[MachineRecipe]

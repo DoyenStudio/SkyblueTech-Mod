@@ -71,6 +71,7 @@ class Ingots(SimpleEnum):
     SILVER = "skybluetech:silver_ingot"
     NICKEL = "skybluetech:nickel_ingot"
     PLATINUM = "skybluetech:platinum_ingot"
+    PALLADIUM = "skybluetech:palladium_ingot"
     TITANIUM = "skybluetech:titanium_ingot"
 
     BRONZE = "skybluetech:bronze_ingot"

@@ -1,6 +1,13 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:baked_molten_palladium_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_palladium/static"
+        },
+        "skybluetech:baked_molten_palladium_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_palladium/flowing"
+        },
         "skybluetech:shocker": {
             "textures": "textures/models/shocker_texture"
         },

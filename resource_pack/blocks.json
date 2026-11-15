@@ -1,4 +1,20 @@
 {
+    "skybluetech:molten_palladium": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_molten_palladium_static",
+            "side": "skybluetech:baked_molten_palladium_flowing",
+            "up": "skybluetech:baked_molten_palladium_static"
+        }
+    },
+    "skybluetech:flowing_molten_palladium": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_molten_palladium_static",
+            "side": "skybluetech:baked_molten_palladium_flowing",
+            "up": "skybluetech:baked_molten_palladium_flowing"
+        }
+    },
     "format_version": [
         1,
         1,

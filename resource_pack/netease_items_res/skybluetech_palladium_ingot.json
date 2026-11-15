@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:palladium_ingot"
+        },
+        "description": {
+            "identifier": "skybluetech:palladium_ingot"
+        }
+    }
+}

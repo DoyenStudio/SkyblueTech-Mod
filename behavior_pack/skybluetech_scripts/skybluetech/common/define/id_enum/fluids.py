@@ -119,6 +119,7 @@ class Molten(HotFluid):
 
     EARTH = "skybluetech:molten_earth"
     IMPURITY = "skybluetech:molten_impurity"
+    PALLADIUM = "skybluetech:molten_palladium"
     ROSIN = "skybluetech:molten_rosin"
 
     COPPER = "skybluetech:molten_copper"

@@ -3,6 +3,18 @@ from ...common.define import id_enum
 from ...common.define import tag_enum
 from .core import CategoryType
 from .common import RegisterSourceDescription, RegisterUsageDescription
+from ..misc.inscriber_press import EMPTY
+
+RegisterUsageDescription(
+    {CategoryType.ITEM: [EMPTY]},
+    "空压印模板的用途",
+    (
+        "手持并使用空压印模板，打开雕刻界面。 长按一格铁块即可将该格雕刻掉。"
+        "\n在配方查看界面中， 黑灰闪烁的格子需要雕掉， 保留白色格子。"
+        "\n雕刻进度自动保存在模板中， 下次打开可继续； 已雕掉的格子§4无法恢复§r， 这也就意味着你必须专注于雕刻， 雕错了会让压印模板§4直接报废§r。"
+        "\n图案完全匹配对应的雕刻形状时， 空模板会自动变成对应的压印模板。\n你可以在左边选择“压印模板”配方分组查看所有§2有效的§r雕刻形状。"
+    ),
+)
 
 RegisterSourceDescription(
     {CategoryType.ITEM: [id_enum.Machinery.AIR_VENT]},

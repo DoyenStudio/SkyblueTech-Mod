@@ -1,6 +1,12 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:inscriber_press_empty": {
+            "textures": "textures/items/inscriber_press/empty"
+        },
+        "skybluetech:inscriber_press_stick": {
+            "textures": "textures/items/inscriber_press/stick"
+        },
         "skybluetech:palladium_ingot": {
             "textures": "textures/items/ingots/palladium_ingot"
         },

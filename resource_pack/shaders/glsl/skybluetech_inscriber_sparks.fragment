@@ -1,0 +1,82 @@
+// __multiversion__
+// This signals the loading code to prepend either #version 100 or #version 300 es as apropriate.
+
+#include "fragmentVersionCentroid.h"
+
+#if __VERSION__ >= 300
+
+#if defined(TEXEL_AA) && defined(TEXEL_AA_FEATURE)
+_centroid in highp vec2 uv;
+#else
+_centroid in vec2 uv;
+#endif
+
+#else
+
+varying vec2 uv;
+
+#endif
+
+#include "uniformShaderConstants.h"
+#include "uniformPerFrameConstants.h"
+#include "util.h"
+
+LAYOUT_BINDING(0) uniform sampler2D TEXTURE_0;
+
+float sparkRandom(float seed)
+{
+    return fract(sin(seed * 12.9898) * 43758.5453);
+}
+
+void main()
+{
+#if !defined(TEXEL_AA) || !defined(TEXEL_AA_FEATURE)
+	vec4 diffuse = texture2D( TEXTURE_0, uv );
+#else
+	vec4 diffuse = texture2D_AA(TEXTURE_0, uv );
+#endif
+
+    if (abs(CURRENT_COLOR.r - 0.123) < 0.006 && abs(CURRENT_COLOR.g - 0.456) < 0.006
+        && abs(CURRENT_COLOR.b - 0.789) < 0.006 && abs(diffuse.r - 17.0 / 255.0) < 0.002
+        && abs(diffuse.a - 231.0 / 255.0) < 0.002) {
+        vec2 p = diffuse.gb - vec2(0.5);
+        vec3 light = vec3(0.0);
+        float opacity = 0.0;
+        for (int i = 0; i < 64; ++i) {
+            float seed = float(i);
+            float lifetime = 0.5;
+            float cycle = TIME / lifetime + sparkRandom(seed + 1.0);
+            float age = fract(cycle);
+            // Re-seed every emission; each trail starts at the cutting point.
+            float emission = seed * 17.0 + floor(cycle) * 0.73;
+            float angle = sparkRandom(emission + 3.0) * 6.2831853;
+            float speed = mix(0.80, 1.16, sparkRandom(emission + 11.0));
+            vec2 direction = vec2(cos(angle), sin(angle));
+            float elapsed = age * lifetime;
+            float tailElapsed = max(0.0, elapsed - 0.045);
+            // UI Y points down; head and tail sample the same ballistic path.
+            vec2 gravity = vec2(0.0, 1.2);
+            vec2 head = direction * speed * elapsed + 0.5 * gravity * elapsed * elapsed;
+            vec2 tail = direction * speed * tailElapsed + 0.5 * gravity * tailElapsed * tailElapsed;
+            vec2 segment = head - tail;
+            float along = clamp(dot(p - tail, segment) / max(dot(segment, segment), 0.00001), 0.0, 1.0);
+            float dist = length(p - tail - segment * along);
+            float spark = (1.0 - smoothstep(0.002, 0.010, dist))
+                * (1.0 - smoothstep(0.70, 1.0, age))
+                * (1.0 - smoothstep(0.39, 0.48, length(p)));
+            light += mix(vec3(1.0, 0.25, 0.015), vec3(1.0, 0.95, 0.65), along) * spark;
+            opacity = max(opacity, spark);
+        }
+        float core = (1.0 - smoothstep(0.0, 0.035, length(p))) * 0.9;
+        gl_FragColor = vec4(min(light + vec3(core), vec3(1.0)), max(opacity, core) * CURRENT_COLOR.a);
+        return;
+    }
+
+
+#ifdef ALPHA_TEST
+	if(diffuse.a < 0.5)
+		discard;
+#endif
+
+	gl_FragColor = CURRENT_COLOR * diffuse;
+}

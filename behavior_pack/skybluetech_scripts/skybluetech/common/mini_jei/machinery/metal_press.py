@@ -10,8 +10,7 @@ class MetalPressRecipe(MachineRecipe):
         self,
         input_fluid_id,  # type: str
         input_volume,  # type: float
-        input_item_id,  # type: str
-        input_count,  # type: int
+        input_items,  # type: list[Input]
         output_item_id,  # type: str
         output_count,  # type: int
         power_cost,  # type: int
@@ -21,16 +20,15 @@ class MetalPressRecipe(MachineRecipe):
             self,
             {
                 CategoryType.FLUID: {0: Input(input_fluid_id, input_volume)},
-                CategoryType.ITEM: {0: Input(input_item_id, input_count)},
             },
             {CategoryType.ITEM: {1: Output(output_item_id, output_count)}},
             power_cost,
             tick_duration,
+            inputs_unordered={CategoryType.ITEM: {(0, 6, 7, 8): input_items}},
         )
         self.input_fluid_id = input_fluid_id
         self.input_volume = input_volume
-        self.input_item_id = input_item_id
-        self.input_count = input_count
+        self.input_items = input_items
         self.output_item_id = output_item_id
         self.output_count = output_count
 
@@ -38,8 +36,7 @@ class MetalPressRecipe(MachineRecipe):
         result = {
             "input_fluid_id": self.input_fluid_id,
             "input_volume": self.input_volume,
-            "input_item_id": self.input_item_id,
-            "input_count": self.input_count,
+            "input_items": [input.to_dict() for input in self.input_items],
             "output_item_id": self.output_item_id,
             "output_count": self.output_count,
             "power_cost": self.power_cost,
@@ -52,8 +49,7 @@ class MetalPressRecipe(MachineRecipe):
         return cls(
             input_fluid_id=data["input_fluid_id"],
             input_volume=data["input_volume"],
-            input_item_id=data["input_item_id"],
-            input_count=data["input_count"],
+            input_items=[Input.from_dict(input) for input in data["input_items"]],
             output_item_id=data["output_item_id"],
             output_count=data["output_count"],
             power_cost=data["power_cost"],

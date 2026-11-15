@@ -2,6 +2,30 @@
     "dy_load_list": [],
     "format_version": "1.14.0",
     "sound_definitions": {
+        "sfx.skybluetech.inscribing_press.1": {
+            "category": "block",
+            "sounds": [
+                {
+                    "name": "sounds/skybluetech/sfx/inscribing_press/inscribing1"
+                }
+            ]
+        },
+        "sfx.skybluetech.inscribing_press.2": {
+            "category": "block",
+            "sounds": [
+                {
+                    "name": "sounds/skybluetech/sfx/inscribing_press/inscribing2"
+                }
+            ]
+        },
+        "sfx.skybluetech.inscribing_press.3": {
+            "category": "block",
+            "sounds": [
+                {
+                    "name": "sounds/skybluetech/sfx/inscribing_press/inscribing3"
+                }
+            ]
+        },
         "record.skybluetech.famicom_1": {
             "category": "record",
             "sounds": [

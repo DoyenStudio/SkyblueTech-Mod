@@ -1,0 +1,22 @@
+{
+    "materials": {
+        "version": "1.0.0",
+        "ui_textured_and_glcolor:ui_base": {
+            "+states": [
+                "DisableDepthWrite"
+            ],
+            "vertexShader": "shaders/uv.vertex",
+            "vrGeometryShader": "shaders/uv.geometry",
+            "fragmentShader": "shaders/skybluetech_inscriber_sparks.fragment",
+            "alphaDst": "DestColor",
+            "vertexFields": [
+                {
+                    "field": "Position"
+                },
+                {
+                    "field": "UV0"
+                }
+            ]
+        }
+    }
+}

@@ -42,6 +42,8 @@
         "ui/HydroponicBedUI.json",
         "ui/IndustrialResearchProgressUI.json",
         "ui/InfraredHeatGeneratorUI.json",
+        "ui/InscriberPressEditorUI.json",
+        "ui/InscriberPressRecipe.json",
         "ui/InscribingTemplateUI.json",
         "ui/ItemInputInterfaceUI.json",
         "ui/ItemOutputInterfaceUI.json",

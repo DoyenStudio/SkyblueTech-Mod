@@ -1,0 +1,340 @@
+{
+    "content": {
+        "type": "panel",
+        "size": [
+            150.0,
+            160.0
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "bg": {
+                    "type": "image",
+                    "layer": 2,
+                    "texture": "textures/ui/dialog_background_opaque"
+                }
+            },
+            {
+                "title": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        8.0,
+                        6.0
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "font_type": "default",
+                    "text": "雕刻压印模板",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "close_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/close_button_default",
+                    "$hover_texture": "textures/ui/close_button_default",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$pressed_button_name": "#press_close",
+                    "$pressed_texture": "textures/ui/close_button_default",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_right",
+                    "anchor_to": "top_right",
+                    "offset": [
+                        -3.0,
+                        3
+                    ],
+                    "size": [
+                        15,
+                        15
+                    ],
+                    "layer": 21,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "#press_close",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        },
+                        {
+                            "to_button_id": "#press_close",
+                            "from_button_id": "button.menu_cancel",
+                            "mapping_type": "global"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "grid_panel_bg": {
+                    "type": "image",
+                    "anchor_from": "bottom_middle",
+                    "anchor_to": "bottom_middle",
+                    "offset": [
+                        0.0,
+                        -10.0
+                    ],
+                    "size": [
+                        "100%cm+2px",
+                        "100%cm+2px"
+                    ],
+                    "layer": 2,
+                    "nineslice_size": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "texture": "textures/ui/skybluetech/bg_frame_slim",
+                    "controls": [
+                        {
+                            "grid": {
+                                "type": "grid",
+                                "size": [
+                                    128,
+                                    128
+                                ],
+                                "layer": 1,
+                                "collection_name": "inscriber_cells",
+                                "grid_dimensions": [
+                                    8,
+                                    8
+                                ],
+                                "grid_item_template": "InscriberPressEditorUI.iron_block_btn"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "sparks": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "size": [
+                        48,
+                        48
+                    ],
+                    "layer": 50,
+                    "visible": false,
+                    "color": [
+                        0.123,
+                        0.456,
+                        0.789
+                    ],
+                    "texture": "textures/ui/skybluetech/inscriber_shader_marker"
+                }
+            },
+            {
+                "tips_button@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        0.2588235294117647,
+                        0.2588235294117647,
+                        0.2588235294117647
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "normal",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0,
+                        0
+                    ],
+                    "$label_text": "?",
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$nineslice_size": [
+                        1.0,
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "$pressed_button_name": "#press_tips",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        62.0,
+                        6.0
+                    ],
+                    "size": [
+                        10.0,
+                        10.0
+                    ],
+                    "layer": 4,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "#press_tips",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {}
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {}
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {}
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "iron_block_btn@common.button": {
+        "type": "button",
+        "$control_alpha": 1.0,
+        "$default_texture": "textures/ui/iron_block",
+        "$hover_texture": "textures/ui/iron_block",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            1,
+            1,
+            1
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "large",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size": [
+            0,
+            0,
+            0,
+            0
+        ],
+        "$pressed_button_name": "#press_cell",
+        "$pressed_texture": "textures/ui/iron_block",
+        "$texture_layer": 2,
+        "size": [
+            16.0,
+            16.0
+        ],
+        "layer": 3,
+        "button_mappings": [
+            {
+                "to_button_id": "#press_cell",
+                "from_button_id": "button.menu_select",
+                "mapping_type": "pressed"
+            }
+        ],
+        "default_control": "default",
+        "hover_control": "hover",
+        "is_handle_button_move_event": true,
+        "pressed_control": "pressed",
+        "bindings": [
+            {
+                "binding_type": "collection_details",
+                "binding_collection_name": "inscriber_cells"
+            },
+            {
+                "binding_name_override": "#visible",
+                "binding_collection_name": "inscriber_cells",
+                "binding_condition": "always",
+                "binding_type": "collection",
+                "binding_name": "#press_visible"
+            }
+        ],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {}
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {
+                    "color": [
+                        0.7843,
+                        0.7843,
+                        0.7843
+                    ]
+                }
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {}
+            }
+        ]
+    },
+    "main@common.base_screen": {
+        "type": "screen",
+        "$screen_content": "InscriberPressEditorUI.screen_root"
+    },
+    "namespace": "InscriberPressEditorUI",
+    "screen_root": {
+        "type": "panel",
+        "controls": [
+            {
+                "panel@InscriberPressEditorUI.content": {}
+            }
+        ]
+    }
+}

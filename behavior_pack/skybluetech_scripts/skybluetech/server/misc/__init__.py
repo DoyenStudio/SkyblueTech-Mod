@@ -6,6 +6,7 @@ from . import (
     famicom,
     initial_supplies,
     inscribing_template,
+    inscriber_press,
     industrial_researching,
     object_upgraders,
     piston_denier,

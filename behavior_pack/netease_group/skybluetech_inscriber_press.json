@@ -1,0 +1,12 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.inscriber_press",
+            "icon": "skybluetech:inscriber_press_empty",
+            "list": [
+                "skybluetech:inscriber_press_empty",
+                "skybluetech:inscriber_press_stick"
+            ]
+        }
+    ]
+}

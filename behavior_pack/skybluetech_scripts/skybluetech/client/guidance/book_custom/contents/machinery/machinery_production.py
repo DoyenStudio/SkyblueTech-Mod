@@ -1,5 +1,8 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.client.ui.recipe_checker import CheckRecipe
+from skybluetech_scripts.skybluetech.client.ui.recipe_checker import (
+    CheckRecipe,
+    CheckRecipes,
+)
 from skybluetech_scripts.skybluetech.common.define import id_enum
 from skybluetech_scripts.skybluetech.common.machinery_def.brine_evaporation_pond import (
     STRUCTURE_PALETTE as BRINE_EVAPORATION_POND_SP,
@@ -239,8 +242,11 @@ metal_press = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.METAL_PRESS),
-            '可以使用一份金属原料<item id="%s">和润滑油生产金属棒<item id="%s">。'
-            % (id_enum.Ingots.TIN, id_enum.Sticks.TIN),
+            '可以使用一份金属原料<item id="%s">和润滑油， 根据所安装的<item id="%s"><link id="press" text="压印模板">生产金属制品<item id="%s">。'
+            % (id_enum.Ingots.TIN, id_enum.InscriberPress.EMPTY, id_enum.Sticks.TIN),
+            hyperlink_cbs={
+                "press": lambda _: CheckRecipes(list(id_enum.InscriberPress.all_sub()))
+            },
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.METAL_PRESS),
     ],

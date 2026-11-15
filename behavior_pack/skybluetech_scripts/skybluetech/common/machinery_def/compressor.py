@@ -2,6 +2,7 @@
 from ..define import id_enum
 from ..define.id_enum import Machinery, Plates
 from ..define.tag_enum.items import IngotTag, PlateTag, RAW_PAPER
+from ..misc.inscriber_press import EMPTY as INSCRIBER_PRESS_EMPTY
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.compressor import (
     MachineRecipe,
@@ -46,6 +47,15 @@ recipes = RecipesCollection(
     preset_tagged(IngotTag.SUPERCONDUCT, Plates.SUPERCONDUCT),
     # other
     preset_tagged(RAW_PAPER, "minecraft:paper"),
+    CompressorRecipe(
+        {
+            0: Input(PlateTag.STEEL, is_tag=True),
+            1: Input(PlateTag.TIN, is_tag=True),
+        },
+        Output(INSCRIBER_PRESS_EMPTY),
+        DEFAULT_POWER,
+        DEFAULT_TICK_DURATION,
+    ),
     CompressorRecipe(
         {
             0: Input("minecraft:lapis_lazuli"),

@@ -237,7 +237,7 @@ LAYOUTS = {
     "skybluetech:metal_press": {
         "file": "MetalPress",
         "control_def": "SkyblueMeiMetalPress.RECIPES_GRID",
-        "inputs": (("fluid", 0), ("item", 0)),
+        "inputs": (("fluid", 0), ("item", 0), ("item", 6), ("item", 7), ("item", 8)),
         "outputs": (("item", 1),),
         "catalysts": 0,
         "power": "use",

@@ -3586,7 +3586,7 @@
     "MetalPress@MachineRecipeLib.content_base": {
         "type": "panel",
         "size": [
-            129,
+            149,
             62
         ],
         "layer": 1,
@@ -3661,7 +3661,52 @@
                                             "anchor_to": "top_left",
                                             "offset": [
                                                 43,
-                                                21
+                                                11
+                                            ],
+                                            "size": [
+                                                20,
+                                                20
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "2@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input2",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                63,
+                                                11
+                                            ],
+                                            "size": [
+                                                20,
+                                                20
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "3@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input3",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                43,
+                                                31
+                                            ],
+                                            "size": [
+                                                20,
+                                                20
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "4@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input4",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                63,
+                                                31
                                             ],
                                             "size": [
                                                 20,
@@ -3687,7 +3732,7 @@
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "offset": [
-                                                105,
+                                                125,
                                                 21
                                             ],
                                             "size": [
@@ -3707,7 +3752,7 @@
                                 "anchor_to": "top_left",
                                 "layer": 1,
                                 "offset": [
-                                    68,
+                                    88,
                                     27
                                 ],
                                 "size": [
@@ -3722,7 +3767,7 @@
                                 "anchor_to": "top_left",
                                 "layer": 9,
                                 "offset": [
-                                    68,
+                                    88,
                                     27
                                 ],
                                 "size": [

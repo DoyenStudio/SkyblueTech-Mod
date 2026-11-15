@@ -20,7 +20,8 @@ class MetalPress(Processor, MultiFluidContainer):
     process_item = True
     process_fluid = True
     recipes = Recipes
-    item_input_slots = (0,)
+    # Append inputs after the legacy output and upgrade slots to preserve inventories.
+    item_input_slots = (0, 6, 7, 8)
     item_output_slots = (1,)
     fluid_input_slots = (0,)
     fluid_io_mode = (0, 0, 0, 0, 0, 0)

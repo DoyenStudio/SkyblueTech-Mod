@@ -85,6 +85,11 @@ class Ingots(SimpleEnum):
     SUPERCONDUCT = "skybluetech:superconduct_ingot"
 
 
+class InscriberPress(SimpleEnum):
+    EMPTY = "skybluetech:inscriber_press_empty"
+    STICK = "skybluetech:inscriber_press_stick"
+
+
 class MetalTools(SimpleEnum):
     BRONZE_AXE = "skybluetech:bronze_axe"
     BRONZE_PICKAXE = "skybluetech:bronze_pickaxe"

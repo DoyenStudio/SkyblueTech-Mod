@@ -1,0 +1,706 @@
+{
+    "namespace": "InscriberPressRecipe",
+    "row@MachineRecipeLib.mini_row": {
+        "$recipe_content": "InscriberPressRecipe.content",
+        "size": [
+            180,
+            58
+        ]
+    },
+    "cell": {
+        "type": "panel",
+        "size": [
+            4,
+            4
+        ],
+        "layer": 2,
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            0,
+            0
+        ],
+        "controls": [
+            {
+                "base": {
+                    "type": "image",
+                    "size": ["100%", "100%"],
+                    "texture": "textures/ui/white_background",
+                    "layer": 1
+                }
+            },
+            {
+                "pulse": {
+                    "type": "image",
+                    "size": ["100%", "100%"],
+                    "texture": "textures/ui/white_background",
+                    "color": [0.5, 0.5, 0.5],
+                    "alpha": "@InscriberPressRecipe.anim_gray_in",
+                    "visible": false,
+                    "layer": 2
+                }
+            }
+        ]
+    },
+    "anim_gray_in": {
+        "anim_type": "alpha",
+        "duration": 1.1,
+        "from": 0.0,
+        "to": 1.0,
+        "next": "@InscriberPressRecipe.anim_gray_out"
+    },
+    "anim_gray_out": {
+        "anim_type": "alpha",
+        "duration": 1.1,
+        "from": 1.0,
+        "to": 0.0,
+        "next": "@InscriberPressRecipe.anim_gray_in"
+    },
+    "content@MachineRecipeLib.content_base": {
+        "type": "panel",
+        "size": [
+            150,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 1,
+                    "texture": "textures/ui/skybluetech/rect_panel_bg",
+                    "nineslice_size": [
+                        2,
+                        2,
+                        2,
+                        2
+                    ]
+                }
+            },
+            {
+                "input": {
+                    "type": "panel",
+                    "size": [
+                        26,
+                        26
+                    ],
+                    "layer": 8,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        14
+                    ],
+                    "controls": [
+                        {
+                            "0@$recipe_item_slot": {
+                                "$binding_name_prefix": "mei_ui.recipe.input"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "output": {
+                    "type": "panel",
+                    "size": [
+                        26,
+                        26
+                    ],
+                    "layer": 8,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        114,
+                        14
+                    ],
+                    "controls": [
+                        {
+                            "0@$recipe_item_slot": {
+                                "$binding_name_prefix": "mei_ui.recipe.output"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "pattern": {
+                    "type": "panel",
+                    "size": [
+                        40,
+                        40
+                    ],
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        55,
+                        7
+                    ],
+                    "controls": [
+                        {
+                            "cell_0@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_1@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_2@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_3@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_4@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_5@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_6@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_7@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    0
+                                ]
+                            }
+                        },
+                        {
+                            "cell_8@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_9@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_10@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_11@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_12@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_13@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_14@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_15@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    5
+                                ]
+                            }
+                        },
+                        {
+                            "cell_16@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_17@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_18@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_19@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_20@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_21@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_22@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_23@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    10
+                                ]
+                            }
+                        },
+                        {
+                            "cell_24@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_25@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_26@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_27@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_28@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_29@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_30@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_31@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "cell_32@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_33@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_34@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_35@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_36@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_37@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_38@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_39@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    20
+                                ]
+                            }
+                        },
+                        {
+                            "cell_40@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_41@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_42@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_43@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_44@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_45@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_46@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_47@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    25
+                                ]
+                            }
+                        },
+                        {
+                            "cell_48@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_49@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_50@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_51@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_52@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_53@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_54@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_55@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    30
+                                ]
+                            }
+                        },
+                        {
+                            "cell_56@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    0,
+                                    35
+                                ]
+                            }
+                        },
+                        {
+                            "cell_57@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    5,
+                                    35
+                                ]
+                            }
+                        },
+                        {
+                            "cell_58@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    10,
+                                    35
+                                ]
+                            }
+                        },
+                        {
+                            "cell_59@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    15,
+                                    35
+                                ]
+                            }
+                        },
+                        {
+                            "cell_60@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    20,
+                                    35
+                                ]
+                            }
+                        },
+                        {
+                            "cell_61@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    25,
+                                    35
+                                ]
+                            }
+                        },
+                        {
+                            "cell_62@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    30,
+                                    35
+                                ]
+                            }
+                        },
+                        {
+                            "cell_63@InscriberPressRecipe.cell": {
+                                "offset": [
+                                    35,
+                                    35
+                                ]
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "left_arrow": {
+                    "type": "label",
+                    "size": [
+                        10,
+                        10
+                    ],
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        41,
+                        21
+                    ],
+                    "text": ">",
+                    "color": [
+                        0.3,
+                        0.3,
+                        0.3
+                    ]
+                }
+            },
+            {
+                "right_arrow": {
+                    "type": "label",
+                    "size": [
+                        10,
+                        10
+                    ],
+                    "layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        100,
+                        21
+                    ],
+                    "text": ">",
+                    "color": [
+                        0.3,
+                        0.3,
+                        0.3
+                    ]
+                }
+            }
+        ]
+    }
+}

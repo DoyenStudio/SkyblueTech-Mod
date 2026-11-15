@@ -1,6 +1,9 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:platinum_catalyst_mesh": {
+            "textures": "textures/items/platinum_catalyst_mesh"
+        },
         "skybluetech:molten_polyethylene_bucket": {
             "textures": "textures/items/buckets/molten_polyethylene_bucket"
         },

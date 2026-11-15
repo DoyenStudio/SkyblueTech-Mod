@@ -18,6 +18,14 @@ CUTTER_LEVEL_MAPPING = {
 
 recipes = RecipesCollection(
     id_enum.Machinery.PRECISION_CUTTER,
+    PrecisionCutterRecipe(
+        Input(id_enum.Plates.PLATINUM, 1),
+        {2: Output(id_enum.PLATINUM_CATALYST_MESH, 1)},
+        cutter_level=1,
+        cutter_durability_cost=1,
+        power_cost=25,
+        tick_duration=160,
+    ),
     # prismarine
     PrecisionCutterRecipe(
         Input("minecraft:prismarine"),

@@ -22,6 +22,10 @@
             "blendSrc": "SourceAlpha",
             "blendDst": "One"
         },
+        "skybluetech_blueprint_frame:skybluetech_tesla_range_preview": {
+            "vertexShader": "shaders/glsl/skybluetech_blueprint_frame_vertex.glsl",
+            "fragmentShader": "shaders/glsl/skybluetech_blueprint_frame_fragment.glsl"
+        },
         "skybluetech_tesla_range_preview:entity": {
             "vertexShader": "shaders/glsl/skybluetech_tesla_range_preview_vertex.glsl",
             "fragmentShader": "shaders/glsl/skybluetech_tesla_range_preview_fragment.glsl",

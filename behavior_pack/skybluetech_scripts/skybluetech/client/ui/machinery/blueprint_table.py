@@ -38,7 +38,6 @@ class BlueprintTableUI(MachinePanelUIProxy):
         self.grid = self.ctrl("materials").asScrollView().GetContent().asGrid()
         self.edit = self.ctrl("input").asTextEditBox()
         self.status = self.ctrl("status").asLabel()
-        self.output = self.ctrl("output").asLabel()
         self.visibility()
 
     def ctrl(self, name):
@@ -49,10 +48,9 @@ class BlueprintTableUI(MachinePanelUIProxy):
 
     def visibility(self):
         saving = self.mode == "save"
-        for name in ("output", "select", "copy"):
+        for name in ("select", "copy"):
             self.ctrl(name).SetVisible(saving)
-        for name in ("input", "paste"):
-            self.ctrl(name).SetVisible(self.mode == "build")
+        self.ctrl("paste").SetVisible(self.mode == "build")
         self.ctrl("copy").SetAlpha(1.0 if self.code else 0.45)
         self.ctrl("confirm").SetAlpha(1.0 if self.ready else 0.45)
 
@@ -78,10 +76,7 @@ class BlueprintTableUI(MachinePanelUIProxy):
         self.ready = state["ready"]
         self.rows = [(name, aux, count, Item(name, aux).GetBasicInfo().id_aux)
                      for name, aux, count in state["rows"]]
-        if self.mode == "build":
-            self.set_input(code)
-        else:
-            self.output.SetText(code)
+        self.set_input(code)
         self.status.SetText(state["status"])
         self.refresh_stock()
         self.grid.SetGridDimension((5, max(1, (len(self.rows) + 4) // 5)))

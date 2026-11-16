@@ -46,6 +46,14 @@
         },
         "sound": "iron"
     },
+    "skybluetech:blueprint_table": {
+        "sound": "wood",
+        "textures": {
+            "down": "skybluetech:blueprint_table_bottom",
+            "side": "skybluetech:blueprint_table_side",
+            "up": "skybluetech:blueprint_table_top"
+        }
+    },
     "skybluetech:alloy_furnace": {
         "textures": {
             "down": "skybluetech:frame_bottom",

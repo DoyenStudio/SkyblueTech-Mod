@@ -11,6 +11,7 @@ class Machinery(SimpleEnum):
     ASSEMBLER = "skybluetech:assembler"
     BATTERY_MATRIX_CONTROLLER = "skybluetech:battery_matrix_controller"
     BATTERY_MATRIX_CORE = "skybluetech:battery_matrix_core"
+    BLUEPRINT_TABLE = "skybluetech:blueprint_table"
     BEDROCK_LAVA_DRILL_CONTROLLER = "skybluetech:bedrock_lava_drill_controller"
     BRINE_EVAPORATION_POND_CONTROLLER = "skybluetech:brine_evaporation_pond_controller"
     CHARGER = "skybluetech:charger"

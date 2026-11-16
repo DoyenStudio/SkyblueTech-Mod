@@ -1,0 +1,20 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:blueprint_frame",
+            "geometry": {
+                "default": "geometry.skybluetech.blueprint_frame"
+            },
+            "textures": {
+                "default": "textures/models/model_entity_texture"
+            },
+            "materials": {
+                "default": "skybluetech_blueprint_frame"
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.tesla_range_preview"
+            ]
+        }
+    }
+}

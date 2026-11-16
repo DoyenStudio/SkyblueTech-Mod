@@ -1,0 +1,103 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "minecraft:geometry": {
+                "identifier": "minecraft:geometry.full_block"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:blueprint_table_side"
+                },
+                "up": {
+                    "texture": "skybluetech:blueprint_table_top"
+                },
+                "down": {
+                    "texture": "skybluetech:blueprint_table_bottom"
+                }
+            },
+            "netease:block_entity": {"tick": true},
+            "netease:block_container": {
+                "container_size": 1,
+                "custom_description": "蓝图工作台",
+                "screen_name": "BlueprintTableUI.main"
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_machine": {}
+        },
+        "description": {
+            "base_block": "netease_container",
+            "category": "none",
+            "identifier": "skybluetech:blueprint_table",
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "permutations": [
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'"
+            },
+            {
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                },
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'"
+            }
+        ]
+    }
+}

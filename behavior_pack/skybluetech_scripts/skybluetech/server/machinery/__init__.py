@@ -5,6 +5,7 @@ from .air_vent import AirVent
 from .assembler import Assembler
 from .battery_matrix import BatteryMatrix
 from .battery_matrix_core import BatteryMatrixCore
+from .blueprint_table import BlueprintTable
 from .bedrock_lava_drill import BedrockLavaDrill
 from . import brine_evaporation_pond
 from .charger import Charger

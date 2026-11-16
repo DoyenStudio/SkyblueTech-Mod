@@ -3,6 +3,7 @@ from .air_compressor import AirCompressorUI
 from .alloy_furnace import AlloyFurnaceUI
 from .assembler import AssemblerUI
 from .battery_matrix import BatteryMatrixUI
+from .blueprint_table import BlueprintTableUI
 from .bedrock_lava_drill import BedrockLavaDrillUI
 from .distillation_column import DistillationColumnUI
 from .brine_evaporation_pond import BrineEvaporationPondUI

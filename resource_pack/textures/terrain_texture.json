@@ -27,6 +27,15 @@
         "skybluetech:baked_evil_undead_static": {
             "textures": "textures/fluid/baked/skybluetech.evil_undead/static"
         },
+        "skybluetech:blueprint_table_bottom": {
+            "textures": "textures/blocks/machinery/blueprint_table_bottom"
+        },
+        "skybluetech:blueprint_table_side": {
+            "textures": "textures/blocks/machinery/blueprint_table_side"
+        },
+        "skybluetech:blueprint_table_top": {
+            "textures": "textures/blocks/machinery/blueprint_table_top"
+        },
         "skybluetech:heat_conductor_edgeless": {
             "textures": "textures/blocks/machinery/heat_conductor_edgeless"
         },

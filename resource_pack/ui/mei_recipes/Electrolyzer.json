@@ -6,8 +6,8 @@
         "$recipe_ui_template": "SkyblueMeiElectrolyzer.recipe"
     },
     "content_panel@MachineRecipeLib.Electrolyzer": {
-        "$recipe_item_slot": "mei_common.item_panel",
         "$recipe_fluid_slot": "SkyblueMeiCommon.fluid_slot",
+        "$recipe_item_slot": "mei_common.item_panel",
         "$recipe_power_hover": "SkyblueMeiCommon.power_hover",
         "$recipe_progress_hover": "SkyblueMeiCommon.progress_hover"
     },

@@ -11,6 +11,7 @@ class MachinePanelUIProxyEx(MachinePanelUIProxy):
     def __init__(self, screen_name, screen_instance, params=None):
         MachinePanelUIProxy.__init__(self, screen_name, screen_instance, params)
         self._page_cache = {}  # type: dict[type[PageBase], PageBase]
+        self._main_page_layouts = {}
         self._current_ex_page = MainPage()
         self._current_ex_page_index = 0
 
@@ -22,6 +23,8 @@ class MachinePanelUIProxyEx(MachinePanelUIProxy):
         MachinePanelUIProxy._on_create(self)
 
     def _on_destroy(self):
+        for page in self._page_cache.values():
+            page.Destroy()
         MachinePanelUIProxy._on_destroy(self)
 
     def reset(self):
@@ -37,6 +40,10 @@ class MachinePanelUIProxyEx(MachinePanelUIProxy):
         # type: (type[PageBase]) -> None
         if self._current_ex_page is not None:
             if isinstance(self._current_ex_page, MainPage):
+                self._main_page_layouts = {
+                    cls: cls.CaptureMainLayout(self._main_path_ctrl)
+                    for cls in self.available_extra_pages
+                }
                 self._main_path_ctrl.SetVisible(False)
             else:
                 self._current_ex_page.Deactive()

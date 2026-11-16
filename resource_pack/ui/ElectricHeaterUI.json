@@ -46,7 +46,6 @@
                     ],
                     "layer": 1,
                     "fill": true,
-                    "nineslice_size": 1,
                     "texture": "textures/ui/skybluetech/info_bg",
                     "controls": [
                         {
@@ -207,16 +206,11 @@
                         0
                     ],
                     "$label_text": "确定",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,

@@ -72,7 +72,7 @@
             {
                 "input_fluid_disp@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -165,7 +165,7 @@
             {
                 "output_fluid_disp@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -218,12 +218,6 @@
                                 "layer": 1,
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
-                                "nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
                                 "texture": "textures/ui/skybluetech/bg_frame_slim",
                                 "visible": false
                             }

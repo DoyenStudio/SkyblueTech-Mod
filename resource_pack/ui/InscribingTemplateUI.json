@@ -179,16 +179,11 @@
             0
         ],
         "$label_text": "Button",
+        "$nineslice_size|default": 0,
         "$nine_slice_buttom": 0,
         "$nine_slice_left": 0,
         "$nine_slice_right": 0,
         "$nine_slice_top": 0,
-        "$nineslice_size": [
-            1.0,
-            1.0,
-            1.0,
-            1.0
-        ],
         "$pressed_button_name": "#InscribingTemplateUI.template_section_button",
         "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$texture_layer": 2,
@@ -261,12 +256,6 @@
                         1.0,
                         0.0,
                         0.01568627450980392
-                    ],
-                    "nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
                     ],
                     "texture": "textures/ui/skybluetech/border_line",
                     "bindings": [

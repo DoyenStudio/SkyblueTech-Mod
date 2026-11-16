@@ -43,7 +43,6 @@
                         "100%",
                         "100%"
                     ],
-                    "nineslice_size": 3,
                     "texture": "$default_texture"
                 }
             },
@@ -54,7 +53,6 @@
                         "100%",
                         "100%"
                     ],
-                    "nineslice_size": 3,
                     "texture": "$hover_texture"
                 }
             },
@@ -65,7 +63,6 @@
                         "100%",
                         "100%"
                     ],
-                    "nineslice_size": 3,
                     "texture": "$pressed_texture"
                 }
             },

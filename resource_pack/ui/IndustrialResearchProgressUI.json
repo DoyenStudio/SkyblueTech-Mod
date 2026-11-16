@@ -48,16 +48,11 @@
             },
             {
                 "researchings_scroll_view@common.scrolling_panel": {
+                    "$background_nineslice_size|default": 0,
                     "$background_nine_slice_buttom": 0,
                     "$background_nine_slice_left": 0,
                     "$background_nine_slice_right": 0,
                     "$background_nine_slice_top": 0,
-                    "$background_nineslice_size": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
                     "$box_nine_slice_buttom": 0,
                     "$box_nine_slice_left": 0,
                     "$box_nine_slice_right": 0,
@@ -274,16 +269,11 @@
                         0
                     ],
                     "$label_text": "研究",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "#IndustrialResearchProgressUI.submit_btn",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -335,12 +325,6 @@
                                     0.2588235294117647,
                                     0.2588235294117647
                                 ],
-                                "nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
                                 "texture": "textures/ui/skybluetech/button_default"
                             }
                         }
@@ -367,16 +351,11 @@
                         0
                     ],
                     "$label_text": "刻印",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "#IndustrialResearchProgressUI.inscribe_btn",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -427,12 +406,6 @@
                                     0.2588235294117647,
                                     0.2588235294117647,
                                     0.2588235294117647
-                                ],
-                                "nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
                                 ],
                                 "texture": "textures/ui/skybluetech/button_default"
                             }
@@ -788,12 +761,6 @@
                             "frame": {
                                 "type": "image",
                                 "layer": 1,
-                                "nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
                                 "texture": "textures/ui/skybluetech/frame_empty_slim"
                             }
                         }

@@ -125,12 +125,6 @@
                         "100%cm+2px"
                     ],
                     "layer": 2,
-                    "nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "texture": "textures/ui/skybluetech/bg_frame_slim",
                     "controls": [
                         {
@@ -191,16 +185,11 @@
                         0
                     ],
                     "$label_text": "?",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "#press_tips",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,

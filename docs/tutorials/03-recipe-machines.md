@@ -342,6 +342,31 @@ tile.stdb:melter.name=示例熔融机
 tile.stdb:fuel_generator.name=示例燃料发电机
 ```
 
+## 可配置的流体输出面
+
+主模组的电解机、小型化学反应釜与高热流体离心机使用通用的 `FluidOutputSettingsPage`。主页面隐藏前，
+`MachinePanelUIProxyEx` 调用副页的 `CaptureMainLayout` 缓存槽位相对位置与尺寸；副页按缓存生成
+半透明的输出槽按钮，按顺序使用六色调色板，标签显示允许输出的机器相对面。点击按钮后，在弹窗中
+勾选多个面并保存；全部关闭表示禁止管道抽取该槽，取消不提交。
+
+其他机器接入时，服务端在 `Processor, MultiFluidContainer` 前增加
+`server.machinery.basic.fluid_output_faces.FluidOutputFaces` 基类，仍使用 `@RegisterMachine`。
+客户端继承 `MachinePanelUIProxyEx`，在 `available_extra_pages` 中加入
+`FluidOutputSettingsPage`，并声明槽号到主页面相对控件路径的映射，例如：
+
+```python
+fluid_output_slot_paths = {1: "fluid1", 2: "fluid2", 3: "fluid3"}
+```
+
+初始值沿用机器的 `fluid_output_slots_by_face`；原值为 `None` 时默认允许全部六面。
+高热流体离心机的六个输出槽默认均允许全部六面输出。
+保存后的选择按槽号写入方块实体，零值也会保留。每台机器单独生成白名单，通过
+`GetFluidOutputSlotsForFace` 约束外部抽取，配方产出和玩家桶交互沿用原流程。
+提交通过现有机器操作事件及 `S2CSync` 会话校验，服务端拒绝非输出槽、非法位掩码及过期版本。
+
+验收时检查两台同类机器的配置互不影响，多面和全部禁用都能保存；在主页面、管道设置页和输出面页
+之间切换后按钮仍与原槽对齐，关闭重开和保存重进后选择保持一致。管道自身也必须设成抽取模式。
+
 ## 验收
 
 为耗能机器连接电缆，检查缺料、缺电、堵塞输出、恢复供电；熔融机连接可传熔岩的管道，检查满槽等待及排空后继续。发电机连接用电器并检查副产物槽满、缓冲满和恢复输出；不要假设所有发电机默认都无损自动停机，是否允许特定停机升级取决于类配置。

@@ -10,7 +10,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.electrolyzer import (
 from skybluetech_scripts.tooldelta.ui import RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
 from skybluetech_scripts.skybluetech.client.ui.machinery_extra_pages import (
-    FluidPipeSettingsPage,
+    FluidPipeSettingsPage, FluidOutputSettingsPage,
 )
 from skybluetech_scripts.skybluetech.client.ui.recipe_checker import AsRecipeCheckerBtn
 from skybluetech_scripts.skybluetech.client.ui.machinery.define_ex import (
@@ -23,7 +23,8 @@ from skybluetech_scripts.skybluetech.client.ui.machinery.utils import (
 
 @RegistToolDeltaScreen("ElectrolyzerUI.main", is_proxy=True)
 class ElectrolyzerUI(MachinePanelUIProxyEx):
-    available_extra_pages = (FluidPipeSettingsPage,)
+    available_extra_pages = (FluidPipeSettingsPage, FluidOutputSettingsPage)
+    fluid_output_slot_paths = {1: "fluid1", 2: "fluid2", 3: "fluid3"}
     STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_out_", "ring_tout_")}
 
     def OnCreate(self):

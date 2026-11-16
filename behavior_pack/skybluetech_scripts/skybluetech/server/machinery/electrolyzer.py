@@ -8,10 +8,11 @@ from skybluetech_scripts.skybluetech.server.machinery.basic import (
 )
 from skybluetech_scripts.skybluetech.server.machinery.core import RegisterMachine
 from skybluetech_scripts.tooldelta.extensions.facing_utils import RelativeFacingStrEnum
+from .basic.fluid_output_faces import FluidOutputFaces
 
 
 @RegisterMachine
-class Electrolyzer(Processor, MultiFluidContainer):
+class Electrolyzer(FluidOutputFaces, Processor, MultiFluidContainer):
     block_name = Machinery.ELECTROLYZER
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True

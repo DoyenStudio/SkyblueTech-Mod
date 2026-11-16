@@ -1,1110 +1,10 @@
 {
-    "item_pipe_settings": {
-        "type": "panel",
-        "size": [
-            162,
-            54
-        ],
-        "controls": [
-            {
-                "top_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "上",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        0
-                    ]
-                }
-            },
-            {
-                "left_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "左",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        18,
-                        18
-                    ]
-                }
-            },
-            {
-                "front_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "前",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        18
-                    ]
-                }
-            },
-            {
-                "right_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "右",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        54,
-                        18
-                    ]
-                }
-            },
-            {
-                "back_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "后",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        72,
-                        18
-                    ]
-                }
-            },
-            {
-                "bottom_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "下",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        36
-                    ]
-                }
-            },
-            {
-                "legend_swatch_0": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.651,
-                                    0.835,
-                                    0.969
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        4
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_0": {
-                    "type": "label",
-                    "text": "输入",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        5
-                    ]
-                }
-            },
-            {
-                "legend_swatch_1": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.969,
-                                    0.804,
-                                    0.58
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        17
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_1": {
-                    "type": "label",
-                    "text": "输出",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        18
-                    ]
-                }
-            },
-            {
-                "legend_swatch_2": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.69,
-                                    0.69,
-                                    0.69
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        30
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_2": {
-                    "type": "label",
-                    "text": "未连接",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        31
-                    ]
-                }
-            },
-            {
-                "legend_note": {
-                    "type": "label",
-                    "text": "点击面切换",
-                    "color": [
-                        0.44,
-                        0.44,
-                        0.44
-                    ],
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        44
-                    ]
-                }
-            }
-        ],
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "offset": [
-            0,
-            0
-        ]
-    },
-    "item_pipe_settings_indirectional": {
-        "type": "panel",
-        "size": [
-            162,
-            54
-        ],
-        "controls": [
-            {
-                "top_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "上",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        0
-                    ]
-                }
-            },
-            {
-                "west_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "西",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        18,
-                        18
-                    ]
-                }
-            },
-            {
-                "south_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "南",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        18
-                    ]
-                }
-            },
-            {
-                "east_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "东",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        54,
-                        18
-                    ]
-                }
-            },
-            {
-                "north_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "北",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        72,
-                        18
-                    ]
-                }
-            },
-            {
-                "bottom_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "下",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        36
-                    ]
-                }
-            },
-            {
-                "legend_swatch_0": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.651,
-                                    0.835,
-                                    0.969
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        4
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_0": {
-                    "type": "label",
-                    "text": "输入",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        5
-                    ]
-                }
-            },
-            {
-                "legend_swatch_1": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.969,
-                                    0.804,
-                                    0.58
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        17
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_1": {
-                    "type": "label",
-                    "text": "输出",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        18
-                    ]
-                }
-            },
-            {
-                "legend_swatch_2": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.69,
-                                    0.69,
-                                    0.69
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        30
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_2": {
-                    "type": "label",
-                    "text": "未连接",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        31
-                    ]
-                }
-            },
-            {
-                "legend_note": {
-                    "type": "label",
-                    "text": "点击面切换",
-                    "color": [
-                        0.44,
-                        0.44,
-                        0.44
-                    ],
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        44
-                    ]
-                }
-            }
-        ],
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "offset": [
-            0,
-            0
-        ]
-    },
-    "fluid_pipe_settings": {
-        "type": "panel",
-        "size": [
-            162,
-            54
-        ],
-        "controls": [
-            {
-                "top_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "上",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        0
-                    ]
-                }
-            },
-            {
-                "left_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "左",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        18,
-                        18
-                    ]
-                }
-            },
-            {
-                "front_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "前",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        18
-                    ]
-                }
-            },
-            {
-                "right_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "右",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        54,
-                        18
-                    ]
-                }
-            },
-            {
-                "back_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "后",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        72,
-                        18
-                    ]
-                }
-            },
-            {
-                "bottom_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "下",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        36
-                    ]
-                }
-            },
-            {
-                "legend_swatch_0": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.651,
-                                    0.835,
-                                    0.969
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        4
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_0": {
-                    "type": "label",
-                    "text": "输入",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        5
-                    ]
-                }
-            },
-            {
-                "legend_swatch_1": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.969,
-                                    0.804,
-                                    0.58
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        17
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_1": {
-                    "type": "label",
-                    "text": "输出",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        18
-                    ]
-                }
-            },
-            {
-                "legend_swatch_2": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.69,
-                                    0.69,
-                                    0.69
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        30
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_2": {
-                    "type": "label",
-                    "text": "未连接",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        31
-                    ]
-                }
-            },
-            {
-                "legend_note": {
-                    "type": "label",
-                    "text": "点击面切换",
-                    "color": [
-                        0.44,
-                        0.44,
-                        0.44
-                    ],
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        44
-                    ]
-                }
-            }
-        ],
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "offset": [
-            0,
-            0
-        ]
-    },
-    "fluid_pipe_settings_indirectional": {
-        "type": "panel",
-        "size": [
-            162,
-            54
-        ],
-        "controls": [
-            {
-                "top_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "上",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        0
-                    ]
-                }
-            },
-            {
-                "west_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "西",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        18,
-                        18
-                    ]
-                }
-            },
-            {
-                "south_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "南",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        18
-                    ]
-                }
-            },
-            {
-                "east_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "东",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        54,
-                        18
-                    ]
-                }
-            },
-            {
-                "north_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "北",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        72,
-                        18
-                    ]
-                }
-            },
-            {
-                "bottom_set_btn@MachinePanelExPages.face_btn": {
-                    "$face_text": "下",
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        36,
-                        36
-                    ]
-                }
-            },
-            {
-                "legend_swatch_0": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.651,
-                                    0.835,
-                                    0.969
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        4
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_0": {
-                    "type": "label",
-                    "text": "输入",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        5
-                    ]
-                }
-            },
-            {
-                "legend_swatch_1": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.969,
-                                    0.804,
-                                    0.58
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        17
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_1": {
-                    "type": "label",
-                    "text": "输出",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        18
-                    ]
-                }
-            },
-            {
-                "legend_swatch_2": {
-                    "type": "image",
-                    "texture": "textures/ui/skybluetech/button_default",
-                    "nineslice_size": 1,
-                    "size": [
-                        9,
-                        9
-                    ],
-                    "layer": 2,
-                    "controls": [
-                        {
-                            "fill": {
-                                "type": "image",
-                                "texture": "textures/ui/white_background",
-                                "size": [
-                                    7,
-                                    7
-                                ],
-                                "color": [
-                                    0.69,
-                                    0.69,
-                                    0.69
-                                ],
-                                "layer": 1,
-                                "keep_ratio": false,
-                                "fill": true
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        30
-                    ],
-                    "keep_ratio": false,
-                    "fill": true
-                }
-            },
-            {
-                "legend_label_2": {
-                    "type": "label",
-                    "text": "未连接",
-                    "color": "$title_text_color",
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        118,
-                        31
-                    ]
-                }
-            },
-            {
-                "legend_note": {
-                    "type": "label",
-                    "text": "点击面切换",
-                    "color": [
-                        0.44,
-                        0.44,
-                        0.44
-                    ],
-                    "font_type": "default",
-                    "shadow": false,
-                    "layer": 2,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        105,
-                        44
-                    ]
-                }
-            }
-        ],
-        "anchor_from": "top_left",
-        "anchor_to": "top_left",
-        "offset": [
-            0,
-            0
-        ]
-    },
     "face_btn@common.button": {
         "type": "button",
         "$control_alpha": 1.0,
         "$default_texture": "textures/ui/skybluetech/button_default",
+        "$face_text|default": "",
         "$hover_texture": "textures/ui/skybluetech/button_hovered",
-        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$is_new_nine_slice": false,
         "$label_color": [
             1,
@@ -1119,19 +19,14 @@
             0
         ],
         "$label_text": "",
+        "$nineslice_size|default": 0,
         "$nine_slice_buttom": 0,
         "$nine_slice_left": 0,
         "$nine_slice_right": 0,
         "$nine_slice_top": 0,
-        "$nineslice_size": [
-            1,
-            1,
-            1,
-            1
-        ],
         "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$texture_layer": 2,
-        "$face_text|default": "",
         "size": [
             18,
             18
@@ -1140,8 +35,8 @@
         "button_mappings": [],
         "default_control": "default",
         "hover_control": "hover",
-        "pressed_control": "pressed",
         "is_handle_button_move_event": true,
+        "pressed_control": "pressed",
         "sound_name": "random.click",
         "bindings": [
             {
@@ -1172,30 +67,34 @@
             {
                 "fill": {
                     "type": "image",
-                    "texture": "textures/ui/white_background",
                     "size": [
                         16,
                         16
                     ],
+                    "layer": 3,
+                    "alpha": 0.0,
                     "color": [
                         1,
                         1,
                         1
                     ],
-                    "alpha": 0.0,
-                    "layer": 3,
+                    "fill": true,
                     "keep_ratio": false,
-                    "fill": true
+                    "texture": "textures/ui/white_background"
                 }
             },
             {
                 "icon": {
                     "type": "image",
-                    "texture": "textures/ui/skybluetech/transmitter_pull_or_push",
                     "size": [
                         9,
                         9
                     ],
+                    "layer": 4,
+                    "visible": false,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/transmitter_pull_or_push",
                     "uv": [
                         0,
                         18
@@ -1203,17 +102,13 @@
                     "uv_size": [
                         9,
                         9
-                    ],
-                    "visible": false,
-                    "layer": 4,
-                    "keep_ratio": false,
-                    "fill": true
+                    ]
                 }
             },
             {
                 "dir_tip": {
                     "type": "label",
-                    "text": "$face_text",
+                    "layer": 5,
                     "color": [
                         0.18,
                         0.18,
@@ -1221,7 +116,1484 @@
                     ],
                     "font_type": "default",
                     "shadow": false,
-                    "layer": 5
+                    "text": "$face_text"
+                }
+            }
+        ]
+    },
+    "fluid_output_btn@common.button": {
+        "type": "button",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            42,
+            22
+        ],
+        "priority": 30,
+        "layer": 5,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "is_handle_button_move_event": true,
+        "pressed_control": "pressed",
+        "sound_name": "random.click",
+        "controls": [
+            {
+                "fill": {
+                    "type": "image",
+                    "layer": 1,
+                    "alpha": 0.4,
+                    "color": [
+                        0.25,
+                        0.65,
+                        1
+                    ],
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/white_background"
+                }
+            },
+            {
+                "frame": {
+                    "type": "image",
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/frame_empty_slim"
+                }
+            },
+            {
+                "default": {
+                    "type": "panel"
+                }
+            },
+            {
+                "hover": {
+                    "type": "image",
+                    "layer": 3,
+                    "alpha": 0.18,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/white_background"
+                }
+            },
+            {
+                "pressed": {
+                    "type": "image",
+                    "layer": 3,
+                    "alpha": 0.32,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/white_background"
+                }
+            },
+            {
+                "caption": {
+                    "type": "label",
+                    "anchor_from": "center",
+                    "anchor_to": "center",
+                    "size": [
+                        "100%-2px",
+                        "default"
+                    ],
+                    "layer": 4,
+                    "color": [
+                        0.12,
+                        0.15,
+                        0.2
+                    ],
+                    "font_scale_factor": 0.8,
+                    "font_size": "normal",
+                    "text": "",
+                    "text_alignment": "center"
+                }
+            }
+        ]
+    },
+    "fluid_output_face_dialog": {
+        "type": "panel",
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "layer": 80,
+        "controls": [
+            {
+                "blocker@common.button": {
+                    "type": "button",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "priority": 20,
+                    "layer": 0,
+                    "button_mappings": [],
+                    "default_control": "shade",
+                    "hover_control": "shade",
+                    "pressed_control": "shade",
+                    "controls": [
+                        {
+                            "shade": {
+                                "type": "image",
+                                "alpha": 0.45,
+                                "color": [
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "panel@common.dialog_background_opaque": {
+                    "controls": [
+                        {
+                            "accent": {
+                                "type": "image",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    12,
+                                    10
+                                ],
+                                "size": [
+                                    4,
+                                    12
+                                ],
+                                "layer": 1,
+                                "texture": "textures/ui/white_background"
+                            }
+                        },
+                        {
+                            "title": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    21,
+                                    11
+                                ],
+                                "size": [
+                                    130,
+                                    12
+                                ],
+                                "layer": 2,
+                                "color": [
+                                    0.15,
+                                    0.18,
+                                    0.22
+                                ],
+                                "text": "流体输出槽",
+                                "text_alignment": "left"
+                            }
+                        },
+                        {
+                            "subtitle": {
+                                "type": "label",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    12,
+                                    26
+                                ],
+                                "size": [
+                                    140,
+                                    10
+                                ],
+                                "layer": 2,
+                                "color": [
+                                    0.35,
+                                    0.38,
+                                    0.44
+                                ],
+                                "font_scale_factor": 0.8,
+                                "text": "选择允许抽取的机器相对面",
+                                "text_alignment": "left"
+                            }
+                        },
+                        {
+                            "face0@MachinePanelExPages.fluid_output_btn": {
+                                "offset": [
+                                    12,
+                                    42
+                                ]
+                            }
+                        },
+                        {
+                            "face1@MachinePanelExPages.fluid_output_btn": {
+                                "offset": [
+                                    61,
+                                    42
+                                ]
+                            }
+                        },
+                        {
+                            "face2@MachinePanelExPages.fluid_output_btn": {
+                                "offset": [
+                                    110,
+                                    42
+                                ]
+                            }
+                        },
+                        {
+                            "face3@MachinePanelExPages.fluid_output_btn": {
+                                "offset": [
+                                    12,
+                                    68
+                                ]
+                            }
+                        },
+                        {
+                            "face4@MachinePanelExPages.fluid_output_btn": {
+                                "offset": [
+                                    61,
+                                    68
+                                ]
+                            }
+                        },
+                        {
+                            "face5@MachinePanelExPages.fluid_output_btn": {
+                                "offset": [
+                                    110,
+                                    68
+                                ]
+                            }
+                        },
+                        {
+                            "apply@MachinePanelExPages.fluid_output_btn": {
+                                "offset": [
+                                    88,
+                                    98
+                                ],
+                                "size": [
+                                    64,
+                                    18
+                                ]
+                            }
+                        },
+                        {
+                            "cancel@common.button": {
+                                "type": "button",
+                                "$control_alpha": 1.0,
+                                "$default_texture": "textures/ui/skybluetech/button_default",
+                                "$hover_texture": "textures/ui/skybluetech/button_hovered",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    1,
+                                    1,
+                                    1
+                                ],
+                                "$label_font_scale_factor": 1.0,
+                                "$label_font_size": "large",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "Button",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                "$pressed_texture": "textures/ui/skybluetech/button_pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    12.0,
+                                    98.0
+                                ],
+                                "size": [
+                                    64.0,
+                                    18.0
+                                ],
+                                "layer": 2,
+                                "button_mappings": [],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "pressed_control": "pressed",
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ]
+                            }
+                        }
+                    ],
+                    "layer": 10,
+                    "size": [
+                        164,
+                        122
+                    ]
+                }
+            }
+        ]
+    },
+    "fluid_output_settings": {
+        "type": "panel",
+        "controls": [
+            {
+                "hint": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        22
+                    ],
+                    "size": [
+                        92,
+                        32
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.22,
+                        0.25,
+                        0.3
+                    ],
+                    "text": "点击彩色输出槽\n设置可输出的面\n可同时选择多个面",
+                    "text_alignment": "left"
+                }
+            },
+            {
+                "status": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        58
+                    ],
+                    "size": [
+                        92,
+                        22
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.35,
+                        0.38,
+                        0.44
+                    ],
+                    "font_scale_factor": 0.8,
+                    "text": "正在读取配置…",
+                    "text_alignment": "left"
+                }
+            }
+        ]
+    },
+    "fluid_pipe_settings": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            0,
+            0
+        ],
+        "size": [
+            162,
+            54
+        ],
+        "controls": [
+            {
+                "top_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "上",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        0
+                    ]
+                }
+            },
+            {
+                "left_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "左",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "front_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "前",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        18
+                    ]
+                }
+            },
+            {
+                "right_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "右",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        54,
+                        18
+                    ]
+                }
+            },
+            {
+                "back_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "后",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        72,
+                        18
+                    ]
+                }
+            },
+            {
+                "bottom_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "下",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        36
+                    ]
+                }
+            },
+            {
+                "legend_swatch_0": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        4
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.651,
+                                    0.835,
+                                    0.969
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_0": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        5
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输入"
+                }
+            },
+            {
+                "legend_swatch_1": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        17
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.969,
+                                    0.804,
+                                    0.58
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_1": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        18
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输出"
+                }
+            },
+            {
+                "legend_swatch_2": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        30
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.69,
+                                    0.69,
+                                    0.69
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_2": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        31
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "未连接"
+                }
+            },
+            {
+                "legend_note": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        44
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.44,
+                        0.44,
+                        0.44
+                    ],
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "点击面切换"
+                }
+            }
+        ]
+    },
+    "fluid_pipe_settings_indirectional": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            0,
+            0
+        ],
+        "size": [
+            162,
+            54
+        ],
+        "controls": [
+            {
+                "top_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "上",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        0
+                    ]
+                }
+            },
+            {
+                "west_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "西",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "south_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "南",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        18
+                    ]
+                }
+            },
+            {
+                "east_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "东",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        54,
+                        18
+                    ]
+                }
+            },
+            {
+                "north_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "北",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        72,
+                        18
+                    ]
+                }
+            },
+            {
+                "bottom_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "下",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        36
+                    ]
+                }
+            },
+            {
+                "legend_swatch_0": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        4
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.651,
+                                    0.835,
+                                    0.969
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_0": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        5
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输入"
+                }
+            },
+            {
+                "legend_swatch_1": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        17
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.969,
+                                    0.804,
+                                    0.58
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_1": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        18
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输出"
+                }
+            },
+            {
+                "legend_swatch_2": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        30
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.69,
+                                    0.69,
+                                    0.69
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_2": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        31
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "未连接"
+                }
+            },
+            {
+                "legend_note": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        44
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.44,
+                        0.44,
+                        0.44
+                    ],
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "点击面切换"
+                }
+            }
+        ]
+    },
+    "item_pipe_settings": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            0,
+            0
+        ],
+        "size": [
+            162,
+            54
+        ],
+        "controls": [
+            {
+                "top_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "上",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        0
+                    ]
+                }
+            },
+            {
+                "left_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "左",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "front_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "前",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        18
+                    ]
+                }
+            },
+            {
+                "right_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "右",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        54,
+                        18
+                    ]
+                }
+            },
+            {
+                "back_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "后",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        72,
+                        18
+                    ]
+                }
+            },
+            {
+                "bottom_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "下",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        36
+                    ]
+                }
+            },
+            {
+                "legend_swatch_0": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        4
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.651,
+                                    0.835,
+                                    0.969
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_0": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        5
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输入"
+                }
+            },
+            {
+                "legend_swatch_1": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        17
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.969,
+                                    0.804,
+                                    0.58
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_1": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        18
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输出"
+                }
+            },
+            {
+                "legend_swatch_2": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        30
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.69,
+                                    0.69,
+                                    0.69
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_2": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        31
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "未连接"
+                }
+            },
+            {
+                "legend_note": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        44
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.44,
+                        0.44,
+                        0.44
+                    ],
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "点击面切换"
+                }
+            }
+        ]
+    },
+    "item_pipe_settings_indirectional": {
+        "type": "panel",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "offset": [
+            0,
+            0
+        ],
+        "size": [
+            162,
+            54
+        ],
+        "controls": [
+            {
+                "top_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "上",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        0
+                    ]
+                }
+            },
+            {
+                "west_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "西",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "south_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "南",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        18
+                    ]
+                }
+            },
+            {
+                "east_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "东",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        54,
+                        18
+                    ]
+                }
+            },
+            {
+                "north_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "北",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        72,
+                        18
+                    ]
+                }
+            },
+            {
+                "bottom_set_btn@MachinePanelExPages.face_btn": {
+                    "$face_text": "下",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        36,
+                        36
+                    ]
+                }
+            },
+            {
+                "legend_swatch_0": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        4
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.651,
+                                    0.835,
+                                    0.969
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_0": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        5
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输入"
+                }
+            },
+            {
+                "legend_swatch_1": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        17
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.969,
+                                    0.804,
+                                    0.58
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_1": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        18
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "输出"
+                }
+            },
+            {
+                "legend_swatch_2": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        30
+                    ],
+                    "size": [
+                        9,
+                        9
+                    ],
+                    "layer": 2,
+                    "fill": true,
+                    "keep_ratio": false,
+                    "texture": "textures/ui/skybluetech/button_default",
+                    "controls": [
+                        {
+                            "fill": {
+                                "type": "image",
+                                "size": [
+                                    7,
+                                    7
+                                ],
+                                "layer": 1,
+                                "color": [
+                                    0.69,
+                                    0.69,
+                                    0.69
+                                ],
+                                "fill": true,
+                                "keep_ratio": false,
+                                "texture": "textures/ui/white_background"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "legend_label_2": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        118,
+                        31
+                    ],
+                    "layer": 2,
+                    "color": "$title_text_color",
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "未连接"
+                }
+            },
+            {
+                "legend_note": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        105,
+                        44
+                    ],
+                    "layer": 2,
+                    "color": [
+                        0.44,
+                        0.44,
+                        0.44
+                    ],
+                    "font_type": "default",
+                    "shadow": false,
+                    "text": "点击面切换"
                 }
             }
         ]

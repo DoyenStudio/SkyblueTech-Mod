@@ -11,12 +11,6 @@
             {
                 "frame": {
                     "type": "image",
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -244,12 +238,6 @@
                         {
                             "bg": {
                                 "type": "image",
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
                                 "texture": "textures/ui/skybluetech/bg_frame_01"
                             }
                         }
@@ -413,12 +401,6 @@
                             "bg": {
                                 "type": "image",
                                 "layer": 1,
-                                "nineslice_size": [
-                                    2.0,
-                                    2.0,
-                                    2.0,
-                                    2.0
-                                ],
                                 "texture": "textures/ui/skybluetech/bg_frame_01"
                             }
                         }
@@ -633,12 +615,6 @@
                         20.0
                     ],
                     "layer": 2,
-                    "nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "texture": "textures/ui/skybluetech/frame_empty_slim"
                 }
             },
@@ -971,16 +947,11 @@
                         0
                     ],
                     "$label_text": "+",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -1031,16 +1002,11 @@
             },
             {
                 "settings_view@common.scrolling_panel": {
+                    "$background_nineslice_size|default": 0,
                     "$background_nine_slice_buttom": 0,
                     "$background_nine_slice_left": 0,
                     "$background_nine_slice_right": 0,
                     "$background_nine_slice_top": 0,
-                    "$background_nineslice_size": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
                     "$box_nine_slice_buttom": 0,
                     "$box_nine_slice_left": 0,
                     "$box_nine_slice_right": 0,

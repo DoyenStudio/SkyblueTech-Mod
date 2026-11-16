@@ -6,7 +6,7 @@
             18.0
         ],
         "layer": 1,
-        "texture": "textures/ui/skybluetech/slot_inscribing_template"
+        "texture": "textures/ui/skybluetech/slot_cell_overlay/inscribing_template"
     },
     "item_slot_with_visual@netease_container.custom_grid_item": {
         "$cell_overlay_ref|default": "TemplateAssemblerUI.item_visual"

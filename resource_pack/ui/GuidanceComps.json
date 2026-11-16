@@ -11,12 +11,6 @@
                 "bg": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },

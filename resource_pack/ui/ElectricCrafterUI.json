@@ -87,7 +87,7 @@
             18.0
         ],
         "layer": 1,
-        "texture": "textures/ui/skybluetech/crafting_template_slot"
+        "texture": "textures/ui/skybluetech/slot_cell_overlay/crafting_template"
     },
     "item_slot_with_preview@netease_container.custom_grid_item": {
         "$cell_overlay_ref|default": "ElectricCrafterUI.crafting_preview_visual"

@@ -217,12 +217,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "nineslice_size": [
-                        2.0,
-                        2.0,
-                        2.0,
-                        2.0
-                    ],
                     "texture": "textures/ui/skybluetech/bg_frame_01"
                 }
             },

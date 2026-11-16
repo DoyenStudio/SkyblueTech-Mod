@@ -57,6 +57,12 @@ RegisterSourceDescription(
 )
 
 RegisterSourceDescription(
+    {CategoryType.ITEM: [id_enum.Machinery.SHOCKER]},
+    "电击器",
+    "支持六向放置，无操作界面；每台储存 16000 RF，仅相对背面和顶部输入能量，遇水流会被摧毁。\n两台正面相对、中间间隔 1～3 格且没有实心方块时配对。任一端收到红石上升沿时电击区域内生物；红石导通期间也会电击新进入的生物。\n仅电击当前生命值低于 40 的生物，使其永久失去自主移动和攻击能力，仍可被传送带等外力推动。每个目标消耗 100 × 当前生命值 × 间隔格数 RF，双方各承担一半且都必须充足。缺电时仅产生微弱电火花并造成一次 0 点伤害；留在区域内不会因补电自动重试。",
+)
+
+RegisterSourceDescription(
     {CategoryType.FLUID: [id_enum.DeepLava.DEEPSLATE_LAVA]},
     "深层熔岩",
     (

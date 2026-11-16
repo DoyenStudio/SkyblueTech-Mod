@@ -53,16 +53,11 @@
             },
             {
                 "vein_blocks@common.scrolling_panel": {
+                    "$background_nineslice_size|default": 0,
                     "$background_nine_slice_buttom": 0,
                     "$background_nine_slice_left": 0,
                     "$background_nine_slice_right": 0,
                     "$background_nine_slice_top": 0,
-                    "$background_nineslice_size": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
                     "$box_nine_slice_buttom": 0,
                     "$box_nine_slice_left": 0,
                     "$box_nine_slice_right": 0,
@@ -149,16 +144,11 @@
                         0
                     ],
                     "$label_text": "添加方块",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "#ObjUpVeinMinerSettingsUI.add_block_btn",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -227,16 +217,11 @@
                         0
                     ],
                     "$label_text": "移除选中",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "#ObjUpVeinMinerSettingsUI.del_block_btn",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -322,16 +307,11 @@
                         0
                     ],
                     "$label_text": "Button",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "#ObjUpVeinMinerSettingsUI.section_btn",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -397,12 +377,6 @@
                     "color": [
                         0.0,
                         0.3333333333333333,
-                        1.0
-                    ],
-                    "nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
                         1.0
                     ],
                     "texture": "textures/ui/skybluetech/border_line",

@@ -11,12 +11,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -56,7 +50,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -120,12 +114,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -329,12 +317,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -359,7 +341,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -388,7 +370,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -452,12 +434,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -586,12 +562,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -752,12 +722,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -782,7 +746,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -811,7 +775,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -875,12 +839,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -905,7 +863,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -934,7 +892,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -951,7 +909,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -968,7 +926,7 @@
                                     {
                                         "2@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output2",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -985,7 +943,7 @@
                                     {
                                         "3@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output3",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1123,12 +1081,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -1168,7 +1120,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_70",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_70",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1212,7 +1164,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_34",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1229,7 +1181,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_34",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1261,7 +1213,7 @@
                                     {
                                         "3@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output3",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_34",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_34",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1340,12 +1292,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -1385,7 +1331,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1402,7 +1348,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1555,12 +1501,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -1642,7 +1582,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1659,7 +1599,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1723,12 +1663,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -1768,7 +1702,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1859,12 +1793,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -1904,7 +1832,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -1995,12 +1923,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -2040,7 +1962,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -2057,7 +1979,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -2086,7 +2008,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -2150,12 +2072,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -2195,7 +2111,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -2212,7 +2128,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -2303,12 +2219,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -2375,7 +2285,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -2441,12 +2351,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -2956,12 +2860,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             }
@@ -2979,12 +2877,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -3115,12 +3007,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -3160,7 +3046,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_70",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_70",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3189,7 +3075,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3206,7 +3092,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3223,7 +3109,7 @@
                                     {
                                         "2@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output2",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3240,7 +3126,7 @@
                                     {
                                         "3@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output3",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3257,7 +3143,7 @@
                                     {
                                         "4@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output4",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3274,7 +3160,7 @@
                                     {
                                         "5@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output5",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3338,12 +3224,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -3410,7 +3290,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3572,12 +3452,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             }
@@ -3595,12 +3469,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -3640,7 +3508,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -3793,12 +3661,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -3959,12 +3821,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -4004,7 +3860,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -4110,12 +3966,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -4182,7 +4032,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -4246,12 +4096,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -4437,12 +4281,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -4482,7 +4320,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -4526,7 +4364,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -4590,12 +4428,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -4679,7 +4511,7 @@
                         },
                         {
                             "flame@SkybluePanelLib.burn_flame": {
-                                "$mask_img": "textures/ui/skybluetech/flame_redstone_mask",
+                                "$mask_img": "textures/ui/skybluetech/progress/flame_redstone_mask",
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "layer": 1,
@@ -4740,12 +4572,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -4904,12 +4730,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -4949,7 +4769,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -4966,7 +4786,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5010,7 +4830,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5116,12 +4936,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -5161,7 +4975,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5205,7 +5019,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5326,12 +5140,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -5622,12 +5430,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -5667,7 +5469,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5684,7 +5486,7 @@
                                     {
                                         "2@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input2",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5713,7 +5515,7 @@
                                     {
                                         "0@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output0",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5730,7 +5532,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -5794,12 +5596,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -5901,12 +5697,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -5961,7 +5751,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.input1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -6005,7 +5795,7 @@
                                     {
                                         "1@$recipe_fluid_slot": {
                                             "$binding_name_prefix": "mei_ui.recipe.output1",
-                                            "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                                             "anchor_from": "top_left",
                                             "anchor_to": "top_left",
                                             "layer": -5,
@@ -6113,12 +5903,6 @@
                 "background": {
                     "type": "image",
                     "layer": 1,
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             }
@@ -6180,7 +5964,6 @@
                     "layer": 3,
                     "fill": true,
                     "keep_ratio": false,
-                    "nineslice_size": 1,
                     "texture": "textures/ui/skybluetech/frame_empty_slim"
                 }
             },

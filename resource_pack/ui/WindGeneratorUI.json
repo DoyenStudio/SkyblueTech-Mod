@@ -8,7 +8,7 @@
         "layer": 1,
         "clip_direction": "left",
         "clip_ratio": 0.0,
-        "texture": "textures/ui/skybluetech/slot_paddle_bg"
+        "texture": "textures/ui/skybluetech/slot_cell_overlay/paddle"
     },
     "content": {
         "type": "panel",
@@ -25,7 +25,6 @@
                         24
                     ],
                     "layer": 1,
-                    "nineslice_size": 1,
                     "texture": "textures/ui/skybluetech/info_bg",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",

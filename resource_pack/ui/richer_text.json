@@ -156,7 +156,7 @@
                                     0.0,
                                     0.0
                                 ],
-                                "texture": "textures/ui/skybluetech/waveline",
+                                "texture": "textures/ui/skybluetech/guidance/waveline",
                                 "tiled": "x"
                             }
                         }

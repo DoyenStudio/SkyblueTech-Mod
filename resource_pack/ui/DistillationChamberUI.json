@@ -5,7 +5,7 @@
             {
                 "lower_fluid@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -61,7 +61,7 @@
             {
                 "upper_fluid@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_52",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -100,7 +100,6 @@
                         54
                     ],
                     "layer": 1,
-                    "nineslice_size": 1,
                     "texture": "textures/ui/skybluetech/info_bg",
                     "controls": [
                         {

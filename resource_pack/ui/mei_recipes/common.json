@@ -26,7 +26,7 @@
     },
     "fluid_slot@mei_common.slot_base": {
         "$binding_name_prefix|default": "mei_ui.recipe.input0",
-        "$tank_ticks|default": "textures/ui/skybluetech/tank_ticks_52",
+        "$tank_ticks|default": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
         "size": [
             18,
             54
@@ -147,7 +147,6 @@
                 "frame": {
                     "type": "image",
                     "texture": "textures/ui/skybluetech/frame_empty_slim",
-                    "nineslice_size": 1,
                     "layer": 5,
                     "keep_ratio": false,
                     "fill": true

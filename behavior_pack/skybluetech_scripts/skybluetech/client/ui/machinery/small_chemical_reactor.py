@@ -10,7 +10,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
 )
 
-from ..machinery_extra_pages import FluidPipeSettingsPage
+from ..machinery_extra_pages import FluidPipeSettingsPage, FluidOutputSettingsPage
 from ..recipe_checker import AsRecipeCheckerBtn
 from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 from .utils import FluidDisplayer, UpdatePowerBar, UpdateProgress
@@ -18,7 +18,8 @@ from .utils import FluidDisplayer, UpdatePowerBar, UpdateProgress
 
 @RegistToolDeltaScreen("SmallChemicalReactorUI.main", is_proxy=True)
 class SmallChemicalReactorUI(MachinePanelUIProxyEx):
-    available_extra_pages = (FluidPipeSettingsPage,)
+    available_extra_pages = (FluidPipeSettingsPage, FluidOutputSettingsPage)
+    fluid_output_slot_paths = {2: "fluid2"}
     definition = small_chemical_reactor
     STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_tout_", "ring_out_")}
 

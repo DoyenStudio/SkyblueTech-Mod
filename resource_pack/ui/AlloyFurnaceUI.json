@@ -2,7 +2,7 @@
     "slot_ingot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/skybluetech/slot_ingot"
+        "texture": "textures/ui/skybluetech/slot_cell_overlay/ingot"
     },
     "content": {
         "type": "panel",

@@ -120,7 +120,6 @@
                     ],
                     "layer": 1,
                     "fill": true,
-                    "nineslice_size": 1,
                     "texture": "textures/ui/skybluetech/info_bg",
                     "controls": [
                         {

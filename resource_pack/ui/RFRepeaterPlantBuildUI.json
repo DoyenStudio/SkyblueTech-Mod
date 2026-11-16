@@ -127,16 +127,11 @@
                         0
                     ],
                     "$label_text": "",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/skybluetech/red_button_pressed",
                     "$texture_layer": 2,
@@ -218,16 +213,11 @@
                         0
                     ],
                     "$label_text": "完成接线",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1.0,
-                        1.0,
-                        1.0,
-                        1.0
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,

@@ -5,10 +5,11 @@ from skybluetech_scripts.skybluetech.common.machinery_def.small_chemical_reactor
 )
 from skybluetech_scripts.skybluetech.server.machinery.basic import Processor, MultiFluidContainer
 from skybluetech_scripts.skybluetech.server.machinery.core import RegisterMachine
+from .basic.fluid_output_faces import FluidOutputFaces
 
 
 @RegisterMachine
-class SmallChemicalReactor(Processor, MultiFluidContainer):
+class SmallChemicalReactor(FluidOutputFaces, Processor, MultiFluidContainer):
     block_name = Machinery.SMALL_CHEMICAL_REACTOR
     store_rf_max = STORE_RF_MAX
     process_item = True

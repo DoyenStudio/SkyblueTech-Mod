@@ -110,16 +110,11 @@
                                 "$font_scale_factor": 1.0,
                                 "$font_size": "normal",
                                 "$is_new_nine_slice": false,
+                                "$nineslice_size|default": 0,
                                 "$nine_slice_buttom": 0,
                                 "$nine_slice_left": 0,
                                 "$nine_slice_right": 0,
                                 "$nine_slice_top": 0,
-                                "$nineslice_size": [
-                                    1.0,
-                                    1.0,
-                                    1.0,
-                                    1.0
-                                ],
                                 "$place_holder_text": "搜索物品..",
                                 "$place_holder_text_color": [
                                     0.796078431372549,
@@ -454,16 +449,11 @@
                                 "$font_scale_factor": 1,
                                 "$font_size": "normal",
                                 "$is_new_nine_slice": false,
+                                "$nineslice_size|default": 0,
                                 "$nine_slice_buttom": 0,
                                 "$nine_slice_left": 0,
                                 "$nine_slice_right": 0,
                                 "$nine_slice_top": 0,
-                                "$nineslice_size": [
-                                    1,
-                                    1,
-                                    1,
-                                    1
-                                ],
                                 "$place_holder_text": "搜索收藏..",
                                 "$place_holder_text_color": [
                                     0.796078431372549,

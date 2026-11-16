@@ -38,12 +38,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
@@ -198,12 +192,6 @@
                         "default",
                         "100%cm+25px"
                     ],
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg",
                     "controls": [
                         {
@@ -265,7 +253,7 @@
                         2,
                         2
                     ],
-                    "texture": "textures/ui/skybluetech/grid_content"
+                    "texture": "textures/ui/skybluetech/description_title_bg"
                 }
             }
         ]
@@ -316,12 +304,6 @@
             {
                 "bg": {
                     "type": "image",
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ],
                     "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },

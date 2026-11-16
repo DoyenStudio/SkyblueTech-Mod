@@ -11,8 +11,8 @@
                 "close_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/skybluetech/guidance_bg_right",
-                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_right",
+                    "$default_texture": "textures/ui/skybluetech/guidance/bg_right",
+                    "$hover_texture": "textures/ui/skybluetech/guidance/bg_right",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -27,18 +27,13 @@
                         0
                     ],
                     "$label_text": "x",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_right",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance/bg_right",
                     "$texture_layer": 2,
                     "anchor_from": "top_right",
                     "anchor_to": "top_left",
@@ -84,7 +79,7 @@
                                 "layer": 3,
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
-                                "texture": "textures/ui/skybluetech/guidance_exit_icon"
+                                "texture": "textures/ui/skybluetech/guidance/exit_icon"
                             }
                         }
                     ]
@@ -94,8 +89,8 @@
                 "prev_page_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/skybluetech/guidance_bg_left",
-                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_left",
+                    "$default_texture": "textures/ui/skybluetech/guidance/bg_left",
+                    "$hover_texture": "textures/ui/skybluetech/guidance/bg_left",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -110,18 +105,13 @@
                         0
                     ],
                     "$label_text": "<-",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_left",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance/bg_left",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_left",
                     "anchor_to": "bottom_right",
@@ -171,7 +161,7 @@
                                 "layer": 3,
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
-                                "texture": "textures/ui/skybluetech/guidance_prevpage_icon"
+                                "texture": "textures/ui/skybluetech/guidance/prevpage_icon"
                             }
                         }
                     ]
@@ -181,8 +171,8 @@
                 "next_page_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/skybluetech/guidance_bg_right",
-                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_right",
+                    "$default_texture": "textures/ui/skybluetech/guidance/bg_right",
+                    "$hover_texture": "textures/ui/skybluetech/guidance/bg_right",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -197,18 +187,13 @@
                         0
                     ],
                     "$label_text": "->",
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_right",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance/bg_right",
                     "$texture_layer": 2,
                     "anchor_from": "bottom_right",
                     "anchor_to": "bottom_left",
@@ -258,7 +243,7 @@
                                 "layer": 3,
                                 "clip_direction": "left",
                                 "clip_ratio": 0.0,
-                                "texture": "textures/ui/skybluetech/guidance_nextpage_icon"
+                                "texture": "textures/ui/skybluetech/guidance/nextpage_icon"
                             }
                         }
                     ]
@@ -268,8 +253,8 @@
                 "back_btn@common.button": {
                     "type": "button",
                     "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/skybluetech/guidance_bg_left",
-                    "$hover_texture": "textures/ui/skybluetech/guidance_bg_left",
+                    "$default_texture": "textures/ui/skybluetech/guidance/bg_left",
+                    "$hover_texture": "textures/ui/skybluetech/guidance/bg_left",
                     "$is_new_nine_slice": false,
                     "$label_color": [
                         0.0,
@@ -283,18 +268,13 @@
                         0,
                         0
                     ],
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        4.0,
-                        4.0,
-                        4.0,
-                        4.0
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
-                    "$pressed_texture": "textures/ui/skybluetech/guidance_bg_left",
+                    "$pressed_texture": "textures/ui/skybluetech/guidance/bg_left",
                     "$texture_layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_right",
@@ -338,7 +318,7 @@
                                     "56%+0px"
                                 ],
                                 "layer": 2,
-                                "texture": "textures/ui/skybluetech/guidance_back_icon"
+                                "texture": "textures/ui/skybluetech/guidance/back_icon"
                             }
                         }
                     ]
@@ -359,7 +339,7 @@
                         4.0,
                         4.0
                     ],
-                    "texture": "textures/ui/skybluetech/guidance_bg"
+                    "texture": "textures/ui/skybluetech/guidance/bg"
                 }
             },
             {

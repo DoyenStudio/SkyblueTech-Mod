@@ -9,11 +9,12 @@ from ...common.machinery_def.magma_centrifuge import (
     recipes as Recipes,
 )
 from .basic import MultiFluidContainer, Processor
+from .basic.fluid_output_faces import FluidOutputFaces
 from .core import RegisterMachine
 
 
 @RegisterMachine
-class MagmaCentrifuge(Processor, MultiFluidContainer):
+class MagmaCentrifuge(FluidOutputFaces, Processor, MultiFluidContainer):
     block_name = Machinery.MAGMA_CENTRIFUGE
     store_rf_max = STORE_RF_MAX
     dump_progress_to_block_entity_data = True
@@ -22,6 +23,7 @@ class MagmaCentrifuge(Processor, MultiFluidContainer):
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES
     fluid_input_slots = (0,)
     fluid_output_slots = (1, 2, 3, 4, 5, 6)
+    fluid_io_mode = (-1, -1, -1, -1, -1, -1)
     upgrade_slot_start = 0
     upgrade_slots = 4
 

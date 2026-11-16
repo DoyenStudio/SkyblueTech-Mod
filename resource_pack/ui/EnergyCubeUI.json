@@ -382,16 +382,11 @@
                                                 0
                                             ],
                                             "$label_text": "Button",
+                                            "$nineslice_size|default": 0,
                                             "$nine_slice_buttom": 0,
                                             "$nine_slice_left": 0,
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
-                                            "$nineslice_size": [
-                                                1,
-                                                1,
-                                                1,
-                                                1
-                                            ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
@@ -513,16 +508,11 @@
                                                 0
                                             ],
                                             "$label_text": "Button",
+                                            "$nineslice_size|default": 0,
                                             "$nine_slice_buttom": 0,
                                             "$nine_slice_left": 0,
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
-                                            "$nineslice_size": [
-                                                1,
-                                                1,
-                                                1,
-                                                1
-                                            ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
@@ -644,16 +634,11 @@
                                                 0
                                             ],
                                             "$label_text": "Button",
+                                            "$nineslice_size|default": 0,
                                             "$nine_slice_buttom": 0,
                                             "$nine_slice_left": 0,
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
-                                            "$nineslice_size": [
-                                                1,
-                                                1,
-                                                1,
-                                                1
-                                            ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
@@ -775,16 +760,11 @@
                                                 0
                                             ],
                                             "$label_text": "Button",
+                                            "$nineslice_size|default": 0,
                                             "$nine_slice_buttom": 0,
                                             "$nine_slice_left": 0,
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
-                                            "$nineslice_size": [
-                                                1,
-                                                1,
-                                                1,
-                                                1
-                                            ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
@@ -906,16 +886,11 @@
                                                 0
                                             ],
                                             "$label_text": "Button",
+                                            "$nineslice_size|default": 0,
                                             "$nine_slice_buttom": 0,
                                             "$nine_slice_left": 0,
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
-                                            "$nineslice_size": [
-                                                1,
-                                                1,
-                                                1,
-                                                1
-                                            ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,
@@ -1037,16 +1012,11 @@
                                                 0
                                             ],
                                             "$label_text": "Button",
+                                            "$nineslice_size|default": 0,
                                             "$nine_slice_buttom": 0,
                                             "$nine_slice_left": 0,
                                             "$nine_slice_right": 0,
                                             "$nine_slice_top": 0,
-                                            "$nineslice_size": [
-                                                1,
-                                                1,
-                                                1,
-                                                1
-                                            ],
                                             "$pressed_button_name": "%netease_editor_template_namespace.click",
                                             "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                                             "$texture_layer": 2,

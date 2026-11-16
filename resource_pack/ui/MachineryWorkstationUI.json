@@ -17,7 +17,7 @@
     "pincer_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/skybluetech/slot_pincer_img"
+        "texture": "textures/ui/skybluetech/slot_cell_overlay/pincer"
     },
     "recipes_grid": {
         "type": "grid",
@@ -223,7 +223,7 @@
     "wrench_slot_img": {
         "type": "image",
         "layer": 1,
-        "texture": "textures/ui/skybluetech/slot_wrench_img"
+        "texture": "textures/ui/skybluetech/slot_cell_overlay/wrench"
     },
     "content": {
         "type": "panel",
@@ -358,16 +358,11 @@
                         0,
                         0
                     ],
+                    "$nineslice_size|default": 0,
                     "$nine_slice_buttom": 0,
                     "$nine_slice_left": 0,
                     "$nine_slice_right": 0,
                     "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
                     "$pressed_button_name": "%netease_editor_template_namespace.click",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -550,7 +545,6 @@
                                 "layer": 1,
                                 "keep_ratio": false,
                                 "texture": "textures/ui/skybluetech/info_bg",
-                                "nineslice_size": 1,
                                 "fill": true
                             }
                         },

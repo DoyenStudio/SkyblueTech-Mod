@@ -73,16 +73,11 @@
                         {
                             "options_scroll@common.scrolling_panel": {
                                 "$allow_scrolling_even_when_content_fits": false,
+                                "$background_nineslice_size|default": 0,
                                 "$background_nine_slice_buttom": 0,
                                 "$background_nine_slice_left": 0,
                                 "$background_nine_slice_right": 0,
                                 "$background_nine_slice_top": 0,
-                                "$background_nineslice_size": [
-                                    1,
-                                    1,
-                                    1,
-                                    1
-                                ],
                                 "$box_nine_slice_buttom": 0,
                                 "$box_nine_slice_left": 0,
                                 "$box_nine_slice_right": 0,
@@ -152,11 +147,11 @@
         "$nine_slice_left": 0,
         "$nine_slice_right": 0,
         "$nine_slice_top": 0,
-        "$nineslice_size": [
-            1.0,
-            1.0,
-            1.0,
-            1.0
+        "$nineslice_size|default": [
+            0,
+            0,
+            0,
+            0
         ],
         "$pressed_texture": "$toggle_pressed_texture",
         "$texture_layer": 2,
@@ -268,12 +263,7 @@
                     "layer": 3,
                     "alpha": 0.5,
                     "visible": false,
-                    "nineslice_size": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
+                    "nineslice_size": "$nineslice_size",
                     "texture": "$option_pressed_texture"
                 }
             },
@@ -362,16 +352,11 @@
                                     {
                                         "options_scroll@common.scrolling_panel": {
                                             "$allow_scrolling_even_when_content_fits": false,
+                                            "$background_nineslice_size|default": 0,
                                             "$background_nine_slice_buttom": 0,
                                             "$background_nine_slice_left": 0,
                                             "$background_nine_slice_right": 0,
                                             "$background_nine_slice_top": 0,
-                                            "$background_nineslice_size": [
-                                                1,
-                                                1,
-                                                1,
-                                                1
-                                            ],
                                             "$box_nine_slice_buttom": 0,
                                             "$box_nine_slice_left": 0,
                                             "$box_nine_slice_right": 0,

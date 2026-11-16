@@ -72,13 +72,7 @@
                         "100%"
                     ],
                     "layer": 1,
-                    "texture": "textures/ui/skybluetech/rect_panel_bg",
-                    "nineslice_size": [
-                        2,
-                        2,
-                        2,
-                        2
-                    ]
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
                 }
             },
             {

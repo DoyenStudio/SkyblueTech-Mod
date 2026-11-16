@@ -1,10 +1,303 @@
 {
+    "content": {
+        "type": "panel",
+        "controls": [
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        72
+                    ]
+                }
+            },
+            {
+                "material_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "AssemblerUI.tool_upgrade_img",
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_in_material_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "push_btn@common.button": {
+                    "type": "button",
+                    "$control_alpha": 1.0,
+                    "$default_texture": "textures/ui/skybluetech/button_default",
+                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
+                    "$is_new_nine_slice": false,
+                    "$label_color": [
+                        1,
+                        1,
+                        1
+                    ],
+                    "$label_font_scale_factor": 1.0,
+                    "$label_font_size": "large",
+                    "$label_layer": 3,
+                    "$label_offset": [
+                        0.0,
+                        0.0
+                    ],
+                    "$label_text": "",
+                    "$nineslice_size|default": 0,
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
+                    "$pressed_button_name": "",
+                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
+                    "$texture_layer": 2,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "priority": 100,
+                    "button_mappings": [
+                        {
+                            "to_button_id": "$pressed_button_name",
+                            "from_button_id": "button.menu_select",
+                            "mapping_type": "pressed"
+                        }
+                    ],
+                    "default_control": "default",
+                    "hover_control": "hover",
+                    "is_handle_button_move_event": true,
+                    "pressed_control": "pressed",
+                    "bindings": [
+                        {
+                            "binding_type": "collection_details",
+                            "binding_collection_name": "",
+                            "binding_condition": "always_when_visible"
+                        }
+                    ],
+                    "controls": [
+                        {
+                            "default@netease_editor_template_namespace.default": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "hover@netease_editor_template_namespace.hover": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "pressed@netease_editor_template_namespace.pressed": {
+                                "fill": true
+                            }
+                        },
+                        {
+                            "button_label@netease_editor_template_namespace.button_label": {}
+                        },
+                        {
+                            "image": {
+                                "type": "image",
+                                "anchor_from": "center",
+                                "anchor_to": "center",
+                                "size": [
+                                    16,
+                                    16
+                                ],
+                                "layer": 2,
+                                "texture": "textures/ui/skybluetech/tool_upgrade_push"
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "input_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        53
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_in_input_slot@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        28,
+                        53
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "upgraders_view@common.scrolling_panel": {
+                    "$background_nine_slice_buttom": 0,
+                    "$background_nine_slice_left": 0,
+                    "$background_nine_slice_right": 0,
+                    "$background_nine_slice_top": 0,
+                    "$background_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$box_nine_slice_buttom": 0,
+                    "$box_nine_slice_left": 0,
+                    "$box_nine_slice_right": 0,
+                    "$box_nine_slice_top": 0,
+                    "$box_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "$collection_name": "assembler_upgraders_list",
+                    "$is_background_nine_slice": false,
+                    "$is_box_nine_slice": false,
+                    "$is_track_nine_slice": false,
+                    "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
+                    "$scroll_background_texture": "textures/ui/ScrollRail",
+                    "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
+                    "$scroll_box_texture": "textures/ui/newTouchScrollBox",
+                    "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
+                    "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
+                    "$scroll_track_texture": "textures/ui/ScrollRail",
+                    "$scrolling_content": "AssemblerUI.upgraders",
+                    "$show_background": true,
+                    "$track_nine_slice_buttom": 0,
+                    "$track_nine_slice_left": 0,
+                    "$track_nine_slice_right": 0,
+                    "$track_nine_slice_top": 0,
+                    "$track_nineslice_size": [
+                        0,
+                        0,
+                        0,
+                        0
+                    ],
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        52,
+                        17
+                    ],
+                    "size": [
+                        117,
+                        72
+                    ]
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$content_size": [
+            162,
+            72
+        ],
+        "$has_tabs": false,
+        "$has_upgrades": true,
+        "$machine_content": "AssemblerUI.content",
+        "$panel_size": [
+            176,
+            184
+        ],
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": false,
+        "$title_text": "装配站",
+        "$upgrade_slot0": 2,
+        "$upgrade_slot1": 3,
+        "$upgrade_slot2": 4,
+        "$upgrade_slot3": 5
+    },
+    "namespace": "AssemblerUI",
     "tool_upgrade_img": {
         "type": "image",
         "layer": 1,
         "clip_direction": "left",
         "clip_ratio": 0.0,
-        "texture": "textures/ui/skybluetech/slot_tool_upgrader_bg"
+        "texture": "textures/ui/skybluetech/slot_cell_overlay/object_upgrader"
     },
     "upgrader_view_single": {
         "type": "panel",
@@ -33,16 +326,11 @@
                         0
                     ],
                     "$label_text": "",
-                    "$nine_slice_buttom": 2,
-                    "$nine_slice_left": 2,
-                    "$nine_slice_right": 2,
-                    "$nine_slice_top": 2,
-                    "$nineslice_size": [
-                        4,
-                        4,
-                        4,
-                        4
-                    ],
+                    "$nineslice_size|default": 0,
+                    "$nine_slice_buttom": 0,
+                    "$nine_slice_left": 0,
+                    "$nine_slice_right": 0,
+                    "$nine_slice_top": 0,
                     "$pressed_button_name": "#upgrade_arg_click",
                     "$pressed_texture": "textures/ui/skybluetech/button_pressed",
                     "$texture_layer": 2,
@@ -155,303 +443,5 @@
                 "binding_name": "#assembler.upgraders"
             }
         ]
-    },
-    "content": {
-        "type": "panel",
-        "controls": [
-            {
-                "power_bar@SkybluePanelLib.energy_meter": {
-                    "layer": 1,
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        7,
-                        17
-                    ],
-                    "size": [
-                        12,
-                        72
-                    ]
-                }
-            },
-            {
-                "ring_energy@SkybluePanelLib.status_ring": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        7,
-                        17
-                    ],
-                    "size": [
-                        12,
-                        72
-                    ]
-                }
-            },
-            {
-                "material_slot": {
-                    "type": "stack_panel",
-                    "offset": [
-                        28,
-                        17
-                    ],
-                    "size": [
-                        18,
-                        18
-                    ],
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "$cell_overlay_ref|default": "AssemblerUI.tool_upgrade_img",
-                                "collection_index": 1
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1
-                }
-            },
-            {
-                "ring_in_material_slot@SkybluePanelLib.status_ring": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        28,
-                        17
-                    ],
-                    "size": [
-                        18,
-                        18
-                    ]
-                }
-            },
-            {
-                "push_btn@common.button": {
-                    "type": "button",
-                    "$control_alpha": 1.0,
-                    "$default_texture": "textures/ui/skybluetech/button_default",
-                    "$hover_texture": "textures/ui/skybluetech/button_hovered",
-                    "$is_new_nine_slice": false,
-                    "$label_color": [
-                        1,
-                        1,
-                        1
-                    ],
-                    "$label_font_scale_factor": 1.0,
-                    "$label_font_size": "large",
-                    "$label_layer": 3,
-                    "$label_offset": [
-                        0.0,
-                        0.0
-                    ],
-                    "$label_text": "",
-                    "$nine_slice_buttom": 0,
-                    "$nine_slice_left": 0,
-                    "$nine_slice_right": 0,
-                    "$nine_slice_top": 0,
-                    "$nineslice_size": [
-                        1,
-                        1,
-                        1,
-                        1
-                    ],
-                    "$pressed_button_name": "",
-                    "$pressed_texture": "textures/ui/skybluetech/button_pressed",
-                    "$texture_layer": 2,
-                    "offset": [
-                        28,
-                        35
-                    ],
-                    "size": [
-                        18,
-                        18
-                    ],
-                    "priority": 100,
-                    "button_mappings": [
-                        {
-                            "to_button_id": "$pressed_button_name",
-                            "from_button_id": "button.menu_select",
-                            "mapping_type": "pressed"
-                        }
-                    ],
-                    "default_control": "default",
-                    "hover_control": "hover",
-                    "is_handle_button_move_event": true,
-                    "pressed_control": "pressed",
-                    "bindings": [
-                        {
-                            "binding_type": "collection_details",
-                            "binding_collection_name": "",
-                            "binding_condition": "always_when_visible"
-                        }
-                    ],
-                    "controls": [
-                        {
-                            "default@netease_editor_template_namespace.default": {
-                                "fill": true
-                            }
-                        },
-                        {
-                            "hover@netease_editor_template_namespace.hover": {
-                                "fill": true
-                            }
-                        },
-                        {
-                            "pressed@netease_editor_template_namespace.pressed": {
-                                "fill": true
-                            }
-                        },
-                        {
-                            "button_label@netease_editor_template_namespace.button_label": {}
-                        },
-                        {
-                            "image": {
-                                "type": "image",
-                                "layer": 2,
-                                "texture": "textures/ui/skybluetech/tool_upgrade_push",
-                                "size": [
-                                    16,
-                                    16
-                                ],
-                                "anchor_from": "center",
-                                "anchor_to": "center"
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
-                }
-            },
-            {
-                "input_slot": {
-                    "type": "stack_panel",
-                    "offset": [
-                        28,
-                        53
-                    ],
-                    "size": [
-                        18,
-                        18
-                    ],
-                    "collection_name": "netease_container",
-                    "controls": [
-                        {
-                            "slot@netease_container.custom_grid_item": {
-                                "collection_index": 0
-                            }
-                        }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "layer": 1
-                }
-            },
-            {
-                "ring_in_input_slot@SkybluePanelLib.status_ring": {
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left",
-                    "offset": [
-                        28,
-                        53
-                    ],
-                    "size": [
-                        18,
-                        18
-                    ]
-                }
-            },
-            {
-                "upgraders_view@common.scrolling_panel": {
-                    "$background_nine_slice_buttom": 0,
-                    "$background_nine_slice_left": 0,
-                    "$background_nine_slice_right": 0,
-                    "$background_nine_slice_top": 0,
-                    "$background_nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "$box_nine_slice_buttom": 0,
-                    "$box_nine_slice_left": 0,
-                    "$box_nine_slice_right": 0,
-                    "$box_nine_slice_top": 0,
-                    "$box_nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "$collection_name": "assembler_upgraders_list",
-                    "$is_background_nine_slice": false,
-                    "$is_box_nine_slice": false,
-                    "$is_track_nine_slice": false,
-                    "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                    "$scroll_background_texture": "textures/ui/ScrollRail",
-                    "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
-                    "$scroll_box_texture": "textures/ui/newTouchScrollBox",
-                    "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
-                    "$scroll_track_image_control": "netease_editor_template_namespace.scroll_track_image",
-                    "$scroll_track_texture": "textures/ui/ScrollRail",
-                    "$scrolling_content": "AssemblerUI.upgraders",
-                    "$show_background": true,
-                    "$track_nine_slice_buttom": 0,
-                    "$track_nine_slice_left": 0,
-                    "$track_nine_slice_right": 0,
-                    "$track_nine_slice_top": 0,
-                    "$track_nineslice_size": [
-                        0,
-                        0,
-                        0,
-                        0
-                    ],
-                    "offset": [
-                        52,
-                        17
-                    ],
-                    "size": [
-                        117,
-                        72
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
-                }
-            },
-            {
-                "machine_label": {
-                    "type": "label",
-                    "text": "",
-                    "visible": false,
-                    "size": [
-                        0,
-                        0
-                    ],
-                    "layer": 1
-                }
-            }
-        ]
-    },
-    "main@common.inventory_screen_common": {
-        "$screen_content": "SkybluePanelLib.machine_screen",
-        "$machine_content": "AssemblerUI.content",
-        "$panel_size": [
-            176,
-            184
-        ],
-        "$content_size": [
-            162,
-            72
-        ],
-        "$title_text": "装配站",
-        "$has_tabs": false,
-        "$has_upgrades": true,
-        "$show_led": false,
-        "$upgrade_slot0": 2,
-        "$upgrade_slot1": 3,
-        "$upgrade_slot2": 4,
-        "$upgrade_slot3": 5
-    },
-    "namespace": "AssemblerUI"
+    }
 }

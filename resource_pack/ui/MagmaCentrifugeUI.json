@@ -34,7 +34,7 @@
             {
                 "left_fluid@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_70",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_70",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -89,7 +89,7 @@
             {
                 "right_fluid1@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -119,7 +119,7 @@
             {
                 "right_fluid2@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -149,7 +149,7 @@
             {
                 "right_fluid3@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -179,7 +179,7 @@
             {
                 "right_fluid4@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -209,7 +209,7 @@
             {
                 "right_fluid5@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
@@ -239,7 +239,7 @@
             {
                 "right_fluid6@SkybluePanelLib.fluid_tank": {
                     "layer": 1,
-                    "$tank_ticks": "textures/ui/skybluetech/tank_ticks_24",
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_24",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [

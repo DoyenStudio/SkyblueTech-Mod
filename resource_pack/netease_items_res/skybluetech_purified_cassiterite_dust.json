@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:purified_cassiterite_dust"
+        },
+        "description": {
+            "identifier": "skybluetech:purified_cassiterite_dust"
+        }
+    }
+}

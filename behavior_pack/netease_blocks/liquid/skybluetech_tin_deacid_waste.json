@@ -1,0 +1,15 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:liquid": {
+                "bucket_name": "skybluetech:tin_deacid_waste_bucket"
+            }
+        },
+        "description": {
+            "base_block": "liquid",
+            "category": "none",
+            "identifier": "skybluetech:tin_deacid_waste"
+        }
+    }
+}

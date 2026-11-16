@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:hydrochloric_acid_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:hydrochloric_acid_bucket"
+        }
+    }
+}

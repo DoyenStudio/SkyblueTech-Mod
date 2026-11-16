@@ -43,7 +43,18 @@ SHARED = (
         "molten_earth_bucket", "molten_gold_bucket", "molten_impurity_bucket", "molten_iron_bucket", "molten_lead_bucket",
         "molten_nickel_bucket", "molten_platinum_bucket", "molten_silver_bucket", "molten_tin_bucket", "raw_oil_bucket",
         "saturated_brine_bucket", "sodium_hydroxide_solution_bucket", "sulfuric_acid_bucket", "vegetable_oil_bucket",
-        "water_vapor_bucket")),
+        "water_vapor_bucket",
+        "mineral_collector_bucket", "coal_tar_bucket", "wood_creosote_bucket", "fuel_oil_bucket",
+        "flotation_waste_bucket", "organic_waste_bucket", "hydrochloric_acid_bucket", "iron_leach_bucket",
+        "process_water_bucket", "peroxide_bucket", "calcium_liquor_bucket", "calcium_chloride_bucket",
+        "concrete_accel_bucket", "tin_acid_waste_bucket", "tin_deacid_waste_bucket", "tin_neutral_liq_bucket",
+        "copper_leach_bucket", "copper_solution_bucket", "nickel_leach_bucket", "nickel_solution_bucket",
+        "silver_slurry_bucket", "gold_leach_bucket", "gold_solution_bucket", "platinum_leach_bucket",
+        "platinum_solution_bucket", "barren_hcl_bucket", "aluminate_bucket", "alkali_liquor_bucket",
+        "titanyl_leach_bucket", "titanium_acid_bucket", "crude_ticl4_bucket", "pure_ticl4_bucket",
+        "raw_seawater_bucket", "mgcl2_solution_bucket", "molten_mgcl2_bucket",
+        "concentrated_sulfuric_acid_bucket", "evil_undead_bucket",
+        "molten_palladium_bucket", "molten_polyethylene_bucket", "molten_rosin_bucket", "tree_oil_bucket")),
     ("minecraft:itemGroup.name.pickaxe", "itemGroup.name.pickaxe", _ids("bronze_pickaxe", "invar_pickaxe", "skyblue_pickaxe")),
     ("minecraft:itemGroup.name.sword", "itemGroup.name.sword", _ids("bronze_sword", "invar_sword", "skyblue_sword")),
     ("minecraft:itemGroup.name.axe", "itemGroup.name.axe", _ids("bronze_axe", "invar_axe", "skyblue_axe")),
@@ -57,7 +68,9 @@ SHARED = (
         "aluminum_dust", "copper_dust", "iron_dust", "gold_dust", "tin_dust", "lead_dust", "lead_oxide_dust",
         "lead_sulfate_dust", "silver_dust", "nickel_dust", "platinum_dust", "titanium_dust", "uranium_dust", "alumite_dust",
         "bronze_dust", "invar_dust", "steel_dust", "cupronickel_dust",
-        "ancient_debris_dust", "carbon_dust", "lapis_dust", "obsidian_dust", "sulfur_dust", "concrete_dust")),
+        "ancient_debris_dust", "carbon_dust", "lapis_dust", "obsidian_dust", "sulfur_dust", "concrete_dust",
+        "iron_oxide_dust", "aluminum_oxide_dust", "titanium_oxide_dust", "purified_cassiterite_dust",
+        "calcium_chloride_dust", "aluminum_electrolysis_mix", "titanium_chlorination_mix")),
 )
 """
 (组的键, .lang 的键, (物品 id, ...))：和原版、别的模组一起的组。原版那几组的键照 MEI 原版扩展（creative/table.py、creative/groups.py）；
@@ -92,6 +105,17 @@ OWN = (
         "aluminum_plate", "copper_plate", "iron_plate", "gold_plate", "tin_plate", "lead_plate", "silver_plate",
         "nickel_plate", "platinum_plate", "titanium_plate", "alumite_plate", "bronze_plate", "invar_plate", "steel_plate",
         "cupronickel_plate", "ultraheatinum_plate", "superconduct_plate")),
+    ("skybluetech:group.fine_concentrates", "itemGroup.skybluetech.fine_concentrates", _ids(
+        "fine_iron_conc", "fine_copper_conc", "fine_gold_conc", "fine_aluminum_conc", "fine_tin_conc",
+        "fine_lead_conc", "fine_silver_conc", "fine_nickel_conc", "fine_platinum_conc", "fine_titanium_conc")),
+    ("skybluetech:group.sorted_ores", "itemGroup.skybluetech.sorted_ores", _ids(
+        "sorted_iron_ore", "sorted_copper_ore", "sorted_gold_ore", "sorted_aluminum_ore", "sorted_tin_ore",
+        "sorted_lead_ore", "sorted_silver_ore", "sorted_nickel_ore", "sorted_platinum_ore", "sorted_titanium_ore")),
+    ("skybluetech:group.filter_cakes", "itemGroup.skybluetech.filter_cakes", _ids(
+        "iron_filter_cake", "copper_filter_cake", "gold_filter_cake", "aluminum_filter_cake", "tin_filter_cake",
+        "lead_filter_cake", "silver_filter_cake", "nickel_filter_cake", "platinum_filter_cake", "titanium_filter_cake",
+        "iron_hydroxide_cake", "silver_chloride_cake", "aluminum_hydroxide_cake", "titanium_hydrate_cake",
+        "magnesium_hydroxide_cake")),
     ("skybluetech:group.metal_sticks", "itemGroup.name.metal_sticks", _ids(
         "aluminum_stick", "copper_stick", "tin_stick", "silver_stick", "platinum_stick", "bronze_stick", "invar_stick", "cupronickel_stick",
         "steel_stick", "iron_stick", "superconduct_stick")),

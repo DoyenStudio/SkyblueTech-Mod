@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:copper_leach_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:copper_leach_bucket"
+        }
+    }
+}

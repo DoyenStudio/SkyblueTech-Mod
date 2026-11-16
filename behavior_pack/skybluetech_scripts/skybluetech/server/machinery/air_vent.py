@@ -4,7 +4,7 @@ from skybluetech_scripts.tooldelta.extensions.facing_utils import RelativeFacing
 
 from ...common.define.facing import FACING_EN2NUM, OPPOSITE_FACING
 from ...common.define.id_enum import Machinery
-from ...common.define.id_enum.fluids import CommonGas
+from ...common.define.id_enum.fluids import ChemicalGas, CommonGas
 from ...common.events.machinery.air_vent import AirVentExhaust
 from ...common.machinery_def.air_vent import (
     MAX_FLUID_VOLUME, TICK_INTERVAL, FLUID_PER_CYCLE,
@@ -56,7 +56,10 @@ class AirVent(MultiFluidContainer):
         self.fluid_io_mode = tuple(0 if face == back else 2 for face in range(6))
 
     def IsValidFluidInput(self, slot, fluid_id):
-        return slot == 0 and fluid_id in CommonGas.all_sub()
+        return slot == 0 and (
+            fluid_id in CommonGas.all_sub()
+            or fluid_id == ChemicalGas.CARBON_DIOXIDE
+        )
 
     def _air_vent_on_ticking(self):
         self._ticks += 1

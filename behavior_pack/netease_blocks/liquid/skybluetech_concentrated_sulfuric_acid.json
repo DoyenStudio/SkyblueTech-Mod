@@ -2,7 +2,9 @@
     "format_version": "1.21.70",
     "minecraft:block": {
         "components": {
-            "netease:liquid": {}
+            "netease:liquid": {
+                "bucket_name": "skybluetech:concentrated_sulfuric_acid_bucket"
+            }
         },
         "description": {
             "base_block": "liquid",

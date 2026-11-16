@@ -1,20 +1,203 @@
 {
     "resource_pack_name": "vanilla",
     "texture_data": {
+        "skybluetech:aluminum_electrolysis_mix": {
+            "textures": "textures/items/mixtures/aluminum_electrolysis_mix"
+        },
+        "skybluetech:titanium_chlorination_mix": {
+            "textures": "textures/items/mixtures/titanium_chlorination_mix"
+        },
+        "skybluetech:iron_oxide_dust": {
+            "textures": "textures/items/dusts/iron_oxide_dust"
+        },
+        "skybluetech:aluminum_oxide_dust": {
+            "textures": "textures/items/dusts/aluminum_oxide_dust"
+        },
+        "skybluetech:titanium_oxide_dust": {
+            "textures": "textures/items/dusts/titanium_oxide_dust"
+        },
+        "skybluetech:purified_cassiterite_dust": {
+            "textures": "textures/items/dusts/purified_cassiterite_dust"
+        },
+        "skybluetech:calcium_chloride_dust": {
+            "textures": "textures/items/dusts/calcium_chloride_dust"
+        },
+        "skybluetech:fine_iron_conc": {
+            "textures": "textures/items/fine_conc/fine_iron_conc"
+        },
+        "skybluetech:fine_copper_conc": {
+            "textures": "textures/items/fine_conc/fine_copper_conc"
+        },
+        "skybluetech:fine_gold_conc": {
+            "textures": "textures/items/fine_conc/fine_gold_conc"
+        },
+        "skybluetech:fine_aluminum_conc": {
+            "textures": "textures/items/fine_conc/fine_aluminum_conc"
+        },
+        "skybluetech:fine_tin_conc": {
+            "textures": "textures/items/fine_conc/fine_tin_conc"
+        },
+        "skybluetech:fine_lead_conc": {
+            "textures": "textures/items/fine_conc/fine_lead_conc"
+        },
+        "skybluetech:fine_silver_conc": {
+            "textures": "textures/items/fine_conc/fine_silver_conc"
+        },
+        "skybluetech:fine_nickel_conc": {
+            "textures": "textures/items/fine_conc/fine_nickel_conc"
+        },
+        "skybluetech:fine_platinum_conc": {
+            "textures": "textures/items/fine_conc/fine_platinum_conc"
+        },
+        "skybluetech:fine_titanium_conc": {
+            "textures": "textures/items/fine_conc/fine_titanium_conc"
+        },
+        "skybluetech:sorted_iron_ore": {
+            "textures": "textures/items/sorted_ore/sorted_iron_ore"
+        },
+        "skybluetech:sorted_copper_ore": {
+            "textures": "textures/items/sorted_ore/sorted_copper_ore"
+        },
+        "skybluetech:sorted_gold_ore": {
+            "textures": "textures/items/sorted_ore/sorted_gold_ore"
+        },
+        "skybluetech:sorted_aluminum_ore": {
+            "textures": "textures/items/sorted_ore/sorted_aluminum_ore"
+        },
+        "skybluetech:sorted_tin_ore": {
+            "textures": "textures/items/sorted_ore/sorted_tin_ore"
+        },
+        "skybluetech:sorted_lead_ore": {
+            "textures": "textures/items/sorted_ore/sorted_lead_ore"
+        },
+        "skybluetech:sorted_silver_ore": {
+            "textures": "textures/items/sorted_ore/sorted_silver_ore"
+        },
+        "skybluetech:sorted_nickel_ore": {
+            "textures": "textures/items/sorted_ore/sorted_nickel_ore"
+        },
+        "skybluetech:sorted_platinum_ore": {
+            "textures": "textures/items/sorted_ore/sorted_platinum_ore"
+        },
+        "skybluetech:sorted_titanium_ore": {
+            "textures": "textures/items/sorted_ore/sorted_titanium_ore"
+        },
+        "skybluetech:iron_filter_cake": {
+            "textures": "textures/items/filter_cake/iron_filter_cake"
+        },
+        "skybluetech:copper_filter_cake": {
+            "textures": "textures/items/filter_cake/copper_filter_cake"
+        },
+        "skybluetech:gold_filter_cake": {
+            "textures": "textures/items/filter_cake/gold_filter_cake"
+        },
+        "skybluetech:aluminum_filter_cake": {
+            "textures": "textures/items/filter_cake/aluminum_filter_cake"
+        },
+        "skybluetech:tin_filter_cake": {
+            "textures": "textures/items/filter_cake/tin_filter_cake"
+        },
+        "skybluetech:lead_filter_cake": {
+            "textures": "textures/items/filter_cake/lead_filter_cake"
+        },
+        "skybluetech:silver_filter_cake": {
+            "textures": "textures/items/filter_cake/silver_filter_cake"
+        },
+        "skybluetech:nickel_filter_cake": {
+            "textures": "textures/items/filter_cake/nickel_filter_cake"
+        },
+        "skybluetech:platinum_filter_cake": {
+            "textures": "textures/items/filter_cake/platinum_filter_cake"
+        },
+        "skybluetech:titanium_filter_cake": {
+            "textures": "textures/items/filter_cake/titanium_filter_cake"
+        },
+        "skybluetech:iron_hydroxide_cake": {
+            "textures": "textures/items/filter_cake/iron_hydroxide_cake"
+        },
+        "skybluetech:silver_chloride_cake": {
+            "textures": "textures/items/filter_cake/silver_chloride_cake"
+        },
+        "skybluetech:aluminum_hydroxide_cake": {
+            "textures": "textures/items/filter_cake/aluminum_hydroxide_cake"
+        },
+        "skybluetech:titanium_hydrate_cake": {
+            "textures": "textures/items/filter_cake/titanium_hydrate_cake"
+        },
+        "skybluetech:magnesium_hydroxide_cake": {
+            "textures": "textures/items/filter_cake/magnesium_hydroxide_cake"
+        },
+        "skybluetech:alkali_liquor_bucket": {
+            "textures": "textures/items/buckets/alkali_liquor_bucket"
+        },
+        "skybluetech:aluminate_bucket": {
+            "textures": "textures/items/buckets/aluminate_bucket"
+        },
+        "skybluetech:barren_hcl_bucket": {
+            "textures": "textures/items/buckets/barren_hcl_bucket"
+        },
+        "skybluetech:calcium_chloride_bucket": {
+            "textures": "textures/items/buckets/calcium_chloride_bucket"
+        },
+        "skybluetech:calcium_liquor_bucket": {
+            "textures": "textures/items/buckets/calcium_liquor_bucket"
+        },
+        "skybluetech:coal_tar_bucket": {
+            "textures": "textures/items/buckets/coal_tar_bucket"
+        },
+        "skybluetech:concentrated_sulfuric_acid_bucket": {
+            "textures": "textures/items/buckets/concentrated_sulfuric_acid_bucket"
+        },
+        "skybluetech:concrete_accel_bucket": {
+            "textures": "textures/items/buckets/concrete_accel_bucket"
+        },
+        "skybluetech:copper_leach_bucket": {
+            "textures": "textures/items/buckets/copper_leach_bucket"
+        },
+        "skybluetech:copper_solution_bucket": {
+            "textures": "textures/items/buckets/copper_solution_bucket"
+        },
+        "skybluetech:crude_ticl4_bucket": {
+            "textures": "textures/items/buckets/crude_ticl4_bucket"
+        },
+        "skybluetech:evil_undead_bucket": {
+            "textures": "textures/items/buckets/evil_undead_bucket"
+        },
+        "skybluetech:flotation_waste_bucket": {
+            "textures": "textures/items/buckets/flotation_waste_bucket"
+        },
+        "skybluetech:fuel_oil_bucket": {
+            "textures": "textures/items/buckets/fuel_oil_bucket"
+        },
+        "skybluetech:gold_leach_bucket": {
+            "textures": "textures/items/buckets/gold_leach_bucket"
+        },
+        "skybluetech:gold_solution_bucket": {
+            "textures": "textures/items/buckets/gold_solution_bucket"
+        },
+        "skybluetech:hydrochloric_acid_bucket": {
+            "textures": "textures/items/buckets/hydrochloric_acid_bucket"
+        },
         "skybluetech:inscriber_press_empty": {
             "textures": "textures/items/inscriber_press/empty"
         },
         "skybluetech:inscriber_press_stick": {
             "textures": "textures/items/inscriber_press/stick"
         },
-        "skybluetech:palladium_ingot": {
-            "textures": "textures/items/ingots/palladium_ingot"
+        "skybluetech:iron_leach_bucket": {
+            "textures": "textures/items/buckets/iron_leach_bucket"
+        },
+        "skybluetech:mgcl2_solution_bucket": {
+            "textures": "textures/items/buckets/mgcl2_solution_bucket"
+        },
+        "skybluetech:mineral_collector_bucket": {
+            "textures": "textures/items/buckets/mineral_collector_bucket"
+        },
+        "skybluetech:molten_mgcl2_bucket": {
+            "textures": "textures/items/buckets/molten_mgcl2_bucket"
         },
         "skybluetech:molten_palladium_bucket": {
             "textures": "textures/items/buckets/molten_palladium_bucket"
-        },
-        "skybluetech:platinum_catalyst_mesh": {
-            "textures": "textures/items/platinum_catalyst_mesh"
         },
         "skybluetech:molten_polyethylene_bucket": {
             "textures": "textures/items/buckets/molten_polyethylene_bucket"
@@ -22,8 +205,35 @@
         "skybluetech:molten_rosin_bucket": {
             "textures": "textures/items/buckets/molten_rosin_bucket"
         },
+        "skybluetech:nickel_leach_bucket": {
+            "textures": "textures/items/buckets/nickel_leach_bucket"
+        },
+        "skybluetech:nickel_solution_bucket": {
+            "textures": "textures/items/buckets/nickel_solution_bucket"
+        },
+        "skybluetech:organic_waste_bucket": {
+            "textures": "textures/items/buckets/organic_waste_bucket"
+        },
+        "skybluetech:peroxide_bucket": {
+            "textures": "textures/items/buckets/peroxide_bucket"
+        },
+        "skybluetech:platinum_leach_bucket": {
+            "textures": "textures/items/buckets/platinum_leach_bucket"
+        },
+        "skybluetech:platinum_solution_bucket": {
+            "textures": "textures/items/buckets/platinum_solution_bucket"
+        },
+        "skybluetech:process_water_bucket": {
+            "textures": "textures/items/buckets/process_water_bucket"
+        },
         "skybluetech:pure_methane_bucket": {
             "textures": "textures/items/buckets/pure_methane_bucket"
+        },
+        "skybluetech:pure_ticl4_bucket": {
+            "textures": "textures/items/buckets/pure_ticl4_bucket"
+        },
+        "skybluetech:raw_seawater_bucket": {
+            "textures": "textures/items/buckets/raw_seawater_bucket"
         },
         "skybluetech:rosin": {
             "textures": "textures/items/rosin"
@@ -484,14 +694,35 @@
         "skybluetech:platinum_ingot": {
             "textures": "textures/items/ingots/platinum_ingot"
         },
+        "skybluetech:palladium_ingot": {
+            "textures": "textures/items/ingots/palladium_ingot"
+        },
+        "skybluetech:platinum_catalyst_mesh": {
+            "textures": "textures/items/platinum_catalyst_mesh"
+        },
         "skybluetech:platinum_plate": {
             "textures": "textures/items/plates/platinum_plate"
         },
         "skybluetech:saturated_brine_bucket": {
             "textures": "textures/items/buckets/saturated_brine_bucket"
         },
+        "skybluetech:silver_slurry_bucket": {
+            "textures": "textures/items/buckets/silver_slurry_bucket"
+        },
         "skybluetech:sodium_hydroxide_solution_bucket": {
             "textures": "textures/items/buckets/sodium_hydroxide_solution_bucket"
+        },
+        "skybluetech:tin_acid_waste_bucket": {
+            "textures": "textures/items/buckets/tin_acid_waste_bucket"
+        },
+        "skybluetech:tin_deacid_waste_bucket": {
+            "textures": "textures/items/buckets/tin_deacid_waste_bucket"
+        },
+        "skybluetech:tin_neutral_liq_bucket": {
+            "textures": "textures/items/buckets/tin_neutral_liq_bucket"
+        },
+        "skybluetech:titanium_acid_bucket": {
+            "textures": "textures/items/buckets/titanium_acid_bucket"
         },
         "skybluetech:titanium_plate": {
             "textures": "textures/items/plates/titanium_plate"
@@ -709,6 +940,9 @@
         "skybluetech:titanium_ingot": {
             "textures": "textures/items/ingots/titanium_ingot"
         },
+        "skybluetech:titanyl_leach_bucket": {
+            "textures": "textures/items/buckets/titanyl_leach_bucket"
+        },
         "skybluetech:transmitter_settings_wrench": {
             "textures": "textures/items/transmitter_settings_wrench"
         },
@@ -783,6 +1017,9 @@
         },
         "skybluetech:wire_tin": {
             "textures": "textures/transmitters/wire_tin_item"
+        },
+        "skybluetech:wood_creosote_bucket": {
+            "textures": "textures/items/buckets/wood_creosote_bucket"
         },
         "skybluetech:wrench_invar": {
             "textures": "textures/items/producted_tools/wrench_invar"

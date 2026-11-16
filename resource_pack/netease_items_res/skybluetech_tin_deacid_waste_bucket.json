@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:tin_deacid_waste_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:tin_deacid_waste_bucket"
+        }
+    }
+}

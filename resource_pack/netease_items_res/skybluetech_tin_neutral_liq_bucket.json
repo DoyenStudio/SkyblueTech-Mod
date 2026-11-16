@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:tin_neutral_liq_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:tin_neutral_liq_bucket"
+        }
+    }
+}

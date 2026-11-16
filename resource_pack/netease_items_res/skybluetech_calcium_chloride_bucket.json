@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:calcium_chloride_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:calcium_chloride_bucket"
+        }
+    }
+}

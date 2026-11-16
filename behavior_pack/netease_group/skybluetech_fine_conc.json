@@ -1,0 +1,20 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.fine_concentrates",
+            "icon": "skybluetech:fine_iron_conc",
+            "list": [
+                "skybluetech:fine_iron_conc",
+                "skybluetech:fine_copper_conc",
+                "skybluetech:fine_gold_conc",
+                "skybluetech:fine_aluminum_conc",
+                "skybluetech:fine_tin_conc",
+                "skybluetech:fine_lead_conc",
+                "skybluetech:fine_silver_conc",
+                "skybluetech:fine_nickel_conc",
+                "skybluetech:fine_platinum_conc",
+                "skybluetech:fine_titanium_conc"
+            ]
+        }
+    ]
+}

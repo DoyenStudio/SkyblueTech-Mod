@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:alkali_liquor_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:alkali_liquor_bucket"
+        }
+    }
+}

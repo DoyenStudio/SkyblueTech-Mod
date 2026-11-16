@@ -1,11 +1,150 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:baked_acid_vapor_static": {
+            "textures": "textures/fluid/baked/skybluetech.acid_vapor/static"
+        },
+        "skybluetech:baked_alkali_liquor_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.alkali_liquor/flowing"
+        },
+        "skybluetech:baked_alkali_liquor_static": {
+            "textures": "textures/fluid/baked/skybluetech.alkali_liquor/static"
+        },
+        "skybluetech:baked_aluminate_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.aluminate/flowing"
+        },
+        "skybluetech:baked_aluminate_static": {
+            "textures": "textures/fluid/baked/skybluetech.aluminate/static"
+        },
+        "skybluetech:baked_barren_hcl_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.barren_hcl/flowing"
+        },
+        "skybluetech:baked_barren_hcl_static": {
+            "textures": "textures/fluid/baked/skybluetech.barren_hcl/static"
+        },
+        "skybluetech:baked_calcium_chloride_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.calcium_chloride/flowing"
+        },
+        "skybluetech:baked_calcium_chloride_static": {
+            "textures": "textures/fluid/baked/skybluetech.calcium_chloride/static"
+        },
+        "skybluetech:baked_calcium_liquor_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.calcium_liquor/flowing"
+        },
+        "skybluetech:baked_calcium_liquor_static": {
+            "textures": "textures/fluid/baked/skybluetech.calcium_liquor/static"
+        },
+        "skybluetech:baked_carbon_dioxide_static": {
+            "textures": "textures/fluid/baked/skybluetech.carbon_dioxide/static"
+        },
+        "skybluetech:baked_coal_tar_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.coal_tar/flowing"
+        },
+        "skybluetech:baked_coal_tar_static": {
+            "textures": "textures/fluid/baked/skybluetech.coal_tar/static"
+        },
+        "skybluetech:baked_concrete_accel_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.concrete_accel/flowing"
+        },
+        "skybluetech:baked_concrete_accel_static": {
+            "textures": "textures/fluid/baked/skybluetech.concrete_accel/static"
+        },
+        "skybluetech:baked_copper_leach_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.copper_leach/flowing"
+        },
+        "skybluetech:baked_copper_leach_static": {
+            "textures": "textures/fluid/baked/skybluetech.copper_leach/static"
+        },
+        "skybluetech:baked_copper_solution_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.copper_solution/flowing"
+        },
+        "skybluetech:baked_copper_solution_static": {
+            "textures": "textures/fluid/baked/skybluetech.copper_solution/static"
+        },
+        "skybluetech:baked_crude_ticl4_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.crude_ticl4/flowing"
+        },
+        "skybluetech:baked_crude_ticl4_static": {
+            "textures": "textures/fluid/baked/skybluetech.crude_ticl4/static"
+        },
+        "skybluetech:baked_flotation_waste_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.flotation_waste/flowing"
+        },
+        "skybluetech:baked_flotation_waste_static": {
+            "textures": "textures/fluid/baked/skybluetech.flotation_waste/static"
+        },
+        "skybluetech:baked_fuel_oil_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.fuel_oil/flowing"
+        },
+        "skybluetech:baked_fuel_oil_static": {
+            "textures": "textures/fluid/baked/skybluetech.fuel_oil/static"
+        },
+        "skybluetech:baked_gold_leach_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.gold_leach/flowing"
+        },
+        "skybluetech:baked_gold_leach_static": {
+            "textures": "textures/fluid/baked/skybluetech.gold_leach/static"
+        },
+        "skybluetech:baked_gold_solution_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.gold_solution/flowing"
+        },
+        "skybluetech:baked_gold_solution_static": {
+            "textures": "textures/fluid/baked/skybluetech.gold_solution/static"
+        },
+        "skybluetech:baked_hydrochloric_acid_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.hydrochloric_acid/flowing"
+        },
+        "skybluetech:baked_hydrochloric_acid_static": {
+            "textures": "textures/fluid/baked/skybluetech.hydrochloric_acid/static"
+        },
         "skybluetech:baked_hydrogen_chloride_static": {
             "textures": "textures/fluid/baked/skybluetech.hydrogen_chloride/static"
         },
         "skybluetech:air_vent": {
             "textures": "textures/models/air_vine_texture"
+        },
+        "skybluetech:baked_iron_leach_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.iron_leach/flowing"
+        },
+        "skybluetech:baked_iron_leach_static": {
+            "textures": "textures/fluid/baked/skybluetech.iron_leach/static"
+        },
+        "skybluetech:baked_mgcl2_solution_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.mgcl2_solution/flowing"
+        },
+        "skybluetech:baked_mgcl2_solution_static": {
+            "textures": "textures/fluid/baked/skybluetech.mgcl2_solution/static"
+        },
+        "skybluetech:baked_mineral_collector_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.mineral_collector/flowing"
+        },
+        "skybluetech:baked_mineral_collector_static": {
+            "textures": "textures/fluid/baked/skybluetech.mineral_collector/static"
+        },
+        "skybluetech:baked_molten_mgcl2_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.molten_mgcl2/flowing"
+        },
+        "skybluetech:baked_molten_mgcl2_static": {
+            "textures": "textures/fluid/baked/skybluetech.molten_mgcl2/static"
         },
         "skybluetech:baked_molten_palladium_static": {
             "textures": "textures/fluid/baked/skybluetech.molten_palladium/static"
@@ -13,6 +152,121 @@
         "skybluetech:baked_molten_palladium_flowing": {
             "quad": 1,
             "textures": "textures/fluid/baked/skybluetech.molten_palladium/flowing"
+        },
+        "skybluetech:baked_nickel_leach_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.nickel_leach/flowing"
+        },
+        "skybluetech:baked_nickel_leach_static": {
+            "textures": "textures/fluid/baked/skybluetech.nickel_leach/static"
+        },
+        "skybluetech:baked_nickel_solution_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.nickel_solution/flowing"
+        },
+        "skybluetech:baked_nickel_solution_static": {
+            "textures": "textures/fluid/baked/skybluetech.nickel_solution/static"
+        },
+        "skybluetech:baked_organic_waste_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.organic_waste/flowing"
+        },
+        "skybluetech:baked_organic_waste_static": {
+            "textures": "textures/fluid/baked/skybluetech.organic_waste/static"
+        },
+        "skybluetech:baked_peroxide_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.peroxide/flowing"
+        },
+        "skybluetech:baked_peroxide_static": {
+            "textures": "textures/fluid/baked/skybluetech.peroxide/static"
+        },
+        "skybluetech:baked_platinum_leach_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.platinum_leach/flowing"
+        },
+        "skybluetech:baked_platinum_leach_static": {
+            "textures": "textures/fluid/baked/skybluetech.platinum_leach/static"
+        },
+        "skybluetech:baked_platinum_solution_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.platinum_solution/flowing"
+        },
+        "skybluetech:baked_platinum_solution_static": {
+            "textures": "textures/fluid/baked/skybluetech.platinum_solution/static"
+        },
+        "skybluetech:baked_process_water_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.process_water/flowing"
+        },
+        "skybluetech:baked_process_water_static": {
+            "textures": "textures/fluid/baked/skybluetech.process_water/static"
+        },
+        "skybluetech:baked_pure_ticl4_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.pure_ticl4/flowing"
+        },
+        "skybluetech:baked_pure_ticl4_static": {
+            "textures": "textures/fluid/baked/skybluetech.pure_ticl4/static"
+        },
+        "skybluetech:baked_raw_seawater_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.raw_seawater/flowing"
+        },
+        "skybluetech:baked_raw_seawater_static": {
+            "textures": "textures/fluid/baked/skybluetech.raw_seawater/static"
+        },
+        "skybluetech:baked_silver_slurry_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.silver_slurry/flowing"
+        },
+        "skybluetech:baked_silver_slurry_static": {
+            "textures": "textures/fluid/baked/skybluetech.silver_slurry/static"
+        },
+        "skybluetech:baked_sulfur_dioxide_static": {
+            "textures": "textures/fluid/baked/skybluetech.sulfur_dioxide/static"
+        },
+        "skybluetech:baked_tin_acid_waste_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.tin_acid_waste/flowing"
+        },
+        "skybluetech:baked_tin_acid_waste_static": {
+            "textures": "textures/fluid/baked/skybluetech.tin_acid_waste/static"
+        },
+        "skybluetech:baked_tin_deacid_waste_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.tin_deacid_waste/flowing"
+        },
+        "skybluetech:baked_tin_deacid_waste_static": {
+            "textures": "textures/fluid/baked/skybluetech.tin_deacid_waste/static"
+        },
+        "skybluetech:baked_tin_neutral_liq_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.tin_neutral_liq/flowing"
+        },
+        "skybluetech:baked_tin_neutral_liq_static": {
+            "textures": "textures/fluid/baked/skybluetech.tin_neutral_liq/static"
+        },
+        "skybluetech:baked_titanium_acid_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.titanium_acid/flowing"
+        },
+        "skybluetech:baked_titanium_acid_static": {
+            "textures": "textures/fluid/baked/skybluetech.titanium_acid/static"
+        },
+        "skybluetech:baked_titanyl_leach_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.titanyl_leach/flowing"
+        },
+        "skybluetech:baked_titanyl_leach_static": {
+            "textures": "textures/fluid/baked/skybluetech.titanyl_leach/static"
+        },
+        "skybluetech:baked_wood_creosote_flowing": {
+            "quad": 1,
+            "textures": "textures/fluid/baked/skybluetech.wood_creosote/flowing"
+        },
+        "skybluetech:baked_wood_creosote_static": {
+            "textures": "textures/fluid/baked/skybluetech.wood_creosote/static"
         },
         "skybluetech:shocker": {
             "textures": "textures/models/shocker_texture"

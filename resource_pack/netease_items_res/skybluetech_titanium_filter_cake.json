@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:titanium_filter_cake"
+        },
+        "description": {
+            "identifier": "skybluetech:titanium_filter_cake"
+        }
+    }
+}

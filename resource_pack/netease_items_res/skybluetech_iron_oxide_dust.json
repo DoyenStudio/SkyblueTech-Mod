@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:iron_oxide_dust"
+        },
+        "description": {
+            "identifier": "skybluetech:iron_oxide_dust"
+        }
+    }
+}

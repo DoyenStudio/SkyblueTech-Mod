@@ -5,7 +5,8 @@
             "netease:liquid": {
                 "can_float_boat": true,
                 "spread_delay": 4,
-                "spread_range": 8
+                "spread_range": 8,
+                "bucket_name": "skybluetech:evil_undead_bucket"
             }
         },
         "description": {

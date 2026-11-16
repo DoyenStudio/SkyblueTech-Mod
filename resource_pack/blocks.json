@@ -1,11 +1,12 @@
 {
-    "skybluetech:hydrogen_chloride": {
+    "format_version": [
+        1,
+        1,
+        0
+    ],
+    "skybluetech:acid_vapor": {
         "blockshape": "water",
-        "textures": "skybluetech:baked_hydrogen_chloride_static"
-    },
-    "skybluetech:flowing_hydrogen_chloride": {
-        "blockshape": "water",
-        "textures": "skybluetech:baked_hydrogen_chloride_static"
+        "textures": "skybluetech:baked_acid_vapor_static"
     },
     "skybluetech:air_vent": {
         "client_entity": {
@@ -13,12 +14,263 @@
         },
         "sound": "iron"
     },
-    "skybluetech:molten_palladium": {
+    "skybluetech:air_compressor": {
+        "sound": "iron"
+    },
+    "skybluetech:alkali_liquor": {
         "blockshape": "water",
         "textures": {
-            "down": "skybluetech:baked_molten_palladium_static",
-            "side": "skybluetech:baked_molten_palladium_flowing",
-            "up": "skybluetech:baked_molten_palladium_static"
+            "down": "skybluetech:baked_alkali_liquor_static",
+            "side": "skybluetech:baked_alkali_liquor_flowing",
+            "up": "skybluetech:baked_alkali_liquor_static"
+        }
+    },
+    "skybluetech:aluminate": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_aluminate_static",
+            "side": "skybluetech:baked_aluminate_flowing",
+            "up": "skybluetech:baked_aluminate_static"
+        }
+    },
+    "skybluetech:barren_hcl": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_barren_hcl_static",
+            "side": "skybluetech:baked_barren_hcl_flowing",
+            "up": "skybluetech:baked_barren_hcl_static"
+        }
+    },
+    "skybluetech:calcium_chloride": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_calcium_chloride_static",
+            "side": "skybluetech:baked_calcium_chloride_flowing",
+            "up": "skybluetech:baked_calcium_chloride_static"
+        }
+    },
+    "skybluetech:calcium_liquor": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_calcium_liquor_static",
+            "side": "skybluetech:baked_calcium_liquor_flowing",
+            "up": "skybluetech:baked_calcium_liquor_static"
+        }
+    },
+    "skybluetech:carbon_dioxide": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_carbon_dioxide_static"
+    },
+    "skybluetech:coal_tar": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_coal_tar_static",
+            "side": "skybluetech:baked_coal_tar_flowing",
+            "up": "skybluetech:baked_coal_tar_static"
+        }
+    },
+    "skybluetech:concrete_accel": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_concrete_accel_static",
+            "side": "skybluetech:baked_concrete_accel_flowing",
+            "up": "skybluetech:baked_concrete_accel_static"
+        }
+    },
+    "skybluetech:copper_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_copper_leach_static",
+            "side": "skybluetech:baked_copper_leach_flowing",
+            "up": "skybluetech:baked_copper_leach_static"
+        }
+    },
+    "skybluetech:copper_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_copper_solution_static",
+            "side": "skybluetech:baked_copper_solution_flowing",
+            "up": "skybluetech:baked_copper_solution_static"
+        }
+    },
+    "skybluetech:crude_ticl4": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_crude_ticl4_static",
+            "side": "skybluetech:baked_crude_ticl4_flowing",
+            "up": "skybluetech:baked_crude_ticl4_static"
+        }
+    },
+    "skybluetech:flotation_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_flotation_waste_static",
+            "side": "skybluetech:baked_flotation_waste_flowing",
+            "up": "skybluetech:baked_flotation_waste_static"
+        }
+    },
+    "skybluetech:flowing_acid_vapor": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_acid_vapor_static"
+    },
+    "skybluetech:flowing_alkali_liquor": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_alkali_liquor_static",
+            "side": "skybluetech:baked_alkali_liquor_flowing",
+            "up": "skybluetech:baked_alkali_liquor_flowing"
+        }
+    },
+    "skybluetech:flowing_aluminate": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_aluminate_static",
+            "side": "skybluetech:baked_aluminate_flowing",
+            "up": "skybluetech:baked_aluminate_flowing"
+        }
+    },
+    "skybluetech:flowing_barren_hcl": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_barren_hcl_static",
+            "side": "skybluetech:baked_barren_hcl_flowing",
+            "up": "skybluetech:baked_barren_hcl_flowing"
+        }
+    },
+    "skybluetech:flowing_calcium_chloride": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_calcium_chloride_static",
+            "side": "skybluetech:baked_calcium_chloride_flowing",
+            "up": "skybluetech:baked_calcium_chloride_flowing"
+        }
+    },
+    "skybluetech:flowing_calcium_liquor": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_calcium_liquor_static",
+            "side": "skybluetech:baked_calcium_liquor_flowing",
+            "up": "skybluetech:baked_calcium_liquor_flowing"
+        }
+    },
+    "skybluetech:flowing_carbon_dioxide": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_carbon_dioxide_static"
+    },
+    "skybluetech:flowing_coal_tar": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_coal_tar_static",
+            "side": "skybluetech:baked_coal_tar_flowing",
+            "up": "skybluetech:baked_coal_tar_flowing"
+        }
+    },
+    "skybluetech:flowing_concrete_accel": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_concrete_accel_static",
+            "side": "skybluetech:baked_concrete_accel_flowing",
+            "up": "skybluetech:baked_concrete_accel_flowing"
+        }
+    },
+    "skybluetech:flowing_copper_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_copper_leach_static",
+            "side": "skybluetech:baked_copper_leach_flowing",
+            "up": "skybluetech:baked_copper_leach_flowing"
+        }
+    },
+    "skybluetech:flowing_copper_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_copper_solution_static",
+            "side": "skybluetech:baked_copper_solution_flowing",
+            "up": "skybluetech:baked_copper_solution_flowing"
+        }
+    },
+    "skybluetech:flowing_crude_ticl4": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_crude_ticl4_static",
+            "side": "skybluetech:baked_crude_ticl4_flowing",
+            "up": "skybluetech:baked_crude_ticl4_flowing"
+        }
+    },
+    "skybluetech:flowing_flotation_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_flotation_waste_static",
+            "side": "skybluetech:baked_flotation_waste_flowing",
+            "up": "skybluetech:baked_flotation_waste_flowing"
+        }
+    },
+    "skybluetech:flowing_fuel_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_fuel_oil_static",
+            "side": "skybluetech:baked_fuel_oil_flowing",
+            "up": "skybluetech:baked_fuel_oil_flowing"
+        }
+    },
+    "skybluetech:flowing_gold_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_gold_leach_static",
+            "side": "skybluetech:baked_gold_leach_flowing",
+            "up": "skybluetech:baked_gold_leach_flowing"
+        }
+    },
+    "skybluetech:flowing_gold_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_gold_solution_static",
+            "side": "skybluetech:baked_gold_solution_flowing",
+            "up": "skybluetech:baked_gold_solution_flowing"
+        }
+    },
+    "skybluetech:flowing_hydrochloric_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_hydrochloric_acid_static",
+            "side": "skybluetech:baked_hydrochloric_acid_flowing",
+            "up": "skybluetech:baked_hydrochloric_acid_flowing"
+        }
+    },
+    "skybluetech:flowing_hydrogen_chloride": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_hydrogen_chloride_static"
+    },
+    "skybluetech:flowing_iron_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_iron_leach_static",
+            "side": "skybluetech:baked_iron_leach_flowing",
+            "up": "skybluetech:baked_iron_leach_flowing"
+        }
+    },
+    "skybluetech:flowing_mgcl2_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_mgcl2_solution_static",
+            "side": "skybluetech:baked_mgcl2_solution_flowing",
+            "up": "skybluetech:baked_mgcl2_solution_flowing"
+        }
+    },
+    "skybluetech:flowing_mineral_collector": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_mineral_collector_static",
+            "side": "skybluetech:baked_mineral_collector_flowing",
+            "up": "skybluetech:baked_mineral_collector_flowing"
+        }
+    },
+    "skybluetech:flowing_molten_mgcl2": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_molten_mgcl2_static",
+            "side": "skybluetech:baked_molten_mgcl2_flowing",
+            "up": "skybluetech:baked_molten_mgcl2_flowing"
         }
     },
     "skybluetech:flowing_molten_palladium": {
@@ -29,13 +281,285 @@
             "up": "skybluetech:baked_molten_palladium_flowing"
         }
     },
-    "format_version": [
-        1,
-        1,
-        0
-    ],
-    "skybluetech:air_compressor": {
-        "sound": "iron"
+    "skybluetech:flowing_nickel_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_nickel_leach_static",
+            "side": "skybluetech:baked_nickel_leach_flowing",
+            "up": "skybluetech:baked_nickel_leach_flowing"
+        }
+    },
+    "skybluetech:flowing_nickel_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_nickel_solution_static",
+            "side": "skybluetech:baked_nickel_solution_flowing",
+            "up": "skybluetech:baked_nickel_solution_flowing"
+        }
+    },
+    "skybluetech:flowing_organic_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_organic_waste_static",
+            "side": "skybluetech:baked_organic_waste_flowing",
+            "up": "skybluetech:baked_organic_waste_flowing"
+        }
+    },
+    "skybluetech:flowing_peroxide": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_peroxide_static",
+            "side": "skybluetech:baked_peroxide_flowing",
+            "up": "skybluetech:baked_peroxide_flowing"
+        }
+    },
+    "skybluetech:flowing_platinum_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_platinum_leach_static",
+            "side": "skybluetech:baked_platinum_leach_flowing",
+            "up": "skybluetech:baked_platinum_leach_flowing"
+        }
+    },
+    "skybluetech:flowing_platinum_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_platinum_solution_static",
+            "side": "skybluetech:baked_platinum_solution_flowing",
+            "up": "skybluetech:baked_platinum_solution_flowing"
+        }
+    },
+    "skybluetech:flowing_process_water": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_process_water_static",
+            "side": "skybluetech:baked_process_water_flowing",
+            "up": "skybluetech:baked_process_water_flowing"
+        }
+    },
+    "skybluetech:flowing_pure_ticl4": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_pure_ticl4_static",
+            "side": "skybluetech:baked_pure_ticl4_flowing",
+            "up": "skybluetech:baked_pure_ticl4_flowing"
+        }
+    },
+    "skybluetech:flowing_raw_seawater": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_raw_seawater_static",
+            "side": "skybluetech:baked_raw_seawater_flowing",
+            "up": "skybluetech:baked_raw_seawater_flowing"
+        }
+    },
+    "skybluetech:flowing_silver_slurry": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_silver_slurry_static",
+            "side": "skybluetech:baked_silver_slurry_flowing",
+            "up": "skybluetech:baked_silver_slurry_flowing"
+        }
+    },
+    "skybluetech:flowing_sulfur_dioxide": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_sulfur_dioxide_static"
+    },
+    "skybluetech:flowing_tin_acid_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tin_acid_waste_static",
+            "side": "skybluetech:baked_tin_acid_waste_flowing",
+            "up": "skybluetech:baked_tin_acid_waste_flowing"
+        }
+    },
+    "skybluetech:flowing_tin_deacid_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tin_deacid_waste_static",
+            "side": "skybluetech:baked_tin_deacid_waste_flowing",
+            "up": "skybluetech:baked_tin_deacid_waste_flowing"
+        }
+    },
+    "skybluetech:flowing_tin_neutral_liq": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tin_neutral_liq_static",
+            "side": "skybluetech:baked_tin_neutral_liq_flowing",
+            "up": "skybluetech:baked_tin_neutral_liq_flowing"
+        }
+    },
+    "skybluetech:flowing_titanium_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_titanium_acid_static",
+            "side": "skybluetech:baked_titanium_acid_flowing",
+            "up": "skybluetech:baked_titanium_acid_flowing"
+        }
+    },
+    "skybluetech:flowing_titanyl_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_titanyl_leach_static",
+            "side": "skybluetech:baked_titanyl_leach_flowing",
+            "up": "skybluetech:baked_titanyl_leach_flowing"
+        }
+    },
+    "skybluetech:flowing_wood_creosote": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_wood_creosote_static",
+            "side": "skybluetech:baked_wood_creosote_flowing",
+            "up": "skybluetech:baked_wood_creosote_flowing"
+        }
+    },
+    "skybluetech:fuel_oil": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_fuel_oil_static",
+            "side": "skybluetech:baked_fuel_oil_flowing",
+            "up": "skybluetech:baked_fuel_oil_static"
+        }
+    },
+    "skybluetech:gold_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_gold_leach_static",
+            "side": "skybluetech:baked_gold_leach_flowing",
+            "up": "skybluetech:baked_gold_leach_static"
+        }
+    },
+    "skybluetech:gold_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_gold_solution_static",
+            "side": "skybluetech:baked_gold_solution_flowing",
+            "up": "skybluetech:baked_gold_solution_static"
+        }
+    },
+    "skybluetech:hydrochloric_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_hydrochloric_acid_static",
+            "side": "skybluetech:baked_hydrochloric_acid_flowing",
+            "up": "skybluetech:baked_hydrochloric_acid_static"
+        }
+    },
+    "skybluetech:hydrogen_chloride": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_hydrogen_chloride_static"
+    },
+    "skybluetech:iron_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_iron_leach_static",
+            "side": "skybluetech:baked_iron_leach_flowing",
+            "up": "skybluetech:baked_iron_leach_static"
+        }
+    },
+    "skybluetech:mgcl2_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_mgcl2_solution_static",
+            "side": "skybluetech:baked_mgcl2_solution_flowing",
+            "up": "skybluetech:baked_mgcl2_solution_static"
+        }
+    },
+    "skybluetech:mineral_collector": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_mineral_collector_static",
+            "side": "skybluetech:baked_mineral_collector_flowing",
+            "up": "skybluetech:baked_mineral_collector_static"
+        }
+    },
+    "skybluetech:molten_mgcl2": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_molten_mgcl2_static",
+            "side": "skybluetech:baked_molten_mgcl2_flowing",
+            "up": "skybluetech:baked_molten_mgcl2_static"
+        }
+    },
+    "skybluetech:molten_palladium": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_molten_palladium_static",
+            "side": "skybluetech:baked_molten_palladium_flowing",
+            "up": "skybluetech:baked_molten_palladium_static"
+        }
+    },
+    "skybluetech:nickel_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_nickel_leach_static",
+            "side": "skybluetech:baked_nickel_leach_flowing",
+            "up": "skybluetech:baked_nickel_leach_static"
+        }
+    },
+    "skybluetech:nickel_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_nickel_solution_static",
+            "side": "skybluetech:baked_nickel_solution_flowing",
+            "up": "skybluetech:baked_nickel_solution_static"
+        }
+    },
+    "skybluetech:organic_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_organic_waste_static",
+            "side": "skybluetech:baked_organic_waste_flowing",
+            "up": "skybluetech:baked_organic_waste_static"
+        }
+    },
+    "skybluetech:peroxide": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_peroxide_static",
+            "side": "skybluetech:baked_peroxide_flowing",
+            "up": "skybluetech:baked_peroxide_static"
+        }
+    },
+    "skybluetech:platinum_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_platinum_leach_static",
+            "side": "skybluetech:baked_platinum_leach_flowing",
+            "up": "skybluetech:baked_platinum_leach_static"
+        }
+    },
+    "skybluetech:platinum_solution": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_platinum_solution_static",
+            "side": "skybluetech:baked_platinum_solution_flowing",
+            "up": "skybluetech:baked_platinum_solution_static"
+        }
+    },
+    "skybluetech:process_water": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_process_water_static",
+            "side": "skybluetech:baked_process_water_flowing",
+            "up": "skybluetech:baked_process_water_static"
+        }
+    },
+    "skybluetech:pure_ticl4": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_pure_ticl4_static",
+            "side": "skybluetech:baked_pure_ticl4_flowing",
+            "up": "skybluetech:baked_pure_ticl4_static"
+        }
+    },
+    "skybluetech:raw_seawater": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_raw_seawater_static",
+            "side": "skybluetech:baked_raw_seawater_flowing",
+            "up": "skybluetech:baked_raw_seawater_static"
+        }
     },
     "skybluetech:shocker": {
         "sound": "iron"
@@ -1197,6 +1721,14 @@
     "skybluetech:silver_ore": {
         "textures": "skybluetech:silver_ore"
     },
+    "skybluetech:silver_slurry": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_silver_slurry_static",
+            "side": "skybluetech:baked_silver_slurry_flowing",
+            "up": "skybluetech:baked_silver_slurry_static"
+        }
+    },
     "skybluetech:so3": {
         "blockshape": "water",
         "textures": {
@@ -1232,6 +1764,10 @@
     },
     "skybluetech:steel_block": {
         "textures": "skybluetech:steel_block"
+    },
+    "skybluetech:sulfur_dioxide": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_sulfur_dioxide_static"
     },
     "skybluetech:sulfuric_acid": {
         "blockshape": "water",
@@ -1279,14 +1815,54 @@
             "west": "skybluetech:generator_frame_side"
         }
     },
+    "skybluetech:tin_acid_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tin_acid_waste_static",
+            "side": "skybluetech:baked_tin_acid_waste_flowing",
+            "up": "skybluetech:baked_tin_acid_waste_static"
+        }
+    },
     "skybluetech:tin_block": {
         "textures": "skybluetech:tin_block"
+    },
+    "skybluetech:tin_deacid_waste": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tin_deacid_waste_static",
+            "side": "skybluetech:baked_tin_deacid_waste_flowing",
+            "up": "skybluetech:baked_tin_deacid_waste_static"
+        }
+    },
+    "skybluetech:tin_neutral_liq": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_tin_neutral_liq_static",
+            "side": "skybluetech:baked_tin_neutral_liq_flowing",
+            "up": "skybluetech:baked_tin_neutral_liq_static"
+        }
     },
     "skybluetech:tin_ore": {
         "textures": "skybluetech:tin_ore"
     },
+    "skybluetech:titanium_acid": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_titanium_acid_static",
+            "side": "skybluetech:baked_titanium_acid_flowing",
+            "up": "skybluetech:baked_titanium_acid_static"
+        }
+    },
     "skybluetech:titanium_ore": {
         "textures": "skybluetech:titanium_ore"
+    },
+    "skybluetech:titanyl_leach": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_titanyl_leach_static",
+            "side": "skybluetech:baked_titanyl_leach_flowing",
+            "up": "skybluetech:baked_titanyl_leach_static"
+        }
     },
     "skybluetech:transmit_belt": {
         "client_entity": {},
@@ -1421,6 +1997,14 @@
             "south": "skybluetech:frame",
             "up": "skybluetech:frame_top",
             "west": "skybluetech:frame"
+        }
+    },
+    "skybluetech:wood_creosote": {
+        "blockshape": "water",
+        "textures": {
+            "down": "skybluetech:baked_wood_creosote_static",
+            "side": "skybluetech:baked_wood_creosote_flowing",
+            "up": "skybluetech:baked_wood_creosote_static"
         }
     }
 }

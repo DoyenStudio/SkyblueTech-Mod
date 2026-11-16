@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:evil_undead_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:evil_undead_bucket"
+        }
+    }
+}

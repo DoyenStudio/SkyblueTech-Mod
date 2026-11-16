@@ -1,0 +1,25 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.filter_cakes",
+            "icon": "skybluetech:iron_filter_cake",
+            "list": [
+                "skybluetech:iron_filter_cake",
+                "skybluetech:copper_filter_cake",
+                "skybluetech:gold_filter_cake",
+                "skybluetech:aluminum_filter_cake",
+                "skybluetech:tin_filter_cake",
+                "skybluetech:lead_filter_cake",
+                "skybluetech:silver_filter_cake",
+                "skybluetech:nickel_filter_cake",
+                "skybluetech:platinum_filter_cake",
+                "skybluetech:titanium_filter_cake",
+                "skybluetech:iron_hydroxide_cake",
+                "skybluetech:silver_chloride_cake",
+                "skybluetech:aluminum_hydroxide_cake",
+                "skybluetech:titanium_hydrate_cake",
+                "skybluetech:magnesium_hydroxide_cake"
+            ]
+        }
+    ]
+}

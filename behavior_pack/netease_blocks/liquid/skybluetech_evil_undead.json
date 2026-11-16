@@ -3,7 +3,8 @@
     "minecraft:block": {
         "components": {
             "netease:liquid": {
-                "can_float_boat": true
+                "can_float_boat": true,
+                "bucket_name": "skybluetech:evil_undead_bucket"
             }
         },
         "description": {

@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:mgcl2_solution_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:mgcl2_solution_bucket"
+        }
+    }
+}

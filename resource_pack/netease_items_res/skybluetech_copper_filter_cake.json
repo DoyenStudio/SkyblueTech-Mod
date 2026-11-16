@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:copper_filter_cake"
+        },
+        "description": {
+            "identifier": "skybluetech:copper_filter_cake"
+        }
+    }
+}

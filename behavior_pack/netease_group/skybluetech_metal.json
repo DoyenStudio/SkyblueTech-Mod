@@ -45,7 +45,14 @@
                 "skybluetech:bronze_dust",
                 "skybluetech:invar_dust",
                 "skybluetech:steel_dust",
-                "skybluetech:cupronickel_dust"
+                "skybluetech:cupronickel_dust",
+                "skybluetech:iron_oxide_dust",
+                "skybluetech:aluminum_oxide_dust",
+                "skybluetech:titanium_oxide_dust",
+                "skybluetech:purified_cassiterite_dust",
+                "skybluetech:calcium_chloride_dust",
+                "skybluetech:aluminum_electrolysis_mix",
+                "skybluetech:titanium_chlorination_mix"
             ]
         },
         {

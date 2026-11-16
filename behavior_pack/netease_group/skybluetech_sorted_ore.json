@@ -1,0 +1,20 @@
+{
+    "groups": [
+        {
+            "group_name": "itemGroup.skybluetech.sorted_ores",
+            "icon": "skybluetech:sorted_iron_ore",
+            "list": [
+                "skybluetech:sorted_iron_ore",
+                "skybluetech:sorted_copper_ore",
+                "skybluetech:sorted_gold_ore",
+                "skybluetech:sorted_aluminum_ore",
+                "skybluetech:sorted_tin_ore",
+                "skybluetech:sorted_lead_ore",
+                "skybluetech:sorted_silver_ore",
+                "skybluetech:sorted_nickel_ore",
+                "skybluetech:sorted_platinum_ore",
+                "skybluetech:sorted_titanium_ore"
+            ]
+        }
+    ]
+}

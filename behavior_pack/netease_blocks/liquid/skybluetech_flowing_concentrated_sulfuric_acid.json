@@ -4,7 +4,8 @@
         "components": {
             "netease:liquid": {
                 "spread_delay": 5,
-                "spread_range": 10
+                "spread_range": 10,
+                "bucket_name": "skybluetech:concentrated_sulfuric_acid_bucket"
             }
         },
         "description": {

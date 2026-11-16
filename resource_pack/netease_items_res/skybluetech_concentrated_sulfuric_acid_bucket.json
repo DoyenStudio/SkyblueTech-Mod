@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:concentrated_sulfuric_acid_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:concentrated_sulfuric_acid_bucket"
+        }
+    }
+}

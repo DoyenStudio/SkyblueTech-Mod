@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:flotation_waste_bucket"
+        },
+        "description": {
+            "identifier": "skybluetech:flotation_waste_bucket"
+        }
+    }
+}

@@ -15,7 +15,7 @@ from skybluetech_scripts.tooldelta.utils.timer import ExecLater, Repeat
 
 from ...common.define.facing import FACING_DXYZ
 from ...common.define.id_enum import Machinery
-from ...common.define.id_enum.fluids import CommonGas
+from ...common.define.id_enum.fluids import ChemicalGas, CommonGas
 from ...common.events.machinery.air_vent import AirVentExhaust
 from ...common.machinery_def.air_vent import (
     MODEL_ROTATIONS, FLUID_PER_CYCLE, PARTICLE_LIFETIME,
@@ -82,7 +82,9 @@ def on_exhaust(event):
     if event.dim != CF.CreateGame(LEVEL_ID).GetCurrentDimension():
         return
     if (event.fluid_id not in CommonGas.all_sub()
-            or event.facing not in MODEL_ROTATIONS or event.volume <= 0):
+            and event.fluid_id != ChemicalGas.CARBON_DIOXIDE):
+        return
+    if event.facing not in MODEL_ROTATIONS or event.volume <= 0:
         return
     block_info = CF.CreateBlockInfo(LEVEL_ID)
     block_name, aux = block_info.GetBlock(event.pos) or (None, 0)

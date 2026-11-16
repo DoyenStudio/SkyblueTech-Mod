@@ -28,6 +28,11 @@ class Dusts(SimpleEnum):
     LEAD = "skybluetech:lead_dust"
     LEAD_OXIDE = "skybluetech:lead_oxide_dust"
     LEAD_SULFATE = "skybluetech:lead_sulfate_dust"
+    IRON_OXIDE = "skybluetech:iron_oxide_dust"
+    ALUMINUM_OXIDE = "skybluetech:aluminum_oxide_dust"
+    TITANIUM_OXIDE = "skybluetech:titanium_oxide_dust"
+    PURIFIED_CASSITERITE = "skybluetech:purified_cassiterite_dust"
+    CALCIUM_CHLORIDE = "skybluetech:calcium_chloride_dust"
     SILVER = "skybluetech:silver_dust"
     NICKEL = "skybluetech:nickel_dust"
     PLATINUM = "skybluetech:platinum_dust"
@@ -48,6 +53,38 @@ class Dusts(SimpleEnum):
     SULFUR = "skybluetech:sulfur_dust"
     UNDEAD = "skybluetech:undead_dust"
     EVIL_UNDEAD = "skybluetech:evil_undead_dust"
+
+
+class FineConcentrates(SimpleEnum):
+    IRON = "skybluetech:fine_iron_conc"
+    COPPER = "skybluetech:fine_copper_conc"
+    GOLD = "skybluetech:fine_gold_conc"
+    ALUMINUM = "skybluetech:fine_aluminum_conc"
+    TIN = "skybluetech:fine_tin_conc"
+    LEAD = "skybluetech:fine_lead_conc"
+    SILVER = "skybluetech:fine_silver_conc"
+    NICKEL = "skybluetech:fine_nickel_conc"
+    PLATINUM = "skybluetech:fine_platinum_conc"
+    TITANIUM = "skybluetech:fine_titanium_conc"
+
+
+class FilterCakes(SimpleEnum):
+    IRON = "skybluetech:iron_filter_cake"
+    COPPER = "skybluetech:copper_filter_cake"
+    GOLD = "skybluetech:gold_filter_cake"
+    ALUMINUM = "skybluetech:aluminum_filter_cake"
+    TIN = "skybluetech:tin_filter_cake"
+    LEAD = "skybluetech:lead_filter_cake"
+    SILVER = "skybluetech:silver_filter_cake"
+    NICKEL = "skybluetech:nickel_filter_cake"
+    PLATINUM = "skybluetech:platinum_filter_cake"
+    TITANIUM = "skybluetech:titanium_filter_cake"
+
+    IRON_HYDROXIDE = "skybluetech:iron_hydroxide_cake"
+    SILVER_CHLORIDE = "skybluetech:silver_chloride_cake"
+    ALUMINUM_HYDROXIDE = "skybluetech:aluminum_hydroxide_cake"
+    HYDRATED_TITANIUM_OXIDE = "skybluetech:titanium_hydrate_cake"
+    MAGNESIUM_HYDROXIDE = "skybluetech:magnesium_hydroxide_cake"
 
 
 class FamicomCartidges(SimpleEnum):
@@ -104,6 +141,11 @@ class MetalTools(SimpleEnum):
     INVAR_HOE = "skybluetech:invar_hoe"
     INVAR_SWORD = "skybluetech:invar_sword"
     INVAR_MINING_HAMMER = "skybluetech:invar_mining_hammer"
+
+
+class Mixtures(SimpleEnum):
+    ALUMINUM_ELECTROLYSIS = "skybluetech:aluminum_electrolysis_mix"
+    TITANIUM_CHLORINATION = "skybluetech:titanium_chlorination_mix"
 
 
 class ObjectUpgraders(SimpleEnum):
@@ -173,6 +215,19 @@ class SkyblueTools(SimpleEnum):
     SHOVEL = "skybluetech:skyblue_shovel"
     HOE = "skybluetech:skyblue_hoe"
     SWORD = "skybluetech:skyblue_sword"
+
+
+class SortedOres(SimpleEnum):
+    IRON = "skybluetech:sorted_iron_ore"
+    COPPER = "skybluetech:sorted_copper_ore"
+    GOLD = "skybluetech:sorted_gold_ore"
+    ALUMINUM = "skybluetech:sorted_aluminum_ore"
+    TIN = "skybluetech:sorted_tin_ore"
+    LEAD = "skybluetech:sorted_lead_ore"
+    SILVER = "skybluetech:sorted_silver_ore"
+    NICKEL = "skybluetech:sorted_nickel_ore"
+    PLATINUM = "skybluetech:sorted_platinum_ore"
+    TITANIUM = "skybluetech:sorted_titanium_ore"
 
 
 class Sticks(SimpleEnum):

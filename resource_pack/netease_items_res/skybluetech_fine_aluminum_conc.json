@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:fine_aluminum_conc"
+        },
+        "description": {
+            "identifier": "skybluetech:fine_aluminum_conc"
+        }
+    }
+}

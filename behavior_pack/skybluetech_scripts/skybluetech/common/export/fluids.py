@@ -1,7 +1,7 @@
 # coding=utf-8
 """流体分类及 UI 材质。世界液体、桶和储罐纹理仍需资源定义。"""
 from ..define.id_enum.fluids import (
-    Fluids, Acid, Gas, Oil, Vanilla, Common, CommonGas, CommonOil, CommonLiquid,
+    Fluids, Acid, Chemical, ChemicalGas, Gas, Oil, Vanilla, Common, CommonGas, CommonOil, CommonLiquid,
     HotFluid, ExtremeHotFluid, HotLava, DeepLava, Molten,
 )
 from ..define.fluids.define import BasicFluidTexture
@@ -12,7 +12,7 @@ from ..define.fluids.texture import (
 )
 
 __all__ = [
-    "Fluids", "Acid", "Gas", "Oil", "Vanilla", "Common", "CommonGas", "CommonOil",
+    "Fluids", "Acid", "Chemical", "ChemicalGas", "Gas", "Oil", "Vanilla", "Common", "CommonGas", "CommonOil",
     "CommonLiquid", "HotFluid", "ExtremeHotFluid", "HotLava", "DeepLava", "Molten",
     "BasicFluidTexture", "RegisterFluidTexture", "GetFluidTexture",
     "AIR", "WATER", "WATER_VAPOR", "LAVA", "MOLTEN_METAL", "VANILLA_WATER",

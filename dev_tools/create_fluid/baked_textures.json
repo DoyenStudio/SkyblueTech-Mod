@@ -791,5 +791,662 @@
             45,
             64
         ]
+    },
+    "textures/fluid/baked/skybluetech.mineral_collector/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            224,
+            194,
+            92,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.mineral_collector/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            224,
+            194,
+            92,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.coal_tar/static": {
+        "source": "textures/fluid/liquid_resin_static",
+        "rgba": [
+            64,
+            48,
+            40,
+            240
+        ]
+    },
+    "textures/fluid/baked/skybluetech.coal_tar/flowing": {
+        "source": "textures/fluid/liquid_resin_flowing",
+        "rgba": [
+            64,
+            48,
+            40,
+            240
+        ]
+    },
+    "textures/fluid/baked/skybluetech.wood_creosote/static": {
+        "source": "textures/fluid/liquid_resin_static",
+        "rgba": [
+            148,
+            91,
+            48,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.wood_creosote/flowing": {
+        "source": "textures/fluid/liquid_resin_flowing",
+        "rgba": [
+            148,
+            91,
+            48,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.fuel_oil/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            91,
+            71,
+            42,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.fuel_oil/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            91,
+            71,
+            42,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.flotation_waste/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            154,
+            132,
+            82,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.flotation_waste/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            154,
+            132,
+            82,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.organic_waste/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            176,
+            162,
+            124,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.organic_waste/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            176,
+            162,
+            124,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.hydrochloric_acid/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            224,
+            255,
+            250,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.hydrochloric_acid/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            224,
+            255,
+            250,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.iron_leach/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            211,
+            151,
+            50,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.iron_leach/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            211,
+            151,
+            50,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.process_water/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            198,
+            218,
+            224,
+            112
+        ]
+    },
+    "textures/fluid/baked/skybluetech.process_water/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            198,
+            218,
+            224,
+            112
+        ]
+    },
+    "textures/fluid/baked/skybluetech.peroxide/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            218,
+            244,
+            255,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.peroxide/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            218,
+            244,
+            255,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.calcium_liquor/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            224,
+            215,
+            190,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.calcium_liquor/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            224,
+            215,
+            190,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.calcium_chloride/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            228,
+            242,
+            250,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.calcium_chloride/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            228,
+            242,
+            250,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.concrete_accel/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            212,
+            230,
+            244,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.concrete_accel/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            212,
+            230,
+            244,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tin_acid_waste/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            183,
+            165,
+            116,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tin_acid_waste/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            183,
+            165,
+            116,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tin_deacid_waste/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            203,
+            191,
+            151,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tin_deacid_waste/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            203,
+            191,
+            151,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tin_neutral_liq/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            211,
+            210,
+            180,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.tin_neutral_liq/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            211,
+            210,
+            180,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.sulfur_dioxide/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            246,
+            244,
+            202,
+            80
+        ]
+    },
+    "textures/fluid/baked/skybluetech.copper_leach/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            38,
+            145,
+            210,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.copper_leach/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            38,
+            145,
+            210,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.copper_solution/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            52,
+            180,
+            238,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.copper_solution/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            52,
+            180,
+            238,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.nickel_leach/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            81,
+            151,
+            85,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.nickel_leach/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            81,
+            151,
+            85,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.nickel_solution/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            91,
+            204,
+            126,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.nickel_solution/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            91,
+            204,
+            126,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.silver_slurry/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            232,
+            228,
+            206,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.silver_slurry/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            232,
+            228,
+            206,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.gold_leach/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            240,
+            177,
+            35,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.gold_leach/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            240,
+            177,
+            35,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.gold_solution/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            255,
+            212,
+            76,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.gold_solution/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            255,
+            212,
+            76,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.platinum_leach/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            188,
+            98,
+            53,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.platinum_leach/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            188,
+            98,
+            53,
+            192
+        ]
+    },
+    "textures/fluid/baked/skybluetech.platinum_solution/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            224,
+            144,
+            67,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.platinum_solution/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            224,
+            144,
+            67,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.barren_hcl/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            239,
+            222,
+            175,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.barren_hcl/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            239,
+            222,
+            175,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.aluminate/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            224,
+            234,
+            210,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.aluminate/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            224,
+            234,
+            210,
+            160
+        ]
+    },
+    "textures/fluid/baked/skybluetech.alkali_liquor/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            206,
+            224,
+            202,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.alkali_liquor/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            206,
+            224,
+            202,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.titanyl_leach/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            218,
+            201,
+            146,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.titanyl_leach/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            218,
+            201,
+            146,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.titanium_acid/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            236,
+            219,
+            193,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.titanium_acid/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            236,
+            219,
+            193,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.crude_ticl4/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            204,
+            177,
+            106,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.crude_ticl4/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            204,
+            177,
+            106,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.pure_ticl4/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            230,
+            241,
+            245,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.pure_ticl4/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            230,
+            241,
+            245,
+            128
+        ]
+    },
+    "textures/fluid/baked/skybluetech.raw_seawater/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            105,
+            187,
+            207,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.raw_seawater/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            105,
+            187,
+            207,
+            144
+        ]
+    },
+    "textures/fluid/baked/skybluetech.mgcl2_solution/static": {
+        "source": "textures/fluid/basic_water_static",
+        "rgba": [
+            218,
+            235,
+            222,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.mgcl2_solution/flowing": {
+        "source": "textures/fluid/basic_water_flowing",
+        "rgba": [
+            218,
+            235,
+            222,
+            176
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_mgcl2/static": {
+        "source": "textures/fluid/gray_molten_metal_static",
+        "rgba": [
+            241,
+            224,
+            179,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.molten_mgcl2/flowing": {
+        "source": "textures/fluid/gray_molten_metal_flowing",
+        "rgba": [
+            241,
+            224,
+            179,
+            224
+        ]
+    },
+    "textures/fluid/baked/skybluetech.acid_vapor/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            224,
+            239,
+            218,
+            80
+        ]
+    },
+    "textures/fluid/baked/skybluetech.carbon_dioxide/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            208,
+            218,
+            230,
+            64
+        ]
     }
 }

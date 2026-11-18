@@ -2,7 +2,7 @@
 """
 通用机器配方页 —— 一台机器要的东西全在这里。
 
-机器配方内容与 MiniJEI 共用 `ui/MachineRecipeLib.json`，`ui/mei_recipes/<机器>.json`
+机器配方内容与 MiniJEI 共用 `ui/common/MachineRecipeLib.json`，`ui/mei_recipes/<机器>.json`
 仅保留 MEI 包装与槽位组件选择。事实表位于 `common/define/recipe_layouts.py`，
 本包 `_layouts.py` 保留原导入路径。`BuildMachine` 查到布局就用 `_LayoutScriptFor`；
 机件加工台、工业研究、金属锤与水培床两页保留各自的脚本。
@@ -697,7 +697,7 @@ def BuildBase():  # type: () -> type
 def _LayoutScriptFor(category_id, layout, lores=None, labels=None):
     # type: (str, dict, any, any) -> type
     """
-    按共享布局表渲染配方页；控件位置由 `ui/MachineRecipeLib.json` 统一维护。
+    按共享布局表渲染配方页；控件位置由 `ui/common/MachineRecipeLib.json` 统一维护。
 
     格子：`input/<i>` / `output/<i>` / `cat/<i>`。第 i 格画布局表里第 i 个 `(种类, 槽位号)`，
     **按真实槽位号反查**（见模块头）；槽位号是 None 的是机器里有、配方从不用的格子，照画成空格（预留位置）。

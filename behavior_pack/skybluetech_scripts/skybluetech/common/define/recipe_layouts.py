@@ -2,7 +2,7 @@
 """
 机器配方内容布局的事实表，MiniJEI 与 MEI 共用。
 
-与 resource_pack/ui/MachineRecipeLib.json 的控件顺序保持一致。
+与 resource_pack/ui/common/MachineRecipeLib.json 的控件顺序保持一致。
 inputs / outputs 按 (种类, 真实槽位号) 映射到 body/input|output/<i>；
 None 表示只展示空槽。催化剂在 body/cat/<i>。
 power、segments、progress、static、flame 描述共用的动画组件。

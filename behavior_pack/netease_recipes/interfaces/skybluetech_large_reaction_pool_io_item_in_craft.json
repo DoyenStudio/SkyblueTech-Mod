@@ -1,0 +1,29 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:large_reaction_pool_io_item_in_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            " P ",
+            " F "
+        ],
+        "key": {
+            "P": {
+                "item": "skybluetech:item_transport_cable_steel"
+            },
+            "F": {
+                "item": "skybluetech:large_reaction_pool_frame"
+            }
+        },
+        "result": {
+            "item": "skybluetech:large_reaction_pool_io_item_in"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

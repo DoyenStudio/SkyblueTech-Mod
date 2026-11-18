@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:gas_metallurgical_furnace_io_gas_out_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "   ",
+            " F ",
+            " P "
+        ],
+        "key": {
+            "P": {
+                "item": "skybluetech:pipe_acidproof"
+            },
+            "F": {
+                "item": "skybluetech:gas_metallurgical_furnace_frame"
+            }
+        },
+        "result": {
+            "item": "skybluetech:gas_metallurgical_furnace_io_gas_out"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

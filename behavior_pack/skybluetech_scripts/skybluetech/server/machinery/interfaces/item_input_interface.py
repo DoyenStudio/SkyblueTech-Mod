@@ -21,7 +21,7 @@ class ItemInputInterface(ItemContainer, BaseInterface):
 
     def SetOnSlotUpdateCallback(self, callback):
         # type: (typing.Callable[[int], None]) -> None
-        self.on_slot_update_cb_ref = ref_method(callback)
+        self.on_slot_update_cb_ref = ref_method(callback) if callback is not None else None
 
     def _item_input_interface_on_slot_update(self, slot_pos):
         if self.on_slot_update_cb_ref is not None:

@@ -14,6 +14,35 @@ class BedrockLavaDrill:
     IO_FLUID = "skybluetech:bedrock_lava_drill_io_fluid"
 
 
+class LargeReactionPool:
+    CONTROLLER = "skybluetech:large_reaction_pool_controller"
+    CAP = "skybluetech:large_reaction_pool_cap"
+    FRAME = "skybluetech:large_reaction_pool_frame"
+    WINDOW = "skybluetech:large_reaction_pool_window"
+    IO_ITEM_INPUT = "skybluetech:large_reaction_pool_io_item_in"
+    IO_ITEM_OUTPUT = "skybluetech:large_reaction_pool_io_item_out"
+    IO_FLUID_INPUT_1 = "skybluetech:large_reaction_pool_io_fluid_in_1"
+    IO_FLUID_INPUT_2 = "skybluetech:large_reaction_pool_io_fluid_in_2"
+    IO_FLUID_INPUT_3 = "skybluetech:large_reaction_pool_io_fluid_in_3"
+    IO_FLUID_OUTPUT_1 = "skybluetech:large_reaction_pool_io_fluid_out_1"
+    IO_FLUID_OUTPUT_2 = "skybluetech:large_reaction_pool_io_fluid_out_2"
+    IO_ENERGY_INPUT = "skybluetech:large_reaction_pool_io_energy_in"
+    IO_HEAT_INPUT = "skybluetech:large_reaction_pool_io_heat_in"
+
+
+class GasMetallurgicalFurnace:
+    CONTROLLER = "skybluetech:gas_metallurgical_furnace_controller"
+    FRAME = "skybluetech:gas_metallurgical_furnace_frame"
+    IO_ITEM_INPUT = "skybluetech:gas_metallurgical_furnace_io_item_in"
+    IO_ITEM_OUTPUT = "skybluetech:gas_metallurgical_furnace_io_item_out"
+    IO_GAS_INPUT = "skybluetech:gas_metallurgical_furnace_io_gas_in"
+    IO_GAS_INPUT_AUXILIARY = "skybluetech:gas_metallurgical_furnace_io_gas_in_2"
+    IO_GAS_OUTPUT = "skybluetech:gas_metallurgical_furnace_io_gas_out"
+    IO_FLUID_INPUT = "skybluetech:gas_metallurgical_furnace_io_fluid_in"
+    IO_FLUID_OUTPUT = "skybluetech:gas_metallurgical_furnace_io_fluid_out"
+    IO_ENERGY_INPUT = "skybluetech:gas_metallurgical_furnace_io_energy_in"
+
+
 class DistillationColumn:
     FRAME = "skybluetech:distillation_column_frame"
     CONTROLLER = "skybluetech:distillation_column_controller"

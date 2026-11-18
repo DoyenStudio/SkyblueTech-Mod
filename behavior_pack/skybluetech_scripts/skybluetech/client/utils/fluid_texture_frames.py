@@ -66,6 +66,7 @@ FLUID_TEXTURE_TINTS = {
 }
 
 FLUID_TEXTURE_FRAMES = {
+    "textures/fluid/baked/skybluetech.argon/static": (32, 10.0),
     "textures/fluid/baked/skybluetech.tree_oil/static": (39, 10.0),
     "textures/fluid/baked/skybluetech.tree_oil/flowing": (39, 10.0),
     "textures/fluid/baked/skybluetech.molten_polyethylene/static": (39, 10.0),

@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:gas_metallurgical_furnace_frame_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "ACA",
+            "A A",
+            "ACA"
+        ],
+        "key": {
+            "A": {
+                "tag": "common:aluminum_plate"
+            },
+            "C": {
+                "tag": "common:cupronickel_plate"
+            }
+        },
+        "result": {
+            "item": "skybluetech:gas_metallurgical_furnace_frame"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

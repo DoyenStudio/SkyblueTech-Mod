@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:large_reaction_pool_frame_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "I I",
+            " C ",
+            "I I"
+        ],
+        "key": {
+            "I": {
+                "item": "minecraft:iron_bars"
+            },
+            "C": {
+                "item": "skybluetech:large_reaction_pool_cap"
+            }
+        },
+        "result": {
+            "item": "skybluetech:large_reaction_pool_frame"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

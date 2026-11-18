@@ -19,3 +19,7 @@ from . import (
 )
 
 from . import thermal_cracker, small_chemical_reactor
+from . import large_reaction_pool
+from . import gas_metallurgical_furnace
+from . import industrial_centrifuge
+from . import flotation_machine

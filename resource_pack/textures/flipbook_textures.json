@@ -1,5 +1,10 @@
 [
     {
+        "flipbook_texture": "textures/blocks/machinery/flipbook_textures/industrial_centrifuge_downside_front_active",
+        "atlas_tile": "skybluetech:industrial_centrifuge_downside_front_active",
+        "ticks_per_frame": 2
+    },
+    {
         "flipbook_texture": "textures/fluid/basic_water_flowing",
         "atlas_tile": "skybluetech:basic_water_flowing",
         "replicate": 2,
@@ -988,6 +993,11 @@
     {
         "flipbook_texture": "textures/fluid/baked/skybluetech.carbon_dioxide/static",
         "atlas_tile": "skybluetech:baked_carbon_dioxide_static",
+        "ticks_per_frame": 2
+    },
+    {
+        "flipbook_texture": "textures/fluid/baked/skybluetech.argon/static",
+        "atlas_tile": "skybluetech:baked_argon_static",
         "ticks_per_frame": 2
     }
 ]

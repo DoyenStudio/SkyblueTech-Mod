@@ -30,7 +30,7 @@ class FluidOutputInterface(GUIControl, MultiFluidContainer, BaseInterface):
 
     def SetOnFluidSlotUpdateCallback(self, callback):
         # type: (typing.Callable[[], None]) -> None
-        self.on_fluid_slot_update_cb_ref = ref_method(callback)
+        self.on_fluid_slot_update_cb_ref = ref_method(callback) if callback is not None else None
 
     def SetOnAddedFluidCallback(self, callback):
         # type: (typing.Callable[[str, float], None]) -> None

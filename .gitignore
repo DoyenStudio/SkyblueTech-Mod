@@ -30,9 +30,19 @@ world_resource_packs.json
 # The web application is maintained as an independent Git repository.
 /web/
 
-/tools/
+/tools/*
+!/tools/generate_gas_metallurgical_furnace_connections.cjs
+!/tools/generate_heavy_steel_machine_base_connections.cjs
+!/tools/generate_large_reaction_pool_connections.cjs
 
-# Keep tutorials and their entry point; ignore other documentation.
+# Keep tutorials, their entry point and the selected casing reference.
 /docs/*
 !/docs/README.md
 !/docs/tutorials/
+!/docs/reference/
+/docs/reference/*
+!/docs/reference/gas_metallurgical_furnace_frame.md
+!/docs/reference/heavy_steel_machine_base.md
+!/docs/reference/industrial_centrifuge.md
+!/docs/reference/flotation_machine.md
+!/docs/reference/large_reaction_pool.md

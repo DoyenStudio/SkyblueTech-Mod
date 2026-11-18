@@ -1,6 +1,6 @@
 # coding=utf-8
 from ..mini_jei.core import RecipesCollection
-from ..define.id_enum import Machinery, Dusts, SULFUR
+from ..define.id_enum import Machinery, Dusts, FilterCakes, FineConcentrates, SULFUR
 from ..define.tag_enum.items import IngotTag, RawTag
 from ..mini_jei.machinery.macerator import (
     MachineRecipe,
@@ -16,6 +16,7 @@ DEFAULT_POWER = 30
 
 preset = gen_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
 preset_tagged = gen_tagged_preset_recipe(DEFAULT_POWER, DEFAULT_TICK_DURATION)
+fine_concentrate = gen_preset_recipe(40, 100)
 
 
 recipes = RecipesCollection(
@@ -68,4 +69,14 @@ recipes = RecipesCollection(
     preset_tagged(IngotTag.STEEL, 1, Dusts.STEEL, 1),
     preset_tagged(IngotTag.INVAR, 1, Dusts.INVAR, 1),
     preset_tagged(IngotTag.CUPRONICKEL, 1, Dusts.CUPRONICKEL, 1),
+    fine_concentrate(FilterCakes.IRON, 1, FineConcentrates.IRON, 1),
+    fine_concentrate(FilterCakes.COPPER, 1, FineConcentrates.COPPER, 1),
+    fine_concentrate(FilterCakes.GOLD, 1, FineConcentrates.GOLD, 1),
+    fine_concentrate(FilterCakes.ALUMINUM, 1, FineConcentrates.ALUMINUM, 1),
+    fine_concentrate(FilterCakes.TIN, 1, FineConcentrates.TIN, 1),
+    fine_concentrate(FilterCakes.LEAD, 1, FineConcentrates.LEAD, 1),
+    fine_concentrate(FilterCakes.SILVER, 1, FineConcentrates.SILVER, 1),
+    fine_concentrate(FilterCakes.NICKEL, 1, FineConcentrates.NICKEL, 1),
+    fine_concentrate(FilterCakes.PLATINUM, 1, FineConcentrates.PLATINUM, 1),
+    fine_concentrate(FilterCakes.TITANIUM, 1, FineConcentrates.TITANIUM, 1),
 )  # type: RecipesCollection[MachineRecipe]

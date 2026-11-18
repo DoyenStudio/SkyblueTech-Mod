@@ -15,7 +15,7 @@ K_CRAFTING_PROGRESS = "st:crafting_progress"
 K_OUTPUT_ITEM_ID = "st:output_item_id"
 K_NEED_TOOL = "st:need_tool"
 
-# SORTED BY MACHINE NAME
+# SORTED BY MACHINE NAME A-Z
 recipes = RecipesCollection(
     id_enum.Machinery.MACHINERY_WORKSTATION,
     # air compressor
@@ -349,6 +349,42 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # industrial centrifuge
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            3: Input(id_enum.Tank.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.Tank.STEEL),
+            6: Input(id_enum.FluidPipe.CHEMICAL),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(id_enum.FluidPipe.CHEMICAL),
+        },
+        id_enum.Machinery.INDUSTRIAL_CENTRIFUGE,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
+    # flotation machine
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            3: Input(id_enum.Tank.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.FluidPipe.CHEMICAL),
+            6: Input(id_enum.AIR_COMPRESS_UNIT),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(id_enum.Tank.STEEL),
+        },
+        id_enum.Machinery.FLOTATION_MACHINE,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # fluid condenser
     MRecipe(
         {
@@ -444,6 +480,39 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
         8,
+    ),
+    MRecipe(
+        {
+            0: Input(id_enum.FluidPipe.CHEMICAL),
+            1: Input(id_enum.Tank.STEEL),
+            2: Input(id_enum.FluidPipe.CHEMICAL),
+            3: Input(id_enum.LargeReactionPool.FRAME),
+            4: Input(id_enum.Machinery.SMALL_CHEMICAL_REACTOR),
+            5: Input(id_enum.LargeReactionPool.FRAME),
+            6: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            7: Input(id_enum.ControlCircuit.PROFESSIONAL),
+            8: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+        },
+        id_enum.LargeReactionPool.CONTROLLER,
+        MRecipe.LEVEL_INVAR, MRecipe.LEVEL_INVAR, 16,
+    ),
+    # gas metal lurgical furnace
+    MRecipe(
+        {
+            0: Input(id_enum.FluidPipe.CHEMICAL),
+            1: Input(id_enum.Tank.STEEL),
+            2: Input(id_enum.FluidPipe.CHEMICAL),
+            3: Input(id_enum.GasMetallurgicalFurnace.FRAME),
+            4: Input(id_enum.Machinery.ELECTRIC_HEATER),
+            5: Input(id_enum.GasMetallurgicalFurnace.FRAME),
+            6: Input(tag_enum.IngotTag.CUPRONICKEL, is_tag=True),
+            7: Input(id_enum.ControlCircuit.PROFESSIONAL),
+            8: Input(tag_enum.IngotTag.CUPRONICKEL, is_tag=True),
+        },
+        id_enum.GasMetallurgicalFurnace.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
     ),
     # geo thermal generator
     MRecipe(

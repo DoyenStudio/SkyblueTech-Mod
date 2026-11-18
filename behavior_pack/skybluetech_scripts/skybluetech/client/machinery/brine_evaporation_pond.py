@@ -87,14 +87,17 @@ class PondFluidDisplay(object):
         self.model_origin = None
         self.applied_state = None
 
+    def read_volume(self, data):
+        return (_read_vector(data, K_FLUID_RENDER_ORIGIN), _read_vector(data, K_FLUID_RENDER_SIZE),
+                _read_fluid_surface(data))
+
     def update(self, xyz, block_data):
         # type: (tuple[int, int, int], dict | None) -> None
         data = ValueOf(block_data.get("exData")) if block_data else None
         if not isinstance(data, dict) or ValueOf(data.get(K_DESTROY_FLAG)) != 0:
             self.clear_model()
             return
-        origin = _read_vector(data, K_FLUID_RENDER_ORIGIN)
-        size = _read_vector(data, K_FLUID_RENDER_SIZE)
+        origin, size, surface = self.read_volume(data)
         if origin is None or size is None:
             self.clear_model()
             return
@@ -103,7 +106,6 @@ class PondFluidDisplay(object):
             self.clear_model()
             return
 
-        surface = _read_fluid_surface(data)
         if surface is None:
             self.clear_model()
             return
@@ -139,23 +141,27 @@ class PondFluidDisplay(object):
             self.applied_state = None
 
 
-def _remove_pond(key):
+def remove_pond(key):
     pond = loaded_ponds.pop(key, None)
     if pond is not None:
         pond.clear_model()
 
 
-@asModBlockLoadedListener(BrineEvaporationPond.CONTROLLER)
-def on_pond_loaded(event):
+def track_pond(event, display):
     key = (event.dimensionId, event.posX, event.posY, event.posZ)
     # 重复加载时清掉旧客户端实体；NBT 尚未同步也保留坐标等待后续刷新。
-    _remove_pond(key)
-    loaded_ponds[key] = PondFluidDisplay()
+    remove_pond(key)
+    loaded_ponds[key] = display
+
+
+@asModBlockLoadedListener(BrineEvaporationPond.CONTROLLER)
+def on_pond_loaded(event):
+    track_pond(event, PondFluidDisplay())
 
 
 @asModBlockRemovedListener(BrineEvaporationPond.CONTROLLER)
 def on_pond_removed(event):
-    _remove_pond((event.dimensionId, event.posX, event.posY, event.posZ))
+    remove_pond((event.dimensionId, event.posX, event.posY, event.posZ))
 
 
 @ClientInitCallback()
@@ -167,7 +173,7 @@ def update_pond_fluids():
     block_info = CF.CreateBlockInfo(LEVEL_ID)
     for key, pond in tuple(loaded_ponds.items()):
         if key[0] != current_dimension:
-            _remove_pond(key)
+            remove_pond(key)
             continue
         xyz = key[1:]
         pond.update(xyz, block_info.GetBlockEntityData(xyz))
@@ -179,7 +185,7 @@ def on_dimension_changed(event):
         return
     for key in tuple(loaded_ponds):
         if key[0] == event.fromDimensionId:
-            _remove_pond(key)
+            remove_pond(key)
     ExecLater(10.0 / 30.0, _reset_loaded_models)
 
 
@@ -198,4 +204,4 @@ def on_local_player_loaded(event):
 @ClientUninitCallback()
 def on_client_uninit():
     for key in tuple(loaded_ponds):
-        _remove_pond(key)
+        remove_pond(key)

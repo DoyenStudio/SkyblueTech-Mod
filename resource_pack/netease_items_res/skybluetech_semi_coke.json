@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:semi_coke"
+        },
+        "description": {
+            "identifier": "skybluetech:semi_coke"
+        }
+    }
+}

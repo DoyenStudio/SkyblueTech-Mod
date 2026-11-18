@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:gas_metallurgical_furnace_io_fluid_in_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            " P ",
+            " F ",
+            "   "
+        ],
+        "key": {
+            "P": {
+                "item": "skybluetech:pipe_chemical"
+            },
+            "F": {
+                "item": "skybluetech:gas_metallurgical_furnace_frame"
+            }
+        },
+        "result": {
+            "item": "skybluetech:gas_metallurgical_furnace_io_fluid_in"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

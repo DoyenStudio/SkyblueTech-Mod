@@ -1,0 +1,11 @@
+{
+    "format_version": "1.10",
+    "minecraft:item": {
+        "components": {
+            "minecraft:icon": "skybluetech:titanium_sponge"
+        },
+        "description": {
+            "identifier": "skybluetech:titanium_sponge"
+        }
+    }
+}

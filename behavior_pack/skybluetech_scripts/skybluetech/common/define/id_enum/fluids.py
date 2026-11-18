@@ -92,6 +92,7 @@ class Common(Fluids):
 class CommonGas(Common, Gas):
     "对流体管道无特殊要求的气体"
 
+    ARGON = "skybluetech:argon"
     CHLORINE = "skybluetech:chlorine"
     COMPRESSED_AIR = "skybluetech:compressed_air"
     ETHYLENE = "skybluetech:ethylene"

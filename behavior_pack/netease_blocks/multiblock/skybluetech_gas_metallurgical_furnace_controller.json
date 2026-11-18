@@ -1,0 +1,301 @@
+{
+    "format_version": "1.21.90",
+    "minecraft:block": {
+        "components": {
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3
+            },
+            "tag:minecraft:is_pickaxe_item_destructible": {},
+            "tag:minecraft:iron_tier_destructible": {},
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.gas_metallurgical_furnace_connected",
+                "culling": "skybluetech:culling.gas_metallurgical_furnace",
+                "culling_layer": "skybluetech:culling_layer.gas_metallurgical_furnace",
+                "bone_visibility": {
+                    "quadrant_east_isolated_up_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_east_isolated_up_joined": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_east_joined_up_isolated": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_east_joined_up_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_down_isolated_east_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_east_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_isolated_east_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_east_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_up_isolated_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_up_joined_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_up_isolated_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_up_joined_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_down_isolated_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_isolated_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_south_isolated_up_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_south_isolated_up_joined": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_south_joined_up_isolated": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_south_joined_up_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_down_isolated_south_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_south_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_isolated_south_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_south_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_north_isolated_up_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_north_isolated_up_joined": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_north_joined_up_isolated": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && !q.block_state('skybluetech:connection_up')",
+                    "quadrant_north_joined_up_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && q.block_state('skybluetech:connection_up')",
+                    "quadrant_down_isolated_north_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_north_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_isolated_north_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && !q.block_state('skybluetech:connection_down')",
+                    "quadrant_down_joined_north_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west'))) && q.block_state('skybluetech:connection_down')",
+                    "quadrant_east_isolated_south_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_east_isolated_south_joined": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_east_joined_south_isolated": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_east_joined_south_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_east_isolated_north_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))",
+                    "quadrant_east_isolated_north_joined": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))",
+                    "quadrant_east_joined_north_isolated": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))",
+                    "quadrant_east_joined_north_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_north'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))",
+                    "quadrant_south_isolated_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_south_joined_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_south_isolated_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_south_joined_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_east')))",
+                    "quadrant_north_isolated_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))",
+                    "quadrant_north_joined_west_isolated": "!(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))",
+                    "quadrant_north_isolated_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && !(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))",
+                    "quadrant_north_joined_west_joined": "(((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_west')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_south'))) && (((q.block_state('minecraft:cardinal_direction') == 'north') && q.block_state('skybluetech:connection_north')) || ((q.block_state('minecraft:cardinal_direction') == 'east') && q.block_state('skybluetech:connection_east')) || ((q.block_state('minecraft:cardinal_direction') == 'south') && q.block_state('skybluetech:connection_south')) || ((q.block_state('minecraft:cardinal_direction') == 'west') && q.block_state('skybluetech:connection_west')))"
+                }
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame",
+                    "render_method": "opaque"
+                },
+                "side": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame",
+                    "render_method": "opaque"
+                },
+                "horizontal": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame_horizontal",
+                    "render_method": "opaque"
+                },
+                "vertical": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame_vertical",
+                    "render_method": "opaque"
+                },
+                "edgeless": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame_edgeless",
+                    "render_method": "opaque"
+                },
+                "side_center_side": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame",
+                    "render_method": "opaque"
+                },
+                "front_center_side": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_controller_front",
+                    "render_method": "opaque"
+                },
+                "side_center_horizontal": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame_horizontal",
+                    "render_method": "opaque"
+                },
+                "front_center_horizontal": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_controller_front",
+                    "render_method": "opaque"
+                },
+                "side_center_vertical": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame_vertical",
+                    "render_method": "opaque"
+                },
+                "front_center_vertical": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_controller_front",
+                    "render_method": "opaque"
+                },
+                "side_center_edgeless": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_frame_edgeless",
+                    "render_method": "opaque"
+                },
+                "front_center_edgeless": {
+                    "texture": "skybluetech:gas_metallurgical_furnace_controller_front",
+                    "render_method": "opaque"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "minecraft:geometry.full_block",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:gas_metallurgical_furnace_frame"
+                    },
+                    "south": {
+                        "texture": "skybluetech:gas_metallurgical_furnace_controller_front"
+                    }
+                }
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:block_entity": {
+                "tick": true
+            },
+            "netease:block_container": {
+                "container_size": 2,
+                "custom_description": "气体冶金炉",
+                "screen_name": "GasMetallurgicalFurnaceUI.main"
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_machine": {},
+            "tag:skybluetech_container": {}
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:gas_metallurgical_furnace_controller",
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180
+                }
+            },
+            "states": {
+                "skybluetech:active": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_north": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_east": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_south": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_west": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_up": [
+                    false,
+                    true
+                ],
+                "skybluetech:connection_down": [
+                    false,
+                    true
+                ]
+            },
+            "base_block": "netease_container"
+        },
+        "permutations": [
+            {
+                "condition": "q.block_state('skybluetech:active')",
+                "components": {
+                    "minecraft:material_instances": {
+                        "*": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame",
+                            "render_method": "opaque"
+                        },
+                        "side": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame",
+                            "render_method": "opaque"
+                        },
+                        "horizontal": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame_horizontal",
+                            "render_method": "opaque"
+                        },
+                        "vertical": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame_vertical",
+                            "render_method": "opaque"
+                        },
+                        "edgeless": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame_edgeless",
+                            "render_method": "opaque"
+                        },
+                        "side_center_side": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame",
+                            "render_method": "opaque"
+                        },
+                        "front_center_side": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_controller_active",
+                            "render_method": "opaque"
+                        },
+                        "side_center_horizontal": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame_horizontal",
+                            "render_method": "opaque"
+                        },
+                        "front_center_horizontal": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_controller_active",
+                            "render_method": "opaque"
+                        },
+                        "side_center_vertical": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame_vertical",
+                            "render_method": "opaque"
+                        },
+                        "front_center_vertical": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_controller_active",
+                            "render_method": "opaque"
+                        },
+                        "side_center_edgeless": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_frame_edgeless",
+                            "render_method": "opaque"
+                        },
+                        "front_center_edgeless": {
+                            "texture": "skybluetech:gas_metallurgical_furnace_controller_active",
+                            "render_method": "opaque"
+                        }
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'north'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            0,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'east'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            -90,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'south'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            180,
+                            0
+                        ]
+                    }
+                }
+            },
+            {
+                "condition": "q.block_state('minecraft:cardinal_direction') == 'west'",
+                "components": {
+                    "minecraft:transformation": {
+                        "rotation": [
+                            0,
+                            90,
+                            0
+                        ]
+                    }
+                }
+            }
+        ]
+    }
+}

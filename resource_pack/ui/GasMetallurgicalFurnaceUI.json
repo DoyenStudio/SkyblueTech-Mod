@@ -1,0 +1,466 @@
+{
+    "content": {
+        "type": "panel",
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "controls": [
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        4,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        4,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        24,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tin_fluid0@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        24,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "role0": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        21,
+                        74
+                    ],
+                    "size": [
+                        24,
+                        10
+                    ],
+                    "color": [
+                        0.25,
+                        0.29,
+                        0.34
+                    ],
+                    "font_size": "small",
+                    "text": "主气",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        42,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tin_fluid1@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        42,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "role1": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        39.0,
+                        74
+                    ],
+                    "size": [
+                        24,
+                        10
+                    ],
+                    "color": [
+                        0.25,
+                        0.29,
+                        0.34
+                    ],
+                    "font_size": "small",
+                    "text": "辅气",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "fluid2@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        60,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tin_fluid2@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        60,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "role2": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        57.0,
+                        74
+                    ],
+                    "size": [
+                        24,
+                        10
+                    ],
+                    "color": [
+                        0.25,
+                        0.29,
+                        0.34
+                    ],
+                    "font_size": "small",
+                    "text": "工艺液",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "fluid3@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        160,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid3@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        160,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "role3": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        157,
+                        74
+                    ],
+                    "size": [
+                        24,
+                        10
+                    ],
+                    "color": [
+                        0.25,
+                        0.29,
+                        0.34
+                    ],
+                    "font_size": "small",
+                    "text": "尾气",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "fluid4@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        178,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tout_fluid4@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        178,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "role4": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        175.0,
+                        74
+                    ],
+                    "size": [
+                        24,
+                        10
+                    ],
+                    "color": [
+                        0.25,
+                        0.29,
+                        0.34
+                    ],
+                    "font_size": "small",
+                    "text": "产液",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "item0": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        88,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_in_item@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        88,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "item1": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        136,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_out_item@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        136,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ]
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        110,
+                        36
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        108,
+                        30
+                    ],
+                    "size": [
+                        26,
+                        26
+                    ]
+                }
+            },
+            {
+                "batch_label": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        84,
+                        61
+                    ],
+                    "size": [
+                        72,
+                        10
+                    ],
+                    "color": [
+                        0.25,
+                        0.29,
+                        0.34
+                    ],
+                    "font_size": "small",
+                    "text": "",
+                    "controls": [
+                        {
+                            "info@SkybluePanelLib.hover_info": {}
+                        }
+                    ]
+                }
+            },
+            {
+                "structure_not_finished_tip@SkybluePanelLib.structure_not_finished_tip": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 50,
+                    "offset": [
+                        5,
+                        17
+                    ],
+                    "size": [
+                        202,
+                        165
+                    ],
+                    "visible": false
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$content_size": [
+            198,
+            92
+        ],
+        "$has_tabs": false,
+        "$has_upgrades": false,
+        "$machine_content": "GasMetallurgicalFurnaceUI.content",
+        "$panel_size": [
+            212,
+            172
+        ],
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": true,
+        "$title_text": "气体冶金炉"
+    },
+    "namespace": "GasMetallurgicalFurnaceUI"
+}

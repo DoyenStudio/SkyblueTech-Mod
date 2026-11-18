@@ -1,0 +1,69 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:industrial_centrifuge_upside",
+            "geometry": {
+                "default": "geometry.skybluetech.industrial_centrifuge_upside"
+            },
+            "textures": {
+                "default": "textures/models/industrial_centrifuge_texture",
+                "empty_tube": "textures/models/industrial_centrifuge_empty_tube",
+                "fluid_atlas": "atlas.terrain"
+            },
+            "materials": {
+                "default": "entity_alphatest",
+                "fluid": "skybluetech_centrifuge_fluid"
+            },
+            "animations": {
+                "rot": "animation.skybluetech.industrial_centrifuge_upside.rot",
+                "facing": "animation.skybluetech.industrial_centrifuge_upside.facing"
+            },
+            "scripts": {
+                "initialize": [
+                    "v.working = 0;",
+                    "v.spin_speed = 0;",
+                    "v.yaw = 0;",
+                    "v.tube1 = 0;",
+                    "v.tube1_u = 0;",
+                    "v.tube1_v = 0;",
+                    "v.tube1_w = 1;",
+                    "v.tube1_h = 1;",
+                    "v.tube1_r = 1;",
+                    "v.tube1_g = 1;",
+                    "v.tube1_b = 1;",
+                    "v.tube2 = 0;",
+                    "v.tube2_u = 0;",
+                    "v.tube2_v = 0;",
+                    "v.tube2_w = 1;",
+                    "v.tube2_h = 1;",
+                    "v.tube2_r = 1;",
+                    "v.tube2_g = 1;",
+                    "v.tube2_b = 1;",
+                    "v.tube3 = 0;",
+                    "v.tube3_u = 0;",
+                    "v.tube3_v = 0;",
+                    "v.tube3_w = 1;",
+                    "v.tube3_h = 1;",
+                    "v.tube3_r = 1;",
+                    "v.tube3_g = 1;",
+                    "v.tube3_b = 1;"
+                ],
+                "pre_animation": [
+                    "v.spin_speed = math.lerp(v.spin_speed, v.working, 1.0 - math.pow(0.5, math.clamp(q.delta_time, 0.0, 0.1) * 6.0));",
+                    "v.spin_speed = math.abs(v.spin_speed - v.working) < 0.001 ? v.working : v.spin_speed;"
+                ],
+                "animate": [
+                    "facing",
+                    "rot"
+                ]
+            },
+            "render_controllers": [
+                "controller.render.skybluetech.industrial_centrifuge",
+                "controller.render.skybluetech.industrial_centrifuge.tube1",
+                "controller.render.skybluetech.industrial_centrifuge.tube2",
+                "controller.render.skybluetech.industrial_centrifuge.tube3"
+            ]
+        }
+    }
+}

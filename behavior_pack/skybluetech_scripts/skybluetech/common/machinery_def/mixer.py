@@ -69,6 +69,16 @@ recipes = RecipesCollection(
     MixerRecipe(
         "minecraft:water",
         100,
+        id_enum.Dusts.CARBON,
+        1,
+        "minecraft:black_dye",
+        1,
+        tick_duration=40,
+        power_cost=20,
+    ),
+    MixerRecipe(
+        "minecraft:water",
+        100,
         id_enum.Dusts.SAWDUST,
         2,
         id_enum.RAW_PAPER,

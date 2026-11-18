@@ -1,4 +1,593 @@
 {
+    "IndustrialCentrifuge@MachineRecipeLib.content_base": {
+        "type": "panel",
+        "size": [
+            154,
+            62
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
+                }
+            },
+            {
+                "power@MachineRecipeLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        4,
+                        4
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input0",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                30,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "output": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output0",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                90,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "1@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output1",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                112,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "2@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output2",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                134,
+                                                22
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.progress_sprite": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 1,
+                                "offset": [
+                                    59,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "progress_hover@$recipe_progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 9,
+                                "offset": [
+                                    59,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "FlotationMachine@MachineRecipeLib.content_base": {
+        "type": "panel",
+        "size": [
+            154,
+            62
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
+                }
+            },
+            {
+                "power@MachineRecipeLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [
+                        4,
+                        4
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input0",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                22,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "1@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input1",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                44,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "2@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input2",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                64,
+                                                22
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "output": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output0",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                112,
+                                                12
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "1@$recipe_item_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output1",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                112,
+                                                34
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ]
+                                        }
+                                    },
+                                    {
+                                        "2@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output2",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [
+                                                132,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.progress_sprite": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 1,
+                                "offset": [
+                                    86,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "progress_hover@$recipe_progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 9,
+                                "offset": [
+                                    86,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
+    "fluid_channel_number": {
+        "type": "label",
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [18, 10],
+        "text_alignment": "center",
+        "font_size": "small",
+        "shadow": true
+    },
+    "LargeReactionPool@MachineRecipeLib.GasMetallurgicalFurnace": {
+        "$show_fluid_channel_numbers": true
+    },
+    "GasMetallurgicalFurnace@MachineRecipeLib.content_base": {
+        "$show_fluid_channel_numbers|default": false,
+        "type": "panel",
+        "size": [
+            176,
+            62
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "fluid_channel_numbers": {
+                    "type": "panel",
+                    "ignored": "(not $show_fluid_channel_numbers)",
+                    "size": ["100%", "100%"],
+                    "layer": 20,
+                    "controls": [
+                        { "channel_0@MachineRecipeLib.fluid_channel_number": { "offset": [38, 45], "text": "Ⅰ" } },
+                        { "channel_1@MachineRecipeLib.fluid_channel_number": { "offset": [56, 45], "text": "Ⅱ" } },
+                        { "channel_2@MachineRecipeLib.fluid_channel_number": { "offset": [74, 45], "text": "Ⅲ" } },
+                        { "channel_3@MachineRecipeLib.fluid_channel_number": { "offset": [136, 45], "text": "Ⅰ" } },
+                        { "channel_4@MachineRecipeLib.fluid_channel_number": { "offset": [154, 45], "text": "Ⅱ" } }
+                    ]
+                }
+            },
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
+                }
+            },
+            {
+                "power@MachineRecipeLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        4,
+                        4
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ],
+                    "layer": 2
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_item_slot": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                20,
+                                                22
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ],
+                                            "$binding_name_prefix": "mei_ui.recipe.input0"
+                                        }
+                                    },
+                                    {
+                                        "1@$recipe_fluid_slot": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                38,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "$binding_name_prefix": "mei_ui.recipe.input1"
+                                        }
+                                    },
+                                    {
+                                        "2@$recipe_fluid_slot": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                56,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "$binding_name_prefix": "mei_ui.recipe.input2"
+                                        }
+                                    },
+                                    {
+                                        "3@$recipe_fluid_slot": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                74,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "$binding_name_prefix": "mei_ui.recipe.input3"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "output": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_item_slot": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                116,
+                                                22
+                                            ],
+                                            "size": [
+                                                18,
+                                                18
+                                            ],
+                                            "$binding_name_prefix": "mei_ui.recipe.output0"
+                                        }
+                                    },
+                                    {
+                                        "1@$recipe_fluid_slot": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                136,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "$binding_name_prefix": "mei_ui.recipe.output1"
+                                        }
+                                    },
+                                    {
+                                        "2@$recipe_fluid_slot": {
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                154,
+                                                4
+                                            ],
+                                            "size": [
+                                                18,
+                                                54
+                                            ],
+                                            "$binding_name_prefix": "mei_ui.recipe.output2"
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.progress_sprite": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    92,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ],
+                                "layer": 1
+                            }
+                        },
+                        {
+                            "progress_hover@$recipe_progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    92,
+                                    24
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ],
+                                "layer": 9
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "AirCompressor@MachineRecipeLib.content_base": {
         "type": "panel",
         "size": [

@@ -1,0 +1,150 @@
+{
+    "format_version": "1.10.0",
+    "render_controllers": {
+        "controller.render.skybluetech.industrial_centrifuge": {
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Texture.default"
+            ],
+            "part_visibility": [
+                {
+                    "fluid_tube*": false
+                }
+            ]
+        },
+        "controller.render.skybluetech.industrial_centrifuge.tube1": {
+            "arrays": {
+                "textures": {
+                    "Array.tubes": [
+                        "Texture.empty_tube",
+                        "Texture.fluid_atlas"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.fluid"
+                }
+            ],
+            "textures": [
+                "Array.tubes[v.tube1]"
+            ],
+            "part_visibility": [
+                {
+                    "*": false
+                },
+                {
+                    "fluid_tube1": true
+                }
+            ],
+            "uv_anim": {
+                "offset": [
+                    "v.tube1_u",
+                    "v.tube1_v"
+                ],
+                "scale": [
+                    "v.tube1_w",
+                    "v.tube1_h"
+                ]
+            },
+            "color": {
+                "r": "v.tube1_r",
+                "g": "v.tube1_g",
+                "b": "v.tube1_b",
+                "a": 1
+            }
+        },
+        "controller.render.skybluetech.industrial_centrifuge.tube2": {
+            "arrays": {
+                "textures": {
+                    "Array.tubes": [
+                        "Texture.empty_tube",
+                        "Texture.fluid_atlas"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.fluid"
+                }
+            ],
+            "textures": [
+                "Array.tubes[v.tube2]"
+            ],
+            "part_visibility": [
+                {
+                    "*": false
+                },
+                {
+                    "fluid_tube2": true
+                }
+            ],
+            "uv_anim": {
+                "offset": [
+                    "v.tube2_u",
+                    "v.tube2_v"
+                ],
+                "scale": [
+                    "v.tube2_w",
+                    "v.tube2_h"
+                ]
+            },
+            "color": {
+                "r": "v.tube2_r",
+                "g": "v.tube2_g",
+                "b": "v.tube2_b",
+                "a": 1
+            }
+        },
+        "controller.render.skybluetech.industrial_centrifuge.tube3": {
+            "arrays": {
+                "textures": {
+                    "Array.tubes": [
+                        "Texture.empty_tube",
+                        "Texture.fluid_atlas"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.fluid"
+                }
+            ],
+            "textures": [
+                "Array.tubes[v.tube3]"
+            ],
+            "part_visibility": [
+                {
+                    "*": false
+                },
+                {
+                    "fluid_tube3": true
+                }
+            ],
+            "uv_anim": {
+                "offset": [
+                    "v.tube3_u",
+                    "v.tube3_v"
+                ],
+                "scale": [
+                    "v.tube3_w",
+                    "v.tube3_h"
+                ]
+            },
+            "color": {
+                "r": "v.tube3_r",
+                "g": "v.tube3_g",
+                "b": "v.tube3_b",
+                "a": 1
+            }
+        }
+    }
+}

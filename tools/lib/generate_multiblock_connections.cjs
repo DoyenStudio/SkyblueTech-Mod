@@ -1,16 +1,24 @@
 'use strict';
 
-// Shared authoring tool for 16px shells with configurable borders and center screws.
+// Shared authoring tool for 16px shells with configurable borders, screws or CTM quadrants.
 // Generates JSON only; never imports or executes mod Python.
-module.exports = function generateConnections({ family, variants, borderWidth = 2, centerScrews = true, controllerFront = 'controller_front', controllerFrontActive = 'controller_front_active', blockFiles = {}, textureNames = {}, textureDirectory = `textures/blocks/multi_block_structure/${family}` }) {
+module.exports = function generateConnections({ family, variants, geometryName = family, borderWidth = 2, centerScrews = true, quadrantConnections = false, quadrantPanelSize = 0, controllerFront = 'controller_front', controllerFrontActive = 'controller_front_active', blockFiles = {}, textureNames = {}, textureDirectory = `textures/blocks/multi_block_structure/${family}`, renderMethod = 'opaque' }) {
     if (!Number.isInteger(borderWidth) || borderWidth < 1 || borderWidth > 5) throw new Error('Invalid border width.');
+    if (![0, 4, 6, 8].includes(quadrantPanelSize) || (quadrantPanelSize && !quadrantConnections)) {
+        throw new Error('Fixed quadrant panels require quadrant connections and a 4px, 6px or 8px center.');
+    }
+    if (quadrantConnections && !quadrantPanelSize && variants.some(([suffix, side]) => suffix === 'controller' || side !== 'frame')) {
+        throw new Error('Quadrant connections support only plain frame variants without a controller.');
+    }
     const end = 16 - borderWidth;
     const inner = 16 - 2 * borderWidth;
+    const panelHalf = quadrantPanelSize / 2;
+    const panelEdge = (16 - quadrantPanelSize) / 2;
     const fs = require('node:fs');
     const path = require('node:path');
     const root = path.resolve(__dirname, '../..');
-    const geometryId = `geometry.skybluetech.${family}_connected`;
-    const cullingId = `skybluetech:culling.${family}`;
+    const geometryId = `geometry.skybluetech.${geometryName}_connected`;
+    const cullingId = `skybluetech:culling.${geometryName}`;
     const cullingLayer = `skybluetech:culling_layer.${family}`;
     const textureId = name => 'skybluetech:' + (textureNames[name] || `${family}_${name}`);
     const horizontal = ['north', 'east', 'south', 'west'];
@@ -58,7 +66,8 @@ module.exports = function generateConnections({ family, variants, borderWidth = 
         const origin = points[0].map((a, axis) => Math.min(a, points[1][axis]));
         const size = points[0].map((a, axis) => Math.abs(a - points[1][axis]));
         const faceMaterial = face === 'north' ? 'front' : 'side';
-        const material = textureRegion === 'edgeless' ? 'edgeless' : faceMaterial + (textureRegion === 'center' ? '_center' : '');
+        const material = quadrantConnections ? (textureRegion.startsWith('center_') ? faceMaterial + '_' + textureRegion : textureRegion)
+            : textureRegion === 'edgeless' ? 'edgeless' : faceMaterial + (textureRegion === 'center' ? '_center' : '');
         return {
             origin, size,
             uv: { [face]: { uv: [sourceU, sourceV], uv_size: [width, height], material_instance: material } },
@@ -79,6 +88,34 @@ module.exports = function generateConnections({ family, variants, borderWidth = 
         const [right, bottom] = faceAxes[face];
         const left = opposite[right];
         const top = opposite[bottom];
+        if (quadrantConnections) {
+            // CTM sprites change whole 8px quadrants, including their center and screws.
+            // Share each two-neighbor predicate between the corresponding face corners.
+            for (const [u, hDirection] of [[0, left], [8, right]]) {
+                for (const [v, vDirection] of [[0, top], [8, bottom]]) {
+                    for (const hJoined of [false, true]) {
+                        for (const vJoined of [false, true]) {
+                            const requirements = { [hDirection]: hJoined, [vDirection]: vJoined };
+                            const name = 'quadrant_' + Object.keys(requirements).sort().map(d => d + (requirements[d] ? '_joined' : '_isolated')).join('_');
+                            const region = hJoined && vJoined ? 'edgeless' : hJoined ? 'horizontal' : vJoined ? 'vertical' : 'side';
+                            if (quadrantPanelSize) {
+                                // Preserve the centered artwork at its original UV and pixel scale.
+                                const centerU = u === 0 ? panelEdge : 8;
+                                const centerV = v === 0 ? panelEdge : 8;
+                                const outerU = u === 0 ? 0 : 8 + panelHalf;
+                                const outerV = v === 0 ? 0 : 8 + panelHalf;
+                                addPatch(name, matching(requirements), face, u, outerV, 8, panelEdge, u, outerV, region);
+                                addPatch(name, matching(requirements), face, outerU, centerV, panelEdge, panelHalf, outerU, centerV, region);
+                                addPatch(name, matching(requirements), face, centerU, centerV, panelHalf, panelHalf, centerU, centerV, 'center_' + region);
+                            } else {
+                                addPatch(name, matching(requirements), face, u, v, 8, 8, u, v, region);
+                            }
+                        }
+                    }
+                }
+            }
+            continue;
+        }
         // Share center visibility across all six faces to stay below 64 visibility entries.
         // Joined frame centers use frame_edgeless; panel/port centers retain their original art.
         for (const joined of [false, true]) {
@@ -145,7 +182,21 @@ module.exports = function generateConnections({ family, variants, borderWidth = 
     }
 
     function materials(side, front = side) {
-        const instance = texture => ({ texture: textureId(texture), render_method: 'opaque' });
+        const instance = texture => ({ texture: textureId(texture), render_method: renderMethod });
+        if (quadrantConnections) {
+            const result = {
+                '*': instance('frame'), side: instance('frame'),
+                horizontal: instance('frame_horizontal'), vertical: instance('frame_vertical'),
+                edgeless: instance('frame_edgeless'),
+            };
+            if (quadrantPanelSize) {
+                for (const [region, frame] of Object.entries({ side: 'frame', horizontal: 'frame_horizontal', vertical: 'frame_vertical', edgeless: 'frame_edgeless' })) {
+                    result['side_center_' + region] = instance(side === 'frame' ? frame : side);
+                    result['front_center_' + region] = instance(front === 'frame' ? frame : front);
+                }
+            }
+            return result;
+        }
         // Plain shells use the shared base when connected; panels/ports keep their art.
         const center = texture => ['frame', 'controller_side'].includes(texture) ? 'frame_edgeless' : texture;
         return {
@@ -161,7 +212,7 @@ module.exports = function generateConnections({ family, variants, borderWidth = 
         '                    "pivot": [0, 8, 0],\n                    "cubes": [\n' +
         group.cubes.map(cube => '                        ' + JSON.stringify(cube)).join(',\n') +
         '\n                    ]\n                }').join(',\n');
-    write(`resource_pack/models/blocks/${family}_connected.geo.json`,
+    write(`resource_pack/models/blocks/${geometryName}_connected.geo.json`,
         '{\n    "format_version": "1.12.0",\n    "minecraft:geometry": [{\n' +
         '        "description": ' + JSON.stringify({ identifier: geometryId, texture_width: 16, texture_height: 16, visible_bounds_width: 2, visible_bounds_height: 2, visible_bounds_offset: [0, 0.5, 0] }) + ',\n' +
         '        "bones": [\n' + boneText + '\n        ]\n    }]\n}\n');
@@ -170,7 +221,7 @@ module.exports = function generateConnections({ family, variants, borderWidth = 
         direction: Object.keys(cube.uv)[0], condition: 'same_culling_layer',
         geometry_part: { bone: name, cube: index, face: Object.keys(cube.uv)[0] },
     })));
-    write(`resource_pack/block_culling/${family}.json`,
+    write(`resource_pack/block_culling/${geometryName}.json`,
         '{\n    "format_version": "1.21.80",\n    "minecraft:block_culling_rules": {\n' +
         `        "description": { "identifier": "${cullingId}" },\n        "rules": [\n` +
         cullingRules.map(rule => '            ' + JSON.stringify(rule)).join(',\n') + '\n        ]\n    }\n}\n');
@@ -203,6 +254,11 @@ module.exports = function generateConnections({ family, variants, borderWidth = 
                 : { '*': { texture: textureId(side) } },
         };
         components['netease:neighborchanged_sendto_script'] = { value: true };
+        if (renderMethod !== 'opaque') {
+            for (const material of Object.values(components['minecraft:item_visual'].material_instances)) {
+                material.render_method = renderMethod;
+            }
+        }
         components['netease:listen_block_remove'] = { value: true };
         components['netease:block_entity'] ??= {};
         if (controller) {
@@ -232,5 +288,5 @@ module.exports = function generateConnections({ family, variants, borderWidth = 
         atlasText = atlasText.replace(anchor, `        "${id}": {${newline}            "textures": "${texture}"${newline}        },${newline}` + anchor);
     }
     write('resource_pack/textures/terrain_texture.json', atlasText);
-    console.log(`Generated ${family}: ${groups.size} bone groups, ${cullingRules.length} face patches, and ${variants.length} block definitions.`);
+    console.log(`Generated ${geometryName}: ${groups.size} bone groups, ${cullingRules.length} face patches, and ${variants.length} block definitions.`);
 };

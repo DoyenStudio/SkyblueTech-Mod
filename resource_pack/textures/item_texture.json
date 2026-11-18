@@ -1032,6 +1032,18 @@
         },
         "skybluetech:wrench_skyblue_useless": {
             "textures": "textures/items/charged_tools/wrench_skyblue"
+        },
+        "skybluetech:magnesium_pellet": {
+            "textures": "textures/items/magnesium_pellet"
+        },
+        "skybluetech:titanium_sponge": {
+            "textures": "textures/items/titanium_sponge"
+        },
+        "skybluetech:semi_coke": {
+            "textures": "textures/items/semi_coke"
+        },
+        "skybluetech:mineral_ash": {
+            "textures": "textures/items/mineral_ash"
         }
     },
     "texture_name": "atlas.items"

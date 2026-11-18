@@ -10,6 +10,35 @@ control_def 是 MEI 外壳的注册名，内容布局本身不依赖 MEI。
 """
 
 LAYOUTS = {
+    "skybluetech:industrial_centrifuge_downside": {
+        "file": "IndustrialCentrifuge", "control_def": "SkyblueMeiIndustrialCentrifuge.RECIPES_GRID",
+        "inputs": (("fluid", 0),),
+        "outputs": (("fluid", 1), ("fluid", 2), ("item", 0)),
+        "catalysts": 0, "power": "use", "segments": 17,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
+    "skybluetech:flotation_machine": {
+        "file": "FlotationMachine", "control_def": "SkyblueMeiFlotationMachine.RECIPES_GRID",
+        "inputs": (("fluid", 0), ("fluid", 1), ("item", 0)),
+        "outputs": (("item", 1), ("item", 2), ("fluid", 2)),
+        "catalysts": 0, "power": "use", "segments": 17,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
+    "skybluetech:large_reaction_pool_controller": {
+        "file": "LargeReactionPool", "control_def": "SkyblueMeiLargeReactionPool.RECIPES_GRID",
+        "inputs": (("item", 0), ("fluid", 0), ("fluid", 1), ("fluid", 3)),
+        "outputs": (("item", 1), ("fluid", 2), ("fluid", 4)),
+        "catalysts": 0, "power": "use", "segments": 17,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
+    "skybluetech:gas_metallurgical_furnace_controller": {
+        "file": "GasMetallurgicalFurnace",
+        "control_def": "SkyblueMeiGasMetallurgicalFurnace.RECIPES_GRID",
+        "inputs": (("item", 0), ("fluid", 0), ("fluid", 1), ("fluid", 2)),
+        "outputs": (("item", 1), ("fluid", 3), ("fluid", 4)),
+        "catalysts": 0, "power": "use", "segments": 17,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
     "skybluetech:specialized_growth_chamber": {
         "file": "SpecializedGrowthChamber", "control_def": "SkyblueMeiSpecializedGrowthChamber.RECIPES_GRID",
         "inputs": (("fluid", 0), ("item", 0)), "outputs": (("fluid", 1), ("item", 3)),

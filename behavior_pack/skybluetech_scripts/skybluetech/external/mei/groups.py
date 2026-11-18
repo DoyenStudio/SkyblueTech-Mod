@@ -70,7 +70,7 @@ SHARED = (
         "bronze_dust", "invar_dust", "steel_dust", "cupronickel_dust",
         "ancient_debris_dust", "carbon_dust", "lapis_dust", "obsidian_dust", "sulfur_dust", "concrete_dust",
         "iron_oxide_dust", "aluminum_oxide_dust", "titanium_oxide_dust", "purified_cassiterite_dust",
-        "calcium_chloride_dust", "aluminum_electrolysis_mix", "titanium_chlorination_mix")),
+        "calcium_chloride_dust", "mineral_ash", "aluminum_electrolysis_mix", "titanium_chlorination_mix")),
 )
 """
 (组的键, .lang 的键, (物品 id, ...))：和原版、别的模组一起的组。原版那几组的键照 MEI 原版扩展（creative/table.py、creative/groups.py）；
@@ -78,6 +78,22 @@ SHARED = (
 """
 
 OWN = (
+    ("skybluetech:group.heavy_steel_machine_base", "itemGroup.skybluetech.heavy_steel_machine_base", _ids(
+        "heavy_steel_machine_base")),
+    ("skybluetech:group.large_reaction_pool", "itemGroup.skybluetech.large_reaction_pool", _ids(
+        "large_reaction_pool_controller", "large_reaction_pool_cap", "large_reaction_pool_frame",
+        "large_reaction_pool_window", "large_reaction_pool_io_item_in", "large_reaction_pool_io_item_out",
+        "large_reaction_pool_io_fluid_in_1", "large_reaction_pool_io_fluid_in_2", "large_reaction_pool_io_fluid_in_3",
+        "large_reaction_pool_io_fluid_out_1", "large_reaction_pool_io_fluid_out_2", "large_reaction_pool_io_energy_in",
+        "large_reaction_pool_io_heat_in",
+    )),
+    ("skybluetech:group.gas_metallurgical_furnace", "itemGroup.skybluetech.gas_metallurgical_furnace", _ids(
+        "gas_metallurgical_furnace_controller", "gas_metallurgical_furnace_frame",
+        "gas_metallurgical_furnace_io_item_in", "gas_metallurgical_furnace_io_item_out",
+        "gas_metallurgical_furnace_io_gas_in", "gas_metallurgical_furnace_io_gas_in_2",
+        "gas_metallurgical_furnace_io_gas_out", "gas_metallurgical_furnace_io_fluid_in",
+        "gas_metallurgical_furnace_io_fluid_out", "gas_metallurgical_furnace_io_energy_in",
+        "magnesium_pellet", "titanium_sponge")),
     ("skybluetech:group.distillation_column", "itemGroup.skybluetech.distillation_column", _ids(
         "distillation_column_controller", "distillation_column_frame", "distillation_column_io_heat",
         "distillation_column_io_fluid1", "distillation_column_io_fluid2")),
@@ -85,7 +101,7 @@ OWN = (
         "assembler", "electric_machinery_workstation", "machinery_workstation")),
     ("skybluetech:group.machinery_production", "itemGroup.skybluetech.machinery_production", _ids(
         "alloy_furnace", "compressor", "distillation_chamber", "electric_crafter", "electrolyzer",
-        "engraver", "fluid_condenser", "freezer", "heat_melting_chamber", "thermal_cracker", "small_chemical_reactor", "hydroponic_base", "hydroponic_bed",
+        "engraver", "fluid_condenser", "industrial_centrifuge_downside", "flotation_machine", "freezer", "heat_melting_chamber", "thermal_cracker", "small_chemical_reactor", "hydroponic_base", "hydroponic_bed",
         "hydroponic_bed_sand", "macerator", "magma_centrifuge", "magma_furnace", "metal_press", "mixed_macerator", "mixer",
         "oil_extractor", "precision_cutter", "redstone_furnace", "sawmill", "template_assembler")),
     ("skybluetech:group.machinery_energy", "itemGroup.skybluetech.machinery_energy", _ids(

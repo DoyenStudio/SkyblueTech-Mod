@@ -1,4 +1,12 @@
 {
+    "skybluetech:flowing_argon": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_argon_static"
+    },
+    "skybluetech:argon": {
+        "blockshape": "water",
+        "textures": "skybluetech:baked_argon_static"
+    },
     "format_version": [
         1,
         1,
@@ -642,6 +650,117 @@
         "sound": "iron",
         "textures": "skybluetech:distillation_column_frame"
     },
+    "skybluetech:heavy_steel_machine_base": {
+        "sound": "iron",
+        "textures": "skybluetech:heavy_steel_machine_base_frame"
+    },
+    "skybluetech:large_reaction_pool_controller": {
+        "client_entity": {},
+        "sound": "metal",
+        "textures": {
+            "down": "skybluetech:large_reaction_pool_frame",
+            "east": "skybluetech:large_reaction_pool_frame",
+            "north": "skybluetech:large_reaction_pool_controller_front",
+            "south": "skybluetech:large_reaction_pool_frame",
+            "up": "skybluetech:large_reaction_pool_frame",
+            "west": "skybluetech:large_reaction_pool_frame"
+        }
+    },
+    "skybluetech:large_reaction_pool_cap": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_cap_frame"
+    },
+    "skybluetech:large_reaction_pool_frame": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_frame"
+    },
+    "skybluetech:large_reaction_pool_window": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_window_frame"
+    },
+    "skybluetech:large_reaction_pool_io_item_in": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_item_in"
+    },
+    "skybluetech:large_reaction_pool_io_item_out": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_item_out"
+    },
+    "skybluetech:large_reaction_pool_io_fluid_in_1": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_fluid_in_1"
+    },
+    "skybluetech:large_reaction_pool_io_fluid_in_2": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_fluid_in_2"
+    },
+    "skybluetech:large_reaction_pool_io_fluid_in_3": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_fluid_in_3"
+    },
+    "skybluetech:large_reaction_pool_io_fluid_out_1": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_fluid_out_1"
+    },
+    "skybluetech:large_reaction_pool_io_fluid_out_2": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_fluid_out_2"
+    },
+    "skybluetech:large_reaction_pool_io_energy_in": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_energy_in"
+    },
+    "skybluetech:large_reaction_pool_io_heat_in": {
+        "sound": "metal",
+        "textures": "skybluetech:large_reaction_pool_io_heat_in"
+    },
+    "skybluetech:gas_metallurgical_furnace_frame": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_frame"
+    },
+    "skybluetech:gas_metallurgical_furnace_controller": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:gas_metallurgical_furnace_frame",
+            "east": "skybluetech:gas_metallurgical_furnace_frame",
+            "north": "skybluetech:gas_metallurgical_furnace_controller_front",
+            "south": "skybluetech:gas_metallurgical_furnace_frame",
+            "up": "skybluetech:gas_metallurgical_furnace_frame",
+            "west": "skybluetech:gas_metallurgical_furnace_frame"
+        }
+    },
+    "skybluetech:gas_metallurgical_furnace_io_item_in": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_item_in"
+    },
+    "skybluetech:gas_metallurgical_furnace_io_item_out": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_item_out"
+    },
+    "skybluetech:gas_metallurgical_furnace_io_gas_in": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_gas_in"
+    },
+    "skybluetech:gas_metallurgical_furnace_io_gas_in_2": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_gas_in_2"
+    },
+    "skybluetech:gas_metallurgical_furnace_io_gas_out": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_gas_out"
+    },
+    "skybluetech:gas_metallurgical_furnace_io_fluid_in": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_fluid_in"
+    },
+    "skybluetech:gas_metallurgical_furnace_io_fluid_out": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_fluid_out"
+    },
+    "skybluetech:gas_metallurgical_furnace_io_energy_in": {
+        "sound": "iron",
+        "textures": "skybluetech:gas_metallurgical_furnace_io_energy_in"
+    },
     "skybluetech:battery_matrix_frame": {
         "textures": "skybluetech:battery_matrix_frame"
     },
@@ -1239,6 +1358,26 @@
         }
     },
     "skybluetech:gas_burning_generator": {
+        "sound": "iron"
+    },
+    "skybluetech:industrial_centrifuge_downside": {
+        "sound": "iron",
+        "textures": {
+            "north": "skybluetech:industrial_centrifuge_downside_front",
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:industrial_centrifuge_side_downside",
+            "south": "skybluetech:industrial_centrifuge_side_downside",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:industrial_centrifuge_side_downside"
+        }
+    },
+    "skybluetech:industrial_centrifuge_upside": {
+        "sound": "iron",
+        "client_entity": {
+            "identifier": "skybluetech:industrial_centrifuge_upside"
+        }
+    },
+    "skybluetech:flotation_machine": {
         "sound": "iron"
     },
     "skybluetech:geothermal_generator": {

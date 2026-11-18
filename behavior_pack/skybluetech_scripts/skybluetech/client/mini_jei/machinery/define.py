@@ -169,7 +169,7 @@ class _AnimatedRenderer(MachineRecipeRendererBase):
             for side, values in (("input", self.GetDisplayInputs()), ("output", self.GetDisplayOutputs())):
                 for index, (kind, slot) in enumerate(self.layout[side + "s"]):
                     if kind == "fluid" and slot not in values.get("fluid", {}):
-                        SetHoverText(self.GetControl(panel, "content/body/%s/%d" % (side, index)), "§7空（这条配方不用）")
+                        SetHoverText(self.GetControl(panel, "content/body/%s/%d" % (side, index)), "§7空闲")
             self.has_progress = self.layout["progress"] is not None
             self.has_flame = self.layout["flame"]
             has_power_bar = self.layout["power"] is not None
@@ -178,7 +178,7 @@ class _AnimatedRenderer(MachineRecipeRendererBase):
             used = set(self.GetDisplayInputs().get("fluid", {})) | set(self.GetDisplayOutputs().get("fluid", {}))
             for i in range(8):
                 if i not in used and _has(panel, "fluid%d" % i):
-                    SetHoverText(self.GetControl(panel, "fluid%d" % i), "§7空（这条配方不用）")
+                    SetHoverText(self.GetControl(panel, "fluid%d" % i), "§7空闲")
             self.has_progress = _has(panel, "progress")
             self.has_flame = _has(panel, "flame")
             has_power_bar = _has(panel, "power_bar")

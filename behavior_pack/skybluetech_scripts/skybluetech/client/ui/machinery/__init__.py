@@ -22,6 +22,8 @@ from .fluid_condenser import FluidCondenserUI
 from .fluid_input_interface import FluidInputInterfaceUI
 from .fluid_output_interface import FluidOutputInterfaceUI
 from .fluid_splitter import FluidSplitterUI
+from .industrial_centrifuge import IndustrialCentrifugeUI
+from .flotation_machine import FlotationMachineUI
 from .forester import ForesterUI
 from .freezer import FreezerUI
 from .fuel_heater import FuelHeaterUI
@@ -68,3 +70,5 @@ from .heat_melting_chamber import HeatMeltingChamberUI
 
 from .thermal_cracker import ThermalCrackerUI
 from .small_chemical_reactor import SmallChemicalReactorUI
+from .large_reaction_pool import LargeReactionPoolUI
+from .gas_metallurgical_furnace import GasMetallurgicalFurnaceUI

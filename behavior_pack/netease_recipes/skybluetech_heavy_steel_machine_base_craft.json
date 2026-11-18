@@ -1,0 +1,33 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:heavy_steel_machine_base_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "SRS",
+            "RIR",
+            "SRS"
+        ],
+        "key": {
+            "S": {
+                "tag": "common:steel_plate"
+            },
+            "R": {
+                "item": "minecraft:iron_bars"
+            },
+            "I": {
+                "tag": "common:invar_plate"
+            }
+        },
+        "result": {
+            "item": "skybluetech:heavy_steel_machine_base"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

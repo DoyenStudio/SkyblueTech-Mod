@@ -3,6 +3,7 @@ from skybluetech_scripts.skybluetech.common.define.id_enum import DistillationCo
 from skybluetech_scripts.skybluetech.common.mini_jei.core import RecipesCollection
 from skybluetech_scripts.skybluetech.common.machinery_def.distillation_chamber import recipes as chamber_recipes
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.distillation_column_chamber import DistillationColumnChamberRecipe
+from skybluetech_scripts.skybluetech.common.mini_jei.machinery.liquid_air_distillation import LiquidAirDistillationRecipe
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.distillation_column import (
     DistillationColumnRecipe, DistillationFraction,
 )
@@ -24,6 +25,7 @@ K_OUTPUT_COUNT = "st:column_output_count"
 # 同一输入的重叠温区按声明顺序选择第一条；具体配方在此添加。
 recipes = RecipesCollection(
     DistillationColumn.CONTROLLER,
+    LiquidAirDistillationRecipe(),
     DistillationColumnRecipe(
         fluids.CommonLiquid.LIQUID_RESIN, 244, 450, 500, 600, 1.0,
         [DistillationFraction(fluids.CommonOil.TREE_OIL, 100.0 / 244.0, 400, 450, 4.0)],

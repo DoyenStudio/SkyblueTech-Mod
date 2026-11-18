@@ -223,7 +223,7 @@ def EnergyInfo(data, role):  # type: (dict, str) -> str
         return label + note if note else ""
     text = label + FormatInt(rate) + " RF/t"
     if ticks > CONTINUOUS_TICKS:
-        text += "（共 %s RF）" % FormatInt(rate * ticks)
+        text += "（共 %s RF）" % FormatInt(data.get("total_rf", rate * ticks))
     return text
 
 

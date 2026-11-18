@@ -18,12 +18,45 @@ from skybluetech_scripts.skybluetech.common.define.id_enum.multi_block_structure
     BatteryMatrix,
     BedrockLavaDrill,
     DistillationColumn,
+    LargeReactionPool,
+    GasMetallurgicalFurnace,
 )
-from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
+from skybluetech_scripts.skybluetech.common.define.id_enum import (
+    HEAVY_STEEL_MACHINE_BASE,
+    Machinery,
+)
 
 
 SHELL_GROUPS = (
+    frozenset((LargeReactionPool.CAP,)),
+    frozenset((
+        LargeReactionPool.CONTROLLER,
+        LargeReactionPool.FRAME,
+        LargeReactionPool.WINDOW,
+        LargeReactionPool.IO_ITEM_INPUT,
+        LargeReactionPool.IO_ITEM_OUTPUT,
+        LargeReactionPool.IO_FLUID_INPUT_1,
+        LargeReactionPool.IO_FLUID_INPUT_2,
+        LargeReactionPool.IO_FLUID_INPUT_3,
+        LargeReactionPool.IO_FLUID_OUTPUT_1,
+        LargeReactionPool.IO_FLUID_OUTPUT_2,
+        LargeReactionPool.IO_ENERGY_INPUT,
+        LargeReactionPool.IO_HEAT_INPUT,
+    )),
     frozenset((Machinery.HEAT_CONDUCTOR,)),
+    frozenset((
+        GasMetallurgicalFurnace.CONTROLLER,
+        GasMetallurgicalFurnace.FRAME,
+        GasMetallurgicalFurnace.IO_ITEM_INPUT,
+        GasMetallurgicalFurnace.IO_ITEM_OUTPUT,
+        GasMetallurgicalFurnace.IO_GAS_INPUT,
+        GasMetallurgicalFurnace.IO_GAS_INPUT_AUXILIARY,
+        GasMetallurgicalFurnace.IO_GAS_OUTPUT,
+        GasMetallurgicalFurnace.IO_FLUID_INPUT,
+        GasMetallurgicalFurnace.IO_FLUID_OUTPUT,
+        GasMetallurgicalFurnace.IO_ENERGY_INPUT,
+    )),
+    frozenset((HEAVY_STEEL_MACHINE_BASE,)),
     frozenset((
         DistillationColumn.FRAME,
         DistillationColumn.CONTROLLER,

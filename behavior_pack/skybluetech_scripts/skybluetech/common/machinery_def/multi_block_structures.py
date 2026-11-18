@@ -6,6 +6,8 @@ from skybluetech_scripts.skybluetech.common.define.id_enum.multi_block_structure
     BrineEvaporationPond,
     DistillationColumn,
     Fermenter,
+    LargeReactionPool,
+    GasMetallurgicalFurnace,
     SeawaterReservoir,
     VacuumFreezer,
 )
@@ -30,6 +32,12 @@ from skybluetech_scripts.skybluetech.common.machinery_def.seawater_pump import (
 from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import (
     STRUCTURE_PALETTE as VACUUM_FREEZER_PALETTE,
 )
+from skybluetech_scripts.skybluetech.common.machinery_def.large_reaction_pool import (
+    STRUCTURE_PALETTE as LARGE_REACTION_POOL_PALETTE,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.gas_metallurgical_furnace import (
+    STRUCTURE_PALETTE as GAS_METALLURGICAL_FURNACE_PALETTE,
+)
 
 
 # 调色板以朝北的控制器为基准，使用时根据控制器朝向旋转副本。
@@ -38,7 +46,10 @@ CONTROLLER_STRUCTURE_PALETTES = {
     BedrockLavaDrill.CONTROLLER: BEDROCK_LAVA_DRILL_PALETTE,
     BrineEvaporationPond.CONTROLLER: BRINE_EVAPORATION_POND_PALETTE,
     DistillationColumn.CONTROLLER: DISTILLATION_COLUMN_PALETTE,
+    LargeReactionPool.CONTROLLER: LARGE_REACTION_POOL_PALETTE,
     Fermenter.CONTROLLER: FERMENTER_PALETTE,
     SeawaterReservoir.CONTROLLER: SEAWATER_RESERVOIR_PALETTE,
     VacuumFreezer.CONTROLLER: VACUUM_FREEZER_PALETTE,
 }
+if GAS_METALLURGICAL_FURNACE_PALETTE is not None:
+    CONTROLLER_STRUCTURE_PALETTES[GasMetallurgicalFurnace.CONTROLLER] = GAS_METALLURGICAL_FURNACE_PALETTE

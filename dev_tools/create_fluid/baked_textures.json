@@ -1,4 +1,13 @@
 {
+    "textures/fluid/baked/skybluetech.argon/static": {
+        "source": "textures/fluid/gas_static",
+        "rgba": [
+            216,
+            224,
+            255,
+            64
+        ]
+    },
     "textures/fluid/baked/skybluetech.hydrogen_chloride/static": {
         "source": "textures/fluid/gas_static",
         "rgba": [224, 255, 250, 64]

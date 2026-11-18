@@ -1,6 +1,50 @@
 {
     "groups": [
         {
+            "group_name": "itemGroup.skybluetech.heavy_steel_machine_base",
+            "icon": "skybluetech:heavy_steel_machine_base",
+            "list": [
+                "skybluetech:heavy_steel_machine_base"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.large_reaction_pool",
+            "icon": "skybluetech:large_reaction_pool_controller",
+            "list": [
+                "skybluetech:large_reaction_pool_controller",
+                "skybluetech:large_reaction_pool_cap",
+                "skybluetech:large_reaction_pool_frame",
+                "skybluetech:large_reaction_pool_window",
+                "skybluetech:large_reaction_pool_io_item_in",
+                "skybluetech:large_reaction_pool_io_item_out",
+                "skybluetech:large_reaction_pool_io_fluid_in_1",
+                "skybluetech:large_reaction_pool_io_fluid_in_2",
+                "skybluetech:large_reaction_pool_io_fluid_in_3",
+                "skybluetech:large_reaction_pool_io_fluid_out_1",
+                "skybluetech:large_reaction_pool_io_fluid_out_2",
+                "skybluetech:large_reaction_pool_io_energy_in",
+                "skybluetech:large_reaction_pool_io_heat_in"
+            ]
+        },
+        {
+            "group_name": "itemGroup.skybluetech.gas_metallurgical_furnace",
+            "icon": "skybluetech:gas_metallurgical_furnace_controller",
+            "list": [
+                "skybluetech:gas_metallurgical_furnace_controller",
+                "skybluetech:gas_metallurgical_furnace_frame",
+                "skybluetech:gas_metallurgical_furnace_io_item_in",
+                "skybluetech:gas_metallurgical_furnace_io_item_out",
+                "skybluetech:gas_metallurgical_furnace_io_gas_in",
+                "skybluetech:gas_metallurgical_furnace_io_gas_in_2",
+                "skybluetech:gas_metallurgical_furnace_io_gas_out",
+                "skybluetech:gas_metallurgical_furnace_io_fluid_in",
+                "skybluetech:gas_metallurgical_furnace_io_fluid_out",
+                "skybluetech:gas_metallurgical_furnace_io_energy_in",
+                "skybluetech:magnesium_pellet",
+                "skybluetech:titanium_sponge"
+            ]
+        },
+        {
             "group_name": "itemGroup.skybluetech.distillation_column",
             "icon": "skybluetech:distillation_column_controller",
             "list": [
@@ -37,7 +81,6 @@
                 "skybluetech:fermenter_io_energy",
                 "skybluetech:fermenter_io_fluid1",
                 "skybluetech:fermenter_io_fluid2",
-                
                 "skybluetech:fermenter_io_item1",
                 "skybluetech:fermenter_io_gas"
             ]

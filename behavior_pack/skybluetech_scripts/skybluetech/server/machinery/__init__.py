@@ -13,6 +13,8 @@ from .compressor import Compressor
 from .creative_generator import CreativeGenerator
 from .creative_power_acceptor import CreativePowerAcceptor
 from .fluid_condenser import FluidCondenser
+from .industrial_centrifuge import IndustrialCentrifuge, IndustrialCentrifugeUpside
+from .flotation_machine import FlotationMachine
 from .deepslate_lava_vibrator import DeepslateLavaVibrator
 from .digger import Digger
 from .distillation_chamber import DistillationChamber
@@ -30,6 +32,9 @@ from .freezer import Freezer
 from .fuel_heater import FuelHeater
 from .fluid_splitter import FluidSplitter
 from .gas_burning_generator import GasBurningGenerator
+from . import large_reaction_pool
+from . import gas_metallurgical_furnace_interfaces
+from . import gas_metallurgical_furnace
 from .geothermal_generator import GeoThermalGenerator
 from .hover_text_displayer import HoverTextDisplayer
 from .hydroponic_base import HydroponicBase

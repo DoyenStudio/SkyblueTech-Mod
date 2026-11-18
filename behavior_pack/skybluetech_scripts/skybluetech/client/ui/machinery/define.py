@@ -4,7 +4,9 @@ from mod.client.extraClientApi import GetLocalPlayerId
 from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from mod.client.extraClientApi import GetMinecraftEnum
 
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 from skybluetech_scripts.skybluetech.common.define.flags import (
+    DEACTIVE_FLAG_HEAT_LACK,
     DEACTIVE_FLAG_FLUID_FULL,
     DEACTIVE_FLAG_FLUID_NOT_MATCH,
     DEACTIVE_FLAG_NO_INPUT,
@@ -49,6 +51,7 @@ _LED_REASONS = (
     (DEACTIVE_FLAG_OUTPUT_FULL, _LED_RED, "输出已满"),
     (DEACTIVE_FLAG_FLUID_FULL, _LED_RED, "流体已满"),
     (DEACTIVE_FLAG_FLUID_NOT_MATCH, _LED_RED, "流体不匹配"),
+    (DEACTIVE_FLAG_HEAT_LACK, _LED_AMBER, "温度不足"),
     (DEACTIVE_FLAG_NO_INPUT, _LED_AMBER, "缺少输入"),
     (DEACTIVE_FLAG_NO_RECIPE, _LED_AMBER, "无可用配方"),
 )
@@ -327,4 +330,7 @@ def onClisBlockUse(event):
     # type: (ClientBlockUseEvent) -> None
     dim = CF.CreateGame(GetLocalPlayerId()).GetCurrentDimension()
     _RUNTIME.GPlayerId = event.playerId
-    _RUNTIME.GPos = (dim, int(event.x), int(event.y), int(event.z))
+    y = int(event.y)
+    if event.blockName == Machinery.INDUSTRIAL_CENTRIFUGE_UPSIDE:
+        y -= 1
+    _RUNTIME.GPos = (dim, int(event.x), y, int(event.z))

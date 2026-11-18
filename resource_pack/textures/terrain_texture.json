@@ -329,6 +329,21 @@
         "skybluetech:air_compressor": {
             "textures": "textures/models/air_compressor_texture"
         },
+        "skybluetech:industrial_centrifuge_downside_front": {
+            "textures": "textures/blocks/machinery/industrial_centrifuge_downside_front"
+        },
+        "skybluetech:industrial_centrifuge_side_downside": {
+            "textures": "textures/blocks/machinery/industrial_centrifuge_side_downside"
+        },
+        "skybluetech:industrial_centrifuge_downside_front_active": {
+            "textures": "textures/blocks/machinery/flipbook_textures/industrial_centrifuge_downside_front_active"
+        },
+        "skybluetech:flotation_machine": {
+            "textures": "textures/models/flotation_machine_texture"
+        },
+        "skybluetech:flotation_machine_active": {
+            "textures": "textures/models/flotation_machine_active_texture"
+        },
         "skybluetech:alloy_furnace_front": {
             "textures": "textures/blocks/machinery/alloy_furnace_front"
         },
@@ -647,6 +662,129 @@
         },
         "skybluetech:distillation_column_frame": {
             "textures": "textures/blocks/multi_block_structure/distillation_column/frame"
+        },
+        "skybluetech:heavy_steel_machine_base_frame_horizontal": {
+            "textures": "textures/blocks/multi_block_structure/heavy_steel_machine_base/frame_horizontal"
+        },
+        "skybluetech:heavy_steel_machine_base_frame_vertical": {
+            "textures": "textures/blocks/multi_block_structure/heavy_steel_machine_base/frame_vertical"
+        },
+        "skybluetech:heavy_steel_machine_base_frame_edgeless": {
+            "textures": "textures/blocks/multi_block_structure/heavy_steel_machine_base/frame_edgeless"
+        },
+        "skybluetech:heavy_steel_machine_base_frame": {
+            "textures": "textures/blocks/multi_block_structure/heavy_steel_machine_base/frame"
+        },
+        "skybluetech:gas_metallurgical_furnace_frame_horizontal": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/frame_horizontal"
+        },
+        "skybluetech:gas_metallurgical_furnace_frame_vertical": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/frame_vertical"
+        },
+        "skybluetech:gas_metallurgical_furnace_frame_edgeless": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/frame_edgeless"
+        },
+        "skybluetech:large_reaction_pool_cap_frame": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/cap/frame"
+        },
+        "skybluetech:large_reaction_pool_cap_frame_edgeless": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/cap/frame_edgeless"
+        },
+        "skybluetech:large_reaction_pool_cap_frame_horizontal": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/cap/frame_horizontal"
+        },
+        "skybluetech:large_reaction_pool_cap_frame_vertical": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/cap/frame_vertical"
+        },
+        "skybluetech:large_reaction_pool_controller_front": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/controller_front"
+        },
+        "skybluetech:large_reaction_pool_controller_front_active": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/controller_front_active"
+        },
+        "skybluetech:large_reaction_pool_frame": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/frame"
+        },
+        "skybluetech:large_reaction_pool_frame_edgeless": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/frame_edgeless"
+        },
+        "skybluetech:large_reaction_pool_frame_horizontal": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/frame_horizontal"
+        },
+        "skybluetech:large_reaction_pool_frame_vertical": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/frame_vertical"
+        },
+        "skybluetech:large_reaction_pool_io_energy_in": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_energy_in"
+        },
+        "skybluetech:large_reaction_pool_io_fluid_in_1": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_fluid_in_1"
+        },
+        "skybluetech:large_reaction_pool_io_fluid_in_2": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_fluid_in_2"
+        },
+        "skybluetech:large_reaction_pool_io_fluid_in_3": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_fluid_in_3"
+        },
+        "skybluetech:large_reaction_pool_io_fluid_out_1": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_fluid_out_1"
+        },
+        "skybluetech:large_reaction_pool_io_fluid_out_2": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_fluid_out_2"
+        },
+        "skybluetech:large_reaction_pool_io_heat_in": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_heat_in"
+        },
+        "skybluetech:large_reaction_pool_io_item_in": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_item_in"
+        },
+        "skybluetech:large_reaction_pool_io_item_out": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/io_item_out"
+        },
+        "skybluetech:large_reaction_pool_window_frame": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/window/frame"
+        },
+        "skybluetech:large_reaction_pool_window_frame_edgeless": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/window/frame_edgeless"
+        },
+        "skybluetech:large_reaction_pool_window_frame_horizontal": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/window/frame_horizontal"
+        },
+        "skybluetech:large_reaction_pool_window_frame_vertical": {
+            "textures": "textures/blocks/multi_block_structure/large_reaction_pool/window/frame_vertical"
+        },
+        "skybluetech:gas_metallurgical_furnace_frame": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/frame"
+        },
+        "skybluetech:gas_metallurgical_furnace_controller_front": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/controller_front"
+        },
+        "skybluetech:gas_metallurgical_furnace_controller_active": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/controller_front_active"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_item_in": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_item_in"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_item_out": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_item_out"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_gas_in": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_gas_in"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_gas_in_2": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_gas_in_2"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_gas_out": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_gas_out"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_fluid_in": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_fluid_in"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_fluid_out": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_fluid_out"
+        },
+        "skybluetech:gas_metallurgical_furnace_io_energy_in": {
+            "textures": "textures/blocks/multi_block_structure/gas_metallurgical_furnace/io_energy_in"
         },
         "skybluetech:battery_matrix_frame": {
             "textures": "textures/blocks/multi_block_structure/battery_matrix/frame"
@@ -1347,6 +1485,9 @@
         },
         "skybluetech:thermal_cracker_casing": {
             "textures": "textures/blocks/machinery/thermal_cracker_casing"
+        },
+        "skybluetech:baked_argon_static": {
+            "textures": "textures/fluid/baked/skybluetech.argon/static"
         }
     },
     "texture_name": "atlas.terrain"

@@ -442,6 +442,8 @@ class MultiBlockStructure(BaseMachine):
 
     structure_palette = None  # type: StructureBlockPalette | None
     "用于进行多方块完整性检测的多方块结构调色板。"
+    allow_unconfigured_structure = False
+    "显式允许尚未配置的模板；保持停机，不创建检测区域。"
     functional_block_ids = set()  # type: set[str]
     """
     多方块结构中功能性方块的列表。
@@ -452,7 +454,7 @@ class MultiBlockStructure(BaseMachine):
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(MultiBlockStructure, self).__init__(dim, x, y, z, block_entity_data)
-        if self.structure_palette is None:
+        if self.structure_palette is None and not self.allow_unconfigured_structure:
             raise ValueError("StructureBlockPalette: structure_palette is None")
         self._last_destroy_flag = DEACTIVE_FLAG_STRUCTURE_BROKEN
         self._lacked_blocks = {}  # type: dict[str, int]
@@ -461,12 +463,17 @@ class MultiBlockStructure(BaseMachine):
         self.x = x
         self.y = y
         self.z = z
-        self.area = DetectArea(self.dim, self.x, self.y, self.z, self)
-        add_detect_area(self.dim, self.area)
+        self.area = None
+        if self.structure_palette is not None:
+            self.area = DetectArea(self.dim, self.x, self.y, self.z, self)
+            add_detect_area(self.dim, self.area)
+        else:
+            self.SetDeactiveFlag(DEACTIVE_FLAG_STRUCTURE_BROKEN)
         self.handler.SubscribeOnUnload(self._multi_block_structure_on_unload)
 
     def _multi_block_structure_on_unload(self):
-        remove_detect_area(self.dim, self.area)
+        if self.area is not None:
+            remove_detect_area(self.dim, self.area)
 
     def SetStructureDestroyed(self, flag):
         # type: (int) -> None
@@ -475,7 +482,8 @@ class MultiBlockStructure(BaseMachine):
         if self.deactive_flags & STRUCTURE_DEACTIVE_FLAGS:
             self.deactive_flags &= ~STRUCTURE_DEACTIVE_FLAGS
         self.last_destroy_flag = flag
-        self.area.functional_block_poses = {}
+        if self.area is not None:
+            self.area.functional_block_poses = {}
         if flag != DEACTIVE_FLAG_STRUCTURE_BLOCK_LACK:
             self.lacked_blocks = {}
         self.SetDeactiveFlag(flag)
@@ -485,6 +493,9 @@ class MultiBlockStructure(BaseMachine):
 
     def UnsetStructureDestroyed(self):
         from .gui_ctrl import GUIControl
+
+        if self.area is None:
+            return
 
         if (
             self.last_destroy_flag != FLAG_OK
@@ -514,10 +525,10 @@ class MultiBlockStructure(BaseMachine):
     def GetFunctionalBlockPoses(self):
         # 返回功能性方块的世界坐标, 按方块 ID 分组, 结构完整时才会更新。
         # 只包含放在调色板允许位置上的方块, 藏在结构内部的接口不会出现在这里。
-        return self.area.functional_block_poses
+        return self.area.functional_block_poses if self.area is not None else {}
 
     def StructureFinished(self):
-        return self.last_destroy_flag == 0
+        return self.area is not None and self.last_destroy_flag == 0
 
     # StructureUtils
 

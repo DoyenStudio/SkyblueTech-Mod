@@ -7,6 +7,8 @@ from ..mini_jei.core import (
     UnmarshalUnorderedInputs, UnmarshalUnorderedOutputs,
 )
 from ..mini_jei.machinery.define import MachineRecipeBase, MachineRecipe, GeneratorRecipe
+from ..mini_jei.machinery.large_reaction_pool import LargeReactionPoolRecipe
+from ..mini_jei.machinery.gas_metallurgical_furnace import GasMetallurgicalFurnaceRecipe
 from ..mini_jei.machinery.macerator import (
     MaceratorRecipe, gen_preset_recipe, gen_tagged_preset_recipe,
 )
@@ -23,6 +25,8 @@ from ..mini_jei.machinery.distillation_column_chamber import DistillationColumnC
 from ..mini_jei.machinery.engraver import EngraverRecipe
 from ..mini_jei.machinery.electrolyzer import ElectrolyzerRecipe
 from ..mini_jei.machinery.fluid_condenser import FluidCondenserRecipe
+from ..mini_jei.machinery.industrial_centrifuge import IndustrialCentrifugeRecipe
+from ..mini_jei.machinery.flotation_machine import FlotationMachineRecipe
 from ..mini_jei.machinery.freezer import FreezerRecipe
 from ..mini_jei.machinery.gas_burning_generator import GasBurningGeneratorRecipe
 from ..mini_jei.machinery.hydroponic_bed import HydroponicBedRecipe
@@ -55,6 +59,8 @@ from ..mini_jei.machinery.small_chemical_reactor import SmallChemicalReactorReci
 from ..mini_jei.machinery.specialized_growth_chamber import SpecializedGrowthChamberRecipe
 
 __all__ = [
+    "LargeReactionPoolRecipe",
+    "GasMetallurgicalFurnaceRecipe",
     "ThermalCrackerRecipe", "SmallChemicalReactorRecipe", "SpecializedGrowthChamberRecipe",
     "DistillationColumnRecipe", "DistillationFraction", "DistillationColumnChamberRecipe",
     "RecipesCollection", "CategoryType", "RecipeBase", "Recipe", "Input", "Output",
@@ -67,7 +73,7 @@ __all__ = [
     "GetRecipesByInput", "GetRecipesByOutput", "GetRecipesByCategory",
     "AirCompressorRecipe", "AlloyFurnaceRecipe", "ChargerRecipe", "CompressorRecipe",
     "HeatMeltingChamberRecipe", "CyroHeatMeltingChamberRecipe", "DistillationChamberRecipe", "EngraverRecipe",
-    "ElectrolyzerRecipe", "FluidCondenserRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
+    "ElectrolyzerRecipe", "FluidCondenserRecipe", "IndustrialCentrifugeRecipe", "FlotationMachineRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
     "HydroponicBedRecipe", "HydroponicBedSandRecipe", "MachineryWorkstationRecipe",
     "MagmaCentrifugeRecipe", "MetalPressRecipe", "MixedMaceratorRecipe", "MixerRecipe",
     "OilExtractorRecipe", "PrecisionCutterRecipe", "ReactingThermalGeneratorRecipe",

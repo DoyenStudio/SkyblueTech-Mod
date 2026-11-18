@@ -1,4 +1,32 @@
 {
+    "industrial_centrifuge_downside_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.IndustrialCentrifuge",
+        "size": [
+            180,
+            62
+        ]
+    },
+    "flotation_machine_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.FlotationMachine",
+        "size": [
+            180,
+            62
+        ]
+    },
+    "large_reaction_pool_controller_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.LargeReactionPool",
+        "size": [
+            180,
+            62
+        ]
+    },
+    "gas_metallurgical_furnace_controller_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.GasMetallurgicalFurnace",
+        "size": [
+            180,
+            62
+        ]
+    },
     "air_compressor_recipes@MachineRecipeLib.mini_row": {
         "$recipe_content": "MachineRecipeLib.AirCompressor",
         "size": [

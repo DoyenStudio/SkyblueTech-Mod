@@ -13,6 +13,7 @@ from ...common.define import id_enum
 GameType = GetMinecraftEnum().GameType
 
 CARDINAL_BLOCKS = id_enum.Machinery.all() | {id_enum.RESIN_COLLECTOR, id_enum.FAMICOM}
+CARDINAL_BLOCKS.discard(id_enum.Machinery.INDUSTRIAL_CENTRIFUGE_UPSIDE)
 
 
 @ServerPlayerTryDestroyBlockEvent.Listen()

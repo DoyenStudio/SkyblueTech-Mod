@@ -87,6 +87,10 @@ class FilterCakes(SimpleEnum):
     MAGNESIUM_HYDROXIDE = "skybluetech:magnesium_hydroxide_cake"
 
 
+MAGNESIUM_PELLET = "skybluetech:magnesium_pellet"
+TITANIUM_SPONGE = "skybluetech:titanium_sponge"
+
+
 class FamicomCartidges(SimpleEnum):
     YELLOW = "skybluetech:famicom_cartidge_1"
     PURPLE = "skybluetech:famicom_cartidge_2"
@@ -285,6 +289,7 @@ INSCRIBING_TEMPLATE = "skybluetech:inscribing_template"
 LASER_PROBE = "skybluetech:laser_probe"
 MACHINERY_BASE_LIGHT = "skybluetech:machinery_base_light"
 METAL_HAMMER = "skybluetech:metal_hammer"
+MINERAL_ASH = "skybluetech:mineral_ash"
 MULTIBLOCK_STRUCTURE_SCEPTER = "skybluetech:multiblock_structure_scepter"
 PLATINUM_CATALYST_MESH = "skybluetech:platinum_catalyst_mesh"
 POLISHED_DIAMOND = "skybluetech:polished_diamond"
@@ -295,6 +300,7 @@ RESIN_SPOON = "skybluetech:resin_spoon"
 ROUGH_RUBBER = "skybluetech:rough_rubber"
 ROSIN = "skybluetech:rosin"
 SALT = "skybluetech:salt"
+SEMI_COKE = "skybluetech:semi_coke"
 SKYBLUE_CORE = "skybluetech:skyblue_core"
 SULFUR = "skybluetech:sulfur"
 SUNFLOWER_SEEDS = "skybluetech:sunflower_seeds"

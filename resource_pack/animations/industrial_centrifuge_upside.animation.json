@@ -1,0 +1,22 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.skybluetech.industrial_centrifuge_upside.facing": {
+			"loop": true,
+			"bones": {"root": {"rotation": [0, "v.yaw", 0]}}
+		},
+		"animation.skybluetech.industrial_centrifuge_upside.rot": {
+			"loop": true,
+			"anim_time_update": "q.anim_time + q.delta_time * v.spin_speed",
+			"animation_length": 1,
+			"bones": {
+				"centrifuge": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"1.0": [0, -1080, 0]
+					}
+				}
+			}
+		}
+	}
+}

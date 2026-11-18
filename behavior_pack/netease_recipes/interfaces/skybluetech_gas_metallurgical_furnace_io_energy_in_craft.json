@@ -1,0 +1,30 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:gas_metallurgical_furnace_io_energy_in_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            " P ",
+            " F ",
+            "   "
+        ],
+        "key": {
+            "P": {
+                "item": "skybluetech:wire_insulated_silver"
+            },
+            "F": {
+                "item": "skybluetech:gas_metallurgical_furnace_frame"
+            }
+        },
+        "result": {
+            "item": "skybluetech:gas_metallurgical_furnace_io_energy_in"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

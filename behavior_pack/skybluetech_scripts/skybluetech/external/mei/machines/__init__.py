@@ -17,6 +17,10 @@
 from mod.client.extraClientApi import ImportModule
 
 MACHINES = (
+    "industrial_centrifuge",
+    "flotation_machine",
+    "large_reaction_pool",
+    "gas_metallurgical_furnace",
     "thermal_cracker", "small_chemical_reactor", "distillation_column",
     # 纯物品
     "macerator",

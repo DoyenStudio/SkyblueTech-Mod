@@ -1,0 +1,29 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:large_reaction_pool_io_fluid_in_2_craft"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "pattern": [
+            "P P",
+            " F "
+        ],
+        "key": {
+            "P": {
+                "item": "skybluetech:pipe_chemical"
+            },
+            "F": {
+                "item": "skybluetech:large_reaction_pool_frame"
+            }
+        },
+        "result": {
+            "item": "skybluetech:large_reaction_pool_io_fluid_in_2"
+        },
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

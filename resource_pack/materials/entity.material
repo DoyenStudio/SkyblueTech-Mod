@@ -1,6 +1,9 @@
 {
     "materials": {
         "version": "1.0.0",
+        "skybluetech_centrifuge_fluid:entity_alphablend": {
+            "+defines": ["USE_UV_ANIM", "USE_COLOR_MASK"]
+        },
         "fluid_model:entity": {
             "vertexShader": "shaders/glsl/skybluetech_fluid_volume_vertex.glsl",
             "fragmentShader": "shaders/glsl/skybluetech_fluid_volume_fragment.glsl",

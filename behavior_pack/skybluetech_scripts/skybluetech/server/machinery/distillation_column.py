@@ -28,7 +28,7 @@ RegisterMachine(FluidInputInterface)
 RegisterMachine(FluidOutputInterface)
 RegisterMachine(HeatInputInterface)
 
-IDLE_FLAGS = (flags.DEACTIVE_FLAG_NO_INPUT, flags.DEACTIVE_FLAG_NO_RECIPE,
+IDLE_FLAGS = (flags.DEACTIVE_FLAG_OUTPUT_FULL, flags.DEACTIVE_FLAG_NO_INPUT, flags.DEACTIVE_FLAG_NO_RECIPE,
               flags.DEACTIVE_FLAG_FLUID_FULL, flags.DEACTIVE_FLAG_FLUID_NOT_MATCH)
 IDLE_MASK = 0
 for _flag in IDLE_FLAGS:
@@ -148,6 +148,8 @@ class DistillationColumnController(GUIControl, MultiBlockStructure, MultiFluidCo
         return flags.DEACTIVE_FLAG_NO_RECIPE
 
     def _commit_recipe(self, recipe, plan):
+        if len(self._output_ios) < getattr(recipe, "required_output_ports", 0):
+            return flags.DEACTIVE_FLAG_OUTPUT_FULL
         source = self.fluids[0]
         # 输入、供热允许降低吞吐；输出不足则整批暂停，不靠丢弃已绑定口的产物腾空间。
         scale = min(1.0, source.volume / plan.feed_volume)

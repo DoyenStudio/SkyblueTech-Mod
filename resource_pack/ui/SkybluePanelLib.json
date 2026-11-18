@@ -1032,6 +1032,12 @@
                                     },
                                     {
                                         "inventory_panel_bottom_half_with_label@common.inventory_panel_bottom_half_with_label": {
+                                            "anchor_from": "bottom_middle",
+                                            "anchor_to": "bottom_middle",
+                                            "size": [
+                                                176,
+                                                93
+                                            ],
                                             "layer": 1
                                         }
                                     },

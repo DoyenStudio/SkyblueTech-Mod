@@ -10,6 +10,13 @@ control_def 是 MEI 外壳的注册名，内容布局本身不依赖 MEI。
 """
 
 LAYOUTS = {
+    "skybluetech:industrial_centrifuge_downside": {
+        "file": "IndustrialCentrifuge", "control_def": "SkyblueMeiIndustrialCentrifuge.RECIPES_GRID",
+        "inputs": (("fluid", 0),),
+        "outputs": (("fluid", 1), ("fluid", 2), ("item", 0)),
+        "catalysts": 0, "power": "use", "segments": 17,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
     "skybluetech:specialized_growth_chamber": {
         "file": "SpecializedGrowthChamber", "control_def": "SkyblueMeiSpecializedGrowthChamber.RECIPES_GRID",
         "inputs": (("fluid", 0), ("item", 0)), "outputs": (("fluid", 1), ("item", 3)),

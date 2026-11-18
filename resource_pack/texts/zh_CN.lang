@@ -743,3 +743,6 @@ item.skybluetech:purified_cassiterite_dust.name=净化锡石粉
 item.skybluetech:calcium_chloride_dust.name=氯化钙粉
 item.skybluetech:aluminum_electrolysis_mix.name=铝电解混合料
 item.skybluetech:titanium_chlorination_mix.name=钛氯化混合料
+tile.skybluetech:industrial_centrifuge_downside.name=工业离心机
+tile.skybluetech:industrial_centrifuge_upside.name=工业离心机转子
+skybluetech.mei.category.industrial_centrifuge=工业离心机

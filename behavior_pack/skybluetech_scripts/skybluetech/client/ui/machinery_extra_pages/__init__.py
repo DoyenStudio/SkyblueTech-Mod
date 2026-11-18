@@ -3,3 +3,4 @@ from .item_pipe_settings import ItemPipeSettingsPage
 from .item_pipe_settings_indirectional import ItemPipeSettingsPageIndirectional
 from .fluid_pipe_settings import FluidPipeSettingsPage
 from .fluid_pipe_settings_indirectional import FluidPipeSettingsPageIndirectional
+from .fluid_output_settings import FluidOutputSettingsPage

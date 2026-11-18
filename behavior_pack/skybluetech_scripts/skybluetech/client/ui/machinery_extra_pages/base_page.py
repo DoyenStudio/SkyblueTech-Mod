@@ -17,6 +17,15 @@ class PageBase(object):
     def Deactive(self):
         pass
 
+    def Destroy(self):
+        "机器界面关闭时调用；清理副页在根画布等位置创建的额外控件。"
+        pass
+
+    @classmethod
+    def CaptureMainLayout(cls, main):
+        "主页面隐藏前采集预览布局；返回值由副页面自行解释。"
+        return None
+
     @staticmethod
     def GetIconPath():
         # type: () -> str

@@ -735,6 +735,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # industrial centrifuge
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            3: Input(id_enum.Tank.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.Tank.STEEL),
+            6: Input(id_enum.FluidPipe.CHEMICAL),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(id_enum.FluidPipe.CHEMICAL),
+        },
+        id_enum.Machinery.INDUSTRIAL_CENTRIFUGE,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # mixer
     MRecipe(
         {

@@ -30,6 +30,8 @@ class Machinery(SimpleEnum):
     FEEDING_TROUGH = "skybluetech:feeding_trough"
     FERMENTER = "skybluetech:fermenter_controller"
     FLUID_CONDENSER = "skybluetech:fluid_condenser"
+    INDUSTRIAL_CENTRIFUGE = "skybluetech:industrial_centrifuge_downside"
+    INDUSTRIAL_CENTRIFUGE_UPSIDE = "skybluetech:industrial_centrifuge_upside"
     FLUID_SPLITTER = "skybluetech:fluid_splitter"
     FORESTER = "skybluetech:forester"
     FREEZER = "skybluetech:freezer"

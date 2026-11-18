@@ -10,6 +10,7 @@ from . import (
     hover_text_displayer,
     hydroponic_bed,
     hydroponic_bed_sand,
+    industrial_centrifuge,
     industrial_fan,
     rf_repeater_plant,
     shocker,

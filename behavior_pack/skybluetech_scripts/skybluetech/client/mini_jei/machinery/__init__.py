@@ -19,3 +19,4 @@ from . import (
 )
 
 from . import thermal_cracker, small_chemical_reactor
+from . import industrial_centrifuge

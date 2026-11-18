@@ -1,0 +1,72 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "description": {
+            "identifier": "skybluetech:industrial_centrifuge_upside",
+            "category": "none",
+            "traits": {
+                "minecraft:placement_direction": {
+                    "enabled_states": [
+                        "minecraft:cardinal_direction"
+                    ],
+                    "y_rotation_offset": 180.0
+                }
+            }
+        },
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.empty"
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:industrial_centrifuge_side_downside",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "netease:block_entity": {
+                "tick": false,
+                "client_tick": false,
+                "movable": false
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_machine": {},
+            "minecraft:loot": "loot_tables/industrial_centrifuge_upside.json",
+            "minecraft:selection_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    16,
+                    16
+                ]
+            },
+            "minecraft:collision_box": {
+                "origin": [
+                    -8,
+                    0,
+                    -8
+                ],
+                "size": [
+                    16,
+                    16,
+                    16
+                ]
+            }
+        }
+    }
+}

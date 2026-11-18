@@ -2,6 +2,8 @@
     "ui_defs": [
         "ui/AirCompressorUI.json",
         "ui/AlloyFurnaceUI.json",
+        "ui/IndustrialCentrifugeUI.json",
+        "ui/mei_recipes/IndustrialCentrifuge.json",
         "ui/AssemblerUI.json",
         "ui/BatteryMatrixUI.json",
         "ui/BedrockLavaDrillUI.json",

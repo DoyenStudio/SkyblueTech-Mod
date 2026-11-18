@@ -81,3 +81,4 @@ from .tanks import *
 
 # Register engine event listeners after all machine components are available.
 from . import listeners as _machine_listeners
+from .industrial_centrifuge import IndustrialCentrifuge, IndustrialCentrifugeUpside

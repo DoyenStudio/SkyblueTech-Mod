@@ -1,4 +1,21 @@
 {
+    "skybluetech:industrial_centrifuge_downside": {
+        "sound": "iron",
+        "textures": {
+            "north": "skybluetech:industrial_centrifuge_downside_front",
+            "down": "skybluetech:frame_bottom",
+            "east": "skybluetech:industrial_centrifuge_side_downside",
+            "south": "skybluetech:industrial_centrifuge_side_downside",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:industrial_centrifuge_side_downside"
+        }
+    },
+    "skybluetech:industrial_centrifuge_upside": {
+        "sound": "iron",
+        "client_entity": {
+            "identifier": "skybluetech:industrial_centrifuge_upside"
+        }
+    },
     "format_version": [
         1,
         1,

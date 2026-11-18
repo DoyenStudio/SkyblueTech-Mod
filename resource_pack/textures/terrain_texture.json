@@ -1,6 +1,15 @@
 {
     "resource_pack_name": "skybluetech",
     "texture_data": {
+        "skybluetech:industrial_centrifuge_downside_front": {
+            "textures": "textures/blocks/machinery/industrial_centrifuge_downside_front"
+        },
+        "skybluetech:industrial_centrifuge_side_downside": {
+            "textures": "textures/blocks/machinery/industrial_centrifuge_side_downside"
+        },
+        "skybluetech:industrial_centrifuge_downside_front_active": {
+            "textures": "textures/blocks/machinery/flipbook_textures/industrial_centrifuge_downside_front_active"
+        },
         "skybluetech:baked_acid_vapor_static": {
             "textures": "textures/fluid/baked/skybluetech.acid_vapor/static"
         },

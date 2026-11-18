@@ -68,3 +68,4 @@ from .heat_melting_chamber import HeatMeltingChamberUI
 
 from .thermal_cracker import ThermalCrackerUI
 from .small_chemical_reactor import SmallChemicalReactorUI
+from .industrial_centrifuge import IndustrialCentrifugeUI

@@ -23,6 +23,7 @@
 
 ## 参考与设计资料
 
+- [工业离心机与加工配方](reference/industrial_centrifuge.md)
 - [正式导出 API 与版本边界](reference/exports.md)
 - [内置配方类型与扩展边界](reference/recipes.md)
 - [18 个机器基类与组合选择](reference/machinery/README.md)

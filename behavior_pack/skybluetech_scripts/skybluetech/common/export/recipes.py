@@ -23,6 +23,7 @@ from ..mini_jei.machinery.distillation_column_chamber import DistillationColumnC
 from ..mini_jei.machinery.engraver import EngraverRecipe
 from ..mini_jei.machinery.electrolyzer import ElectrolyzerRecipe
 from ..mini_jei.machinery.fluid_condenser import FluidCondenserRecipe
+from ..mini_jei.machinery.industrial_centrifuge import IndustrialCentrifugeRecipe
 from ..mini_jei.machinery.freezer import FreezerRecipe
 from ..mini_jei.machinery.gas_burning_generator import GasBurningGeneratorRecipe
 from ..mini_jei.machinery.hydroponic_bed import HydroponicBedRecipe
@@ -67,7 +68,7 @@ __all__ = [
     "GetRecipesByInput", "GetRecipesByOutput", "GetRecipesByCategory",
     "AirCompressorRecipe", "AlloyFurnaceRecipe", "ChargerRecipe", "CompressorRecipe",
     "HeatMeltingChamberRecipe", "CyroHeatMeltingChamberRecipe", "DistillationChamberRecipe", "EngraverRecipe",
-    "ElectrolyzerRecipe", "FluidCondenserRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
+    "ElectrolyzerRecipe", "FluidCondenserRecipe", "IndustrialCentrifugeRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
     "HydroponicBedRecipe", "HydroponicBedSandRecipe", "MachineryWorkstationRecipe",
     "MagmaCentrifugeRecipe", "MetalPressRecipe", "MixedMaceratorRecipe", "MixerRecipe",
     "OilExtractorRecipe", "PrecisionCutterRecipe", "ReactingThermalGeneratorRecipe",

@@ -1,6 +1,6 @@
 # coding=utf-8
 from ...common.define.id_enum import GasMetallurgicalFurnace as ids
-from .multiblock_processing_ports import MultiblockProcessingPorts
+from .basic.multiblock_processing_ports import MultiblockProcessingPorts
 from .interfaces import (
     EnergyInputInterface, FluidInputInterface, FluidOutputInterface,
     ItemInputInterface, ItemOutputInterface,

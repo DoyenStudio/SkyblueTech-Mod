@@ -17,6 +17,7 @@ from skybluetech_scripts.skybluetech.server.machinery.basic import (
     GUIControl,
     HeatCtrl,
     MultiBlockStructure,
+    MultiblockPortBindings,
 )
 from skybluetech_scripts.skybluetech.server.machinery.core import RegisterMachine
 from skybluetech_scripts.skybluetech.server.machinery.interfaces import (
@@ -42,7 +43,7 @@ for fluid_recipes in recipes_collection.values():
 
 
 @RegisterMachine
-class BrineEvaporationPondController(GUIControl, MultiBlockStructure, HeatCtrl):
+class BrineEvaporationPondController(MultiblockPortBindings, GUIControl, MultiBlockStructure, HeatCtrl):
     block_name = BrineEvaporationPond.CONTROLLER
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
@@ -105,9 +106,7 @@ class BrineEvaporationPondController(GUIControl, MultiBlockStructure, HeatCtrl):
         ]
 
     def disconnect_ios(self):
-        for machine in self._input_ios + self._output_ios + [self._heat_io]:
-            if machine is not None and machine.getMachineRef() is self:
-                machine.UnsetMachineRef()
+        self._unbind_ports(only_owned=True)
         self._input_ios = []
         self._output_ios = []
         self._heat_io = None
@@ -145,8 +144,7 @@ class BrineEvaporationPondController(GUIControl, MultiBlockStructure, HeatCtrl):
         if current_ios != loaded_ios:
             self.disconnect_ios()
             self._input_ios, self._output_ios, self._heat_io = loaded_ios
-            for machine in input_ios + output_ios + [heat_io]:
-                machine.SetMachineRef(self)
+            self._bind_ports(input_ios + output_ios + [heat_io])
         return True
 
     @staticmethod

@@ -26,6 +26,7 @@ from ..basic.item_container import ItemContainer
 from ..basic import (
     GUIControl,
     MultiBlockStructure,
+    MultiblockPortBindings,
     UpgradeControl,
 )
 from ..interfaces import EnergyInputInterface, FluidOutputInterface
@@ -41,7 +42,7 @@ FluidOutputInterface.AddExtraMachineId(IO_FLUID1)
 
 
 @RegisterMachine
-class BedrockLavaDrill(UpgradeControl, MultiBlockStructure, GUIControl):
+class BedrockLavaDrill(MultiblockPortBindings, UpgradeControl, MultiBlockStructure, GUIControl):
     block_name = Machinery.BEDROCK_LAVA_DRILL_CONTROLLER
     store_rf_max = STORE_RF_MAX
     pump_speed = 400
@@ -58,27 +59,13 @@ class BedrockLavaDrill(UpgradeControl, MultiBlockStructure, GUIControl):
         self._rest_volume_predicted = None
         self._total_storage_volume = None
         self._power_changed = False
-        self._energy_in = None
-        self._fluid_out = None
-        self.handler.SubscribeOnUnload(self._bedrock_lava_drill_on_unload)
+        self.handler.SubscribeOnUnload(self._unbind_ports)
         self.handler.SubscribeOnPlaced(self._bedrock_lava_drill_on_placed)
         self.handler.SubscribeOnTicking(self._bedrock_lava_drill_on_ticking)
         self.handler.SubscribeOnSync(self._bedrock_lava_drill_on_sync)
         self.handler.SubscribeOnStructureChanged(self._bedrock_lava_drill_on_structure_changed)
         self.handler.SubscribeOnSlotUpdate(self._bedrock_lava_drill_on_slot_update)
         self.CallSync()
-
-    def _bedrock_lava_drill_on_unload(self):
-        self.clean()
-
-    def clean(self):
-        # type: () -> None
-        if self._energy_in is not None:
-            self._energy_in.UnsetMachineRef()
-            self._energy_in = None
-        if self._fluid_out is not None:
-            self._fluid_out.UnsetMachineRef()
-            self._fluid_out = None
 
     def _bedrock_lava_drill_on_placed(self, _):
         self.pos_ok = self.detect_block()
@@ -116,13 +103,12 @@ class BedrockLavaDrill(UpgradeControl, MultiBlockStructure, GUIControl):
 
     def _bedrock_lava_drill_on_structure_changed(self, structure_finished):
         if structure_finished:
-            self._energy_in = self.get_energy_input_io()
-            self._fluid_out = self.get_fluid_output_io()
-            self._energy_in.SetMachineRef(self)
-            self._fluid_out.SetMachineRef(self)
-            self._fluid_out.SetOnReducedFluidCallback(self.on_reduced_fluid)
+            energy_in = self.get_energy_input_io()
+            fluid_out = self.get_fluid_output_io()
+            self._bind_ports((energy_in, fluid_out))
+            fluid_out.SetOnReducedFluidCallback(self.on_reduced_fluid)
         else:
-            self.clean()
+            self._unbind_ports()
 
     def IsValidInput(self, slot, item):
         # type: (int, Item) -> bool

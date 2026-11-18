@@ -7,13 +7,13 @@ from ...common.define.id_enum import Acid, Gas, LargeReactionPool as Pool
 from ...common.machinery_def import large_reaction_pool as definition
 from ...common.mini_jei.machinery.large_reaction_pool import LargeReactionPoolRecipe
 from .basic import HeatCtrl, MultiBlockStructure, MultiFluidContainer, Processor
+from .basic.multiblock_processing_ports import MultiblockProcessingPorts
 from .basic.slot_reads import SlotReads, accepts_slot_reads
 from .core import RegisterMachine
 from .interfaces import (
     EnergyInputInterface, FluidInputInterface, FluidOutputInterface, HeatInputInterface,
     ItemInputInterface, ItemOutputInterface,
 )
-from .multiblock_processing_ports import MultiblockProcessingPorts
 
 FLUID_INPUTS = ((Pool.IO_FLUID_INPUT_1, 0), (Pool.IO_FLUID_INPUT_2, 1), (Pool.IO_FLUID_INPUT_3, 3))
 FLUID_OUTPUTS = ((Pool.IO_FLUID_OUTPUT_1, 2), (Pool.IO_FLUID_OUTPUT_2, 4))

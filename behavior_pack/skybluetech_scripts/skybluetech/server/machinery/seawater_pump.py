@@ -21,6 +21,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.seawater_pump import (
 from skybluetech_scripts.skybluetech.server.machinery.basic import (
     GUIControl,
     MultiBlockStructure,
+    MultiblockPortBindings,
     MultiFluidContainer,
 )
 from skybluetech_scripts.skybluetech.server.machinery.core import RegisterMachine
@@ -31,7 +32,7 @@ EnergyInputInterface.AddExtraMachineId(SeawaterReservoir.IO_ENERGY)
 
 
 @RegisterMachine
-class SeawaterPump(GUIControl, MultiBlockStructure, MultiFluidContainer):
+class SeawaterPump(MultiblockPortBindings, GUIControl, MultiBlockStructure, MultiFluidContainer):
     block_name = Machinery.SEAWATER_PUMP
     store_rf_max = STORE_RF_MAX
     structure_palette = STRUCTURE_PALETTE
@@ -49,11 +50,10 @@ class SeawaterPump(GUIControl, MultiBlockStructure, MultiFluidContainer):
             WATER_SCAN_VOLUME, self.bdata[K_WATER_BLOCK_COUNT] or 0
         )))
         self._output_per_tick = get_output_per_tick(water_count)
-        self._energy_in_ios = []  # type: list[EnergyInputInterface]
         self.handler.SubscribeOnPlaced(self._seawater_pump_on_placed)
         self.handler.SubscribeOnTicking(self._seawater_pump_on_ticking)
         self.handler.SubscribeOnStructureChanged(self._seawater_pump_on_structure_changed)
-        self.handler.SubscribeOnUnload(self._seawater_pump_on_unload)
+        self.handler.SubscribeOnUnload(self._unbind_ports)
 
     def _seawater_pump_on_placed(self, _):
         # 包含泵所在的顶层，X/Z 各向两侧延伸 30 格，Y 向下延伸 19 格。
@@ -99,18 +99,6 @@ class SeawaterPump(GUIControl, MultiBlockStructure, MultiFluidContainer):
 
     def _seawater_pump_on_structure_changed(self, ok):
         # type: (bool) -> None
-        self.disconnect_ios()
+        self._unbind_ports()
         if ok:
-            self._energy_in_ios = self.GetAllMachines(
-                EnergyInputInterface, SeawaterReservoir.IO_ENERGY
-            )
-            for machine in self._energy_in_ios:
-                machine.SetMachineRef(self)
-
-    def _seawater_pump_on_unload(self):
-        self.disconnect_ios()
-
-    def disconnect_ios(self):
-        for machine in self._energy_in_ios:
-            machine.UnsetMachineRef()
-        self._energy_in_ios = []
+            self._bind_ports(self.GetAllMachines(EnergyInputInterface, SeawaterReservoir.IO_ENERGY))

@@ -8,6 +8,7 @@ from .gui_ctrl import GUIControl
 from .heat_ctrl import HeatCtrl
 from .item_container import ItemContainer
 from .multi_block_structure import MultiBlockStructure
+from .multiblock_port_bindings import MultiblockPortBindings
 from .multi_fluid_container import MultiFluidContainer
 from .operation_listener import OperationListener
 from .power_control import PowerControl

@@ -15,7 +15,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.distillation_column im
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.multi_fluid_container import FLUID_VOLUME_EPSILON
 from skybluetech_scripts.skybluetech.server.machinery.basic import (
-    GUIControl, HeatCtrl, MultiBlockStructure, MultiFluidContainer,
+    GUIControl, HeatCtrl, MultiBlockStructure, MultiFluidContainer, MultiblockPortBindings,
 )
 from skybluetech_scripts.skybluetech.server.machinery.core.pool import GetLoadedMachine
 
@@ -35,7 +35,9 @@ for _flag in IDLE_FLAGS:
     IDLE_MASK |= _flag
 
 @RegisterMachine
-class DistillationColumnController(GUIControl, MultiBlockStructure, MultiFluidContainer, HeatCtrl):
+class DistillationColumnController(
+    MultiblockPortBindings, GUIControl, MultiBlockStructure, MultiFluidContainer, HeatCtrl
+):
     block_name = DistillationColumn.CONTROLLER
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
@@ -59,9 +61,7 @@ class DistillationColumnController(GUIControl, MultiBlockStructure, MultiFluidCo
         self.CallSync()
 
     def disconnect_ios(self):
-        for machine in self._input_ios + self._output_ios + self._heat_ios:
-            if machine.getMachineRef() is self:
-                machine.UnsetMachineRef()
+        self._unbind_ports(only_owned=True)
         self._input_ios = []
         self._output_ios = []
         self._heat_ios = []
@@ -98,8 +98,7 @@ class DistillationColumnController(GUIControl, MultiBlockStructure, MultiFluidCo
         if (input_ios, output_ios, heat_ios) != (self._input_ios, self._output_ios, self._heat_ios):
             self.disconnect_ios()
             self._input_ios, self._output_ios, self._heat_ios = input_ios, output_ios, heat_ios
-            for machine in all_ios:
-                machine.SetMachineRef(self)
+            self._bind_ports(all_ios)
         return True
 
     def _column_on_tick(self):

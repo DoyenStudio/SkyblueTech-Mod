@@ -41,6 +41,7 @@ from .basic import (
     OperationListener,
     Processor,
 )
+from .basic.multiblock_processing_ports import MultiblockProcessingPorts
 from .core import RegisterMachine
 from .interfaces import (
     EnergyInputInterface,
@@ -50,15 +51,20 @@ from .interfaces import (
     ItemOutputInterface,
 )
 
-EnergyInputInterface.AddExtraMachineId(ids.IO_ENERGY)
-FluidInputInterface.AddExtraMachineId(ids.IO_FLUID1)
-FluidOutputInterface.AddExtraMachineId(ids.IO_FLUID2)
-ItemInputInterface.AddExtraMachineId(ids.IO_ITEM1)
-ItemOutputInterface.AddExtraMachineId(ids.IO_ITEM2)
+PORTS = (
+    (ids.IO_ENERGY, EnergyInputInterface),
+    (ids.IO_FLUID1, FluidInputInterface),
+    (ids.IO_FLUID2, FluidOutputInterface),
+    (ids.IO_ITEM1, ItemInputInterface),
+    (ids.IO_ITEM2, ItemOutputInterface),
+)
+for port_id, interface in PORTS:
+    interface.AddExtraMachineId(port_id)
 
 
 @RegisterMachine
 class VacuumFreezer(
+    MultiblockProcessingPorts,
     OperationListener,
     Processor,
     MultiFluidContainer,
@@ -84,20 +90,7 @@ class VacuumFreezer(
     # 由制冷机搬走。设计工况是 80K 附近的液化配方, 此时制冷机的 COP(含冷头效率与
     # 蒸发器温差)恰好约 0.1, 即每 1 RF 的放热要花约 10 RF 的电, 也就是约 400 RF/t。
 
-    # 结构里的接口方块不参与热力与配方结算, 只负责搬运物料, 而且流体与物品都是被动
-    # 触发的, 不做轮询:
-
-    #     - 输入口一有变动, 就把里面的东西抽进本机(输入口的 `OnSlotUpdate` /
-    #       `OnFluidSlotUpdate` 钩子)
-    #     - 本机产出槽一有变动, 就把产出推给输出口(本机的 `OnSlotUpdate` /
-    #       `OnFluidSlotUpdate`)
-    #     - 输出口腾出空间时(最常见的是被管道抽走), 由输出口的钩子再推一次
-
-    # 接口方块全都不参与结构校验, 不放也照样能成型; 只放输入口、只放输出口都可以。
-    # 结构刚成型时 `connect_ios()` 会先把接口里已经有的东西补搬一遍, 之后完全由事件
-    # 驱动。接口的流体回调是当场触发的, 而搬运自己又会写接口槽位, 所以流体吞吐要带
-    # 重入保护, 见 `transmit_fluids`。
-
+    # 接口均可选；成型时补搬一次，此后由各自的库存事件触发。
     block_name = Machinery.VACUUM_FREEZER
     store_rf_max = STORE_RF_MAX
     heat_capacity = CHAMBER_HEAT_CAPACITY
@@ -124,42 +117,18 @@ class VacuumFreezer(
     fluid_output_slots = (1,)
     fluid_slot_max_volumes = MAX_FLUID_VOLUMES
     structure_palette = STRUCTURE_PALETTE
-    functional_block_ids = {
-        ids.IO_ENERGY,
-        ids.IO_FLUID1,
-        ids.IO_FLUID2,
-        ids.IO_ITEM1,
-        ids.IO_ITEM2,
-    }
+    ports = PORTS
+    exclusive_ports = False
+    functional_block_ids = frozenset(port_id for port_id, _ in PORTS)
+    item_input_port = ids.IO_ITEM1
+    item_output_port = ids.IO_ITEM2
+    fluid_inputs_by_port = ((ids.IO_FLUID1, 0),)
+    fluid_outputs_by_port = ((ids.IO_FLUID2, 1),)
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(VacuumFreezer, self).__init__(dim, x, y, z, block_entity_data)
-        # 流体吞吐的重入保护标志, 见 transmit_fluids
-        self._fluid_io_busy = False
-        self._energy_in_ios = []  # type: list[EnergyInputInterface]
-        self._fluid_in_ios = []  # type: list[FluidInputInterface]
-        self._fluid_out_ios = []  # type: list[FluidOutputInterface]
-        self._item_in_ios = []  # type: list[ItemInputInterface]
-        self._item_out_ios = []  # type: list[ItemOutputInterface]
-        self.handler.SubscribeOnSlotUpdate(self._vacuum_freezer_on_slot_update)
-        self.handler.SubscribeOnFluidSlotUpdate(self._vacuum_freezer_on_fluid_slot_update)
-        self.handler.SubscribeOnStructureChanged(self._vacuum_freezer_on_structure_changed)
-        self.handler.SubscribeOnUnload(self._vacuum_freezer_on_unload)
+        self._init_ios(refresh_on_sync=False)
         self.handler.SubscribeOnHeatWork(self._vacuum_freezer_on_heat_work)
-
-
-    def _vacuum_freezer_on_slot_update(self, slot_pos):
-        # type: (int) -> None
-        if slot_pos in self.item_output_slots:
-            self.try_output_items()
-        elif slot_pos in self.item_input_slots:
-            # 输入槽腾出空间后, 物品输入口里没抽完的东西可以再抽一次
-            self.try_take_in_items()
-
-    def _vacuum_freezer_on_fluid_slot_update(self, slot_pos, is_final):
-        # type: (int, bool) -> None
-        if slot_pos in self.fluid_input_slots or slot_pos in self.fluid_output_slots:
-            self.transmit_fluids()
 
     def UpdateUpgraders(self, upgraders):
         Processor.UpdateUpgraders(self, upgraders)
@@ -193,77 +162,38 @@ class VacuumFreezer(
         self.bdata[K_RECIPE] = index
         return idx, recipe
 
+    def _bind_port(self, machine):
+        machine.SetMachineRef(self)
+        if isinstance(machine, ItemInputInterface):
+            machine.SetOnSlotUpdateCallback(self.on_item_input_slot_update)
+        elif isinstance(machine, ItemOutputInterface):
+            machine.SetOnSlotUpdateCallback(self.on_item_output_slot_update)
+        elif isinstance(machine, (FluidInputInterface, FluidOutputInterface)):
+            machine.SetOnFluidSlotUpdateCallback(self.transmit_fluids)
+
     def on_item_input_slot_update(self, slot_pos):
-        # type: (int) -> None
-        self.try_take_in_items()
+        self._take_items()
 
     def on_item_output_slot_update(self, slot_pos):
-        # type: (int) -> None
-        self.try_output_items()
+        self._send_items()
 
-    def on_fluid_input_slot_update(self):
-        # type: () -> None
+    def _on_material_item_update(self, slot):
+        if slot in self.item_output_slots:
+            self._send_items()
+        elif slot in self.item_input_slots:
+            self._take_items()
+
+    def _push_port_item(self, item):
+        return self.PushItem(item)
+
+    def _on_material_fluid_update(self, slot, is_final):
+        if slot in self.fluid_input_slots or slot in self.fluid_output_slots:
+            self.transmit_fluids()
+
+    def transmit_materials(self):
+        self._take_items()
+        self._send_items()
         self.transmit_fluids()
-
-    def on_fluid_output_slot_update(self):
-        # type: () -> None
-        self.transmit_fluids()
-
-
-    def _vacuum_freezer_on_structure_changed(self, ok):
-        # type: (bool) -> None
-        self.clean()
-        if ok:
-            self.connect_ios()
-        self.CallSync()
-
-    def _vacuum_freezer_on_unload(self):
-        self.clean()
-
-    def connect_ios(self):
-        # type: () -> None
-        self._energy_in_ios = self.GetAllMachines(EnergyInputInterface, ids.IO_ENERGY)
-        self._fluid_in_ios = self.GetAllMachines(FluidInputInterface, ids.IO_FLUID1)
-        self._fluid_out_ios = self.GetAllMachines(FluidOutputInterface, ids.IO_FLUID2)
-        self._item_in_ios = self.GetAllMachines(ItemInputInterface, ids.IO_ITEM1)
-        self._item_out_ios = self.GetAllMachines(ItemOutputInterface, ids.IO_ITEM2)
-        for machine in self.iter_ios():
-            machine.SetMachineRef(self)
-        for io in self._item_in_ios:
-            io.SetOnSlotUpdateCallback(self.on_item_input_slot_update)
-        for io in self._item_out_ios:
-            io.SetOnSlotUpdateCallback(self.on_item_output_slot_update)
-        for io in self._fluid_in_ios:
-            io.SetOnFluidSlotUpdateCallback(self.on_fluid_input_slot_update)
-        for io in self._fluid_out_ios:
-            io.SetOnFluidSlotUpdateCallback(self.on_fluid_output_slot_update)
-        self.try_take_in_items()
-        self.try_output_items()
-        self.transmit_fluids()
-
-    def iter_ios(self):
-        "遍历本机接上的所有接口方块。"
-        return (
-            machine
-            for machines in (
-                self._energy_in_ios,
-                self._fluid_in_ios,
-                self._fluid_out_ios,
-                self._item_in_ios,
-                self._item_out_ios,
-            )
-            for machine in machines
-        )
-
-    def clean(self):
-        # type: () -> None
-        for machine in self.iter_ios():
-            machine.UnsetMachineRef()
-        self._energy_in_ios = []
-        self._fluid_in_ios = []
-        self._fluid_out_ios = []
-        self._item_in_ios = []
-        self._item_out_ios = []
 
     def _vacuum_freezer_on_heat_work(self):
         # type: () -> None
@@ -359,93 +289,29 @@ class VacuumFreezer(
 
     def transmit_fluids(self):
         # type: () -> None
-        # 流体接口吞吐: 把流体输入口里的流体抽进本机, 再把本机产出的流体送到输出口。
-
-        # 和本机开没开机无关 —— 机器因为缺料/缺电停下来时, 接口照样得能把东西送进来。
-        # 结构不完整时(接口方块已不属于本机)直接跳过。
-
-        # 重入保护是必须的: `_on_added_fluid` / `_on_reduced_fluid` 是当场回调
-        # `OnFluidSlotUpdate` 的, 而本方法自己就会写接口槽位, 往输出口送流体会立刻
-        # 回调回来。没有保护的话, 回调回来时本机产出槽还没扣账, 会被当成还有一整份
-        # 流体, 反复往同一个输出口里倒, 凭空多出流体。标志只挡这种重入, 同一帧里被
-        # 多个来源各叫一次是照常跑的(重读状态, 幂等)。
-        if self._fluid_io_busy or not self.StructureFinished():
+        # 配方提交期间也同步搬运，只拦截搬运自身触发的流体回调。
+        if self._io_busy or not self.StructureFinished():
             return
-        self._fluid_io_busy = True
+        self._io_busy = True
         try:
-            self.try_take_in_fluids()
-            self.try_output_fluids()
+            self._transfer_fluids()
         finally:
-            self._fluid_io_busy = False
+            self._io_busy = False
 
-    def try_take_in_fluids(self):
-        # type: () -> None
-        for io in self._fluid_in_ios:
-            fluid = io.fluids[0]
-            fluid_id = fluid.fluid_id
-            fluid_volume = fluid.volume
-            if fluid_id is None or fluid_volume <= 0:
-                continue
-            _, rest_volume = self.AddFluid(fluid_id, fluid_volume)
-            moved_volume = fluid_volume - rest_volume
-            if moved_volume <= 0:
-                continue
-            fluid.volume = rest_volume
-            io._on_reduced_fluid(0, fluid_id, moved_volume, True)
-
-    def try_take_in_items(self):
-        # type: () -> None
-        for io in self._item_in_ios:
-            for slot in io.item_input_slots:
-                item = io.GetSlotItem(slot)
-                if item is None:
-                    continue
-                count_before = item.count
-                rest_item = self.PushItem(item)
-                if rest_item is None:
-                    io.SetSlotItem(slot, None)
-                elif rest_item.count < count_before:
-                    io.SetSlotItem(slot, rest_item)
-
-    def try_output_fluids(self):
-        # type: () -> None
-        if not self._fluid_out_ios:
+    def _move_fluid(self, source_machine, source_slot, target_machine, target_slot):
+        # 接收端先通知，来源再按实际接收量扣除。
+        source = source_machine.fluids[source_slot]
+        fluid_id, volume = source.fluid_id, source.volume
+        if fluid_id is None or volume <= 0:
             return
-        for slot in self.fluid_output_slots:
-            fluid = self.fluids[slot]
-            fluid_id = fluid.fluid_id
-            if fluid_id is None or fluid.volume <= 0:
-                continue
-            for io in self._fluid_out_ios:
-                if fluid.volume <= 0:
-                    break
-                fluid_volume = fluid.volume
-                _, rest_volume = io.OutputFluid(fluid_id, fluid_volume, 0, True)
-                moved_volume = fluid_volume - rest_volume
-                if moved_volume <= 0:
-                    continue
-                fluid.volume = rest_volume
-                self._on_reduced_fluid(slot, fluid_id, moved_volume, True)
-
-    def try_output_items(self):
-        # type: () -> None
-        if not self._item_out_ios:
-            return
-        for slot in self.item_output_slots:
-            item = self.GetSlotItem(slot)
-            if item is None:
-                continue
-            count_before = item.count
-            for io in self._item_out_ios:
-                # 输出口的 IsValidInput 对任何槽位都返回 False, 用不了 PushItem,
-                # 改走 OutputItem(底层 PutItemIntoContainer) 直接写容器槽位
-                item = io.OutputItem(item)
-                if item is None:
-                    break
-            if item is None:
-                self.SetSlotItem(slot, None)
-            elif item.count < count_before:
-                self.SetSlotItem(slot, item)
+        if target_machine is self:
+            _, rest = self.AddFluid(fluid_id, volume)
+        else:
+            _, rest = target_machine.OutputFluid(fluid_id, volume, target_slot, True)
+        moved = volume - rest
+        if moved > 0:
+            source.volume = rest
+            source_machine._on_reduced_fluid(source_slot, fluid_id, moved, True)
 
 
 @VacuumFreezer.ForOperation(VacuumFreezerSubmitModifiesEvent)

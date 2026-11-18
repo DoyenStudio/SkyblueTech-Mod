@@ -30,6 +30,7 @@ from .basic import (
     GUIControl,
     ItemContainer,
     MultiBlockStructure,
+    MultiblockPortBindings,
     OperationListener,
     WorkRenderer,
 )
@@ -43,6 +44,7 @@ EnergyOutputInterface.AddExtraMachineId(IO_ENERGY_OUTPUT)
 
 @RegisterMachine
 class BatteryMatrix(
+    MultiblockPortBindings,
     WorkRenderer,
     OperationListener,
     MultiBlockStructure,
@@ -64,13 +66,11 @@ class BatteryMatrix(
         self._sum_input = 0
         self._sum_output = 0
         self._sum_power_t = 0
-        self._energy_in_ios = []  # type: list[EnergyInputInterface]
-        self._energy_out_ios = []  # type: list[EnergyOutputInterface]
         self.handler.SubscribeOnTicking(self._battery_matrix_on_ticking)
         self.handler.SubscribeOnClick(self._battery_matrix_on_click)
         self.handler.SubscribeOnSync(self._battery_matrix_on_sync)
         self.handler.SubscribeOnStructureChanged(self._battery_matrix_on_structure_changed)
-        self.handler.SubscribeOnUnload(self._battery_matrix_on_unload)
+        self.handler.SubscribeOnUnload(self._unbind_ports)
         self.CallSync()
 
     def _battery_matrix_on_ticking(self):
@@ -113,7 +113,7 @@ class BatteryMatrix(
 
     def _battery_matrix_on_structure_changed(self, ok):
         # type: (bool) -> None
-        self.clean()
+        self._unbind_ports()
         if ok:
             self.connect_ios()
         self.CallSync()
@@ -164,32 +164,10 @@ class BatteryMatrix(
         # type: (int) -> None
         self.recv_energy_return(rf)
 
-    def _battery_matrix_on_unload(self):
-        # type: () -> None
-        self.clean()
-
     def connect_ios(self):
-        # type: () -> None
-        "绑定结构里所有的能量输入/输出接口; 每种接口的数量不限, 多放几个就多几路吞吐。"
-        self._energy_in_ios = self.GetAllMachines(
-            EnergyInputInterface, IO_ENERGY_INPUT
-        )
-        self._energy_out_ios = self.GetAllMachines(
-            EnergyOutputInterface, IO_ENERGY_OUTPUT
-        )
-        for io in self._energy_in_ios:
-            io.SetMachineRef(self)
-        for io in self._energy_out_ios:
-            io.SetMachineRef(self)
-
-    def clean(self):
-        # type: () -> None
-        for io in self._energy_in_ios:
-            io.UnsetMachineRef()
-        for io in self._energy_out_ios:
-            io.UnsetMachineRef()
-        self._energy_in_ios = []
-        self._energy_out_ios = []
+        inputs = self.GetAllMachines(EnergyInputInterface, IO_ENERGY_INPUT)
+        outputs = self.GetAllMachines(EnergyOutputInterface, IO_ENERGY_OUTPUT)
+        self._bind_ports(inputs + outputs)
 
     def push_batteries_to_core(self):
         if self.GetStructureDestroyFlag() != 0:

@@ -19,11 +19,11 @@
             0
         ],
         "$label_text": "",
-        "$nineslice_size|default": 0,
         "$nine_slice_buttom": 0,
         "$nine_slice_left": 0,
         "$nine_slice_right": 0,
         "$nine_slice_top": 0,
+        "$nineslice_size|default": 0,
         "$pressed_button_name": "%netease_editor_template_namespace.click",
         "$pressed_texture": "textures/ui/skybluetech/button_pressed",
         "$texture_layer": 2,
@@ -258,8 +258,8 @@
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
-                                    12,
-                                    10
+                                    12.0,
+                                    6.0
                                 ],
                                 "size": [
                                     4,
@@ -276,7 +276,7 @@
                                 "anchor_to": "top_left",
                                 "offset": [
                                     21,
-                                    11
+                                    7.0
                                 ],
                                 "size": [
                                     130,
@@ -298,8 +298,8 @@
                                 "anchor_from": "top_left",
                                 "anchor_to": "top_left",
                                 "offset": [
-                                    12,
-                                    26
+                                    12.0,
+                                    18.0
                                 ],
                                 "size": [
                                     140,
@@ -320,7 +320,7 @@
                             "face0@MachinePanelExPages.fluid_output_btn": {
                                 "offset": [
                                     12,
-                                    42
+                                    30
                                 ]
                             }
                         },
@@ -328,7 +328,7 @@
                             "face1@MachinePanelExPages.fluid_output_btn": {
                                 "offset": [
                                     61,
-                                    42
+                                    30
                                 ]
                             }
                         },
@@ -336,7 +336,7 @@
                             "face2@MachinePanelExPages.fluid_output_btn": {
                                 "offset": [
                                     110,
-                                    42
+                                    30
                                 ]
                             }
                         },
@@ -344,7 +344,7 @@
                             "face3@MachinePanelExPages.fluid_output_btn": {
                                 "offset": [
                                     12,
-                                    68
+                                    56
                                 ]
                             }
                         },
@@ -352,7 +352,7 @@
                             "face4@MachinePanelExPages.fluid_output_btn": {
                                 "offset": [
                                     61,
-                                    68
+                                    56
                                 ]
                             }
                         },
@@ -360,19 +360,7 @@
                             "face5@MachinePanelExPages.fluid_output_btn": {
                                 "offset": [
                                     110,
-                                    68
-                                ]
-                            }
-                        },
-                        {
-                            "apply@MachinePanelExPages.fluid_output_btn": {
-                                "offset": [
-                                    88,
-                                    98
-                                ],
-                                "size": [
-                                    64,
-                                    18
+                                    56
                                 ]
                             }
                         },
@@ -384,18 +372,18 @@
                                 "$hover_texture": "textures/ui/skybluetech/button_hovered",
                                 "$is_new_nine_slice": false,
                                 "$label_color": [
-                                    1,
-                                    1,
-                                    1
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
                                 ],
                                 "$label_font_scale_factor": 1.0,
-                                "$label_font_size": "large",
+                                "$label_font_size": "normal",
                                 "$label_layer": 3,
                                 "$label_offset": [
                                     0,
                                     0
                                 ],
-                                "$label_text": "Button",
+                                "$label_text": "取消",
                                 "$nine_slice_buttom": 0,
                                 "$nine_slice_left": 0,
                                 "$nine_slice_right": 0,
@@ -413,7 +401,79 @@
                                 "anchor_to": "top_left",
                                 "offset": [
                                     12.0,
-                                    98.0
+                                    84.0
+                                ],
+                                "size": [
+                                    64.0,
+                                    18.0
+                                ],
+                                "layer": 2,
+                                "button_mappings": [],
+                                "default_control": "default",
+                                "hover_control": "hover",
+                                "is_handle_button_move_event": true,
+                                "pressed_control": "pressed",
+                                "bindings": [
+                                    {
+                                        "binding_type": "collection_details",
+                                        "binding_collection_name": "",
+                                        "binding_condition": "always_when_visible"
+                                    }
+                                ],
+                                "controls": [
+                                    {
+                                        "default@netease_editor_template_namespace.default": {}
+                                    },
+                                    {
+                                        "hover@netease_editor_template_namespace.hover": {}
+                                    },
+                                    {
+                                        "pressed@netease_editor_template_namespace.pressed": {}
+                                    },
+                                    {
+                                        "button_label@netease_editor_template_namespace.button_label": {}
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "apply@common.button": {
+                                "type": "button",
+                                "$control_alpha": 1.0,
+                                "$default_texture": "textures/ui/skybluetech/button_default",
+                                "$hover_texture": "textures/ui/skybluetech/button_hovered",
+                                "$is_new_nine_slice": false,
+                                "$label_color": [
+                                    0.2588235294117647,
+                                    0.2588235294117647,
+                                    0.2588235294117647
+                                ],
+                                "$label_font_scale_factor": 1.0,
+                                "$label_font_size": "normal",
+                                "$label_layer": 3,
+                                "$label_offset": [
+                                    0,
+                                    0
+                                ],
+                                "$label_text": "应用",
+                                "$nine_slice_buttom": 0,
+                                "$nine_slice_left": 0,
+                                "$nine_slice_right": 0,
+                                "$nine_slice_top": 0,
+                                "$nineslice_size": [
+                                    0,
+                                    0,
+                                    0,
+                                    0
+                                ],
+                                "$pressed_button_name": "%netease_editor_template_namespace.click",
+                                "$pressed_texture": "textures/ui/skybluetech/button_pressed",
+                                "$texture_layer": 2,
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    88.0,
+                                    84.0
                                 ],
                                 "size": [
                                     64.0,
@@ -452,7 +512,7 @@
                     "layer": 10,
                     "size": [
                         164,
-                        122
+                        112
                     ]
                 }
             }
@@ -480,7 +540,8 @@
                         0.25,
                         0.3
                     ],
-                    "text": "点击彩色输出槽\n设置可输出的面\n可同时选择多个面",
+                    "font_scale_factor": 0.9,
+                    "text": "对应机器界面流体槽\n点击彩色输出槽\n设置可输出面",
                     "text_alignment": "left"
                 }
             },

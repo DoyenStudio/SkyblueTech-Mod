@@ -54,11 +54,7 @@ class FluidOutputSettingsPage(PageBase, EventListenerService):
         self.dialog_panel = self.dialog["panel"]
         self.dialog_panel["cancel"].asButton().SetCallback(lambda _: self.close_dialog())
         self.dialog_panel["apply"].asButton().SetCallback(lambda _: self.apply())
-        self.dialog_panel["cancel/caption"].asLabel().SetText("取消")
-        self.dialog_panel["apply/caption"].asLabel().SetText("保存")
-        for name in ("cancel", "apply"):
-            self.dialog_panel[name + "/fill"].asImage().SetAlpha(1.0)
-            self.dialog_panel[name + "/fill"].asImage().SetSpriteColor((0.77, 0.83, 0.90))
+        self.dialog_panel["apply/button_label"].asLabel().SetText("保存")
         self.face_buttons = []
         for index in range(len(OUTPUT_FACES)):
             button = self.dialog_panel["face%d" % index].asButton()
@@ -102,7 +98,8 @@ class FluidOutputSettingsPage(PageBase, EventListenerService):
         self.disable_listeners()
 
     def Destroy(self):
-        self.disable_listeners()
+        self.Deactive()
+        self.dialog.Remove()
 
     @EventListenerService.Listen(FluidOutputFacesUpdate)
     def on_faces_update(self, event):
@@ -138,7 +135,7 @@ class FluidOutputSettingsPage(PageBase, EventListenerService):
         self.selected_color = OUTPUT_SLOT_COLORS[index % len(OUTPUT_SLOT_COLORS)]
         self.dialog_panel["accent"].asImage().SetSpriteColor(self.selected_color)
         self.dialog_panel["title"].asLabel().SetText("流体输出槽 %d" % slot)
-        self.dialog_panel["apply/caption"].asLabel().SetText("保存")
+        self.dialog_panel["apply/button_label"].asLabel().SetText("保存")
         self.refresh_faces()
         self.dialog.SetVisible(True)
 
@@ -169,7 +166,7 @@ class FluidOutputSettingsPage(PageBase, EventListenerService):
         if self.pending or self.selected_slot is None:
             return
         self.pending = True
-        self.dialog_panel["apply/caption"].asLabel().SetText("保存中")
+        self.dialog_panel["apply/button_label"].asLabel().SetText("保存中")
         x, y, z = self.machine_pos[1:]
         FluidOutputFacesSet(
             x, y, z, self.selected_slot, self.draft_mask, self.draft_revision

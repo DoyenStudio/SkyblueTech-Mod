@@ -1,6 +1,10 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
-from skybluetech_scripts.tooldelta.extensions.facing_utils import RelativeFacingStrEnum
+from skybluetech_scripts.tooldelta.extensions.facing_utils import (
+    FacingStrEnum,
+    RelativeFacingStrEnum,
+    get_relative_facing,
+)
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.gas_burning_generator import (
@@ -35,13 +39,12 @@ class GasBurningGenerator(GeneratorProcessor, MultiFluidContainer):
         1: MAX_OUTPUT_GAS_VOLUME,
         2: MAX_INPUT_GAS_VOLUME,
     }
-    # Chlorine uses the separate top inlet; fuel gases use slot 0.
     fluid_input_slots_by_face = {
         RelativeFacingStrEnum.TOP: (2,),
-        RelativeFacingStrEnum.FRONT: (0,),
-        RelativeFacingStrEnum.BACK: (0,),
-        RelativeFacingStrEnum.LEFT: (0,),
-        RelativeFacingStrEnum.RIGHT: (0,),
+        RelativeFacingStrEnum.FRONT: fluid_input_slots,
+        RelativeFacingStrEnum.BACK: fluid_input_slots,
+        RelativeFacingStrEnum.LEFT: fluid_input_slots,
+        RelativeFacingStrEnum.RIGHT: fluid_input_slots,
         RelativeFacingStrEnum.DOWN: (0,),
     }
 
@@ -49,6 +52,13 @@ class GasBurningGenerator(GeneratorProcessor, MultiFluidContainer):
         super(GasBurningGenerator, self).__init__(dim, x, y, z, block_entity_data)
         self.handler.SubscribeOnPlaced(self._gas_burning_generator_on_placed)
         self.handler.SubscribeOnNeighborChanged(self._gas_burning_generator_on_neighbor_changed)
+
+    def GetRelativeFacing(self, absolute_face):
+        # 机身没有朝向状态，以北面作为固定的参考正面。
+        try:
+            return get_relative_facing(FacingStrEnum.NORTH, absolute_face)
+        except ValueError:
+            return None
 
     def _gas_burning_generator_on_placed(self, _):
         TCON.block_placed(self)

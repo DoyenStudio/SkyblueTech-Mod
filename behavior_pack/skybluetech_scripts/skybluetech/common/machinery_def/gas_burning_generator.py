@@ -31,7 +31,7 @@ recipes = RecipesCollection(
     GasBurningGeneratorRecipe(fluids.CommonGas.METHANE, 4, 160),
     # Electrolysis: 20 mB H2 costs 2,000 RF; 16 mB burning recovers 15/32.
     GasBurningGeneratorRecipe(fluids.CommonGas.HYDROGEN, 16, 750),
-    # Append to preserve saved recipe indices; chlorine uses the top inlet.
+    # Append to preserve saved recipe indices.
     GasBurningGeneratorRecipe(
         fluids.CommonGas.HYDROGEN, HCL_HYDROGEN_VOLUME, HCL_OUTPUT_POWER,
         output_gas_id=fluids.Acid.HYDROGEN_CHLORIDE,

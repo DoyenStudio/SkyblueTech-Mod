@@ -42,6 +42,7 @@ MACHINES = (
     "fluid_condenser",
     "freezer",
     "air_compressor",
+    "pump",
     "vacuum_freezer",
     # 混合输入（流 + 物）
     "metal_press",

@@ -691,6 +691,113 @@
             }
         ]
     },
+    "Pump@MachineRecipeLib.content_base": {
+        "type": "panel",
+        "size": [
+            112,
+            54
+        ],
+        "layer": 1,
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "pump_preview": {
+                                "type": "custom",
+                                "renderer": "netease_paper_doll_renderer",
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    4,
+                                    3
+                                ],
+                                "size": [
+                                    40,
+                                    48
+                                ],
+                                "layer": 5,
+                                "enable_scissor_test": true,
+                                "rotation": "none",
+                                "screen_scale": 1.0
+                            }
+                        },
+                        {
+                            "progress@SkybluePanelLib.progress_arrow": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    45,
+                                    19
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ]
+                            }
+                        },
+                        {
+                            "progress_hover@$recipe_progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "offset": [
+                                    45,
+                                    19
+                                ],
+                                "size": [
+                                    22,
+                                    15
+                                ],
+                                "layer": 9
+                            }
+                        },
+                        {
+                            "output": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.output0",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_34",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "offset": [
+                                                78,
+                                                9
+                                            ],
+                                            "size": [
+                                                24,
+                                                36
+                                            ],
+                                            "layer": -5
+                                        }
+                                    }
+                                ]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "AlloyFurnace@MachineRecipeLib.content_base": {
         "type": "panel",
         "size": [

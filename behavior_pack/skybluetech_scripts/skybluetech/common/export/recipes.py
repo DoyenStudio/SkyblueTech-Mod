@@ -38,6 +38,7 @@ from ..mini_jei.machinery.mixed_macerator import MixedMaceratorRecipe
 from ..mini_jei.machinery.mixer import MixerRecipe
 from ..mini_jei.machinery.oil_extractor import OilExtractorRecipe
 from ..mini_jei.machinery.precision_cutter import PrecisionCutterRecipe
+from skybluetech_scripts.skybluetech.common.mini_jei.machinery.pump import PumpRecipe
 from ..mini_jei.machinery.reacting_thermal_generator import ReactingThermalGeneratorRecipe
 from ..mini_jei.machinery.sawmill import SawmillRecipe
 from ..mini_jei.machinery.template_assembler import TemplateAssemblerRecipe
@@ -76,7 +77,7 @@ __all__ = [
     "ElectrolyzerRecipe", "FluidCondenserRecipe", "IndustrialCentrifugeRecipe", "FlotationMachineRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
     "HydroponicBedRecipe", "HydroponicBedSandRecipe", "MachineryWorkstationRecipe",
     "MagmaCentrifugeRecipe", "MetalPressRecipe", "MixedMaceratorRecipe", "MixerRecipe",
-    "OilExtractorRecipe", "PrecisionCutterRecipe", "ReactingThermalGeneratorRecipe",
+    "OilExtractorRecipe", "PrecisionCutterRecipe", "PumpRecipe", "ReactingThermalGeneratorRecipe",
     "SawmillRecipe", "TemplateAssemblerRecipe", "VacuumFreezerRecipe",
     "IndustrialResearchingRecipe", "MetalHammerRecipe", "GenericCraftingTableRecipe",
     "GenericFurnaceRecipe", "GenericBlastFurnaceRecipe", "GenericSmokerRecipe",

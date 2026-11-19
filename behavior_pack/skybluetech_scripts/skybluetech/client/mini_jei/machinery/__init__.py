@@ -13,6 +13,7 @@ from . import (
     hydroponic_bed_sand,
     machinery_workstation,
     precision_cutter,
+    pump,
     specialized_growth_chamber,
     template_assembler,
     vacuum_freezer,

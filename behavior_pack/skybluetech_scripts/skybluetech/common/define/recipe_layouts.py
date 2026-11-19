@@ -83,6 +83,18 @@ LAYOUTS = {
         "static": False,
         "flame": False,
     },
+    "skybluetech:pump": {
+        "file": "Pump",
+        "control_def": "SkyblueMeiPump.RECIPES_GRID",
+        "inputs": (),
+        "outputs": (("fluid", 0),),
+        "catalysts": 0,
+        "power": None,
+        "segments": 0,
+        "progress": "fromRightToLeft",
+        "static": True,
+        "flame": False,
+    },
     "skybluetech:alloy_furnace": {
         "file": "AlloyFurnace",
         "control_def": "SkyblueMeiAlloyFurnace.RECIPES_GRID",

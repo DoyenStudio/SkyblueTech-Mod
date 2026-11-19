@@ -34,6 +34,13 @@
             62
         ]
     },
+    "pump_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.Pump",
+        "size": [
+            180,
+            54
+        ]
+    },
     "alloy_furnace_recipes@MachineRecipeLib.mini_row": {
         "$recipe_content": "MachineRecipeLib.AlloyFurnace",
         "size": [

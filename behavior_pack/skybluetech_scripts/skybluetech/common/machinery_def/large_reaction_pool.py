@@ -58,7 +58,7 @@ for old_recipe in small_reactor_recipes:
         ))
 
 # 公共供药与回收。PM-R4 与吸收制酸共用一条。
-_add("pm_r4", "氯化氢吸收", [(Acid.HYDROGEN_CHLORIDE, 200), (water, 100)], [(hcl, 200)])
+_add("pm_r4", "氯化氢吸收", [(Acid.HYDROGEN_CHLORIDE, 200), (water, 100)], [(hcl, 200)], ticks=20)
 _add("v1", "植物油制捕收剂", [(CommonOil.VEGETABLE_OIL, 100), (water, 100)],
      [(Chemical.MINERAL_COLLECTOR, 200)], power=128, ticks=100)
 _add("p2", "工艺水高级氧化", [(CommonLiquid.ORGANIC_WASTE, 200), (CommonGas.OXYGEN, 100)],

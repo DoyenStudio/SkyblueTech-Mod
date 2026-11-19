@@ -32,7 +32,9 @@
 
 ## 配方与实测
 
-反应池收录矿线中的 45 道工序，以及聚乙烯合成和恶灵液配制。两条旧配方仍可在小型化学反应釜使用。可在控制器配方页或 MEI 中查阅每道工序的原料、数量和通道顺序。[完整配方表](../../behavior_pack/skybluetech_scripts/skybluetech/common/machinery_def/large_reaction_pool.py)
+反应池收录矿线中的 45 道工序，以及聚乙烯合成和恶灵液配制。小型化学反应釜也登记了聚乙烯合成、恶灵液配制，以及 PM-R4 氯化氢吸收、V1 植物油制捕收剂、P2 工艺水高级氧化、N4 混凝土促凝液配制和 PB6 二氧化硫氧化制酸。其中 V1、P2、N4、PB6 在小釜中加工同等物料需 1.5 倍时间，每 tick 的耗电相同。可在控制器配方页或 MEI 中查阅原料、数量和通道顺序。[完整配方表](../../behavior_pack/skybluetech_scripts/skybluetech/common/machinery_def/large_reaction_pool.py)
+
+PM-R4 在大型池每批消耗 200 mB 氯化氢和 100 mB 水，20 tick（1 秒）产出 200 mB 盐酸；小釜每批消耗 100 mB 氯化氢和 50 mB 水，30 tick（1.5 秒）产出 100 mB 盐酸。两机均为 256 RF/t、无外热，处理同等物料时小釜需 3 倍时间。
 
 煤焦油制药（C2）是三进两出的接线实例。流体入口 Ⅰ、Ⅱ、Ⅲ 分别接 1,000 mB 煤焦油、500 mB 过氧化氢和 400 mB 乙烯。达到 450 K 时，400 tick 消耗 204,800 RF 电和 2,000 RF 热，流体出口 Ⅰ 和 Ⅱ 分别得到 1,600 mB 矿物捕收剂和 300 mB 燃料油。
 

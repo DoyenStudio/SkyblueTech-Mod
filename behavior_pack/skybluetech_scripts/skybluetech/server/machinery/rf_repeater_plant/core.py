@@ -164,6 +164,9 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
         block_sync.discard_block((self.dim, self.x, self.y, self.z))
 
     def GetEnergyTransferLimits(self, period_ticks):
+        if self.mode == MODE_OUTPUT:
+            return 0, max(0, int(self.store_rf))
+        # 输入电量转发给输出塔，由目标塔的剩余容量决定接收量。
         return None, 0
 
     def AddPower(self, rf):

@@ -51,6 +51,7 @@ MACHINES = (
     # 多流体产出
     "magma_centrifuge",
     "electrolyzer",
+    "high_temp_electrolyzer",
     # 无电
     "distillation_chamber",
     "heat_melting_chamber",

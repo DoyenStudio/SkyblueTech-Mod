@@ -24,6 +24,7 @@ from ..mini_jei.machinery.distillation_column import DistillationColumnRecipe, D
 from ..mini_jei.machinery.distillation_column_chamber import DistillationColumnChamberRecipe
 from ..mini_jei.machinery.engraver import EngraverRecipe
 from ..mini_jei.machinery.electrolyzer import ElectrolyzerRecipe
+from ..mini_jei.machinery.high_temp_electrolyzer import HighTempElectrolyzerRecipe
 from ..mini_jei.machinery.fluid_condenser import FluidCondenserRecipe
 from ..mini_jei.machinery.industrial_centrifuge import IndustrialCentrifugeRecipe
 from ..mini_jei.machinery.flotation_machine import FlotationMachineRecipe
@@ -74,7 +75,7 @@ __all__ = [
     "GetRecipesByInput", "GetRecipesByOutput", "GetRecipesByCategory",
     "AirCompressorRecipe", "AlloyFurnaceRecipe", "ChargerRecipe", "CompressorRecipe",
     "HeatMeltingChamberRecipe", "CyroHeatMeltingChamberRecipe", "DistillationChamberRecipe", "EngraverRecipe",
-    "ElectrolyzerRecipe", "FluidCondenserRecipe", "IndustrialCentrifugeRecipe", "FlotationMachineRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
+    "ElectrolyzerRecipe", "HighTempElectrolyzerRecipe", "FluidCondenserRecipe", "IndustrialCentrifugeRecipe", "FlotationMachineRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
     "HydroponicBedRecipe", "HydroponicBedSandRecipe", "MachineryWorkstationRecipe",
     "MagmaCentrifugeRecipe", "MetalPressRecipe", "MixedMaceratorRecipe", "MixerRecipe",
     "OilExtractorRecipe", "PrecisionCutterRecipe", "PumpRecipe", "ReactingThermalGeneratorRecipe",

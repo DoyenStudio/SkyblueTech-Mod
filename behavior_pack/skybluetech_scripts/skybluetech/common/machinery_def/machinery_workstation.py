@@ -300,6 +300,23 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            1: Input(id_enum.ELECTROLYTIC_PANE),
+            2: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            3: Input(id_enum.FluidPipe.CHEMICAL),
+            4: Input(id_enum.Machinery.ELECTROLYZER),
+            5: Input(id_enum.Tank.STEEL),
+            6: Input(id_enum.REDSTONEFLUX_CORE),
+            7: Input(id_enum.HEAT_EXCHANGER),
+            8: Input(id_enum.ControlCircuit.ADVANCED),
+        },
+        id_enum.Machinery.HIGH_TEMP_ELECTROLYZER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
     # energy cube : junior
     MRecipe(
         {

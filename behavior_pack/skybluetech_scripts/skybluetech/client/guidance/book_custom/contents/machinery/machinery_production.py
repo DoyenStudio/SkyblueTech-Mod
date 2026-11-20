@@ -137,6 +137,20 @@ electrolyzer = PageGroup(
 )
 
 
+high_temp_electrolyzer = PageGroup(
+    "high_temp_electrolyzer_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.HIGH_TEMP_ELECTROLYZER),
+            "在机器底面接红外高热发生器或导热块，再接入电力。"
+            "铝电解混合料从物品槽投入，无水氯化镁熔盐从流体槽注入。\n\n"
+            "金属进入物品出口，副产气体默认从右侧抽取。点击面板上的进度箭头可查看配方温区。",
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.HIGH_TEMP_ELECTROLYZER),
+    ],
+)
+
+
 engraver = PageGroup(
     "engraver_description",
     [

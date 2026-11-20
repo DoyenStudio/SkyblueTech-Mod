@@ -88,6 +88,12 @@ machinery_production_toc = _split_toc(
         machinery_production.electrolyzer,
     ),
     TOCPageSection(
+        id_enum.Machinery.HIGH_TEMP_ELECTROLYZER,
+        0,
+        None,
+        machinery_production.high_temp_electrolyzer,
+    ),
+    TOCPageSection(
         id_enum.Machinery.ENGRAVER,
         0,
         None,

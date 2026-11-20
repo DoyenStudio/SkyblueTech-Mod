@@ -1,4 +1,8 @@
 {
+    "high_temp_electrolyzer_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.HighTempElectrolyzer",
+        "size": [180, 62]
+    },
     "industrial_centrifuge_downside_recipes@MachineRecipeLib.mini_row": {
         "$recipe_content": "MachineRecipeLib.IndustrialCentrifuge",
         "size": [

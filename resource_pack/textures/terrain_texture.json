@@ -928,6 +928,15 @@
         "skybluetech:electrolyzer_front_active": {
             "textures": "textures/blocks/machinery/electrolyzer_front_active"
         },
+        "skybluetech:high_temp_electrolyzer_bottom": {
+            "textures": "textures/blocks/machinery/high_temp_electrolyzer_bottom"
+        },
+        "skybluetech:high_temp_electrolyzer_front": {
+            "textures": "textures/blocks/machinery/high_temp_electrolyzer_front"
+        },
+        "skybluetech:high_temp_electrolyzer_front_active": {
+            "textures": "textures/blocks/machinery/high_temp_electrolyzer_front_active"
+        },
         "skybluetech:energy_cube_junior": {
             "textures": "textures/models/energy_cube/energy_cube_junior_texture"
         },

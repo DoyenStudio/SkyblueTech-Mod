@@ -22,6 +22,7 @@ from . import distillation_column
 from .electric_heater import ElectricHeater
 from .electric_crafter import ElectricCrafter
 from .electrolyzer import Electrolyzer
+from .high_temp_electrolyzer import HighTempElectrolyzer
 from .energy_cube import EnergyCubeJunior
 from .engraver import Engraver
 from .farming_station import FarmingStation

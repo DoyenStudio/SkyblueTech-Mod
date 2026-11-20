@@ -1,0 +1,254 @@
+{
+    "namespace": "HighTempElectrolyzerUI",
+    "content": {
+        "type": "panel",
+        "size": [
+            "100%",
+            "100%"
+        ],
+        "controls": [
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ],
+                    "layer": 1
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        7,
+                        17
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ],
+                    "layer": 10
+                }
+            },
+            {
+                "fluid0@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52"
+                }
+            },
+            {
+                "ring_tin_fluid0@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        27,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "layer": 10
+                }
+            },
+            {
+                "input_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        34
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "type": "stack_panel",
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 0
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_in_item@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50,
+                        34
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 10
+                }
+            },
+            {
+                "progress@SkybluePanelLib.progress_sprite": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        77,
+                        35
+                    ],
+                    "size": [
+                        22,
+                        15
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.recipe_overlay_btn": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        75,
+                        31
+                    ],
+                    "size": [
+                        26,
+                        23
+                    ],
+                    "layer": 9
+                }
+            },
+            {
+                "temperature": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        64,
+                        57
+                    ],
+                    "size": [
+                        48,
+                        11
+                    ],
+                    "type": "label",
+                    "text": "300 K",
+                    "text_alignment": "center",
+                    "color": [
+                        0.22,
+                        0.22,
+                        0.22
+                    ],
+                    "layer": 2
+                }
+            },
+            {
+                "output_slot": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        109,
+                        34
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "type": "stack_panel",
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_out_item@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        109,
+                        34
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 10
+                }
+            },
+            {
+                "fluid1@SkybluePanelLib.fluid_tank": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        137,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "layer": 1,
+                    "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52"
+                }
+            },
+            {
+                "ring_tout_fluid1@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        137,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ],
+                    "layer": 10
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "HighTempElectrolyzerUI.content",
+        "$panel_size": [
+            176,
+            166
+        ],
+        "$content_size": [
+            162,
+            72
+        ],
+        "$title_text": "高温电解机",
+        "$has_tabs": true,
+        "$has_upgrades": true,
+        "$show_led": true,
+        "$upgrade_slot0": 2,
+        "$upgrade_slot1": 3,
+        "$upgrade_slot2": 4,
+        "$upgrade_slot3": 5
+    }
+}

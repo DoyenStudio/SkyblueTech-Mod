@@ -1,0 +1,17 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:aluminum_electrolysis_mix_craft"
+        },
+        "ingredients": [
+            {"item": "skybluetech:aluminum_oxide_dust"},
+            {"item": "skybluetech:carbon_dust"}
+        ],
+        "result": {
+            "count": 1,
+            "item": "skybluetech:aluminum_electrolysis_mix"
+        },
+        "tags": ["crafting_table"]
+    }
+}

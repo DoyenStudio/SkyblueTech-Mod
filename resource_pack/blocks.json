@@ -966,6 +966,17 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:high_temp_electrolyzer": {
+        "sound": "iron",
+        "textures": {
+            "down": "skybluetech:high_temp_electrolyzer_bottom",
+            "east": "skybluetech:frame",
+            "north": "skybluetech:high_temp_electrolyzer_front",
+            "south": "skybluetech:frame",
+            "up": "skybluetech:frame_top",
+            "west": "skybluetech:frame"
+        }
+    },
     "skybluetech:engraver": {
         "sound": "iron",
         "textures": {

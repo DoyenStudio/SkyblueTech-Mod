@@ -14,6 +14,9 @@
                     "back_belt": "Material.connected_belt"
                 },
                 {
+                    "incline_belt": "Material.connected_belt"
+                },
+                {
                     "left_belt": "Material.connected_belt_side"
                 },
                 {
@@ -25,31 +28,46 @@
             ],
             "part_visibility": [
                 {
-                    "left_conn": "query.mod.skybluetech_transmit_belt_connect_left"
+                    "horizonal": "!query.mod.skybluetech_transmit_belt_incline"
                 },
                 {
-                    "left_belt": "query.mod.skybluetech_transmit_belt_connect_left"
+                    "fixed": "!query.mod.skybluetech_transmit_belt_incline"
                 },
                 {
-                    "no_left_conn": "!query.mod.skybluetech_transmit_belt_connect_left"
+                    "fixed_belt": "!query.mod.skybluetech_transmit_belt_incline"
                 },
                 {
-                    "right_conn": "query.mod.skybluetech_transmit_belt_connect_right"
+                    "left_conn": "!query.mod.skybluetech_transmit_belt_incline && query.mod.skybluetech_transmit_belt_connect_left"
                 },
                 {
-                    "right_belt": "query.mod.skybluetech_transmit_belt_connect_right"
+                    "left_belt": "!query.mod.skybluetech_transmit_belt_incline && query.mod.skybluetech_transmit_belt_connect_left"
                 },
                 {
-                    "no_right_conn": "!query.mod.skybluetech_transmit_belt_connect_right"
+                    "no_left_conn": "!query.mod.skybluetech_transmit_belt_incline && !query.mod.skybluetech_transmit_belt_connect_left"
                 },
                 {
-                    "back_conn": "query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right)"
+                    "right_conn": "!query.mod.skybluetech_transmit_belt_incline && query.mod.skybluetech_transmit_belt_connect_right"
                 },
                 {
-                    "back_belt": "query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right)"
+                    "right_belt": "!query.mod.skybluetech_transmit_belt_incline && query.mod.skybluetech_transmit_belt_connect_right"
                 },
                 {
-                    "no_back_conn": "!(query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right))"
+                    "no_right_conn": "!query.mod.skybluetech_transmit_belt_incline && !query.mod.skybluetech_transmit_belt_connect_right"
+                },
+                {
+                    "back_conn": "!query.mod.skybluetech_transmit_belt_incline && (query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right))"
+                },
+                {
+                    "back_belt": "!query.mod.skybluetech_transmit_belt_incline && (query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right))"
+                },
+                {
+                    "no_back_conn": "!query.mod.skybluetech_transmit_belt_incline && !(query.mod.skybluetech_transmit_belt_connect_back || (!query.mod.skybluetech_transmit_belt_connect_left && !query.mod.skybluetech_transmit_belt_connect_right))"
+                },
+                {
+                    "incline": "query.mod.skybluetech_transmit_belt_incline"
+                },
+                {
+                    "incline_belt": "query.mod.skybluetech_transmit_belt_incline"
                 }
             ],
             "ignore_lighting": false

@@ -4,4 +4,5 @@ from . import (
     extractor_belt,
     inserter_belt,
     detector_belt,
+    topology,
 )

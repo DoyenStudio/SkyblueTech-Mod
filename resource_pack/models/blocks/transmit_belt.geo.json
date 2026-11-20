@@ -6,9 +6,9 @@
 				"identifier": "geometry.skybluetech.transmit_belt",
 				"texture_width": 32,
 				"texture_height": 32,
-				"visible_bounds_width": 2,
-				"visible_bounds_height": 1.5,
-				"visible_bounds_offset": [0, 0.25, 0]
+				"visible_bounds_width": 4,
+				"visible_bounds_height": 2.5,
+				"visible_bounds_offset": [0, 0.75, 0]
 			},
 			"bones": [
 				{
@@ -16,13 +16,13 @@
 					"pivot": [0, 0, 0]
 				},
 				{
-					"name": "general",
+					"name": "horizonal",
 					"parent": "root",
 					"pivot": [0, 0, 0]
 				},
 				{
 					"name": "fixed",
-					"parent": "general",
+					"parent": "horizonal",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
@@ -72,7 +72,7 @@
 				},
 				{
 					"name": "left_conn",
-					"parent": "general",
+					"parent": "horizonal",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
@@ -124,7 +124,7 @@
 				},
 				{
 					"name": "no_left_conn",
-					"parent": "general",
+					"parent": "horizonal",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
@@ -143,7 +143,7 @@
 				},
 				{
 					"name": "right_conn",
-					"parent": "general",
+					"parent": "horizonal",
 					"pivot": [13, 0, 0],
 					"cubes": [
 						{
@@ -195,7 +195,7 @@
 				},
 				{
 					"name": "no_right_conn",
-					"parent": "general",
+					"parent": "horizonal",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
@@ -214,7 +214,7 @@
 				},
 				{
 					"name": "back_conn",
-					"parent": "general",
+					"parent": "horizonal",
 					"pivot": [0, 0, -3],
 					"cubes": [
 						{
@@ -264,7 +264,7 @@
 				},
 				{
 					"name": "no_back_conn",
-					"parent": "general",
+					"parent": "horizonal",
 					"pivot": [0, 0, 0],
 					"cubes": [
 						{
@@ -277,6 +277,62 @@
 								"west": {"uv": [17, 16], "uv_size": [1, 2]},
 								"up": {"uv": [28, 17], "uv_size": [-12, -1]},
 								"down": {"uv": [28, 18], "uv_size": [-12, -1]}
+							}
+						}
+					]
+				},
+				{
+					"name": "incline",
+					"parent": "root",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-6, 10.5, -12],
+							"size": [1, 2, 23],
+							"pivot": [0, 10.5, 3],
+							"rotation": [45, 0, 0],
+							"uv": {
+								"north": {"uv": [18, 4], "uv_size": [1, 2]},
+								"east": {"uv": [16, 16], "uv_size": [16, 2]},
+								"south": {"uv": [18, 6], "uv_size": [1, 2]},
+								"west": {"uv": [16, 16], "uv_size": [16, 2]},
+								"up": {"uv": [16, 0], "uv_size": [1, 19]},
+								"down": {"uv": [16, 0], "uv_size": [1, 19]}
+							}
+						},
+						{
+							"origin": [5, 10.5, -12],
+							"size": [1, 2, 23],
+							"pivot": [11, 10.5, 3],
+							"rotation": [45, 0, 0],
+							"uv": {
+								"north": {"uv": [18, 4], "uv_size": [1, 2]},
+								"east": {"uv": [16, 16], "uv_size": [16, 2]},
+								"south": {"uv": [18, 6], "uv_size": [1, 2]},
+								"west": {"uv": [16, 16], "uv_size": [16, 2]},
+								"up": {"uv": [16, 0], "uv_size": [1, 19]},
+								"down": {"uv": [16, 0], "uv_size": [1, 19]}
+							}
+						}
+					]
+				},
+				{
+					"name": "incline_belt",
+					"parent": "incline",
+					"pivot": [0, 0, 0],
+					"cubes": [
+						{
+							"origin": [-5, 8.2, -10.9],
+							"size": [10, 1, 23],
+							"pivot": [0, 8.2, 0.6],
+							"rotation": [45, 0, 0],
+							"uv": {
+								"north": {"uv": [0, 13], "uv_size": [10, 1]},
+								"east": {"uv": [0, 0], "uv_size": [1, 1]},
+								"south": {"uv": [0, 13], "uv_size": [10, 1]},
+								"west": {"uv": [0, 0], "uv_size": [1, 1]},
+								"up": {"uv": [10, 16], "uv_size": [-10, -16]},
+								"down": {"uv": [10, 16], "uv_size": [-10, -16]}
 							}
 						}
 					]

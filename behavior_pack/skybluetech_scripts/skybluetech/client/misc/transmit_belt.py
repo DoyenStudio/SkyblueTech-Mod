@@ -11,11 +11,13 @@ from skybluetech_scripts.tooldelta.extensions.mod_block_event import (
 from skybluetech_scripts.tooldelta.general import ClientInitCallback, ClientUninitCallback
 from skybluetech_scripts.tooldelta.utils.timer import Repeat
 
+from ...common.define.belt import OUTPUT_BELTS
 from ...common.define.id_enum import TransmitBelt
 from ..utils.client_molangs import (
     TRANSMIT_BELT_CONNECT_LEFT,
     TRANSMIT_BELT_CONNECT_RIGHT,
     TRANSMIT_BELT_CONNECT_BACK,
+    TRANSMIT_BELT_INCLINE,
 )
 
 ENTITY_TYPES = {
@@ -24,32 +26,51 @@ ENTITY_TYPES = {
     TransmitBelt.INSERTER: "skybluetech:inserter_belt_entity",
     TransmitBelt.DETECTOR: "skybluetech:detector_belt_entity",
 }
-OUTPUT_BELTS = frozenset((TransmitBelt.BELT, TransmitBelt.EXTRACTOR, TransmitBelt.DETECTOR))
 # aux 的低两位依次为南、西、北、东。
 FACING_OFFSETS = ((0, 1), (-1, 0), (0, -1), (1, 0))
-CONNECTION_MOLANGS = (
+# transmit_belt.json 的状态序号占据其余位，diagonal_up 是第 3 号。
+INCLINE_STATUS_INDEX = 3
+BELT_MOLANGS = (
     TRANSMIT_BELT_CONNECT_LEFT,
     TRANSMIT_BELT_CONNECT_RIGHT,
     TRANSMIT_BELT_CONNECT_BACK,
+    TRANSMIT_BELT_INCLINE,
 )
 
 client_entities_pool = {}  # type: dict[tuple[int, int, int, int], BeltModel]
 active_dimension = None  # type: int | None
 
 
-def _get_connections(pos, facing, read_block):
-    # type: (tuple[int, int, int], int, object) -> tuple[bool, ...]
+def _is_incline(block):
+    return (
+        block is not None
+        and block[0] == TransmitBelt.BELT
+        and block[1] >> 2 == INCLINE_STATUS_INDEX
+    )
+
+
+def _get_model_flags(pos, facing, incline, read_block):
+    # type: (tuple[int, int, int], int, bool, object) -> tuple[bool, ...]
+    if incline:
+        return (False, False, False, True)
+
+    x, y, z = pos
+    forward_x, forward_z = FACING_OFFSETS[facing]
     connections = []
     # 实体旋转后的模型左右以运输方向为准，不能套用面对方块正面的左右。
     for side in ((facing + 3) & 3, (facing + 1) & 3, (facing + 2) & 3):
         dx, dz = FACING_OFFSETS[side]
-        neighbor = read_block((pos[0] + dx, pos[1], pos[2] + dz))
+        neighbor = read_block((x + dx, y, z + dz))
         connections.append(
             neighbor is not None
             and neighbor[0] in OUTPUT_BELTS
             and (neighbor[1] & 3) == ((side + 2) & 3)
+            and not _is_incline(neighbor)
         )
-    return tuple(connections)
+    lower = read_block((x - forward_x, y - 1, z - forward_z))
+    if _is_incline(lower) and (lower[1] & 3) == facing:
+        connections[2] = True
+    return tuple(connections) + (False,)
 
 
 class BeltModel(object):
@@ -62,7 +83,7 @@ class BeltModel(object):
         self.entity_id = None  # type: str | None
         self.block_name = None  # type: str | None
         self.facing = None  # type: int | None
-        self.connections = None  # type: tuple[bool, ...] | None
+        self.model_flags = None  # type: tuple[bool, ...] | None
 
     def destroy_model(self):
         if self.entity_id is not None:
@@ -90,15 +111,15 @@ class BeltModel(object):
             CF.CreateModel(self.entity_id).SetEntityShadowShow(False)
         if block_name != TransmitBelt.BELT:
             return
-        connections = _get_connections(pos, facing, read_block)
-        if connections == self.connections:
+        model_flags = _get_model_flags(pos, facing, _is_incline((block_name, aux)), read_block)
+        if model_flags == self.model_flags:
             return
         applied = True
-        for index, molang in enumerate(CONNECTION_MOLANGS):
-            if self.connections is None or connections[index] != self.connections[index]:
-                if not molang.set_to_entity(self.entity_id, float(connections[index])):
+        for index, molang in enumerate(BELT_MOLANGS):
+            if self.model_flags is None or model_flags[index] != self.model_flags[index]:
+                if not molang.set_to_entity(self.entity_id, float(model_flags[index])):
                     applied = False
-        self.connections = connections if applied else None
+        self.model_flags = model_flags if applied else None
 
 
 def _sync_dimension():
@@ -139,7 +160,11 @@ def _refresh_models(keys, removed_key=None):
 def _refresh_nearby(key, removed=False):
     dim, x, y, z = key
     keys = [key]
-    keys.extend((dim, x + dx, y, z + dz) for dx, dz in FACING_OFFSETS)
+    keys.extend(
+        (dim, x + dx, y + dy, z + dz)
+        for dx, dz in FACING_OFFSETS
+        for dy in (0, 1)
+    )
     _refresh_models(keys, key if removed else None)
 
 

@@ -313,7 +313,9 @@ thermal_cracker = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.THERMAL_CRACKER),
-            '热裂解机可以使用高热对液体进行化学裂解， 建议使用<link id="heater" text="红外高热发生器">\n\n热裂解机的流体输出模式<text color="§a" t="较为特殊">： 左输出槽的流体从机器<text color="§c" t="左侧">的管道输出； 右输出槽从机器<text color="§9" t="右侧">的管道输出。',
+            '热裂解机可以使用高热对液体进行化学裂解， 建议使用<link id="heater" text="红外高热发生器">。\n\n'
+            '管道默认从机器左侧抽取左槽的流体，从右侧抽取右槽的流体。'
+            '在「流体输出面」页可为每个输出槽选择一个或多个面，也可以关闭该槽的所有输出面。',
             hyperlink_cbs={
                 "heater": lambda _: (
                     _get_machinery_thermal_module().infrared_heat_generator.FastJump()

@@ -4,7 +4,7 @@
 
 配方页照蔚蓝 UI 规范 v2：格子顺序、能量条、进度都在 `_layouts.py`（生成器从机器界面算出，
 与 `ui/mei_recipes/Charger.json` 同一次生成），`BuildMachine` 自动取 —— 本模块只声明身份。
-典型配方：**失活红石 → 红石粉**（给物品充电不是配方，只有这 1 条）
+材料配方：**惰性红石 → 红石粉**、**惰性红石块 → 红石块**。
 """
 from .._common import BuildMachine
 from ... import exports

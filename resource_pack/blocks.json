@@ -859,6 +859,10 @@
         "client_entity": {},
         "textures": "skybluetech:creative_power_acceptor"
     },
+    "skybluetech:deactivation_redstone_block": {
+        "sound": "stone",
+        "textures": "skybluetech:deactivation_redstone_block"
+    },
     "skybluetech:deepslate_lava": {
         "blockshape": "water",
         "textures": {

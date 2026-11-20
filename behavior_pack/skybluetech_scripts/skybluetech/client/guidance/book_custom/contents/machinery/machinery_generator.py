@@ -60,8 +60,9 @@ redstone_generator = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.REDSTONE_GENERATOR),
-            '红石发电机使用<item id="minecraft:redstone"><text color="§4" t="红石">或<item id="minecraft:redstone_block"><text color="§4" t="红石块">进行短时间内快速且大功率地产能。\n\n红石发电机提取红石或红石块中所含红石能， 被提取后的红石会转化为<item id="%s"><text color="§4" t="惰性红石">。'
-            % id_enum.DEACTIVATION_REDSTONE,
+            '红石发电机使用<item id="minecraft:redstone"><text color="§4" t="红石">或<item id="minecraft:redstone_block"><text color="§4" t="红石块">进行短时间内快速且大功率地产能。'
+            '\n\n每份红石粉发电后会变成一份<item id="%s"><text color="§4" t="惰性红石">，每个红石块发电后会变成一个<item id="%s"><text color="§4" t="惰性红石块">。'
+            % (id_enum.DEACTIVATION_REDSTONE, id_enum.DEACTIVATION_REDSTONE_BLOCK),
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.REDSTONE_GENERATOR),
     ],

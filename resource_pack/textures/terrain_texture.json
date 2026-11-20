@@ -867,6 +867,9 @@
         "skybluetech:creative_power_acceptor": {
             "textures": "textures/blocks/machinery/creative_power_acceptor"
         },
+        "skybluetech:deactivation_redstone_block": {
+            "textures": "textures/blocks/deactivation_redstone_block"
+        },
         "skybluetech:deepslate_lava_flowing": {
             "quad": 2,
             "textures": "textures/fluid/deepslate_lava_flowing"

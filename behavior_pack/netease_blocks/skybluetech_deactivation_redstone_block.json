@@ -1,0 +1,19 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "components": {
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 1
+            },
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 2.0
+            }
+        },
+        "description": {
+            "category": "skybluetech",
+            "identifier": "skybluetech:deactivation_redstone_block"
+        }
+    }
+}

@@ -50,15 +50,11 @@ STRUCTURE_KEYS = {
     "o": [_GMF.FRAME, _GMF.IO_GAS_OUTPUT, _GMF.IO_ITEM_OUTPUT, _GMF.IO_FLUID_OUTPUT],
 }
 STRUCTURE_REQUIRE_BLOCKS = {}
-STRUCTURE_PALETTE = (
-    GenerateSimpleStructureTemplate(
-        STRUCTURE_KEYS,
-        STRUCTURE_PALETTE_DICT,
-        "#",
-        require_blocks_count=STRUCTURE_REQUIRE_BLOCKS,
-    )
-    if STRUCTURE_PALETTE_DICT
-    else None
+STRUCTURE_PALETTE = GenerateSimpleStructureTemplate(
+    STRUCTURE_KEYS,
+    STRUCTURE_PALETTE_DICT,
+    "#",
+    require_blocks_count=STRUCTURE_REQUIRE_BLOCKS,
 )
 
 

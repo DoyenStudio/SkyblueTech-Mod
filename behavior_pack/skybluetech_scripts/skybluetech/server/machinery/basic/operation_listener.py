@@ -32,6 +32,7 @@ class OperationListener(BaseMachine):
         cls,
         event,  # type: type[EventT]
         priority=0,
+        require_structure=True,
     ):
         def decorator(
             fun,  # type: typing.Callable[[EventT, typing.Self], None]
@@ -46,7 +47,7 @@ class OperationListener(BaseMachine):
                         return
                     if reject_banned_machine(event.player_id, machine.block_name):
                         return
-                    if isinstance(machine, MultiBlockStructure) and not machine.StructureFinished():
+                    if require_structure and isinstance(machine, MultiBlockStructure) and not machine.StructureFinished():
                         return
                     fun(event, machine)
                 return listener

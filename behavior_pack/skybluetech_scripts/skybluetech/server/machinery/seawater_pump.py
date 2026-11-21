@@ -5,17 +5,20 @@ from skybluetech_scripts.skybluetech.common.define.id_enum import (
     Machinery,
     SeawaterReservoir,
 )
+from skybluetech_scripts.skybluetech.common.events.machinery.seawater_pump import SeawaterPumpModeRequest
 from skybluetech_scripts.skybluetech.common.machinery_def.seawater_pump import (
+    K_OUTPUT_MODE,
     K_WATER_BLOCK_COUNT,
     MAX_FLUID_VOLUME,
     MIN_WATER_RATIO,
-    OUTPUT_FLUID,
+    OUTPUT_MODE_FLUIDS,
     RUNNING_POWER,
     STORE_RF_MAX,
     STRUCTURE_PALETTE,
     WATER_SCAN_HEIGHT,
     WATER_SCAN_RADIUS,
     WATER_SCAN_VOLUME,
+    get_output_mode,
     get_output_per_tick,
 )
 from skybluetech_scripts.skybluetech.server.machinery.basic import (
@@ -23,6 +26,7 @@ from skybluetech_scripts.skybluetech.server.machinery.basic import (
     MultiBlockStructure,
     MultiblockPortBindings,
     MultiFluidContainer,
+    OperationListener,
 )
 from skybluetech_scripts.skybluetech.server.machinery.core import RegisterMachine
 from skybluetech_scripts.skybluetech.server.machinery.interfaces import EnergyInputInterface
@@ -32,7 +36,7 @@ EnergyInputInterface.AddExtraMachineId(SeawaterReservoir.IO_ENERGY)
 
 
 @RegisterMachine
-class SeawaterPump(MultiblockPortBindings, GUIControl, MultiBlockStructure, MultiFluidContainer):
+class SeawaterPump(MultiblockPortBindings, OperationListener, GUIControl, MultiBlockStructure, MultiFluidContainer):
     block_name = Machinery.SEAWATER_PUMP
     store_rf_max = STORE_RF_MAX
     structure_palette = STRUCTURE_PALETTE
@@ -54,6 +58,21 @@ class SeawaterPump(MultiblockPortBindings, GUIControl, MultiBlockStructure, Mult
         self.handler.SubscribeOnTicking(self._seawater_pump_on_ticking)
         self.handler.SubscribeOnStructureChanged(self._seawater_pump_on_structure_changed)
         self.handler.SubscribeOnUnload(self._unbind_ports)
+
+    @property
+    def output_mode(self):
+        return get_output_mode(self.bdata[K_OUTPUT_MODE])
+
+    def set_output_mode(self, mode):
+        if type(mode) is not int or not 0 <= mode < len(OUTPUT_MODE_FLUIDS):
+            return False
+        if mode == self.output_mode:
+            return True
+        if self.fluids[0].volume > 0:
+            return False
+        self.bdata[K_OUTPUT_MODE] = mode
+        self.CallSync()
+        return True
 
     def _seawater_pump_on_placed(self, _):
         # 包含泵所在的顶层，X/Z 各向两侧延伸 30 格，Y 向下延伸 19 格。
@@ -89,16 +108,27 @@ class SeawaterPump(MultiblockPortBindings, GUIControl, MultiBlockStructure, Mult
         water_count = self.bdata[K_WATER_BLOCK_COUNT] or 0
         if water_count < WATER_SCAN_VOLUME * MIN_WATER_RATIO:
             return
-        if self.fluids[0].isFull() or self.store_rf < RUNNING_POWER:
+        tank = self.fluids[0]
+        fluid_id = OUTPUT_MODE_FLUIDS[self.output_mode]
+        if tank.isFull() or tank.fluid_id not in (None, fluid_id) or self.store_rf < RUNNING_POWER:
             return
         # 达到最低水占比、储槽未满且电量充足时，固定消耗 80 RF。
         self.ReducePower(RUNNING_POWER)
         if self._output_per_tick > 0.0:
             # OutputFluid 只填入剩余容量；返回的溢出量直接丢弃，不缓存补产。
-            self.OutputFluid(OUTPUT_FLUID, self._output_per_tick, 0, True)
+            self.OutputFluid(fluid_id, self._output_per_tick, 0, True)
 
     def _seawater_pump_on_structure_changed(self, ok):
         # type: (bool) -> None
         self._unbind_ports()
         if ok:
             self._bind_ports(self.GetAllMachines(EnergyInputInterface, SeawaterReservoir.IO_ENERGY))
+
+
+@SeawaterPump.ForOperation(SeawaterPumpModeRequest)
+def on_seawater_pump_mode(event, machine):
+    if not machine.ui_sync.PlayerInSync(event.player_id):
+        return
+    pos = CF.CreatePos(event.player_id).GetFootPos()
+    if pos is not None and sum((a - b - 0.5) ** 2 for a, b in zip(pos, machine.xyz)) <= 64:
+        machine.set_output_mode(event.mode)

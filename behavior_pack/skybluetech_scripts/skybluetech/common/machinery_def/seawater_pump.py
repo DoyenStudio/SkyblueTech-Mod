@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define.id_enum import (
+    Chemical,
     CommonLiquid,
     SeawaterReservoir,
 )
@@ -13,7 +14,10 @@ IO_ENERGY = SeawaterReservoir.IO_ENERGY
 MAX_FLUID_VOLUME = 4000
 STORE_RF_MAX = 10000
 RUNNING_POWER = 80
-OUTPUT_FLUID = CommonLiquid.DILUTE_BRINE
+MODE_DILUTE_BRINE = 0
+MODE_RAW_SEAWATER = 1
+OUTPUT_MODE_FLUIDS = (CommonLiquid.DILUTE_BRINE, Chemical.RAW_SEAWATER)
+K_OUTPUT_MODE = "st:seawater_mode"
 MAX_OUTPUT_PER_TICK = 1000.0
 WATER_SCAN_RADIUS = 30
 WATER_SCAN_HEIGHT = 20
@@ -21,6 +25,10 @@ WATER_SCAN_VOLUME = (WATER_SCAN_RADIUS * 2 + 1) ** 2 * WATER_SCAN_HEIGHT
 MIN_WATER_RATIO = 0.3
 FULL_SPEED_WATER_RATIO = 0.6
 K_WATER_BLOCK_COUNT = "st:water_block_count"
+
+
+def get_output_mode(saved_mode):
+    return MODE_RAW_SEAWATER if saved_mode == MODE_RAW_SEAWATER else MODE_DILUTE_BRINE
 
 
 def get_output_per_tick(water_block_count):

@@ -1,4 +1,63 @@
 {
+    "output_mode_button@common.button": {
+        "$control_alpha": 1.0,
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$texture_layer": 2,
+        "$label_color": [
+            0.26,
+            0.26,
+            0.26
+        ],
+        "$label_font_scale_factor": 1.0,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text|default": "",
+        "$is_new_nine_slice": false,
+        "$nineslice_size|default": 0,
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "size": [
+            60,
+            17
+        ],
+        "layer": 2,
+        "button_mappings": [],
+        "default_control": "default",
+        "hover_control": "hover",
+        "pressed_control": "pressed",
+        "is_handle_button_move_event": true,
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {
+                    "keep_ratio": false
+                }
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {
+                    "keep_ratio": false
+                }
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {
+                    "keep_ratio": false
+                }
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {}
+            }
+        ]
+    },
     "content": {
         "type": "panel",
         "controls": [
@@ -42,7 +101,25 @@
                         17
                     ],
                     "size": [
-                        144,
+                        78,
+                        36
+                    ]
+                }
+            },
+            {
+                "mode_brine@SeawaterPumpUI.output_mode_button": {
+                    "$label_text": "淡盐水",
+                    "offset": [
+                        109,
+                        17
+                    ]
+                }
+            },
+            {
+                "mode_raw@SeawaterPumpUI.output_mode_button": {
+                    "$label_text": "原海水",
+                    "offset": [
+                        109,
                         36
                     ]
                 }

@@ -15,7 +15,7 @@ K_CRAFTING_PROGRESS = "st:crafting_progress"
 K_OUTPUT_ITEM_ID = "st:output_item_id"
 K_NEED_TOOL = "st:need_tool"
 
-# SORTED BY MACHINE NAME A-Z
+# SORTED BY OUTPUT ITEM ID
 recipes = RecipesCollection(
     id_enum.Machinery.MACHINERY_WORKSTATION,
     # air compressor
@@ -35,6 +35,18 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
         8,
+    ),
+    # air vent
+    MRecipe(
+        {
+            1: Input(tag_enum.PlateTag.IRON, is_tag=True),
+            4: Input(tag_enum.StickTag.STEEL, is_tag=True),
+            7: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+        },
+        id_enum.Machinery.AIR_VENT,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        1,
     ),
     # alloy furnace
     MRecipe(
@@ -300,23 +312,6 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            1: Input(id_enum.ELECTROLYTIC_PANE),
-            2: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
-            3: Input(id_enum.FluidPipe.CHEMICAL),
-            4: Input(id_enum.Machinery.ELECTROLYZER),
-            5: Input(id_enum.Tank.STEEL),
-            6: Input(id_enum.REDSTONEFLUX_CORE),
-            7: Input(id_enum.HEAT_EXCHANGER),
-            8: Input(id_enum.ControlCircuit.ADVANCED),
-        },
-        id_enum.Machinery.HIGH_TEMP_ELECTROLYZER,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        16,
-    ),
     # energy cube : junior
     MRecipe(
         {
@@ -365,24 +360,6 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
         8,
-    ),
-    # industrial centrifuge
-    MRecipe(
-        {
-            0: Input(tag_enum.PlateTag.STEEL, is_tag=True),
-            1: Input(id_enum.ELECTRIC_MOTOR),
-            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
-            3: Input(id_enum.Tank.STEEL),
-            4: Input(id_enum.MACHINERY_FRAME),
-            5: Input(id_enum.Tank.STEEL),
-            6: Input(id_enum.FluidPipe.CHEMICAL),
-            7: Input(id_enum.ControlCircuit.ADVANCED),
-            8: Input(id_enum.FluidPipe.CHEMICAL),
-        },
-        id_enum.Machinery.INDUSTRIAL_CENTRIFUGE,
-        MRecipe.LEVEL_INVAR,
-        MRecipe.LEVEL_INVAR,
-        16,
     ),
     # flotation machine
     MRecipe(
@@ -498,21 +475,6 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
-    MRecipe(
-        {
-            0: Input(id_enum.FluidPipe.CHEMICAL),
-            1: Input(id_enum.Tank.STEEL),
-            2: Input(id_enum.FluidPipe.CHEMICAL),
-            3: Input(id_enum.LargeReactionPool.FRAME),
-            4: Input(id_enum.Machinery.SMALL_CHEMICAL_REACTOR),
-            5: Input(id_enum.LargeReactionPool.FRAME),
-            6: Input(tag_enum.PlateTag.INVAR, is_tag=True),
-            7: Input(id_enum.ControlCircuit.PROFESSIONAL),
-            8: Input(tag_enum.PlateTag.INVAR, is_tag=True),
-        },
-        id_enum.LargeReactionPool.CONTROLLER,
-        MRecipe.LEVEL_INVAR, MRecipe.LEVEL_INVAR, 16,
-    ),
     # gas metal lurgical furnace
     MRecipe(
         {
@@ -563,6 +525,24 @@ recipes = RecipesCollection(
             8: Input(tag_enum.PlateTag.SKYBLUE, is_tag=True),
         },
         id_enum.Machinery.HEAT_MELTING_CHAMBER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
+    ),
+    # high temp electrolyzer
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            1: Input(id_enum.ELECTROLYTIC_PANE),
+            2: Input(tag_enum.PlateTag.ULTRAHEATINUM, is_tag=True),
+            3: Input(id_enum.FluidPipe.CHEMICAL),
+            4: Input(id_enum.Machinery.ELECTROLYZER),
+            5: Input(id_enum.Tank.STEEL),
+            6: Input(id_enum.REDSTONEFLUX_CORE),
+            7: Input(id_enum.HEAT_EXCHANGER),
+            8: Input(id_enum.ControlCircuit.ADVANCED),
+        },
+        id_enum.Machinery.HIGH_TEMP_ELECTROLYZER,
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
         16,
@@ -630,6 +610,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
         8,
+    ),
+    # industrial centrifuge
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            1: Input(id_enum.ELECTRIC_MOTOR),
+            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            3: Input(id_enum.Tank.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.Tank.STEEL),
+            6: Input(id_enum.FluidPipe.CHEMICAL),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(id_enum.FluidPipe.CHEMICAL),
+        },
+        id_enum.Machinery.INDUSTRIAL_CENTRIFUGE,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
     ),
     # industrial_fan
     MRecipe(
@@ -702,6 +700,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
         8,
+    ),
+    # large reaction pool controller
+    MRecipe(
+        {
+            0: Input(id_enum.FluidPipe.CHEMICAL),
+            1: Input(id_enum.Tank.STEEL),
+            2: Input(id_enum.FluidPipe.CHEMICAL),
+            3: Input(id_enum.LargeReactionPool.FRAME),
+            4: Input(id_enum.Machinery.SMALL_CHEMICAL_REACTOR),
+            5: Input(id_enum.LargeReactionPool.FRAME),
+            6: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            7: Input(id_enum.ControlCircuit.PROFESSIONAL),
+            8: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+        },
+        id_enum.LargeReactionPool.CONTROLLER,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
+        16,
     ),
     # lexical transmuter
     MRecipe(
@@ -963,6 +979,22 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         8,
     ),
+    # sawmill
+    MRecipe(
+        {
+            1: Input(tag_enum.StickTag.STEEL, is_tag=True),
+            3: Input(id_enum.Cutter.STEEL),
+            4: Input(id_enum.MACHINERY_FRAME),
+            5: Input(id_enum.ELECTRIC_MOTOR),
+            6: Input("minecraft:redstone"),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input("minecraft:redstone"),
+        },
+        id_enum.Machinery.SAWMILL,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # seawater pump
     MRecipe(
         {
@@ -1025,6 +1057,39 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # specialized growth base
+    MRecipe(
+        {
+            1: Input("minecraft:hopper"),
+            3: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            4: Input("minecraft:chest"),
+            5: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            6: Input(id_enum.FluidPipe.CHEMICAL),
+            7: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            8: Input(id_enum.FluidPipe.CHEMICAL),
+        },
+        id_enum.Machinery.SPECIALIZED_GROWTH_BASE,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
+    # specialized growth chamber
+    MRecipe(
+        {
+            0: Input("minecraft:glass_pane"),
+            1: Input("minecraft:lantern"),
+            2: Input("minecraft:glass_pane"),
+            3: Input(id_enum.HEAT_EXCHANGER),
+            5: Input("minecraft:glass_pane"),
+            6: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            7: Input("minecraft:moss_block"),
+            8: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+        },
+        id_enum.Machinery.SPECIALIZED_GROWTH_CHAMBER,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
+    ),
     # template assembler
     MRecipe(
         {
@@ -1042,6 +1107,22 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         MRecipe.LEVEL_INVAR,
         16,
+    ),
+    # tesla plant (core recipe maybe too easy)
+    MRecipe(
+        {
+            0: Input(tag_enum.StickTag.INVAR, is_tag=True),
+            1: Input(id_enum.Coils.COPPER),
+            2: Input(tag_enum.StickTag.INVAR, is_tag=True),
+            4: Input(id_enum.Plates.HDPE),
+            6: Input(id_enum.Plates.HDPE),
+            7: Input(id_enum.ControlCircuit.ADVANCED),
+            8: Input(id_enum.Plates.HDPE),
+        },
+        id_enum.Machinery.TESLA_PLANT,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        8,
     ),
     # thermal cracker
     MRecipe(

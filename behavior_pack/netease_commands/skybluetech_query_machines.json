@@ -1,0 +1,14 @@
+{
+    "description": "commands.skybluetech.query_machines.description",
+    "format_version": "0.0.1",
+    "name": "skybluetech:query_machines",
+    "permission_level": "game_directors",
+    "requires_cheats": true,
+    "args": [
+        {
+            "name": "page",
+            "type": "int",
+            "default": null
+        }
+    ]
+}

@@ -5,6 +5,7 @@ from . import (
     inscribing_template_give,
     machine_bans,
     multi_block_structure_areas,
+    query_machines,
     reset_deactive_flags,
     transmitter_test,
 )

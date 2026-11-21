@@ -42,8 +42,7 @@ IO_HEAT = DistillationColumn.IO_HEAT
 IO_FLUID1 = DistillationColumn.IO_FLUID1
 IO_FLUID2 = DistillationColumn.IO_FLUID2
 
-# 区分 O 与 o, f 与 H、I:
-# 在自动建造结构时尽可能显式只放置 1 个液体输入口和受热口、3 个液体输出口
+# H、I、O 的候选顺序让手杖在这些位置优先选用接口。
 STRUCTURE_PALETTE_DICT = {
     -1: ["FfffF", "fFFFf", "fFfFH", "fFFFf", "FfIfF"],
     0: ["Ff#fF", "f...f", "o...o", "f...f", "FfofF"],

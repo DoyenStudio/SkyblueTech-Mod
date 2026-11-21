@@ -7,7 +7,8 @@ def create_build_plan(candidates, available_counts, required_counts):
     """返回 ``[(世界坐标, 方块 ID)]``，不修改传入的坐标、库存或缺额。
 
     candidates 为 ``[(坐标三元组, 按模板优先级排列的方块 ID 元组)]``；
-    每个世界坐标只能出现一次。库存和最低缺额均为非负整数计数。
+    每个世界坐标只能出现一次。库存和最低缺额均为非负整数计数；
+    required_counts 中的材料最多使用其缺额，零缺额表示已经达标。
     先尽可能满足最低缺额并填满其余位置，再按位置顺序优先选择列表靠前的材料；
     调整时保留已满足的最低数量和已填位置，避免挤占必需材料或其允许位置。
     """
@@ -19,6 +20,8 @@ def create_build_plan(candidates, available_counts, required_counts):
         allowed = []
         for block_id in block_ids:
             count = available_counts.get(block_id, 0)
+            if block_id in required_counts:
+                count = min(count, required_counts[block_id])
             if count > 0 and block_id not in allowed:
                 allowed.append(block_id)
                 capacity[block_id] = count
@@ -67,7 +70,7 @@ def create_build_plan(candidates, available_counts, required_counts):
         key=lambda block_id: (len(allowed_positions[block_id]), block_id),
     )
     for block_id in required_ids:
-        target = min(required_counts[block_id], capacity[block_id], len(positions))
+        target = min(capacity[block_id], len(allowed_positions[block_id]))
         for _i in range(target):
             if not add_required_block(block_id):
                 break

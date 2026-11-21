@@ -8,15 +8,16 @@
             "crafting_table"
         ],
         "pattern": [
+            "S S",
             " G ",
-            " F "
+            "S S"
         ],
         "key": {
             "G": {
                 "item": "minecraft:glass"
             },
-            "F": {
-                "item": "skybluetech:large_reaction_pool_frame"
+            "S": {
+                "tag": "common:invar_stick"
             }
         },
         "result": {

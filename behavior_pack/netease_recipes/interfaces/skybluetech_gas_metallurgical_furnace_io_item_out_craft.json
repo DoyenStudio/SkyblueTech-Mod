@@ -8,9 +8,8 @@
             "crafting_table"
         ],
         "pattern": [
-            "   ",
-            " F ",
-            " P "
+            "F",
+            "P"
         ],
         "key": {
             "P": {

@@ -35,7 +35,7 @@ class ThermalGenerator(WorkRenderer, GUIControl, ItemContainer, BaseGenerator):
         self._burn_sync_tick = 0
         self._burn_seconds_left_mem = self.bdata[K_BURN_SEC_LEFT] or 0
         self.is_burning = self.burn_seconds_left > 0
-        if self.IsActive() and self.burn_seconds_left > 0:
+        if self.IsActive() and self.is_burning:
             self.SetOutputPower(TICK_POWER)
         else:
             self.SetOutputPower(0)
@@ -44,21 +44,18 @@ class ThermalGenerator(WorkRenderer, GUIControl, ItemContainer, BaseGenerator):
 
 
     def _thermal_generator_on_ticking(self):
-        if self.IsActive():
-            if self.burn_seconds_left <= 0:
-                self.is_burning = self.next_burn()
-                return
-            self.burn_seconds_left -= SECOND_PER_TICK
+        if not self.IsActive():
+            return
+        remaining = self.burn_seconds_left
+        if remaining > 0:
+            # 秒数保存在方块数据中，消除逐 tick 扣时累积的浮点误差。
+            remaining = max(0.0, round(remaining - SECOND_PER_TICK, 9))
+            self.burn_seconds_left = remaining
+        if remaining <= 0:
+            self.is_burning = False
+            self.next_burn()
 
     def IsValidInput(self, slot, item):
-        # type: (int, Item) -> bool
-        results = (
-            ItemContainer.IsValidInput(self, slot, item),
-            self._thermal_generator_is_valid_input(slot, item),
-        )
-        return all(results)
-
-    def _thermal_generator_is_valid_input(self, slot, item):
         # type: (int, Item) -> bool
         return item.newItemName != "minecraft:lava_bucket" and (
             item.id in FUEL_SECONDS_MAP or item.GetBasicInfo().fuelDuration > 0
@@ -75,7 +72,6 @@ class ThermalGenerator(WorkRenderer, GUIControl, ItemContainer, BaseGenerator):
         mainSlotItem = self.GetSlotItem(0)
         if mainSlotItem is None:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-            self.is_burning = False
             return False
         burnTime = (
             FUEL_SECONDS_MAP.get(mainSlotItem.id)

@@ -11,6 +11,9 @@ from .multi_block_structure_render_page import generate_blocks_btn_callback
 from .structure_model_projection import StructureModelProjection
 
 
+NORTH_CARDINAL_AUX = 2
+
+
 class MultiBlockStructureModelPage(BasePage):
     ctrl_def_name = "GuidanceLib.multi_block_structure_model_page"
 
@@ -222,7 +225,9 @@ class MultiBlockStructureModelPage(BasePage):
         common = {}
         for (x, y, z), block_id in sorted(selected.items()):
             index = (y - min_y) * size_x * size_z + (x - min_x) * size_z + z - min_z
-            common.setdefault((block_id, 0), []).append(index)
+            # 未旋转的结构模板以控制器朝北为基准。
+            aux = NORTH_CARDINAL_AUX if (x, y, z) == (0, 0, 0) else 0
+            common.setdefault((block_id, aux), []).append(index)
         block_palette = CF.CreateBlock(LEVEL_ID).GetBlankBlockPalette()
         if block_palette is None:
             return None

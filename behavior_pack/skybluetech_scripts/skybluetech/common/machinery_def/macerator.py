@@ -1,6 +1,8 @@
 # coding=utf-8
 from ..mini_jei.core import RecipesCollection
-from ..define.id_enum import Machinery, Dusts, FilterCakes, FineConcentrates, SULFUR
+from ..define.id_enum import (
+    Machinery, Dusts, FilterCakes, FineConcentrates, SULFUR, TITANIUM_SPONGE,
+)
 from ..define.tag_enum.items import IngotTag, RawTag
 from ..mini_jei.machinery.macerator import (
     MachineRecipe,
@@ -79,4 +81,8 @@ recipes = RecipesCollection(
     fine_concentrate(FilterCakes.NICKEL, 1, FineConcentrates.NICKEL, 1),
     fine_concentrate(FilterCakes.PLATINUM, 1, FineConcentrates.PLATINUM, 1),
     fine_concentrate(FilterCakes.TITANIUM, 1, FineConcentrates.TITANIUM, 1),
+    MaceratorRecipe(
+        Input(TITANIUM_SPONGE), Dusts.TITANIUM, 1,
+        power_cost=40, tick_duration=100,
+    ),
 )  # type: RecipesCollection[MachineRecipe]

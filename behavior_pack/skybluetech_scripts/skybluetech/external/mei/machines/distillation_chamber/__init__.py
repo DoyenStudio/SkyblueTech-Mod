@@ -19,23 +19,22 @@ RECIPE_CLS = "DistillationChamberRecipe"
 
 SORT_INDEX = 117
 
-TEMPERATURE_FIELDS = ("min_temperature", "max_temperature", "fit_temperature")
-""" 搬进 `Recipe.Data` 的温度字段（标量，Data 会随配方序列化出去） """
-
-
 def Decorate(sb_recipe, parts):  # type: (any, dict) -> None
-    """ 温度在配方对象的属性上，不在 inputs/outputs 里：搬进 Data，再写成悬停的条件行 """
-    data = parts["data"]
-    for name in TEMPERATURE_FIELDS:
-        value = getattr(sb_recipe, name, None)
-        if value is not None:
-            data[name] = int(value)
-    conditions = []
-    if data.get("fit_temperature") is not None:
-        conditions.append("§7最适温度： §f" + Kelvin(data["fit_temperature"]))
-    if data.get("min_temperature") is not None and data.get("max_temperature") is not None:
-        conditions.append("§7温度范围： §f%d ~ %d K" % (data["min_temperature"], data["max_temperature"]))
-    data["conditions"] = conditions
+    min_temperature = int(sb_recipe.min_temperature)
+    max_temperature = int(sb_recipe.max_temperature)
+    fit_temperature = int(sb_recipe.fit_temperature)
+    conditions = ["§7最适温度： §f" + Kelvin(fit_temperature)]
+    if sb_recipe.max_temperature == sb_recipe.fit_temperature:
+        conditions.extend([
+            "§7起步温度： §f> %d K" % min_temperature,
+            "§7满速以上进出料率同比封顶",
+            "§7配方用量满速耗时： §f%d tick" % sb_recipe.tick_duration,
+            "§7配方用量热耗： §f%g RF热" % (sb_recipe.produce * sb_recipe.heat_per_produce),
+        ])
+    else:
+        conditions.append("§7温度范围： §f%d ~ %d K" % (min_temperature, max_temperature))
+    parts["data"].update(min_temperature=min_temperature, max_temperature=max_temperature,
+                         fit_temperature=fit_temperature, conditions=conditions)
 
 
 def Build():  # type: () -> tuple

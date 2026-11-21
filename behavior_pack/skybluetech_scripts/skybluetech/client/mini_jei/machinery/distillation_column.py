@@ -19,9 +19,11 @@ class DistillationColumnRecipeRenderer(MachineRecipeRendererBase):
     def RenderInit(self, panel):
         MachineRecipeRendererBase.RenderInit(self, panel)
         recipe = self.recipe
+        is_chamber_recipe = getattr(recipe, "chamber_multiplier", None)
+        fixed_yield = is_chamber_recipe and recipe.max_temperature == recipe.fit_temperature
         for name, prefix, temperature in (
             ("min", "> ", recipe.min_temperature),
-            ("max", "≤ ", recipe.max_temperature),
+            ("max", "封顶 " if fixed_yield else "≤ ", recipe.max_temperature),
             ("fit", "≈ ", recipe.fit_temperature),
         ):
             self.GetControl(
@@ -31,11 +33,13 @@ class DistillationColumnRecipeRenderer(MachineRecipeRendererBase):
             SetHoverText(
                 self.GetSlotControl(panel, "fluid", slot, True), "§7空闲"
             )
-        if getattr(recipe, "chamber_multiplier", None):
+        if is_chamber_recipe:
+            condition = ("§7达到满速后进出料率同比封顶" if fixed_yield
+                         else "§7[§6!§7] 过高的温度将导致原料§6损耗加剧")
             SetHoverText(
                 self.GetControl(panel, "progress_tip"),
-                "§7[§bi§7] 小型蒸馏仓§f适用配方\n§7[§6!§7] 过高的温度将导致原料§6损耗加剧\n§f批次耗时： %.2f s"
-                % (recipe.tick_duration / 20.0),
+                "§7[§bi§7] 小型蒸馏仓§f适用配方\n%s\n§f批次耗时： %.2f s"
+                % (condition, recipe.tick_duration / 20.0),
             )
             return
         SetHoverText(

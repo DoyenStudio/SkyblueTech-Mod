@@ -21,6 +21,15 @@ class DistillationChamberRecipeRenderer(_AnimatedRenderer):
         self.recipe = recipe
 
     def ProgressTip(self):
+        if self.recipe.max_temperature == self.recipe.fit_temperature:
+            return [
+                "§7起步温度： §f> " + FormatKelvin(self.recipe.min_temperature),
+                "§7满速温度： §f" + FormatKelvin(self.recipe.fit_temperature),
+                "§7满速以上进出料率同比封顶",
+                "§7配方用量满速耗时： §f%d tick" % self.recipe.tick_duration,
+                "§7配方用量热耗： §f%g RF热"
+                % (self.recipe.produce * self.recipe.heat_per_produce),
+            ]
         return [
             "§7最适温度： §f" + FormatKelvin(self.recipe.fit_temperature),
             "§7温度范围： §f%s ~ %s"

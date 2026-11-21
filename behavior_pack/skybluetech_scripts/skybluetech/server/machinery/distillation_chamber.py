@@ -13,6 +13,7 @@ from ...common.machinery_def.distillation_chamber import (
 from ...common.machinery_def.distillation_chamber import (
     recipes as Recipes,
 )
+from ...common.machinery_def.basic.multi_fluid_container import FLUID_VOLUME_EPSILON
 from .basic import (
     GUIControl,
     HeatCtrl,
@@ -82,14 +83,6 @@ class DistillationChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCt
 
     def IsValidFluidInput(self, slot, fluid_id):
         # type: (int, str) -> bool
-        results = (
-            MultiFluidContainer.IsValidFluidInput(self, slot, fluid_id),
-            self._distillation_chamber_is_valid_fluid_input(slot, fluid_id),
-        )
-        return all(results)
-
-    def _distillation_chamber_is_valid_fluid_input(self, slot, fluid_id):
-        # type: (int, str) -> bool
         return fluid_id in recipes_collection
 
     def set_idle_reason(self, reason):
@@ -111,9 +104,11 @@ class DistillationChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCt
             return flags.DEACTIVE_FLAG_NO_RECIPE
         if self.locked_recipe_idx is None:
             for idx, rcp in enumerate(rcps):
+                # 最高计算温度等于满速温度时封顶吞吐，仍允许高温开机。
                 if (
                     self.kelvin > rcp.min_temperature
-                    and self.kelvin < rcp.max_temperature
+                    and (self.kelvin < rcp.max_temperature
+                         or rcp.max_temperature == rcp.fit_temperature)
                 ):
                     reason = self.work_with_recipe(rcp, in_fluid, out_fluid)
                     self.locked_recipe_idx = idx
@@ -127,16 +122,25 @@ class DistillationChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCt
     def work_with_recipe(self, rcp, in_fluid, out_fluid):
         # type: (DistillationChamberRecipe, FluidSlotServer, FluidSlotServer) -> int
         plan = rcp.evaluate(self.kelvin)
-        if plan is None:
-            return flags.DEACTIVE_FLAG_NO_RECIPE
         consume = plan.feed_volume
         produce = plan.output_volumes[0]
-        # Fractional feed (e.g. 0.1 mB/t steam) must not strand its final tick
-        # because repeated subtraction rounded a few ulps below the requirement.
-        tolerance = min(1e-9, consume * 1e-9)
-        if in_fluid.volume < consume - tolerance:
-            return flags.DEACTIVE_FLAG_NO_INPUT
-        consume = min(consume, in_fluid.volume)
+        heat_cost = plan.heat_cost
+        if rcp.max_temperature == rcp.fit_temperature:
+            # 把槽位即将清零的微尾一并结算，不能只清掉原料而漏发产物。
+            if in_fluid.volume - consume <= FLUID_VOLUME_EPSILON:
+                consume = in_fluid.volume
+            produce = consume * (float(rcp.produce) / rcp.consume)
+            heat_cost = produce * rcp.heat_per_produce
+            available_heat = self.heat_value - self.heat_capacity * rcp.min_temperature
+            if out_fluid.volume + produce <= FLUID_VOLUME_EPSILON or heat_cost > available_heat:
+                return flags.DEACTIVE_FLAG_NO_RECIPE
+        else:
+            # Fractional feed (e.g. 0.1 mB/t steam) must not strand its final tick
+            # because repeated subtraction rounded a few ulps below the requirement.
+            tolerance = min(1e-9, consume * 1e-9)
+            if in_fluid.volume < consume - tolerance:
+                return flags.DEACTIVE_FLAG_NO_INPUT
+            consume = min(consume, in_fluid.volume)
         if out_fluid.fluid_id not in (None, rcp.produce_matter):
             return flags.DEACTIVE_FLAG_FLUID_NOT_MATCH
         if out_fluid.max_volume - out_fluid.volume < produce:
@@ -144,7 +148,5 @@ class DistillationChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCt
         in_fluid.volume -= consume
         self._produce_accum += produce
         self.OutputFluid(rcp.produce_matter, produce, 1, True)
-        self.heat_value -= plan.heat_cost
-        if in_fluid.volume <= 0:
-            in_fluid.fluid_id = None
+        self.heat_value -= heat_cost
         return 0

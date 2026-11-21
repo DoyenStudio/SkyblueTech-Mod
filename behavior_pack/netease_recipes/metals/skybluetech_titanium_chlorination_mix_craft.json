@@ -1,0 +1,17 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:titanium_chlorination_mix_craft"
+        },
+        "ingredients": [
+            {"item": "skybluetech:titanium_oxide_dust"},
+            {"item": "skybluetech:carbon_dust"}
+        ],
+        "result": {
+            "count": 1,
+            "item": "skybluetech:titanium_chlorination_mix"
+        },
+        "tags": ["crafting_table"]
+    }
+}

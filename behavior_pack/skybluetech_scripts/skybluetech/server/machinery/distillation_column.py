@@ -11,9 +11,11 @@ from skybluetech_scripts.skybluetech.server.machinery.interfaces import (
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.distillation_column import (
     CHAMBER_HEAT_CAPACITY, INPUT_MAX_VOLUME, K_OUTPUT_CAPACITY,
-    K_OUTPUT_COUNT, MAX_OUTPUT_PORTS, MIN_OUTPUT_PORTS, STRUCTURE_PALETTE, recipes,
+    K_OUTPUT_COUNT, MAX_OUTPUT_PORTS, STRUCTURE_PALETTE, recipes,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.multi_fluid_container import FLUID_VOLUME_EPSILON
+from skybluetech_scripts.skybluetech.common.mini_jei.machinery.distillation_column import DistillationPlan
+from skybluetech_scripts.skybluetech.common.mini_jei.machinery.distillation_column_chamber import DistillationColumnChamberRecipe
 from skybluetech_scripts.skybluetech.server.machinery.basic import (
     GUIControl, HeatCtrl, MultiBlockStructure, MultiFluidContainer, MultiblockPortBindings,
 )
@@ -77,16 +79,15 @@ class DistillationColumnController(
         poses = self.GetFunctionalBlockPoses()
         # 先按世界坐标选出最高四口，再解析实例；未加载的高口不能被低口顶替。
         output_poses = sorted(
-            poses.get(DistillationColumn.IO_FLUID2, ()),
+            poses[DistillationColumn.IO_FLUID2],
             key=lambda pos: (-pos[1], pos[0], pos[2]),
         )[:MAX_OUTPUT_PORTS]
         output_ios = [GetLoadedMachine(self.dim, *pos) for pos in output_poses]
         input_ios = self.GetAllMachines(FluidInputInterface, DistillationColumn.IO_FLUID1)
         heat_ios = self.GetAllMachines(HeatInputInterface, DistillationColumn.IO_HEAT)
-        if (len(output_ios) < MIN_OUTPUT_PORTS
-                or any(not isinstance(m, FluidOutputInterface) for m in output_ios)
-                or len(input_ios) != len(poses.get(DistillationColumn.IO_FLUID1, ()))
-                or len(heat_ios) != len(poses.get(DistillationColumn.IO_HEAT, ()))):
+        if (any(not isinstance(m, FluidOutputInterface) for m in output_ios)
+                or len(input_ios) != len(poses[DistillationColumn.IO_FLUID1])
+                or len(heat_ios) != len(poses[DistillationColumn.IO_HEAT])):
             self.disconnect_ios()
             return False
         input_ios.sort(key=lambda machine: machine.xyz)
@@ -136,7 +137,7 @@ class DistillationColumnController(
     def work_once(self):
         # 每 tick 重新按当前原料、温度选择，不把配方锁在过期温区。
         source = self.fluids[0]
-        if source.fluid_id is None or source.volume <= FLUID_VOLUME_EPSILON:
+        if source.fluid_id is None:
             return flags.DEACTIVE_FLAG_NO_INPUT
         for recipe in recipes:
             if recipe.collection_name != source.fluid_id:
@@ -152,10 +153,21 @@ class DistillationColumnController(
         source = self.fluids[0]
         # 输入、供热允许降低吞吐；输出不足则整批暂停，不靠丢弃已绑定口的产物腾空间。
         scale = min(1.0, source.volume / plan.feed_volume)
+        available_heat = self.heat_value - self.heat_capacity * recipe.min_temperature
         if plan.heat_cost > 0.0:
-            available_heat = max(0.0, self.heat_value - self.heat_capacity * recipe.min_temperature)
             scale = min(scale, available_heat / plan.heat_cost)
         plan = plan.scaled(scale)
+        if isinstance(recipe, DistillationColumnChamberRecipe) and recipe.max_temperature == recipe.fit_temperature:
+            # 定额兼容工艺的微尾也要出料并扣热，不能交给槽位阈值丢弃。
+            chamber_recipe = recipe.chamber_recipe
+            consume = plan.feed_volume
+            if source.volume - consume <= FLUID_VOLUME_EPSILON:
+                consume = source.volume
+            produce = consume * (float(chamber_recipe.produce) / chamber_recipe.consume)
+            heat_cost = produce * chamber_recipe.heat_per_produce
+            if heat_cost > available_heat:
+                return flags.DEACTIVE_FLAG_NO_RECIPE
+            plan = DistillationPlan(consume, [produce], heat_cost)
         if plan.feed_volume <= FLUID_VOLUME_EPSILON:
             return flags.DEACTIVE_FLAG_NO_RECIPE
         updates = []

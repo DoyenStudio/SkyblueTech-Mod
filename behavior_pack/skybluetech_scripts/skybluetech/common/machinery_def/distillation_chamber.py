@@ -61,4 +61,15 @@ recipes = RecipesCollection(
         c2k(70),
         heat_per_produce=40,
     ),
+    DistillationChamberRecipe(
+        fluids.Chemical.CRUDE_TICL4,
+        250,
+        fluids.Chemical.PURE_TICL4,
+        250,
+        410,
+        450,
+        450,
+        heat_per_produce=4,
+        tick_duration=100,
+    ),
 )

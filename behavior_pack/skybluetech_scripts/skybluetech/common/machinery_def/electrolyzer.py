@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import id_enum
 from skybluetech_scripts.skybluetech.common.mini_jei.core import RecipesCollection
+from skybluetech_scripts.skybluetech.common.mini_jei.machinery.define import Output
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.electrolyzer import (
     ElectrolyzerRecipe,
 )
@@ -55,5 +56,42 @@ recipes = RecipesCollection(
         output_volume3=CHLOR_ALKALI_SODIUM_HYDROXIDE_VOLUME,
         power_cost=CHLOR_ALKALI_POWER_COST,
         tick_duration=CHLOR_ALKALI_TICK_DURATION,
+    ),
+    ElectrolyzerRecipe(
+        input_fluid=id_enum.Chemical.COPPER_SOLUTION,
+        input_volume=250,
+        output_fluid1=id_enum.Acid.SULFURIC_ACID,
+        output_volume1=150,
+        output_fluid2=id_enum.CommonLiquid.WATER,
+        output_volume2=100,
+        output_fluid3=id_enum.CommonGas.OXYGEN,
+        output_volume3=50,
+        output_item=Output(id_enum.Dusts.COPPER),
+        power_cost=256,
+        tick_duration=200,
+    ),
+    ElectrolyzerRecipe(
+        input_fluid=id_enum.Chemical.NICKEL_SOLUTION,
+        input_volume=250,
+        output_fluid1=id_enum.Acid.SULFURIC_ACID,
+        output_volume1=150,
+        output_fluid2=id_enum.CommonLiquid.WATER,
+        output_volume2=100,
+        output_fluid3=id_enum.CommonGas.OXYGEN,
+        output_volume3=50,
+        output_item=Output(id_enum.Dusts.NICKEL),
+        power_cost=384,
+        tick_duration=200,
+    ),
+    ElectrolyzerRecipe(
+        input_fluid=id_enum.Chemical.GOLD_SOLUTION,
+        input_volume=250,
+        output_fluid1=id_enum.Chemical.BARREN_HCL,
+        output_volume1=100,
+        output_fluid2=id_enum.CommonGas.CHLORINE,
+        output_volume2=50,
+        output_item=Output(id_enum.Dusts.GOLD),
+        power_cost=384,
+        tick_duration=200,
     ),
 )  # type: RecipesCollection[ElectrolyzerRecipe]

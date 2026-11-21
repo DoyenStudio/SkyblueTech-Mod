@@ -1186,6 +1186,9 @@
         "skybluetech:oil_extractor_front_active": {
             "textures": "textures/blocks/machinery/flipbook_textures/oil_extractor_front_active"
         },
+        "skybluetech:oilfuel_generator": {
+            "textures": "textures/models/oilfuel_generator_texture"
+        },
         "skybluetech:pipe_acidproof": {
             "textures": "textures/transmitters/fluid_pipe_acidproof_texture"
         },

@@ -58,6 +58,7 @@ from .mini_miner import MiniMiner
 from .mixed_macerator import MixedMacerator
 from .mixer import Mixer
 from .oil_extractor import OilExtractor
+from .oilfuel_generator import OilFuelGenerator
 from .precision_cutter import PrecisionCutter
 from .pump import Pump
 from .reacting_thermal_generator import ReactingThermalGenerator

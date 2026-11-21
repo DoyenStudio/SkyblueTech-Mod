@@ -865,6 +865,24 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_IRON,
         8,
     ),
+    # oilfuel generator
+    MRecipe(
+        {
+            0: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            1: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            2: Input(tag_enum.PlateTag.STEEL, is_tag=True),
+            3: Input(tag_enum.StickTag.STEEL, is_tag=True),
+            4: Input(id_enum.Coils.LARGE_COPPER),
+            5: Input(id_enum.REDSTONEFLUX_CORE),
+            6: Input("minecraft:smooth_stone_slab"),
+            7: Input(tag_enum.PlateTag.IRON, is_tag=True),
+            8: Input("minecraft:smooth_stone_slab"),
+        },
+        id_enum.Machinery.OILFUEL_GENERATOR,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        1,
+    ),
     # precision cutter
     MRecipe(
         {

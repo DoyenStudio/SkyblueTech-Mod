@@ -1,0 +1,21 @@
+{
+	"format_version": "1.8.0",
+	"animations": {
+		"animation.skybluetech.oilfuel_generator.facing": {
+			"loop": true,
+			"bones": {"root": {"rotation": [0, "variable.yaw", 0]}}
+		},
+		"animation.skybluetech.oilfuel_generator.work": {
+			"loop": true,
+			"animation_length": 0.5,
+			"bones": {
+				"rotor_core": {
+					"rotation": {
+						"0.0": [0, 0, 0],
+						"0.5": [0, 0, 360]
+					}
+				}
+			}
+		}
+	}
+}

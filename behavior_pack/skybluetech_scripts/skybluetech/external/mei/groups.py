@@ -111,7 +111,7 @@ OWN = (
     ("skybluetech:group.machinery_source_extraction", "itemGroup.skybluetech.machinery_source_extraction", _ids(
         "air_compressor", "digger", "farming_station", "forester", "mini_miner", "pump")),
     ("skybluetech:group.machinery_generator", "itemGroup.skybluetech.machinery_generator", _ids(
-        "creative_generator", "gas_burning_generator", "geothermal_generator", "reacting_thermal_generator",
+        "creative_generator", "gas_burning_generator", "geothermal_generator", "oilfuel_generator", "reacting_thermal_generator",
         "redstone_generator", "solar_panel", "thermal_generator", "wind_generator")),
     ("skybluetech:group.machinery_thermal", "itemGroup.skybluetech.machinery_thermal", _ids(
         "electric_heater", "infrared_heat_generator", "fuel_heater")),

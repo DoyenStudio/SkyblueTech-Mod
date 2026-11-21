@@ -223,6 +223,12 @@ LAYOUTS = {
         "static": False,
         "flame": False,
     },
+    "skybluetech:oilfuel_generator": {
+        "file": "OilFuelGenerator", "control_def": "SkyblueMeiOilFuelGenerator.RECIPES_GRID",
+        "inputs": (("fluid", 0),), "outputs": (),
+        "catalysts": 0, "power": "gen", "segments": 17,
+        "progress": None, "static": False, "flame": True,
+    },
     "skybluetech:gas_burning_generator": {
         "file": "GasBurningGenerator",
         "control_def": "SkyblueMeiGasBurningGenerator.RECIPES_GRID",

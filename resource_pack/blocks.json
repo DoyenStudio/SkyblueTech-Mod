@@ -1720,6 +1720,12 @@
             "west": "skybluetech:frame"
         }
     },
+    "skybluetech:oilfuel_generator": {
+        "client_entity": {
+            "identifier": "skybluetech:oilfuel_generator"
+        },
+        "sound": "iron"
+    },
     "skybluetech:oxygen": {
         "blockshape": "water",
         "textures": "skybluetech:baked_oxygen_static"

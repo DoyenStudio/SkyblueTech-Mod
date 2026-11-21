@@ -1,0 +1,80 @@
+{
+    "content": {
+        "type": "panel",
+        "controls": [
+            {
+                "fuel_input@SkybluePanelLib.fluid_tank": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        41,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_tin_fuel_input@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        41,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "recipe_check_btn@SkybluePanelLib.icon_button": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [80, 36],
+                    "layer": 2
+                }
+            },
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "layer": 1,
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        117,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            },
+            {
+                "ring_energy@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        117,
+                        17
+                    ],
+                    "size": [
+                        18,
+                        54
+                    ]
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$machine_content": "OilFuelGeneratorUI.content",
+        "$title_text": "燃油发电机",
+        "$has_tabs": true
+    },
+    "namespace": "OilFuelGeneratorUI"
+}

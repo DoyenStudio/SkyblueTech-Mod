@@ -2769,6 +2769,82 @@
             }
         ]
     },
+    "OilFuelGenerator@MachineRecipeLib.content_base": {
+        "type": "panel",
+        "size": [78, 62],
+        "layer": 1,
+        "controls": [
+            {
+                "background": {
+                    "type": "image",
+                    "layer": 1,
+                    "texture": "textures/ui/skybluetech/rect_panel_bg"
+                }
+            },
+            {
+                "power@MachineRecipeLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 2,
+                    "offset": [56, 4],
+                    "size": [18, 54]
+                }
+            },
+            {
+                "body": {
+                    "type": "panel",
+                    "size": [
+                        "100%",
+                        "100%"
+                    ],
+                    "layer": 2,
+                    "controls": [
+                        {
+                            "input": {
+                                "type": "panel",
+                                "size": [
+                                    "100%",
+                                    "100%"
+                                ],
+                                "layer": 10,
+                                "controls": [
+                                    {
+                                        "0@$recipe_fluid_slot": {
+                                            "$binding_name_prefix": "mei_ui.recipe.input0",
+                                            "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
+                                            "anchor_from": "top_left",
+                                            "anchor_to": "top_left",
+                                            "layer": -5,
+                                            "offset": [4, 4],
+                                            "size": [18, 54]
+                                        }
+                                    }
+                                ]
+                            }
+                        },
+                        {
+                            "flame@SkybluePanelLib.burn_flame": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 1,
+                                "offset": [32, 25],
+                                "size": [13, 13]
+                            }
+                        },
+                        {
+                            "progress_hover@$recipe_progress_hover": {
+                                "anchor_from": "top_left",
+                                "anchor_to": "top_left",
+                                "layer": 9,
+                                "offset": [32, 25],
+                                "size": [13, 13]
+                            }
+                        }
+                    ]
+                }
+            }
+        ]
+    },
     "GasBurningGenerator@MachineRecipeLib.content_base": {
         "type": "panel",
         "size": [

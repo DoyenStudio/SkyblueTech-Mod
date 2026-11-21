@@ -13,6 +13,7 @@ from . import (
     hydroponic_bed_sand,
     industrial_centrifuge,
     industrial_fan,
+    oilfuel_generator,
     rf_repeater_plant,
     shocker,
     tesla_plant,

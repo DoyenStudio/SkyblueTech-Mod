@@ -84,6 +84,7 @@
                 "skybluetech:creative_generator",
                 "skybluetech:gas_burning_generator",
                 "skybluetech:geothermal_generator",
+                "skybluetech:oilfuel_generator",
                 "skybluetech:reacting_thermal_generator",
                 "skybluetech:redstone_generator",
                 "skybluetech:solar_panel",

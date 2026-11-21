@@ -56,6 +56,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         provider_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
         accepter_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int, int]], bool] | None
         blocked_block_names=(),  # type: typing.Iterable[str]
+        native_face_check_func=None,  # type: typing.Callable[[str, int, tuple[int, int, int], int], bool] | None
     ):
         EventListenerService.__init__(self, GetMCServerEventBus())
         self.network_cls = network_cls
@@ -64,6 +65,7 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         "方块是否为传输管线方块。"
         self.native_block_check = transmittable_block_check_func
         "方块是否为传输目标方块。传入(方块ID, 维度, 方块坐标), 坐标可为None(仅按名称判断, 用于被移除的方块)"
+        self.native_face_check = native_face_check_func
         self.transfer_capability = None
         self.blocked_block_names = frozenset(blocked_block_names)
         self.provider_check_func = provider_check_func
@@ -236,7 +238,11 @@ class LogicModule(Generic[_NT, _APT], EventListenerService):
         if name in self.blocked_block_names:
             return False
         if self.native_block_check(name, dim, pos):
-            return True
+            return (
+                face is None
+                or self.native_face_check is None
+                or self.native_face_check(name, dim, pos, face)
+            )
         if self.transfer_capability and name != "minecraft:air":
             from ... import transferlib
             return transferlib.has_port(self.transfer_capability, dim, pos, face)

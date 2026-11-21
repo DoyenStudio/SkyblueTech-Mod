@@ -10,6 +10,7 @@ from . import (
     heat_melting_chamber,
     high_temp_electrolyzer,
     gas_burning_generator,
+    oilfuel_generator,
     hydroponic_bed,
     hydroponic_bed_sand,
     machinery_workstation,

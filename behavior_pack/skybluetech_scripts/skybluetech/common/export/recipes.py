@@ -30,6 +30,7 @@ from ..mini_jei.machinery.industrial_centrifuge import IndustrialCentrifugeRecip
 from ..mini_jei.machinery.flotation_machine import FlotationMachineRecipe
 from ..mini_jei.machinery.freezer import FreezerRecipe
 from ..mini_jei.machinery.gas_burning_generator import GasBurningGeneratorRecipe
+from ..mini_jei.machinery.oilfuel_generator import OilFuelGeneratorRecipe
 from ..mini_jei.machinery.hydroponic_bed import HydroponicBedRecipe
 from ..mini_jei.machinery.hydroponic_bed_sand import HydroponicBedSandRecipe
 from ..mini_jei.machinery.machinery_workstation import MachineryWorkstationRecipe
@@ -62,6 +63,7 @@ from ..mini_jei.machinery.specialized_growth_chamber import SpecializedGrowthCha
 
 __all__ = [
     "LargeReactionPoolRecipe",
+    "OilFuelGeneratorRecipe",
     "GasMetallurgicalFurnaceRecipe",
     "ThermalCrackerRecipe", "SmallChemicalReactorRecipe", "SpecializedGrowthChamberRecipe",
     "DistillationColumnRecipe", "DistillationFraction", "DistillationColumnChamberRecipe",

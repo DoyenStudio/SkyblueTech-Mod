@@ -60,6 +60,7 @@ MACHINES = (
     # 产电
     "redstone_generator",
     "gas_burning_generator",
+    "oilfuel_generator",
     "reacting_thermal_generator",
     "thermal_generator",
     "geothermal_generator",

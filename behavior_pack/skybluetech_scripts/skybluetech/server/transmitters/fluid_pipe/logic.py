@@ -1,5 +1,6 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
+from skybluetech_scripts.skybluetech.common.define.facing import FACING_EN2NUM
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
 
 
@@ -33,6 +34,14 @@ def isFluidContainer(blockName, dim=None, xyz=None):
             CF.CreateBlockInfo(LEVEL_ID).GetBlockTags(blockName)
         )
     return "skybluetech_fluid_container" in tags
+
+
+def can_connect_fluid_container_face(block_name, dim, pos, face):
+    if block_name != Machinery.OILFUEL_GENERATOR:
+        return True
+    states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(pos, dim) or {}
+    front = FACING_EN2NUM.get(states.get("minecraft:cardinal_direction"))
+    return front is not None and face == front
 
 
 def PostFluidIntoNetworks(dim, xyz, fluid_id, fluid_volume, networks):
@@ -270,5 +279,6 @@ logic_module = LogicModule(
     transmittable_block_check_func=isFluidContainer,
     on_network_tick=onNetworkTick,
     blocked_block_names=_BLOCKED_BLOCK_NAMES,
+    native_face_check_func=can_connect_fluid_container_face,
 )
 logic_module.transfer_capability = "radium:fluid"

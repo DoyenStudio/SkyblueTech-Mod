@@ -1,14 +1,10 @@
 # coding=utf-8
-import json
-
-from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from ...common.define import flags
 from ...common.define.id_enum import Acid, Gas, LargeReactionPool as Pool
 from ...common.machinery_def import large_reaction_pool as definition
 from ...common.mini_jei.machinery.large_reaction_pool import LargeReactionPoolRecipe
-from .basic import HeatCtrl, MultiBlockStructure, MultiFluidContainer, Processor
-from .basic.multiblock_processing_ports import MultiblockProcessingPorts
-from .basic.slot_reads import SlotReads, accepts_slot_reads
+from .basic import HeatCtrl
+from .basic.multiblock_batch_processor import MultiblockBatchProcessor
 from .core import RegisterMachine
 from .interfaces import (
     EnergyInputInterface, FluidInputInterface, FluidOutputInterface, HeatInputInterface,
@@ -30,7 +26,7 @@ K_WORK = "st:reaction_pool_work"
 
 
 @RegisterMachine
-class LargeReactionPool(MultiblockProcessingPorts, Processor, MultiFluidContainer, MultiBlockStructure, HeatCtrl):
+class LargeReactionPool(MultiblockBatchProcessor, HeatCtrl):
     block_name = Pool.CONTROLLER
     structure_palette = definition.STRUCTURE_PALETTE
     functional_block_ids = frozenset([p for p, _ in PORTS] + [Pool.WINDOW])
@@ -39,6 +35,12 @@ class LargeReactionPool(MultiblockProcessingPorts, Processor, MultiFluidContaine
     fluid_outputs_by_port = FLUID_OUTPUTS
     item_input_port = Pool.IO_ITEM_INPUT
     item_output_port = Pool.IO_ITEM_OUTPUT
+    batch_key = definition.K_BATCH
+    recipe_id_key = definition.K_RECIPE_ID
+    batch_recipe_type = LargeReactionPoolRecipe
+    work_units_per_tick = UNITS_PER_TICK
+    work_key = K_WORK
+    refresh_ports_on_sync = False
     recipes = definition.recipes
     process_item = process_fluid = True
     item_input_slots = (0,)
@@ -56,79 +58,13 @@ class LargeReactionPool(MultiblockProcessingPorts, Processor, MultiFluidContaine
     allow_upgraders = frozenset()
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        saved = block_entity_data[definition.K_BATCH]
-        self._batch = LargeReactionPoolRecipe.Unmarshal(json.loads(saved)) if saved else None
-        self._work = int(block_entity_data[K_WORK] or 0) if saved else 0
-        self._advancing = False
         self._surface = object()
         super(LargeReactionPool, self).__init__(dim, x, y, z, block_entity_data)
-        if self._batch is not None:
-            self.ticks_left = self._batch.tick_duration - self._work / float(UNITS_PER_TICK)
-            self.bdata[definition.K_RECIPE_ID] = self._batch.recipe_id
-        else:
-            self.recheck_recipe()
-        self._init_ios(refresh_on_sync=False)
-        self._last_work_status = None
-        self._update_work_status()
-        self._update_surface()
-
-    @accepts_slot_reads
-    def get_recipe(self, slot_reads=None):
-        if self._batch:
-            return 0, self._batch
-        return Processor.get_recipe(self, slot_reads=slot_reads)
 
     def recheck_recipe(self):
-        if self._batch or self._applying_recipe:
-            return
-        _, recipe = self.get_recipe()
-        self.current_recipe = recipe
-        self._output_dirty = True
-        self.bdata[definition.K_RECIPE_ID] = recipe.recipe_id if recipe else ""
-        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_NO_RECIPE, recipe is None)
-        self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-        self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_HEAT_LACK)
-        if recipe:
-            self.SetProcessTicks(recipe.tick_duration)
-            self.SetPower(recipe.power_cost)
-        else:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
-        self.ResetProgress()
-
-    def _base_speed_control_set_deactive_flag(self, flag, flush=True):
-        if self._batch is None:
-            super(LargeReactionPool, self)._base_speed_control_set_deactive_flag(flag, flush)
-
-    def _update_work_status(self, flush=True):
-        if not flush:
-            return
-        active = self._advancing and self._batch is not None and self.IsActive() and self.StructureFinished()
-        if active == self._last_work_status:
-            return
-        comp = CF.CreateBlockState(LEVEL_ID)
-        states = comp.GetBlockStates(self.xyz, self.dim)
-        if states is not None:
-            states["skybluetech:active"] = active
-            comp.SetBlockStates(self.xyz, states, self.dim)
-            self._last_work_status = active
-            self.handler.CallOnWorkStatusUpdatedHandlers()
-
-    def _begin_batch(self, recipe):
-        reads = SlotReads(self)
-        _, actual = reads.call(self.get_recipe)
-        if actual is not recipe or not reads.call(self.can_output, recipe):
-            self.recheck_recipe()
-            return False
-        self._batch = recipe
-        if not reads.call(self._apply_recipe, recipe, consume_inputs=True, produce_outputs=False):
-            self._batch = None
-            self.recheck_recipe()
-            return False
-        self._work = self.bdata[K_WORK] = 0
-        self.bdata[definition.K_BATCH] = json.dumps(recipe.Marshal(), ensure_ascii=True)
-        self.transmit_materials()
-        return True
+        if self._batch is None and not self._applying_recipe:
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_HEAT_LACK)
+        super(LargeReactionPool, self).recheck_recipe()
 
     def _step_units(self, recipe):
         if not recipe.heat_cost:
@@ -138,49 +74,23 @@ class LargeReactionPool(MultiblockProcessingPorts, Processor, MultiFluidContaine
         factor = (self.kelvin - recipe.min_temperature) / float(recipe.fit_temperature - recipe.min_temperature)
         return max(1, min(UNITS_PER_TICK, int(UNITS_PER_TICK * factor)))
 
-    def _processor_on_ticking(self):
-        self._io_refresh_ticks += 1
-        if self._io_refresh_ticks >= 20:
-            self._io_refresh_ticks = 0
-            self._refresh_io_bindings()
-            # 有效结构之间直接替换窗或衬板时，接口实例可能完全相同。
-            self._update_surface()
-        self._advancing = False
-        recipe = self.current_recipe
-        if recipe is not None and self.StructureFinished():
-            self._advance_batch(recipe)
-        self._update_work_status()
-
-    def _advance_batch(self, recipe):
-        if self._output_dirty:
-            self._check_output()
-        total = recipe.tick_duration * UNITS_PER_TICK
-        step = min(total - self._work, self._step_units(recipe))
-        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_HEAT_LACK, step == 0 and self._work < total)
+    def _batch_step_and_cost(self, recipe, remaining):
+        step = min(remaining, self._step_units(recipe))
+        self.UpdateDeactiveFlag(flags.DEACTIVE_FLAG_HEAT_LACK, step == 0 and remaining > 0)
         # 累计向上取整的差值保证整批电费与配方表相同。
         charge = ((self._work + step) * recipe.power_cost + UNITS_PER_TICK - 1) // UNITS_PER_TICK
         charge -= (self._work * recipe.power_cost + UNITS_PER_TICK - 1) // UNITS_PER_TICK
-        self.SetPower(charge)
-        if not self.PowerEnough() or not self.IsActive():
-            return
-        if self._batch is None and not self._begin_batch(recipe):
-            return
-        if step:
-            self.ReducePower(charge, bypass_upgraders=True)
-            if recipe.heat_cost:
-                self.heat_value -= recipe.heat_cost * step / float(total)
-            self._work += step
-            self.bdata[K_WORK] = self._work
-            self.ticks_left = (total - self._work) / float(UNITS_PER_TICK)
-            self._advancing = True
-        if self._work == total:
-            if not self._apply_recipe(recipe, consume_inputs=False, produce_outputs=True):
-                self._output_dirty = True
-                return
-            self._batch = self.bdata[definition.K_BATCH] = None
-            self._work = self.bdata[K_WORK] = 0
-            self.recheck_recipe()
-            self.transmit_materials()
+        return step, charge
+
+    def _advance_work(self, recipe, step):
+        if recipe.heat_cost:
+            self.heat_value -= recipe.heat_cost * step / float(recipe.tick_duration * UNITS_PER_TICK)
+        super(LargeReactionPool, self)._advance_work(recipe, step)
+
+    def _refresh_io_bindings(self):
+        super(LargeReactionPool, self)._refresh_io_bindings()
+        # 有效结构之间直接替换窗或衬板时，接口实例可能完全相同。
+        self._update_surface()
 
     def _on_structure_changed(self, ok):
         super(LargeReactionPool, self)._on_structure_changed(ok)

@@ -57,7 +57,7 @@
                     "anchor_to": "top_left",
                     "layer": 10,
                     "offset": [
-                        120,
+                        146,
                         17
                     ],
                     "size": [
@@ -72,7 +72,7 @@
                     "anchor_to": "top_left",
                     "layer": 10,
                     "offset": [
-                        138,
+                        164,
                         17
                     ],
                     "size": [
@@ -114,7 +114,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        120,
+                        146,
                         17
                     ],
                     "size": [
@@ -128,7 +128,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        138,
+                        164,
                         17
                     ],
                     "size": [
@@ -171,7 +171,7 @@
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
                     "offset": [
-                        70.0,
+                        70,
                         35
                     ],
                     "size": [
@@ -186,6 +186,45 @@
                                 "collection_index": 0
                             }
                         }
+                    ]
+                }
+            },
+            {
+                "item_output_slot": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        122,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 1,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "collection_index": 1
+                            }
+                        }
+                    ]
+                }
+            },
+            {
+                "ring_out_item@SkybluePanelLib.status_ring": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 10,
+                    "offset": [
+                        122,
+                        35
+                    ],
+                    "size": [
+                        18,
+                        18
                     ]
                 }
             },
@@ -208,14 +247,14 @@
     },
     "main@common.inventory_screen_common": {
         "$content_size": [
-            162,
+            188,
             72
         ],
         "$has_tabs": true,
         "$has_upgrades": false,
         "$machine_content": "ThermalCrackerUI.content",
         "$panel_size": [
-            176,
+            202,
             166
         ],
         "$screen_content": "SkybluePanelLib.machine_screen",

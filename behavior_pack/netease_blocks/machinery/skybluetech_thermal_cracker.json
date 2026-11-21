@@ -14,13 +14,13 @@
                 "tick": true
             },
             "netease:custom_tips": {
-                "value": "\n§7使用§f高热§7热能对液体组分进行§f裂解§7。"
+                "value": "\n§7从底部供热，进行流体裂解、煤木干馏和煤间接液化等裂解反应。"
             },
             "netease:listen_block_remove": {
                 "value": true
             },
             "netease:block_container": {
-                "container_size": 1,
+                "container_size": 2,
                 "custom_description": "热裂解机",
                 "screen_name": "ThermalCrackerUI.main"
             },

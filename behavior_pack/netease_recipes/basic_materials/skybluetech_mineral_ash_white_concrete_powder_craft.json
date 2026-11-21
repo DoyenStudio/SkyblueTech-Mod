@@ -1,0 +1,25 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shapeless": {
+        "description": {
+            "identifier": "skybluetech:mineral_ash_white_concrete_powder_craft"
+        },
+        "ingredients": [
+            {"item": "skybluetech:mineral_ash"},
+            {"item": "minecraft:sand", "data": 0},
+            {"item": "minecraft:sand", "data": 0},
+            {"item": "minecraft:sand", "data": 0},
+            {"item": "minecraft:gravel"},
+            {"item": "minecraft:gravel"},
+            {"item": "minecraft:gravel"},
+            {"item": "minecraft:gravel"},
+            {"item": "minecraft:bone_meal"}
+        ],
+        "result": {
+            "count": 8,
+            "data": 0,
+            "item": "minecraft:white_concrete_powder"
+        },
+        "tags": ["crafting_table"]
+    }
+}

@@ -106,6 +106,7 @@
         "ui/mei_recipes/Compressor.json",
         "ui/mei_recipes/DistillationChamber.json",
         "ui/mei_recipes/DistillationColumn.json",
+        "ui/mei_recipes/EffluentOutfall.json",
         "ui/mei_recipes/Electrolyzer.json",
         "ui/mei_recipes/HighTempElectrolyzer.json",
         "ui/mei_recipes/Engraver.json",

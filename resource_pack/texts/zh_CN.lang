@@ -345,6 +345,7 @@ tile.skybluetech:wind_generator.name=风力发电机
 tile.skybluetech:hover_text_displayer.name=悬浮文本投影器
 tile.skybluetech:industrial_fan.name=工业风扇
 tile.skybluetech:air_vent.name=排气口
+tile.skybluetech:effluent_outfall.name=废液排放口
 tile.skybluetech:shocker.name=电击器
 item.skybluetech:sunflower_seeds.name=葵花籽
 tile.skybluetech:oil_extractor.name=榨油机

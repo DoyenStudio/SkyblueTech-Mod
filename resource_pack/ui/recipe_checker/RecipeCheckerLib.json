@@ -399,6 +399,10 @@
             }
         ]
     },
+    "effluent_outfall_recipes@MachineRecipeLib.mini_row": {
+        "$recipe_content": "MachineRecipeLib.EffluentOutfall",
+        "size": [180, 62]
+    },
     "oilfuel_generator_recipes@MachineRecipeLib.mini_row": {
         "$recipe_content": "MachineRecipeLib.OilFuelGenerator",
         "size": [180, 62]

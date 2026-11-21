@@ -116,7 +116,7 @@ OWN = (
     ("skybluetech:group.machinery_thermal", "itemGroup.skybluetech.machinery_thermal", _ids(
         "electric_heater", "infrared_heat_generator", "fuel_heater")),
     ("skybluetech:group.machinery_misc", "itemGroup.skybluetech.machinery_misc", _ids(
-        "deepslate_lava_vibrator", "hover_text_displayer", "lexical_transmuter")),
+        "deepslate_lava_vibrator", "effluent_outfall", "hover_text_displayer", "lexical_transmuter")),
     ("skybluetech:group.plates", "itemGroup.skybluetech.plates", _ids(
         "aluminum_plate", "copper_plate", "iron_plate", "gold_plate", "tin_plate", "lead_plate", "silver_plate",
         "nickel_plate", "platinum_plate", "titanium_plate", "alumite_plate", "bronze_plate", "invar_plate", "steel_plate",

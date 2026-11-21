@@ -6,6 +6,7 @@ from . import (
     default,
     distillation_chamber,
     distillation_column,
+    effluent_outfall,
     freezer,
     heat_melting_chamber,
     high_temp_electrolyzer,

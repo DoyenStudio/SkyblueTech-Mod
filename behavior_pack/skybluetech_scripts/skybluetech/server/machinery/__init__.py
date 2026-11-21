@@ -2,6 +2,7 @@
 from .alloy_furnace import AlloyFurnace
 from .air_compressor import AirCompressor
 from .air_vent import AirVent
+from .effluent_outfall import EffluentOutfall
 from .assembler import Assembler
 from .battery_matrix import BatteryMatrix
 from .battery_matrix_core import BatteryMatrixCore

@@ -10,6 +10,12 @@ control_def 是 MEI 外壳的注册名，内容布局本身不依赖 MEI。
 """
 
 LAYOUTS = {
+    "skybluetech:effluent_outfall": {
+        "file": "EffluentOutfall", "control_def": "SkyblueMeiEffluentOutfall.RECIPES_GRID",
+        "inputs": (("fluid", 0),), "outputs": (),
+        "catalysts": 0, "power": None, "segments": 0,
+        "progress": "fromRightToLeft", "static": False, "flame": False,
+    },
     "skybluetech:high_temp_electrolyzer": {
         "file": "HighTempElectrolyzer",
         "control_def": "SkyblueMeiHighTempElectrolyzer.RECIPES_GRID",

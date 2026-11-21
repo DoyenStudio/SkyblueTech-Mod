@@ -16,6 +16,9 @@
         "blockshape": "water",
         "textures": "skybluetech:baked_acid_vapor_static"
     },
+    "skybluetech:effluent_outfall": {
+        "sound": "iron"
+    },
     "skybluetech:air_vent": {
         "client_entity": {
             "identifier": "skybluetech:air_vent"

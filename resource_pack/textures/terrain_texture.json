@@ -115,6 +115,9 @@
         "skybluetech:baked_hydrogen_chloride_static": {
             "textures": "textures/fluid/baked/skybluetech.hydrogen_chloride/static"
         },
+        "skybluetech:effluent_outfall": {
+            "textures": "textures/models/effluent_outfall_texture"
+        },
         "skybluetech:air_vent": {
             "textures": "textures/models/air_vine_texture"
         },

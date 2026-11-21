@@ -201,7 +201,7 @@ def _BuildSource():  # type: () -> type
             # 一律拦掉的话它那条配方会被整条丢弃, 整台机器 0 条配方。
             # 这类配方在 MEI 里仍然查得到 —— "按材料查用途"走的是输入侧,
             # 玩家点甲烷照样能看到"能在燃气发电机里烧成电"。
-            if not parts["outputs"] and not extra_out:
+            if not parts["outputs"] and not extra_out and not parts.get("allow_empty_outputs"):
                 bridge.Error("配方 {} 的产物一个都解析不出, 已跳过".format(
                     type(sb_recipe).__name__))
                 return None

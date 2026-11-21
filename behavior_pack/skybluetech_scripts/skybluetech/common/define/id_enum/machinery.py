@@ -4,6 +4,7 @@ from .utils import SimpleEnum
 
 class Machinery(SimpleEnum):
     AIR_VENT = "skybluetech:air_vent"
+    EFFLUENT_OUTFALL = "skybluetech:effluent_outfall"
     THERMAL_CRACKER = "skybluetech:thermal_cracker"
     SMALL_CHEMICAL_REACTOR = "skybluetech:small_chemical_reactor"
     ALLOY_FURNACE = "skybluetech:alloy_furnace"

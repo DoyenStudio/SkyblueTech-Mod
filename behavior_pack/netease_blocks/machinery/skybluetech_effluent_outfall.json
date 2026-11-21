@@ -1,0 +1,90 @@
+{
+    "format_version": "1.21.70",
+    "minecraft:block": {
+        "description": {
+            "identifier": "skybluetech:effluent_outfall",
+            "category": "skybluetech",
+            "states": {
+                "skybluetech:down_pipe_connection": [false, true],
+                "skybluetech:up_pipe_connection": [false, true],
+                "skybluetech:north_pipe_connection": [false, true],
+                "skybluetech:south_pipe_connection": [false, true],
+                "skybluetech:west_pipe_connection": [false, true],
+                "skybluetech:east_pipe_connection": [false, true]
+            }
+        },
+        "components": {
+            "minecraft:geometry": {
+                "identifier": "geometry.skybluetech.effluent_outfall",
+                "bone_visibility": {
+                    "down": "q.block_state('skybluetech:down_pipe_connection')",
+                    "up": "q.block_state('skybluetech:up_pipe_connection')",
+                    "north": "q.block_state('skybluetech:north_pipe_connection')",
+                    "south": "q.block_state('skybluetech:south_pipe_connection')",
+                    "west": "q.block_state('skybluetech:west_pipe_connection')",
+                    "east": "q.block_state('skybluetech:east_pipe_connection')"
+                }
+            },
+            "minecraft:material_instances": {
+                "*": {
+                    "texture": "skybluetech:effluent_outfall",
+                    "render_method": "alpha_test"
+                }
+            },
+            "minecraft:item_visual": {
+                "geometry": "geometry.skybluetech.effluent_outfall_item",
+                "material_instances": {
+                    "*": {
+                        "texture": "skybluetech:effluent_outfall",
+                        "render_method": "alpha_test"
+                    }
+                }
+            },
+            "minecraft:liquid_detection": {
+                "detection_rules": [
+                    {
+                        "liquid_type": "water",
+                        "can_contain_liquid": true,
+                        "on_liquid_touches": "no_reaction"
+                    }
+                ]
+            },
+            "minecraft:light_dampening": 0,
+            "minecraft:destructible_by_mining": {
+                "seconds_to_destroy": 3.0
+            },
+            "netease:tier": {
+                "destroy_special": true,
+                "digger": "pickaxe",
+                "level": 2
+            },
+            "netease:aabb": {
+                "collision": {
+                    "min": [0.3125, 0.3125, 0.3125],
+                    "max": [0.6875, 0.6875, 0.6875]
+                },
+                "clip": {
+                    "min": [0.3125, 0.3125, 0.3125],
+                    "max": [0.6875, 0.6875, 0.6875]
+                }
+            },
+            "netease:block_entity": {
+                "tick": true,
+                "client_tick": false,
+                "movable": false
+            },
+            "netease:listen_block_remove": {
+                "value": true
+            },
+            "netease:neighborchanged_sendto_script": {
+                "value": true
+            },
+            "netease:custom_tips": {
+                "value": "\n§7向水体环境§f排放部分废液§7。\n自身需要浸泡在水里。"
+            },
+            "tag:piston_denier": {},
+            "tag:skybluetech_machine": {},
+            "tag:skybluetech_fluid_container": {}
+        }
+    }
+}

@@ -242,6 +242,23 @@ recipes = RecipesCollection(
         MRecipe.LEVEL_INVAR,
         24,
     ),
+    # effluent outfall
+    MRecipe(
+        {
+            0: Input(id_enum.Plates.HDPE),
+            1: Input(id_enum.Plates.HDPE),
+            2: Input(id_enum.Plates.HDPE),
+            3: Input(tag_enum.StickTag.TIN, is_tag=True),
+            5: Input(tag_enum.StickTag.TIN, is_tag=True),
+            6: Input(id_enum.Plates.HDPE),
+            7: Input(id_enum.Plates.HDPE),
+            8: Input(id_enum.Plates.HDPE),
+        },
+        id_enum.Machinery.EFFLUENT_OUTFALL,
+        MRecipe.LEVEL_IRON,
+        MRecipe.LEVEL_IRON,
+        4,
+    ),
     # electric crafter
     MRecipe(
         {

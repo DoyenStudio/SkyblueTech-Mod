@@ -1,6 +1,10 @@
 {
     "materials": {
         "version": "1.0.0",
+        "skybluetech_anchor_light:entity_alphablend": {
+            "+defines": ["USE_UV_ANIM"],
+            "+samplerStates": [{"samplerIndex": 0, "textureWrap": "Repeat"}]
+        },
         "skybluetech_centrifuge_fluid:entity_alphablend": {
             "+defines": ["USE_UV_ANIM", "USE_COLOR_MASK"]
         },

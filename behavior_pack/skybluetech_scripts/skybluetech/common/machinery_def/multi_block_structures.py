@@ -1,5 +1,6 @@
 # coding=utf-8
 """多方块控制器 ID 到未旋转结构调色板的公共表。"""
+from .chunk_anchor import ANCHOR, STRUCTURE_PALETTE as ANCHOR_PALETTE
 from skybluetech_scripts.skybluetech.common.define.id_enum.multi_block_structure import (
     BatteryMatrix,
     BedrockLavaDrill,
@@ -42,6 +43,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.gas_metallurgical_furn
 
 # 调色板以朝北的控制器为基准，使用时根据控制器朝向旋转副本。
 CONTROLLER_STRUCTURE_PALETTES = {
+    ANCHOR: ANCHOR_PALETTE,
     BatteryMatrix.CONTROLLER: BATTERY_MATRIX_PALETTE,
     BedrockLavaDrill.CONTROLLER: BEDROCK_LAVA_DRILL_PALETTE,
     BrineEvaporationPond.CONTROLLER: BRINE_EVAPORATION_POND_PALETTE,

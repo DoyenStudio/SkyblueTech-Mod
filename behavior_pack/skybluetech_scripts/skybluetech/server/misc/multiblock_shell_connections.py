@@ -56,7 +56,7 @@ SHELL_GROUPS = (
         GasMetallurgicalFurnace.IO_FLUID_OUTPUT,
         GasMetallurgicalFurnace.IO_ENERGY_INPUT,
     )),
-    frozenset((HEAVY_STEEL_MACHINE_BASE,)),
+    frozenset(("skybluetech:chunk_anchor_energy_input_port", HEAVY_STEEL_MACHINE_BASE,)),
     frozenset((
         DistillationColumn.FRAME,
         DistillationColumn.CONTROLLER,

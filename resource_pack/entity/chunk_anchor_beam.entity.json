@@ -1,0 +1,28 @@
+{
+    "format_version": "1.10.0",
+    "minecraft:client_entity": {
+        "description": {
+            "identifier": "skybluetech:chunk_anchor_beam",
+            "materials": {
+                "default": "skybluetech_anchor_light"
+            },
+            "textures": {
+                "blue": "textures/models/chunk_anchor_beam_blue",
+                "red": "textures/models/chunk_anchor_beam_red"
+            },
+            "geometry": {
+                "default": "geometry.skybluetech.chunk_anchor_beam"
+            },
+            "scripts": {
+                "initialize": [
+                    "variable.anchor_beam = 0;"
+                ]
+            },
+            "render_controllers": [
+                {
+                    "controller.render.skybluetech.chunk_anchor_beam": "variable.anchor_beam > 0"
+                }
+            ]
+        }
+    }
+}

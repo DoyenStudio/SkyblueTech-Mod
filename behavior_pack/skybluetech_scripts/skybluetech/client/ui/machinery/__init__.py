@@ -58,6 +58,7 @@ from .redstone_generator import RedstoneGeneratorUI
 from .redstoneflux_brake import RedstoneFluxBrakeUI
 from .rf_repeater_plant import RFRepeaterPlantUI
 from .sawmill import SawmillUI
+from .chunk_anchor import ChunkAnchorUI
 from .seawater_pump import SeawaterPumpUI
 from .solar_panel import SolarPanelUI
 from .specialized_growth_base import SpecializedGrowthBaseUI

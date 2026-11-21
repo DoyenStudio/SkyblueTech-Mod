@@ -8,6 +8,7 @@
         "ui/machinery/BlueprintTableUI.json",
         "ui/machinery/BrineEvaporationPondUI.json",
         "ui/machinery/ChargerUI.json",
+        "ui/machinery/ChunkAnchorUI.json",
         "ui/machinery/CompressorUI.json",
         "ui/misc/CraftingTemplateSettingsUI.json",
         "ui/machinery/CyroHeatMeltingChamberUI.json",

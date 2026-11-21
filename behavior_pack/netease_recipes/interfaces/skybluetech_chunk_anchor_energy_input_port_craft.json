@@ -1,0 +1,39 @@
+{
+    "format_version": "1.20.10",
+    "minecraft:recipe_shaped": {
+        "description": {
+            "identifier": "skybluetech:chunk_anchor_energy_input_port_craft"
+        },
+        "assume_symmetry": false,
+        "key": {
+            "L": {
+                "tag": "common:light_skyblue_ingot"
+            },
+            "T": {
+                "tag": "common:tin_plate"
+            },
+            "W": {
+                "item": "skybluetech:wire_insulated_silver"
+            },
+            "H": {
+                "item": "skybluetech:heavy_steel_machine_base"
+            }
+        },
+        "pattern": [
+            "LTH",
+            "TWT",
+            "LTL"
+        ],
+        "result": {
+            "count": 1,
+            "data": 0,
+            "item": "skybluetech:chunk_anchor_energy_input_port"
+        },
+        "tags": [
+            "crafting_table"
+        ],
+        "unlock": {
+            "context": "AlwaysUnlocked"
+        }
+    }
+}

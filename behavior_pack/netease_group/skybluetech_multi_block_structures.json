@@ -1,5 +1,6 @@
 {
     "groups": [
+        {"group_name": "itemGroup.skybluetech.chunk_anchor", "icon": "skybluetech:chunk_anchor", "list": ["skybluetech:chunk_anchor", "skybluetech:chunk_anchor_energy_input_port"]},
         {
             "group_name": "itemGroup.skybluetech.heavy_steel_machine_base",
             "icon": "skybluetech:heavy_steel_machine_base",

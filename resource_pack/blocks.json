@@ -653,6 +653,8 @@
         "sound": "iron",
         "textures": "skybluetech:distillation_column_frame"
     },
+    "skybluetech:chunk_anchor": {"client_entity": {"identifier": "skybluetech:chunk_anchor_beam"}, "sound": "iron", "textures": "skybluetech:chunk_anchor"},
+    "skybluetech:chunk_anchor_energy_input_port": {"sound": "iron", "textures": "skybluetech:chunk_anchor_energy_input_port_frame"},
     "skybluetech:heavy_steel_machine_base": {
         "sound": "iron",
         "textures": "skybluetech:heavy_steel_machine_base_frame"

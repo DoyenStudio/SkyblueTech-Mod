@@ -1,0 +1,35 @@
+{
+    "format_version": "1.8.0",
+    "render_controllers": {
+        "controller.render.skybluetech.chunk_anchor_beam": {
+            "arrays": {
+                "textures": {
+                    "Array.beams": [
+                        "Texture.blue",
+                        "Texture.red"
+                    ]
+                }
+            },
+            "geometry": "Geometry.default",
+            "materials": [
+                {
+                    "*": "Material.default"
+                }
+            ],
+            "textures": [
+                "Array.beams[variable.anchor_beam == 2]"
+            ],
+            "ignore_lighting": true,
+            "uv_anim": {
+                "offset": [
+                    0,
+                    "math.mod(query.life_time * 0.45, 1.0)"
+                ],
+                "scale": [
+                    1,
+                    1
+                ]
+            }
+        }
+    }
+}

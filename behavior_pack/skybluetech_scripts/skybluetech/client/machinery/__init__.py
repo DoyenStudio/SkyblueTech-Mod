@@ -5,6 +5,7 @@ from . import (
     large_reaction_pool,
     chamber_fluid,
     charger,
+    chunk_anchor,
     creative_power_acceptor,
     deepslate_lava_vibrator,
     digger,

@@ -1,0 +1,149 @@
+{
+    "format_version": "1.12.0",
+    "minecraft:geometry": [
+        {
+            "description": {
+                "identifier": "geometry.skybluetech.chunk_anchor_beam",
+                "texture_width": 32,
+                "texture_height": 16,
+                "visible_bounds_width": 3,
+                "visible_bounds_height": 258,
+                "visible_bounds_offset": [
+                    0,
+                    128,
+                    0
+                ]
+            },
+            "bones": [
+                {
+                    "name": "core",
+                    "pivot": [
+                        -8,
+                        12,
+                        8
+                    ],
+                    "cubes": [
+                        {
+                            "origin": [
+                                -9.5,
+                                12,
+                                6.5
+                            ],
+                            "size": [
+                                3,
+                                4096,
+                                3
+                            ],
+                            "uv": {
+                                "north": {
+                                    "uv": [
+                                        0,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                },
+                                "south": {
+                                    "uv": [
+                                        0,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                },
+                                "east": {
+                                    "uv": [
+                                        0,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                },
+                                "west": {
+                                    "uv": [
+                                        0,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                },
+                {
+                    "name": "halo",
+                    "pivot": [
+                        -8,
+                        12,
+                        8
+                    ],
+                    "cubes": [
+                        {
+                            "origin": [
+                                -11.0,
+                                12,
+                                5.0
+                            ],
+                            "size": [
+                                6,
+                                4096,
+                                6
+                            ],
+                            "uv": {
+                                "north": {
+                                    "uv": [
+                                        16,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                },
+                                "south": {
+                                    "uv": [
+                                        16,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                },
+                                "east": {
+                                    "uv": [
+                                        16,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                },
+                                "west": {
+                                    "uv": [
+                                        16,
+                                        0
+                                    ],
+                                    "uv_size": [
+                                        16,
+                                        2048
+                                    ]
+                                }
+                            }
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+}

@@ -69,6 +69,7 @@ from .redstone_generator import RedstoneGenerator
 from .resin_collector_outputer import ResinCollectorOutputer
 from .rf_repeater_plant import RFRepeaterPlant
 from .sawmill import Sawmill
+from .chunk_anchor import ChunkAnchor
 from .seawater_pump import SeawaterPump
 from .shocker import Shocker
 from .solar_panel import SolarPanel

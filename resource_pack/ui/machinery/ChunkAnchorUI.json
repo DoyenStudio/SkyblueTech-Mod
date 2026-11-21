@@ -1,0 +1,237 @@
+{
+    "content": {
+        "type": "panel",
+        "controls": [
+            {
+                "power_bar@SkybluePanelLib.energy_meter": {
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 1,
+                    "offset": [
+                        8,
+                        18
+                    ],
+                    "size": [
+                        12,
+                        54
+                    ]
+                }
+            },
+            {
+                "minus@ChunkAnchorUI.output_mode_button": {
+                    "$label_font_size": "large",
+                    "$label_offset": [
+                        0,
+                        -1
+                    ],
+                    "$label_text": "−",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 3,
+                    "offset": [
+                        31,
+                        18
+                    ],
+                    "size": [
+                        19,
+                        18
+                    ]
+                }
+            },
+            {
+                "radius_bg": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        50.0,
+                        18.0
+                    ],
+                    "size": [
+                        84.0,
+                        18.0
+                    ],
+                    "layer": 1,
+                    "clip_direction": "left",
+                    "clip_ratio": 0.0,
+                    "texture": "textures/ui/skybluetech/bg_frame_slim"
+                }
+            },
+            {
+                "radius": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        52,
+                        22.0
+                    ],
+                    "size": [
+                        80,
+                        10.0
+                    ],
+                    "layer": 3,
+                    "color": [
+                        1.0,
+                        1.0,
+                        1.0
+                    ],
+                    "shadow": true,
+                    "text": "",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "plus@ChunkAnchorUI.output_mode_button": {
+                    "$label_font_size": "large",
+                    "$label_offset": [
+                        0,
+                        -1
+                    ],
+                    "$label_text": "+",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "layer": 3,
+                    "offset": [
+                        134,
+                        18
+                    ],
+                    "size": [
+                        19,
+                        18
+                    ]
+                }
+            },
+            {
+                "status_bg": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        31.0,
+                        36.0
+                    ],
+                    "size": [
+                        122.0,
+                        36.0
+                    ],
+                    "layer": 1,
+                    "clip_direction": "left",
+                    "clip_ratio": 0.0,
+                    "texture": "textures/ui/skybluetech/info_bg"
+                }
+            },
+            {
+                "status": {
+                    "type": "label",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        33.0,
+                        38.0
+                    ],
+                    "size": [
+                        118.0,
+                        31
+                    ],
+                    "layer": 3,
+                    "color": [
+                        0.1882352941176471,
+                        0.1882352941176471,
+                        0.1882352941176471
+                    ],
+                    "text": "",
+                    "text_alignment": "center"
+                }
+            },
+            {
+                "machine_label": {
+                    "type": "label",
+                    "size": [
+                        0,
+                        0
+                    ],
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
+                }
+            }
+        ]
+    },
+    "main@common.inventory_screen_common": {
+        "$content_size": [
+            162,
+            54
+        ],
+        "$has_tabs": false,
+        "$has_upgrades": false,
+        "$machine_content": "ChunkAnchorUI.content",
+        "$panel_size": [
+            176,
+            168
+        ],
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": false,
+        "$title_text": "区块锚"
+    },
+    "namespace": "ChunkAnchorUI",
+    "output_mode_button@common.button": {
+        "$control_alpha": 1,
+        "$default_texture": "textures/ui/skybluetech/button_default",
+        "$hover_texture": "textures/ui/skybluetech/button_hovered",
+        "$is_new_nine_slice": false,
+        "$label_color": [
+            0.26,
+            0.26,
+            0.26
+        ],
+        "$label_font_scale_factor": 1,
+        "$label_font_size": "normal",
+        "$label_layer": 3,
+        "$label_offset": [
+            0,
+            0
+        ],
+        "$label_text|default": "",
+        "$nine_slice_buttom": 0,
+        "$nine_slice_left": 0,
+        "$nine_slice_right": 0,
+        "$nine_slice_top": 0,
+        "$nineslice_size|default": 0,
+        "$pressed_button_name": "%netease_editor_template_namespace.click",
+        "$pressed_texture": "textures/ui/skybluetech/button_pressed",
+        "$texture_layer": 2,
+        "anchor_from": "top_left",
+        "anchor_to": "top_left",
+        "button_mappings": [],
+        "controls": [
+            {
+                "default@netease_editor_template_namespace.default": {
+                    "keep_ratio": false
+                }
+            },
+            {
+                "hover@netease_editor_template_namespace.hover": {
+                    "keep_ratio": false
+                }
+            },
+            {
+                "pressed@netease_editor_template_namespace.pressed": {
+                    "keep_ratio": false
+                }
+            },
+            {
+                "button_label@netease_editor_template_namespace.button_label": {}
+            }
+        ],
+        "default_control": "default",
+        "hover_control": "hover",
+        "is_handle_button_move_event": true,
+        "layer": 2,
+        "pressed_control": "pressed",
+        "size": [
+            60,
+            17
+        ]
+    }
+}

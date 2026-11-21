@@ -2,6 +2,7 @@
 from skybluetech_scripts.tooldelta.define import Item
 
 from ..define import id_enum, tag_enum
+from .chunk_anchor import ANCHOR as CHUNK_ANCHOR
 from ..define.tag_enum import Pincer, Wrench
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.machinery_workstation import (
@@ -162,6 +163,17 @@ recipes = RecipesCollection(
         id_enum.Machinery.CHARGER,
         MRecipe.LEVEL_IRON,
         MRecipe.LEVEL_IRON,
+        8,
+    ),
+    # chunk anchor
+    MRecipe(
+        {
+            1: Input("minecraft:beacon"),
+            4: Input(id_enum.HEAVY_STEEL_MACHINE_BASE),
+        },
+        CHUNK_ANCHOR,
+        MRecipe.LEVEL_INVAR,
+        MRecipe.LEVEL_INVAR,
         8,
     ),
     # compressor

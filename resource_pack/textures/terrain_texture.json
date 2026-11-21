@@ -675,6 +675,11 @@
         "skybluetech:heavy_steel_machine_base_frame_edgeless": {
             "textures": "textures/blocks/multi_block_structure/heavy_steel_machine_base/frame_edgeless"
         },
+        "skybluetech:chunk_anchor": {"textures": "textures/models/chunk_anchor_texture"},
+        "skybluetech:chunk_anchor_energy_input_port_frame": {"textures": "textures/blocks/multi_block_structure/chunk_anchor/frame"},
+        "skybluetech:chunk_anchor_energy_input_port_frame_edgeless": {"textures": "textures/blocks/multi_block_structure/chunk_anchor/frame_edgeless"},
+        "skybluetech:chunk_anchor_energy_input_port_frame_horizontal": {"textures": "textures/blocks/multi_block_structure/chunk_anchor/frame_horizontal"},
+        "skybluetech:chunk_anchor_energy_input_port_frame_vertical": {"textures": "textures/blocks/multi_block_structure/chunk_anchor/frame_vertical"},
         "skybluetech:heavy_steel_machine_base_frame": {
             "textures": "textures/blocks/multi_block_structure/heavy_steel_machine_base/frame"
         },

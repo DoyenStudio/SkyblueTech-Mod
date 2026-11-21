@@ -791,3 +791,6 @@ item.skybluetech:titanium_sponge.name=海绵钛
 skybluetech.mei.category.gas_metallurgical_furnace=气体冶金炉
 item.skybluetech:semi_coke.name=半焦
 item.skybluetech:mineral_ash.name=矿物灰
+tile.skybluetech:chunk_anchor.name=区块锚
+tile.skybluetech:chunk_anchor_energy_input_port.name=区块锚能量输入口
+itemGroup.skybluetech.chunk_anchor=区块锚

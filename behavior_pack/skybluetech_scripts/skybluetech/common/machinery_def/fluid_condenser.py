@@ -1,5 +1,6 @@
 # coding=utf-8
-from ..define.id_enum import Machinery, Molten, HotFluid, HDPE_NUGGET, ROSIN
+from ..define.id_enum import CommonLiquid, Machinery, Molten, HotFluid, HDPE_NUGGET, RESIN, ROSIN
+from ..define.resin import RESIN_FLUID_VOLUME
 from ..mini_jei.core import RecipesCollection
 from ..mini_jei.machinery.fluid_condenser import (
     MachineRecipe,
@@ -15,6 +16,14 @@ recipes = RecipesCollection(
     Machinery.FLUID_CONDENSER,
     FluidCondenserRecipe(HotFluid.MOLTEN_POLYETHYLENE, 144, HDPE_NUGGET, 9, tick_duration=100, power_cost=40),
     FluidCondenserRecipe(Molten.ROSIN, 144, ROSIN, 1, tick_duration=100, power_cost=40),
+    FluidCondenserRecipe(
+        CommonLiquid.LIQUID_RESIN,
+        RESIN_FLUID_VOLUME,
+        RESIN,
+        1,
+        tick_duration=80,
+        power_cost=20,
+    ),
     FluidCondenserRecipe(
         "minecraft:lava",
         1000,

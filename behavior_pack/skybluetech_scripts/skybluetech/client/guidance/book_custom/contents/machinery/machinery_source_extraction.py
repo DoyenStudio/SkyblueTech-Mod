@@ -11,7 +11,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.seawater_pump import (
 from ...define import (
     MachineryWorkstationRecipePage,
     MultiBlockStructureModelPage,
-    MultiBlockStructureRenderPage,
     PageGroup,
     TextPage,
     UnfinishedItemName,
@@ -33,14 +32,14 @@ bedrock_lava_drill = PageGroup(
     [
         TextPage(
             "基岩熔岩钻",
-            '基岩熔岩钻是一种<text color="§b" t="多方块结构机器">， 可以在基岩层处开采<text color="§4" t="深层熔岩">； 使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n深层熔岩可以进一步被离心成几种熔岩， 进而被离心为熔融金属和其它成分。 它的钻头必须对准一块基岩。',
+            '基岩熔岩钻是一种<text color="§b" t="多方块结构机器">， 可以在基岩层处开采<text color="§4" t="深层熔岩">； 使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n深层熔岩可以进一步被离心成几种熔岩， 进而被离心为熔融金属和其它成分。 控制器必须放在 Y ≤ 5 的位置， 并且正下方要紧贴一块基岩。',
             hyperlink_cbs={
                 "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
             },
         ),
         TextPage(
             "",
-            '基岩熔岩钻需要先钻破顶层基岩才能把泵送管道送至深层熔岩层， 这意味着它在开始工作前至少需要安装一个<item id="{drill}"><style color="§c"><link id="drill" text="耐热钻头"><style color="R">到钻头槽位。\n\n钻头钻开顶层基岩层需要一定时间， <text color="§n" t="消耗一定量耐久">。 一旦其钻开了基岩层， 钻头的耐久就会被<text color="§2" t="停止消耗">， 基岩熔岩钻即开始泵出深层熔岩。\n\n基岩熔岩钻目前<text color="§c" t="最多">只能拥有 1 个能量输入口和 1 个流体输出口。'.format(
+            '基岩熔岩钻需要先钻破顶层基岩才能把泵送管道送至深层熔岩层， 这意味着它在开始工作前至少需要安装一个<item id="{drill}"><style color="§c"><link id="drill" text="耐热钻头"><style color="R">到钻头槽位。\n\n钻头钻开顶层基岩层需要一定时间， <text color="§n" t="消耗一定量耐久">。 一旦其钻开了基岩层， 钻头的耐久就会被<text color="§2" t="停止消耗">， 基岩熔岩钻即开始泵出深层熔岩。\n\n基岩熔岩钻需要<text color="§c" t="各装 1 个">能量输入口和流体输出口。即使装了多个， 也只会各使用一个。'.format(
                 drill=id_enum.DRILL_TOP_ULTRAHEATINUM
             ),
             hyperlink_cbs={
@@ -51,7 +50,7 @@ bedrock_lava_drill = PageGroup(
             "",
             '每个区域的深层熔岩量是<text color="§n" t="有限的">， 你可以通过控制器界面查看该区域剩余熔岩储量。\n\n在安放机器前， 强烈推荐您先使用<text color="§d" t="深层熔岩谐振勘探器">探明此地的大致熔岩储量再搭建好熔岩钻！',
         ),
-        MultiBlockStructureRenderPage(
+        MultiBlockStructureModelPage(
             id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER, STRUCTURE_PALETTE
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.BEDROCK_LAVA_DRILL_CONTROLLER),
@@ -98,7 +97,7 @@ mini_miner = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.MINI_MINER),
-            '迷你采矿机是最简单的<text color="§3" t="采矿机">， 不需要搭建多方块结构，只需要输入能量和润滑油即可开始采矿。\n\n它可以对下方 <text color="§9" t="16x64x16"> 的范围进行采矿。 对应地， 它无法进行更高级的采矿设置， 如接受时运或精准采集设置。',
+            '迷你采矿机是最简单的<text color="§3" t="采矿机">， 不需要搭建多方块结构， 只需要输入能量和润滑油即可开始采矿。\n\n它可以对下方 <text color="§9" t="16x64x16"> 的范围进行采矿。 对应地， 它无法进行更高级的采矿设置， 如接受时运或精准采集设置。',
         ),
         TextPage(
             "",
@@ -124,7 +123,9 @@ seawater_reservoir = PageGroup(
     [
         TextPage(
             "海水蓄水池",
-            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n抽取盐水！ <item id="{seawater_pump}">海水泵可以从<text color="§9" t="海水蓄水池">中抽取淡盐水； 使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n把蓄水池建到<text color="§9" t="宽阔海域的水底">！ 若建在水量不足的淡水区域， 海水泵将难以抽取盐水。 抽取速度与蓄水池所在水域盐水浓度有关； 海水泵界面上<img path="textures/ui/white_background" rgba=#B0B000 alpha=0.5 size_x=2 size_y=12>是抽取盐水所需最低海水浓度；浓度达到<img path="textures/ui/white_background" rgba=#00B000 alpha=0.5 size_x=2 size_y=12>时抽取速率最高。'.format(
+            '<text color="§c" t="此多方块结构为实验性机器。">\n抽取盐水！ <item id="{seawater_pump}">海水泵可以从<text color="§9" t="海水蓄水池">中抽取淡盐水或原海水。使用<link id="scepter" text="多方块结构手杖">可快速建造， 建好后从能量输入口供电。\n\n'
+            '把蓄水池建到<text color="§9" t="宽阔海域的水底">！ 界面上显示的「盐水浓度」是放置海水泵时统计到的周围水方块占比。水占比超过 30% 才有产出， 达到 60% 时抽取速率最高。\n\n'
+            "可在海水泵界面切换淡盐水和原海水。切换前请停止供电， 并排空输出槽。".format(
                 seawater_pump=id_enum.Machinery.SEAWATER_PUMP
             ),
             hyperlink_cbs={
@@ -134,5 +135,6 @@ seawater_reservoir = PageGroup(
         MultiBlockStructureModelPage(
             id_enum.Machinery.SEAWATER_PUMP, SEAWATER_RESERVOIR_SP
         ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.SEAWATER_PUMP),
     ],
 )

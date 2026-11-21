@@ -10,6 +10,12 @@ from skybluetech_scripts.skybluetech.common.machinery_def.brine_evaporation_pond
 from skybluetech_scripts.skybluetech.common.machinery_def.distillation_column import (
     STRUCTURE_PALETTE as DISTILLATION_COLUMN_SP,
 )
+from skybluetech_scripts.skybluetech.common.machinery_def.gas_metallurgical_furnace import (
+    STRUCTURE_PALETTE as GAS_METALLURGICAL_FURNACE_SP,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.large_reaction_pool import (
+    STRUCTURE_PALETTE as LARGE_REACTION_POOL_SP,
+)
 from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import (
     STRUCTURE_PALETTE as VACUUM_FREEZER_SP,
 )
@@ -17,7 +23,6 @@ from skybluetech_scripts.skybluetech.common.machinery_def.vacuum_freezer import 
 from ...define import (
     MachineryWorkstationRecipePage,
     MultiBlockStructureModelPage,
-    MultiBlockStructureRenderPage,
     PageGroup,
     TextPage,
     UnfinishedItemName,
@@ -41,7 +46,7 @@ brine_evaporation_pond = PageGroup(
     [
         TextPage(
             "卤水池",
-            '<text color="§c" t="当前预览版无完整功能！ 请不要使用！">\n<text color="§9" t="卤水池">多方块结构是海水化工中的核心设施之一， 可以使用热能浓缩盐水。\n使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n在受热口放置热源， 即可浓缩输入的<text color="§3" t="淡盐水">。',
+            '<text color="§9" t="卤水池">多方块结构是海水化工中的核心设施之一， 可以使用热能浓缩盐水。\n使用<link id="scepter" text="多方块结构手杖">可快速建造。\n\n在受热口放置热源， 从液体输入口送入<text color="§3" t="淡盐水">， 即可从液体输出口收集饱和盐水。',
             hyperlink_cbs={
                 "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
             },
@@ -49,6 +54,7 @@ brine_evaporation_pond = PageGroup(
         MultiBlockStructureModelPage(
             id_enum.BrineEvaporationPond.CONTROLLER, BRINE_EVAPORATION_POND_SP
         ),
+        MachineryWorkstationRecipePage(id_enum.BrineEvaporationPond.CONTROLLER),
     ],
 )
 
@@ -79,7 +85,7 @@ distillation_chamber = PageGroup(
         ),
         TextPage(
             "",
-            "对比蒸馏塔， 无法使用过高或过低的温度， 也无法生产副产物， 但是可以进行需要精细控温的蒸馏， 相比之下产率也更高。",
+            "小型蒸馏仓按配方所需的温度进行蒸馏， 每个配方只产出一种流体。蒸馏塔也兼容这些配方， 在相同温度下的原料与产物比例相同。",
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.DISTILLATION_CHAMBER),
     ],
@@ -90,7 +96,8 @@ distillation_column = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.DistillationColumn.CONTROLLER),
-            '蒸馏仓可以使用<text color="§c" t="热能">对其中的流体进行<text color="§9" t="蒸馏">。 对比小型蒸馏仓， 其具有<text color="§d" t="更高的蒸馏速率">， 也能收集到蒸馏时的<text color="§d" t="副产物">。 \n\n蒸馏塔的受热口需要<text color="§4" t="热源">为其供热， 如<link text="电力加热仓" id="electric_heater">。',
+            '蒸馏塔可以使用<text color="§c" t="热能">对其中的流体进行<text color="§9" t="蒸馏">。处理兼容配方时， 蒸馏塔的最高蒸馏速率比小型蒸馏仓更高， 部分配方还能收集多种<text color="§d" t="馏分">。\n\n'
+            '搭建时至少需要一个液体输入口、一个受热口和两个液体输出口。蒸馏塔的受热口需要<text color="§4" t="热源">为其供热， 如<link text="电力加热仓" id="electric_heater">。',
             hyperlink_cbs={
                 "electric_heater": lambda _: (
                     _get_machinery_thermal_module().electric_heater.FastJump()
@@ -99,12 +106,14 @@ distillation_column = PageGroup(
         ),
         TextPage(
             "",
-            '馏分会按液体输出口高低进行输出； <text color="§6" t="最高处">的输出口将产生最上层馏分， 越往下的输出口就输出<text color="§5" t="越下层:>的馏分。\n\n如果输出口数量不足， 下层的馏分将被直接<text color="§4" t="丢弃">； 同一层有多个输出口， 馏分容易混合输出。 所以每层只有一个液体输出口是最妥当的。',
+            '馏分会按液体输出口高低进行输出， 蒸馏塔最多使用最高的四个输出口。<text color="§6" t="最高处">的输出口将产生最上层馏分， 越往下的输出口就输出<text color="§5" t="越下层">的馏分。'
+            '同一层有多个输出口时， 按世界坐标 X、Z 由小到大排列， 各自独立输出。\n\n'
+            '蒸馏液态空气至少需要三个液体输出口， 数量不足时会暂停。满足配方要求后， 如果还有馏分没有对应的输出口， 这些下层馏分会被<text color="§4" t="丢弃">。',
         ),
-        MultiBlockStructureRenderPage(
+        MultiBlockStructureModelPage(
             id_enum.DistillationColumn.CONTROLLER, DISTILLATION_COLUMN_SP
         ),
-        MachineryWorkstationRecipePage(id_enum.Machinery.DISTILLATION_CHAMBER),
+        MachineryWorkstationRecipePage(id_enum.DistillationColumn.CONTROLLER),
     ],
 )
 
@@ -142,9 +151,9 @@ high_temp_electrolyzer = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.HIGH_TEMP_ELECTROLYZER),
-            "在机器底面接红外高热发生器或导热块，再接入电力。"
-            "铝电解混合料从物品槽投入，无水氯化镁熔盐从流体槽注入。\n\n"
-            "金属进入物品出口，副产气体默认从右侧抽取。点击面板上的进度箭头可查看配方温区。",
+            "在机器底面接红外高热发生器或导热块， 再接入电力。"
+            "铝电解混合料从物品槽投入， 无水氯化镁熔盐从流体槽注入。\n\n"
+            "金属进入物品出口， 副产气体默认从右侧抽取。点击面板上的进度箭头可查看配方温区。",
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.HIGH_TEMP_ELECTROLYZER),
     ],
@@ -161,6 +170,21 @@ engraver = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.ENGRAVER),
     ],
 )
+
+flotation_machine = PageGroup(
+    "flotation_machine_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.FLOTATION_MACHINE),
+            '浮选机可以对粗矿进行浮选， 产出<item id="{sorted_ore}">预选矿料和<item id="{cake}">滤饼， 使一份粗矿能产出更多产品。\n\n'
+            "接通电源后， 输入粗矿、水和复配矿物捕收剂。工作时还会产生含捕收剂的浮选废水， 废水槽容量不足时需要排出废水才能继续。".format(
+                sorted_ore=id_enum.SortedOres.IRON, cake=id_enum.FilterCakes.IRON
+            ),
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.FLOTATION_MACHINE),
+    ],
+)
+
 
 fluid_condenser = PageGroup(
     "fluid_condenser_description",
@@ -183,6 +207,39 @@ freezer = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.FREEZER),
     ],
 )
+
+gas_metallurgical_furnace = PageGroup(
+    "gas_metallurgical_furnace_description",
+    [
+        TextPage(
+            "气体冶金炉",
+            '气体冶金炉主要用于在特定气体环境下<text color="§6" t="冶炼金属">。例如， 可用<item id="{hydrogen}">氢气还原氧化铁粉， 得到铁粉和水蒸气。\n\n'
+            "炉体底面为 3×3， 高 5 格。控制器所在层和紧下方一层可安装输入口， 紧上方一层可安装输出口， 中间三层的中心留空。\n\n"
+            "通过能量输入口供电， 再按配方选装对应的进出料接口。点击结构图中的方块可查看该位置允许使用的部件。".format(
+                hydrogen=id_enum.CommonGas.HYDROGEN
+            ),
+        ),
+        MultiBlockStructureModelPage(
+            id_enum.GasMetallurgicalFurnace.CONTROLLER,
+            GAS_METALLURGICAL_FURNACE_SP,
+        ),
+        MachineryWorkstationRecipePage(id_enum.GasMetallurgicalFurnace.CONTROLLER),
+    ],
+)
+
+
+heat_melting_chamber = PageGroup(
+    "heat_melting_chamber_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.HEAT_MELTING_CHAMBER),
+            '熔化仓消耗<text color="§4" t="热量">将低温易熔物品熔化为流体。热源应接在底部。\n\n'
+            "超过配方的最高温度时， 仍会消耗原料， 但不会产出流体。",
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.HEAT_MELTING_CHAMBER),
+    ],
+)
+
 
 hydroponic_base = PageGroup(
     "hydroponic_base_description",
@@ -211,6 +268,48 @@ hydroponic_bed = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.HYDROPONIC_BED),
     ],
 )
+
+hydroponic_bed_sand = PageGroup(
+    "hydroponic_bed_sand_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.HYDROPONIC_BED_SAND),
+            "沙底水培床可培养甘蔗和仙人掌。将其放在水培基座上并供电， 基座供水并接收收获的作物。",
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.HYDROPONIC_BED_SAND),
+    ],
+)
+
+
+industrial_centrifuge = PageGroup(
+    "industrial_centrifuge_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.INDUSTRIAL_CENTRIFUGE),
+            '工业离心机通过快速转动离心管， 对其中的液体进行<text color="§5" t="离心分离">， 或分离出其中的固体粉末。\n\n'
+            "放置时， 上方留出一格供转子自动生成。需要加热的配方从机器底面供热。",
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.INDUSTRIAL_CENTRIFUGE),
+    ],
+)
+
+
+large_reaction_pool = PageGroup(
+    "large_reaction_pool_description",
+    [
+        TextPage(
+            "大型反应池",
+            '大型反应池可进行比小型化学反应釜更复杂的反应， 最多使用三路流体输入和两路流体输出。需要加热的配方还要通过<text color="§c" t="热量输入口">供热。\n\n'
+            "池体底面为 3×3， 高 4 格。控制器所在层可安装输入口， 紧上方一层可安装输出口， 两层池壁的中心留空。\n\n"
+            "通过能源输入口供电， 按配方所示的通道编号接管。点击结构图中的方块可查看该位置允许使用的部件。",
+        ),
+        MultiBlockStructureModelPage(
+            id_enum.LargeReactionPool.CONTROLLER, LARGE_REACTION_POOL_SP
+        ),
+        MachineryWorkstationRecipePage(id_enum.LargeReactionPool.CONTROLLER),
+    ],
+)
+
 
 macerator = PageGroup(
     "macerator_description",
@@ -300,6 +399,24 @@ oil_extractor = PageGroup(
     ],
 )
 
+precision_cutter = PageGroup(
+    "precision_cutter_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.PRECISION_CUTTER),
+            '可对部分物品和建材进行<text color="§1" t="精密切割">， 将其切分为原料， 或对物品进行精细打磨。\n\n'
+            '精密切割机需要安装<item id="{cutter}"><link id="cutter" text="锯片">， 每次加工会消耗锯片耐久。'.format(
+                cutter=id_enum.Cutter.STEEL
+            ),
+            hyperlink_cbs={
+                "cutter": lambda _: CheckRecipes(list(id_enum.Cutter.all()))
+            },
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.PRECISION_CUTTER),
+    ],
+)
+
+
 redstone_furnace = PageGroup(
     "redstone_furnace_description",
     [
@@ -310,6 +427,18 @@ redstone_furnace = PageGroup(
         MachineryWorkstationRecipePage(id_enum.Machinery.REDSTONE_FURNACE),
     ],
 )
+
+sawmill = PageGroup(
+    "sawmill_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.SAWMILL),
+            '锯木机可以提高木材利用率。\n\n例如， 1 根<item id="minecraft:oak_log">橡木原木可锯成 6 块<item id="minecraft:oak_planks">橡木木板， 1 块木板可锯成 3 根<item id="minecraft:stick">木棍。',
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.SAWMILL),
+    ],
+)
+
 
 smmall_chemical_reactor = PageGroup(
     "smmall_chemical_reactor_description",
@@ -322,14 +451,46 @@ smmall_chemical_reactor = PageGroup(
     ],
 )
 
+specialized_growth_base = PageGroup(
+    "specialized_growth_base_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.SPECIALIZED_GROWTH_BASE),
+            '特种培养基座向正上方的<link id="chamber" text="特种培养仓">补充消耗性原料和培养液， 并接收物品及液体产物。自动化供料和收集时， 将物品、流体管道接到基座。',
+            hyperlink_cbs={
+                "chamber": lambda _: specialized_growth_chamber.FastJump(),
+            },
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.SPECIALIZED_GROWTH_BASE),
+    ],
+)
+
+
+specialized_growth_chamber = PageGroup(
+    "specialized_growth_chamber_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.SPECIALIZED_GROWTH_CHAMBER),
+            "特种培养仓用于培养特殊作物。接通电源后， 手动将配方需要的保留材料放入绿色槽位， 加工时不会消耗这些材料。\n\n"
+            '培养仓可以手动供料和取出产物。需要自动化时， 在正下方放置<item id="{base}"><link id="chamber_base" text="特种培养基座">， 由基座补充消耗性原料和培养液， 并收集产物。'.format(
+                base=id_enum.Machinery.SPECIALIZED_GROWTH_BASE
+            ),
+            hyperlink_cbs={
+                "chamber_base": lambda _: specialized_growth_base.FastJump(),
+            },
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.SPECIALIZED_GROWTH_CHAMBER),
+    ],
+)
+
+
 thermal_cracker = PageGroup(
     "thermal_cracker_description",
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.THERMAL_CRACKER),
-            '热裂解机可以使用高热对液体进行化学裂解， 建议使用<link id="heater" text="红外高热发生器">。\n\n'
-            '管道默认从机器左侧抽取左槽的流体，从右侧抽取右槽的流体。'
-            '在「流体输出面」页可为每个输出槽选择一个或多个面，也可以关闭该槽的所有输出面。',
+            '热裂解机从底部接收热量， 可按配方裂解物品或流体。建议使用<link id="heater" text="红外高热发生器">供热。\n\n'
+            "在「流体输出面」页可为每个输出槽选择一个或多个面， 也可以关闭该槽的所有输出面。",
             hyperlink_cbs={
                 "heater": lambda _: (
                     _get_machinery_thermal_module().infrared_heat_generator.FastJump()
@@ -355,7 +516,7 @@ vacuum_freezer = PageGroup(
                 "scepter": lambda _: CheckRecipe(id_enum.MULTIBLOCK_STRUCTURE_SCEPTER)
             },
         ),
-        MultiBlockStructureRenderPage(
+        MultiBlockStructureModelPage(
             id_enum.VacuumFreezer.CONTROLLER, VACUUM_FREEZER_SP
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.VACUUM_FREEZER),

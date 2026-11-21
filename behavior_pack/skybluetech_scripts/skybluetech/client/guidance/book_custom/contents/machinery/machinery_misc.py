@@ -1,11 +1,51 @@
 # coding=utf-8
+from skybluetech_scripts.skybluetech.client.ui.recipe_checker import (
+    PushRecipeCheckerUI,
+)
 from skybluetech_scripts.skybluetech.common.define import id_enum
+from skybluetech_scripts.skybluetech.common.machinery_def.chunk_anchor import (
+    ANCHOR as CHUNK_ANCHOR,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.chunk_anchor import (
+    STRUCTURE_PALETTE as CHUNK_ANCHOR_SP,
+)
+from skybluetech_scripts.skybluetech.common.machinery_def.effluent_outfall import (
+    recipes as EFFLUENT_OUTFALL_RECIPES,
+)
 
 from ...define import (
     MachineryWorkstationRecipePage,
+    MultiBlockStructureModelPage,
     PageGroup,
     TextPage,
     UnfinishedItemName,
+)
+
+air_vent = PageGroup(
+    "air_vent_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.AIR_VENT),
+            "对于反应产生的副产物气体， 可通过排气口排放到环境中。\n\n"
+            "将流体管道接到排气口的底座面， 该面只接收普通气体和二氧化碳。",
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.AIR_VENT),
+    ],
+)
+
+chunk_anchor = PageGroup(
+    "chunk_anchor_description",
+    [
+        TextPage(
+            "区块锚",
+            '区块锚可<text color="§2" t="常加载世界区块">， 使你不在产线附近时机器也能继续运转。\n\n'
+            "常加载区域受游戏限制， 整个世界最多同时保留 10 个常加载区域， 与其他使用常加载区域的模组共用上限。\n\n"
+            '将区块锚放在 3×3 底座正中央的上方。底座至少要装一个<text color="§c" t="能量输入口">为区块锚供能， 其余位置可用重型钢机械底座。\n\n'
+            "区块锚默认关闭， 可在界面中将加载范围设为 1×1、3×3、5×5、7×7 或 9×9 个区块， 每区块消耗 50 RF/t。",
+        ),
+        MultiBlockStructureModelPage(CHUNK_ANCHOR, CHUNK_ANCHOR_SP),
+        MachineryWorkstationRecipePage(CHUNK_ANCHOR),
+    ],
 )
 
 deepslate_lava_vibrator = PageGroup(
@@ -20,6 +60,22 @@ deepslate_lava_vibrator = PageGroup(
             "将深层熔岩谐振勘探器放置到地面， 为其输入能量就可以启动探测。 勘探进度越多， 勘探到的深层熔岩储量也越准确。 勘探进度到达百分百后探测到的深层熔岩储量就几乎是百分百准确了。",
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.DEEPSLATE_LAVA_VIBRATOR),
+    ],
+)
+
+effluent_outfall = PageGroup(
+    "effluent_outfall_description",
+    [
+        TextPage(
+            UnfinishedItemName(id_enum.Machinery.EFFLUENT_OUTFALL),
+            "废液排放口可向大面积水体排放废液， 处理反应产生的部分废液。排放口本身必须浸在水中， 以排放口为中心的 3×5×3 范围内至少要有 27 格水， 包括排放口所在格。\n\n"
+            '不同群系可处理的废液和排放速率见<link id="fluids" text="这里">。\n\n'
+            '<text color="§7" t="但是我们还是希望你能回收部分废液， 这很环保主义。">',
+            hyperlink_cbs={
+                "fluids": lambda _: PushRecipeCheckerUI(EFFLUENT_OUTFALL_RECIPES)
+            },
+        ),
+        MachineryWorkstationRecipePage(id_enum.Machinery.EFFLUENT_OUTFALL),
     ],
 )
 
@@ -51,7 +107,7 @@ lexical_transmuter = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.LEXICAL_TRANSMUTER),
-            '矿词转换机使不同模组间相同物品名或 ID 的物品得以相互转换， 例如本模组和其他科技模组的锡锭。\n将目标物品放入模版物品槽（右上角）， 再将需要转换的物品放入输入槽（左下角）， 即可瞬间转换为目标物品。 整个过程<text color="§2" t="无需任何能量供应">。\n\n<text color="§c" t="不支持转换带 NBT 的物品，"> 如工具和武器类物品。',
+            '矿词转换机使不同模组间相同物品名或 ID 的物品得以相互转换， 例如本模组和其他科技模组的锡锭。\n将目标物品放入模版物品槽（右上角）， 再将需要转换的物品放入输入槽（左下角）， 即可瞬间转换为目标物品。 整个过程<text color="§2" t="无需任何能量供应">。\n\n<text color="§c" t="不支持转换带 NBT 的物品， "> 如工具和武器类物品。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.LEXICAL_TRANSMUTER),
     ],

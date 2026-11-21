@@ -1,5 +1,8 @@
 # coding=utf-8
 from skybluetech_scripts.skybluetech.common.define import id_enum
+from skybluetech_scripts.skybluetech.common.machinery_def.chunk_anchor import (
+    ANCHOR as CHUNK_ANCHOR,
+)
 
 from ...define import (
     MainTOCPage,
@@ -54,7 +57,7 @@ machinery_production_toc = _split_toc(
     TOCPageSection(
         id_enum.Machinery.BRINE_EVAPORATION_POND_CONTROLLER,
         0,
-        "卤水池§c[实验性]",
+        "卤水池",
         machinery_production.brine_evaporation_pond,
     ),
     TOCPageSection(
@@ -189,6 +192,66 @@ machinery_production_toc = _split_toc(
         "真空冷却仓",
         machinery_production.vacuum_freezer,
     ),
+    TOCPageSection(
+        id_enum.Machinery.INDUSTRIAL_CENTRIFUGE,
+        0,
+        None,
+        machinery_production.industrial_centrifuge,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.FLOTATION_MACHINE,
+        0,
+        None,
+        machinery_production.flotation_machine,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.HEAT_MELTING_CHAMBER,
+        0,
+        None,
+        machinery_production.heat_melting_chamber,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.PRECISION_CUTTER,
+        0,
+        None,
+        machinery_production.precision_cutter,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.SAWMILL,
+        0,
+        None,
+        machinery_production.sawmill,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.HYDROPONIC_BED_SAND,
+        0,
+        None,
+        machinery_production.hydroponic_bed_sand,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.SPECIALIZED_GROWTH_BASE,
+        0,
+        None,
+        machinery_production.specialized_growth_base,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.SPECIALIZED_GROWTH_CHAMBER,
+        0,
+        None,
+        machinery_production.specialized_growth_chamber,
+    ),
+    TOCPageSection(
+        id_enum.LargeReactionPool.CONTROLLER,
+        0,
+        "大型反应池",
+        machinery_production.large_reaction_pool,
+    ),
+    TOCPageSection(
+        id_enum.GasMetallurgicalFurnace.CONTROLLER,
+        0,
+        "气体冶金炉",
+        machinery_production.gas_metallurgical_furnace,
+    ),
 )
 
 machinery_source_extraction_toc = _split_toc(
@@ -299,6 +362,18 @@ machinery_generator_toc = _split_toc(
         None,
         machinery_generator.wind_generator,
     ),
+    TOCPageSection(
+        id_enum.Machinery.GAS_BURNING_GENERATOR,
+        0,
+        None,
+        machinery_generator.gas_burning_generator,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.OILFUEL_GENERATOR,
+        0,
+        None,
+        machinery_generator.oilfuel_generator,
+    ),
 )
 
 machinery_energy_toc = _split_toc(
@@ -332,6 +407,18 @@ machinery_energy_toc = _split_toc(
         0,
         None,
         machinery_energy.rf_repeater_plant,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.ENERGY_CUBE_JUNIOR,
+        0,
+        None,
+        machinery_energy.energy_cube_junior,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.REDSTONEFLUX_BRAKE,
+        0,
+        None,
+        machinery_energy.redstoneflux_brake,
     ),
 )
 
@@ -406,6 +493,30 @@ machinery_misc_toc = _split_toc(
         0,
         None,
         machinery_misc.shocker,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.AIR_VENT,
+        0,
+        None,
+        machinery_misc.air_vent,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.EFFLUENT_OUTFALL,
+        0,
+        None,
+        machinery_misc.effluent_outfall,
+    ),
+    TOCPageSection(
+        CHUNK_ANCHOR,
+        0,
+        "区块锚",
+        machinery_misc.chunk_anchor,
+    ),
+    TOCPageSection(
+        id_enum.Machinery.TESLA_PLANT,
+        0,
+        None,
+        machinery_energy.tesla_plant,
     ),
 )
 

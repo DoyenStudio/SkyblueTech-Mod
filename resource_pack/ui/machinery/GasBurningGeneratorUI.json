@@ -4,10 +4,10 @@
         "controls": [
             {
                 "gas_input@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         32,
                         17
@@ -34,10 +34,10 @@
             },
             {
                 "gas_aux_input@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         54,
                         17
@@ -64,9 +64,9 @@
             },
             {
                 "flame@SkybluePanelLib.burn_flame": {
-                    "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         82,
                         38
@@ -75,9 +75,9 @@
             },
             {
                 "recipe_check_btn@SkybluePanelLib.icon_button": {
-                    "layer": 2,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 2,
                     "offset": [
                         80,
                         53
@@ -86,9 +86,9 @@
             },
             {
                 "power_bar@SkybluePanelLib.energy_meter": {
-                    "layer": 1,
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         108,
                         17
@@ -115,10 +115,10 @@
             },
             {
                 "gas_output@SkybluePanelLib.fluid_tank": {
-                    "layer": 1,
                     "$tank_ticks": "textures/ui/skybluetech/slot_visual/tank_ticks_52",
                     "anchor_from": "top_left",
                     "anchor_to": "top_left",
+                    "layer": 1,
                     "offset": [
                         130,
                         17
@@ -146,6 +146,8 @@
             {
                 "output_slot": {
                     "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
                     "offset": [
                         151,
                         35
@@ -162,9 +164,7 @@
                                 "collection_index": 0
                             }
                         }
-                    ],
-                    "anchor_from": "top_left",
-                    "anchor_to": "top_left"
+                    ]
                 }
             },
             {
@@ -184,32 +184,32 @@
             {
                 "machine_label": {
                     "type": "label",
-                    "text": "",
-                    "visible": false,
                     "size": [
                         0,
                         0
                     ],
-                    "layer": 1
+                    "layer": 1,
+                    "visible": false,
+                    "text": ""
                 }
             }
         ]
     },
     "main@common.inventory_screen_common": {
-        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$content_size": [
+            162,
+            54
+        ],
+        "$has_tabs": true,
+        "$has_upgrades": false,
         "$machine_content": "GasBurningGeneratorUI.content",
         "$panel_size": [
             176,
             166
         ],
-        "$content_size": [
-            162,
-            54
-        ],
-        "$title_text": "燃气发电机",
-        "$has_tabs": true,
-        "$has_upgrades": false,
-        "$show_led": true
+        "$screen_content": "SkybluePanelLib.machine_screen",
+        "$show_led": true,
+        "$title_text": "燃气发电机"
     },
     "namespace": "GasBurningGeneratorUI"
 }

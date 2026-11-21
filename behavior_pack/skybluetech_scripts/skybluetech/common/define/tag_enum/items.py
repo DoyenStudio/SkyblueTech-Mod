@@ -86,7 +86,6 @@ class PlateTag:
     SUPERCONDUCT = "common:superconduct_plate"
     ULTRAHEATINUM = "common:ultraheatinum_plate"
 
-
 class StickTag:
     COPPER = "common:copper_stick"
     IRON = "common:iron_stick"

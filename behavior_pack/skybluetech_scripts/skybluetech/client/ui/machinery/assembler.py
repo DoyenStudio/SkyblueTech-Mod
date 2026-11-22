@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
+import re
 
 from skybluetech_scripts.skybluetech.common.events.machinery.assembler import (
     ACTION_PULL_UPGRADER,
@@ -13,6 +13,7 @@ from skybluetech_scripts.skybluetech.common.machinery_def.assembler import (
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     K_STORE_RF,
 )
+from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen
 from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault as GetValue
@@ -22,7 +23,7 @@ from .utils import UpdatePowerBar
 
 POWER_PATH = MAIN_PATH / "power_bar"
 UPGRADERS_LIST_PATH = MAIN_PATH / "upgraders_view"
-
+FORMAT_CODE_RE = re.compile(u"\u00a7[0-9a-v]", re.IGNORECASE)
 
 @RegistToolDeltaScreen("AssemblerUI.main", is_proxy=True)
 class AssemblerUI(MachinePanelUIProxy):
@@ -63,7 +64,9 @@ class AssemblerUI(MachinePanelUIProxy):
         # type: (list[tuple[str, str, int]]) -> None
         for i, (typ, text, count) in enumerate(lis):
             if count != -1:
-                text = CF.CreateItem(LEVEL_ID).GetItemHoverName(text)
+                text = CF.CreateItem(LEVEL_ID).GetItemHoverName(text) or ""
+            if isinstance(text, bytes):
+                text = text.decode("utf-8")
             elem = self.upgraders_grid.GetGridItem(0, i)
-            elem["text"].asLabel().SetText(text)
+            elem["text"].asLabel().SetText(FORMAT_CODE_RE.sub(u"", text))
             elem["item"].asItemRenderer().SetUiItem(Item(typ))

@@ -201,6 +201,22 @@
                 }
             },
             {
+                "upgraders_view_bg": {
+                    "type": "image",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        51.0,
+                        16.0
+                    ],
+                    "size": [
+                        120.0,
+                        72.0
+                    ],
+                    "texture": "textures/ui/skybluetech/bg_frame_slim"
+                }
+            },
+            {
                 "upgraders_view@common.scrolling_panel": {
                     "$background_nine_slice_buttom": 0,
                     "$background_nine_slice_left": 0,
@@ -227,7 +243,7 @@
                     "$is_box_nine_slice": false,
                     "$is_track_nine_slice": false,
                     "$scroll_background_image_control": "netease_editor_template_namespace.scroll_background_image",
-                    "$scroll_background_texture": "textures/ui/ScrollRail",
+                    "$scroll_background_texture": "",
                     "$scroll_box_mouse_image_control": "netease_editor_template_namespace.scroll_box_image",
                     "$scroll_box_texture": "textures/ui/newTouchScrollBox",
                     "$scroll_box_touch_image_control": "netease_editor_template_namespace.scroll_box_image",
@@ -252,8 +268,8 @@
                         17
                     ],
                     "size": [
-                        117,
-                        72
+                        118,
+                        70
                     ]
                 }
             },

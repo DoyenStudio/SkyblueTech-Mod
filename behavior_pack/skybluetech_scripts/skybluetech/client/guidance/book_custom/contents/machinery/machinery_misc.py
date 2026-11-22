@@ -38,10 +38,9 @@ chunk_anchor = PageGroup(
     [
         TextPage(
             "区块锚",
-            '区块锚可<text color="§2" t="常加载世界区块">， 使你不在产线附近时机器也能继续运转。\n\n'
-            "常加载区域受游戏限制， 整个世界最多同时保留 10 个常加载区域， 与其他使用常加载区域的模组共用上限。\n\n"
-            '将区块锚放在 3×3 底座正中央的上方。底座至少要装一个<text color="§c" t="能量输入口">为区块锚供能， 其余位置可用重型钢机械底座。\n\n'
-            "区块锚默认关闭， 可在界面中将加载范围设为 1×1、3×3、5×5、7×7 或 9×9 个区块， 每区块消耗 50 RF/t。",
+            '区块锚可<text color="§2" t="常加载世界区块">， 使你不在产线附近时机器也能继续运转。'
+            '\n常加载区域受游戏限制， 整个世界<text color="§d" t="最多同时保留 10 个常加载区域">， 与其他使用常加载区域的模组共用上限。\n'
+            '\n\n区块锚<text color="§4" t="默认关闭">， 可在界面中调整加载范围以启动。 每区块消耗 50 RF/t。',
         ),
         MultiBlockStructureModelPage(CHUNK_ANCHOR, CHUNK_ANCHOR_SP),
         MachineryWorkstationRecipePage(CHUNK_ANCHOR),

@@ -3,7 +3,7 @@
     "parent_node": "skybluetech:craft_thermal_generator",
     "title": "万能充",
     "unfinished_icon": "textures/icon/charger_icon",
-    "finished_icon": "textures/icon/charger_icons",
+    "finished_icon": "textures/icon/charger_icon",
     "goal_details": {
         "item_dict": {
             "newItemName": "skybluetech:charger"

@@ -775,7 +775,13 @@
         ],
         "$title_text": "机件加工台",
         "$has_tabs": false,
-        "$has_upgrades": false,
+        "$has_upgrades": true,
+        "$drawer_ref": "SkybluePanelLib.upgrade_drawer_single",
+        "$drawer_offset": [
+            -32,
+            10
+        ],
+        "$upgrade_slot0": 12,
         "$show_led": false
     },
     "namespace": "MachineryWorkstationUI"

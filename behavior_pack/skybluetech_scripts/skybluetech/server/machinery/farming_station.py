@@ -34,9 +34,11 @@ class FarmingStation(UpgradeControl, GUIControl):
     item_output_slots = tuple(range(24))
     upgrade_slot_start = 24
     upgrade_slots = 4
-    allow_upgraders = frozenset(
-        [Upgraders.BASIC_ENERGY_UPGRADER, Upgraders.GENERIC_EXPANSION_UPGRADER]
-    )
+    allow_upgraders = frozenset({
+        Upgraders.BASIC_ENERGY_UPGRADER,
+        Upgraders.GENERIC_EXPANSION_UPGRADER,
+        Upgraders.GENERIC_AUTO_EJECTION,
+    })
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(FarmingStation, self).__init__(dim, x, y, z, block_entity_data)

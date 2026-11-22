@@ -2283,6 +2283,44 @@
         "keep_ratio": false,
         "fill": true
     },
+    "upgrade_drawer_single": {
+        "type": "image",
+        "texture": "textures/ui/dialog_background_opaque",
+        "nineslice_size": 4,
+        "size": [
+            35,
+            32
+        ],
+        "controls": [
+            {
+                "slot0": {
+                    "type": "stack_panel",
+                    "anchor_from": "top_left",
+                    "anchor_to": "top_left",
+                    "offset": [
+                        10,
+                        7
+                    ],
+                    "size": [
+                        18,
+                        18
+                    ],
+                    "layer": 2,
+                    "collection_name": "netease_container",
+                    "controls": [
+                        {
+                            "slot@netease_container.custom_grid_item": {
+                                "$cell_overlay_ref|default": "SkybluePanelLib.upgrade_slot_img",
+                                "collection_index": "$upgrade_slot0"
+                            }
+                        }
+                    ]
+                }
+            }
+        ],
+        "keep_ratio": false,
+        "fill": true
+    },
     "upgrade_drawer_left": {
         "type": "image",
         "texture": "textures/ui/dialog_background_opaque",

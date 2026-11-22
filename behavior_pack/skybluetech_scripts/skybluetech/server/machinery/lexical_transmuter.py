@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.define.item import Item
 
 from .basic.item_container import ItemContainer
 from ...common.define import flags
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from .basic import (
     GUIControl,
     UpgradeControl,
@@ -50,6 +50,7 @@ class LexicalTransmuter(UpgradeControl, GUIControl):
     item_output_slots = (1,)
     template_slot = 2
     upgrade_slot_start = 3
+    allow_upgraders = frozenset({Upgraders.GENERIC_AUTO_EJECTION})
     is_non_energy_machine = True
 
     def __init__(self, dim, x, y, z, block_entity_data):

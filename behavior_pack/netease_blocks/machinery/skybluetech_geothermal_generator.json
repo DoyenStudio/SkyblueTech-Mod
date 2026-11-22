@@ -33,14 +33,14 @@
                 "value": true
             },
             "netease:block_container": {
-                "container_size": 1,
+                "container_size": 2,
                 "custom_description": "地热发电机",
                 "screen_name": "GeoThermalGeneratorUI.main",
                 "hopper": {
                     "input": false,
                     "output": true,
                     "output_slot": [
-                        1
+                        0
                     ]
                 }
             },

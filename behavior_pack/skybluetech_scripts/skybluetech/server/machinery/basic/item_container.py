@@ -239,10 +239,10 @@ class ItemContainer(BaseMachine):
             Item: 剩余物品, 当没有剩余物时返回 None
         """
         for slot in self.item_output_slots:
-            slotitem = self.GetSlotItem(slot, get_user_data=False)
+            slotitem = self.GetSlotItem(slot)
             if slotitem is None:
-                self.SetSlotItem(slot, item)
-                return None
+                if self.SetSlotItem(slot, item):
+                    return None
             elif slotitem.StackFull():
                 continue
             elif slotitem.CanMerge(item):
@@ -250,8 +250,8 @@ class ItemContainer(BaseMachine):
                     item.GetBasicInfo().maxStackSize - slotitem.count, item.count
                 )
                 slotitem.count += require_count
-                item.count -= require_count
-                self.SetSlotItem(slot, slotitem)
-                if item.count == 0:
-                    return None
+                if self.SetSlotItem(slot, slotitem):
+                    item.count -= require_count
+                    if item.count == 0:
+                        return None
         return item

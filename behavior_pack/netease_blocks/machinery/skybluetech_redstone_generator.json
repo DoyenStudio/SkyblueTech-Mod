@@ -9,7 +9,7 @@
                 "identifier": "minecraft:geometry.full_block"
             },
             "netease:block_container": {
-                "container_size": 2,
+                "container_size": 3,
                 "custom_description": "红石发电机",
                 "hopper": {
                     "input": true,

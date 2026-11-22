@@ -22,10 +22,10 @@ from ...common.machinery_def.geothermal_generator import (
 from .basic import (
     BaseGenerator,
     GUIControl,
-    ItemContainer,
     MultiFluidContainer,
     WorkRenderer,
 )
+from .basic.upgrade_control import ItemUpgradeControl
 from .core import RegisterMachine
 
 
@@ -33,7 +33,7 @@ from .core import RegisterMachine
 class GeoThermalGenerator(
     WorkRenderer,
     MultiFluidContainer,
-    ItemContainer,
+    ItemUpgradeControl,
     GUIControl,
     BaseGenerator,
 ):
@@ -44,6 +44,7 @@ class GeoThermalGenerator(
     fluid_io_fix_mode = 0
     fluid_slot_max_volumes = {0: MAX_LAVA_VOLUME, 1: MAX_WATER_VOLUME}
     item_output_slots = (0,)
+    upgrade_slot_start = 1
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(GeoThermalGenerator, self).__init__(dim, x, y, z, block_entity_data)

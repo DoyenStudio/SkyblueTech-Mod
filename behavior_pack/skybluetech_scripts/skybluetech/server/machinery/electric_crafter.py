@@ -35,6 +35,7 @@ class ElectricCrafter(UpgradeControl, GUIControl):
     allow_upgraders = frozenset({
         Upgraders.BASIC_SPEED_UPGRADER,
         Upgraders.BASIC_ENERGY_UPGRADER,
+        Upgraders.GENERIC_AUTO_EJECTION,
     })
 
     def __init__(self, dim, x, y, z, block_entity_data):

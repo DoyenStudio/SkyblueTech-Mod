@@ -2,8 +2,8 @@
 
 
 def move_item(source, source_slot, target, target_slots, validate_input=False):
-    """转移已成功写入的数量；源槽写入失败时撤回目标写入。"""
-    changed = False
+    """返回成功转入物品的目标槽；源槽写入失败时撤回目标写入。"""
+    changed_slots = []
     for target_slot in target_slots:
         item = source.GetSlotItem(source_slot)
         if item is None or item.count <= 0:
@@ -27,8 +27,8 @@ def move_item(source, source_slot, target, target_slots, validate_input=False):
             if not target.SetSlotItem(target_slot, previous):
                 raise RuntimeError("Specialized growth item transfer rollback failed")
             break
-        changed = True
-    return changed
+        changed_slots.append(target_slot)
+    return changed_slots
 
 
 def move_fluid(source, source_slot, target, target_slot, events, validate_input=False):

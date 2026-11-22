@@ -44,7 +44,9 @@
         ],
         "$title_text": "物品输出口",
         "$has_tabs": false,
-        "$has_upgrades": false,
+        "$has_upgrades": true,
+        "$drawer_ref": "SkybluePanelLib.upgrade_drawer_single",
+        "$upgrade_slot0": 5,
         "$show_led": false
     },
     "namespace": "ItemOutputInterfaceUI"

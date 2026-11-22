@@ -3,17 +3,19 @@ from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 
 from ...common.define.id_enum import Machinery
 from ...common.machinery_def.specialized_growth_base import FLUID_SLOT_MAX_VOLUMES
-from .basic import GUIControl, ItemContainer, MultiFluidContainer
+from .basic import GUIControl, MultiFluidContainer
+from .basic.upgrade_control import ItemUpgradeControl
 from .core import RegisterMachine
 from .core.pool import GetLoadedMachine
 
 
 @RegisterMachine
-class SpecializedGrowthBase(GUIControl, MultiFluidContainer, ItemContainer):
+class SpecializedGrowthBase(GUIControl, MultiFluidContainer, ItemUpgradeControl):
     block_name = Machinery.SPECIALIZED_GROWTH_BASE
     is_non_energy_machine = True
     item_input_slots = (0,)
     item_output_slots = (1, 2, 3, 4)
+    upgrade_slot_start = 5
     fluid_input_slots = (0,)
     fluid_output_slots = (1,)
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES

@@ -6,7 +6,8 @@ from ...common.machinery_def.heat_melting_chamber import (
     CHAMBER_HEAT_CAPACITY, OUTPUT_MAX_VOLUME, K_PROGRESS, K_RECIPE_INPUT,
     K_SPEED, K_DURATION, K_OVERHEATED, recipes,
 )
-from .basic import GUIControl, HeatCtrl, ItemContainer, MultiFluidContainer
+from .basic import GUIControl, HeatCtrl, MultiFluidContainer
+from .basic.upgrade_control import ItemUpgradeControl
 from .core import RegisterMachine
 from .utils.production import MachineRecipeCanOutput, OutputRecipe
 
@@ -15,7 +16,7 @@ IDLE_FLAGS = (flags.DEACTIVE_FLAG_NO_INPUT, flags.DEACTIVE_FLAG_NO_RECIPE,
 
 
 @RegisterMachine
-class HeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCtrl):
+class HeatMeltingChamber(ItemUpgradeControl, GUIControl, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.HEAT_MELTING_CHAMBER
     heat_faces_follow_rotation = False
     heat_input_faces = (RelFacEnum.DOWN,)
@@ -23,6 +24,7 @@ class HeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCtr
     heat_capacity = CHAMBER_HEAT_CAPACITY
     item_input_slots = (0,)
     item_output_slots = (1,)
+    upgrade_slot_start = 2
     fluid_io_mode = (1, 1, 1, 1, 1, 1)
     fluid_input_slots = ()
     fluid_output_slots = (0,)
@@ -35,6 +37,8 @@ class HeatMeltingChamber(ItemContainer, GUIControl, MultiFluidContainer, HeatCtr
         self.handler.SubscribeOnTicking(self._on_melting_tick)
 
     def IsValidInput(self, slot, item):
+        if self.InUpgradeSlot(slot):
+            return ItemUpgradeControl.IsValidInput(self, slot, item)
         return slot == 0 and any(r.input_item_id == item.id for r in recipes)
 
     def _on_melting_tick(self):

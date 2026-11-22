@@ -41,7 +41,7 @@
                 "tick": true
             },
             "netease:block_container": {
-                "container_size": 2,
+                "container_size": 3,
                 "custom_description": "skybluetech:tank_platinum",
                 "screen_name": "GeneralTankUI.main"
             },

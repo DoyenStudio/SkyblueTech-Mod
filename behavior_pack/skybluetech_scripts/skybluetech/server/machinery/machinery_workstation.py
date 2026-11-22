@@ -27,9 +27,9 @@ from .utils.bans import is_machine_banned
 from .basic import (
     BaseMachine,
     GUIControl,
-    ItemContainer,
     OperationListener,
 )
+from .basic.upgrade_control import ItemUpgradeControl
 from .core import RegisterMachine
 
 K_CRAFT_TIMES = "craft_times"
@@ -37,10 +37,11 @@ ItemPosType = GetMinecraftEnum().ItemPosType
 
 
 @RegisterMachine
-class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
+class MachineryWorkstation(OperationListener, ItemUpgradeControl, GUIControl):
     block_name = Machinery.MACHINERY_WORKSTATION
     item_input_slots = (0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10)
     item_output_slots = (11,)
+    upgrade_slot_start = 12
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(MachineryWorkstation, self).__init__(dim, x, y, z, block_entity_data)
@@ -196,10 +197,11 @@ class MachineryWorkstation(OperationListener, ItemContainer, GUIControl):
                 slotitem.count -= input.count
                 self.SetSlotItem(slot, slotitem)
             if output_slot_item is None:
-                self.SetSlotItem(11, Item(recipe.output_item_id))
+                output_slot_item = Item(recipe.output_item_id)
             else:
                 output_slot_item.count += 1
-                self.SetSlotItem(11, output_slot_item)
+            if self.SetSlotItem(11, output_slot_item):
+                self.FlushOutputSlots(self.item_output_slots)
         sound = [
             "random.anvil_use",
             "block.barrel.open",

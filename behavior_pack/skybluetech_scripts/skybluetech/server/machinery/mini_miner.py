@@ -6,7 +6,7 @@ from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.events.server import BlockNeighborChangedServerEvent
 
 from ...common.define import flags
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.machinery_def.mini_miner import (
     BLOCK_CAN_MINE,
     K_DIGGING_POS,
@@ -46,6 +46,7 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
     item_output_slots = (0, 1, 2, 3, 4, 5, 6, 7)
     running_power = 200
     upgrade_slot_start = 8
+    allow_upgraders = frozenset({Upgraders.GENERIC_AUTO_EJECTION})
     origin_process_ticks = 20
 
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -82,9 +83,12 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
         TCON.neighbor_block_changed(self, event)
 
     def _mini_miner_on_slot_update(self, slot):
-        if self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL):
-            if self.OutputItem(Item("minecraft:air")) is None:
-                self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+        if (
+            slot in self.item_output_slots
+            and self.HasDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+            and self._has_empty_output_slot()
+        ):
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
 
     def _mini_miner_on_fluid_slot_update(self, slot, is_final):
         if self.fluids[0].fluid_id != USE_FLUID or self.fluids[0].volume < VOLUME_COST_ONCE:
@@ -133,8 +137,14 @@ class MiniMiner(UpgradeControl, GUIControl, MultiFluidContainer):
     def init_flags(self):
         if self.fluids[0].fluid_id != USE_FLUID or self.fluids[0].volume < VOLUME_COST_ONCE:
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_NO_INPUT)
-        if self.OutputItem(Item("minecraft:air")):
+        if not self._has_empty_output_slot():
             self.SetDeactiveFlag(flags.DEACTIVE_FLAG_OUTPUT_FULL)
+
+    def _has_empty_output_slot(self):
+        return any(
+            self.GetSlotItem(slot, get_user_data=False) is None
+            for slot in self.item_output_slots
+        )
 
     def init_mining_area(self):
         x_offset = -self.size_x // 2

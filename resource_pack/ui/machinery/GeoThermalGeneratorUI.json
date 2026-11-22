@@ -167,7 +167,9 @@
         ],
         "$title_text": "地热发电机",
         "$has_tabs": true,
-        "$has_upgrades": false,
+        "$has_upgrades": true,
+        "$drawer_ref": "SkybluePanelLib.upgrade_drawer_single",
+        "$upgrade_slot0": 1,
         "$show_led": true
     },
     "namespace": "GeoThermalGeneratorUI"

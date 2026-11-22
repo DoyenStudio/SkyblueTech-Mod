@@ -106,20 +106,20 @@ def OutputRecipe(machine, recipe):
     from ..basic import (
         ItemContainer,
         MultiFluidContainer,
-        UpgradeControl,
     )
+    from ..basic.upgrade_control import ItemUpgradeControl
 
+    written_slots = []
     if isinstance(machine, ItemContainer):
         output_items = (recipe.GetMachineOutputs() or {}).get(CategoryType.ITEM, {})
         for slot, output in output_items.items():
             machine_slot = machine.GetSlotItem(slot, get_user_data=True)
             if machine_slot is None:
-                machine.SetSlotItem(slot, Item(output.id, count=int(output.count)))
+                machine_slot = Item(output.id, count=int(output.count))
             else:
                 machine_slot.count += int(output.count)
-                machine.SetSlotItem(slot, machine_slot)
-        if isinstance(machine, UpgradeControl):
-            machine.FlushOutputSlots(list(output_items.keys()))
+            if machine.SetSlotItem(slot, machine_slot):
+                written_slots.append(slot)
     if isinstance(machine, MultiFluidContainer):
         output_fluids = (recipe.GetMachineOutputs() or {}).get(CategoryType.FLUID, {})
         slots_and_fluids = sorted(output_fluids.items())
@@ -129,6 +129,8 @@ def OutputRecipe(machine, recipe):
                 machine.OutputFluid(fluid.id, fluid.count, slot, is_final=True)
             else:
                 machine.OutputFluid(fluid.id, fluid.count, slot, is_final=False)
+    if written_slots and isinstance(machine, ItemUpgradeControl):
+        machine.FlushOutputSlots(written_slots)
 
 
 def FlushRecipeStat(recipe, machine):

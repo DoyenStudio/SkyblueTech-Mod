@@ -26,7 +26,7 @@
                 }
             },
             "netease:block_container": {
-                "container_size": 8,
+                "container_size": 12,
                 "custom_description": "迷你采矿机",
                 "screen_name": "MiniMinerUI.main"
             },

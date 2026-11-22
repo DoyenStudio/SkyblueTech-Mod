@@ -20,39 +20,29 @@ from .base_machine import BaseMachine
 from .sp_control import SPControl
 
 
-class UpgradeControl(SPControl, ItemContainer):
+class ItemUpgradeControl(ItemContainer):
     """
     代表可接受升级卡的机器基类。
-
-    派生自:
-        `ItemContainer`
-        `SPControl`
 
     类属性:
         upgrade_slot_start (int): 升级槽起始槽位
         upgrade_slots (int): 升级槽数量
         allow_upgraders (frozenset[str]): 可接受的机器升级卡ID。
 
-    覆写:
-        - `__init__`
-        - `IsValidInput`
-        - `OnCustomCotainerPutItem`
-        - `OnSlotUpdate`
-        - `AddPower`
-        - `SetDeactiveFlag`
     """
 
     upgrade_slot_start = 2  # type: int
-    upgrade_slots = 4  # type: int
-    allow_upgraders = frozenset()  # type: set[str] | frozenset[str]
+    upgrade_slots = 1  # type: int
+    allow_upgraders = frozenset({Upgraders.GENERIC_AUTO_EJECTION})  # type: set[str] | frozenset[str]
 
     def __init__(self, dim, x, y, z, block_entity_data):
-        super(UpgradeControl, self).__init__(dim, x, y, z, block_entity_data)
-        self._basic_max_rf_store = self.store_rf_max
-        self._power_cost_relative = 1.0
-        self.UpdateUpgraders(self.GetAllUpgraders())
+        super(ItemUpgradeControl, self).__init__(dim, x, y, z, block_entity_data)
+        self._load_upgraders()
         self.handler.SubscribeOnCustomCotainerPutItem(self._upgrade_control_on_custom_cotainer_put_item)
         self.handler.SubscribeOnSlotUpdate(self._upgrade_control_on_slot_update)
+
+    def _load_upgraders(self):
+        self.UpdateUpgraders(self.GetAllUpgraders())
 
     def InUpgradeSlot(self, slot):
         # type: (int) -> bool
@@ -90,36 +80,10 @@ class UpgradeControl(SPControl, ItemContainer):
             event.cancel()
             return
 
-    def ReducePower(self, rf=None, bypass_upgraders=False):
-        # type: (int | None, bool) -> None
-        "PowerControl 方法, 由 UpgradeControl 覆写"
-        if rf is None:
-            rf = self.running_power
-        if not bypass_upgraders:
-            rf = round(rf * self._power_cost_relative)
-        BaseMachine.ReducePower(self, rf)
-
-    def PowerEnough(self):
-        # type: () -> bool
-        """
-        PowerControl 方法, 由 UpgradeControl 覆写
-
-        如果能量不足时先尝试向电网索取能源, 后自动将 flag 设置为缺少能源
-        """
-        res = self.store_rf >= round(self.running_power * self._power_cost_relative)
-        if res:
-            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
-        else:
-            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
-        return res
-
     def _upgrade_control_on_slot_update(self, slot):
         # type: (int) -> None
         "超类方法更新升级槽数据。"
-        if (
-            slot < self.upgrade_slot_start
-            or slot >= self.upgrade_slot_start + self.upgrade_slots
-        ):
+        if not self.InUpgradeSlot(slot):
             return
         # 如果一次性放入多个升级，多余升级变成掉落物，只保留一个
         item = self.GetSlotItem(slot)
@@ -134,7 +98,10 @@ class UpgradeControl(SPControl, ItemContainer):
             )
             item.count = 1
             self.SetSlotItem(slot, item)
+        had_auto_ejection = self.HasUpgrader(Upgraders.GENERIC_AUTO_EJECTION)
         self.UpdateUpgraders(self.GetAllUpgraders())
+        if not had_auto_ejection:
+            self.FlushOutputSlots(self.item_output_slots)
 
     def GetAllUpgraders(self):
         # type: () -> dict[str, int]
@@ -155,33 +122,22 @@ class UpgradeControl(SPControl, ItemContainer):
         return res
 
     def FlushOutputSlots(self, slots):
-        # type: (list[int]) -> None
+        # type: (list[int] | tuple[int, ...]) -> bool
         if self.HasUpgrader(Upgraders.GENERIC_AUTO_EJECTION):
-            self._auto_eject_item(slots)
+            return self._auto_eject_item(slots)
+        return False
 
     def OutputItem(self, item):
         # type: (Item) -> Item | None
         rest = ItemContainer.OutputItem(self, item)
-        self.FlushOutputSlots(list(self.item_output_slots))
+        if self.FlushOutputSlots(self.item_output_slots) and rest is not None:
+            rest = ItemContainer.OutputItem(self, rest)
+            self.FlushOutputSlots(self.item_output_slots)
         return rest
 
     def UpdateUpgraders(self, upgraders):
         # type: (dict[str, int]) -> None
-        "超类方法更新基本的速度和能量升级处理。超类方法作进一步处理"
         self._upgraders = upgraders
-        speed_pos = 1.0
-        speed_neg = 1.0
-        power_pos = 1.0
-        power_neg = 1.0
-        for upgrader, count in upgraders.items():
-            # speed
-            speed_pos += SPEED_POSITIVE.get(upgrader, 0) * count
-            speed_neg += SPEED_NEGATIVE.get(upgrader, 0) * count
-            # power
-            power_pos += POWER_POSITIVE.get(upgrader, 0) * count
-            power_neg += POWER_NEGATIVE.get(upgrader, 0) * count
-        self.SetSpeedRelative(speed_pos / speed_neg)
-        self._power_cost_relative = power_pos / power_neg
 
     def HasUpgrader(self, item_id):
         # type: (str) -> bool
@@ -209,12 +165,13 @@ class UpgradeControl(SPControl, ItemContainer):
 
 
     def _auto_eject_item(self, slots):
-        # type: (list[int]) -> None
+        # type: (list[int] | tuple[int, ...]) -> bool
         """尝试把指定输出槽中的物品送入六面相邻容器。"""
         from ...transmitters.item_pipe.logic import PushItemToGenericContainerEasy
 
+        cleared_space = False
         for slot in slots:
-            if slot not in self.item_output_slots:
+            if slot not in self.item_output_slots or self.InUpgradeSlot(slot):
                 continue
             item = self.GetSlotItem(slot, get_user_data=True)
             if item is None:
@@ -229,7 +186,51 @@ class UpgradeControl(SPControl, ItemContainer):
                 )
                 if rest is None:
                     break
-            if rest is None:
-                ItemContainer.SetSlotItem(self, slot, None)
-            elif rest.count != item.count:
-                ItemContainer.SetSlotItem(self, slot, rest)
+            if rest is None or rest.count < item.count:
+                if self.SetSlotItem(slot, rest):
+                    cleared_space = True
+        return cleared_space
+
+
+class UpgradeControl(ItemUpgradeControl, SPControl):
+    """提供速度和能耗升级的机器基类。"""
+
+    upgrade_slots = 4
+    allow_upgraders = frozenset()
+
+    def _load_upgraders(self):
+        self._basic_max_rf_store = self.store_rf_max
+        self._power_cost_relative = 1.0
+        super(UpgradeControl, self)._load_upgraders()
+
+    def ReducePower(self, rf=None, bypass_upgraders=False):
+        # type: (int | None, bool) -> None
+        if rf is None:
+            rf = self.running_power
+        if not bypass_upgraders:
+            rf = round(rf * self._power_cost_relative)
+        BaseMachine.ReducePower(self, rf)
+
+    def PowerEnough(self):
+        # type: () -> bool
+        res = self.store_rf >= round(self.running_power * self._power_cost_relative)
+        if res:
+            self.UnsetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
+        else:
+            self.SetDeactiveFlag(flags.DEACTIVE_FLAG_POWER_LACK)
+        return res
+
+    def UpdateUpgraders(self, upgraders):
+        # type: (dict[str, int]) -> None
+        super(UpgradeControl, self).UpdateUpgraders(upgraders)
+        speed_pos = 1.0
+        speed_neg = 1.0
+        power_pos = 1.0
+        power_neg = 1.0
+        for upgrader, count in upgraders.items():
+            speed_pos += SPEED_POSITIVE.get(upgrader, 0) * count
+            speed_neg += SPEED_NEGATIVE.get(upgrader, 0) * count
+            power_pos += POWER_POSITIVE.get(upgrader, 0) * count
+            power_neg += POWER_NEGATIVE.get(upgrader, 0) * count
+        self.SetSpeedRelative(speed_pos / speed_neg)
+        self._power_cost_relative = power_pos / power_neg

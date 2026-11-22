@@ -3,7 +3,7 @@ from skybluetech_scripts.tooldelta.define import Item
 
 from .basic.item_container import ItemContainer
 from ...common.define import flags
-from ...common.define.id_enum import Machinery
+from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.charger import (
     ChargeItemModelRequest,
     ChargerItemModelUpdate,
@@ -52,7 +52,7 @@ class Charger(Processor, OperationListener):
     """
 
     block_name = Machinery.CHARGER
-    allow_upgraders = frozenset()
+    allow_upgraders = frozenset({Upgraders.GENERIC_AUTO_EJECTION})
     item_input_slots = (0,)
     item_output_slots = (1,)
     upgrade_slot_start = 2

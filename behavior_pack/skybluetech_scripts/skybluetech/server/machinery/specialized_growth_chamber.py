@@ -84,11 +84,11 @@ class SpecializedGrowthChamber(Processor, MultiFluidContainer):
         self._exchange_running = True
         self._applying_recipe = True
         fluid_events = []
-        changed = False
         try:
-            changed = move_item(self, 3, base, base.item_output_slots) or changed
+            output_slots = move_item(self, 3, base, base.item_output_slots)
+            changed = bool(output_slots)
             changed = move_fluid(self, 1, base, 1, fluid_events) or changed
-            changed = move_item(base, 0, self, (0,), validate_input=True) or changed
+            changed = bool(move_item(base, 0, self, (0,), validate_input=True)) or changed
             changed = move_fluid(base, 0, self, 0, fluid_events, validate_input=True) or changed
             # 流体事件同步触发；双方库存一致后再通知，禁止中途选方或递归搬运。
             for machine, added, slot, fluid_id, amount in fluid_events:
@@ -96,6 +96,8 @@ class SpecializedGrowthChamber(Processor, MultiFluidContainer):
                     machine._on_added_fluid(slot, fluid_id, amount, True)
                 else:
                     machine._on_reduced_fluid(slot, fluid_id, amount, True)
+            if output_slots:
+                base.FlushOutputSlots(output_slots)
         finally:
             self._applying_recipe = False
             self._exchange_running = False

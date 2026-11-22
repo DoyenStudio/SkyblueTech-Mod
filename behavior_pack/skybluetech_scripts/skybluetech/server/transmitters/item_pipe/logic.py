@@ -117,11 +117,11 @@ def _broadcast_pull_out(dim, pos, slot, item, block_name):
 
 
 def _set_slot_item(dim, pos, slot, item):
-    # type: (int, PosData, int, Item | None) -> None
+    # type: (int, PosData, int, Item | None) -> bool
     "写入槽位; 物品为空或数量为 0 时清空该槽位。"
     if item is None or item.count <= 0:
         item = Item("minecraft:air", count=0)
-    CF.CreateItem(LEVEL_ID).SpawnItemToContainer(item.marshal(), slot, pos, dim)
+    return CF.CreateItem(LEVEL_ID).SpawnItemToContainer(item.marshal(), slot, pos, dim)
 
 
 def _calc_move_count(source_item, target_item):
@@ -196,12 +196,10 @@ def _push_item_to_container(dim, xyz, face, item, limit_count=None):
         piece.count = move_count
         if not _broadcast_push_in(dim, xyz, slot_pos, piece, block_name):
             continue
-        if orig_item is None:
-            _set_slot_item(dim, xyz, slot_pos, piece)
-        else:
+        if orig_item is not None:
             orig_item.count += move_count
-            _set_slot_item(dim, xyz, slot_pos, orig_item)
-        rest.count -= move_count
+        if _set_slot_item(dim, xyz, slot_pos, orig_item or piece):
+            rest.count -= move_count
     if rest.count <= 0 and overflow_count <= 0:
         return None
     rest.count += overflow_count

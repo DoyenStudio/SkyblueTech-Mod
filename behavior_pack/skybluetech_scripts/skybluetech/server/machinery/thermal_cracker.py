@@ -10,8 +10,9 @@ from skybluetech_scripts.skybluetech.common.machinery_def.thermal_cracker import
 from skybluetech_scripts.skybluetech.common.machinery_def.basic.multi_fluid_container import FLUID_VOLUME_EPSILON
 from skybluetech_scripts.skybluetech.common.mini_jei.core import CategoryType
 from skybluetech_scripts.skybluetech.common.mini_jei.machinery.thermal_cracker import ThermalCrackerRecipe
-from skybluetech_scripts.skybluetech.server.machinery.basic import GUIControl, HeatCtrl, ItemContainer, MultiFluidContainer
+from skybluetech_scripts.skybluetech.server.machinery.basic import GUIControl, HeatCtrl, MultiFluidContainer
 from skybluetech_scripts.skybluetech.server.machinery.basic.fluid_output_faces import FluidOutputFaces
+from skybluetech_scripts.skybluetech.server.machinery.basic.upgrade_control import ItemUpgradeControl
 from skybluetech_scripts.skybluetech.server.machinery.basic.work_renderer import WorkRenderer
 from skybluetech_scripts.skybluetech.server.machinery.core import RegisterMachine
 from skybluetech_scripts.tooldelta.define import Item
@@ -28,13 +29,14 @@ _WORK_UNITS_PER_TICK = 256
 
 
 @RegisterMachine
-class ThermalCracker(FluidOutputFaces, WorkRenderer, GUIControl, ItemContainer, MultiFluidContainer, HeatCtrl):
+class ThermalCracker(FluidOutputFaces, WorkRenderer, GUIControl, ItemUpgradeControl, MultiFluidContainer, HeatCtrl):
     block_name = Machinery.THERMAL_CRACKER
     heat_input_faces = (RelFacEnum.DOWN,)
     is_non_energy_machine = True
     heat_capacity = CHAMBER_HEAT_CAPACITY
     item_input_slots = (0,)
     item_output_slots = (1,)
+    upgrade_slot_start = 2
     fluid_input_slots = (0, 1)
     fluid_output_slots = (2, 3)
     fluid_slot_max_volumes = FLUID_SLOT_MAX_VOLUMES
@@ -52,6 +54,8 @@ class ThermalCracker(FluidOutputFaces, WorkRenderer, GUIControl, ItemContainer, 
         self.handler.SubscribeOnTicking(self._cracker_on_tick)
 
     def IsValidInput(self, slot, item):
+        if self.InUpgradeSlot(slot):
+            return ItemUpgradeControl.IsValidInput(self, slot, item)
         return slot == 0 and any(
             recipe.recipe_id and recipe.inputs[CategoryType.ITEM][0].match_item_id(item.id, item.newAuxValue)
             for recipe in recipes
@@ -175,6 +179,7 @@ class ThermalCracker(FluidOutputFaces, WorkRenderer, GUIControl, ItemContainer, 
         self._set_batch_work(0, total)
         for slot, (fluid_id, volume) in enumerate(recipe.output_fluids, 2):
             self._on_added_fluid(slot, fluid_id, volume, slot == 1 + len(recipe.output_fluids))
+        self.FlushOutputSlots(self.item_output_slots)
         return 0
 
     def _commit_recipe(self, recipe):

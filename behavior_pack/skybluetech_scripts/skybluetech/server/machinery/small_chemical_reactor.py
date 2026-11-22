@@ -1,5 +1,5 @@
 # coding=utf-8
-from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
+from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery, Upgraders
 from skybluetech_scripts.skybluetech.common.machinery_def.small_chemical_reactor import (
     STORE_RF_MAX, FLUID_SLOT_MAX_VOLUMES, recipes,
 )
@@ -22,5 +22,5 @@ class SmallChemicalReactor(FluidOutputFaces, Processor, MultiFluidContainer):
     item_input_slots = (0, 2)
     item_output_slots = (1,)
     upgrade_slot_start = 3
-    upgrade_slots = 0
-    allow_upgraders = frozenset()
+    upgrade_slots = 1
+    allow_upgraders = frozenset((Upgraders.GENERIC_AUTO_EJECTION,))

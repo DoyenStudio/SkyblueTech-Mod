@@ -8,9 +8,9 @@ from ...common.machinery_def.hydroponic_base import (
 from .basic import (
     BaseMachine,
     GUIControl,
-    ItemContainer,
     MultiFluidContainer,
 )
+from .basic.upgrade_control import ItemUpgradeControl
 from .core import RegisterMachine
 
 K_GROW_STAGE = "grow_stage"
@@ -20,11 +20,12 @@ POWER_COST = 4
 
 
 @RegisterMachine
-class HydroponicBase(GUIControl, MultiFluidContainer, ItemContainer):
+class HydroponicBase(GUIControl, MultiFluidContainer, ItemUpgradeControl):
     block_name = Machinery.HYDROPONIC_BASE
     is_non_energy_machine = True
     item_input_slots = ()
     item_output_slots = tuple(range(16))
+    upgrade_slot_start = 16
     fluid_input_slots = (0, 1)
     fluid_io_mode = (0, 0, 0, 0, 0, 0)
     fluid_slot_max_volumes = {0: FLUID_0_MAX_VOLUME, 1: FLUID_1_MAX_VOLUME}

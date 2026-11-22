@@ -26,7 +26,7 @@
                 "value": true
             },
             "netease:block_container": {
-                "container_size": 12,
+                "container_size": 13,
                 "custom_description": "机件加工台",
                 "screen_name": "MachineryWorkstationUI.main"
             },

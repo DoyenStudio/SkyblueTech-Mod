@@ -6,7 +6,7 @@ from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_OU
 from skybluetech_scripts.skybluetech.common.machinery_def import high_temp_electrolyzer as definition
 from skybluetech_scripts.skybluetech.common.machinery_def.basic import FluidSlotClient, K_HEAT_VALUE, K_PROGRESS, K_STORE_RF
 from skybluetech_scripts.skybluetech.client.ui.machinery_extra_pages import (
-    FluidOutputSettingsPage, FluidPipeSettingsPage, ItemPipeSettingsPage,
+    FluidPipeSettingsPage, ItemPipeSettingsPage,
 )
 from skybluetech_scripts.skybluetech.client.ui.recipe_checker import AsRecipeCheckerBtn
 from skybluetech_scripts.skybluetech.client.ui.machinery.define_ex import MAIN_PATH, MachinePanelUIProxyEx
@@ -15,8 +15,7 @@ from skybluetech_scripts.skybluetech.client.ui.machinery.utils import FluidDispl
 
 @RegistToolDeltaScreen("HighTempElectrolyzerUI.main", is_proxy=True)
 class HighTempElectrolyzerUI(MachinePanelUIProxyEx):
-    available_extra_pages = (ItemPipeSettingsPage, FluidPipeSettingsPage, FluidOutputSettingsPage)
-    fluid_output_slot_paths = {1: "fluid1"}
+    available_extra_pages = (ItemPipeSettingsPage, FluidPipeSettingsPage)
     STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_out_", "ring_tout_")}
 
     def OnCreate(self):

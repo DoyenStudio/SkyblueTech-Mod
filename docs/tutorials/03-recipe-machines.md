@@ -344,7 +344,7 @@ tile.stdb:fuel_generator.name=示例燃料发电机
 
 ## 可配置的流体输出面
 
-主模组的电解机、小型化学反应釜与高热流体离心机使用通用的 `FluidOutputSettingsPage`。主页面隐藏前，
+主模组的电解机、工业离心机、高热流体离心机与热裂解机使用通用的 `FluidOutputSettingsPage`。主页面隐藏前，
 `MachinePanelUIProxyEx` 调用副页的 `CaptureMainLayout` 缓存槽位相对位置与尺寸；副页按缓存生成
 半透明的输出槽按钮，按顺序使用六色调色板，标签显示允许输出的机器相对面。点击按钮后，在弹窗中
 勾选多个面并保存；全部关闭表示禁止管道抽取该槽，取消不提交。

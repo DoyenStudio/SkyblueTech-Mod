@@ -168,8 +168,15 @@ recipes = RecipesCollection(
     # chunk anchor
     MRecipe(
         {
-            1: Input("minecraft:beacon"),
-            4: Input(id_enum.HEAVY_STEEL_MACHINE_BASE),
+            0: Input("minecraft:glass"),
+            1: Input("minecraft:glass"),
+            2: Input("minecraft:glass"),
+            3: Input("minecraft:glass"),
+            4: Input(id_enum.SKYBLUE_CORE),
+            5: Input("minecraft:glass"),
+            6: Input(tag_enum.PlateTag.INVAR, is_tag=True),
+            7: Input("minecraft:nether_star"),
+            8: Input(tag_enum.PlateTag.INVAR, is_tag=True),
         },
         CHUNK_ANCHOR,
         MRecipe.LEVEL_INVAR,

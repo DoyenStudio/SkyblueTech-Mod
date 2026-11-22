@@ -5,7 +5,7 @@ from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from ...common.define.global_config import BUCKET_VOLUME
 from ...common.define.id_enum import Machinery
 from ...common.events.machinery.effluent_outfall import EffluentOutfallDischarge
-from ...common.machinery_def.effluent_outfall import classify_biome, find_recipe
+from ...common.machinery_def.effluent_outfall import EffluentOutfallRecipe, classify_biome, find_recipe
 from .basic import MultiFluidContainer
 from .core import RegisterMachine
 from .utils.transmitter_conn import TransmitterConn
@@ -14,7 +14,7 @@ from .utils.transmitter_conn import TransmitterConn
 TCON = TransmitterConn(fluid_pipe=True)
 K_BIOME = "st:outfall_biome_group"
 BUFFER = 0
-DIRECT_INLET = 1
+UNLIMITED_INLETS = (1, 2)
 MIN_WATER_BLOCKS = 27
 WATER_RECHECK_TICKS = 20
 WATER_BLOCKS = ("minecraft:water", "minecraft:flowing_water")
@@ -28,11 +28,11 @@ class EffluentOutfall(MultiFluidContainer):
     store_rf_max = 0
     energy_io_mode = (2,) * 6
     fluid_io_mode = (0,) * 6
-    fluid_input_slots = (BUFFER, DIRECT_INLET)
+    fluid_input_slots = (BUFFER,) + UNLIMITED_INLETS
     fluid_output_slots = ()
-    # 直排入口接收任意有限输入量，普通管道和事务提交均在入槽回调立即排空。
-    # 框架将 float("inf") 容量解释为创造供液槽。
-    fluid_slot_max_volumes = {BUFFER: BUCKET_VOLUME, DIRECT_INLET: sys.float_info.max}
+    # 限速槽能容纳最快配方的一秒用量。两个水槽允许同一秒内分别接收两种水。
+    # 使用有限容量，避免触发框架的创造供液槽语义。
+    fluid_slot_max_volumes = {BUFFER: 2 * BUCKET_VOLUME, 1: sys.float_info.max, 2: sys.float_info.max}
     allow_player_use_bucket_pull = False
 
     def __init__(self, dim, x, y, z, block_entity_data):
@@ -40,11 +40,10 @@ class EffluentOutfall(MultiFluidContainer):
         self._biome = self.bdata[K_BIOME]
         self._submerged = None
         self._water_recheck_ticks = 1
-        self._particle_cooldown = 0
+        self._settlement_ticks = 0
         self.handler.SubscribeOnPlaced(self._on_placed)
         self.handler.SubscribeOnNeighborChanged(self._on_neighbor_changed)
         self.handler.SubscribeOnTicking(self._on_tick)
-        self.handler.SubscribeOnAddedFluid(self._on_input)
 
     def _on_placed(self, _):
         self._refresh_water()
@@ -110,36 +109,31 @@ class EffluentOutfall(MultiFluidContainer):
         recipe = find_recipe(fluid_id, self._biome)
         if recipe is None:
             return False
-        return slot == (DIRECT_INLET if recipe.rate is None else BUFFER)
-
-    def _on_input(self, slot, fluid_id, volume, is_final):
-        if slot == DIRECT_INLET:
-            self._discharge(slot, fluid_id, volume)
+        if recipe.volume_per_second is None:
+            return slot in UNLIMITED_INLETS
+        return slot == BUFFER
 
     def _on_tick(self):
         self._water_recheck_ticks -= 1
         if not self._water_recheck_ticks:
             self._check_and_break()
-        if self._particle_cooldown:
-            self._particle_cooldown -= 1
+        self._settlement_ticks += 1
+        if self._settlement_ticks < EffluentOutfallRecipe.SETTLEMENT_TICKS:
+            return
+        self._settlement_ticks = 0
         if not self._submerged:
             return
-        # 恢复已经入槽但未完成的直排事务。
-        inlet = self.fluids[DIRECT_INLET]
-        if inlet.volume > 0 and self.IsValidFluidInput(DIRECT_INLET, inlet.fluid_id):
-            self._discharge(DIRECT_INLET, inlet.fluid_id, inlet.volume)
-        tank = self.fluids[BUFFER]
-        if tank.volume > 0:
-            recipe = find_recipe(tank.fluid_id, self._biome)
-            if recipe is not None:
-                amount = tank.volume if recipe.rate is None else min(tank.volume, recipe.rate)
-                self._discharge(BUFFER, tank.fluid_id, amount)
-
-    def _discharge(self, slot, fluid_id, volume):
-        if not self._submerged:
-            return
-        self.fluids[slot].volume -= volume
-        self._on_reduced_fluid(slot, fluid_id, volume, True)
-        if not self._particle_cooldown:
-            self._particle_cooldown = 5
+        for slot in self.fluid_input_slots:
+            tank = self.fluids[slot]
+            if tank.volume <= 0:
+                continue
+            fluid_id = tank.fluid_id
+            recipe = find_recipe(fluid_id, self._biome)
+            if recipe is None:
+                continue
+            volume = tank.volume
+            if recipe.volume_per_second is not None:
+                volume = min(volume, recipe.volume_per_second)
+            tank.volume -= volume
+            self._on_reduced_fluid(slot, fluid_id, volume, True)
             EffluentOutfallDischarge(self.dim, self.xyz, fluid_id).sendAll()

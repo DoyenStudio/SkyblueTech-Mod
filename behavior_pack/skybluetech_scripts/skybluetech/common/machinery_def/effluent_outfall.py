@@ -7,16 +7,17 @@ from ..mini_jei.machinery.effluent_outfall import EffluentOutfallRecipe
 
 recipes = RecipesCollection(
     Machinery.EFFLUENT_OUTFALL,
-    EffluentOutfallRecipe(CommonLiquid.WATER, None, "any"),
-    EffluentOutfallRecipe(CommonLiquid.DISTILLED_WATER, None, "any"),
-    EffluentOutfallRecipe(Chemical.HYDROCHLORIC_ACID, 1, "river_ocean"),
-    EffluentOutfallRecipe(Acid.SULFURIC_ACID, 1, "river_ocean"),
-    EffluentOutfallRecipe(Alkali.SODIUM_HYDROXIDE_SOLUTION, 1, "river_ocean"),
-    EffluentOutfallRecipe(CommonLiquid.PROCESS_WATER, 100, "water"),
-    EffluentOutfallRecipe(CommonLiquid.DILUTE_BRINE, 100, "river_ocean"),
-    EffluentOutfallRecipe(CommonLiquid.BRINE, 100, "river_ocean"),
-    EffluentOutfallRecipe(CommonLiquid.SATURATED_BRINE, 100, "river_ocean"),
-    EffluentOutfallRecipe(Chemical.RAW_SEAWATER, 100, "river_ocean"),
+    EffluentOutfallRecipe(CommonLiquid.WATER, biome_group="any"),
+    EffluentOutfallRecipe(CommonLiquid.DISTILLED_WATER, biome_group="any"),
+    EffluentOutfallRecipe(Chemical.HYDROCHLORIC_ACID, volume_per_second=2, biome_group="river_ocean"),
+    EffluentOutfallRecipe(Acid.SULFURIC_ACID, volume_per_second=2, biome_group="river_ocean"),
+    EffluentOutfallRecipe(Alkali.SODIUM_HYDROXIDE_SOLUTION, volume_per_second=2, biome_group="river_ocean"),
+    EffluentOutfallRecipe(Chemical.TIN_DEACID_WASTE, volume_per_second=40, biome_group="river_ocean"),
+    EffluentOutfallRecipe(CommonLiquid.PROCESS_WATER, volume_per_second=2000, biome_group="water"),
+    EffluentOutfallRecipe(CommonLiquid.DILUTE_BRINE, volume_per_second=2000, biome_group="river_ocean"),
+    EffluentOutfallRecipe(CommonLiquid.BRINE, volume_per_second=2000, biome_group="river_ocean"),
+    EffluentOutfallRecipe(CommonLiquid.SATURATED_BRINE, volume_per_second=2000, biome_group="river_ocean"),
+    EffluentOutfallRecipe(Chemical.RAW_SEAWATER, volume_per_second=2000, biome_group="river_ocean"),
 )
 
 

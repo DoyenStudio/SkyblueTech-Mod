@@ -12,6 +12,7 @@ from skybluetech_scripts.skybluetech.server.transmitters.item_pipe.logic import 
 )
 
 from .container import get_container_slots, read_slot, write_slot
+from .occupancy import ITEM_TYPE, get_belt_entities
 from .utils import get_belt_direction
 
 EXTRACT_INTERVAL_TICKS = 40
@@ -65,6 +66,11 @@ def on_extractor_belt_tick(event):
     ticks = (data[TICK_DATA_KEY] or 0) + 1
     data[TICK_DATA_KEY] = ticks % EXTRACT_INTERVAL_TICKS
     if ticks < EXTRACT_INTERVAL_TICKS:
+        return
+    if any(
+        type_id == ITEM_TYPE
+        for _, type_id in get_belt_entities(event.dimension, pos, event.blockName)
+    ):
         return
     direction = get_belt_direction(event.dimension, pos)
     if direction is None:

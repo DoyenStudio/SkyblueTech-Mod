@@ -1,5 +1,4 @@
 # coding=utf-8
-from mod.server.extraServerApi import GetMinecraftEnum
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.events.server import (
     OnEntityInsideBlockServerEvent,
@@ -8,22 +7,50 @@ from skybluetech_scripts.tooldelta.events.server import (
 from skybluetech_scripts.tooldelta.general import ServerUninitCallback
 
 from ....common.define.belt import BELTS, BELT_STATUS, OUTPUT_BELTS, BeltState
-from ....common.define.facing import CARDINAL_DIRECTION_TO_DXZ
 from ....common.define.id_enum import TransmitBelt
-from .utils import get_forward_offset
+from .item_lifetime import refresh_belt_item
+from .occupancy import EntityType, ITEM_TYPE, get_belt_entities
+from .utils import (
+    FLAT_BELT_HEIGHT,
+    INCLINE_TOP,
+    MOTION,
+    get_direction_from_states,
+    get_forward_offset,
+    get_incline_height,
+    is_in_belt_column,
+    is_in_incline_lane,
+)
 
-EntityType = GetMinecraftEnum().EntityType
 PLAYER_TYPE = EntityType.Player & EntityType.TypeMask
 
-MOTION = 0.05
 INSERTER_STOP_OFFSET = 0.25
-INCLINE_TOP = 1.1125
+OUTLET_STOP_OFFSET = 0.5 - 0.03125
 MAX_INCLINE_LIFT = 0.25
 incline_entities = {}
 
 
-def _get_direction(states):
-    return CARDINAL_DIRECTION_TO_DXZ.get(states.get("minecraft:cardinal_direction"))
+def _is_belt_occupied(dim, block_pos, block_name, entity_id):
+    return any(
+        other_id != entity_id
+        for other_id, _ in get_belt_entities(dim, block_pos, block_name, incline_entities)
+    )
+
+
+def _is_front_belt_occupied(dim, block_pos, direction, rise, entity_id):
+    x, y, z = block_pos
+    dx, dz = direction
+    next_pos = (x + dx, y + rise, z + dz)
+    next_block = CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(next_pos, dim) or {}
+    next_name = next_block.get("name")
+    return next_name in BELTS and _is_belt_occupied(dim, next_pos, next_name, entity_id)
+
+
+def _get_forward_speed(dim, block_pos, pos, direction, rise, entity_id):
+    # 让脚点停在本带末端，避免下一段提前接手。
+    remaining = OUTLET_STOP_OFFSET - get_forward_offset(block_pos, pos, direction)
+    if remaining >= MOTION or not _is_front_belt_occupied(dim, block_pos, direction, rise, entity_id):
+        return MOTION
+    return max(0, remaining)
 
 
 def _is_closed_incline_side(dim, block_pos, direction):
@@ -35,13 +62,13 @@ def _is_closed_incline_side(dim, block_pos, direction):
     next_states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(next_pos, dim) or {}
     if next_states.get(BELT_STATUS) != BeltState.DIAGONAL_UP:
         return False
-    next_direction = _get_direction(next_states)
+    next_direction = get_direction_from_states(next_states)
     return next_direction is not None and dx * next_direction[0] + dz * next_direction[1] == 0
 
 
-def _get_flat_motion(dim, block_pos, entity_pos, direction, block_name):
+def _get_flat_motion(dim, block_pos, entity_pos, direction, block_name, speed):
     dx, dz = direction
-    forward_motion = (dx * MOTION, 0, dz * MOTION)
+    forward_motion = (dx * speed, 0, dz * speed)
     if (
         get_forward_offset(block_pos, entity_pos, direction) >= 0.5 - MOTION - 1e-4
         and _is_closed_incline_side(dim, block_pos, direction)
@@ -66,37 +93,13 @@ def _get_flat_motion(dim, block_pos, entity_pos, direction, block_name):
     )
     if (
         neighbor_states.get(BELT_STATUS) == BeltState.DIAGONAL_UP
-        or _get_direction(neighbor_states) != (-dx, -dz)
+        or get_direction_from_states(neighbor_states) != (-dx, -dz)
     ):
         return forward_motion
 
     # 同时有左右输入时，按实体所在侧汇入，不能用单一转角状态选择方向。
     step = min(MOTION, abs(offset))
     return (-dx * step, 0, -dz * step)
-
-
-def _is_in_belt_column(block_pos, pos):
-    return (
-        block_pos[0] <= pos[0] < block_pos[0] + 1
-        and block_pos[2] <= pos[2] < block_pos[2] + 1
-    )
-
-
-def _is_in_incline_lane(block_pos, pos, direction, half_width):
-    if _is_in_belt_column(block_pos, pos):
-        return True
-    # 碰撞盒前缘先碰到坡脚，实体脚点此时仍在后方一格。
-    axis = 2 if direction[0] else 0
-    if not block_pos[axis] <= pos[axis] < block_pos[axis] + 1:
-        return False
-    progress = get_forward_offset(block_pos, pos, direction) + 0.5
-    return -min(half_width + 0.01, 1) <= progress <= 0
-
-
-def _get_incline_height(block_pos, pos, direction, half_width):
-    progress = get_forward_offset(block_pos, pos, direction) + 0.5
-    # 先抬高碰撞盒的前缘，避免在坡顶被上一层传送带的边缘卡住。
-    return min(INCLINE_TOP, 0.0625 + progress + half_width + MOTION)
 
 
 def _apply_motion(entity_id, type_id, motion, preserve_player_y=False):
@@ -112,28 +115,36 @@ def _apply_motion(entity_id, type_id, motion, preserve_player_y=False):
 @OnScriptTickServer.Listen()
 def _tick_incline_entities(_event):
     # 脚点升出源方块后不再触发 OnEntityInsideBlock，继续推到脚点进入上层带所在列。
-    for entity_id, (dim, block_pos, direction, half_width, type_id) in tuple(incline_entities.items()):
+    for entity_id, rider in tuple(incline_entities.items()):
+        dim, block_pos, direction, half_width, type_id = rider
         pos = CF.CreatePos(entity_id).GetFootPos()
         if not (
             pos is not None
-            and _is_in_incline_lane(block_pos, pos, direction, half_width)
-            and 0 <= pos[1] - block_pos[1] <= INCLINE_TOP + 0.125
+            and is_in_incline_lane(block_pos, pos, direction, half_width)
+            and 0 <= pos[1] - block_pos[1] <= INCLINE_TOP + FLAT_BELT_HEIGHT
             and CF.CreateDimension(entity_id).GetEntityDimensionId() == dim
         ):
             del incline_entities[entity_id]
             continue
         states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(block_pos, dim) or {}
-        if states.get(BELT_STATUS) != BeltState.DIAGONAL_UP or _get_direction(states) != direction:
+        if states.get(BELT_STATUS) != BeltState.DIAGONAL_UP or get_direction_from_states(states) != direction:
             del incline_entities[entity_id]
             continue
-        height = _get_incline_height(block_pos, pos, direction, half_width)
+        if type_id == ITEM_TYPE:
+            current_id = refresh_belt_item(entity_id, dim)
+            if current_id != entity_id:
+                del incline_entities[entity_id]
+                incline_entities[current_id] = rider
+                entity_id = current_id
+        height = get_incline_height(block_pos, pos, direction, half_width)
         # 实体各自的重力在移动阶段扣减纵向速度。
-        gravity = 0.05 if type_id == EntityType.ItemEntity else 0.09
+        gravity = 0.05 if type_id == ITEM_TYPE else 0.09
         if type_id == PLAYER_TYPE and CF.CreateFly(entity_id).IsPlayerFlying():
             gravity = 0
         lift = max(0, min(MAX_INCLINE_LIFT, block_pos[1] + height - pos[1] + gravity))
         dx, dz = direction
-        _apply_motion(entity_id, type_id, (dx * MOTION, lift, dz * MOTION))
+        speed = _get_forward_speed(dim, block_pos, pos, direction, 1, entity_id)
+        _apply_motion(entity_id, type_id, (dx * speed, lift, dz * speed))
 
 
 @OnEntityInsideBlockServerEvent.Listen()
@@ -148,25 +159,25 @@ def _on_entity_inside_belt(event):
     height = pos[1] - event.blockY
     if not 0 <= height < 1:
         return
-    in_column = _is_in_belt_column(block_pos, pos)
-    if event.blockName != TransmitBelt.BELT and (not in_column or height > 0.125):
+    in_column = is_in_belt_column(block_pos, pos)
+    if event.blockName != TransmitBelt.BELT and (not in_column or height > FLAT_BELT_HEIGHT):
         return
     dim = CF.CreateDimension(event.entityId).GetEntityDimensionId()
     riding = incline_entities.get(event.entityId)
     if riding is not None and riding[:2] == (dim, block_pos):
         return
     states = CF.CreateBlockState(LEVEL_ID).GetBlockStates(block_pos, dim) or {}
-    direction = _get_direction(states)
+    direction = get_direction_from_states(states)
     if direction is None:
         return
     is_incline = states.get(BELT_STATUS) == BeltState.DIAGONAL_UP
     if not is_incline:
         # 平带只控制脚点所在格，并把坡脚已接手的实体交给坡带。
-        if not in_column or height > 0.125:
+        if not in_column or height > FLAT_BELT_HEIGHT:
             return
         if riding is not None and riding[0] == dim:
             _, incline_pos, incline_direction, half_width, _ = riding
-            if _is_in_incline_lane(incline_pos, pos, incline_direction, half_width):
+            if is_in_incline_lane(incline_pos, pos, incline_direction, half_width):
                 return
     entity_type = CF.CreateEngineType(event.entityId).GetEngineType()
     if entity_type is None:
@@ -178,19 +189,24 @@ def _on_entity_inside_belt(event):
             return
         half_width = size[0] * 0.5
         if (
-            _is_in_incline_lane(block_pos, pos, direction, half_width)
-            and height <= _get_incline_height(block_pos, pos, direction, half_width) + 0.125
+            is_in_incline_lane(block_pos, pos, direction, half_width)
+            and height <= get_incline_height(block_pos, pos, direction, half_width) + FLAT_BELT_HEIGHT
+            and (in_column or not _is_belt_occupied(dim, block_pos, event.blockName, event.entityId))
         ):
             incline_entities[event.entityId] = (dim, block_pos, direction, half_width, type_id)
         return
 
-    motion = _get_flat_motion(dim, block_pos, pos, direction, event.blockName)
-    if event.blockName == TransmitBelt.INSERTER and type_id == EntityType.ItemEntity:
+    entity_id = event.entityId
+    if type_id == ITEM_TYPE:
+        entity_id = refresh_belt_item(entity_id, dim)
+    speed = _get_forward_speed(dim, block_pos, pos, direction, 0, entity_id)
+    motion = _get_flat_motion(dim, block_pos, pos, direction, event.blockName, speed)
+    if event.blockName == TransmitBelt.INSERTER and type_id == ITEM_TYPE:
         # 沿输送方向计算距中心的偏移，掉落物在存货口前等待入库。
         forward_offset = get_forward_offset(block_pos, pos, direction)
         if forward_offset >= INSERTER_STOP_OFFSET - 1e-6:
             motion = (0, 0, 0)
-    _apply_motion(event.entityId, type_id, motion, preserve_player_y=True)
+    _apply_motion(entity_id, type_id, motion, preserve_player_y=True)
 
 
 @ServerUninitCallback()

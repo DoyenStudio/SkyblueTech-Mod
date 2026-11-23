@@ -1,6 +1,4 @@
 # coding=utf-8
-import sys
-
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from ...common.define.global_config import BUCKET_VOLUME
 from ...common.define.id_enum import Machinery
@@ -32,7 +30,7 @@ class EffluentOutfall(MultiFluidContainer):
     fluid_output_slots = ()
     # 限速槽能容纳最快配方的一秒用量。两个水槽允许同一秒内分别接收两种水。
     # 使用有限容量，避免触发框架的创造供液槽语义。
-    fluid_slot_max_volumes = {BUFFER: 2 * BUCKET_VOLUME, 1: sys.float_info.max, 2: sys.float_info.max}
+    fluid_slot_max_volumes = {BUFFER: 2 * BUCKET_VOLUME, 1: 2147483647, 2: 2147483647}
     allow_player_use_bucket_pull = False
 
     def __init__(self, dim, x, y, z, block_entity_data):

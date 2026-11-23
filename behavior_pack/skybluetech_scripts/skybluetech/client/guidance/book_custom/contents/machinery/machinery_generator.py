@@ -24,8 +24,7 @@ gas_burning_generator = PageGroup(
         TextPage(
             UnfinishedItemName(id_enum.Machinery.GAS_BURNING_GENERATOR),
             '燃气发电机可以燃烧<text color="§d" t="气体">用于发电。部分反应会产生<text color="§7" t="废气">， 需要导出才能持续运行。\n\n'
-            "当然， 燃气发电机还可以同时充当一些气体放能反应的容器， 如氢气和氯气燃烧生成氯化氢气体。\n\n"
-            "氢气和氯气需分两条管路接入不同侧面， 也可从底面接入氢气， 从顶面接入氯气。 氯化氢可用耐酸流体管道或化学品管道导出。",
+            '当然， 燃气发电机还可以同时充当一些气体<text color="§c" t="放能反应">的容器， 如氢气和氯气燃烧生成氯化氢气体。\n\n',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.GAS_BURNING_GENERATOR),
     ],
@@ -49,9 +48,7 @@ oilfuel_generator = PageGroup(
         TextPage(
             UnfinishedItemName(id_enum.Machinery.OILFUEL_GENERATOR),
             '燃油发电机目前仅可燃烧反应副产物<item id="{oil}">工业燃料油， 回收产线的部分能耗。\n\n'
-            "将燃油管道接到机器正面的进油口。".format(
-                oil=id_enum.CommonOil.FUEL_OIL
-            ),
+            "将燃油管道接到机器正面的进油口。".format(oil=id_enum.CommonOil.FUEL_OIL),
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.OILFUEL_GENERATOR),
     ],

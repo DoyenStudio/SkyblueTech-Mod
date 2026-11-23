@@ -79,8 +79,9 @@ redstoneflux_brake = PageGroup(
     [
         TextPage(
             UnfinishedItemName(id_enum.Machinery.REDSTONEFLUX_BRAKE),
-            "能源控制闸可以查看邻接电网的平均功率， 约每秒更新一次。 它可使用红石控制电网的启停（停用时， 相连的电网停止输送能量）。 如果有多条电网都连接了一个控制闸， 那么控制闸会同时控制它们的启停。\n\n"
-            "默认有红石信号时启用， 可在界面反相。 将控制闸接在线缆旁。 接在控制闸两侧的线缆无法通过它互相传输能量。",
+            '能源控制闸可以查看<text color="§9" t="所有">邻接电网的平均功率或使用<item id="minecraft:redstone"><text color="§4" t="红石信号">控制电它们的启停。'
+            "\n可在界面内设置红石信号的控制模式。"
+            '\n\n能源控制闸控制电网的方式是与其他普通用电器一样并联入网， <text color="§c" t="不要尝试将其串联到电缆线路上">。',
         ),
         MachineryWorkstationRecipePage(id_enum.Machinery.REDSTONEFLUX_BRAKE),
     ],

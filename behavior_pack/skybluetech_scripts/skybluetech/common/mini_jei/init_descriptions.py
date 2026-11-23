@@ -44,24 +44,6 @@ RegisterSourceDescription(
     ),
 )
 
-RegisterUsageDescription(
-    {CategoryType.ITEM: [id_enum.Machinery.INDUSTRIAL_FAN]},
-    "工业风扇",
-    "储存 8800 RF，仅背面输入能量，无操作界面。\n红石 0 级停机，1～15 级对应 1～15 格/秒风速、10～150 RF/t 功耗，叶片转速从 1 倍线性增加至 5 倍。\n正面 1×1 格风道内的生物、玩家和掉落物会沿朝向吹动；射程随信号从 10 格线性增加至 20 格。实心方块会阻挡风道，只能吹动障碍前的实体。能量不足时停机。",
-)
-
-RegisterSourceDescription(
-    {CategoryType.ITEM: [id_enum.TransmitBelt.DETECTOR]},
-    "感应传送带",
-    "沿放置朝向输送生物和掉落物，无需能量。\n生物或玩家站在带上时输出 15 级红石信号，全部离开后信号归零；掉落物和盔甲架不会触发感应。",
-)
-
-RegisterSourceDescription(
-    {CategoryType.ITEM: [id_enum.Machinery.SHOCKER]},
-    "电击器",
-    "支持六向放置，无操作界面；每台储存 16000 RF，仅相对背面和顶部输入能量，遇水流会被摧毁。\n两台正面相对、中间间隔 1～3 格且没有实心方块时配对。任一端收到红石上升沿时电击区域内生物；红石导通期间也会电击新进入的生物。\n仅电击当前生命值低于 40 的生物，使其永久失去自主移动和攻击能力，仍可被传送带等外力推动。每个目标消耗 100 × 当前生命值 × 间隔格数 RF，双方各承担一半且都必须充足。缺电时仅产生微弱电火花并造成一次 0 点伤害；留在区域内不会因补电自动重试。",
-)
-
 RegisterSourceDescription(
     {CategoryType.FLUID: [id_enum.DeepLava.DEEPSLATE_LAVA]},
     "深层熔岩",

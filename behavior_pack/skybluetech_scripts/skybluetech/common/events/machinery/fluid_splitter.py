@@ -1,6 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
-
 from .basic import MachineryOperationC2S
 
 
@@ -47,20 +45,3 @@ class FluidSplitterSimpleAction(MachineryOperationC2S):
         self.action = action
         self.extra = extra
         self.player_id = player_id
-
-
-class FluidSplitterSettingsListUpdate(CustomS2CEvent):
-    name = "st:FSSLU"
-
-    def __init__(self, lis=[]):
-        # type: (list[tuple[int, str]]) -> None
-        self.lis = lis
-
-    def marshal(self):
-        return {"l": self.lis}
-
-    @classmethod
-    def unmarshal(cls, data):
-        return cls(
-            lis=data["l"],
-        )

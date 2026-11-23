@@ -3,13 +3,20 @@ from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from mod.client.extraClientApi import GetLocalPlayerId, GetMinecraftEnum
 from skybluetech_scripts.skybluetech.common.define.flags import DEACTIVE_FLAG_OUTPUT_FULL
 from skybluetech_scripts.skybluetech.common.events.machinery.item_splitter import (
-    ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
     ItemSplitterSettingsSetLabel,
     ItemSplitterSimpleAction,
 )
+from skybluetech_scripts.skybluetech.common.machinery_def.splitter_settings import (
+    ITEM_SPLITTER_DEFAULT_ITEM,
+    ITEM_SPLITTER_SETTINGS_LIMIT,
+    K_RECORD_LABELS,
+    K_SETTINGS_LIMIT,
+    LoadSplitterSettings,
+)
 from skybluetech_scripts.tooldelta.define import Item
 from skybluetech_scripts.tooldelta.ui import Binder, RegistToolDeltaScreen, UBaseCtrl
+from skybluetech_scripts.tooldelta.utils.nbt import GetValue, NBT2Py, ValueOf
 
 from ..machinery_extra_pages import ItemPipeSettingsPageIndirectional
 from ..misc.transmitter_settings_ui import get_opposite_color, rand_rgb_by_index
@@ -17,6 +24,8 @@ from .define_ex import MAIN_PATH, MachinePanelUIProxyEx
 
 SETTINGS_VIEW_PATH = MAIN_PATH / "settings_view"
 ADD_BTN_PATH = MAIN_PATH / "add_btn"
+SETTINGS_COLLECTION = "item_splitter_settings_grid"
+EMPTY_SETTING_ROW = ("", (1.0, 1.0, 1.0), 131072)
 
 
 @RegistToolDeltaScreen("ItemSplitterUI.main", is_proxy=True)
@@ -24,53 +33,75 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
     available_extra_pages = (ItemPipeSettingsPageIndirectional,)
     STATUS_TEXTS = {DEACTIVE_FLAG_OUTPUT_FULL: "送不出去（没有对应标签的出口或出口已满）"}
     STATUS_RINGS = {DEACTIVE_FLAG_OUTPUT_FULL: ("ring_in_container_slots",)}
+    _setting_rows = ()  # type: tuple[tuple[str, tuple[float, float, float], int], ...]
 
     def OnCreate(self):
-        self.settings = []
-        self._settings_revision = -1
-        self.settings_view = self.GetElement(SETTINGS_VIEW_PATH).asScrollView()
-        self.settings_grid = self.settings_view.GetContent().asGrid()
-        self.add_btn = (
-            self.GetElement(ADD_BTN_PATH).asButton().SetCallback(self.onAddSetting)
-        )
         self.label_selector_window = None
         self.item_selector_window = None
         self.selected_setting_index = -1
+        self.settings = []
+        self.settings_limit = 0
+
+        settings_view = self.GetElement(SETTINGS_VIEW_PATH).asScrollView()
+        self.settings_grid = settings_view.GetContent().asGrid()
+        data = CF.CreateBlockInfo(LEVEL_ID).GetBlockEntityData(self.pos[1:])
+        if data is not None:
+            ex_data = ValueOf(data.get("exData")) or {}
+            records = NBT2Py(GetValue(ex_data, K_RECORD_LABELS))
+            self.settings = LoadSplitterSettings(records, ITEM_SPLITTER_DEFAULT_ITEM)
+            self.settings_limit = (
+                ValueOf(ex_data.get(K_SETTINGS_LIMIT)) or ITEM_SPLITTER_SETTINGS_LIMIT
+            )
+        self._refresh_setting_rows()
+        self.GetElement(ADD_BTN_PATH).asButton().SetCallback(self.onAddSetting)
 
     def OnDestroy(self):
+        MachinePanelUIProxyEx.OnDestroy(self)
+        self.close_setting_selectors()
+
+    def _refresh_setting_rows(self):
+        item_comp = CF.CreateItem(LEVEL_ID)
+        rows = []
+        for label, item_id in self.settings:
+            name = item_comp.GetItemHoverName(item_id) or item_id
+            icon = item_comp.GetItemBasicInfo(item_id, 0, False) or {}
+            rows.append(
+                (name.replace("§f", ""), rand_rgb_by_index(label), icon.get("id_aux", 131072))
+            )
+        self._setting_rows = tuple(rows)
+
+    def has_setting(self, index):
+        return 0 <= index < len(self.settings)
+
+    def _get_setting_row(self, index):
+        rows = self._setting_rows
+        return rows[index] if 0 <= index < len(rows) else EMPTY_SETTING_ROW
+
+    @Binder.binding(Binder.BF_BindGridSize, "#ItemSplitterUI.settings_grid_size")
+    def _get_settings_grid_size(self):
+        return (1, len(self._setting_rows))
+
+    @Binder.binding_collection(
+        Binder.BF_BindString, SETTINGS_COLLECTION, "#ItemSplitterUI.setting_name"
+    )
+    def _get_setting_name(self, index):
+        return self._get_setting_row(index)[0]
+
+    @Binder.binding_collection(
+        Binder.BF_BindColor, SETTINGS_COLLECTION, "#ItemSplitterUI.setting_color"
+    )
+    def _get_setting_color(self, index):
+        return self._get_setting_row(index)[1]
+
+    @Binder.binding_collection(
+        Binder.BF_BindInt, SETTINGS_COLLECTION, "#ItemSplitterUI.setting_item_id_aux"
+    )
+    def _get_setting_item_id_aux(self, index):
+        return self._get_setting_row(index)[2]
+
+    def close_setting_selectors(self):
         self.close_label_selector()
         self.close_item_selector()
-
-    @Binder.binding_collection(
-        Binder.BF_BindString,
-        "item_splitter_settings_grid",
-        "#ItemSplitterUI.setting_name",
-    )
-    def get_setting_name(self, index):
-        # type: (int) -> str
-        return self.settings[index][0] if 0 <= index < len(self.settings) else ""
-
-    @Binder.binding_collection(
-        Binder.BF_BindColor,
-        "item_splitter_settings_grid",
-        "#ItemSplitterUI.setting_color",
-    )
-    def get_setting_color(self, index):
-        # type: (int) -> tuple[float, float, float]
-        return (
-            self.settings[index][1]
-            if 0 <= index < len(self.settings)
-            else (1.0, 1.0, 1.0)
-        )
-
-    @Binder.binding_collection(
-        Binder.BF_BindInt,
-        "item_splitter_settings_grid",
-        "#ItemSplitterUI.setting_item_id_aux",
-    )
-    def get_setting_item_id_aux(self, index):
-        # type: (int) -> int
-        return self.settings[index][2] if 0 <= index < len(self.settings) else 131072
 
     def create_label_selector(self, x, y):
         # type: (float, float) -> UBaseCtrl
@@ -147,6 +178,10 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
             self.item_selector_window = None
 
     def onAddSetting(self, _):
+        if len(self.settings) >= self.settings_limit:
+            return
+        self.settings.append((0, ITEM_SPLITTER_DEFAULT_ITEM))
+        self._refresh_setting_rows()
         _, x, y, z = self.pos
         ItemSplitterSimpleAction(
             x, y, z, ItemSplitterSimpleAction.ACTION_ADD_SETTING, 0
@@ -154,21 +189,23 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.label_editing")
     def onEditLabel(self, params):
-        if params["ButtonState"] != 0:
+        idx = params.get("#collection_index", -1)
+        if params["ButtonState"] != 0 or not self.has_setting(idx):
             return
         btn = self.GetElement(SETTINGS_VIEW_PATH / params["ButtonPath"])
         btn_x, btn_y = btn.GetRootPos()
-        idx = params["#collection_index"]
+        self.close_setting_selectors()
         self.selected_setting_index = idx
         self.create_label_selector(btn_x, btn_y)
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.item_editing")
     def onEditItem(self, params):
-        if params["ButtonState"] != 0:
+        idx = params.get("#collection_index", -1)
+        if params["ButtonState"] != 0 or not self.has_setting(idx):
             return
         btn = self.GetElement(SETTINGS_VIEW_PATH / params["ButtonPath"])
         btn_x, btn_y = btn.GetRootPos()
-        idx = params["#collection_index"]
+        self.close_setting_selectors()
         self.selected_setting_index = idx
         self.create_item_selector(btn_x, btn_y)
 
@@ -177,21 +214,22 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         if params["ButtonState"] != 0:
             return
         button_path = params["ButtonPath"][len("main/") :]
-        idx = self.GetElement(button_path).GetPropertyBag().get("#index", -1)
-        if idx == -1:
-            return
-        if self.selected_setting_index == -1:
+        label = self.GetElement(button_path).GetPropertyBag().get("#index", -1)
+        index = self.selected_setting_index
+        if label == -1 or not self.has_setting(index):
             return
         self.close_label_selector()
+        self.settings[index] = (label, self.settings[index][1])
+        self._refresh_setting_rows()
         _, x, y, z = self.pos
-        ItemSplitterSettingsSetLabel(x, y, z, self.selected_setting_index, idx).send()
+        ItemSplitterSettingsSetLabel(x, y, z, index, label).send()
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.item_selected")
     def onSelectItem(self, params):
         if params["ButtonState"] != 0:
             return
         button_path = params["ButtonPath"][len("main/") :]
-        idx = self.GetElement(button_path).GetPropertyBag().get("#index", 0)  # type: int
+        idx = self.GetElement(button_path).GetPropertyBag().get("#index", -1)  # type: int
         if idx == -1:
             return
         if self.selected_setting_index == -1:
@@ -205,43 +243,27 @@ class ItemSplitterUI(MachinePanelUIProxyEx):
         if selected_item is None:
             return
         self.close_item_selector()
+        self.set_setting_content(self.selected_setting_index, selected_item.id)
+
+    def set_setting_content(self, index, item_id):
+        if not self.has_setting(index) or not item_id or len(item_id) > 256:
+            return False
+        self.settings[index] = (self.settings[index][0], item_id)
+        self._refresh_setting_rows()
         _, x, y, z = self.pos
-        ItemSplitterSettingsSetItem(
-            x, y, z, self.selected_setting_index, selected_item.id
-        ).send()
+        ItemSplitterSettingsSetItem(x, y, z, index, item_id).send()
+        return True
 
     @Binder.binding(Binder.BF_ButtonClick, "#ItemSplitterUI.delete")
     def onDeleteSetting(self, params):
-        if params["ButtonState"] != 0:
+        index = params.get("#collection_index", -1)
+        if params["ButtonState"] != 0 or not self.has_setting(index):
             return
-        idx = params["#collection_index"]
+        self.close_setting_selectors()
+        self.selected_setting_index = -1
+        self.settings.pop(index)
+        self._refresh_setting_rows()
         _, x, y, z = self.pos
         ItemSplitterSimpleAction(
-            x,
-            y,
-            z,
-            ItemSplitterSimpleAction.ACTION_REMOVE_SETTING,
-            idx,
+            x, y, z, ItemSplitterSimpleAction.ACTION_REMOVE_SETTING, index
         ).send()
-
-    @MachinePanelUIProxyEx.Listen(ItemSplitterSettingsListUpdate)
-    def onListUpdated(self, event):
-        # type: (ItemSplitterSettingsListUpdate) -> None
-        if tuple(event.pos) != tuple(self.pos):
-            return
-        if event.revision <= self._settings_revision:
-            return
-        item_comp = CF.CreateItem(LEVEL_ID)
-        # 滚出视口的行可能尚未创建或已被回收，由集合绑定读取当前数据。
-        self.settings = [
-            (
-                item_comp.GetItemHoverName(item_id).replace("§f", ""),
-                rand_rgb_by_index(label),
-                Item(item_id).GetBasicInfo().id_aux,
-            )
-            for label, item_id in event.lis
-        ]
-        dimension = (1, len(self.settings))
-        if self.settings_grid.GetGridDimension() != dimension:
-            self.settings_grid.SetGridDimension(dimension)
-        self._settings_revision = event.revision

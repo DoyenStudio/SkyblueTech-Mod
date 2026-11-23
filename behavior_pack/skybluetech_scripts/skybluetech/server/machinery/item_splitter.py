@@ -1,16 +1,21 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.utils.timer import ExecLater
 from skybluetech_scripts.tooldelta.define.item import Item
-from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
 
 from .basic.item_container import ItemContainer
 from ...common.define import flags
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.item_splitter import (
-    ItemSplitterSettingsListUpdate,
     ItemSplitterSettingsSetItem,
     ItemSplitterSettingsSetLabel,
     ItemSplitterSimpleAction,
+)
+from ...common.machinery_def.splitter_settings import (
+    ITEM_SPLITTER_DEFAULT_ITEM,
+    ITEM_SPLITTER_SETTINGS_LIMIT,
+    K_RECORD_LABELS,
+    K_SETTINGS_LIMIT,
+    LoadSplitterSettings,
+    SaveSplitterSettings,
 )
 from ..transmitters.item_pipe.logic import (
     PushItemToGenericContainer,
@@ -20,11 +25,6 @@ from ..transmitters.item_pipe.logic import (
 )
 from .basic import GUIControl, OperationListener, UpgradeControl
 from .core import RegisterMachine
-
-K_RECORD_LABELS = "record_settings"
-K_SETTINGS_LIMIT = "settings_limit"
-
-DEFAULT_SETTINGS_LIMIT = 6
 
 
 @RegisterMachine
@@ -39,11 +39,9 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     def __init__(self, dim, x, y, z, block_entity_data):
         super(ItemSplitter, self).__init__(dim, x, y, z, block_entity_data)
         self._cached_recorded_settings = None
-        self._settings_sync_revision = 0
         self._sending_items = True
         self._ticking_t = 0
         self.handler.SubscribeOnTicking(self._item_splitter_on_ticking)
-        self.handler.SubscribeOnClick(self._item_splitter_on_click)
         self.handler.SubscribeOnSlotUpdate(self._item_splitter_on_slot_update)
 
     def _item_splitter_on_ticking(self):
@@ -83,19 +81,6 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
             return UpgradeControl.IsValidInput(self, slot, item)
         return True
 
-    def _item_splitter_on_click(self, event, extra_datas=None):
-        # type: (ServerBlockUseEvent, dict | None) -> None
-        ExecLater(0.1, self.sync_settings, event.playerId)
-
-    def sync_settings(self, player_id):
-        # 仅发送一次快照，版本号只用于防止旧回包覆盖新设置。
-        self._settings_sync_revision += 1
-        packet = ItemSplitterSettingsListUpdate(
-            self.record_settings, self.dim, self.x, self.y, self.z,
-            self._settings_sync_revision,
-        )
-        packet.send(player_id)
-
     def _item_splitter_on_slot_update(self, slot):
         if not self.InUpgradeSlot(slot):
             self._sending_items = True
@@ -129,43 +114,37 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
                 return label
         return 0 if self.HasUpgrader(Upgraders.GENERIC_SPLIT) else -1
 
-    def on_add_setting(self, player_id):
-        # type: (str) -> None
+    def on_add_setting(self):
         if len(self.record_settings) >= self.settings_limit:
-            self.sync_settings(player_id)
             return
-        self.record_settings.append((0, "minecraft:iron_ingot"))
+        self.record_settings.append((0, ITEM_SPLITTER_DEFAULT_ITEM))
         self.save_settings()
-        self.sync_settings(player_id)
 
-    def on_delete_setting(self, player_id, index):
-        # type: (str, int) -> None
-        if index >= len(self.record_settings):
+    def on_delete_setting(self, index):
+        # type: (int) -> None
+        if not 0 <= index < len(self.record_settings):
             return
         self.record_settings.pop(index)
         self.save_settings()
-        self.sync_settings(player_id)
 
-    def on_set_item(self, player_id, index, item):
-        # type: (str, int, str) -> None
-        if index >= len(self.record_settings):
+    def on_set_item(self, index, item):
+        # type: (int, str) -> None
+        if not 0 <= index < len(self.record_settings):
             return
         self.record_settings[index] = (self.record_settings[index][0], item)
         self.save_settings()
-        self.sync_settings(player_id)
 
-    def on_set_label(self, player_id, index, label):
-        # type: (str, int, int) -> None
-        if index >= len(self.record_settings):
+    def on_set_label(self, index, label):
+        # type: (int, int) -> None
+        if not 0 <= index < len(self.record_settings):
             return
         self.record_settings[index] = (label, self.record_settings[index][1])
         self.save_settings()
-        self.sync_settings(player_id)
 
     @property
     def settings_limit(self):
         # type: () -> int
-        return self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
+        return self.bdata[K_SETTINGS_LIMIT] or ITEM_SPLITTER_SETTINGS_LIMIT
 
     @settings_limit.setter
     def settings_limit(self, value):
@@ -175,31 +154,28 @@ class ItemSplitter(OperationListener, UpgradeControl, GUIControl):
     @property
     def record_settings(self):
         if self._cached_recorded_settings is None:
-            record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:iron_ingot"]
-            self._cached_recorded_settings = [
-                (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
-            ]
+            self._cached_recorded_settings = LoadSplitterSettings(
+                self.bdata[K_RECORD_LABELS], ITEM_SPLITTER_DEFAULT_ITEM
+            )
         return self._cached_recorded_settings
 
     @record_settings.setter
     def record_settings(self, value):
         # type: (list[tuple[int, str]]) -> None
         self._cached_recorded_settings = value
-        self.bdata[K_RECORD_LABELS] = ["%d-%s" % (a, b) for a, b in value]
+        self.save_settings()
 
     def save_settings(self):
-        self.bdata[K_RECORD_LABELS] = [
-            "%d-%s" % (a, b) for a, b in self.record_settings
-        ]
+        self.bdata[K_RECORD_LABELS] = SaveSplitterSettings(self.record_settings)
 
 
 @ItemSplitter.ForOperation(ItemSplitterSimpleAction)
 def onSimpleAction(event, machine):
     # type: (ItemSplitterSimpleAction, ItemSplitter) -> None
     if event.action == event.ACTION_ADD_SETTING:
-        machine.on_add_setting(event.player_id)
-    elif event.action == event.ACTION_REMOVE_SETTING:
-        machine.on_delete_setting(event.player_id, event.extra)
+        machine.on_add_setting()
+    elif event.action == event.ACTION_REMOVE_SETTING and isinstance(event.extra, int):
+        machine.on_delete_setting(event.extra)
 
 
 @ItemSplitter.ForOperation(ItemSplitterSettingsSetLabel)
@@ -207,7 +183,7 @@ def onSetLabel(event, machine):
     # type: (ItemSplitterSettingsSetLabel, ItemSplitter) -> None
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
-    machine.on_set_label(event.player_id, event.setting_index, event.label)
+    machine.on_set_label(event.setting_index, event.label)
 
 
 @ItemSplitter.ForOperation(ItemSplitterSettingsSetItem)
@@ -219,4 +195,4 @@ def onSetItem(event, machine):
         or len(event.item_id) > 256
     ):
         return
-    machine.on_set_item(event.player_id, event.setting_index, event.item_id)
+    machine.on_set_item(event.setting_index, event.item_id)

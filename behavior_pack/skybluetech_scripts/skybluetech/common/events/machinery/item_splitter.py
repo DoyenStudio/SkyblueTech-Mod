@@ -1,6 +1,4 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.events.basic import CustomS2CEvent
-
 from .basic import MachineryOperationC2S
 
 
@@ -47,28 +45,3 @@ class ItemSplitterSimpleAction(MachineryOperationC2S):
         self.action = action
         self.extra = extra
         self.player_id = player_id
-
-
-class ItemSplitterSettingsListUpdate(CustomS2CEvent):
-    name = "st:ISSLU"
-
-    def __init__(self, lis, dim, x, y, z, revision):
-        self.lis = list(lis) if lis is not None else []
-        self.pos = (dim, x, y, z)
-        self.revision = revision
-
-    def marshal(self):
-        # 事件数据只传字典、列表和标量；不能把内部的规则元组交给网络层。
-        return {
-            "settings": [[label, item_id] for label, item_id in self.lis],
-            "pos": list(self.pos),
-            "revision": self.revision,
-        }
-
-    @classmethod
-    def unmarshal(
-        cls,
-        data,  # type: dict
-    ):
-        dim, x, y, z = data["pos"]
-        return cls(data["settings"], dim, x, y, z, data["revision"])

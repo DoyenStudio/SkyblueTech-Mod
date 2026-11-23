@@ -6,7 +6,7 @@
 |---|---|---|
 | 电动机件加工台 `ElectricMachineryWorkstationUI.main` | 机器面板任何地方 | 选「产物是这样物品」的那条加工台配方（和点右侧配方栏一样） |
 | 冷冻机 `FreezerUI.main` | 机器面板任何地方 | 切到产物是这样物品的那一档（`changeMode`） |
-| 物品分流器 `ItemSplitterUI.main` | 设置列表的某一行 | 那一行的物品换成它（`ItemSplitterSettingsSetItem`） |
+| 物品分流器 `ItemSplitterUI.main` | 设置列表的某一行 | 更新该行的物品并提交设置 |
 | 连锁挖矿设置 `ObjUpVeinMinerSettingsUI.main` | 方块列表 | 是方块就加进列表（`ObjUpVeinMinerSettingsUpload`） |
 
 不收的（没有这个产物的配方 / 档、不是方块、列表满了、点在行与行之间、目标那块被藏起来）回调返回原因或 False：MEI 不放下玩家手里的东西，
@@ -114,7 +114,7 @@ def SplitterRow(screen, pos):  # type: (any, tuple) -> int or None
 
 
 def OnDropSplitter(_name, stack, pos):  # type: (any, any, tuple) -> any
-    """ 那一行的物品换成拿着的这样（和蔚蓝自己的物品选择框发同一个请求；列表由服务端回传再画）；点在行与行之间不收 """
+    """ 通过分拣器界面更新拖放目标行的物品。"""
     module, cls = _Splitter()
     screen = Active(cls)
     item_id = ItemId(stack)
@@ -126,9 +126,7 @@ def OnDropSplitter(_name, stack, pos):  # type: (any, any, tuple) -> any
     close = getattr(screen, "close_item_selector", None)
     if callable(close):
         close()
-    _, x, y, z = screen.pos
-    module.ItemSplitterSettingsSetItem(x, y, z, index, item_id).send()
-    return True
+    return screen.set_setting_content(index, item_id)
 
 
 # 连锁挖矿设置

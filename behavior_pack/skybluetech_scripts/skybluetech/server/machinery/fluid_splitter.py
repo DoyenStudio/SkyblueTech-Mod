@@ -1,16 +1,20 @@
 # coding=utf-8
-from skybluetech_scripts.tooldelta.utils.timer import ExecLater
-from skybluetech_scripts.tooldelta.events.server import ServerBlockUseEvent
-
 from ...common.define import flags
 from ...common.define.id_enum import Machinery, Upgraders
 from ...common.events.machinery.fluid_splitter import (
-    FluidSplitterSettingsListUpdate,
     FluidSplitterSettingsSetFluid,
     FluidSplitterSettingsSetLabel,
     FluidSplitterSimpleAction,
 )
 from ...common.machinery_def.fluid_splitter import MAX_FLUID_VOLUME
+from ...common.machinery_def.splitter_settings import (
+    FLUID_SPLITTER_DEFAULT_FLUID,
+    FLUID_SPLITTER_SETTINGS_LIMIT,
+    K_RECORD_LABELS,
+    K_SETTINGS_LIMIT,
+    LoadSplitterSettings,
+    SaveSplitterSettings,
+)
 from ..transmitters.fluid_pipe.logic import (
     PushFluidToFluidContainer,
     fluid_pipe_can_transfer_fluid,
@@ -25,11 +29,6 @@ from .basic import (
     UpgradeControl,
 )
 from .core import RegisterMachine
-
-K_RECORD_LABELS = "record_settings"
-K_SETTINGS_LIMIT = "settings_limit"
-
-DEFAULT_SETTINGS_LIMIT = 3
 
 
 @RegisterMachine
@@ -51,7 +50,6 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
         self._ticking_t = 0
         self.handler.SubscribeOnTicking(self._fluid_splitter_on_ticking)
         self.handler.SubscribeOnAddedFluid(self._fluid_splitter_on_added_fluid)
-        self.handler.SubscribeOnClick(self._fluid_splitter_on_click)
 
     def _fluid_splitter_on_ticking(self):
         if self._sending_fluid and self._ticking_t % 5 == 0:
@@ -83,16 +81,6 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
             if fluid.volume <= 0:
                 fluid.fluid_id = None
         return ok
-
-    def _fluid_splitter_on_click(self, event, extra_datas=None):
-        # type: (ServerBlockUseEvent, dict | None) -> None
-        ExecLater(
-            0.1,
-            lambda: FluidSplitterSettingsListUpdate(self.record_settings).send(
-                event.playerId
-            ),
-        )
-
 
     def try_post_fluid_by_label(self, fluid_id, fluid_volume, source_slot=None):
         # type: (str, float) -> float
@@ -151,42 +139,37 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
                 return label
         return 0 if self.HasUpgrader("skybluetech:upgrader_generic_split") else -1
 
-    def on_add_setting(self, player_id):
-        # type: (str) -> None
+    def on_add_setting(self):
         if len(self.record_settings) >= self.settings_limit:
             return
-        self.record_settings.append((0, "minecraft:water"))
+        self.record_settings.append((0, FLUID_SPLITTER_DEFAULT_FLUID))
         self.save_settings()
-        FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
-    def on_delete_setting(self, player_id, index):
-        # type: (str, int) -> None
-        if index >= len(self.record_settings):
+    def on_delete_setting(self, index):
+        # type: (int) -> None
+        if not 0 <= index < len(self.record_settings):
             return
         self.record_settings.pop(index)
-        self.record_settings = self.record_settings
-        FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
+        self.save_settings()
 
-    def on_set_fluid(self, player_id, index, fluid):
-        # type: (str, int, str) -> None
-        if index >= len(self.record_settings):
+    def on_set_fluid(self, index, fluid):
+        # type: (int, str) -> None
+        if not 0 <= index < len(self.record_settings):
             return
         self.record_settings[index] = (self.record_settings[index][0], fluid)
         self.save_settings()
-        FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
-    def on_set_label(self, player_id, index, label):
-        # type: (str, int, int) -> None
-        if index >= len(self.record_settings):
+    def on_set_label(self, index, label):
+        # type: (int, int) -> None
+        if not 0 <= index < len(self.record_settings):
             return
         self.record_settings[index] = (label, self.record_settings[index][1])
         self.save_settings()
-        FluidSplitterSettingsListUpdate(self.record_settings).send(player_id)
 
     @property
     def settings_limit(self):
         # type: () -> int
-        return self.bdata[K_SETTINGS_LIMIT] or DEFAULT_SETTINGS_LIMIT
+        return self.bdata[K_SETTINGS_LIMIT] or FLUID_SPLITTER_SETTINGS_LIMIT
 
     @settings_limit.setter
     def settings_limit(self, value):
@@ -196,31 +179,28 @@ class FluidSplitter(OperationListener, UpgradeControl, MultiFluidContainer, GUIC
     @property
     def record_settings(self):
         if self._cached_recorded_settings is None:
-            record_settings = self.bdata[K_RECORD_LABELS] or ["0-minecraft:water"]
-            self._cached_recorded_settings = [
-                (int(i.split("-")[0]), str(i.split("-")[1])) for i in record_settings
-            ]
+            self._cached_recorded_settings = LoadSplitterSettings(
+                self.bdata[K_RECORD_LABELS], FLUID_SPLITTER_DEFAULT_FLUID
+            )
         return self._cached_recorded_settings
 
     @record_settings.setter
     def record_settings(self, value):
         # type: (list[tuple[int, str]]) -> None
         self._cached_recorded_settings = value
-        self.bdata[K_RECORD_LABELS] = ["%d-%s" % (a, b) for a, b in value]
+        self.save_settings()
 
     def save_settings(self):
-        self.bdata[K_RECORD_LABELS] = [
-            "%d-%s" % (a, b) for a, b in self.record_settings
-        ]
+        self.bdata[K_RECORD_LABELS] = SaveSplitterSettings(self.record_settings)
 
 
 @FluidSplitter.ForOperation(FluidSplitterSimpleAction)
 def onSimpleAction(event, machine):
     # type: (FluidSplitterSimpleAction, FluidSplitter) -> None
     if event.action == event.ACTION_ADD_SETTING:
-        machine.on_add_setting(event.player_id)
-    elif event.action == event.ACTION_REMOVE_SETTING:
-        machine.on_delete_setting(event.player_id, event.extra)
+        machine.on_add_setting()
+    elif event.action == event.ACTION_REMOVE_SETTING and isinstance(event.extra, int):
+        machine.on_delete_setting(event.extra)
 
 
 @FluidSplitter.ForOperation(FluidSplitterSettingsSetLabel)
@@ -228,7 +208,7 @@ def onSetLabel(event, machine):
     # type: (FluidSplitterSettingsSetLabel, FluidSplitter) -> None
     if not isinstance(event.label, int) or not isinstance(event.setting_index, int):
         return
-    machine.on_set_label(event.player_id, event.setting_index, event.label)
+    machine.on_set_label(event.setting_index, event.label)
 
 
 @FluidSplitter.ForOperation(FluidSplitterSettingsSetFluid)
@@ -240,4 +220,4 @@ def onSetFluid(event, machine):
         or len(event.fluid_id) > 256
     ):
         return
-    machine.on_set_fluid(event.player_id, event.setting_index, event.fluid_id)
+    machine.on_set_fluid(event.setting_index, event.fluid_id)

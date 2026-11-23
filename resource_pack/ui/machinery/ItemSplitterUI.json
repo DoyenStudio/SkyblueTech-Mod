@@ -515,11 +515,18 @@
         "type": "grid",
         "layer": 1,
         "collection_name": "$collection_name",
+        "grid_dimension_binding": "#ItemSplitterUI.settings_grid_size",
         "grid_dimensions": [
             1,
             1
         ],
-        "grid_item_template": "ItemSplitterUI.splitter_setting"
+        "grid_item_template": "ItemSplitterUI.splitter_setting",
+        "bindings": [
+            {
+                "binding_condition": "always_when_visible",
+                "binding_name": "#ItemSplitterUI.settings_grid_size"
+            }
+        ]
     },
     "splitter_setting": {
         "type": "panel",

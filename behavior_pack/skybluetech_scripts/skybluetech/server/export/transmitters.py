@@ -121,15 +121,25 @@ def RegisterWire(block_id, transfer_speed, replace=False):
 def RefreshPowerConnections(dim, x, y, z):
     """Refresh cached wire endpoints after a machine changes its RF face modes.
 
-    Existing wire connection switches remain unchanged. Wire networks contain
-    no material buffer; fluid and item networks are deliberately untouched.
+    Preserve physical connections and the enabled state of wire networks.
     Call on structural/configuration changes, never every machine tick.
     """
+    from ...common.define.facing import FACING_DXYZ
+    from .. import transferlib
     from ..transmitters.wire.logic import logic_module
 
-    from .. import transferlib
+    disabled_positions = []
+    for dx, dy, dz in FACING_DXYZ:
+        pos = (x + dx, y + dy, z + dz)
+        network = logic_module.GetNetworkByTransmitter(dim, *pos, force_use_cached=True)
+        if network is not None and not network.enabled:
+            disabled_positions.append(pos)
     transferlib.invalidate()
     logic_module.clean_container_networks(dim, x, y, z)
+    for pos in disabled_positions:
+        network = logic_module.GetNetworkByTransmitter(dim, *pos, force_use_cached=True)
+        if network is not None:
+            network.enabled = False
 
 
 __all__ = ["RegisterItemPipe", "RegisterFluidPipe", "RegisterWire", "RefreshPowerConnections"]

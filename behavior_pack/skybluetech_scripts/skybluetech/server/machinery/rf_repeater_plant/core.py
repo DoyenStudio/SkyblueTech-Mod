@@ -1,6 +1,7 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
+from skybluetech_scripts.skybluetech.common.define.machinery import EnergyIOMode
 from skybluetech_scripts.skybluetech.common.define.ui_keys import RF_REPEATER_PLANT_UI
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantSettingsUpdate,
@@ -44,7 +45,7 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
     bound_ui = RF_REPEATER_PLANT_UI
     block_name = Machinery.RF_REPEATER_PLANT
     store_rf_max = 120000
-    energy_io_mode = (0, 0, 0, 0, 0, 0)
+    energy_io_mode = (EnergyIOMode.NONE,) * 2 + (MODE_INPUT,) * 4
 
     def __init__(self, dim, x, y, z, block_entity_data):
         super(RFRepeaterPlant, self).__init__(dim, x, y, z, block_entity_data)
@@ -54,7 +55,7 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
         self.layer = states["skybluetech:layer"]  # type: int
         self.is_base_block = self.layer == 0
         if not self.is_base_block:
-            self.energy_io_mode = (2, 2, 2, 2, 2, 2)
+            self.energy_io_mode = (EnergyIOMode.NONE,) * 6
         self.flush_data()
         self.handler.UnsubscribeOnClick(self._gui_control_on_click)
         self.handler.SubscribeOnClick(self._rf_repeater_plant_on_click)
@@ -211,19 +212,12 @@ class RFRepeaterPlant(GUIControl, BaseClicker):
     def sync_energy_io_mode(self, mode=None):
         # type: (int | None) -> None
         if not self.is_base_block:
-            self.energy_io_mode = (2, 2, 2, 2, 2, 2)
+            self.energy_io_mode = (EnergyIOMode.NONE,) * 6
             return
-        if mode is None:
-            mode = self.mode
-        self.mode = int(mode)
-        self.energy_io_mode = (
-            1,
-            1,
-            int(mode),
-            int(mode),
-            int(mode),
-            int(mode),
-        )
+        mode = int(self.mode if mode is None else mode)
+        self.mode = mode
+        vertical_mode = MODE_OUTPUT if mode == MODE_OUTPUT else EnergyIOMode.NONE
+        self.energy_io_mode = (vertical_mode,) * 2 + (mode,) * 4
 
     def recv_energy(self, rf):
         # type: (int) -> tuple[bool, int]

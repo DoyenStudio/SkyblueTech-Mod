@@ -6,6 +6,7 @@ from .base_interface import BaseInterface
 
 @RegisterMachine
 class EnergyOutputInterface(BasePowerProvider, BaseInterface):
+    energy_io_mode = (1, 1, 1, 1, 1, 1)
     store_rf_max = 160000
 
     def __init__(self, dim, x, y, z, block_entity_data):

@@ -2,10 +2,6 @@
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 import uuid
 from mod_log import logger
-from skybluetech_scripts.skybluetech.common.define.facing import (
-    OPPOSITE_FACING,
-    FACING_DXYZ,
-)
 from skybluetech_scripts.skybluetech.common.events.machinery.rf_repeater_plant import (
     RFRepeaterPlantSettingsUpdate,
 )
@@ -217,8 +213,7 @@ def build_connection(
 
 def change_node_mode(dim, x, y, z, new_mode):
     # type: (int, int, int, int, int) -> None
-    from ...transmitters.base.define import AP_MODE_INPUT, AP_MODE_OUTPUT
-    from ...transmitters.wire.logic import logic_module
+    from ...export.energy import RefreshEnergyConnections
     from . import RFRepeaterPlant
 
     m = GetLoadedMachine(dim, x, y, z)
@@ -245,16 +240,18 @@ def change_node_mode(dim, x, y, z, new_mode):
     node.save_to_global_dict(nodes_data)
     save_networks_data(networks_data)
     save_nodes_data(nodes_data)
+    previous_modes = m.energy_io_mode
+    m.flush_data(network)
+    if m.energy_io_mode != previous_modes:
+        RefreshEnergyConnections(m.xyz, dim)
     s = sum_network_data(network_uuid)
-    io_mode = m.bdata[NodeData.K_MODE]
-    m.sync_energy_io_mode(node.mode)
     RFRepeaterPlantSettingsUpdate(
         dim,
         x,
         y,
         z,
         node.bound_network_uuid[-6:],
-        io_mode,
+        m.mode,
         s.network_plant_count,
         s.network_plant_online_count,
         s.total_output_count,
@@ -262,25 +259,6 @@ def change_node_mode(dim, x, y, z, new_mode):
         s.total_input_count,
         s.total_input_active_count,
     ).sendMulti(m.ui_sync.GetPlayersInSync())
-    for face in (2, 3, 4, 5):
-        dx, dy, dz = FACING_DXYZ[face]
-        ap = logic_module.access_points_pool.get((
-            dim,
-            x + dx,
-            y + dy,
-            z + dz,
-            OPPOSITE_FACING[face],
-        ))
-        if ap is None:
-            continue
-        res = logic_module.SetAccessPointIOMode(
-            ap, [AP_MODE_INPUT, AP_MODE_OUTPUT][new_mode]
-        )
-        if not res:
-            print("[Error] set node io mode failed")
-    plant = GetLoadedMachine(dim, *node.pos)
-    if isinstance(plant, RFRepeaterPlant):
-        plant.flush_data(network)
 
 
 def remove_node_and_flush(dim, pos):

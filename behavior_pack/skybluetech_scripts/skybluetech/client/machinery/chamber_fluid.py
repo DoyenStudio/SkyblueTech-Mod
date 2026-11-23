@@ -1,10 +1,15 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.cli import CF, LEVEL_ID
 from skybluetech_scripts.tooldelta.events.client import (
-    DimensionChangeClientEvent, OnLocalPlayerStopLoading,
-    ModBlockEntityLoadedClientEvent, ModBlockEntityRemoveClientEvent,
+    DimensionChangeClientEvent,
+    OnLocalPlayerStopLoading,
+    ModBlockEntityLoadedClientEvent,
+    ModBlockEntityRemoveClientEvent,
 )
-from skybluetech_scripts.tooldelta.general import ClientInitCallback, ClientUninitCallback
+from skybluetech_scripts.tooldelta.general import (
+    ClientInitCallback,
+    ClientUninitCallback,
+)
 from skybluetech_scripts.tooldelta.utils.nbt import ValueOf
 from skybluetech_scripts.tooldelta.utils.timer import ExecLater, Repeat
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
@@ -12,7 +17,8 @@ from skybluetech_scripts.skybluetech.common.machinery_def.basic import (
     FluidSlotClient,
 )
 from skybluetech_scripts.skybluetech.common.machinery_def import (
-    distillation_chamber, heat_melting_chamber,
+    distillation_chamber,
+    heat_melting_chamber,
 )
 from skybluetech_scripts.skybluetech.client.utils.fluid_model import FluidVolumeModel
 
@@ -23,11 +29,13 @@ INSET = 0.004
 CHAMBERS = {
     Machinery.DISTILLATION_CHAMBER: (
         (distillation_chamber.INPUT_MAX_VOLUME, distillation_chamber.OUTPUT_MAX_VOLUME),
-        2 / 16.0, (12 / 16.0, 12 / 16.0, 12 / 16.0),
+        2 / 16.0,
+        (12 / 16.0, 12 / 16.0, 12 / 16.0),
     ),
     Machinery.HEAT_MELTING_CHAMBER: (
         (heat_melting_chamber.OUTPUT_MAX_VOLUME,),
-        3 / 16.0, (10 / 16.0, 7 / 16.0, 10 / 16.0),
+        3 / 16.0,
+        (10 / 16.0, 7 / 16.0, 10 / 16.0),
     ),
 }
 loaded_chambers = {}
@@ -58,7 +66,7 @@ class ChamberFluidDisplay(object):
             if not slot.fluid_id or not 0.0 < volume < float("inf"):
                 continue
             # 严格大于：等量时保留先遍历的输入槽，不合并两槽储量。
-            if selected is None or volume > selected[1]:
+            if selected is None or volume > selected[1]:  # pylint: disable=unsubscriptable-object
                 selected = (slot.fluid_id, volume, capacity)
         if selected is None:
             self.clear_model()

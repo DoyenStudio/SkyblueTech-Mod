@@ -5,21 +5,26 @@
             "identifier": "skybluetech:mineral_ash_white_concrete_powder_craft"
         },
         "ingredients": [
-            {"item": "skybluetech:mineral_ash"},
-            {"item": "minecraft:sand", "data": 0},
-            {"item": "minecraft:sand", "data": 0},
-            {"item": "minecraft:sand", "data": 0},
-            {"item": "minecraft:gravel"},
-            {"item": "minecraft:gravel"},
-            {"item": "minecraft:gravel"},
-            {"item": "minecraft:gravel"},
-            {"item": "minecraft:bone_meal"}
+            {
+                "item": "skybluetech:mineral_ash"
+            },
+            {
+                "item": "minecraft:sand",
+                "data": 0,
+                "count": 1
+            },
+            {
+                "item": "minecraft:gravel",
+                "count": 2
+            }
         ],
         "result": {
-            "count": 8,
+            "count": 3,
             "data": 0,
             "item": "minecraft:white_concrete_powder"
         },
-        "tags": ["crafting_table"]
+        "tags": [
+            "crafting_table"
+        ]
     }
 }

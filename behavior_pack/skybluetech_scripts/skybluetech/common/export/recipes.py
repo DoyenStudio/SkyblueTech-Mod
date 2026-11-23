@@ -78,7 +78,7 @@ __all__ = [
     "gen_preset_recipe", "gen_tagged_preset_recipe",
     "GetRecipesByInput", "GetRecipesByOutput", "GetRecipesByCategory",
     "AirCompressorRecipe", "AlloyFurnaceRecipe", "ChargerRecipe", "CompressorRecipe",
-    "HeatMeltingChamberRecipe", "CyroHeatMeltingChamberRecipe", "DistillationChamberRecipe", "EngraverRecipe",
+    "HeatMeltingChamberRecipe",  "DistillationChamberRecipe", "EngraverRecipe",
     "ElectrolyzerRecipe", "HighTempElectrolyzerRecipe", "FluidCondenserRecipe", "IndustrialCentrifugeRecipe", "FlotationMachineRecipe", "FreezerRecipe", "GasBurningGeneratorRecipe",
     "HydroponicBedRecipe", "HydroponicBedSandRecipe", "MachineryWorkstationRecipe",
     "MagmaCentrifugeRecipe", "MetalPressRecipe", "MixedMaceratorRecipe", "MixerRecipe",

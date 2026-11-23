@@ -26,7 +26,7 @@ recipes = RecipesCollection(
         ((fluids.CommonLiquid.WATER, 400),),
         ((fluids.Chemical.WOOD_CREOSOTE, 1000), (fluids.CommonLiquid.ORGANIC_WASTE, 400)),
         650, 800, None, 3000, tick_duration=300, recipe_id="w1",
-        solid_in=("oak", 4), solid_out=("minecraft:charcoal", 4), solid_in_is_tag=True,
+        solid_in=("log", 4), solid_out=("minecraft:charcoal", 4), solid_in_is_tag=True,
     ),
 )
 recipes.add_recipe(ThermalCrackerRecipe(

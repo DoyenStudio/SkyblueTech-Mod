@@ -48,13 +48,17 @@ class GenericCraftingTableRecipeRenderer(RecipeRenderer):
                         )
                     )
         else:
-            for i, input in enumerate(base.inputs):
-                self.input_displayers.append(
-                    MultiItemsDisplayer(
-                        panel["slot%d" % i],
-                        [Item(i) for i in input.item_ids],
+            slot_index = 0
+            for input in base.inputs:
+                # 无序配方可用 count 合并相同原料，展示时按工作台格子展开。
+                for _ in range(input.count):
+                    self.input_displayers.append(
+                        MultiItemsDisplayer(
+                            panel["slot%d" % slot_index],
+                            [Item(i) for i in input.item_ids],
+                        )
                     )
-                )
+                    slot_index += 1
         ItemDisplayer(
             panel["slot9"],
             Item(

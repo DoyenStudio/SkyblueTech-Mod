@@ -18,7 +18,6 @@ class ItemPipeNetwork(BaseNetwork["ItemPipeAccessPoint"]):
             dim, group_inputs, group_outputs, nodes, transmitter_id
         )
         # 跨 tick 容器缓存, 由 onNetworkTick 使用, 容器内容变化时经事件失效
-        self._cache_datas = {}  # type: dict[tuple[int, int, int], dict | None]
         self._cache_block_names = {}  # type: dict[tuple[int, int, int], str]
         self._cache_slotposes = {}  # type: dict[tuple[int, int, int], tuple[tuple[int, ...], tuple[int, ...]]]
         self._cache_slotitems = {}  # type: dict[tuple[int, int, int], dict[int, Item | None]]

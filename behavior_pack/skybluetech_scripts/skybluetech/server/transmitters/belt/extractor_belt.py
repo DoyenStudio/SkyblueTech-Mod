@@ -6,7 +6,6 @@ from skybluetech_scripts.tooldelta.internal import GetServer
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
 from skybluetech_scripts.skybluetech.common.define.facing import DXYZ_FACING
 from skybluetech_scripts.skybluetech.common.define.id_enum import TransmitBelt
-from skybluetech_scripts.skybluetech.server.transmitters.constants import CHEST_CONTAINERS
 from skybluetech_scripts.skybluetech.server.transmitters.item_pipe.logic import (
     _broadcast_pull_out,
 )
@@ -23,9 +22,8 @@ TICK_DATA_KEY = "extractor_belt_ticks"
 def _extract_item(dim, belt_pos, container_pos, access_facing):
     # type: (int, tuple[int, int, int], tuple[int, int, int], int) -> None
     block_name, slots = get_container_slots(dim, container_pos, access_facing, False)
-    is_chest = block_name in CHEST_CONTAINERS
     for slot in slots:
-        item, snapshot = read_slot(dim, container_pos, slot, is_chest)
+        item, snapshot = read_slot(dim, container_pos, slot)
         if item is None:
             continue
         # 事件可以修改取出物品的嵌套数据，余量需在广播前独立保存。

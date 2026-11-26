@@ -1,39 +1,32 @@
 # coding=utf-8
 """Pair-wise optional transactions; native inventories remain host-owned."""
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
-from skybluetech_scripts.tooldelta.utils.nbt import GetValueWithDefault
 
 from ... import transferlib
-from .nbt_utils import _get_container_nbt
 
 
 def _clear_inventory_cache(network):
     from .logic import logic_module
-    # A provider may persist through NBT without a container-change event.
+    # A provider may persist without a container-change event.
     # Other networks can share its inventory or be changed by its callbacks.
     for current in set(logic_module.networks_pool) | set((network,)):
-        current._cache_datas.clear()
         current._cache_block_names.clear()
         current._cache_slotposes.clear()
         current._cache_slotitems.clear()
 
 
 def _unique_chests(network, access_points):
-    from .logic import _is_chest
+    from .logic import _get_chest_pair
     seen = set()
     result = []
     for ap in access_points:
         pos = ap.target_pos
-        if _is_chest(network, pos):
-            data, _ = _get_container_nbt(network.dim, pos, network._cache_datas)
-            x = GetValueWithDefault(data or {}, "pairx", None)
-            z = GetValueWithDefault(data or {}, "pairz", None)
-            if x is not None and z is not None:
-                pair = (x, pos[1], z)
-                key = (min(pos, pair), max(pos, pair))
-                if key in seen:
-                    continue
-                seen.add(key)
+        pair = _get_chest_pair(network.dim, pos)
+        if pair is not None:
+            key = (min(pos, pair), max(pos, pair))
+            if key in seen:
+                continue
+            seen.add(key)
         result.append(ap)
     return result
 
@@ -57,7 +50,7 @@ def _move(api, source, target, budget):
 
 
 def tick(network):
-    from .logic import _legacy_network_tick, logic_module
+    from .logic import _get_chest_pair, _legacy_network_tick, logic_module
     api = transferlib.api
     budget = network.transfer_speed
     inputs = tuple(
@@ -77,8 +70,9 @@ def tick(network):
     inputs = _unique_chests(network, inputs)
     native_items = CF.CreateItem(LEVEL_ID)
     for output_ap in outputs:
+        pair_pos = _get_chest_pair(network.dim, output_ap.target_pos)
         for input_ap in inputs:
-            if output_ap.target_pos == input_ap.target_pos:
+            if input_ap.target_pos in (output_ap.target_pos, pair_pos):
                 continue
             try:
                 # Query both sides before choosing the backend. Exceptions are

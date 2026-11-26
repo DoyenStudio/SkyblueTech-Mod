@@ -1,21 +1,15 @@
 # coding=utf-8
-from copy import deepcopy
 from mod_log import logger
 
 from skybluetech_scripts.tooldelta.define.item import Item
 from skybluetech_scripts.tooldelta.events.server import ServerBlockEntityTickEvent
 from skybluetech_scripts.tooldelta.internal import GetServer
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
-from skybluetech_scripts.tooldelta.utils.nbt import Byte
 from skybluetech_scripts.skybluetech.common.define.facing import DXYZ_FACING
 from skybluetech_scripts.skybluetech.common.define.id_enum import TransmitBelt
-from skybluetech_scripts.skybluetech.server.transmitters.constants import CHEST_CONTAINERS
 from skybluetech_scripts.skybluetech.server.transmitters.item_pipe.logic import (
     _broadcast_push_in,
     _calc_move_count,
-)
-from skybluetech_scripts.skybluetech.server.transmitters.item_pipe.nbt_utils import (
-    _item_to_nbt_entry,
 )
 
 from .container import get_container_slots, read_slot, write_slot
@@ -71,13 +65,8 @@ def _store_in_slot(dim, pos, slot, block_name, original, snapshot, entity_id, ra
         return
     # 写入成功后才移除源实体；移除失败则仅回滚仍属于本次写入的槽位。
     if items.GetDroppedItem(entity_id, True) != raw or not server.DestroyEntity(entity_id):
-        current, committed = read_slot(dim, pos, slot, block_name in CHEST_CONTAINERS)
-        if block_name in CHEST_CONTAINERS:
-            matches_write = _same_stack(current, target)
-        else:
-            expected = deepcopy(snapshot) if snapshot is not None else _item_to_nbt_entry(slot, target)
-            expected["Count"] = Byte(target.count)
-            matches_write = committed == expected
+        current, committed = read_slot(dim, pos, slot)
+        matches_write = _same_stack(current, target)
         if not matches_write or not write_slot(
             dim, pos, slot, block_name, committed, original
         ):
@@ -91,7 +80,7 @@ def _insert_item(dim, pos, access_facing, entity_id, raw):
     block_name, slots = get_container_slots(dim, pos, access_facing, True)
     source = Item.from_dict(raw)
     for slot in slots:
-        original, snapshot = read_slot(dim, pos, slot, block_name in CHEST_CONTAINERS)
+        original, snapshot = read_slot(dim, pos, slot)
         count = _calc_move_count(source, original)
         if count <= 0:
             continue

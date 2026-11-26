@@ -1,7 +1,10 @@
 # coding=utf-8
 from skybluetech_scripts.tooldelta.srv import CF, LEVEL_ID
-from copy import deepcopy
 from skybluetech_scripts.skybluetech.common.define.id_enum import Machinery
+from skybluetech_scripts.skybluetech.server.container_items import (
+    GetContainerItem,
+    SetContainerItem,
+)
 
 
 from skybluetech_scripts.tooldelta.define.item import Item
@@ -11,24 +14,13 @@ from skybluetech_scripts.tooldelta.events.server import (
     ItemPullOutCustomContainerServerEvent,
     ItemPushInCustomContainerServerEvent,
 )
-from skybluetech_scripts.tooldelta.utils.nbt import (
-    Byte,
-    GetValueWithDefault,
-    Short,
-    String,
-)
 from skybluetech_scripts.tooldelta.utils.py_comp import py2_xrange
 
 from ..base.logic import LogicModule
-from ..constants import CHEST_CONTAINERS, COMMON_CONTAINERS
+from ..constants import COMMON_CONTAINERS
 from .define import ItemPipeAccessPoint, ItemPipeNetwork
-from .nbt_utils import (
-    MISSING,
-    _find_slot_entry,
-    _get_container_nbt,
-    _item_to_nbt_entry,
-    _nbt_entry_to_item,
-)
+
+MISSING = object()
 
 # TYPE_CHECKING
 if 0 > 1:
@@ -41,7 +33,7 @@ if 0 > 1:
 # 输入型网络: 网络向此容器输入物品
 # 输出型网络: 网络向此容器提取物品
 #
-# 读取容器内容走方块实体 NBT 批量读(箱子走容器 API) + 跨 tick 缓存, 不区分机器与普通
+# 读取容器内容统一走容器 API + 跨 tick 缓存, 不区分机器与普通
 # 容器; 只在真正写入某个槽位时构造 ItemPushInCustomContainerServerEvent /
 # ItemPullOutCustomContainerServerEvent 广播一次来验证这一次取出 / 存入:
 # 机器在 machinery/listeners/event_listener.py 里按 item_input_slots / item_output_slots / IsValidInput
@@ -119,9 +111,7 @@ def _broadcast_pull_out(dim, pos, slot, item, block_name):
 def _set_slot_item(dim, pos, slot, item):
     # type: (int, PosData, int, Item | None) -> bool
     "写入槽位; 物品为空或数量为 0 时清空该槽位。"
-    if item is None or item.count <= 0:
-        item = Item("minecraft:air", count=0)
-    return CF.CreateItem(LEVEL_ID).SpawnItemToContainer(item.marshal(), slot, pos, dim)
+    return SetContainerItem(pos, slot, dim, item)
 
 
 def _calc_move_count(source_item, target_item):
@@ -187,7 +177,7 @@ def _push_item_to_container(dim, xyz, face, item, limit_count=None):
     for slot_pos in slots:
         if rest.count <= 0:
             break
-        orig_item = CF.CreateItem(LEVEL_ID).GetContainerItem(xyz, slot_pos, dim, True)
+        orig_item = GetContainerItem(xyz, slot_pos, dim, True)
         orig_item = Item.from_dict(orig_item) if orig_item is not None else None
         move_count = _calc_move_count(rest, orig_item)
         if move_count <= 0:
@@ -271,18 +261,7 @@ def _legacy_network_tick(network, inputs=None, outputs=None, budget=None):
         output_pos = output_ap.target_pos
         output_slotposes = _get_container_output_slots(network, output_ap)
 
-        pair_pos = None
-        if _is_chest(network, output_pos):
-            pair_data, _ = _get_container_nbt(
-                network.dim, output_pos, network._cache_datas
-            )
-            pair_x = GetValueWithDefault(pair_data or {}, "pairx", None)
-            pair_z = GetValueWithDefault(pair_data or {}, "pairz", None)
-            pair_y = output_pos[1]
-            if pair_x is not None and pair_z is not None:
-                pair_pos = (pair_x, pair_y, pair_z)
-        else:
-            pair_x = pair_z = pair_y = None
+        pair_pos = _get_chest_pair(network.dim, output_pos)
 
         if pair_pos is not None:
             pair_key = (min(output_pos, pair_pos), max(output_pos, pair_pos))
@@ -295,7 +274,7 @@ def _legacy_network_tick(network, inputs=None, outputs=None, budget=None):
             if output_item is None:
                 continue
 
-            # 实际搬运数受源堆叠限制；不要把 long 周期预算传入物品/NBT。
+            # 实际搬运数受源堆叠限制；不要把 long 周期预算传入物品接口。
             count_to_send = int(min(tick_capacity, output_item.count))
             if count_to_send <= 0:
                 break
@@ -317,31 +296,20 @@ def _legacy_network_tick(network, inputs=None, outputs=None, budget=None):
 
                 if input_pos == output_pos:
                     continue
-                if (
-                    _is_chest(network, input_pos)
-                    and pair_x == input_pos[0]
-                    and pair_z == input_pos[2]
-                    and pair_y == input_pos[1]
-                ):
+                if input_pos == pair_pos:
                     # 跳过双箱子的另一半, 避免同一容器互相搬运
                     continue
 
                 # 输入端同一 tick 也只允许大箱子的一个半箱参与投递
-                if _is_chest(network, input_pos):
-                    ipair_data, _ = _get_container_nbt(
-                        network.dim, input_pos, network._cache_datas
+                ipair_pos = _get_chest_pair(network.dim, input_pos)
+                if ipair_pos is not None:
+                    ipair_key = (
+                        min(input_pos, ipair_pos),
+                        max(input_pos, ipair_pos),
                     )
-                    ipair_x = GetValueWithDefault(ipair_data or {}, "pairx", None)
-                    ipair_z = GetValueWithDefault(ipair_data or {}, "pairz", None)
-                    if ipair_x is not None and ipair_z is not None:
-                        ipair_pos = (ipair_x, input_pos[1], ipair_z)
-                        ipair_key = (
-                            min(input_pos, ipair_pos),
-                            max(input_pos, ipair_pos),
-                        )
-                        if ipair_key in scanned_in_chest_pairs:
-                            continue
-                        scanned_in_chest_pairs.add(ipair_key)
+                    if ipair_key in scanned_in_chest_pairs:
+                        continue
+                    scanned_in_chest_pairs.add(ipair_key)
 
                 break_flag2 = False
                 input_slotposes = _get_container_input_slots(network, input_ap)
@@ -411,47 +379,8 @@ def _legacy_network_tick(network, inputs=None, outputs=None, budget=None):
             pending_writes[pos] = writes
 
     for pos, writes in pending_writes.items():
-        if _is_chest(network, pos):
-            # 箱子/陷阱箱使用容器 API 读写: 大箱子两个方块实体各自只存
-            # 本地 0-26 槽, 而容器 API 把两个半箱映射成统一的 0-53 槽位
-            for slot, item in writes:
-                if item is None:
-                    CF.CreateItem(LEVEL_ID).SpawnItemToContainer(
-                        Item("minecraft:air").marshal(),
-                        slot,
-                        pos,
-                        network.dim,
-                    )
-                else:
-                    CF.CreateItem(LEVEL_ID).SpawnItemToContainer(
-                        item.marshal(),
-                        slot,
-                        pos,
-                        network.dim,
-                    )
-            _invalidate_container(network, pos)
-            continue
-        data, items = _get_container_nbt(network.dim, pos, network._cache_datas)
-        if data is None:
-            continue
         for slot, item in writes:
-            list_index, _ = _find_slot_entry(items, slot)
-            if item is None:
-                if list_index >= 0:
-                    items.pop(list_index)
-            elif list_index >= 0:
-                # 原地更新条目, 保留 Block/WasPickedUp 等额外字段
-                old_entry = items[list_index]
-                old_entry["Count"] = Byte(item.count)
-                old_entry["Name"] = String(item.newItemName)
-                old_entry["Damage"] = Short(item.newAuxValue)
-                if item.userData is not None:
-                    old_entry["tag"] = deepcopy(item.userData)
-                else:
-                    old_entry.pop("tag", None)
-            else:
-                items.append(_item_to_nbt_entry(slot, item))
-        CF.CreateBlockInfo(LEVEL_ID).SetBlockEntityData(network.dim, pos, data)
+            SetContainerItem(pos, slot, network.dim, item)
         # 自己写回后同样标记失效, 下次 tick 与引擎实际状态重新对齐
         _invalidate_container(network, pos)
 
@@ -465,21 +394,10 @@ def _get_container_item(network, xyz, slot):
         cache = network._cache_slotitems[xyz] = {}
     elif slot in cache:
         return cache[slot]
-    if _is_chest(network, xyz):
-        res = CF.CreateItem(LEVEL_ID).GetContainerItem(xyz, slot, network.dim, True)
-        res = Item.from_dict(res) if res is not None else None
-        if res is None or res.count <= 0:
-            res = None
-        cache[slot] = res
-        return res
-    _, items = _get_container_nbt(network.dim, xyz, network._cache_datas)
-    _, entry = _find_slot_entry(items, slot)
-    if entry is None:
+    res = GetContainerItem(xyz, slot, network.dim, True)
+    res = Item.from_dict(res) if res is not None else None
+    if res is not None and (res.count <= 0 or res.id in ("", "minecraft:air")):
         res = None
-    else:
-        res = _nbt_entry_to_item(entry)
-        if res.count <= 0:
-            res = None
     cache[slot] = res
     return res
 
@@ -552,31 +470,24 @@ def _get_block_name(network, xyz):
     return res
 
 
-def _is_chest(network, xyz):
-    # type: (ItemPipeNetwork, tuple[int, int, int]) -> bool
-    "箱子、陷阱箱和铜箱子变种可组成大箱子, 每半的方块实体 NBT 只含本地 0-26 槽, 需走容器 API"
-    return _get_block_name(network, xyz) in CHEST_CONTAINERS
+def _get_chest_pair(dim, xyz):
+    # type: (int, tuple[int, int, int]) -> tuple[int, int, int] | None
+    pair = CF.CreateBlockInfo(LEVEL_ID).GetChestPairedPosition(xyz, dim)
+    return tuple(pair) if pair is not None else None
 
 
 def _invalidate_container(network, xyz):
     # type: (ItemPipeNetwork, tuple[int, int, int]) -> None
     "容器内容/方块变化后使该容器的缓存失效, 下次 tick 重新读取"
-    network._cache_datas.pop(xyz, None)
     network._cache_block_names.pop(xyz, None)
     network._cache_slotposes.pop(xyz, None)
     network._cache_slotitems.pop(xyz, None)
     # 大箱子两个半箱共享同一个容器视图, 内容变化时同步失效另一半的缓存
-    if _is_chest(network, xyz):
-        data, _ = _get_container_nbt(network.dim, xyz, network._cache_datas)
-        pair_x = GetValueWithDefault(data or {}, "pairx", None)
-        pair_z = GetValueWithDefault(data or {}, "pairz", None)
-        if pair_x is not None and pair_z is not None:
-            pair_pos = (pair_x, xyz[1], pair_z)
-            if pair_pos != xyz:
-                network._cache_datas.pop(pair_pos, None)
-                network._cache_block_names.pop(pair_pos, None)
-                network._cache_slotposes.pop(pair_pos, None)
-                network._cache_slotitems.pop(pair_pos, None)
+    pair_pos = _get_chest_pair(network.dim, xyz)
+    if pair_pos is not None and pair_pos != xyz:
+        network._cache_block_names.pop(pair_pos, None)
+        network._cache_slotposes.pop(pair_pos, None)
+        network._cache_slotitems.pop(pair_pos, None)
 
 
 logic_module = LogicModule(
@@ -595,17 +506,12 @@ def InvalidateContainerCaches(dim, pos):
     # type: (int, tuple[int, int, int]) -> None
     "使连接到该容器及其配对半箱的物品管网络缓存失效。"
     # 大箱子: 物品变化事件只携带实际发生变化的半箱坐标, 而管道可能只连接了
-    # 另一个半箱。若事件半箱不在连接池中, 沿 pairx/pairz 找到配对半箱, 让连接
+    # 另一个半箱。若事件半箱不在连接池中, 经容器 API 找到配对半箱, 让连接
     # 在配对半箱上的网络缓存一并失效, 否则另一侧半箱的物品永远读不到。
     positions = [pos]
-    if (CF.CreateBlockInfo(LEVEL_ID).GetBlockNew(pos, dim) or {}).get("name") in CHEST_CONTAINERS:
-        data, _ = _get_container_nbt(dim, pos, {})
-        pair_x = GetValueWithDefault(data or {}, "pairx", None)
-        pair_z = GetValueWithDefault(data or {}, "pairz", None)
-        if pair_x is not None and pair_z is not None:
-            pair_pos = (pair_x, pos[1], pair_z)
-            if pair_pos != pos:
-                positions.append(pair_pos)
+    pair_pos = _get_chest_pair(dim, pos)
+    if pair_pos is not None and pair_pos != pos:
+        positions.append(pair_pos)
     invalidated_networks = set()  # type: set[ItemPipeNetwork]
     for p in positions:
         cnode = logic_module.container_nodes_pool.get((dim, (p[0], p[1], p[2])))

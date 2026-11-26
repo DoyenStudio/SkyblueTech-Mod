@@ -7,6 +7,10 @@ from skybluetech_scripts.tooldelta.events import (
     PlayerTryPutCustomContainerItemServerEvent,
 )
 from skybluetech_scripts.tooldelta.extensions.item_utils import SortItems
+from skybluetech_scripts.skybluetech.server.container_items import (
+    GetContainerItem,
+    SetContainerItem,
+)
 
 from .base_machine import BaseMachine
 from .slot_reads import accepts_slot_reads
@@ -69,7 +73,7 @@ class ItemContainer(BaseMachine):
         Returns:
             Item (optional): 槽位内物品实例, 如果为空则返回 None
         """
-        raw_item = CF.CreateItem(LEVEL_ID).GetContainerItem(
+        raw_item = GetContainerItem(
             self.xyz,
             slot_pos,
             self.dim,
@@ -89,12 +93,7 @@ class ItemContainer(BaseMachine):
         Returns:
             bool: 是否成功设置物品
         """
-        return CF.CreateItem(LEVEL_ID).SpawnItemToContainer(
-            (item or Item("minecraft:air", count=0)).marshal(),
-            slot_pos,
-            self.xyz,
-            self.dim,
-        )
+        return SetContainerItem(self.xyz, slot_pos, self.dim, item)
 
     def DropAllItems(self):
         for slot in self.item_input_slots + self.item_output_slots:
